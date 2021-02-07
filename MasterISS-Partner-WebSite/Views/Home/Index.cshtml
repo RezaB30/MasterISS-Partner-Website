@@ -1,0 +1,122 @@
+﻿@using MasterISS_Partner_WebSite.ViewModels;
+@using MasterISS_Partner_WebSite.Localization;
+@model NameValueListViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var response = new ServiceAvaibilityResponseViewModel();
+}
+
+<div id="addressQueryContainer">
+    <div>
+        @Html.DropDownListFor(nvpl => nvpl.ProvinceId, (SelectList)ViewBag.Provinces, HomeView.SelectProvince, new { @id = "province", @dataValue = 1 })
+    </div>
+
+    <div>
+        @Html.DropDownListFor(nvpl => nvpl.DistrictId, new SelectList(""), HomeView.SelectDistrict, new { @id = "district", @disabled = "disabled", @dataValue = 2 })
+    </div>
+
+    <div>
+        @Html.DropDownListFor(nvpl => nvpl.RuralRegionsId, new SelectList(""), HomeView.SelectRegions, new { @id = "ruralregions", @disabled = "disabled", @dataValue = 3 })
+    </div>
+    <div>
+        @Html.DropDownListFor(nvpl => nvpl.NeighborhoodId, new SelectList(""), HomeView.SelectNeigborhood, new { @id = "neighborhood", @disabled = "disabled", @dataValue = 4 })
+    </div>
+
+    <div>
+        @Html.DropDownListFor(nvpl => nvpl.StreetId, new SelectList(""), HomeView.SelectStreet, new { @id = "street", @disabled = "disabled", @dataValue = 5 })
+    </div>
+
+    <div>
+        @Html.DropDownListFor(nvpl => nvpl.BuildingId, new SelectList(""), HomeView.SelectBuilding, new { @id = "building", @disabled = "disabled", @dataValue = 6 })
+    </div>
+
+    <div>
+        @Html.DropDownListFor(nvpl => nvpl.ApartmentId, new SelectList(""), HomeView.SelectApartment, new { @id = "apartment", @disabled = "disabled", @dataValue = 7 })
+    </div>
+</div>
+
+<div id="service-avaibility-response">
+</div>
+
+@section Javascript{
+    <script>
+
+    function QueryAddress(triggerSelectId, triggeredSelectId, url) {
+
+
+        $(document).ready(function () {
+            $(triggerSelectId).change(function () {
+
+                    $("#service-avaibility-response").empty();
+
+                    $(triggeredSelectId).find("option").not(":first").remove();
+                    $(triggeredSelectId).attr("disabled", "disabled");
+
+                    if (triggeredSelectId != "#apartment") {
+                        $(triggeredSelectId).trigger('change');
+                    }
+
+                    var id = $(this).find(":selected").val();
+
+                if (id != "") {
+                          var selectId = { "id": id }
+                          $.ajax({
+                              url: url,
+                              type: 'POST',
+                              dataType:'JSON',
+                              contentType: 'application/json; charset=utf-8',
+                              data: JSON.stringify(selectId),
+                              complete: function (data, status) {
+                                  if (status == "success") {
+                                      var result = data.responseJSON.list;
+                                      for (var i = 0; i < result.length; i++) {
+                                          $(triggeredSelectId).append($('<option>', {
+                                              value: result[i].Value,
+                                              text: result[i].Name,
+                                          }));
+                                      }
+                                      $(triggeredSelectId).attr("disabled", false)
+                                  }
+                                  else {
+                                      console.log(data.responseJSON.errorMessage);
+                                  }
+                              }
+                          });
+                      }
+                  });
+            });
+        }
+
+
+        QueryAddress("#province","#district",'@Url.Action("DistrictList", "Home")')
+
+        QueryAddress("#district", "#ruralregions", '@Url.Action("RuralRegionsList", "Home")')
+
+        QueryAddress("#ruralregions","#neighborhood",'@Url.Action("NeighborhoodList", "Home")')
+
+        QueryAddress("#neighborhood","#street",'@Url.Action("StreetList", "Home")')
+
+        QueryAddress("#street","#building",'@Url.Action("BuildingList", "Home")')
+
+        QueryAddress("#building","#apartment",'@Url.Action("ApartmentList", "Home")')
+
+
+        $("#apartment").change(function () {
+            var bbk = $("#apartment").find(":selected").val();
+            var selectId = { "bbk": bbk }
+            $("#service-avaibility-response").empty();
+             $.ajax({
+                    url: '@Url.Action("ServiceAvailability", "Home")',
+                    type: 'POST',
+                    dataType: 'html',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(selectId),
+                    success: function (data) {
+                        $("#service-avaibility-response").html(data);
+                    },
+                });
+        });
+
+    </script>
+}

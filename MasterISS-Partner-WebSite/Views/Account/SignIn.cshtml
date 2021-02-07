@@ -1,0 +1,30 @@
+﻿@model  MasterISS_Partner_WebSite.ViewModels.UserSignInViewModel
+@{
+    ViewBag.Title = "SignIn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("SignIn", "Account", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div>
+        <div>
+            @Html.LabelFor(m => m.Username)
+            @Html.EditorFor(m => m.Username)
+            @Html.ValidationMessageFor(m => m.Username)
+        </div>
+
+        <div>
+            @Html.LabelFor(m => m.DealerCode)
+            @Html.EditorFor(m => m.DealerCode)
+            @Html.ValidationMessageFor(m => m.DealerCode)
+        </div>
+
+        <div>
+            @Html.LabelFor(m => m.Password)
+            @Html.EditorFor(m => m.Password)
+            @Html.ValidationMessageFor(m => m.Password)
+        </div>
+    </div>
+    <input value="giriş" type="submit"/>
+}

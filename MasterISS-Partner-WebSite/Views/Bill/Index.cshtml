@@ -1,0 +1,76 @@
+﻿@using MasterISS_Partner_WebSite.ViewModels
+@model BillCollectionViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    Abone No Giriniz.
+    @Html.TextBox("SubscriberNo")
+</div>
+
+<div id="bill-list">
+    <table>
+        <tbody>
+            <tr>
+                <td>@Html.DisplayFor(m => m.SubscriberNo)</td>
+            </tr>
+            @foreach (var itemBill in Model.Bills)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => itemBill.Cost)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => itemBill.DueDate)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => itemBill.IssueDate)</td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" id="Check_@itemBill.BillID" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <input type="submit" value="pay" id="pay-button" />
+
+</div>
+
+@section Javascript{
+    <script>
+        $("#pay-button").click(function () {
+            var arrayBillItem = [];
+            var checkSeperatedId = "";
+            $("#bill-list table tbody tr td input[type=checkbox]").each(function (index, val) {
+                var billId = $(val).attr("id");
+                var splitItem = billId.split('_');
+                var currentCheckboxId = splitItem[1];
+                var isChecked = $("#" + billId).is(":checked", true);
+                if (isChecked) {
+                    arrayBillItem.push(currentCheckboxId);
+                }
+            })
+
+            if (arrayBillItem.length != 0) {
+                checkSeperatedId = arrayBillItem.toString();
+                var subsNo = $("#SubscriberNo").val();
+                alert(subsNo);
+                $.ajax({
+                    url: '@Url.Action("BillOperations","Bill")',
+                    type: 'POST',
+                    data: { billList: checkSeperatedId, subsNo: subsNo},
+                    complete: function (data, status) {
+                        if (status == "success") {
+
+                        }
+                    }
+                })
+
+            }
+        });
+    </script>
+}

@@ -1,0 +1,34 @@
+﻿@model MasterISS_Partner_WebSite.ViewModels.ServiceAvaibilityResponseViewModel
+@{
+    Layout = null;
+}
+
+<div id="avaibility-container">
+    <div>@Html.DisplayFor(m => m.Address)</div>
+    <div>@Html.DisplayFor(m => m.BBK)</div>
+
+    <div id="fiber-container">
+        <div>@Html.DisplayFor(m => m.FIBER.FiberDistance)</div>
+        <div>@Html.DisplayFor(m => m.FIBER.FiberPortState)</div>
+        <div>@Html.DisplayFor(m => m.FIBER.FiberSpeed)</div>
+        <div>@Html.DisplayFor(m => m.FIBER.FiberVUID)</div>
+        <div>@Html.DisplayFor(m => m.FIBER.HasInfrastructureFiber)</div>
+    </div>
+
+    <div id="vdsl-container">
+        <div>@Html.DisplayFor(m => m.VDSL.VdslDistance)</div>
+        <div>@Html.DisplayFor(m => m.VDSL.VdslPortState)</div>
+        <div>@Html.DisplayFor(m => m.VDSL.VdslSpeed)</div>
+        <div>@Html.DisplayFor(m => m.VDSL.VdslVUID)</div>
+        <div>@Html.DisplayFor(m => m.VDSL.HasInfrastructureVdsl)</div>
+    </div>
+
+    <div id="adsl-container">
+        <div>@Html.DisplayFor(m => m.ADSL.AdslDistance)</div>
+        <div>@Html.DisplayFor(m => m.ADSL.AdslPortState)</div>
+        <div>@Html.DisplayFor(m => m.ADSL.AdslSpeed)</div>
+        <div>@Html.DisplayFor(m => m.ADSL.AdslVUID)</div>
+        <div>@Html.DisplayFor(m => m.ADSL.HasInfrastructureAdsl)</div>
+    </div>
+
+</div>
