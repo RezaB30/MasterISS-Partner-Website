@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
@@ -34,9 +35,9 @@ namespace MasterISS_Partner_WebSite
             Client = new PartnerServiceClient();
         }
 
-        public string Hash()
+        public string Hash<HAT>() where HAT : HashAlgorithm
         {
-            var hashAuthenticaiton = CalculateHash<SHA256>(Username + Rand + CalculateHash<SHA256>(Password) + KeyFragment);
+            var hashAuthenticaiton = CalculateHash<HAT>(Username + Rand + CalculateHash<HAT>(Password) + KeyFragment);
             return hashAuthenticaiton;
         }
 
@@ -52,12 +53,13 @@ namespace MasterISS_Partner_WebSite
             var request = new PartnerServicePaymentRequest()
             {
                 Culture = Culture,
-                Hash = Hash(),
+                Hash = Hash<SHA1>(),
                 Rand = Rand,
                 Username = Username,
                 PaymentRequest = new PaymentRequest()
                 {
-                    SubUserEmail = requestModel.SubMail,
+                    SubUserEmail = GetUserSubMail(),
+                    UserEmail = GetUserMail(),
                     BillIDs = requestModel.BillIDs,
                 }
             };
@@ -81,7 +83,7 @@ namespace MasterISS_Partner_WebSite
             var request = new CustomerServiceServiceAvailabilityRequest
             {
                 Culture = Culture,
-                Hash = Hash(),
+                Hash = Hash<SHA1>(),
                 Rand = Rand,
                 Username = Username,
                 ServiceAvailabilityParameters = new ServiceAvailabilityRequest()
@@ -110,9 +112,9 @@ namespace MasterISS_Partner_WebSite
             var request = new CustomerServiceProvincesRequest()
             {
                 Culture = Culture,
-                Hash = Hash(),
+                Hash = Hash<SHA1>(),
                 Rand = Rand,
-                Username = Username
+                Username = Username,
             };
             var response = Client.GetProvinces(request);
 
@@ -237,14 +239,14 @@ namespace MasterISS_Partner_WebSite
             {
                 BBK = BBK,
                 Culture = Culture,
-                Hash = Hash(),
+                Hash = Hash<SHA1>(),
                 Rand = Rand,
                 Username = Username
             };
 
             var response = Client.GetApartmentAddress(request);
 
-            var aresponse = Client.AddSubUser(new PartnerServiceAddSubUserRequest() { AddSubUserRequestParameters= new AddSubUserRequest() { } });
+            var aresponse = Client.AddSubUser(new PartnerServiceAddSubUserRequest() { AddSubUserRequestParameters = new AddSubUserRequest() { } });
 
             if (response.ResponseMessage.ErrorCode == 0)
             {
@@ -259,12 +261,42 @@ namespace MasterISS_Partner_WebSite
             };
         }
 
+        public ServiceResponse<PartnerServiceBillListResponse> UserBillList(string subscriberNo)
+        {
+            var request = new PartnerServiceBillListRequest()
+            {
+                Culture = Culture,
+                Hash = Hash<SHA256>(),
+                Rand = Rand,
+                Username = Username,
+                BillListRequest = new BillListRequest()
+                {
+                    SubscriberNo = subscriberNo,
+                    SubUserEmail = GetUserSubMail(),
+                    UserEmail = GetUserMail()
+                }
+            };
+            var response = Client.BillsBySubscriberNo(request);
+
+            if (response.ResponseMessage.ErrorCode == 0)
+            {
+                return new ServiceResponse<PartnerServiceBillListResponse>()
+                {
+                    Data = response
+                };
+            }
+            return new ServiceResponse<PartnerServiceBillListResponse>()
+            {
+                ErrorMessage = response.ResponseMessage.ErrorMessage
+            };
+        }
+
         private CustomerServiceNameValuePairRequest GetRequest(long id)
         {
             var request = new CustomerServiceNameValuePairRequest
             {
                 Culture = Culture,
-                Hash = Hash(),
+                Hash = Hash<SHA1>(),
                 ItemCode = id,
                 Rand = Rand,
                 Username = Username
@@ -272,5 +304,25 @@ namespace MasterISS_Partner_WebSite
             return request;
         }
 
+        private List<Claim> CurrentClaims()
+        {
+            return ClaimsPrincipal.Current.Identities.First().Claims.ToList();
+
+
+            //var sid = identity.Claims.Where(c => c.Type == ClaimTypes.Name)
+            //                   .Select(c => c.Value).SingleOrDefault();
+        }
+        private string GetUserMail()
+        {
+            var userMail = CurrentClaims().Where(c => c.Type == "UserMail")
+                   .Select(c => c.Value).SingleOrDefault();
+            return userMail;
+        }
+        private string GetUserSubMail()
+        {
+            var userSubMail = CurrentClaims().Where(c => c.Type == "UserSubMail")
+                   .Select(c => c.Value).SingleOrDefault();
+            return userSubMail;
+        }
     }
 }

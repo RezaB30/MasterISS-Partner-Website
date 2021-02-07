@@ -28,8 +28,8 @@ namespace MasterISS_Partner_WebSite.Controllers
             {
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, userSignInModel.Username),
-                    new Claim("DealerCode", userSignInModel.DealerCode),
+                    new Claim("UserSubMail", userSignInModel.Username),
+                    new Claim("UserMail", userSignInModel.DealerCode),
                     new Claim("UserPassword", userSignInModel.Password)
                 };
 
