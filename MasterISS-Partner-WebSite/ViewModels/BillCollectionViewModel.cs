@@ -10,17 +10,16 @@ namespace MasterISS_Partner_WebSite.ViewModels
     {
         [Required]
         [Display(Name = "SubscriberNo", ResourceType = typeof(Localization.Model))]
-        public string SubscriberNo { get; set; }
+        public string SubscriberName { get; set; }
         public IEnumerable<BillsViewModel> Bills { get; set; }
-        //public string SelectedBills { get; set; }
     }
 
     public class BillsViewModel
     {
-        public string BillID { get; set; }
+        public long BillID { get; set; }
 
         [Display(Name = "Amount", ResourceType = typeof(Localization.Model))]
-        public string Cost { get; set; }
+        public decimal Cost { get; set; }
 
         [Display(Name = "IssueDate", ResourceType = typeof(Localization.Model))]
         public string IssueDate { get; set; }
@@ -28,6 +27,5 @@ namespace MasterISS_Partner_WebSite.ViewModels
         [Display(Name = "DueDate", ResourceType = typeof(Localization.Model))]
         public string DueDate { get; set; }
 
-        public bool IsPayBill { get; set; }
     }
 }

@@ -48,22 +48,25 @@ namespace MasterISS_Partner_WebSite
             return calculatedHash;
         }
 
-        public ServiceResponse<PartnerServicePaymentResponse> PayBill(PayBillRequestViewModel requestModel)
+        public ServiceResponse<PartnerServicePaymentResponse> PayBill(long[] BillIds)
         {
+            var ass = GetUserSubMail();
+            var as2s = GetUserMail();
             var request = new PartnerServicePaymentRequest()
             {
                 Culture = Culture,
-                Hash = Hash<SHA1>(),
+                Hash = Hash<SHA256>(),
                 Rand = Rand,
                 Username = Username,
                 PaymentRequest = new PaymentRequest()
                 {
                     SubUserEmail = GetUserSubMail(),
                     UserEmail = GetUserMail(),
-                    BillIDs = requestModel.BillIDs,
+                    BillIDs = BillIds,
                 }
             };
-            var response = Client.PayBills(request);
+            var client = new PartnerServiceClient();
+            var response = client.PayBills(request);
 
             if (response.ResponseMessage.ErrorCode == 0)
             {
@@ -263,6 +266,9 @@ namespace MasterISS_Partner_WebSite
 
         public ServiceResponse<PartnerServiceBillListResponse> UserBillList(string subscriberNo)
         {
+            var ass = GetUserMail();
+            var ass2 = GetUserSubMail();
+
             var request = new PartnerServiceBillListRequest()
             {
                 Culture = Culture,
@@ -320,7 +326,7 @@ namespace MasterISS_Partner_WebSite
         }
         private string GetUserSubMail()
         {
-            var userSubMail = CurrentClaims().Where(c => c.Type == "UserSubMail")
+            var userSubMail = CurrentClaims().Where(c => c.Type == ClaimTypes.Name)
                    .Select(c => c.Value).SingleOrDefault();
             return userSubMail;
         }

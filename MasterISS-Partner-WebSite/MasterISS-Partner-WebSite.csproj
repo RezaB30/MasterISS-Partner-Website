@@ -196,6 +196,7 @@
     <Compile Include="ViewModels\Account\RegisterViewModel.cs" />
     <Compile Include="ViewModels\Account\UserSignInViewModel.cs" />
     <Compile Include="ViewModels\BillCollectionViewModel.cs" />
+    <Compile Include="ViewModels\GetBillCollectionBySubscriberNoViewModel.cs" />
     <Compile Include="ViewModels\Home\AddCustomerViewModel.cs" />
     <Compile Include="ViewModels\Home\BalanceRequestViewModel.cs" />
     <Compile Include="ViewModels\NameValueListViewModel.cs" />
@@ -236,6 +237,21 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <Content Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite.PartnerServiceReference.PartnerServiceSubUserResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite.PartnerServiceReference.PartnerServiceCreditReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite.PartnerServiceReference.PartnerServiceIDCardValidationResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite.PartnerServiceReference.PartnerServiceKeyValueListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite.PartnerServiceReference.PartnerServiceNewCustomerRegisterResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite.PartnerServiceReference.PartnerServiceSMSCodeResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <None Include="Connected Services\PartnerServiceReference\Reference.svcmap">
@@ -304,6 +320,7 @@
     <Content Include="Views\Shared\_ServiceAvaibility.cshtml" />
     <Content Include="Views\Bill\Index.cshtml" />
     <Content Include="Views\Account\SignIn.cshtml" />
+    <Content Include="Views\Bill\Succesfull.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
