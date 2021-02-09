@@ -1,0 +1,32 @@
+﻿@using MasterISS_Partner_WebSite.ViewModels
+@model  NewUserViewModel
+@{
+    ViewBag.Title = "AddUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("AddUser", "UserOperations", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div>
+        @Html.LabelFor(m => m.UserNameSurname)
+        @Html.EditorFor(m => m.UserNameSurname)
+        @Html.ValidationMessageFor(m => m.UserNameSurname)
+    </div>
+
+    <div>
+        @Html.LabelFor(m => m.UserEmail)
+        @Html.EditorFor(m => m.UserEmail)
+        @Html.ValidationMessageFor(m => m.UserEmail)
+    </div>
+
+    <div>
+        @Html.LabelFor(m => m.Password)
+        @Html.EditorFor(m => m.Password)
+        @Html.ValidationMessageFor(m => m.Password)
+    </div>
+
+    <input type="submit" value="ekle"/>
+}
+
+

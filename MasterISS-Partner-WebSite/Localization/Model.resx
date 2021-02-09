@@ -184,7 +184,7 @@
     <value>Domain</value>
   </data>
   <data name="DueDate" xml:space="preserve">
-    <value>Due Date</value>
+    <value>Bitiş Tarihi</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>E-Posta</value>
@@ -336,8 +336,14 @@
   <data name="TradeRegistrationNo" xml:space="preserve">
     <value>Ticaret Sicil Numarası</value>
   </data>
+  <data name="UserEmail" xml:space="preserve">
+    <value>Kullanıcı E-Posta</value>
+  </data>
   <data name="Username" xml:space="preserve">
     <value>Kullanıcı Adı</value>
+  </data>
+  <data name="UserNameSurname" xml:space="preserve">
+    <value>Kullanıcı Adı ve Soyadı</value>
   </data>
   <data name="VolumeNo" xml:space="preserve">
     <value>Cilt Numarası</value>

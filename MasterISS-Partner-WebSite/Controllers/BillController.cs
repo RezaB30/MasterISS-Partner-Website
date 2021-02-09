@@ -2,6 +2,7 @@
 using MasterISS_Partner_WebSite.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading;
@@ -24,7 +25,7 @@ namespace MasterISS_Partner_WebSite.Controllers
         public ActionResult Index([Bind(Prefix = "search")] GetBillCollectionBySubscriberNoViewModel billListRequestViewModel)
         {
             billListRequestViewModel = billListRequestViewModel ?? new GetBillCollectionBySubscriberNoViewModel();
-            if (!string.IsNullOrEmpty(billListRequestViewModel.SubscriberNo))
+            if (ModelState.IsValid)
             {
                 var wrapper = new WebServiceWrapper();
                 var response = wrapper.UserBillList(billListRequestViewModel.SubscriberNo);
@@ -46,9 +47,9 @@ namespace MasterISS_Partner_WebSite.Controllers
                 SubscriberName = response.Data.BillListResponse.SubscriberName,
                 Bills = response.Data.BillListResponse.Bills == null ? Enumerable.Empty<BillsViewModel>() : response.Data.BillListResponse.Bills.Select(b => new BillsViewModel()
                 {
-                    IssueDate = b.IssueDate,
+                    IssueDate = DateTime.ParseExact(b.IssueDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture).ToString("dd.MM.yyyy"),
                     BillID = b.ID,
-                    DueDate = b.DueDate,
+                    DueDate = DateTime.ParseExact(b.DueDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture).ToString("dd.MM.yyyy"),
                     Cost = b.Total
                 })
             };
@@ -83,19 +84,21 @@ namespace MasterISS_Partner_WebSite.Controllers
                         counter++;
                     }
                 }
+
                 if (counter != 0)
                 {
-                    TempData["hata"] = "ilk eski faturayı öde";
+                    ViewBag.PayOldBillError = Localization.BillView.PayOldBillError;
 
                     return View(viewName: "Index", model: BillList(response));
                 }
+
                 else
                 {
                     wrapper = new WebServiceWrapper();
                     var responsePayBill = wrapper.PayBill(selectedBills);
                     if (!string.IsNullOrEmpty(responsePayBill.ErrorMessage))
                     {
-                        ViewBag.PayBillError = "Fatura Ödemede Hata var";
+                        ViewBag.PayBillError = Localization.BillView.PayBillError;
                     }
                     else
                     {

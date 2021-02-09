@@ -35,23 +35,8 @@ namespace MasterISS_Partner_WebSite
             Client = new PartnerServiceClient();
         }
 
-        public string Hash<HAT>() where HAT : HashAlgorithm
-        {
-            var hashAuthenticaiton = CalculateHash<HAT>(Username + Rand + CalculateHash<HAT>(Password) + KeyFragment);
-            return hashAuthenticaiton;
-        }
-
-        private string CalculateHash<HAT>(string value) where HAT : HashAlgorithm
-        {
-            HAT algorithm = (HAT)HashAlgorithm.Create(typeof(HAT).Name);
-            var calculatedHash = string.Join(string.Empty, algorithm.ComputeHash(Encoding.UTF8.GetBytes(value)).Select(b => b.ToString("x2")));
-            return calculatedHash;
-        }
-
         public ServiceResponse<PartnerServicePaymentResponse> PayBill(long[] BillIds)
         {
-            var ass = GetUserSubMail();
-            var as2s = GetUserMail();
             var request = new PartnerServicePaymentRequest()
             {
                 Culture = Culture,
@@ -236,7 +221,7 @@ namespace MasterISS_Partner_WebSite
             };
         }
 
-        public ServiceResponse<CustomerServiceAddressDetailsResponse> GetOpenAdress(long BBK)
+        public ServiceResponse<CustomerServiceAddressDetailsResponse> GetApartmentAddress(long BBK)
         {
             var request = new CustomerServiceAddressDetailsRequest
             {
@@ -248,8 +233,6 @@ namespace MasterISS_Partner_WebSite
             };
 
             var response = Client.GetApartmentAddress(request);
-
-            var aresponse = Client.AddSubUser(new PartnerServiceAddSubUserRequest() { AddSubUserRequestParameters = new AddSubUserRequest() { } });
 
             if (response.ResponseMessage.ErrorCode == 0)
             {
@@ -266,9 +249,6 @@ namespace MasterISS_Partner_WebSite
 
         public ServiceResponse<PartnerServiceBillListResponse> UserBillList(string subscriberNo)
         {
-            var ass = GetUserMail();
-            var ass2 = GetUserSubMail();
-
             var request = new PartnerServiceBillListRequest()
             {
                 Culture = Culture,
@@ -297,6 +277,117 @@ namespace MasterISS_Partner_WebSite
             };
         }
 
+        public PartnerServiceAuthenticationResponse Authenticate(UserSignInViewModel userSignInModel)
+        {
+            var request = new PartnerServiceAuthenticationRequest()
+            {
+                Culture = Culture,
+                Hash = Hash<SHA256>(),
+                Rand = Rand,
+                Username = Username,
+                AuthenticationParameters = new AuthenticationRequest()
+                {
+                    SubUserEmail = userSignInModel.Username,
+                    UserEmail = userSignInModel.DealerCode,
+                    PartnerPasswordHash = CalculateHash<SHA256>(userSignInModel.Password),
+                }
+            };
+
+            var response = Client.Authenticate(request);
+
+            return response;
+        }
+
+        public PartnerServiceAddSubUserResponse AddUser(NewUserViewModel newUserViewModel)
+        {
+            var request = new PartnerServiceAddSubUserRequest()
+            {
+                Culture = Culture,
+                Hash = Hash<SHA256>(),
+                Rand = Rand,
+                Username = Username,
+                AddSubUserRequestParameters = new AddSubUserRequest()
+                {
+                    SubUserEmail = GetUserSubMail(),
+                    UserEmail = GetUserMail(),
+                    RequestedSubUserEmail = newUserViewModel.UserEmail,
+                    RequestedSubUserName = newUserViewModel.UserNameSurname,
+                    RequestedSubUserPassword = newUserViewModel.Password
+                }
+            };
+
+            var response = Client.AddSubUser(request);
+
+            return response;
+        }
+
+        public PartnerServiceSubUserResponse EnableUser(string enabledUserMail)
+        {
+            var response = Client.EnableSubUser(PartnerServiceSubUserRequest(enabledUserMail));
+
+            return response;
+        }
+
+        public PartnerServiceSubUserResponse DisableUser(string disabledUserMail)
+        {
+            var response = Client.DisableSubUser(PartnerServiceSubUserRequest(disabledUserMail));
+            return response;
+        }
+
+
+
+        private PartnerServiceSubUserRequest PartnerServiceSubUserRequest(string subUserMail)
+        {
+            var request = new PartnerServiceSubUserRequest()
+            {
+                Culture = Culture,
+                Hash = Hash<SHA256>(),
+                Rand = Rand,
+                Username = Username,
+                SubUserRequest = new SubUserRequest()
+                {
+                    SubUserEmail = GetUserSubMail(),
+                    UserEmail = GetUserMail(),
+                    RequestedSubUserEmail = subUserMail,
+                }
+            };
+            return request;
+        }
+        public string PartenrSetupServiceUser()
+        {
+            var partnerSetupServiceUser = CurrentClaims().Where(c => c.Type == "SetupServiceUser")
+                  .Select(c => c.Value).SingleOrDefault();
+            return partnerSetupServiceUser;
+        }
+        public string PartnerSetupServiceHash()
+        {
+            var partnerSetupServiceHash = CurrentClaims().Where(c => c.Type == "SetupServiceHash")
+                  .Select(c => c.Value).SingleOrDefault();
+            return partnerSetupServiceHash;
+        }
+        public string PartnerId()
+        {
+            var partnerId = CurrentClaims().Where(c => c.Type == "UserId")
+                  .Select(c => c.Value).SingleOrDefault();
+            return partnerId;
+        }
+        public string GetPartnerName()
+        {
+            var partnerName = CurrentClaims().Where(c => c.Type == "PartnerName")
+                   .Select(c => c.Value).SingleOrDefault();
+            return partnerName;
+        }
+        public string Hash<HAT>() where HAT : HashAlgorithm
+        {
+            var hashAuthenticaiton = CalculateHash<HAT>(Username + Rand + CalculateHash<HAT>(Password) + KeyFragment);
+            return hashAuthenticaiton;
+        }
+        public string GetUserPassword()
+        {
+            var userPassword = CurrentClaims().Where(c => c.Type == "UserPassword")
+                 .Select(c => c.Value).SingleOrDefault();
+            return userPassword;
+        }
         private CustomerServiceNameValuePairRequest GetRequest(long id)
         {
             var request = new CustomerServiceNameValuePairRequest
@@ -309,7 +400,6 @@ namespace MasterISS_Partner_WebSite
             };
             return request;
         }
-
         private List<Claim> CurrentClaims()
         {
             return ClaimsPrincipal.Current.Identities.First().Claims.ToList();
@@ -329,6 +419,12 @@ namespace MasterISS_Partner_WebSite
             var userSubMail = CurrentClaims().Where(c => c.Type == ClaimTypes.Name)
                    .Select(c => c.Value).SingleOrDefault();
             return userSubMail;
+        }
+        public string CalculateHash<HAT>(string value) where HAT : HashAlgorithm
+        {
+            HAT algorithm = (HAT)HashAlgorithm.Create(typeof(HAT).Name);
+            var calculatedHash = string.Join(string.Empty, algorithm.ComputeHash(Encoding.UTF8.GetBytes(value)).Select(b => b.ToString("x2")));
+            return calculatedHash;
         }
     }
 }

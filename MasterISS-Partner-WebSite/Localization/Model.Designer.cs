@@ -259,7 +259,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Due Date.
+        ///   Looks up a localized string similar to Bitiş Tarihi.
         /// </summary>
         public static string DueDate {
             get {
@@ -718,11 +718,29 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kullanıcı E-Posta.
+        /// </summary>
+        public static string UserEmail {
+            get {
+                return ResourceManager.GetString("UserEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kullanıcı Adı.
         /// </summary>
         public static string Username {
             get {
                 return ResourceManager.GetString("Username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kullanıcı Adı ve Soyadı.
+        /// </summary>
+        public static string UserNameSurname {
+            get {
+                return ResourceManager.GetString("UserNameSurname", resourceCulture);
             }
         }
         

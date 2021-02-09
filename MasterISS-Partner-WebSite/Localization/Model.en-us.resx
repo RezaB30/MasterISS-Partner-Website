@@ -336,8 +336,14 @@
   <data name="TradeRegistrationNo" xml:space="preserve">
     <value>Trade Registration Number</value>
   </data>
+  <data name="UserEmail" xml:space="preserve">
+    <value>User E-Mail</value>
+  </data>
   <data name="Username" xml:space="preserve">
     <value>Username</value>
+  </data>
+  <data name="UserNameSurname" xml:space="preserve">
+    <value>User Name and Surname</value>
   </data>
   <data name="VolumeNo" xml:space="preserve">
     <value>Volume Number</value>

@@ -21,7 +21,7 @@ namespace MasterISS_Partner_WebSite.App_Start
             {
                 CookieName = "MasterISSPartnerWebsite",
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString(value: "/" + lang + "/Home/Index"),//yetkisi olmayan
+                LoginPath = new PathString(value: "/" + lang + "/Account/SignIn"),//yetkisi olmayan
                 CookieHttpOnly = true,
                 CookieSecure = CookieSecureOption.SameAsRequest
             });

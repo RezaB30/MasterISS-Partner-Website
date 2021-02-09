@@ -1,4 +1,5 @@
-﻿@using MasterISS_Partner_WebSite.ViewModels
+﻿@using MasterISS_Partner_WebSite.Localization
+@using MasterISS_Partner_WebSite.ViewModels
 @model BillCollectionViewModel
 @{
     ViewBag.Title = "Index";
@@ -18,73 +19,43 @@
 
 @if (ViewBag.Error == null)
 {
-    using (Html.BeginForm("BillOperations","Bill",FormMethod.Post)) { 
-    <div id="bill-list">
-        <table>
-            <tbody>
-                <tr>
-                    <td>@Html.DisplayFor(m => m.SubscriberName)</td>
-                </tr>
-                @foreach (var itemBill in Model.Bills)
-                {
+    using (Html.BeginForm("BillOperations", "Bill", FormMethod.Post))
+    {
+        <div id="bill-list">
+            <table>
+                <thead>
                     <tr>
-                        <td>@Html.DisplayFor(modelItem => itemBill.Cost)</td>
+                        <th>@Html.DisplayNameFor(m => m.SubscriberName)</th>
+                        <th>@Html.DisplayNameFor(m => m.Bills.FirstOrDefault().Cost)</th>
+                        <th>@Html.DisplayNameFor(m => m.Bills.FirstOrDefault().DueDate)</th>
+                        <th>@Html.DisplayNameFor(m => m.Bills.FirstOrDefault().IssueDate)</th>
                     </tr>
+                </thead>
+                <tbody>
                     <tr>
-                        <td>@Html.DisplayFor(modelItem => itemBill.DueDate)</td>
+                        <td>@Html.DisplayFor(m => m.SubscriberName)</td>
                     </tr>
-                    <tr>
-                        <td>@Html.DisplayFor(modelItem => itemBill.IssueDate)</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input name="selectedBills" type="checkbox" value="@itemBill.BillID" />
-                        </td>
-                    </tr>
-                }
-                @Html.Hidden("SubscriberNo",search.SubscriberNo)
-            </tbody>
-        </table>
+                    @foreach (var itemBill in Model.Bills)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => itemBill.Cost)</td>
+                            <td>@Html.DisplayFor(modelItem => itemBill.DueDate)</td>
+                            <td>@Html.DisplayFor(modelItem => itemBill.IssueDate)</td>
+                            <td>
+                                <input name="selectedBills" type="checkbox" value="@itemBill.BillID" />
+                            </td>
+                        </tr>
+                    }
+                    @Html.Hidden("SubscriberNo", search.SubscriberNo)
+                </tbody>
+            </table>
 
-        <input type="submit" value="pay" id="pay-button" />
-    </div>
+            <input type="submit" value="@BillView.PayBill" id="pay-button" />
+        </div>
     }
 }
 
 <div style="background-color:red">
-    @Html.Raw(TempData["hata"])
+    @ViewBag.PayOldBillError
+    @ViewBag.PayBillError
 </div>
-
-@section Javascript{
-    @*<script>
-        $("#pay-button").click(function () {
-            var arrayBillItem = [];
-            var checkSeperatedId = "";
-            $("#bill-list table tbody tr td input[type=checkbox]").each(function (index, val) {
-                var billId = $(val).attr("id");
-                var splitItem = billId.split('_');
-                var currentCheckboxId = splitItem[1];
-                var isChecked = $("#" + billId).is(":checked", true);
-                if (isChecked) {
-                    arrayBillItem.push(currentCheckboxId);
-                }
-            })
-
-            if (arrayBillItem.length != 0) {
-                checkSeperatedId = arrayBillItem.toString();
-                var subsNo = $("#subsNo").val();
-                alert(subsNo);
-                $.ajax({
-                    url: '@Url.Action("BillOperations","Bill")',
-                    type: 'POST',
-                    data: { billList: checkSeperatedId, subsNo: subsNo},
-                    complete: function (data, status) {
-                        if (status == "success") {
-                            $("body").html(data.responseText);
-                        }
-                    }
-                })
-            }
-        });
-    </script>*@
-}

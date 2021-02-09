@@ -9,20 +9,20 @@ namespace MasterISS_Partner_WebSite.ViewModels
 {
     public class NewUserViewModel
     {
-        public List<SelectListItem> UserRoleList { get; set; }
-
-        [Display(ResourceType = typeof(Localization.Model), Name = "Username")]
+        //ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "EmailFormat"
+        [MaxLength(300)]
+        [RegularExpression(@"\A(?:[a-z0-9!#$%&'+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'+/=?^_`{|}~-]+)@(?:[a-z0-9](?:[a-z0-9-][a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", ErrorMessage = "Email hoo")]
+        [Display(ResourceType = typeof(Localization.Model), Name = "UserEmail")]
         [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
-        public string Username { get; set; }
+        public string UserEmail{ get; set; }
 
-        [DataType(DataType.Password)]
         [Display(ResourceType = typeof(Localization.Model), Name = "Password")]
         [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
         public string Password { get; set; }
 
-        [Display(ResourceType = typeof(Localization.Model), Name = "PhoneNo")]
+        [Display(ResourceType = typeof(Localization.Model), Name = "UserNameSurname")]
         [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
-        public string PhoneNumber { get; set; }
+        public string UserNameSurname{ get; set; }
 
     }
 }

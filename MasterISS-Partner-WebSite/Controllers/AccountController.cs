@@ -26,24 +26,46 @@ namespace MasterISS_Partner_WebSite.Controllers
         {
             if (ModelState.IsValid)
             {
-                var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, userSignInModel.Username),
-                    new Claim("UserMail", userSignInModel.DealerCode),
-                    new Claim("UserPassword", userSignInModel.Password)
-                };
+                var wrapper = new WebServiceWrapper();
 
-                var identity = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
-                HttpContext.GetOwinContext().Authentication.SignIn(identity);
-                return RedirectToAction("Index","Bill");
+                var authenticateResponse = wrapper.Authenticate(userSignInModel);
+
+                if (authenticateResponse.ResponseMessage.ErrorCode == 0)
+                {
+                    if (authenticateResponse.AuthenticationResponse.IsAuthenticated == true)
+                    {
+                        var claims = new List<Claim>
+                        {
+                            new Claim(ClaimTypes.Name, userSignInModel.Username),//Submail
+                            new Claim("UserMail", userSignInModel.DealerCode),
+                            new Claim("UserPassword", userSignInModel.Password),
+                            new Claim("PartnerName", authenticateResponse.AuthenticationResponse.DisplayName),
+                            new Claim("UserId", authenticateResponse.AuthenticationResponse.UserID.ToString()),
+                            new Claim("SetupServiceHash", authenticateResponse.AuthenticationResponse.SetupServiceHash),
+                            new Claim("SetupServiceUser", authenticateResponse.AuthenticationResponse.SetupServiceUser),
+                        };
+                        for (int i = 0; i < authenticateResponse.AuthenticationResponse.Permissions.Count(); i++)
+                        {
+                            claims.Add(new Claim(ClaimTypes.Role, authenticateResponse.AuthenticationResponse.Permissions.Select(p=>p.Name).ToArray()[i]));
+                        }
+
+                        var identity = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
+                        HttpContext.GetOwinContext().Authentication.SignIn(identity);
+                        return RedirectToAction("Index", "Home");
+
+                    }
+                    ViewBag.AuthenticateError = Localization.View.AuthenticateError;
+                    return View(userSignInModel);
+                }
+                ViewBag.AuthenticateError = authenticateResponse.ResponseMessage.ErrorMessage;
+                return View(userSignInModel);
             }
             return View(userSignInModel);
         }
 
-        public ActionResult Signout()
+        public ActionResult SignOut()
         {
-            //var authenticator = new PartnerAuthencation();
-            //authenticator.SignOut(Request.GetOwinContext());
+            HttpContext.GetOwinContext().Authentication.SignOut();
             return RedirectToAction("SignIn", "Account");
         }
     }
