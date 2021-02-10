@@ -262,6 +262,7 @@
     <Compile Include="ViewModels\Settings\TTelekomUserViewModel.cs" />
     <Compile Include="ViewModels\SMSConfirmationViewModel.cs" />
     <Compile Include="ViewModels\Settings\VerimorSettingsWiewModel.cs" />
+    <Compile Include="ViewModels\UserListViewModel.cs" />
     <Compile Include="WebServiceWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -392,6 +393,7 @@
     <Content Include="Views\Bill\Succesfull.cshtml" />
     <Content Include="Views\UserOperations\AddUser.cshtml" />
     <Content Include="Views\UserOperations\Index.cshtml" />
+    <Content Include="Views\UserOperations\Successful.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

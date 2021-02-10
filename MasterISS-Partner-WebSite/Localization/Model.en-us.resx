@@ -234,6 +234,9 @@
   <data name="HasInfrastructure" xml:space="preserve">
     <value>Is There Infrastructure</value>
   </data>
+  <data name="IsEnabled" xml:space="preserve">
+    <value>Is Enabled?</value>
+  </data>
   <data name="ISPCode" xml:space="preserve">
     <value>ISPCode</value>
   </data>

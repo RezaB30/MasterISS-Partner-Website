@@ -412,6 +412,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Aktif Mi?.
+        /// </summary>
+        public static string IsEnabled {
+            get {
+                return ResourceManager.GetString("IsEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ISPCode.
         /// </summary>
         public static string ISPCode {

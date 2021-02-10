@@ -61,11 +61,83 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Login Failed..
+        ///   Looks up a localized string similar to Kullanıcı aktif etme işleminde hata oluştu. Tekrar deneyiniz..
+        /// </summary>
+        public static string ActiveError {
+            get {
+                return ResourceManager.GetString("ActiveError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Giriş İşlemi Başarısız..
         /// </summary>
         public static string AuthenticateError {
             get {
                 return ResourceManager.GetString("AuthenticateError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İşlem yapılırken hata oluştu..
+        /// </summary>
+        public static string ErrorProcessing {
+            get {
+                return ResourceManager.GetString("ErrorProcessing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bu mail zaten mevcut..
+        /// </summary>
+        public static string MailValidError {
+            get {
+                return ResourceManager.GetString("MailValidError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kullanıcı pasif etme işleminde hata oluştu. Tekrar deneyiniz..
+        /// </summary>
+        public static string PassiveError {
+            get {
+                return ResourceManager.GetString("PassiveError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Geri.
+        /// </summary>
+        public static string ReturnBill {
+            get {
+                return ResourceManager.GetString("ReturnBill", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Geri.
+        /// </summary>
+        public static string ReturnUserOperations {
+            get {
+                return ResourceManager.GetString("ReturnUserOperations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Başarılı.
+        /// </summary>
+        public static string Successful {
+            get {
+                return ResourceManager.GetString("Successful", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ödeme Başarılı.
+        /// </summary>
+        public static string SuccessfulPayment {
+            get {
+                return ResourceManager.GetString("SuccessfulPayment", resourceCulture);
             }
         }
     }

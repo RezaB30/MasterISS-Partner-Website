@@ -11,11 +11,35 @@ namespace MasterISS_Partner_WebSite.Controllers
 {
     public class UserOperationsController : Controller
     {
-        PartnerWebSiteEntities db = new PartnerWebSiteEntities();
         // GET: UserOperations
         public ActionResult Index()
         {
-            return View();
+            var wrapper = new WebServiceWrapper();
+            var partnerId = Convert.ToInt32(wrapper.PartnerId());
+
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var adminRoleId = db.Role.Where(r => r.RoleName == "Admin").FirstOrDefault().Id;
+
+                var userList = db.User.Where(u => u.PartnerId == partnerId && u.RoleId != adminRoleId).Select(u => new
+                {
+                    IsEnabled = u.IsEnabled,
+                    NameSurname = u.NameSurname,
+                    UserSubMail = u.UserSubMail,
+                }).ToList();
+
+                var userlistViewModel = new List<UserListViewModel>();
+                foreach (var item in userList)
+                {
+                    userlistViewModel.Add(new UserListViewModel()
+                    {
+                        IsEnabled = item.IsEnabled,
+                        NameSurname = item.NameSurname,
+                        UserSubMail = item.UserSubMail,
+                    });
+                }
+                return View(userlistViewModel);
+            }
         }
 
         public ActionResult AddUser()
@@ -32,29 +56,55 @@ namespace MasterISS_Partner_WebSite.Controllers
                 var wrapper = new WebServiceWrapper();
 
                 var response = wrapper.AddUser(newUserViewModel);
-
-                int? subuserRoleId = db.Role.Where(r => r.RoleName == "SubUser").SingleOrDefault().Id;
-
-                if (response.ResponseMessage.ErrorCode == 0)
+                if (ValidEmail(newUserViewModel.UserEmail))
                 {
-                    User newUser = new User()
+                    using (var db = new PartnerWebSiteEntities())
                     {
-                        IsEnabled = true,
-                        PartnerId = Convert.ToInt32(wrapper.PartnerId()),
-                        Password = wrapper.CalculateHash<SHA256>(newUserViewModel.Password),
-                        RoleId = subuserRoleId ?? 2,
-                        UserSubMail = newUserViewModel.UserEmail,
-                        NameSurname = newUserViewModel.UserNameSurname
-                    };
-                    db.User.Add(newUser);
-                    db.SaveChanges();
+                        int? subuserRoleId = db.Role.Where(r => r.RoleName == "SubUser").SingleOrDefault().Id;
 
-                    return RedirectToAction("Index");
+                        if (response.ResponseMessage.ErrorCode == 0)
+                        {
+                            if (subuserRoleId.HasValue)
+                            {
+                                User newUser = new User()
+                                {
+                                    IsEnabled = true,
+                                    PartnerId = Convert.ToInt32(wrapper.PartnerId()),
+                                    Password = wrapper.CalculateHash<SHA256>(newUserViewModel.Password),
+                                    RoleId = (int)subuserRoleId,
+                                    UserSubMail = newUserViewModel.UserEmail,
+                                    NameSurname = newUserViewModel.UserNameSurname
+                                };
+                                db.User.Add(newUser);
+                                db.SaveChanges();
+
+                                return RedirectToAction("Successful");
+                            }
+                            ViewBag.AddUserError = Localization.View.ErrorProcessing;
+                            return View(newUserViewModel);
+                        }
+                        ViewBag.AddUserError = response.ResponseMessage.ErrorMessage;
+                        return View(newUserViewModel);
+                    }
                 }
-                ViewBag.AddUserError = response.ResponseMessage.ErrorMessage;
+                ViewBag.AddUserError = Localization.View.MailValidError;
                 return View(newUserViewModel);
             }
             return View(newUserViewModel);
+
+        }
+
+        private bool ValidEmail(string eMail)
+        {
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var valid = db.User.Where(u => u.UserSubMail == eMail).FirstOrDefault();
+                if (valid == null)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public ActionResult EnableUser(string userMail)
@@ -65,39 +115,53 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             if (response.ResponseMessage.ErrorCode == 0)
             {
-                var enabledUser = db.User.Where(m => m.UserSubMail == userMail).FirstOrDefault();
-                if (enabledUser != null)
+                using (var db = new PartnerWebSiteEntities())
                 {
-                    enabledUser.IsEnabled = false;
-                    db.SaveChanges();
+                    var enabledUser = db.User.Where(m => m.UserSubMail == userMail).FirstOrDefault();
+
+                    if (enabledUser != null)
+                    {
+                        enabledUser.IsEnabled = true;
+                        db.SaveChanges();
+                        return RedirectToAction("Successful");
+                    }
+                    TempData["Error"] = Localization.View.PassiveError;
                     return RedirectToAction("Index");
                 }
             }
-
-            ViewBag.Error = response.ResponseMessage.ErrorMessage;
-            return View("Index");
+            TempData["Error"] = response.ResponseMessage.ErrorMessage;
+            return RedirectToAction("Index");
         }
 
         public ActionResult DisableUser(string userMail)
         {
-
             var wrapper = new WebServiceWrapper();
 
             var response = wrapper.DisableUser(userMail);
 
             if (response.ResponseMessage.ErrorCode == 0)
             {
-                var disabledUser = db.User.Where(m => m.UserSubMail == userMail).FirstOrDefault();
-                if (disabledUser != null)
+                using (var db = new PartnerWebSiteEntities())
                 {
-                    disabledUser.IsEnabled = true;
-                    db.SaveChanges();
+                    var disabledUser = db.User.Where(m => m.UserSubMail == userMail).FirstOrDefault();
+
+                    if (disabledUser != null)
+                    {
+                        disabledUser.IsEnabled = false;
+                        db.SaveChanges();
+                        return RedirectToAction("Successful");
+                    }
+                    TempData["Error"] = Localization.View.ActiveError;
                     return RedirectToAction("Index");
                 }
             }
+            TempData["Error"] = response.ResponseMessage.ErrorMessage;
+            return RedirectToAction("Index");
+        }
 
-            ViewBag.Error = response.ResponseMessage.ErrorMessage;
-            return View("Index");
+        public ActionResult Successful()
+        {
+            return View();
         }
 
     }

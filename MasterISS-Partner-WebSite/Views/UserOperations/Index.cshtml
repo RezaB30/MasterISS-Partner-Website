@@ -1,8 +1,39 @@
-﻿
+﻿@using MasterISS_Partner_WebSite.ViewModels
+@model  IEnumerable<UserListViewModel>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<table>
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(m => m.NameSurname)</th>
+            <th>@Html.DisplayNameFor(m => m.UserSubMail)</th>
+            <th>@Html.DisplayNameFor(m => m.IsEnabled)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.NameSurname)</td>
+                <td>@Html.DisplayFor(modelItem => item.UserSubMail)</td>
+                <td>@Html.DisplayFor(modelItem => item.IsEnabled)</td>
+                @if (item.IsEnabled == true)
+                {
+                    <td>@Html.ActionLink("pasif yap", "DisableUser", "UserOperations", new { userMail = item.UserSubMail }, null)</td>
+                }
+                else
+                {
+                    <td>@Html.ActionLink("aktif yap", "EnableUser", "UserOperations", new { userMail = item.UserSubMail }, null)</td>
 
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div style="background-color:red">
+    @Html.Raw(TempData["Error"])
+</div>

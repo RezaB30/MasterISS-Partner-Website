@@ -61,6 +61,33 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to E-Posta formatında giriş yapınız..
+        /// </summary>
+        public static string EmailFormat {
+            get {
+                return ResourceManager.GetString("EmailFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to E-Posta alanı 300 karakterden fazla olamaz..
+        /// </summary>
+        public static string EmailMaxLenght {
+            get {
+                return ResourceManager.GetString("EmailMaxLenght", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minimum 6 karakter giriniz..
+        /// </summary>
+        public static string PasswordMinLenght {
+            get {
+                return ResourceManager.GetString("PasswordMinLenght", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} alanı boş bırakılamaz..
         /// </summary>
         public static string Required {

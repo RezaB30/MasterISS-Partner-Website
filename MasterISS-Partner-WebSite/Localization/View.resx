@@ -117,7 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ActiveError" xml:space="preserve">
+    <value>Kullanıcı aktif etme işleminde hata oluştu. Tekrar deneyiniz.</value>
+  </data>
   <data name="AuthenticateError" xml:space="preserve">
-    <value>Login Failed.</value>
+    <value>Giriş İşlemi Başarısız.</value>
+  </data>
+  <data name="ErrorProcessing" xml:space="preserve">
+    <value>İşlem yapılırken hata oluştu.</value>
+  </data>
+  <data name="MailValidError" xml:space="preserve">
+    <value>Bu mail zaten mevcut.</value>
+  </data>
+  <data name="PassiveError" xml:space="preserve">
+    <value>Kullanıcı pasif etme işleminde hata oluştu. Tekrar deneyiniz.</value>
+  </data>
+  <data name="ReturnBill" xml:space="preserve">
+    <value>Geri</value>
+  </data>
+  <data name="ReturnUserOperations" xml:space="preserve">
+    <value>Geri</value>
+  </data>
+  <data name="Successful" xml:space="preserve">
+    <value>Başarılı</value>
+  </data>
+  <data name="SuccessfulPayment" xml:space="preserve">
+    <value>Ödeme Başarılı</value>
   </data>
 </root>

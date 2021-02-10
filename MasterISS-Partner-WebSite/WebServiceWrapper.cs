@@ -312,7 +312,7 @@ namespace MasterISS_Partner_WebSite
                     UserEmail = GetUserMail(),
                     RequestedSubUserEmail = newUserViewModel.UserEmail,
                     RequestedSubUserName = newUserViewModel.UserNameSurname,
-                    RequestedSubUserPassword = newUserViewModel.Password
+                    RequestedSubUserPassword = CalculateHash<SHA256>(newUserViewModel.Password)
                 }
             };
 
