@@ -251,6 +251,7 @@
     <Compile Include="ViewModels\GetBillCollectionBySubscriberNoViewModel.cs" />
     <Compile Include="ViewModels\Home\AddCustomerViewModel.cs" />
     <Compile Include="ViewModels\Home\BalanceRequestViewModel.cs" />
+    <Compile Include="ViewModels\IDCardValidationViewModel.cs" />
     <Compile Include="ViewModels\NameValueListViewModel.cs" />
     <Compile Include="ViewModels\NewUserViewModel.cs" />
     <Compile Include="ViewModels\PayBillRequestViewModel.cs" />

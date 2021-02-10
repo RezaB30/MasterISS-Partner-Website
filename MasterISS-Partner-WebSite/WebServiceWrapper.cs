@@ -1,6 +1,7 @@
 ﻿using MasterISS_Partner_WebSite;
 using MasterISS_Partner_WebSite.PartnerServiceReference;
 using MasterISS_Partner_WebSite.ViewModels;
+using MasterISS_Partner_WebSite.ViewModels.Home;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -334,8 +335,267 @@ namespace MasterISS_Partner_WebSite
             return response;
         }
 
+        public PartnerServiceKeyValueListResponse GetSexesList()
+        {
+            var response = Client.GetSexes(PartnerServiceParameterlessRequest());
+
+            return response;
+        }
+
+        public PartnerServiceKeyValueListResponse GetCultures()
+        {
+            var response = Client.GetCultures(PartnerServiceParameterlessRequest());
+
+            return response;
+        }
+
+        public PartnerServiceCreditReportResponse GetCreditReport(bool isDetail)
+        {
+            var request = new PartnerServiceCreditReportRequest()
+            {
+                Username = Username,
+                Culture = Culture,
+                Hash = Hash<SHA256>(),
+                Rand = Rand,
+                CreditReportRequest = new CreditReportRequest()
+                {
+                    SubUserEmail = GetUserSubMail(),
+                    UserEmail = GetUserMail(),
+                    WithDetails = isDetail
+                }
+            };
+
+            var response = Client.GetCreditReport(request);
+
+            return response;
+        }
+
+        public PartnerServiceKeyValueListResponse GetCustomerType()
+        {
+            var response = Client.GetCustomerTypes(PartnerServiceParameterlessRequest());
+
+            return response;
+        }
+
+        public PartnerServiceKeyValueListResponse GetNationalities()
+        {
+            var response = Client.GetNationalities(PartnerServiceParameterlessRequest());
+
+            return response;
+        }
+
+        public PartnerServiceKeyValueListResponse GetPartnerTariffs()
+        {
+            var response = Client.GetPartnerTariffs(PartnerServiceParameterlessRequest());
+
+            return response;
+        }
+
+        public PartnerServiceKeyValueListResponse GetPaymentDays()
+        {
+            var request = new PartnerServiceListFromIDRequest()
+            {
+                Culture = Culture,
+                Hash = Hash<SHA256>(),
+                Rand = Rand,
+                Username = Username,
+                ListFromIDRequest = new ListFromIDRequest()
+                {
+                    SubUserEmail = GetUserSubMail(),
+                    UserEmail = GetUserMail()
+                }
+            };
+
+            var response = Client.GetPaymentDays(request);
+
+            return response;
+        }
+
+        public PartnerServiceKeyValueListResponse GetProfessions()
+        {
+            var response = Client.GetProfessions(PartnerServiceParameterlessRequest());
+
+            return response;
+        }
+
+        public PartnerServiceKeyValueListResponse GetTCKTypes()
+        {
+            var response = Client.GetTCKTypes(PartnerServiceParameterlessRequest());
+
+            return response;
+        }
+
+        public PartnerServiceIDCardValidationResponse IDCardValidation(IDCardValidationViewModel IDCardValidationViewModel)
+        {
+            var request = new PartnerServiceIDCardValidationRequest()
+            {
+                Culture = Culture,
+                Hash = Hash<SHA256>(),
+                Rand = Rand,
+                Username = Username,
+                IDCardValidationRequest = new IDCardValidationRequest
+                {
+                    BirthDate = IDCardValidationViewModel.BirtDate,
+                    RegistirationNo = IDCardValidationViewModel.RegistirationNo,
+                    FirstName = IDCardValidationViewModel.FirstName,
+                    IDCardType = IDCardValidationViewModel.IdCardType,
+                    LastName = IDCardValidationViewModel.LastName,
+                    TCKNo = IDCardValidationViewModel.TCKNo,
+                }
+            };
+
+            var response = Client.IDCardValidation(request);
+
+            return response;
+        }
+
+        public PartnerServiceNewCustomerRegisterResponse NewCustomerRegister(AddCustomerViewModel addCustomerViewModel)
+        {
+            var request = new PartnerServiceNewCustomerRegisterRequest()
+            {
+                Culture = Culture,
+                Hash = Hash<SHA256>(),
+                Rand = Rand,
+                Username = Username,
+                CustomerRegisterParameters = new NewCustomerRegisterRequest
+                {
+                    UserEmail = GetUserMail(),
+                    SubUserEmail = GetUserSubMail(),
+                    CorporateCustomerInfo = new CorporateCustomerInfo
+                    {
+                        CentralSystemNo = addCustomerViewModel.CorporateInfo.CentralSystemNo,
+                        ExecutiveBirthPlace = addCustomerViewModel.CorporateInfo.ExecutiveBirthPlace,
+                        ExecutiveFathersName = addCustomerViewModel.CorporateInfo.ExecutiveFathersName,
+                        ExecutiveMothersMaidenName = addCustomerViewModel.CorporateInfo.ExecutiveMothersMaidenName,
+                        ExecutiveMothersName = addCustomerViewModel.CorporateInfo.ExecutiveMothersName,
+                        ExecutiveNationality = addCustomerViewModel.CorporateInfo.ExecutiveNationality,
+                        ExecutiveProfession = addCustomerViewModel.CorporateInfo.ExecutiveProfession,
+                        ExecutiveSex = addCustomerViewModel.CorporateInfo.ExecutiveSexId,
+                        TaxNo = addCustomerViewModel.CorporateInfo.TaxNo,
+                        TaxOffice = addCustomerViewModel.CorporateInfo.TaxOffice,
+                        Title = addCustomerViewModel.CorporateInfo.Title,
+                        TradeRegistrationNo = addCustomerViewModel.CorporateInfo.TradeRegistrationNo,
+                        ExecutiveResidencyAddress = new PartnerServiceReference.AddressInfo
+                        {
+                            //burayı bir sor. fonksiyondan geliyordu galiba
+                        },
+                        CompanyAddress = new PartnerServiceReference.AddressInfo()
+                        {
+                            //burayı bir sor. fonksiyondan geliyordu galiba
+                        },
+                    },
+
+                    CustomerGeneralInfo = new CustomerGeneralInfo()
+                    {
+                        BillingAddress = new PartnerServiceReference.AddressInfo()
+                        {
+                            //burayı bir sor. fonksiyondan geliyordu galiba
+                        },
+                        ContactPhoneNo = addCustomerViewModel.GeneralInfo.ContactPhoneNo,
+                        Email = addCustomerViewModel.GeneralInfo.Email,
+                        CustomerType = addCustomerViewModel.GeneralInfo.CustomerTypeId,
+                        Culture = addCustomerViewModel.GeneralInfo.Culture,
+                        OtherPhoneNos = new PhoneNoListItem[]
+                        {
+                            //phonelist dizisi at
+                        },
+                    },
+
+                    IDCardInfo = new IDCardInfo()
+                    {
+                        BirthDate = addCustomerViewModel.IDCard.BirthDate,
+                        CardType = addCustomerViewModel.IDCard.CardTypeId,
+                        DateOfIssue = addCustomerViewModel.IDCard.DateOfIssue,
+                        District = addCustomerViewModel.IDCard.District,
+                        FirstName = addCustomerViewModel.IDCard.FirstName,
+                        LastName = addCustomerViewModel.IDCard.LastName,
+                        Neighbourhood = addCustomerViewModel.IDCard.Neighbourhood,
+                        PageNo = addCustomerViewModel.IDCard.PageNo,
+                        PassportNo = addCustomerViewModel.IDCard.PassportNo,
+                        PlaceOfIssue = addCustomerViewModel.IDCard.PlaceOfIssue,
+                        Province = addCustomerViewModel.IDCard.Province,
+                        RowNo = addCustomerViewModel.IDCard.RowNo,
+                        SerialNo = addCustomerViewModel.IDCard.SerialNo,
+                        TCKNo = addCustomerViewModel.IDCard.TCKNo,
+                        VolumeNo = addCustomerViewModel.IDCard.VolumeNo,
+                    },
+
+                    IndividualCustomerInfo = new IndividualCustomerInfo()
+                    {
+                        BirthPlace = addCustomerViewModel.Individual.BirthPlace,
+                        FathersName = addCustomerViewModel.Individual.FathersName,
+                        MothersMaidenName = addCustomerViewModel.Individual.MothersMaidenName,
+                        MothersName = addCustomerViewModel.Individual.MothersName,
+                        Nationality = addCustomerViewModel.Individual.NationalityId,
+                        Profession = addCustomerViewModel.Individual.ProfessionId,
+                        Sex = addCustomerViewModel.Individual.SexId,
+                        ResidencyAddress = new PartnerServiceReference.AddressInfo()
+                        {
+                            //burayı bir sor. fonksiyondan geliyordu galiba
+                        }
+                    },
+
+                    SubscriptionInfo = new SubscriptionRegistrationInfo()
+                    {
+                        BillingPeriod = addCustomerViewModel.SubscriptionInfo.BillingPeriodId,
+                        ServiceID = addCustomerViewModel.SubscriptionInfo.ServiceId,//What is This,
+                        ReferralDiscountInfo = new ReferralDiscountInfo
+                        {
+                            ReferenceNo = addCustomerViewModel.SubscriptionInfo.ReferenceNo,
+                        },
+                        SetupAddress = new PartnerServiceReference.AddressInfo()
+                        {
+                            //burayı bir sor. fonksiyondan geliyordu galiba
+                        }
+
+                    },
 
 
+                }
+            };
+            var response = Client.NewCustomerRegister(request);
+
+            return response;
+        }
+
+        public PartnerServiceSMSCodeResponse SendConfirmationSMS(string phoneNo)
+        {
+            var request = new PartnerServiceSMSCodeRequest()
+            {
+                Culture = Culture,
+                Hash = Hash<SHA256>(),
+                Rand = Rand,
+                Username = Username,
+                SMSCodeRequest = new SMSCodeRequest
+                {
+                    SubUserEmail = GetUserSubMail(),
+                    UserEmail = GetUserMail(),
+                    PhoneNo = phoneNo,
+                },
+            };
+            var response = Client.SendConfirmationSMS(request);
+
+            return response;
+        }
+
+
+
+        private PartnerServiceParameterlessRequest PartnerServiceParameterlessRequest()
+        {
+            var request = new PartnerServiceParameterlessRequest()
+            {
+                Culture = Culture,
+                Hash = Hash<SHA256>(),
+                Rand = Rand,
+                Username = Username,
+                ParameterlessRequest = new ParameterlessRequest()
+                {
+                    SubUserEmail = GetUserSubMail(),
+                    UserEmail = GetUserMail(),
+                }
+            };
+            return request;
+        }
         private PartnerServiceSubUserRequest PartnerServiceSubUserRequest(string subUserMail)
         {
             var request = new PartnerServiceSubUserRequest()

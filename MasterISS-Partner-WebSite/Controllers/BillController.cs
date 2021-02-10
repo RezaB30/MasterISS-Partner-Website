@@ -47,9 +47,9 @@ namespace MasterISS_Partner_WebSite.Controllers
                 SubscriberName = response.Data.BillListResponse.SubscriberName,
                 Bills = response.Data.BillListResponse.Bills == null ? Enumerable.Empty<BillsViewModel>() : response.Data.BillListResponse.Bills.Select(b => new BillsViewModel()
                 {
-                    IssueDate = DateTime.ParseExact(b.IssueDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture).ToString("dd.MM.yyyy"),
+                    IssueDate = DateTime.ParseExact(b.IssueDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture).ToString("dd.MM.yyyy"),//this is shit
                     BillID = b.ID,
-                    DueDate = DateTime.ParseExact(b.DueDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture).ToString("dd.MM.yyyy"),
+                    DueDate = DateTime.ParseExact(b.DueDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture).ToString("dd.MM.yyyy"),//this is shit
                     Cost = b.Total
                 })
             };
