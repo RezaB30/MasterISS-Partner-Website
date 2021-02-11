@@ -12,18 +12,9 @@ namespace MasterISS_Partner_WebSite.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Permission
+    public partial class RoleType
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Permission()
-        {
-            this.Role = new HashSet<Role>();
-        }
-    
         public int Id { get; set; }
-        public string PermissionName { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Role> Role { get; set; }
+        public string Name { get; set; }
     }
 }

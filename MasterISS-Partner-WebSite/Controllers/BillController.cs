@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace MasterISS_Partner_WebSite.Controllers
 {
+    [Authorize]
     public class BillController : Controller
     {
         // GET: Bill
@@ -47,9 +48,9 @@ namespace MasterISS_Partner_WebSite.Controllers
                 SubscriberName = response.Data.BillListResponse.SubscriberName,
                 Bills = response.Data.BillListResponse.Bills == null ? Enumerable.Empty<BillsViewModel>() : response.Data.BillListResponse.Bills.Select(b => new BillsViewModel()
                 {
-                    IssueDate = DateTime.ParseExact(b.IssueDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture).ToString("dd.MM.yyyy"),//this is shit
+                    IssueDate = b.IssueDate,
                     BillID = b.ID,
-                    DueDate = DateTime.ParseExact(b.DueDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture).ToString("dd.MM.yyyy"),//this is shit
+                    DueDate = b.DueDate,
                     Cost = b.Total
                 })
             };

@@ -1,0 +1,10 @@
+﻿@model string
+
+@if (!string.IsNullOrEmpty(Model))
+{
+    @: @DateTime.ParseExact(Model, "yyyy-MM-dd HH:mm:ss", null).ToString("dd.MM.yyyy")
+}
+else
+{
+    @: -
+}

@@ -579,7 +579,23 @@ namespace MasterISS_Partner_WebSite
         }
 
 
-
+        public string Hash<HAT>() where HAT : HashAlgorithm
+        {
+            var hashAuthenticaiton = CalculateHash<HAT>(Username + Rand + CalculateHash<HAT>(Password) + KeyFragment);
+            return hashAuthenticaiton;
+        }
+        private CustomerServiceNameValuePairRequest GetRequest(long id)
+        {
+            var request = new CustomerServiceNameValuePairRequest
+            {
+                Culture = Culture,
+                Hash = Hash<SHA1>(),
+                ItemCode = id,
+                Rand = Rand,
+                Username = Username
+            };
+            return request;
+        }
         private PartnerServiceParameterlessRequest PartnerServiceParameterlessRequest()
         {
             var request = new PartnerServiceParameterlessRequest()
@@ -613,61 +629,13 @@ namespace MasterISS_Partner_WebSite
             };
             return request;
         }
-        public string PartenrSetupServiceUser()
+        public string CalculateHash<HAT>(string value) where HAT : HashAlgorithm
         {
-            var partnerSetupServiceUser = CurrentClaims().Where(c => c.Type == "SetupServiceUser")
-                  .Select(c => c.Value).SingleOrDefault();
-            return partnerSetupServiceUser;
+            HAT algorithm = (HAT)HashAlgorithm.Create(typeof(HAT).Name);
+            var calculatedHash = string.Join(string.Empty, algorithm.ComputeHash(Encoding.UTF8.GetBytes(value)).Select(b => b.ToString("x2")));
+            return calculatedHash;
         }
-        public string PartnerSetupServiceHash()
-        {
-            var partnerSetupServiceHash = CurrentClaims().Where(c => c.Type == "SetupServiceHash")
-                  .Select(c => c.Value).SingleOrDefault();
-            return partnerSetupServiceHash;
-        }
-        public string PartnerId()
-        {
-            var partnerId = CurrentClaims().Where(c => c.Type == "UserId")
-                  .Select(c => c.Value).SingleOrDefault();
-            return partnerId;
-        }
-        public string GetPartnerName()
-        {
-            var partnerName = CurrentClaims().Where(c => c.Type == "PartnerName")
-                   .Select(c => c.Value).SingleOrDefault();
-            return partnerName;
-        }
-        public string Hash<HAT>() where HAT : HashAlgorithm
-        {
-            var hashAuthenticaiton = CalculateHash<HAT>(Username + Rand + CalculateHash<HAT>(Password) + KeyFragment);
-            return hashAuthenticaiton;
-        }
-        public string GetUserPassword()
-        {
-            var userPassword = CurrentClaims().Where(c => c.Type == "UserPassword")
-                 .Select(c => c.Value).SingleOrDefault();
-            return userPassword;
-        }
-        private CustomerServiceNameValuePairRequest GetRequest(long id)
-        {
-            var request = new CustomerServiceNameValuePairRequest
-            {
-                Culture = Culture,
-                Hash = Hash<SHA1>(),
-                ItemCode = id,
-                Rand = Rand,
-                Username = Username
-            };
-            return request;
-        }
-        private List<Claim> CurrentClaims()
-        {
-            return ClaimsPrincipal.Current.Identities.First().Claims.ToList();
 
-
-            //var sid = identity.Claims.Where(c => c.Type == ClaimTypes.Name)
-            //                   .Select(c => c.Value).SingleOrDefault();
-        }
         private string GetUserMail()
         {
             var userMail = CurrentClaims().Where(c => c.Type == "UserMail")
@@ -680,11 +648,14 @@ namespace MasterISS_Partner_WebSite
                    .Select(c => c.Value).SingleOrDefault();
             return userSubMail;
         }
-        public string CalculateHash<HAT>(string value) where HAT : HashAlgorithm
+        private List<Claim> CurrentClaims()
         {
-            HAT algorithm = (HAT)HashAlgorithm.Create(typeof(HAT).Name);
-            var calculatedHash = string.Join(string.Empty, algorithm.ComputeHash(Encoding.UTF8.GetBytes(value)).Select(b => b.ToString("x2")));
-            return calculatedHash;
+            var claimList = ClaimsPrincipal.Current.Identities.First().Claims.ToList();
+            return claimList;
+
+            //var sid = identity.Claims.Where(c => c.Type == ClaimTypes.Name)
+            //                   .Select(c => c.Value).SingleOrDefault();
         }
+
     }
 }

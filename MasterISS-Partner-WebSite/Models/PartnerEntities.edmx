@@ -5,29 +5,22 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="MasterISSPartnerWebSiteModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Permission">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PermissionName" Type="nvarchar" MaxLength="50" Nullable="false" />
-        </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="RoleName" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="RoleTypeId" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'MasterISSPartnerWebSite.dbo.RolePermission' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="RolePermission">
+warning 6002: The table/view 'MasterISSPartnerWebSite.dbo.RoleType' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="RoleType">
           <Key>
-            <PropertyRef Name="PermissionId" />
-            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="PermissionId" Type="int" Nullable="false" />
-          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -38,66 +31,57 @@ warning 6002: The table/view 'MasterISSPartnerWebSite.dbo.RolePermission' does n
           <Property Name="UserSubMail" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="NameSurname" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="64" Nullable="false" />
-          <Property Name="RoleId" Type="int" Nullable="false" />
           <Property Name="IsEnabled" Type="bit" Nullable="false" />
         </EntityType>
-        <Association Name="FK_RolePermission_Permission">
-          <End Role="Permission" Type="Self.Permission" Multiplicity="1" />
-          <End Role="RolePermission" Type="Self.RolePermission" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Permission">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="RolePermission">
-              <PropertyRef Name="PermissionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_RolePermission_Role">
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_UserRole_Role">
           <End Role="Role" Type="Self.Role" Multiplicity="1" />
-          <End Role="RolePermission" Type="Self.RolePermission" Multiplicity="*" />
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Role">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="RolePermission">
+            <Dependent Role="UserRole">
               <PropertyRef Name="RoleId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_User_Role">
-          <End Role="Role" Type="Self.Role" Multiplicity="1" />
-          <End Role="User" Type="Self.User" Multiplicity="*" />
+        <Association Name="FK_UserRole_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Role">
+            <Principal Role="User">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="User">
-              <PropertyRef Name="RoleId" />
+            <Dependent Role="UserRole">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="MasterISSPartnerWebSiteModelStoreContainer">
-          <EntitySet Name="Permission" EntityType="Self.Permission" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="RolePermission" EntityType="Self.RolePermission" store:Type="Tables" store:Schema="dbo">
+          <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RoleType" EntityType="Self.RoleType" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [RolePermission].[PermissionId] AS [PermissionId], 
-    [RolePermission].[RoleId] AS [RoleId]
-    FROM [dbo].[RolePermission] AS [RolePermission]</DefiningQuery>
+    [RoleType].[Id] AS [Id], 
+    [RoleType].[Name] AS [Name]
+    FROM [dbo].[RoleType] AS [RoleType]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK_RolePermission_Permission" Association="Self.FK_RolePermission_Permission">
-            <End Role="Permission" EntitySet="Permission" />
-            <End Role="RolePermission" EntitySet="RolePermission" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RolePermission_Role" Association="Self.FK_RolePermission_Role">
+          <AssociationSet Name="FK_UserRole_Role" Association="Self.FK_UserRole_Role">
             <End Role="Role" EntitySet="Role" />
-            <End Role="RolePermission" EntitySet="RolePermission" />
+            <End Role="UserRole" EntitySet="UserRole" />
           </AssociationSet>
-          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
-            <End Role="Role" EntitySet="Role" />
+          <AssociationSet Name="FK_UserRole_User" Association="Self.FK_UserRole_User">
             <End Role="User" EntitySet="User" />
+            <End Role="UserRole" EntitySet="UserRole" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -105,34 +89,27 @@ warning 6002: The table/view 'MasterISSPartnerWebSite.dbo.RolePermission' does n
     <edmx:ConceptualModels>
       <Schema Namespace="MasterISSPartnerWebSiteModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="PartnerWebSiteEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Permission" EntityType="MasterISSPartnerWebSiteModel.Permission" />
           <EntitySet Name="Role" EntityType="MasterISSPartnerWebSiteModel.Role" />
           <EntitySet Name="User" EntityType="MasterISSPartnerWebSiteModel.User" />
-          <AssociationSet Name="FK_User_Role" Association="MasterISSPartnerWebSiteModel.FK_User_Role">
+          <EntitySet Name="UserRole" EntityType="MasterISSPartnerWebSiteModel.UserRole" />
+          <EntitySet Name="RoleType" EntityType="MasterISSPartnerWebSiteModel.RoleType" />
+          <AssociationSet Name="FK_UserRole_Role" Association="MasterISSPartnerWebSiteModel.FK_UserRole_Role">
             <End Role="Role" EntitySet="Role" />
-            <End Role="User" EntitySet="User" />
+            <End Role="UserRole" EntitySet="UserRole" />
           </AssociationSet>
-          <AssociationSet Name="RolePermission" Association="MasterISSPartnerWebSiteModel.RolePermission">
-            <End Role="Permission" EntitySet="Permission" />
-            <End Role="Role" EntitySet="Role" />
+          <AssociationSet Name="FK_UserRole_User" Association="MasterISSPartnerWebSiteModel.FK_UserRole_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserRole" EntitySet="UserRole" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Permission">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PermissionName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Role" Relationship="MasterISSPartnerWebSiteModel.RolePermission" FromRole="Permission" ToRole="Role" />
-        </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <NavigationProperty Name="User" Relationship="MasterISSPartnerWebSiteModel.FK_User_Role" FromRole="Role" ToRole="User" />
-          <NavigationProperty Name="Permission" Relationship="MasterISSPartnerWebSiteModel.RolePermission" FromRole="Role" ToRole="Permission" />
+          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="RoleTypeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="UserRole" Relationship="MasterISSPartnerWebSiteModel.FK_UserRole_Role" FromRole="Role" ToRole="UserRole" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -143,25 +120,49 @@ warning 6002: The table/view 'MasterISSPartnerWebSite.dbo.RolePermission' does n
           <Property Name="UserSubMail" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="NameSurname" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="RoleId" Type="Int32" Nullable="false" />
           <Property Name="IsEnabled" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Role" Relationship="MasterISSPartnerWebSiteModel.FK_User_Role" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="UserRole" Relationship="MasterISSPartnerWebSiteModel.FK_UserRole_User" FromRole="User" ToRole="UserRole" />
         </EntityType>
-        <Association Name="FK_User_Role">
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="MasterISSPartnerWebSiteModel.FK_UserRole_Role" FromRole="UserRole" ToRole="Role" />
+          <NavigationProperty Name="User" Relationship="MasterISSPartnerWebSiteModel.FK_UserRole_User" FromRole="UserRole" ToRole="User" />
+        </EntityType>
+        <EntityType Name="RoleType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_UserRole_Role">
           <End Type="MasterISSPartnerWebSiteModel.Role" Role="Role" Multiplicity="1" />
-          <End Type="MasterISSPartnerWebSiteModel.User" Role="User" Multiplicity="*" />
+          <End Type="MasterISSPartnerWebSiteModel.UserRole" Role="UserRole" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Role">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="User">
+            <Dependent Role="UserRole">
               <PropertyRef Name="RoleId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="RolePermission">
-          <End Type="MasterISSPartnerWebSiteModel.Permission" Role="Permission" Multiplicity="*" />
-          <End Type="MasterISSPartnerWebSiteModel.Role" Role="Role" Multiplicity="*" />
+        <Association Name="FK_UserRole_User">
+          <End Type="MasterISSPartnerWebSiteModel.User" Role="User" Multiplicity="1" />
+          <End Type="MasterISSPartnerWebSiteModel.UserRole" Role="UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -169,17 +170,10 @@ warning 6002: The table/view 'MasterISSPartnerWebSite.dbo.RolePermission' does n
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="MasterISSPartnerWebSiteModelStoreContainer" CdmEntityContainer="PartnerWebSiteEntities">
-          <EntitySetMapping Name="Permission">
-            <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.Permission">
-              <MappingFragment StoreEntitySet="Permission">
-                <ScalarProperty Name="PermissionName" ColumnName="PermissionName" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Role">
             <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.Role">
               <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="RoleTypeId" ColumnName="RoleTypeId" />
                 <ScalarProperty Name="RoleName" ColumnName="RoleName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -189,7 +183,6 @@ warning 6002: The table/view 'MasterISSPartnerWebSite.dbo.RolePermission' does n
             <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.User">
               <MappingFragment StoreEntitySet="User">
                 <ScalarProperty Name="IsEnabled" ColumnName="IsEnabled" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="NameSurname" ColumnName="NameSurname" />
                 <ScalarProperty Name="UserSubMail" ColumnName="UserSubMail" />
@@ -198,14 +191,23 @@ warning 6002: The table/view 'MasterISSPartnerWebSite.dbo.RolePermission' does n
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="RolePermission" TypeName="MasterISSPartnerWebSiteModel.RolePermission" StoreEntitySet="RolePermission">
-            <EndProperty Name="Role">
-              <ScalarProperty Name="Id" ColumnName="RoleId" />
-            </EndProperty>
-            <EndProperty Name="Permission">
-              <ScalarProperty Name="Id" ColumnName="PermissionId" />
-            </EndProperty>
-          </AssociationSetMapping>
+          <EntitySetMapping Name="UserRole">
+            <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.UserRole">
+              <MappingFragment StoreEntitySet="UserRole">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RoleType">
+            <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.RoleType">
+              <MappingFragment StoreEntitySet="RoleType">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

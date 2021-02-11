@@ -1,5 +1,7 @@
-﻿using MasterISS_Partner_WebSite.Models;
+﻿using MasterISS_Partner_WebSite.Enums;
+using MasterISS_Partner_WebSite.Models;
 using MasterISS_Partner_WebSite.ViewModels;
+using RezaB.Data.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,19 +11,18 @@ using System.Web.Mvc;
 
 namespace MasterISS_Partner_WebSite.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class UserOperationsController : Controller
     {
         // GET: UserOperations
         public ActionResult Index()
         {
-            var wrapper = new WebServiceWrapper();
-            var partnerId = Convert.ToInt32(wrapper.PartnerId());
+            var claimInfo = new ClaimInfo();
+            var partnerId = Convert.ToInt32(claimInfo.PartnerId());
 
             using (var db = new PartnerWebSiteEntities())
             {
-                var adminRoleId = db.Role.Where(r => r.RoleName == "Admin").FirstOrDefault().Id;
-
-                var userList = db.User.Where(u => u.PartnerId == partnerId && u.RoleId != adminRoleId).Select(u => new
+                var userList = db.User.Where(u => u.PartnerId == partnerId).Select(u => new
                 {
                     IsEnabled = u.IsEnabled,
                     NameSurname = u.NameSurname,
@@ -44,44 +45,77 @@ namespace MasterISS_Partner_WebSite.Controllers
 
         public ActionResult AddUser()
         {
-            return View();
+            var claimInfo = new ClaimInfo();
+            var adminRoleIdList = claimInfo.PartnerRoleId().ToArray();
+            var db = new PartnerWebSiteEntities();
+            var list = new List<SelectListItem>();
+            var localizedList = new LocalizedList<PermissionListEnum, Localization.PermissionList>();
+
+            for (int i = 0; i < adminRoleIdList.Length; i++)
+            {
+                var array = adminRoleIdList[i];
+                var roleList = db.Role.Where(r => r.RoleTypeId.ToString() == array).Select(r => r.Id).ToArray();
+
+                for (int j = 0; j < roleList.Length; j++)
+                {
+                    var listItem = new SelectListItem()
+                    {
+                        Value = roleList[j].ToString(),
+                        Text = localizedList.GetDisplayText(roleList[j], null)
+                    };
+                    list.Add(listItem);
+                }
+            }
+
+            var model = new NewUserViewModel()
+            {
+                AvaibleRole = list
+            };
+            return View(model);
         }
 
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult AddUser(NewUserViewModel newUserViewModel)
         {
             if (ModelState.IsValid)
             {
                 var wrapper = new WebServiceWrapper();
+                var claimInfo = new ClaimInfo();
 
                 var response = wrapper.AddUser(newUserViewModel);
                 if (ValidEmail(newUserViewModel.UserEmail))
                 {
                     using (var db = new PartnerWebSiteEntities())
                     {
-                        int? subuserRoleId = db.Role.Where(r => r.RoleName == "SubUser").SingleOrDefault().Id;
-
                         if (response.ResponseMessage.ErrorCode == 0)
                         {
-                            if (subuserRoleId.HasValue)
+                            User newUser = new User()
                             {
-                                User newUser = new User()
-                                {
-                                    IsEnabled = true,
-                                    PartnerId = Convert.ToInt32(wrapper.PartnerId()),
-                                    Password = wrapper.CalculateHash<SHA256>(newUserViewModel.Password),
-                                    RoleId = (int)subuserRoleId,
-                                    UserSubMail = newUserViewModel.UserEmail,
-                                    NameSurname = newUserViewModel.UserNameSurname
-                                };
-                                db.User.Add(newUser);
-                                db.SaveChanges();
+                                IsEnabled = true,
+                                PartnerId = Convert.ToInt32(claimInfo.PartnerId()),
+                                Password = wrapper.CalculateHash<SHA256>(newUserViewModel.Password),
+                                UserSubMail = newUserViewModel.UserEmail,
+                                NameSurname = newUserViewModel.UserNameSurname
+                            };
 
-                                return RedirectToAction("Successful");
+                            db.User.Add(newUser);
+
+                            for (int i = 0; i < newUserViewModel.SelectedRole.Count; i++)
+                            {
+                                var roleId = newUserViewModel.SelectedRole.ToArray()[i];
+                                var convertedRoleId = Convert.ToInt32(roleId);
+
+                                var userRole = new UserRole()
+                                {
+                                    RoleId=convertedRoleId,
+                                    UserId=newUser.Id
+                                };
+                                db.UserRole.Add(userRole);
                             }
-                            ViewBag.AddUserError = Localization.View.ErrorProcessing;
-                            return View(newUserViewModel);
+                            db.SaveChanges();
+
+                            return RedirectToAction("Successful");
                         }
                         ViewBag.AddUserError = response.ResponseMessage.ErrorMessage;
                         return View(newUserViewModel);

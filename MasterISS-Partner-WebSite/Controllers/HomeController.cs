@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace MasterISS_Partner_WebSite.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         public ActionResult Index()

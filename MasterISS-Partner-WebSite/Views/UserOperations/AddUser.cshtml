@@ -7,13 +7,14 @@
 
 @using (Html.BeginForm("AddUser", "UserOperations", FormMethod.Post))
 {
-    @Html.AntiForgeryToken()
+    @*@Html.AntiForgeryToken()*@
     <div>
         @Html.LabelFor(m => m.UserNameSurname)
         @Html.EditorFor(m => m.UserNameSurname)
         @Html.ValidationMessageFor(m => m.UserNameSurname)
     </div>
 
+    @Html.AntiForgeryToken()
     <div>
         @Html.LabelFor(m => m.UserEmail)
         @Html.EditorFor(m => m.UserEmail)
@@ -26,7 +27,22 @@
         @Html.ValidationMessageFor(m => m.Password)
     </div>
 
-    <input type="submit" value="ekle" />
-}
+    foreach (var item in Model.AvaibleRole)
+    {
+        <div class="checkbox">
+            <label>
+                <input type="checkbox"
+                       name="SelectedRole"
+                       value="@item.Value"
+                       @if (Model.SelectedRole.Contains(item.Value)) { <text> checked </text>  } /> @item.Text
+                </label>
+            </div>
 
- @ViewBag.AddUserError
+            @*<input id="@item.Text" type="checkbox" value="@item.Value" />
+            <label for="@item.Text">@item.Text</label>*@
+        }
+
+        <input type="submit" value="ekle" />
+    }
+
+@ViewBag.AddUserError

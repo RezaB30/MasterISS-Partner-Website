@@ -22,9 +22,11 @@ namespace MasterISS_Partner_WebSite.ViewModels
         public decimal Cost { get; set; }
 
         [Display(Name = "IssueDate", ResourceType = typeof(Localization.Model))]
+        [UIHint("DatetimeFormat")]
         public string IssueDate { get; set; }
 
         [Display(Name = "DueDate", ResourceType = typeof(Localization.Model))]
+        [UIHint("DatetimeFormat")]
         public string DueDate { get; set; }
 
     }
