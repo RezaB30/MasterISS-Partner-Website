@@ -349,26 +349,20 @@ namespace MasterISS_Partner_WebSite
             return response;
         }
 
-        public PartnerServiceCreditReportResponse GetCreditReport(bool isDetail)
+        public PartnerServiceCreditReportResponse GetCreditReportWithDetail()
         {
-            var request = new PartnerServiceCreditReportRequest()
-            {
-                Username = Username,
-                Culture = Culture,
-                Hash = Hash<SHA256>(),
-                Rand = Rand,
-                CreditReportRequest = new CreditReportRequest()
-                {
-                    SubUserEmail = GetUserSubMail(),
-                    UserEmail = GetUserMail(),
-                    WithDetails = isDetail
-                }
-            };
-
-            var response = Client.GetCreditReport(request);
-
+            var response = Client.GetCreditReport(PartnerServiceCreditReportRequest(true));
             return response;
         }
+
+        public PartnerServiceCreditReportResponse GetCreditReportNotDetail()
+        {
+            var response = Client.GetCreditReport(PartnerServiceCreditReportRequest(false));
+            return response;
+        }
+       
+
+
 
         public PartnerServiceKeyValueListResponse GetCustomerType()
         {
@@ -612,6 +606,23 @@ namespace MasterISS_Partner_WebSite
             };
             return request;
         }
+        private PartnerServiceCreditReportRequest PartnerServiceCreditReportRequest(bool isDetail)
+        {
+            var request = new PartnerServiceCreditReportRequest()
+            {
+                Username = Username,
+                Culture = Culture,
+                Hash = Hash<SHA256>(),
+                Rand = Rand,
+                CreditReportRequest = new CreditReportRequest()
+                {
+                    SubUserEmail = GetUserSubMail(),
+                    UserEmail = GetUserMail(),
+                    WithDetails = isDetail
+                }
+            };
+            return request;
+        }
         private PartnerServiceSubUserRequest PartnerServiceSubUserRequest(string subUserMail)
         {
             var request = new PartnerServiceSubUserRequest()
@@ -638,23 +649,19 @@ namespace MasterISS_Partner_WebSite
 
         private string GetUserMail()
         {
-            var userMail = CurrentClaims().Where(c => c.Type == "UserMail")
+            var claimInfo = new ClaimInfo();
+
+            var userMail = claimInfo.CurrentClaims().Where(c => c.Type == "UserMail")
                    .Select(c => c.Value).SingleOrDefault();
             return userMail;
         }
         private string GetUserSubMail()
         {
-            var userSubMail = CurrentClaims().Where(c => c.Type == ClaimTypes.Name)
+            var claimInfo = new ClaimInfo();
+
+            var userSubMail = claimInfo.CurrentClaims().Where(c => c.Type == ClaimTypes.Email)
                    .Select(c => c.Value).SingleOrDefault();
             return userSubMail;
-        }
-        private List<Claim> CurrentClaims()
-        {
-            var claimList = ClaimsPrincipal.Current.Identities.First().Claims.ToList();
-            return claimList;
-
-            //var sid = identity.Claims.Where(c => c.Type == ClaimTypes.Name)
-            //                   .Select(c => c.Value).SingleOrDefault();
         }
 
     }

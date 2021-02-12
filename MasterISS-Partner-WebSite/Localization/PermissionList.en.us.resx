@@ -120,6 +120,9 @@
   <data name="PaymentManager" xml:space="preserve">
     <value>Payment Manager</value>
   </data>
+  <data name="SaleList" xml:space="preserve">
+    <value>Sale List Display</value>
+  </data>
   <data name="SaleManager" xml:space="preserve">
     <value>Sale Manager</value>
   </data>

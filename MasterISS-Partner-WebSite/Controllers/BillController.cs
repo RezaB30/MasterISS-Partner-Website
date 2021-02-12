@@ -11,7 +11,8 @@ using System.Web.Mvc;
 
 namespace MasterISS_Partner_WebSite.Controllers
 {
-    [Authorize]
+    //[Authorize(Roles = "Payment")]
+    //[Authorize(Roles ="PaymentManager,Admin")]
     public class BillController : Controller
     {
         // GET: Bill
@@ -36,6 +37,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                     ViewBag.Search = billListRequestViewModel;
                     return View("Index", BillList(response));
                 }
+                ViewBag.ResponseError = response.ErrorMessage;
+
             }
             ViewBag.Error = "Error";
             return View("Index");
@@ -55,6 +58,20 @@ namespace MasterISS_Partner_WebSite.Controllers
                 })
             };
             return billList;
+        }
+
+        public ActionResult ass()
+        {
+
+            var wrapper2 = new WebServiceWrapper();
+            var response2 = wrapper2.GetCreditReportWithDetail();
+
+            //var wrapper = new WebServiceWrapper();
+            //var response= wrapper.GetCreditReportNotDetail();
+
+            
+
+            return View();
         }
 
         public ActionResult Succesfull()

@@ -5,12 +5,13 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="61b51993dbdd4a4ea216695796bde0ab" Name="Diagram1">
-        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.Role" Width="1.5" PointX="1.75" PointY="0.75" />
-        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.User" Width="1.5" PointX="1.875" PointY="3.125" />
-        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.UserRole" Width="1.5" PointX="4" PointY="0.625" />
-        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.RoleType" Width="1.5" PointX="6.5" PointY="3.375" />
-        <AssociationConnector Association="MasterISSPartnerWebSiteModel.FK_UserRole_Role" />
-        <AssociationConnector Association="MasterISSPartnerWebSiteModel.FK_UserRole_User" />
+        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.Permission" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.Role" Width="1.5" PointX="0.75" PointY="3.625" />
+        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.RolePermission" Width="1.5" PointX="3" PointY="2.625" />
+        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.User" Width="1.5" PointX="3" PointY="6.125" />
+        <AssociationConnector Association="MasterISSPartnerWebSiteModel.FK_RolePermission_Permission" />
+        <AssociationConnector Association="MasterISSPartnerWebSiteModel.FK_RolePermission_Role" />
+        <AssociationConnector Association="MasterISSPartnerWebSiteModel.FK_User_Role" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

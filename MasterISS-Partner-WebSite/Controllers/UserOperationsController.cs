@@ -27,6 +27,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                     IsEnabled = u.IsEnabled,
                     NameSurname = u.NameSurname,
                     UserSubMail = u.UserSubMail,
+                    UserRole = u.Role.RoleName
                 }).ToList();
 
                 var userlistViewModel = new List<UserListViewModel>();
@@ -37,51 +38,98 @@ namespace MasterISS_Partner_WebSite.Controllers
                         IsEnabled = item.IsEnabled,
                         NameSurname = item.NameSurname,
                         UserSubMail = item.UserSubMail,
+                        RoleName = item.UserRole
                     });
                 }
                 return View(userlistViewModel);
             }
         }
 
-        public ActionResult AddUser()
+        public ActionResult AddPermission()
         {
             var claimInfo = new ClaimInfo();
             var adminRoleIdList = claimInfo.PartnerRoleId().ToArray();
             var db = new PartnerWebSiteEntities();
             var list = new List<SelectListItem>();
             var localizedList = new LocalizedList<PermissionListEnum, Localization.PermissionList>();
-
-            for (int i = 0; i < adminRoleIdList.Length; i++)
+            var permissionList = db.Permission.Where(p => adminRoleIdList.Contains(p.RoleTypeId)).Select(p=> new SelectListItem()
             {
-                var array = adminRoleIdList[i];
-                var roleList = db.Role.Where(r => r.RoleTypeId.ToString() == array).Select(r => r.Id).ToArray();
+                Value = p.Id.ToString()
+            }).ToArray();
 
-                for (int j = 0; j < roleList.Length; j++)
-                {
-                    var listItem = new SelectListItem()
-                    {
-                        Value = roleList[j].ToString(),
-                        Text = localizedList.GetDisplayText(roleList[j], null)
-                    };
-                    list.Add(listItem);
-                }
+            foreach (var item in permissionList)
+            {
+                item.Text = localizedList.GetDisplayText(Convert.ToInt32(item.Value), null);
             }
-
-            var model = new NewUserViewModel()
+            
+            var permissionModel = new AddPermissionViewModel()
             {
-                AvaibleRole = list
+                AvaibleRole = permissionList
             };
-            return View(model);
+            return View(permissionModel);
         }
 
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult AddUser(NewUserViewModel newUserViewModel)
+        public ActionResult AddPermission(AddPermissionViewModel addPermissionViewModel)
         {
             if (ModelState.IsValid)
             {
+                using (var db = new PartnerWebSiteEntities())
+                {
+                    var claimList = new ClaimInfo();
+                    var partnerId = claimList.PartnerId();
+
+                    var role = new Role()
+                    {
+                        RoleName = addPermissionViewModel.RoleName,
+                        PartnerId = partnerId
+                    };
+                    db.Role.Add(role);
+
+                    for (int i = 0; i < addPermissionViewModel.SelectedRole.Count; i++)
+                    {
+                        var permissionId = addPermissionViewModel.SelectedRole.ToArray()[i];
+                        var convertedRoleId = Convert.ToInt32(permissionId);
+
+                        var rolePermission = new RolePermission()
+                        {
+                            RoleId = role.Id,
+                            PermissionId = convertedRoleId
+                        };
+                        db.RolePermission.Add(rolePermission);
+                        db.SaveChanges();
+                    }
+                    return View("Index");
+                }
+            }
+            return View(addPermissionViewModel);
+        }
+
+        public ActionResult AddUser()
+        {
+            var db = new PartnerWebSiteEntities();
+
+            var claimInfo = new ClaimInfo();
+            var partnerId = claimInfo.PartnerId();
+            ViewBag.RoleList = new SelectList(db.Role.Where(r => r.PartnerId == partnerId).Select(r => new { Value = r.Id, Name = r.RoleName }).ToArray(), "Value", "Name");
+
+            return View();
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult AddUser(NewUserViewModel newUserViewModel)
+        {
+            var claimInfo = new ClaimInfo();
+            var partnerId = claimInfo.PartnerId();
+
+            var dbRole = new PartnerWebSiteEntities();
+            ViewBag.RoleList = new SelectList(dbRole.Role.Where(r => r.PartnerId == partnerId).Select(r => new { Value = r.Id, Name = r.RoleName }).ToArray(), "Value", "Name", newUserViewModel.RoleId);
+
+            if (ModelState.IsValid)
+            {
                 var wrapper = new WebServiceWrapper();
-                var claimInfo = new ClaimInfo();
 
                 var response = wrapper.AddUser(newUserViewModel);
                 if (ValidEmail(newUserViewModel.UserEmail))
@@ -96,23 +144,12 @@ namespace MasterISS_Partner_WebSite.Controllers
                                 PartnerId = Convert.ToInt32(claimInfo.PartnerId()),
                                 Password = wrapper.CalculateHash<SHA256>(newUserViewModel.Password),
                                 UserSubMail = newUserViewModel.UserEmail,
-                                NameSurname = newUserViewModel.UserNameSurname
+                                NameSurname = newUserViewModel.UserNameSurname,
+                                RoleId = newUserViewModel.RoleId
                             };
 
                             db.User.Add(newUser);
 
-                            for (int i = 0; i < newUserViewModel.SelectedRole.Count; i++)
-                            {
-                                var roleId = newUserViewModel.SelectedRole.ToArray()[i];
-                                var convertedRoleId = Convert.ToInt32(roleId);
-
-                                var userRole = new UserRole()
-                                {
-                                    RoleId=convertedRoleId,
-                                    UserId=newUser.Id
-                                };
-                                db.UserRole.Add(userRole);
-                            }
                             db.SaveChanges();
 
                             return RedirectToAction("Successful");

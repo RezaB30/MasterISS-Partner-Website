@@ -157,7 +157,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
-    <Compile Include="Authentication\PartnerAuthenticator.cs" />
+    <Compile Include="Authentication\AdminAuthenticator.cs" />
+    <Compile Include="Authentication\SubUserAuthenticator.cs" />
     <Compile Include="ClaimInfo.cs" />
     <Compile Include="Connected Services\PartnerServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -248,16 +249,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PartnerEntities.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Permission.cs">
+      <DependentUpon>PartnerEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Role.cs">
       <DependentUpon>PartnerEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\RoleType.cs">
+    <Compile Include="Models\RolePermission.cs">
       <DependentUpon>PartnerEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
-      <DependentUpon>PartnerEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UserRole.cs">
       <DependentUpon>PartnerEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
@@ -269,6 +270,7 @@
     <Compile Include="ViewModels\Account\ForgetPasswordWievModel.cs" />
     <Compile Include="ViewModels\Account\RegisterViewModel.cs" />
     <Compile Include="ViewModels\Account\UserSignInViewModel.cs" />
+    <Compile Include="ViewModels\AddPermissionViewModel.cs" />
     <Compile Include="ViewModels\BillCollectionViewModel.cs" />
     <Compile Include="ViewModels\GetBillCollectionBySubscriberNoViewModel.cs" />
     <Compile Include="ViewModels\Home\AddCustomerViewModel.cs" />
@@ -418,6 +420,7 @@
     <Content Include="Views\UserOperations\Index.cshtml" />
     <Content Include="Views\UserOperations\Successful.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\DatetimeFormat.cshtml" />
+    <Content Include="Views\UserOperations\AddPermission.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

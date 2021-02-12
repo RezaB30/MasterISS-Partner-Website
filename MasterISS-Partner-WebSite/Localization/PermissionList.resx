@@ -120,6 +120,9 @@
   <data name="PaymentManager" xml:space="preserve">
     <value>Ödeme Temsilcisi</value>
   </data>
+  <data name="SaleList" xml:space="preserve">
+    <value>Satış Listesi Görüntüle</value>
+  </data>
   <data name="SaleManager" xml:space="preserve">
     <value>Satış Temsilcisi</value>
   </data>

@@ -25,9 +25,9 @@ namespace MasterISS_Partner_WebSite.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Permission> Permission { get; set; }
         public virtual DbSet<Role> Role { get; set; }
+        public virtual DbSet<RolePermission> RolePermission { get; set; }
         public virtual DbSet<User> User { get; set; }
-        public virtual DbSet<UserRole> UserRole { get; set; }
-        public virtual DbSet<RoleType> RoleType { get; set; }
     }
 }

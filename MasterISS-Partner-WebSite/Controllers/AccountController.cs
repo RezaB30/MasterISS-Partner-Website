@@ -42,18 +42,22 @@ namespace MasterISS_Partner_WebSite.Controllers
                             var userPasswordHash = wrapper.CalculateHash<SHA256>(userSignInModel.Password);
                             var userValid = db.User.Where(u => u.IsEnabled == true && u.PartnerId == authenticateResponse.AuthenticationResponse.UserID && u.Password == userPasswordHash).FirstOrDefault();
 
-                            if (userValid != null)
+                            if (userValid != null || (userSignInModel.DealerCode == userSignInModel.Username))
                             {
                                 var claims = new List<Claim>
                                     {
-                                        new Claim(ClaimTypes.Name, userSignInModel.Username),
                                         new Claim("UserMail", userSignInModel.DealerCode),
                                         new Claim("UserPassword", userSignInModel.Password),
                                         new Claim("PartnerName", authenticateResponse.AuthenticationResponse.DisplayName),
-                                        new Claim("UserId", authenticateResponse.AuthenticationResponse.UserID.ToString()),
-                                        new Claim("SetupServiceHash", authenticateResponse.AuthenticationResponse.SetupServiceHash),
-                                        new Claim("SetupServiceUser", authenticateResponse.AuthenticationResponse.SetupServiceUser),
+                                        new Claim("PartnerId", authenticateResponse.AuthenticationResponse.UserID.ToString()),
                                     };
+
+                                if (authenticateResponse.AuthenticationResponse.Permissions.Select(pl => pl.Name).Contains("Setup"))
+                                {
+                                    claims.Add(new Claim("SetupServiceHash", authenticateResponse.AuthenticationResponse.SetupServiceHash));
+                                    claims.Add(new Claim("SetupServiceUser", authenticateResponse.AuthenticationResponse.SetupServiceUser));
+                                }
+
                                 for (int i = 0; i < authenticateResponse.AuthenticationResponse.Permissions.Count(); i++)
                                 {
                                     claims.Add(new Claim(ClaimTypes.Role, authenticateResponse.AuthenticationResponse.Permissions.Select(p => p.Name).ToArray()[i]));
@@ -64,8 +68,42 @@ namespace MasterISS_Partner_WebSite.Controllers
                                 {
                                     claims.Add(new Claim(ClaimTypes.Role, "Admin"));
                                 }
+                                else
+                                {
+                                    var claimRoleList = claims.Where(c => c.Type == "RoleId").Select(c => c.Value);
 
-                                var authenticator = new PartnerAuthenticator();
+                                    List<int> partnerRoleList = new List<int>();
+
+                                    foreach (var item in claimRoleList)
+                                    {
+                                        partnerRoleList.Add(Convert.ToInt32(item));
+                                    }
+
+                                    var currentPermissionIdListByPartnerList = new List<int>();
+
+                                    foreach (var roleId in partnerRoleList)
+                                    {
+                                        var permissionIdListByPartnerRoleList = db.Permission.Where(p => p.RoleTypeId == roleId).Select(p => p.Id).ToArray();
+
+                                        foreach (var permissionId in permissionIdListByPartnerRoleList)
+                                        {
+                                            currentPermissionIdListByPartnerList.Add(permissionId);
+                                        }
+                                    }
+
+                                    foreach (var permissionId in currentPermissionIdListByPartnerList)
+                                    {
+                                        var userAvaibleRoles = userValid.Role.RolePermission.Where(rp => rp.PermissionId == permissionId).Select(p => p.Permission).ToArray();
+
+                                        for (int i = 0; i < userAvaibleRoles.Length; i++)
+                                        {
+                                            claims.Add(new Claim(ClaimTypes.Role, userAvaibleRoles.Select(uar => uar.PermissionName).ToArray()[i]));
+                                        }
+                                    }
+
+                                }
+
+                                var authenticator = new SubUserAuthenticator();
                                 var isSignIn = authenticator.SignIn(Request.GetOwinContext(), userSignInModel.Username, userSignInModel.Password, claims);
 
                                 if (isSignIn)
@@ -73,7 +111,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                                     return RedirectToAction("Index", "Home");
                                 }
                             }
-                            ViewBag.AuthenticateError = "";
+                            ViewBag.AuthenticateError = "Başarısız";
                             return View(userSignInModel);
                         }
                     }
@@ -88,7 +126,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
         public ActionResult SignOut()
         {
-            var authenticator = new PartnerAuthenticator();
+            var authenticator = new SubUserAuthenticator();
             authenticator.SignOut(Request.GetOwinContext());
             return RedirectToAction("SignIn", "Account");
         }

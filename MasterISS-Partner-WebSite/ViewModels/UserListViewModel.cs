@@ -16,5 +16,8 @@ namespace MasterISS_Partner_WebSite.ViewModels
 
         [Display(ResourceType = typeof(Localization.Model), Name = "IsEnabled")]
         public bool IsEnabled { get; set; }
+
+        [Display(ResourceType = typeof(Localization.Model), Name = "RoleName")]
+        public string RoleName { get; set; }
     }
 }

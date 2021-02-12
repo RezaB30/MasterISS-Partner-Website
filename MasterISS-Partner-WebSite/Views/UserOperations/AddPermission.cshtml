@@ -1,0 +1,28 @@
+﻿@using MasterISS_Partner_WebSite.ViewModels
+@model  AddPermissionViewModel
+@{
+    ViewBag.Title = "AddPermission";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using (Html.BeginForm("AddPermission", "UserOperations", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.EditorFor(m=>m.RoleName)
+    
+    foreach (var item in Model.AvaibleRole)
+    {
+        <div class="checkbox">
+            <label>
+                <input type="checkbox"
+                       name="SelectedRole"
+                       value="@item.Value"
+                       @if (Model.SelectedRole.Contains(item.Value)) { <text> checked </text> } /> @item.Text
+                </label>
+            </div>
+
+        }
+        <input type="submit" value="kaydet" />
+    }

@@ -70,6 +70,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satış Listesi Görüntüle.
+        /// </summary>
+        public static string SaleList {
+            get {
+                return ResourceManager.GetString("SaleList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satış Temsilcisi.
         /// </summary>
         public static string SaleManager {

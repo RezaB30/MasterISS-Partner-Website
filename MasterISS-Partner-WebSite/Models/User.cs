@@ -14,20 +14,14 @@ namespace MasterISS_Partner_WebSite.Models
     
     public partial class User
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public User()
-        {
-            this.UserRole = new HashSet<UserRole>();
-        }
-    
         public int Id { get; set; }
         public int PartnerId { get; set; }
+        public int RoleId { get; set; }
         public string UserSubMail { get; set; }
         public string NameSurname { get; set; }
         public string Password { get; set; }
         public bool IsEnabled { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserRole> UserRole { get; set; }
+        public virtual Role Role { get; set; }
     }
 }

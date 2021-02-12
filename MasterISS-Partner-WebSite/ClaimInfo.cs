@@ -20,11 +20,23 @@ namespace MasterISS_Partner_WebSite
                   .Select(c => c.Value).SingleOrDefault();
             return partnerSetupServiceHash;
         }
-        public string PartnerId()
+        public int PartnerId()
         {
-            var partnerId = CurrentClaims().Where(c => c.Type == "UserId")
+            var partnerId = CurrentClaims().Where(c => c.Type == "PartnerId")
                   .Select(c => c.Value).SingleOrDefault();
-            return partnerId;
+
+            var convertedPartnerId = Convert.ToInt32(partnerId);
+
+            return convertedPartnerId;
+        }
+        public int UserId()
+        {
+            var userId = CurrentClaims().Where(c => c.Type == ClaimTypes.NameIdentifier)
+                  .Select(c => c.Value).SingleOrDefault();
+
+            var convertedUserId = Convert.ToInt32(userId);
+
+            return convertedUserId;
         }
         public string GetPartnerName()
         {
@@ -38,15 +50,23 @@ namespace MasterISS_Partner_WebSite
                  .Select(c => c.Value).SingleOrDefault();
             return userPassword;
         }
-        private List<Claim> CurrentClaims()
+        public List<Claim> CurrentClaims()
         {
-            return ClaimsPrincipal.Current.Identities.First().Claims.ToList();
+            var currentClaims= ClaimsPrincipal.Current.Identities.First().Claims.ToList();
+            return currentClaims;
         }
-        public IEnumerable<string> PartnerRoleId()
+        public IEnumerable<int> PartnerRoleId()
         {
             var partnerSetupServiceUser = CurrentClaims().Where(c => c.Type == "RoleId")
                   .Select(c => c.Value);
-             return partnerSetupServiceUser;
+
+            List<int> roleIds = new List<int>();
+
+            foreach (var item in partnerSetupServiceUser)
+            {
+                roleIds.Add(Convert.ToInt32(item));
+            }
+             return roleIds;
         }
     }
 }

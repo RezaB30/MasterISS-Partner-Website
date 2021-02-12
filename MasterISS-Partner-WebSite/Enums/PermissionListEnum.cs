@@ -9,6 +9,8 @@ namespace MasterISS_Partner_WebSite.Enums
     {
         SaleManager = 1,
         SetupManager = 2,
-        PaymentManager = 3
+        PaymentManager = 3,
+        SaleList=10
+
     }
 }

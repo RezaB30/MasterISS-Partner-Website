@@ -10,6 +10,7 @@
         <tr>
             <th>@Html.DisplayNameFor(m => m.NameSurname)</th>
             <th>@Html.DisplayNameFor(m => m.UserSubMail)</th>
+            <th>@Html.DisplayNameFor(m => m.RoleName)</th>
             <th>@Html.DisplayNameFor(m => m.IsEnabled)</th>
         </tr>
     </thead>
@@ -19,6 +20,7 @@
             <tr>
                 <td>@Html.DisplayFor(modelItem => item.NameSurname)</td>
                 <td>@Html.DisplayFor(modelItem => item.UserSubMail)</td>
+                <td>@Html.DisplayFor(modelItem => item.RoleName)</td>
                 <td>@Html.DisplayFor(modelItem => item.IsEnabled)</td>
                 @if (item.IsEnabled == true)
                 {
