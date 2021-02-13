@@ -1,0 +1,62 @@
+﻿@using MasterISS_Partner_WebSite.ViewModels.Home
+@using MasterISS_Partner_WebSite.Localization
+@model AddCustomerViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    @Html.LabelFor(m => m.IDCard.CardTypeId)
+    @Html.DropDownListFor(m => m.IDCard.CardTypeId, (SelectList)ViewBag.TckTypeList, "Seç")
+    @Html.ValidationMessageFor(m => m.IDCard.CardTypeId)
+</div>
+
+<div>
+    @Html.LabelFor(m => m.Individual.SexId)
+    @Html.DropDownListFor(m => m.Individual.SexId, (SelectList)ViewBag.SexexList, "Seç")
+    @Html.ValidationMessageFor(m => m.Individual.SexId)
+</div>
+
+<div>
+    @Html.LabelFor(m => m.GeneralInfo.Culture)
+    @Html.DropDownListFor(m => m.GeneralInfo.Culture, (SelectList)ViewBag.CultureList, "Seç")
+    @Html.ValidationMessageFor(m => m.GeneralInfo.Culture)
+</div>
+
+<div>
+    @Html.LabelFor(m => m.Individual.ProfessionId)
+    @Html.DropDownListFor(m => m.Individual.ProfessionId, (SelectList)ViewBag.ProfessionList, "Seç")
+    @Html.ValidationMessageFor(m => m.Individual.ProfessionId)
+</div>
+
+<div>
+    @Html.LabelFor(m => m.Individual.NationalityId)
+    @Html.DropDownListFor(m => m.Individual.NationalityId, (SelectList)ViewBag.NationalityList, "Seç")
+    @Html.ValidationMessageFor(m => m.Individual.NationalityId)
+</div>
+
+<div>
+    @Html.LabelFor(m => m.SubscriptionInfo.BillingPeriodId)
+    @Html.DropDownListFor(m => m.SubscriptionInfo.BillingPeriodId, (SelectList)ViewBag.PaymentDayList, "Seç")
+    @Html.ValidationMessageFor(m => m.SubscriptionInfo.BillingPeriodId)
+</div>
+
+<div>
+    @Html.LabelFor(m => m.SubscriptionInfo.PartnerTariffID)
+    @Html.DropDownListFor(m => m.SubscriptionInfo.PartnerTariffID, (SelectList)ViewBag.PartnerTariffList, "Seç")
+    @Html.ValidationMessageFor(m => m.SubscriptionInfo.PartnerTariffID)
+</div>
+
+<div>
+    @Html.LabelFor(m => m.GeneralInfo.CustomerTypeId)
+    @Html.DropDownListFor(m => m.GeneralInfo.CustomerTypeId, (SelectList)ViewBag.CustomerTypeList, "Seç")
+    @Html.ValidationMessageFor(m => m.GeneralInfo.CustomerTypeId)
+</div>
+
+
+
+
+@section Javascript{
+  
+}

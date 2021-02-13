@@ -144,9 +144,9 @@ namespace MasterISS_Partner_WebSite.Localization {
         /// <summary>
         ///   Looks up a localized string similar to Kart Tipi.
         /// </summary>
-        public static string CardType {
+        public static string CardTypeId {
             get {
-                return ResourceManager.GetString("CardType", resourceCulture);
+                return ResourceManager.GetString("CardTypeId", resourceCulture);
             }
         }
         
@@ -183,6 +183,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string ContactPhoneNo {
             get {
                 return ResourceManager.GetString("ContactPhoneNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dil.
+        /// </summary>
+        public static string CultureCustomer {
+            get {
+                return ResourceManager.GetString("CultureCustomer", resourceCulture);
             }
         }
         

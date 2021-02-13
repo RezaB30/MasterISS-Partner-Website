@@ -138,6 +138,9 @@
   <data name="ReturnUserOperations" xml:space="preserve">
     <value>Geri</value>
   </data>
+  <data name="SelectRole" xml:space="preserve">
+    <value>Rol Seçiniz</value>
+  </data>
   <data name="Successful" xml:space="preserve">
     <value>Başarılı</value>
   </data>

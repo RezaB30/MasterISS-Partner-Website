@@ -17,7 +17,7 @@
 
     <div>
         @Html.LabelFor(m => m.RoleId)
-        @Html.DropDownListFor(m => m.RoleId, (SelectList)ViewBag.RoleList, "Role Seç")
+        @Html.DropDownListFor(m => m.RoleId, (SelectList)ViewBag.RoleList, MasterISS_Partner_WebSite.Localization.View.SelectRole)
         @Html.ValidationMessageFor(m => m.RoleId)
     </div>
 

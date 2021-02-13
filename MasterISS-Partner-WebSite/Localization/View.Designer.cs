@@ -124,6 +124,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rol Seçiniz.
+        /// </summary>
+        public static string SelectRole {
+            get {
+                return ResourceManager.GetString("SelectRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Başarılı.
         /// </summary>
         public static string Successful {

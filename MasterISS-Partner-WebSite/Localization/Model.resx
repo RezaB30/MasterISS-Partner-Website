@@ -144,7 +144,7 @@
   <data name="BirthPlace" xml:space="preserve">
     <value>Doğum Yeri</value>
   </data>
-  <data name="CardType" xml:space="preserve">
+  <data name="CardTypeId" xml:space="preserve">
     <value>Kart Tipi</value>
   </data>
   <data name="CentralSystemNo" xml:space="preserve">
@@ -158,6 +158,9 @@
   </data>
   <data name="ContactPhoneNo" xml:space="preserve">
     <value>İletişim Numarası</value>
+  </data>
+  <data name="CultureCustomer" xml:space="preserve">
+    <value>Dil</value>
   </data>
   <data name="CustomerCode" xml:space="preserve">
     <value>Müşteri Kodu</value>

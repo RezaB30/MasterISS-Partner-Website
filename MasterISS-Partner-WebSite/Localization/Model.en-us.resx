@@ -159,6 +159,9 @@
   <data name="ContactPhoneNo" xml:space="preserve">
     <value>Contact Phone No</value>
   </data>
+  <data name="CultureCustomer" xml:space="preserve">
+    <value>Culture</value>
+  </data>
   <data name="CustomerCode" xml:space="preserve">
     <value>Customer Code</value>
   </data>

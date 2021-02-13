@@ -31,6 +31,7 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         public int? SelectedBillingPeriod { get; set; }
 
         [Display(Name = "PartnerTariffID", ResourceType = typeof(Localization.Model))]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
         public int PartnerTariffID { get; set; }
 
         public List<SelectListItem> PartnerTariffs { get; set; }
@@ -75,14 +76,14 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         public string MothersName { get; set; }
 
         [Display(Name = "NationalityId", ResourceType = typeof(Localization.Model))]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
         public int NationalityId { get; set; }
-
-        public List<SelectListItem> Nationality { get; set; }
 
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Model))]
         public int? SelectedNationality { get; set; }
 
         [Display(Name = "ProfessionId", ResourceType = typeof(Localization.Model))]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
         public int ProfessionId { get; set; }
 
         public List<SelectListItem> Profession { get; set; }
@@ -94,12 +95,8 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         public AddressInfo ResidencyAddress { get; set; }
 
         [Display(Name = "SexId", ResourceType = typeof(Localization.Model))]
-        public short SexId { get; set; }
-
-        public List<SelectListItem> Sex { get; set; }
-
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Model))]
-        public short? SelectedSex { get; set; }
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        public int SexId { get; set; }
 
         public bool IndividualSameAddress { get; set; }
     }
@@ -111,9 +108,8 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         public string BirthDate { get; set; }
 
         [Display(Name = "CardTypeId", ResourceType = typeof(Localization.Model))]
-        public short CardTypeId { get; set; }
-
-        public List<SelectListItem> CardTypes { get; set; }
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        public int CardTypeId { get; set; }
 
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Model))]
         public short? SelectedCardType { get; set; }
@@ -172,7 +168,8 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         public string ContactPhoneNo { get; set; }
 
         [Display(Name = "CustomerTypeId", ResourceType = typeof(Localization.Model))]
-        public int? CustomerTypeId { get; set; }
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        public int CustomerTypeId { get; set; }
 
         public List<SelectListItem> CustomerType { get; set; }
 
@@ -186,10 +183,11 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         [Display(Name = "OtherPhoneNos", ResourceType = typeof(Localization.Model))]
         public string[] OtherPhoneNos { get; set; }
 
-        [Display(Name = "CulturId", ResourceType = typeof(Localization.Model))]
-        [Required(ErrorMessageResourceName = "CustomerTypeIdRequired", ErrorMessageResourceType = typeof(Localization.Validation))]
-        public string CultureId { get; set; }
+        
+        //public int CultureId { get; set; }
 
+        [Display(Name = "CultureCustomer", ResourceType = typeof(Localization.Model))]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
         public string Culture { get; set; }
 
         public string SelectedCulture { get; set; }

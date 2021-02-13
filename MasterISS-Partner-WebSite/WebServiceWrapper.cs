@@ -360,9 +360,6 @@ namespace MasterISS_Partner_WebSite
             var response = Client.GetCreditReport(PartnerServiceCreditReportRequest(false));
             return response;
         }
-       
-
-
 
         public PartnerServiceKeyValueListResponse GetCustomerType()
         {
@@ -396,7 +393,7 @@ namespace MasterISS_Partner_WebSite
                 ListFromIDRequest = new ListFromIDRequest()
                 {
                     SubUserEmail = GetUserSubMail(),
-                    UserEmail = GetUserMail()
+                    UserEmail = GetUserMail(),
                 }
             };
 
