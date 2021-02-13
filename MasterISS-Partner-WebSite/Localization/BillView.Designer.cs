@@ -86,5 +86,14 @@ namespace MasterISS_Partner_WebSite.Localization {
                 return ResourceManager.GetString("PayOldBillError", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toplam Krediniz.
+        /// </summary>
+        public static string TotalCredit {
+            get {
+                return ResourceManager.GetString("TotalCredit", resourceCulture);
+            }
+        }
     }
 }

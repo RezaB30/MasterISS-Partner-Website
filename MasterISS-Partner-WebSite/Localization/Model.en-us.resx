@@ -168,11 +168,17 @@
   <data name="CustomerTypeId" xml:space="preserve">
     <value>Customer Type</value>
   </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
   <data name="DateOfIssue" xml:space="preserve">
     <value>Date Of Issue</value>
   </data>
   <data name="DealerCode" xml:space="preserve">
     <value>Dealer Code</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Details</value>
   </data>
   <data name="Distance" xml:space="preserve">
     <value>Infrastructure Distance</value>
@@ -338,6 +344,9 @@
   </data>
   <data name="Title" xml:space="preserve">
     <value>Title</value>
+  </data>
+  <data name="TotalCredit" xml:space="preserve">
+    <value>Total Credit</value>
   </data>
   <data name="TradeRegistrationNo" xml:space="preserve">
     <value>Trade Registration Number</value>

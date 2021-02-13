@@ -272,6 +272,7 @@
     <Compile Include="ViewModels\Account\UserSignInViewModel.cs" />
     <Compile Include="ViewModels\AddPermissionViewModel.cs" />
     <Compile Include="ViewModels\BillCollectionViewModel.cs" />
+    <Compile Include="ViewModels\CreditReportViewModel.cs" />
     <Compile Include="ViewModels\GetBillCollectionBySubscriberNoViewModel.cs" />
     <Compile Include="ViewModels\Home\AddCustomerViewModel.cs" />
     <Compile Include="ViewModels\Home\BalanceRequestViewModel.cs" />
@@ -421,6 +422,7 @@
     <Content Include="Views\UserOperations\Successful.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\DatetimeFormat.cshtml" />
     <Content Include="Views\UserOperations\AddPermission.cshtml" />
+    <Content Include="Views\Bill\CreditReportDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -70,7 +70,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bakiye.
+        ///   Looks up a localized string similar to Tutar.
         /// </summary>
         public static string Amount {
             get {
@@ -214,6 +214,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tarih.
+        /// </summary>
+        public static string Date {
+            get {
+                return ResourceManager.GetString("Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Veriliş Tarihi.
         /// </summary>
         public static string DateOfIssue {
@@ -228,6 +237,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string DealerCode {
             get {
                 return ResourceManager.GetString("DealerCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Detay.
+        /// </summary>
+        public static string Details {
+            get {
+                return ResourceManager.GetString("Details", resourceCulture);
             }
         }
         
@@ -723,6 +741,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string Title {
             get {
                 return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toplam Kredi.
+        /// </summary>
+        public static string TotalCredit {
+            get {
+                return ResourceManager.GetString("TotalCredit", resourceCulture);
             }
         }
         

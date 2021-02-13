@@ -126,4 +126,7 @@
   <data name="PayOldBillError" xml:space="preserve">
     <value>Öncelikle eski faturayı ödeyiniz.</value>
   </data>
+  <data name="TotalCredit" xml:space="preserve">
+    <value>Toplam Krediniz</value>
+  </data>
 </root>

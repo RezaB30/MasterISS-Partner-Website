@@ -121,7 +121,7 @@
     <value>Yetkili Adresi</value>
   </data>
   <data name="Amount" xml:space="preserve">
-    <value>Bakiye</value>
+    <value>Tutar</value>
   </data>
   <data name="BalanceAmount" xml:space="preserve">
     <value>Bakiye Tutarı</value>
@@ -168,11 +168,17 @@
   <data name="CustomerTypeId" xml:space="preserve">
     <value>Müşteri Tipi</value>
   </data>
+  <data name="Date" xml:space="preserve">
+    <value>Tarih</value>
+  </data>
   <data name="DateOfIssue" xml:space="preserve">
     <value>Veriliş Tarihi</value>
   </data>
   <data name="DealerCode" xml:space="preserve">
     <value>Bayi Kodu</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Detay</value>
   </data>
   <data name="Distance" xml:space="preserve">
     <value>Altyapı Uzaklığı</value>
@@ -338,6 +344,9 @@
   </data>
   <data name="Title" xml:space="preserve">
     <value>Ünvan</value>
+  </data>
+  <data name="TotalCredit" xml:space="preserve">
+    <value>Toplam Kredi</value>
   </data>
   <data name="TradeRegistrationNo" xml:space="preserve">
     <value>Ticaret Sicil Numarası</value>

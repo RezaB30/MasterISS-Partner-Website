@@ -1,0 +1,30 @@
+﻿@model MasterISS_Partner_WebSite.ViewModels.CreditReportViewModel
+@{
+    ViewBag.Title = "CreditReportDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div>
+    @Html.DisplayNameFor(m => m.Total)
+    <div>@Html.DisplayFor(m => m.Total)</div>
+</div>
+<table>
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(m => m.CreditReportDetailsViewModel.FirstOrDefault().Amount)</th>
+            <th>@Html.DisplayNameFor(m => m.CreditReportDetailsViewModel.FirstOrDefault().Date)</th>
+            <th>@Html.DisplayNameFor(m => m.CreditReportDetailsViewModel.FirstOrDefault().Details)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.CreditReportDetailsViewModel)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Amount)</td>
+                <td>@Html.DisplayFor(modelItem => item.Date)</td>
+                <td>@Html.DisplayFor(modelItem => item.Details)</td>
+            </tr>
+        }
+    </tbody>
+</table>

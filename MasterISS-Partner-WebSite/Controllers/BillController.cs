@@ -60,17 +60,47 @@ namespace MasterISS_Partner_WebSite.Controllers
             return billList;
         }
 
-        public ActionResult ass()
+        [HttpPost]
+        public ActionResult CreditReportNotDetail()
         {
+            var wrapper = new WebServiceWrapper();
+            var response = wrapper.GetCreditReportNotDetail();
 
-            var wrapper2 = new WebServiceWrapper();
-            var response2 = wrapper2.GetCreditReportWithDetail();
+            if (response.ResponseMessage.ErrorCode == 0)
+            {
+                var totalCredit = response.CreditReportResponse.Total;
+                return Json(new { totalCredit = totalCredit }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { errorMessage = response.ResponseMessage.ErrorMessage }, JsonRequestBehavior.AllowGet);
+        }
 
-            //var wrapper = new WebServiceWrapper();
-            //var response= wrapper.GetCreditReportNotDetail();
+        //[HttpPost]
+        public ActionResult CreditReportDetail()
+        {
+            var wrapper = new WebServiceWrapper();
+            var response = wrapper.GetCreditReportWithDetail();
 
-            
+            if (response.ResponseMessage.ErrorCode == 0)
+            {
+                var detail = new CreditReportViewModel
+                {
+                    Total = response.CreditReportResponse.Total,
+                };
 
+                detail.CreditReportDetailsViewModel = new List<CreditReportDetailsViewModel>(); 
+
+                foreach (var item in response.CreditReportResponse.Details)
+                {
+                    detail.CreditReportDetailsViewModel.Add(new CreditReportDetailsViewModel()
+                    {
+                        Details = item.Details,
+                        Amount = item.Amount,
+                        Date = item.Date
+                    });
+                }
+                return View(detail);
+            }
+            ViewBag.ErrorMessage = response.ResponseMessage.ErrorMessage;
             return View();
         }
 

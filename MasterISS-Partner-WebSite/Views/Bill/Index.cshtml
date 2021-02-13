@@ -60,3 +60,31 @@
     @ViewBag.PayOldBillError
     @ViewBag.PayBillError
 </div>
+
+<div>
+    @MasterISS_Partner_WebSite.Localization.BillView.TotalCredit
+    <div id="total-credit" style="background-color:red">
+    </div>
+</div>
+
+@section Javascript{
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: '@Url.Action("CreditReportNotDetail", "Bill")',
+                type: 'POST',
+                dataType: 'JSON',
+                complete: function (data, status) {
+                    if (status == "success") {
+
+                        $("#total-credit").html(data.responseJSON.totalCredit);
+                    }
+                    else {
+                        $("#total-credit").html(data.responseJSON.errorMessage);
+                    }
+                }
+            });
+        });
+    </script>
+
+}

@@ -126,4 +126,7 @@
   <data name="PayOldBillError" xml:space="preserve">
     <value>Pay the old bill first.</value>
   </data>
+  <data name="TotalCredit" xml:space="preserve">
+    <value>Total Credit</value>
+  </data>
 </root>

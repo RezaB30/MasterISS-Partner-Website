@@ -74,12 +74,17 @@ namespace MasterISS_Partner_WebSite.Controllers
                                     {
                                         return RedirectToAction("Index", "Home");
                                     }
+                                    else
+                                    {
+                                        ViewBag.AuthenticateError = Localization.View.AuthenticateError;
+                                        return View(userSignInModel);
+                                    }
                                 }
                                 else//SubUser
                                 {
                                     var claimRoleList = claims.Where(c => c.Type == "RoleId").Select(c => c.Value);
 
-                                    List<int> partnerRoleList = new List<int>();
+                                    var partnerRoleList = new List<int>();
 
                                     foreach (var item in claimRoleList)
                                     {
@@ -119,7 +124,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                                     }
                                 }
                             }
-                            ViewBag.AuthenticateError = "Başarısız";
+                            ViewBag.AuthenticateError = Localization.View.AuthenticateError;
                             return View(userSignInModel);
                         }
                     }
