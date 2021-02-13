@@ -67,8 +67,15 @@ namespace MasterISS_Partner_WebSite.Controllers
                                 if (userSignInModel.Username == userSignInModel.DealerCode)//Admin
                                 {
                                     claims.Add(new Claim(ClaimTypes.Role, "Admin"));
+                                    claims.Add(new Claim(ClaimTypes.NameIdentifier, authenticateResponse.AuthenticationResponse.UserID.ToString()));
+                                    claims.Add(new Claim(ClaimTypes.Email, userSignInModel.Username));
+                                    claims.Add(new Claim(ClaimTypes.Name, authenticateResponse.AuthenticationResponse.DisplayName));
+                                    if (Request.GetOwinContext().AdminSignIn(claims))
+                                    {
+                                        return RedirectToAction("Index", "Home");
+                                    }
                                 }
-                                else
+                                else//SubUser
                                 {
                                     var claimRoleList = claims.Where(c => c.Type == "RoleId").Select(c => c.Value);
 
@@ -91,6 +98,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                                         }
                                     }
 
+                                    //claims.AddRange(userValid.Role.RolePermission.Select(r => new Claim(ClaimTypes.Role, r.Permission.PermissionName));
+
                                     foreach (var permissionId in currentPermissionIdListByPartnerList)
                                     {
                                         var userAvaibleRoles = userValid.Role.RolePermission.Where(rp => rp.PermissionId == permissionId).Select(p => p.Permission).ToArray();
@@ -101,14 +110,13 @@ namespace MasterISS_Partner_WebSite.Controllers
                                         }
                                     }
 
-                                }
+                                    var authenticator = new SubUserAuthenticator();
+                                    var isSignIn = authenticator.SignIn(Request.GetOwinContext(), userSignInModel.Username, userSignInModel.Password, claims);
 
-                                var authenticator = new SubUserAuthenticator();
-                                var isSignIn = authenticator.SignIn(Request.GetOwinContext(), userSignInModel.Username, userSignInModel.Password, claims);
-
-                                if (isSignIn)
-                                {
-                                    return RedirectToAction("Index", "Home");
+                                    if (isSignIn)
+                                    {
+                                        return RedirectToAction("Index", "Home");
+                                    }
                                 }
                             }
                             ViewBag.AuthenticateError = "Başarısız";
