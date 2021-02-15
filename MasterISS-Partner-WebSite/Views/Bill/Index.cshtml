@@ -5,6 +5,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var search = ViewBag.Search as GetBillCollectionBySubscriberNoViewModel ?? new GetBillCollectionBySubscriberNoViewModel();
+    var counter = 0;
 }
 
 <div>
@@ -38,12 +39,13 @@
                     </tr>
                     @foreach (var itemBill in Model.Bills)
                     {
+                        counter++;
                         <tr>
                             <td>@Html.DisplayFor(modelItem => itemBill.Cost)</td>
                             <td>@Html.DisplayFor(modelItem => itemBill.DueDate)</td>
                             <td>@Html.DisplayFor(modelItem => itemBill.IssueDate)</td>
                             <td>
-                                <input name="selectedBills" type="checkbox" value="@itemBill.BillID" />
+                                <input name="selectedBills" type="checkbox" value="@itemBill.BillID" dataValue="@counter" class="bill-check" />
                             </td>
                         </tr>
                     }
@@ -85,6 +87,25 @@
                 }
             });
         });
+
+        //var ass = $(".bill-check").attr("dataValue",1)
+        //$(".bill-check").not(ass).prop("checked", false);
+
+
+        //$(".bill-check").click(function () {
+        //    var value = $(this).attr("dataValue");
+        //    $('input[type=checkbox]:checked').each(function () {
+        //        var allCheckboxDataValue = $(this).attr("dataValue");
+
+        //        if (value > allCheckboxDataValue ) {
+        //            $(".bill-check").prop("checked", false);
+        //        }
+
+
+
+        //    });
+        //});
+
     </script>
 
 }

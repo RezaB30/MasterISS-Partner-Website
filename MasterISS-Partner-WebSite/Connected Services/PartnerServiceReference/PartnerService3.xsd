@@ -224,4 +224,114 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="PartnerServiceIDCardValidationResponse" nillable="true" type="tns:PartnerServiceIDCardValidationResponse" />
+  <xs:complexType name="PartnerServiceAllowanceDetailsResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q13="http://schemas.datacontract.org/2004/07/RezaB.API.WebService" base="q13:BaseResponseOfArrayOfAllowanceDetailsResponseSHA256_SnLIBD70">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AllowanceDetailsResponse" nillable="true" type="tns:ArrayOfAllowanceDetailsResponse" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="PartnerServiceAllowanceDetailsResponse" nillable="true" type="tns:PartnerServiceAllowanceDetailsResponse" />
+  <xs:complexType name="ArrayOfAllowanceDetailsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AllowanceDetailsResponse" nillable="true" type="tns:AllowanceDetailsResponse" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAllowanceDetailsResponse" nillable="true" type="tns:ArrayOfAllowanceDetailsResponse" />
+  <xs:complexType name="AllowanceDetailsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AllowanceStateID" type="xs:int" />
+      <xs:element minOccurs="0" name="AllowanceStateName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Price" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AllowanceDetailsResponse" nillable="true" type="tns:AllowanceDetailsResponse" />
+  <xs:complexType name="PartnerServiceSetupGenericAllowanceListResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q14="http://schemas.datacontract.org/2004/07/RezaB.API.WebService" base="q14:BaseResponseOfSetupGenericAllowanceListResponseSHA256_SnLIBD70">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="SetupGenericAllowanceList" nillable="true" type="tns:SetupGenericAllowanceListResponse" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="PartnerServiceSetupGenericAllowanceListResponse" nillable="true" type="tns:PartnerServiceSetupGenericAllowanceListResponse" />
+  <xs:complexType name="SetupGenericAllowanceListResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:PaginationResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="SetupGenericAllowances" nillable="true" type="tns:ArrayOfSetupGenericAllowanceListResponse.SetupGenericAllowanceList" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SetupGenericAllowanceListResponse" nillable="true" type="tns:SetupGenericAllowanceListResponse" />
+  <xs:complexType name="PaginationResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="TotalPageCount" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PaginationResponse" nillable="true" type="tns:PaginationResponse" />
+  <xs:complexType name="ArrayOfSetupGenericAllowanceListResponse.SetupGenericAllowanceList">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SetupGenericAllowanceListResponse.SetupGenericAllowanceList" nillable="true" type="tns:SetupGenericAllowanceListResponse.SetupGenericAllowanceList" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSetupGenericAllowanceListResponse.SetupGenericAllowanceList" nillable="true" type="tns:ArrayOfSetupGenericAllowanceListResponse.SetupGenericAllowanceList" />
+  <xs:complexType name="SetupGenericAllowanceListResponse.SetupGenericAllowanceList">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Allowance" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="AllowanceState" nillable="true" type="tns:NameValuePair" />
+      <xs:element minOccurs="0" name="CompletionDate" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IssueDate" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SetupState" nillable="true" type="tns:NameValuePair" />
+      <xs:element minOccurs="0" name="SubscriptionNo" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SetupGenericAllowanceListResponse.SetupGenericAllowanceList" nillable="true" type="tns:SetupGenericAllowanceListResponse.SetupGenericAllowanceList" />
+  <xs:complexType name="NameValuePair">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Value" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="NameValuePair" nillable="true" type="tns:NameValuePair" />
+  <xs:complexType name="PartnerServiceSetupAllowanceListResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q15="http://schemas.datacontract.org/2004/07/RezaB.API.WebService" base="q15:BaseResponseOfSetupAllowanceListResponseSHA256_SnLIBD70">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="SetupAllowanceList" nillable="true" type="tns:SetupAllowanceListResponse" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="PartnerServiceSetupAllowanceListResponse" nillable="true" type="tns:PartnerServiceSetupAllowanceListResponse" />
+  <xs:complexType name="SetupAllowanceListResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:PaginationResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="SetupAllowances" nillable="true" type="tns:ArrayOfSetupAllowanceListResponse.SetupAllowanceList" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SetupAllowanceListResponse" nillable="true" type="tns:SetupAllowanceListResponse" />
+  <xs:complexType name="ArrayOfSetupAllowanceListResponse.SetupAllowanceList">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SetupAllowanceListResponse.SetupAllowanceList" nillable="true" type="tns:SetupAllowanceListResponse.SetupAllowanceList" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSetupAllowanceListResponse.SetupAllowanceList" nillable="true" type="tns:ArrayOfSetupAllowanceListResponse.SetupAllowanceList" />
+  <xs:complexType name="SetupAllowanceListResponse.SetupAllowanceList">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ID" type="xs:long" />
+      <xs:element minOccurs="0" name="IsPaid" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IssueDate" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PaymentDate" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Total" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SetupAllowanceListResponse.SetupAllowanceList" nillable="true" type="tns:SetupAllowanceListResponse.SetupAllowanceList" />
 </xs:schema>

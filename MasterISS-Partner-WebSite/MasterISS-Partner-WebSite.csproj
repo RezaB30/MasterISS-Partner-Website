@@ -278,7 +278,7 @@
     <Compile Include="ViewModels\Home\AddCustomerViewModel.cs" />
     <Compile Include="ViewModels\Home\BalanceRequestViewModel.cs" />
     <Compile Include="ViewModels\IDCardValidationViewModel.cs" />
-    <Compile Include="ViewModels\NameValueListViewModel.cs" />
+    <Compile Include="ViewModels\AdresInfoViewModel.cs" />
     <Compile Include="ViewModels\NewUserViewModel.cs" />
     <Compile Include="ViewModels\PayBillRequestViewModel.cs" />
     <Compile Include="ViewModels\ServiceAvaibilityResponseViewModel.cs" />
@@ -334,6 +334,15 @@
     <Content Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite.PartnerServiceReference.PartnerServiceSMSCodeResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <Content Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite.PartnerServiceReference.PartnerServiceAllowanceDetailsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite.PartnerServiceReference.PartnerServiceSetupAllowanceListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite.PartnerServiceReference.PartnerServiceSetupGenericAllowanceListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Connected Services\PartnerServiceReference\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -356,6 +365,7 @@
       <DependentUpon>PartnerEntities.edmx</DependentUpon>
       <LastGenOutput>PartnerEntities.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\QueryAddress\address-query.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Connected Services\PartnerServiceReference\PartnerService.wsdl" />
@@ -401,7 +411,6 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

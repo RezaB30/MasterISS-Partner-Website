@@ -44,22 +44,6 @@ namespace MasterISS_Partner_WebSite.Controllers
             return View("Index");
         }
 
-        private BillCollectionViewModel BillList(ServiceResponse<PartnerServiceBillListResponse> response)
-        {
-            var billList = new BillCollectionViewModel()
-            {
-                SubscriberName = response.Data.BillListResponse.SubscriberName,
-                Bills = response.Data.BillListResponse.Bills == null ? Enumerable.Empty<BillsViewModel>() : response.Data.BillListResponse.Bills.Select(b => new BillsViewModel()
-                {
-                    IssueDate = b.IssueDate,
-                    BillID = b.ID,
-                    DueDate = b.DueDate,
-                    Cost = b.Total
-                })
-            };
-            return billList;
-        }
-
         [HttpPost]
         public ActionResult CreditReportNotDetail()
         {
@@ -156,7 +140,21 @@ namespace MasterISS_Partner_WebSite.Controllers
             }
             return View(viewName: "Index", model: BillList(response));
         }
-
+        private BillCollectionViewModel BillList(ServiceResponse<PartnerServiceBillListResponse> response)
+        {
+            var billList = new BillCollectionViewModel()
+            {
+                SubscriberName = response.Data.BillListResponse.SubscriberName,
+                Bills = response.Data.BillListResponse.Bills == null ? Enumerable.Empty<BillsViewModel>() : response.Data.BillListResponse.Bills.Select(b => new BillsViewModel()
+                {
+                    IssueDate = b.IssueDate,
+                    BillID = b.ID,
+                    DueDate = b.DueDate,
+                    Cost = b.Total
+                })
+            };
+            return billList;
+        }
 
     }
 }

@@ -1,6 +1,6 @@
 ﻿@using MasterISS_Partner_WebSite.ViewModels;
 @using MasterISS_Partner_WebSite.Localization;
-@model NameValueListViewModel
+@model AdresInfoViewModel
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -9,30 +9,31 @@
 
 <div id="addressQueryContainer">
     <div>
-        @Html.DropDownListFor(nvpl => nvpl.ProvinceId, (SelectList)ViewBag.Provinces, HomeView.SelectProvince, new { @id = "province", @dataValue = 1 })
+        @Html.DropDownListFor(nvpl => nvpl.ProvinceId, (SelectList)ViewBag.Provinces, HomeView.SelectProvince, new { @id = "province" })
     </div>
 
     <div>
-        @Html.DropDownListFor(nvpl => nvpl.DistrictId, new SelectList(""), HomeView.SelectDistrict, new { @id = "district", @disabled = "disabled", @dataValue = 2 })
+        @Html.DropDownListFor(nvpl => nvpl.DistrictId, new SelectList(""), HomeView.SelectDistrict, new { @id = "district", @disabled = "disabled" })
     </div>
 
     <div>
-        @Html.DropDownListFor(nvpl => nvpl.RuralRegionsId, new SelectList(""), HomeView.SelectRegions, new { @id = "ruralregions", @disabled = "disabled", @dataValue = 3 })
-    </div>
-    <div>
-        @Html.DropDownListFor(nvpl => nvpl.NeighborhoodId, new SelectList(""), HomeView.SelectNeigborhood, new { @id = "neighborhood", @disabled = "disabled", @dataValue = 4 })
+        @Html.DropDownListFor(nvpl => nvpl.RuralRegionsId, new SelectList(""), HomeView.SelectRegions, new { @id = "ruralregions", @disabled = "disabled" })
     </div>
 
     <div>
-        @Html.DropDownListFor(nvpl => nvpl.StreetId, new SelectList(""), HomeView.SelectStreet, new { @id = "street", @disabled = "disabled", @dataValue = 5 })
+        @Html.DropDownListFor(nvpl => nvpl.NeighborhoodId, new SelectList(""), HomeView.SelectNeigborhood, new { @id = "neighborhood", @disabled = "disabled" })
     </div>
 
     <div>
-        @Html.DropDownListFor(nvpl => nvpl.BuildingId, new SelectList(""), HomeView.SelectBuilding, new { @id = "building", @disabled = "disabled", @dataValue = 6 })
+        @Html.DropDownListFor(nvpl => nvpl.StreetId, new SelectList(""), HomeView.SelectStreet, new { @id = "street", @disabled = "disabled" })
     </div>
 
     <div>
-        @Html.DropDownListFor(nvpl => nvpl.ApartmentId, new SelectList(""), HomeView.SelectApartment, new { @id = "apartment", @disabled = "disabled", @dataValue = 7 })
+        @Html.DropDownListFor(nvpl => nvpl.BuildingId, new SelectList(""), HomeView.SelectBuilding, new { @id = "building", @disabled = "disabled" })
+    </div>
+
+    <div>
+        @Html.DropDownListFor(nvpl => nvpl.ApartmentId, new SelectList(""), HomeView.SelectApartment, new { @id = "apartment", @disabled = "disabled" })
     </div>
 </div>
 
@@ -41,53 +42,6 @@
 
 @section Javascript{
     <script>
-
-    function QueryAddress(triggerSelectId, triggeredSelectId, url) {
-
-
-        $(document).ready(function () {
-            $(triggerSelectId).change(function () {
-
-                    $("#service-avaibility-response").empty();
-
-                    $(triggeredSelectId).find("option").not(":first").remove();
-                    $(triggeredSelectId).attr("disabled", "disabled");
-
-                    if (triggeredSelectId != "#apartment") {
-                        $(triggeredSelectId).trigger('change');
-                    }
-
-                    var id = $(this).find(":selected").val();
-
-                if (id != "") {
-                          var selectId = { "id": id }
-                          $.ajax({
-                              url: url,
-                              type: 'POST',
-                              dataType:'JSON',
-                              contentType: 'application/json; charset=utf-8',
-                              data: JSON.stringify(selectId),
-                              complete: function (data, status) {
-                                  if (status == "success") {
-                                      var result = data.responseJSON.list;
-                                      for (var i = 0; i < result.length; i++) {
-                                          $(triggeredSelectId).append($('<option>', {
-                                              value: result[i].Value,
-                                              text: result[i].Name,
-                                          }));
-                                      }
-                                      $(triggeredSelectId).attr("disabled", false)
-                                  }
-                                  else {
-                                      console.log(data.responseJSON.errorMessage);
-                                  }
-                              }
-                          });
-                      }
-                  });
-            });
-        }
-
 
         QueryAddress("#province","#district",'@Url.Action("DistrictList", "Home")')
 
