@@ -27,7 +27,8 @@ namespace MasterISS_Partner_WebSite.Controllers
             var sexListResponse = wrapper.GetSexesList();
             if (sexListResponse.ResponseMessage.ErrorCode == 0)
             {
-                ViewBag.SexexList = SexesList(sexListResponse, null);
+                ViewBag.SexexListByCorporative = SexesList(sexListResponse, null);
+                ViewBag.SexexListByIndividual = SexesList(sexListResponse, null);
             }
 
             wrapper = new WebServiceWrapper();
@@ -43,7 +44,8 @@ namespace MasterISS_Partner_WebSite.Controllers
             var professionsListResponse = wrapper.GetProfessions();
             if (professionsListResponse.ResponseMessage.ErrorCode == 0)
             {
-                ViewBag.ProfessionList = ProfessionList(professionsListResponse, null);
+                ViewBag.ProfessionListByCorporative = ProfessionList(professionsListResponse, null);
+                ViewBag.ProfessionListByIndividual = ProfessionList(professionsListResponse, null);
             }
 
             wrapper = new WebServiceWrapper();
@@ -51,7 +53,8 @@ namespace MasterISS_Partner_WebSite.Controllers
             var nationalityListResponse = wrapper.GetNationalities();
             if (nationalityListResponse.ResponseMessage.ErrorCode == 0)
             {
-                ViewBag.NationalityList = NationalityList(nationalityListResponse, null);
+                ViewBag.NationalityListByCorporative = NationalityList(nationalityListResponse, null);
+                ViewBag.NationalityListByIndividual = NationalityList(nationalityListResponse, null);
             }
 
             wrapper = new WebServiceWrapper();
@@ -70,6 +73,139 @@ namespace MasterISS_Partner_WebSite.Controllers
                 ViewBag.CustomerTypeList = CustomerTypeList(customerTypeList, null);
             }
 
+            wrapper = new WebServiceWrapper();
+            var provinceList = wrapper.GetProvince();
+
+            if (string.IsNullOrEmpty(provinceList.ErrorMessage))
+            {
+                ViewBag.Provinces = new SelectList(provinceList.Data.ValueNamePairList.Select(nvpl => new { Name = nvpl.Name, Value = nvpl.Value }), "Value", "Name");
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult NewCustomer(AddCustomerViewModel addCustomerViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var companyBBK = addCustomerViewModel.CorporateInfo.CompanyAddress.ApartmentId;
+                var executiveResidencyBBK = addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.ApartmentId;
+                var billingAddressBBK = addCustomerViewModel.GeneralInfo.BillingAddress.ApartmentId;
+                var individualResidencyBBK = addCustomerViewModel.Individual.ResidencyAddress.ApartmentId;
+                var setupAddressBBK = addCustomerViewModel.SubscriptionInfo.SetupAddress.ApartmentId;
+
+                var wrapperByQueryApartmentAddress = new WebServiceWrapper();
+                var companyApartmentAddress = wrapperByQueryApartmentAddress.GetApartmentAddress((long)companyBBK);
+
+                wrapperByQueryApartmentAddress = new WebServiceWrapper();
+                var executiveResidencyAddress = wrapperByQueryApartmentAddress.GetApartmentAddress((long)executiveResidencyBBK);
+
+                wrapperByQueryApartmentAddress = new WebServiceWrapper();
+                var billingAddress = wrapperByQueryApartmentAddress.GetApartmentAddress((long)billingAddressBBK);
+
+                wrapperByQueryApartmentAddress = new WebServiceWrapper();
+                var individualAddress = wrapperByQueryApartmentAddress.GetApartmentAddress((long)individualResidencyBBK);
+
+                wrapperByQueryApartmentAddress = new WebServiceWrapper();
+                var setupAddress = wrapperByQueryApartmentAddress.GetApartmentAddress((long)setupAddressBBK);
+
+
+                if (setupAddress.ResponseMessage.ErrorCode == 0 && individualAddress.ResponseMessage.ErrorCode == 0 && billingAddress.ResponseMessage.ErrorCode == 0 && companyApartmentAddress.ResponseMessage.ErrorCode == 0 && executiveResidencyAddress.ResponseMessage.ErrorCode == 0)
+                {
+                    addCustomerViewModel.CorporateInfo.CompanyAddress.NewCustomerAddressInfoRequest = NewCustomerAddressInfoRequest(companyApartmentAddress.AddressDetailsResponse);
+
+                    addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.NewCustomerAddressInfoRequest = NewCustomerAddressInfoRequest(executiveResidencyAddress.AddressDetailsResponse);
+
+                    addCustomerViewModel.GeneralInfo.BillingAddress.NewCustomerAddressInfoRequest = NewCustomerAddressInfoRequest(billingAddress.AddressDetailsResponse);
+
+                    addCustomerViewModel.Individual.ResidencyAddress.NewCustomerAddressInfoRequest = NewCustomerAddressInfoRequest(individualAddress.AddressDetailsResponse);
+
+                    addCustomerViewModel.SubscriptionInfo.SetupAddress.NewCustomerAddressInfoRequest = NewCustomerAddressInfoRequest(setupAddress.AddressDetailsResponse);
+
+                    var wrapperByNewCustomer = new WebServiceWrapper();
+                    var response = wrapperByNewCustomer.NewCustomerRegister(addCustomerViewModel);
+
+                    if (response.ResponseMessage.ErrorCode == 0)
+                    {
+                        return RedirectToAction("Successful");//Bu sayfayı ekle
+                    }
+                    else
+                    {
+                        ViewBag.Error = "kayıt eklerken bir hata oldu, sıkıntı";
+                    }
+                }
+                else
+                {
+                    //Web Servisler çalışmazsa
+                    ViewBag.Error = "Adresler gelmiyor, sıkıntı";//bu mesajı değiştir
+                }
+            }
+            else
+            {
+                //Modelstate hatası
+                ViewBag.Error = "düzgün doldur bilgileri";//bu mesajıda değiştir
+            }
+
+            var wrapper = new WebServiceWrapper();
+
+            var tckTypeResponse = wrapper.GetTCKTypes();
+            if (tckTypeResponse.ResponseMessage.ErrorCode == 0)
+            {
+                ViewBag.TckTypeList = TCKTypeList(tckTypeResponse, addCustomerViewModel.IDCard.CardTypeId);
+            }
+
+            wrapper = new WebServiceWrapper();
+
+            var sexListResponse = wrapper.GetSexesList();
+            if (sexListResponse.ResponseMessage.ErrorCode == 0)
+            {
+                ViewBag.SexexListByCorporative = SexesList(sexListResponse, addCustomerViewModel.CorporateInfo.ExecutiveSexId);
+                ViewBag.SexexListByIndividual = SexesList(sexListResponse, addCustomerViewModel.Individual.SexId);
+            }
+
+            wrapper = new WebServiceWrapper();
+
+            var cultureListResponse = wrapper.GetCultures();
+            if (cultureListResponse.ResponseMessage.ErrorCode == 0)
+            {
+                ViewBag.CultureList = CultureList(cultureListResponse, addCustomerViewModel.GeneralInfo.Culture);
+            }
+
+            wrapper = new WebServiceWrapper();
+
+            var professionsListResponse = wrapper.GetProfessions();
+            if (professionsListResponse.ResponseMessage.ErrorCode == 0)
+            {
+                ViewBag.ProfessionListByCorporative = ProfessionList(professionsListResponse, addCustomerViewModel.CorporateInfo.ExecutiveProfessionId);
+                ViewBag.ProfessionListByIndividual = ProfessionList(professionsListResponse, addCustomerViewModel.Individual.ProfessionId);
+            }
+
+            wrapper = new WebServiceWrapper();
+
+            var nationalityListResponse = wrapper.GetNationalities();
+            if (nationalityListResponse.ResponseMessage.ErrorCode == 0)
+            {
+                ViewBag.NationalityListByCorporative = NationalityList(nationalityListResponse, addCustomerViewModel.CorporateInfo.ExecutiveNationalityId);
+                ViewBag.NationalityListByIndividual = NationalityList(nationalityListResponse, addCustomerViewModel.Individual.ProfessionId);
+            }
+
+            wrapper = new WebServiceWrapper();
+
+            var partnerTariffListResponse = wrapper.GetPartnerTariffs();
+            if (partnerTariffListResponse.ResponseMessage.ErrorCode == 0)
+            {
+                ViewBag.PartnerTariffList = PartnerTariffList(partnerTariffListResponse, null);
+            }
+
+            wrapper = new WebServiceWrapper();
+
+            var customerTypeList = wrapper.GetCustomerType();
+            if (customerTypeList.ResponseMessage.ErrorCode == 0)
+            {
+                ViewBag.CustomerTypeList = CustomerTypeList(customerTypeList, addCustomerViewModel.GeneralInfo.CustomerTypeId);
+            }
 
             wrapper = new WebServiceWrapper();
             var provinceList = wrapper.GetProvince();
@@ -79,91 +215,9 @@ namespace MasterISS_Partner_WebSite.Controllers
                 ViewBag.Provinces = new SelectList(provinceList.Data.ValueNamePairList.Select(nvpl => new { Name = nvpl.Name, Value = nvpl.Value }), "Value", "Name");
             }
 
-
-            return View();
+            return View("Index", addCustomerViewModel);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult NewCustomer(AddCustomerViewModel addCustomerViewModel)
-        {
-            var companyBBK = addCustomerViewModel.CorporateInfo.CompanyAddress.ApartmentId;
-            var executiveResidencyBBK = addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.ApartmentId;
-            var billingAddressBBK = addCustomerViewModel.GeneralInfo.BillingAddress.ApartmentId;
-
-            var wrapper = new WebServiceWrapper();
-            var companyApartmentAddress = wrapper.GetApartmentAddress((long)companyBBK);
-
-            wrapper = new WebServiceWrapper();
-            var executiveResidencyAddress = wrapper.GetApartmentAddress((long)executiveResidencyBBK);
-
-            wrapper = new WebServiceWrapper();
-            var billingAddress = wrapper.GetApartmentAddress((long)billingAddressBBK);
-
-            if (billingAddress.ResponseMessage.ErrorCode == 0 && companyApartmentAddress.ResponseMessage.ErrorCode == 0 && executiveResidencyAddress.ResponseMessage.ErrorCode == 0)
-            {
-                addCustomerViewModel.CorporateInfo.CompanyAddress.NewCustomerAddressInfoRequest = new NewCustomerAddressInfoRequest()
-                {
-                    AddressText = companyApartmentAddress.AddressDetailsResponse.AddressText,
-                    AddressNo = companyApartmentAddress.AddressDetailsResponse.AddressNo,
-                    AparmentNo = companyApartmentAddress.AddressDetailsResponse.ApartmentNo,
-                    ApartmentId = companyApartmentAddress.AddressDetailsResponse.ApartmentID,
-                    DistrictId = companyApartmentAddress.AddressDetailsResponse.DistrictID,
-                    DistrictName = companyApartmentAddress.AddressDetailsResponse.DistrictName,
-                    DoorId = companyApartmentAddress.AddressDetailsResponse.DoorID,
-                    DoorNo = companyApartmentAddress.AddressDetailsResponse.DoorNo,
-                    NeighbourhoodID = companyApartmentAddress.AddressDetailsResponse.NeighbourhoodID,
-                    NeighbourhoodName = companyApartmentAddress.AddressDetailsResponse.NeighbourhoodName,
-                    ProvinceId = companyApartmentAddress.AddressDetailsResponse.ProvinceID,
-                    ProvinceName = companyApartmentAddress.AddressDetailsResponse.ProvinceName,
-                    RuralCode = companyApartmentAddress.AddressDetailsResponse.RuralCode,
-                    StreetId = companyApartmentAddress.AddressDetailsResponse.StreetID,
-                    StreetName = companyApartmentAddress.AddressDetailsResponse.StreetName,
-                };
-
-                addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.NewCustomerAddressInfoRequest = new NewCustomerAddressInfoRequest()
-                {
-                    AddressText = executiveResidencyAddress.AddressDetailsResponse.AddressText,
-                    AddressNo = executiveResidencyAddress.AddressDetailsResponse.AddressNo,
-                    AparmentNo = executiveResidencyAddress.AddressDetailsResponse.ApartmentNo,
-                    ApartmentId = executiveResidencyAddress.AddressDetailsResponse.ApartmentID,
-                    DistrictId = executiveResidencyAddress.AddressDetailsResponse.DistrictID,
-                    DistrictName = executiveResidencyAddress.AddressDetailsResponse.DistrictName,
-                    DoorId = executiveResidencyAddress.AddressDetailsResponse.DoorID,
-                    DoorNo = executiveResidencyAddress.AddressDetailsResponse.DoorNo,
-                    NeighbourhoodID = executiveResidencyAddress.AddressDetailsResponse.NeighbourhoodID,
-                    NeighbourhoodName = executiveResidencyAddress.AddressDetailsResponse.NeighbourhoodName,
-                    ProvinceId = executiveResidencyAddress.AddressDetailsResponse.ProvinceID,
-                    ProvinceName = executiveResidencyAddress.AddressDetailsResponse.ProvinceName,
-                    RuralCode = executiveResidencyAddress.AddressDetailsResponse.RuralCode,
-                    StreetId = executiveResidencyAddress.AddressDetailsResponse.StreetID,
-                    StreetName = executiveResidencyAddress.AddressDetailsResponse.StreetName,
-                };
-
-                addCustomerViewModel.GeneralInfo.BillingAddress.NewCustomerAddressInfoRequest = new NewCustomerAddressInfoRequest()
-                {
-                    AddressText = billingAddress.AddressDetailsResponse.AddressText,
-                    AddressNo = billingAddress.AddressDetailsResponse.AddressNo,
-                    AparmentNo = billingAddress.AddressDetailsResponse.ApartmentNo,
-                    ApartmentId = billingAddress.AddressDetailsResponse.ApartmentID,
-                    DistrictId = billingAddress.AddressDetailsResponse.DistrictID,
-                    DistrictName = billingAddress.AddressDetailsResponse.DistrictName,
-                    DoorId = billingAddress.AddressDetailsResponse.DoorID,
-                    DoorNo = billingAddress.AddressDetailsResponse.DoorNo,
-                    NeighbourhoodID = billingAddress.AddressDetailsResponse.NeighbourhoodID,
-                    NeighbourhoodName = billingAddress.AddressDetailsResponse.NeighbourhoodName,
-                    ProvinceId = billingAddress.AddressDetailsResponse.ProvinceID,
-                    ProvinceName = billingAddress.AddressDetailsResponse.ProvinceName,
-                    RuralCode = billingAddress.AddressDetailsResponse.RuralCode,
-                    StreetId = billingAddress.AddressDetailsResponse.StreetID,
-                    StreetName = billingAddress.AddressDetailsResponse.StreetName,
-                };
-            }
-
-            //Burada ındexteki viewbagları tekrar taşıman gerekicek
-            ViewBag.Error = "Adresler gelmiyor, sıkıntı";//bu mesajıda değiştir
-            return View("Index");
-        }
 
         [HttpPost]
         public ActionResult PaymentDayList(long id)
@@ -181,11 +235,33 @@ namespace MasterISS_Partner_WebSite.Controllers
             return Json(new { errorMessage = paymentDayListResponse.ResponseMessage.ErrorMessage }, JsonRequestBehavior.AllowGet);
         }
 
-
         private SelectList CustomerTypeList(PartnerServiceKeyValueListResponse customerType, int? selectedValue)
         {
             var list = new SelectList(customerType.KeyValueItemResponse.Select(tck => new { Name = tck.Value, Value = tck.Key }), "Value", "Name", selectedValue);
             return list;
+        }
+
+        private NewCustomerAddressInfoRequest NewCustomerAddressInfoRequest(AddressDetailsResponse addressDetailsResponse)
+        {
+            var request = new NewCustomerAddressInfoRequest
+            {
+                AddressText = addressDetailsResponse.AddressText,
+                AddressNo = addressDetailsResponse.AddressNo,
+                ApartmentNo = addressDetailsResponse.ApartmentNo,
+                ApartmentId = addressDetailsResponse.ApartmentID,
+                DistrictId = addressDetailsResponse.DistrictID,
+                DistrictName = addressDetailsResponse.DistrictName,
+                DoorId = addressDetailsResponse.DoorID,
+                DoorNo = addressDetailsResponse.DoorNo,
+                NeighbourhoodID = addressDetailsResponse.NeighbourhoodID,
+                NeighbourhoodName = addressDetailsResponse.NeighbourhoodName,
+                ProvinceId = addressDetailsResponse.ProvinceID,
+                ProvinceName = addressDetailsResponse.ProvinceName,
+                RuralCode = addressDetailsResponse.RuralCode,
+                StreetId = addressDetailsResponse.StreetID,
+                StreetName = addressDetailsResponse.StreetName,
+            };
+            return request;
         }
 
         private SelectList PartnerTariffList(PartnerServiceKeyValueListResponse partnerTarifType, int? selectedValue)

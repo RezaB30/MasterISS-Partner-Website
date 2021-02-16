@@ -95,5 +95,23 @@ namespace MasterISS_Partner_WebSite.Localization {
                 return ResourceManager.GetString("Required", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string String1 {
+            get {
+                return ResourceManager.GetString("String1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 10 haneli telefon numarası giriniz..
+        /// </summary>
+        public static string ValidPhoneNumber {
+            get {
+                return ResourceManager.GetString("ValidPhoneNumber", resourceCulture);
+            }
+        }
     }
 }

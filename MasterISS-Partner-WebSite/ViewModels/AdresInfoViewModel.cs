@@ -38,7 +38,7 @@ namespace MasterISS_Partner_WebSite.ViewModels
 
         public long ApartmentId{ get; set; }
 
-        public string AparmentNo { get; set; }
+        public string ApartmentNo { get; set; }
 
         public long DistrictId{ get; set; }
 

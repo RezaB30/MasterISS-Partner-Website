@@ -442,6 +442,7 @@ namespace MasterISS_Partner_WebSite
                 {
                     UserEmail = GetUserMail(),
                     SubUserEmail = GetUserSubMail(),
+
                     CorporateCustomerInfo = new CorporateCustomerInfo
                     {
                         CentralSystemNo = addCustomerViewModel.CorporateInfo.CentralSystemNo,
@@ -456,78 +457,21 @@ namespace MasterISS_Partner_WebSite
                         TaxOffice = addCustomerViewModel.CorporateInfo.TaxOffice,
                         Title = addCustomerViewModel.CorporateInfo.Title,
                         TradeRegistrationNo = addCustomerViewModel.CorporateInfo.TradeRegistrationNo,
-                        ExecutiveResidencyAddress = new PartnerServiceReference.AddressInfo
-                        {
-                            AddressNo = addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.NewCustomerAddressInfoRequest.AddressNo,
-                            AddressText = addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.NewCustomerAddressInfoRequest.AddressText,
-                            ApartmentNo = addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.NewCustomerAddressInfoRequest.AparmentNo,
-                            ApartmentID = addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.NewCustomerAddressInfoRequest.ApartmentId,
-                            DistrictID = addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.NewCustomerAddressInfoRequest.DistrictId,
-                            DistrictName = addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.NewCustomerAddressInfoRequest.DistrictName,
-                            DoorID = addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.NewCustomerAddressInfoRequest.DoorId,
-                            DoorNo = addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.NewCustomerAddressInfoRequest.DoorNo,
-                            NeighbourhoodID = addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.NewCustomerAddressInfoRequest.NeighbourhoodID,
-                            NeighbourhoodName = addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.NewCustomerAddressInfoRequest.NeighbourhoodName,
-                            ProvinceID = addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.NewCustomerAddressInfoRequest.ProvinceId,
-                            ProvinceName = addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.NewCustomerAddressInfoRequest.ProvinceName,
-                            RuralCode = addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.NewCustomerAddressInfoRequest.RuralCode,
-                            StreetID = addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.NewCustomerAddressInfoRequest.StreetId,
-                            StreetName = addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.NewCustomerAddressInfoRequest.StreetName,
-                            Floor = addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.Floor,
-                            PostalCode = addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.PostalCode,
-                        },
-                        CompanyAddress = new PartnerServiceReference.AddressInfo
-                        {
-                            AddressNo = addCustomerViewModel.CorporateInfo.CompanyAddress.NewCustomerAddressInfoRequest.AddressNo,
-                            AddressText = addCustomerViewModel.CorporateInfo.CompanyAddress.NewCustomerAddressInfoRequest.AddressText,
-                            ApartmentNo = addCustomerViewModel.CorporateInfo.CompanyAddress.NewCustomerAddressInfoRequest.AparmentNo,
-                            ApartmentID = addCustomerViewModel.CorporateInfo.CompanyAddress.NewCustomerAddressInfoRequest.ApartmentId,
-                            DistrictID = addCustomerViewModel.CorporateInfo.CompanyAddress.NewCustomerAddressInfoRequest.DistrictId,
-                            DistrictName = addCustomerViewModel.CorporateInfo.CompanyAddress.NewCustomerAddressInfoRequest.DistrictName,
-                            DoorID = addCustomerViewModel.CorporateInfo.CompanyAddress.NewCustomerAddressInfoRequest.DoorId,
-                            DoorNo = addCustomerViewModel.CorporateInfo.CompanyAddress.NewCustomerAddressInfoRequest.DoorNo,
-                            NeighbourhoodID = addCustomerViewModel.CorporateInfo.CompanyAddress.NewCustomerAddressInfoRequest.NeighbourhoodID,
-                            NeighbourhoodName = addCustomerViewModel.CorporateInfo.CompanyAddress.NewCustomerAddressInfoRequest.NeighbourhoodName,
-                            ProvinceID = addCustomerViewModel.CorporateInfo.CompanyAddress.NewCustomerAddressInfoRequest.ProvinceId,
-                            ProvinceName = addCustomerViewModel.CorporateInfo.CompanyAddress.NewCustomerAddressInfoRequest.ProvinceName,
-                            RuralCode = addCustomerViewModel.CorporateInfo.CompanyAddress.NewCustomerAddressInfoRequest.RuralCode,
-                            StreetID = addCustomerViewModel.CorporateInfo.CompanyAddress.NewCustomerAddressInfoRequest.StreetId,
-                            StreetName = addCustomerViewModel.CorporateInfo.CompanyAddress.NewCustomerAddressInfoRequest.StreetName,
-                            Floor = addCustomerViewModel.CorporateInfo.CompanyAddress.Floor,
-                            PostalCode = addCustomerViewModel.CorporateInfo.CompanyAddress.PostalCode,
-                        },
+                        ExecutiveResidencyAddress = NewAddressInfo(addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.NewCustomerAddressInfoRequest, addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.PostalCode, addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.Floor),
+                        CompanyAddress = NewAddressInfo(addCustomerViewModel.CorporateInfo.CompanyAddress.NewCustomerAddressInfoRequest, addCustomerViewModel.CorporateInfo.CompanyAddress.PostalCode, addCustomerViewModel.CorporateInfo.CompanyAddress.Floor)
                     },
 
                     CustomerGeneralInfo = new CustomerGeneralInfo()
                     {
-                        BillingAddress = new PartnerServiceReference.AddressInfo()
-                        {
-                            AddressNo=addCustomerViewModel.GeneralInfo.BillingAddress.NewCustomerAddressInfoRequest.AddressNo,
-                            AddressText=addCustomerViewModel.GeneralInfo.BillingAddress.NewCustomerAddressInfoRequest.AddressText,
-                            ApartmentID=addCustomerViewModel.GeneralInfo.BillingAddress.NewCustomerAddressInfoRequest.ApartmentId,
-                            ApartmentNo=addCustomerViewModel.GeneralInfo.BillingAddress.NewCustomerAddressInfoRequest.AparmentNo,
-                            DistrictID=addCustomerViewModel.GeneralInfo.BillingAddress.NewCustomerAddressInfoRequest.DistrictId,
-                            DistrictName=addCustomerViewModel.GeneralInfo.BillingAddress.NewCustomerAddressInfoRequest.DistrictName,
-                            DoorID=addCustomerViewModel.GeneralInfo.BillingAddress.NewCustomerAddressInfoRequest.DoorId,
-                            DoorNo=addCustomerViewModel.GeneralInfo.BillingAddress.NewCustomerAddressInfoRequest.DoorNo,
-                            NeighbourhoodID=addCustomerViewModel.GeneralInfo.BillingAddress.NewCustomerAddressInfoRequest.NeighbourhoodID,
-                            NeighbourhoodName=addCustomerViewModel.GeneralInfo.BillingAddress.NewCustomerAddressInfoRequest.NeighbourhoodName,
-                            ProvinceID=addCustomerViewModel.GeneralInfo.BillingAddress.NewCustomerAddressInfoRequest.ProvinceId,
-                            ProvinceName=addCustomerViewModel.GeneralInfo.BillingAddress.NewCustomerAddressInfoRequest.ProvinceName,
-                            RuralCode=addCustomerViewModel.GeneralInfo.BillingAddress.NewCustomerAddressInfoRequest.RuralCode,
-                            StreetID=addCustomerViewModel.GeneralInfo.BillingAddress.NewCustomerAddressInfoRequest.StreetId,
-                            StreetName=addCustomerViewModel.GeneralInfo.BillingAddress.NewCustomerAddressInfoRequest.StreetName,
-                            PostalCode=addCustomerViewModel.GeneralInfo.BillingAddress.PostalCode,
-                            Floor=addCustomerViewModel.GeneralInfo.BillingAddress.Floor,
-                        },
+                        BillingAddress = NewAddressInfo(addCustomerViewModel.GeneralInfo.BillingAddress.NewCustomerAddressInfoRequest, addCustomerViewModel.GeneralInfo.BillingAddress.PostalCode, addCustomerViewModel.GeneralInfo.BillingAddress.Floor),
                         ContactPhoneNo = addCustomerViewModel.GeneralInfo.ContactPhoneNo,
                         Email = addCustomerViewModel.GeneralInfo.Email,
                         CustomerType = addCustomerViewModel.GeneralInfo.CustomerTypeId,
                         Culture = addCustomerViewModel.GeneralInfo.Culture,
-                        OtherPhoneNos = new PhoneNoListItem[]
+                        OtherPhoneNos = addCustomerViewModel.GeneralInfo.OtherPhoneNos.Select(phoneNo => new PhoneNoListItem()
                         {
-                            //phonelist dizisi at to array ile
-                        },
+                            Number = phoneNo
+                        }).ToArray()
                     },
 
                     IDCardInfo = new IDCardInfo()
@@ -558,29 +502,16 @@ namespace MasterISS_Partner_WebSite
                         Nationality = addCustomerViewModel.Individual.NationalityId,
                         Profession = addCustomerViewModel.Individual.ProfessionId,
                         Sex = addCustomerViewModel.Individual.SexId,
-                        ResidencyAddress = new PartnerServiceReference.AddressInfo()
-                        {
-                            //burayı bir sor. fonksiyondan geliyordu galiba
-                        }
+                        ResidencyAddress = NewAddressInfo(addCustomerViewModel.Individual.ResidencyAddress.NewCustomerAddressInfoRequest, addCustomerViewModel.Individual.ResidencyAddress.PostalCode, addCustomerViewModel.Individual.ResidencyAddress.Floor)
                     },
 
                     SubscriptionInfo = new SubscriptionRegistrationInfo()
                     {
                         BillingPeriod = addCustomerViewModel.SubscriptionInfo.BillingPeriodId,
-                        ServiceID = addCustomerViewModel.SubscriptionInfo.ServiceId,//What is This,
-                        ReferralDiscountInfo = new ReferralDiscountInfo
-                        {
-                            ReferenceNo = addCustomerViewModel.SubscriptionInfo.ReferenceNo,
-                        },
-                        SetupAddress = new PartnerServiceReference.AddressInfo()
-                        {
-                            //burayı bir sor. fonksiyondan geliyordu galiba
-                        }
-
+                        ServiceID = addCustomerViewModel.SubscriptionInfo.PartnerTariffID,
+                        SetupAddress = NewAddressInfo(addCustomerViewModel.SubscriptionInfo.SetupAddress.NewCustomerAddressInfoRequest, addCustomerViewModel.SubscriptionInfo.SetupAddress.PostalCode, addCustomerViewModel.SubscriptionInfo.SetupAddress.Floor)
                     },
-
-
-                }
+                },
             };
             var response = Client.NewCustomerRegister(request);
 
@@ -607,11 +538,34 @@ namespace MasterISS_Partner_WebSite
             return response;
         }
 
-
         public string Hash<HAT>() where HAT : HashAlgorithm
         {
             var hashAuthenticaiton = CalculateHash<HAT>(Username + Rand + CalculateHash<HAT>(Password) + KeyFragment);
             return hashAuthenticaiton;
+        }
+        private AddressInfo NewAddressInfo(NewCustomerAddressInfoRequest addressInfoRequest, int postalCode, string floor)
+        {
+            var request = new AddressInfo()
+            {
+                AddressNo = addressInfoRequest.AddressNo,
+                AddressText = addressInfoRequest.AddressText,
+                ApartmentID = addressInfoRequest.ApartmentId,
+                ApartmentNo = addressInfoRequest.ApartmentNo,
+                DistrictID = addressInfoRequest.DistrictId,
+                DistrictName = addressInfoRequest.DistrictName,
+                DoorID = addressInfoRequest.DoorId,
+                DoorNo = addressInfoRequest.DoorNo,
+                NeighbourhoodID = addressInfoRequest.NeighbourhoodID,
+                NeighbourhoodName = addressInfoRequest.NeighbourhoodName,
+                ProvinceID = addressInfoRequest.ProvinceId,
+                ProvinceName = addressInfoRequest.ProvinceName,
+                RuralCode = addressInfoRequest.RuralCode,
+                StreetID = addressInfoRequest.StreetId,
+                StreetName = addressInfoRequest.StreetName,
+                PostalCode = postalCode,
+                Floor = floor
+            };
+            return request;
         }
         private CustomerServiceNameValuePairRequest GetRequest(long id)
         {
@@ -681,7 +635,6 @@ namespace MasterISS_Partner_WebSite
             var calculatedHash = string.Join(string.Empty, algorithm.ComputeHash(Encoding.UTF8.GetBytes(value)).Select(b => b.ToString("x2")));
             return calculatedHash;
         }
-
         private string GetUserMail()
         {
             var claimInfo = new ClaimInfo();
