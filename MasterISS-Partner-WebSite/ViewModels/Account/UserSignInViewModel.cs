@@ -21,7 +21,5 @@ namespace MasterISS_Partner_WebSite.ViewModels
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
         public string DealerCode { get; set; }
 
-        //[Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
-        //public string CaptchaCode { get; set; }
     }
 }

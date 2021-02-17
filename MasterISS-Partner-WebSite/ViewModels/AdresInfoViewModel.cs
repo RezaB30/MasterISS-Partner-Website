@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -8,7 +9,7 @@ namespace MasterISS_Partner_WebSite.ViewModels
 {
     public class AdresInfoViewModel
     {
-        public long ProvinceId { get; set; }
+        public long? ProvinceId { get; set; }
 
         public long? DistrictId { get; set; }
 
@@ -20,9 +21,10 @@ namespace MasterISS_Partner_WebSite.ViewModels
 
         public long? BuildingId { get; set; }
 
+        [Required]
         public long? ApartmentId { get; set; }
 
-        public int PostalCode { get; set; }
+        public int? PostalCode { get; set; }
 
         public string Floor { get; set; }
 

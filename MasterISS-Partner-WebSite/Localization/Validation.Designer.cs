@@ -79,6 +79,24 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Maksimum 11 Haneli TC Kimlik Numarası giriniz..
+        /// </summary>
+        public static string MaxTCKValid {
+            get {
+                return ResourceManager.GetString("MaxTCKValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minimum 11 Haneli TC Kimlik Numarası giriniz..
+        /// </summary>
+        public static string MinTCKValid {
+            get {
+                return ResourceManager.GetString("MinTCKValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Minimum 6 karakter giriniz..
         /// </summary>
         public static string PasswordMinLenght {
@@ -93,15 +111,6 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string Required {
             get {
                 return ResourceManager.GetString("Required", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string String1 {
-            get {
-                return ResourceManager.GetString("String1", resourceCulture);
             }
         }
         

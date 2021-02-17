@@ -11,248 +11,6 @@
 
     @Html.AntiForgeryToken()
 
-    <div id="CorporateCustomerInfoContainer">
-        <h2>CorporateCustomerInfo</h2>
-        <div>
-            @Html.LabelFor(ci => ci.CorporateInfo.CentralSystemNo)
-            @Html.EditorFor(ci => ci.CorporateInfo.CentralSystemNo)
-            @Html.ValidationMessageFor(ci => ci.CorporateInfo.CentralSystemNo)
-        </div>
-
-        <div>
-            @Html.LabelFor(ci => ci.CorporateInfo.ExecutiveBirthPlace)
-            @Html.EditorFor(ci => ci.CorporateInfo.ExecutiveBirthPlace)
-            @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveBirthPlace)
-        </div>
-
-        <div>
-            @Html.LabelFor(ci => ci.CorporateInfo.ExecutiveFathersName)
-            @Html.EditorFor(ci => ci.CorporateInfo.ExecutiveFathersName)
-            @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveFathersName)
-        </div>
-
-        <div>
-            @Html.LabelFor(ci => ci.CorporateInfo.ExecutiveMothersMaidenName)
-            @Html.EditorFor(ci => ci.CorporateInfo.ExecutiveMothersMaidenName)
-            @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveMothersMaidenName)
-        </div>
-
-        <div>
-            @Html.LabelFor(ci => ci.CorporateInfo.ExecutiveMothersName)
-            @Html.EditorFor(ci => ci.CorporateInfo.ExecutiveMothersName)
-            @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveMothersName)
-        </div>
-
-        <div>
-            @Html.LabelFor(ci => ci.CorporateInfo.ExecutiveNationalityId)
-            @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveNationalityId, (SelectList)ViewBag.NationalityListByCorporative, BillView.Select)
-            @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveNationalityId)
-        </div>
-
-        <div>
-            @Html.LabelFor(ci => ci.CorporateInfo.ExecutiveProfessionId)
-            @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveProfessionId, (SelectList)ViewBag.ProfessionListByCorporative, BillView.Select)
-            @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveProfessionId)
-        </div>
-
-        <div>
-            @Html.LabelFor(ci => ci.CorporateInfo.ExecutiveSexId)
-            @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveSexId, (SelectList)ViewBag.SexexListByCorporative, BillView.Select)
-            @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveSexId)
-        </div>
-
-        <div>
-            @Html.LabelFor(ci => ci.CorporateInfo.TaxNo)
-            @Html.EditorFor(ci => ci.CorporateInfo.TaxNo)
-            @Html.ValidationMessageFor(ci => ci.CorporateInfo.TaxNo)
-        </div>
-
-        <div>
-            @Html.LabelFor(ci => ci.CorporateInfo.TaxOffice)
-            @Html.EditorFor(ci => ci.CorporateInfo.TaxOffice)
-            @Html.ValidationMessageFor(ci => ci.CorporateInfo.TaxOffice)
-        </div>
-
-        <div>
-            @Html.LabelFor(ci => ci.CorporateInfo.Title)
-            @Html.EditorFor(ci => ci.CorporateInfo.Title)
-            @Html.ValidationMessageFor(ci => ci.CorporateInfo.Title)
-        </div>
-
-        <div>
-            @Html.LabelFor(ci => ci.CorporateInfo.TradeRegistrationNo)
-            @Html.EditorFor(ci => ci.CorporateInfo.TradeRegistrationNo)
-            @Html.ValidationMessageFor(ci => ci.CorporateInfo.TradeRegistrationNo)
-        </div>
-
-        <h4>ExecutiveResidencyAddress</h4>
-        <div id="ExecutiveResidencyContainer">
-            <div>
-                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.ProvinceId, (SelectList)ViewBag.Provinces, HomeView.SelectProvince, new { @id = "province" })
-            </div>
-
-            <div>
-                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.DistrictId, new SelectList(""), HomeView.SelectDistrict, new { @id = "district", @disabled = "disabled" })
-            </div>
-
-            <div>
-                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.RuralRegionsId, new SelectList(""), HomeView.SelectRegions, new { @id = "ruralregions", @disabled = "disabled" })
-            </div>
-
-            <div>
-                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.NeighborhoodId, new SelectList(""), HomeView.SelectNeigborhood, new { @id = "neighborhood", @disabled = "disabled" })
-            </div>
-
-            <div>
-                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.StreetId, new SelectList(""), HomeView.SelectStreet, new { @id = "street", @disabled = "disabled" })
-            </div>
-
-            <div>
-                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.BuildingId, new SelectList(""), HomeView.SelectBuilding, new { @id = "building", @disabled = "disabled" })
-            </div>
-
-            <div>
-                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.ApartmentId, new SelectList(""), HomeView.SelectApartment, new { @id = "apartment", @disabled = "disabled" })
-            </div>
-
-            <div>
-                @Html.LabelFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.PostalCode)
-                @Html.EditorFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.PostalCode)
-                @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.PostalCode)
-            </div>
-
-            <div>
-                @Html.LabelFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.Floor)
-                @Html.EditorFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.Floor)
-                @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.Floor)
-            </div>
-
-        </div>
-
-
-
-        <h4>CompanyAddress</h4>
-        <div id="CompanyContainer">
-            <div>
-                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.ProvinceId, (SelectList)ViewBag.Provinces, HomeView.SelectProvince, new { @id = "province-company" })
-            </div>
-
-            <div>
-                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.DistrictId, new SelectList(""), HomeView.SelectDistrict, new { @id = "district-company", @disabled = "disabled" })
-            </div>
-
-            <div>
-                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.RuralRegionsId, new SelectList(""), HomeView.SelectRegions, new { @id = "ruralregions-company", @disabled = "disabled" })
-            </div>
-
-            <div>
-                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.NeighborhoodId, new SelectList(""), HomeView.SelectNeigborhood, new { @id = "neighborhood-company", @disabled = "disabled" })
-            </div>
-
-            <div>
-                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.StreetId, new SelectList(""), HomeView.SelectStreet, new { @id = "street-company", @disabled = "disabled" })
-            </div>
-
-            <div>
-                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.BuildingId, new SelectList(""), HomeView.SelectBuilding, new { @id = "building-company", @disabled = "disabled" })
-            </div>
-
-            <div>
-                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.ApartmentId, new SelectList(""), HomeView.SelectApartment, new { @id = "apartment-company", @disabled = "disabled" })
-            </div>
-
-            <div>
-                @Html.LabelFor(ci => ci.CorporateInfo.CompanyAddress.PostalCode)
-                @Html.EditorFor(ci => ci.CorporateInfo.CompanyAddress.PostalCode)
-                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.PostalCode)
-            </div>
-
-            <div>
-                @Html.LabelFor(ci => ci.CorporateInfo.CompanyAddress.Floor)
-                @Html.EditorFor(ci => ci.CorporateInfo.CompanyAddress.Floor)
-                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.Floor)
-            </div>
-        </div>
-
-    </div>
-
-    <div id="CustomerGeneralInfoContainer">
-        <h2>CustomerGeneralInfo</h2>
-
-        <h4>BillingAddress</h4>
-        <div id="BillingAddressContainer">
-            <div>
-                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.ProvinceId, (SelectList)ViewBag.Provinces, HomeView.SelectProvince, new { @id = "province-billing" })
-            </div>
-
-            <div>
-                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.DistrictId, new SelectList(""), HomeView.SelectDistrict, new { @id = "district-billing", @disabled = "disabled" })
-            </div>
-
-            <div>
-                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.RuralRegionsId, new SelectList(""), HomeView.SelectRegions, new { @id = "ruralregions-billing", @disabled = "disabled" })
-            </div>
-
-            <div>
-                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.NeighborhoodId, new SelectList(""), HomeView.SelectNeigborhood, new { @id = "neighborhood-billing", @disabled = "disabled" })
-            </div>
-
-            <div>
-                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.StreetId, new SelectList(""), HomeView.SelectStreet, new { @id = "street-billing", @disabled = "disabled" })
-            </div>
-
-            <div>
-                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.BuildingId, new SelectList(""), HomeView.SelectBuilding, new { @id = "building-billing", @disabled = "disabled" })
-            </div>
-
-            <div>
-                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.ApartmentId, new SelectList(""), HomeView.SelectApartment, new { @id = "apartment-billing", @disabled = "disabled" })
-            </div>
-
-            <div>
-                @Html.LabelFor(gi => gi.GeneralInfo.BillingAddress.PostalCode)
-                @Html.EditorFor(gi => gi.GeneralInfo.BillingAddress.PostalCode)
-                @Html.ValidationMessageFor(gi => gi.GeneralInfo.BillingAddress.PostalCode)
-            </div>
-
-            <div>
-                @Html.LabelFor(gi => gi.GeneralInfo.BillingAddress.Floor)
-                @Html.EditorFor(gi => gi.GeneralInfo.BillingAddress.Floor)
-                @Html.ValidationMessageFor(gi => gi.GeneralInfo.BillingAddress.Floor)
-            </div>
-
-        </div>
-
-        <div>
-            @Html.LabelFor(m => m.GeneralInfo.ContactPhoneNo)
-            @Html.EditorFor(m => m.GeneralInfo.ContactPhoneNo)
-            @Html.ValidationMessageFor(m => m.GeneralInfo.ContactPhoneNo)
-        </div>
-
-        <div>
-            @Html.LabelFor(m => m.GeneralInfo.Email)
-            @Html.EditorFor(m => m.GeneralInfo.Email)
-            @Html.ValidationMessageFor(m => m.GeneralInfo.Email)
-        </div>
-
-        <div>
-            @Html.LabelFor(m => m.GeneralInfo.CustomerTypeId)
-            @Html.DropDownListFor(m => m.GeneralInfo.CustomerTypeId, (SelectList)ViewBag.CustomerTypeList, "Seç")
-            @Html.ValidationMessageFor(m => m.GeneralInfo.CustomerTypeId)
-        </div>
-
-        <div>
-            @Html.LabelFor(m => m.GeneralInfo.Culture)
-            @Html.DropDownListFor(m => m.GeneralInfo.Culture, (SelectList)ViewBag.CultureList, BillView.Select)
-            @Html.ValidationMessageFor(m => m.GeneralInfo.Culture)
-        </div>
-
-
-
-        <input type="button" id="createNumberInput" value="başka telefon ekle" />
-        <div id="telephoneNumberInputContainer"></div>
-    </div>
-
     <div id="IDCardInfoContainer">
         <h2>IDCardInfo</h2>
 
@@ -350,7 +108,259 @@
 
     </div>
 
-    <div id="IndividualCustomerInfoContainer">
+    <div id="CustomerGeneralInfoContainer">
+        <h2>CustomerGeneralInfo</h2>
+
+        <div>
+            @Html.LabelFor(gi => gi.GeneralInfo.SameSetupAddressByBilling)
+            @Html.EditorFor(gi => gi.GeneralInfo.SameSetupAddressByBilling)
+        </div>
+
+        <h4>BillingAddress</h4>
+        <div id="BillingAddressContainer">
+            <div>
+                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.ProvinceId, (SelectList)ViewBag.Provinces, HomeView.SelectProvince, new { @id = "province-billing" })
+            </div>
+
+            <div>
+                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.DistrictId, new SelectList(""), HomeView.SelectDistrict, new { @id = "district-billing", @disabled = "disabled" })
+            </div>
+
+            <div>
+                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.RuralRegionsId, new SelectList(""), HomeView.SelectRegions, new { @id = "ruralregions-billing", @disabled = "disabled" })
+            </div>
+
+            <div>
+                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.NeighborhoodId, new SelectList(""), HomeView.SelectNeigborhood, new { @id = "neighborhood-billing", @disabled = "disabled" })
+            </div>
+
+            <div>
+                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.StreetId, new SelectList(""), HomeView.SelectStreet, new { @id = "street-billing", @disabled = "disabled" })
+            </div>
+
+            <div>
+                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.BuildingId, new SelectList(""), HomeView.SelectBuilding, new { @id = "building-billing", @disabled = "disabled" })
+            </div>
+
+            <div>
+                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.ApartmentId, new SelectList(""), HomeView.SelectApartment, new { @id = "apartment-billing", @disabled = "disabled" })
+            </div>
+
+            <div>
+                @Html.LabelFor(gi => gi.GeneralInfo.BillingAddress.PostalCode)
+                @Html.EditorFor(gi => gi.GeneralInfo.BillingAddress.PostalCode)
+                @Html.ValidationMessageFor(gi => gi.GeneralInfo.BillingAddress.PostalCode)
+            </div>
+
+            <div>
+                @Html.LabelFor(gi => gi.GeneralInfo.BillingAddress.Floor)
+                @Html.EditorFor(gi => gi.GeneralInfo.BillingAddress.Floor)
+                @Html.ValidationMessageFor(gi => gi.GeneralInfo.BillingAddress.Floor)
+            </div>
+        </div>
+
+        <div>
+            @Html.LabelFor(m => m.GeneralInfo.ContactPhoneNo)
+            @Html.EditorFor(m => m.GeneralInfo.ContactPhoneNo)
+            @Html.ValidationMessageFor(m => m.GeneralInfo.ContactPhoneNo)
+        </div>
+
+        <div>
+            @Html.LabelFor(m => m.GeneralInfo.Email)
+            @Html.EditorFor(m => m.GeneralInfo.Email)
+            @Html.ValidationMessageFor(m => m.GeneralInfo.Email)
+        </div>
+
+        <div>
+            @Html.LabelFor(m => m.GeneralInfo.CustomerTypeId)
+            @Html.DropDownListFor(m => m.GeneralInfo.CustomerTypeId, (SelectList)ViewBag.CustomerTypeList, "Seç")
+            @Html.ValidationMessageFor(m => m.GeneralInfo.CustomerTypeId)
+        </div>
+
+        <div>
+            @Html.LabelFor(m => m.GeneralInfo.Culture)
+            @Html.DropDownListFor(m => m.GeneralInfo.Culture, (SelectList)ViewBag.CultureList, BillView.Select)
+            @Html.ValidationMessageFor(m => m.GeneralInfo.Culture)
+        </div>
+        <input type="button" id="createNumberInput" value="başka telefon ekle" />
+        <div id="telephoneNumberInputContainer"></div>
+    </div>
+
+    <div id="corporateCustomerInfoContainer" style="display:none">
+        <h2>CorporateCustomerInfo</h2>
+        <div>
+            @Html.LabelFor(ci => ci.CorporateInfo.CentralSystemNo)
+            @Html.EditorFor(ci => ci.CorporateInfo.CentralSystemNo)
+            @Html.ValidationMessageFor(ci => ci.CorporateInfo.CentralSystemNo)
+        </div>
+
+        <div>
+            @Html.LabelFor(ci => ci.CorporateInfo.ExecutiveBirthPlace)
+            @Html.EditorFor(ci => ci.CorporateInfo.ExecutiveBirthPlace)
+            @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveBirthPlace)
+        </div>
+
+        <div>
+            @Html.LabelFor(ci => ci.CorporateInfo.ExecutiveFathersName)
+            @Html.EditorFor(ci => ci.CorporateInfo.ExecutiveFathersName)
+            @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveFathersName)
+        </div>
+
+        <div>
+            @Html.LabelFor(ci => ci.CorporateInfo.ExecutiveMothersMaidenName)
+            @Html.EditorFor(ci => ci.CorporateInfo.ExecutiveMothersMaidenName)
+            @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveMothersMaidenName)
+        </div>
+
+        <div>
+            @Html.LabelFor(ci => ci.CorporateInfo.ExecutiveMothersName)
+            @Html.EditorFor(ci => ci.CorporateInfo.ExecutiveMothersName)
+            @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveMothersName)
+        </div>
+
+        <div>
+            @Html.LabelFor(ci => ci.CorporateInfo.ExecutiveNationalityId)
+            @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveNationalityId, (SelectList)ViewBag.NationalityListByCorporative, BillView.Select)
+            @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveNationalityId)
+        </div>
+
+        <div>
+            @Html.LabelFor(ci => ci.CorporateInfo.ExecutiveProfessionId)
+            @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveProfessionId, (SelectList)ViewBag.ProfessionListByCorporative, BillView.Select)
+            @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveProfessionId)
+        </div>
+
+        <div>
+            @Html.LabelFor(ci => ci.CorporateInfo.ExecutiveSexId)
+            @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveSexId, (SelectList)ViewBag.SexexListByCorporative, BillView.Select)
+            @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveSexId)
+        </div>
+
+        <div>
+            @Html.LabelFor(ci => ci.CorporateInfo.TaxNo)
+            @Html.EditorFor(ci => ci.CorporateInfo.TaxNo)
+            @Html.ValidationMessageFor(ci => ci.CorporateInfo.TaxNo)
+        </div>
+
+        <div>
+            @Html.LabelFor(ci => ci.CorporateInfo.TaxOffice)
+            @Html.EditorFor(ci => ci.CorporateInfo.TaxOffice)
+            @Html.ValidationMessageFor(ci => ci.CorporateInfo.TaxOffice)
+        </div>
+
+        <div>
+            @Html.LabelFor(ci => ci.CorporateInfo.Title)
+            @Html.EditorFor(ci => ci.CorporateInfo.Title)
+            @Html.ValidationMessageFor(ci => ci.CorporateInfo.Title)
+        </div>
+
+        <div>
+            @Html.LabelFor(ci => ci.CorporateInfo.TradeRegistrationNo)
+            @Html.EditorFor(ci => ci.CorporateInfo.TradeRegistrationNo)
+            @Html.ValidationMessageFor(ci => ci.CorporateInfo.TradeRegistrationNo)
+        </div>
+
+        <div>
+            @Html.LabelFor(ci => ci.CorporateInfo.SameSetupAddressByCorporativeResidencyAddress)
+            @Html.EditorFor(ci => ci.CorporateInfo.SameSetupAddressByCorporativeResidencyAddress)
+        </div>
+
+        <h4>ExecutiveResidencyAddress</h4>
+        <div id="ExecutiveResidencyContainer">
+            <div>
+                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.ProvinceId, (SelectList)ViewBag.Provinces, HomeView.SelectProvince, new { @id = "province" })
+            </div>
+
+            <div>
+                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.DistrictId, new SelectList(""), HomeView.SelectDistrict, new { @id = "district", @disabled = "disabled" })
+            </div>
+
+            <div>
+                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.RuralRegionsId, new SelectList(""), HomeView.SelectRegions, new { @id = "ruralregions", @disabled = "disabled" })
+            </div>
+
+            <div>
+                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.NeighborhoodId, new SelectList(""), HomeView.SelectNeigborhood, new { @id = "neighborhood", @disabled = "disabled" })
+            </div>
+
+            <div>
+                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.StreetId, new SelectList(""), HomeView.SelectStreet, new { @id = "street", @disabled = "disabled" })
+            </div>
+
+            <div>
+                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.BuildingId, new SelectList(""), HomeView.SelectBuilding, new { @id = "building", @disabled = "disabled" })
+            </div>
+
+            <div>
+                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.ApartmentId, new SelectList(""), HomeView.SelectApartment, new { @id = "apartment", @disabled = "disabled" })
+            </div>
+
+            <div>
+                @Html.LabelFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.PostalCode)
+                @Html.EditorFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.PostalCode)
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.PostalCode)
+            </div>
+
+            <div>
+                @Html.LabelFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.Floor)
+                @Html.EditorFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.Floor)
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.Floor)
+            </div>
+
+        </div>
+
+
+        <div>
+            @Html.LabelFor(ci => ci.CorporateInfo.SameSetupAddressByCorporativeCompanyAddress)
+            @Html.EditorFor(ci => ci.CorporateInfo.SameSetupAddressByCorporativeCompanyAddress)
+        </div>
+
+        <h4>CompanyAddress</h4>
+        <div id="CompanyContainer">
+            <div>
+                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.ProvinceId, (SelectList)ViewBag.Provinces, HomeView.SelectProvince, new { @id = "province-company" })
+            </div>
+
+            <div>
+                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.DistrictId, new SelectList(""), HomeView.SelectDistrict, new { @id = "district-company", @disabled = "disabled" })
+            </div>
+
+            <div>
+                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.RuralRegionsId, new SelectList(""), HomeView.SelectRegions, new { @id = "ruralregions-company", @disabled = "disabled" })
+            </div>
+
+            <div>
+                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.NeighborhoodId, new SelectList(""), HomeView.SelectNeigborhood, new { @id = "neighborhood-company", @disabled = "disabled" })
+            </div>
+
+            <div>
+                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.StreetId, new SelectList(""), HomeView.SelectStreet, new { @id = "street-company", @disabled = "disabled" })
+            </div>
+
+            <div>
+                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.BuildingId, new SelectList(""), HomeView.SelectBuilding, new { @id = "building-company", @disabled = "disabled" })
+            </div>
+
+            <div>
+                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.ApartmentId, new SelectList(""), HomeView.SelectApartment, new { @id = "apartment-company", @disabled = "disabled" })
+            </div>
+
+            <div>
+                @Html.LabelFor(ci => ci.CorporateInfo.CompanyAddress.PostalCode)
+                @Html.EditorFor(ci => ci.CorporateInfo.CompanyAddress.PostalCode)
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.PostalCode)
+            </div>
+
+            <div>
+                @Html.LabelFor(ci => ci.CorporateInfo.CompanyAddress.Floor)
+                @Html.EditorFor(ci => ci.CorporateInfo.CompanyAddress.Floor)
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.Floor)
+            </div>
+        </div>
+
+    </div>
+
+    <div id="individualCustomerInfoContainer" style="display:none">
         <h2>IndividualCustomerInfo</h2>
 
         <div>
@@ -393,6 +403,11 @@
             @Html.LabelFor(m => m.Individual.SexId)
             @Html.DropDownListFor(m => m.Individual.SexId, (SelectList)ViewBag.SexexListByIndividual, BillView.Select)
             @Html.ValidationMessageFor(m => m.Individual.SexId)
+        </div>
+
+        <div>
+            @Html.LabelFor(m => m.Individual.SameSetupAddressByIndividual)
+            @Html.EditorFor(m=>m.Individual.SameSetupAddressByIndividual)
         </div>
 
         <h4>IndividualResidencyAddress</h4>
@@ -509,6 +524,60 @@
 
 @section Javascript{
     <script>
+
+        $("#GeneralInfo_SameSetupAddressByBilling").change(function () {
+            if (this.checked) {
+                $("#BillingAddressContainer").hide();
+            }
+            else {
+                $("#BillingAddressContainer").show();
+            }
+        });
+
+        $("#Individual_SameSetupAddressByIndividual").change(function () {
+            if (this.checked) {
+                $("#IndividualResidencyContainer").hide();
+            }
+            else {
+                $("#IndividualResidencyContainer").show();
+            }
+        });
+        
+        $("#CorporateInfo_SameSetupAddressByCorporativeResidencyAddress").change(function () {
+            if (this.checked) {
+                $("#ExecutiveResidencyContainer").hide();
+            }
+            else {
+                $("#ExecutiveResidencyContainer").show();
+            }
+        });
+
+        $("#CorporateInfo_SameSetupAddressByCorporativeCompanyAddress").change(function () {
+            if (this.checked) {
+                $("#CompanyContainer").hide();
+            }
+            else {
+                $("#CompanyContainer").show();
+            }
+        });
+
+        $("#GeneralInfo_CustomerTypeId").change(function () {
+            var value = $("#GeneralInfo_CustomerTypeId option:selected").val();
+            if (value=="1") {
+                $("#corporateCustomerInfoContainer").hide();
+                $("#individualCustomerInfoContainer").show();
+            }
+            else if (value == "") {
+                $("#corporateCustomerInfoContainer").hide();
+                $("#individualCustomerInfoContainer").hide();
+            }
+            else {
+                $("#corporateCustomerInfoContainer").show();
+                $("#individualCustomerInfoContainer").hide();
+            }
+        });
+
+
         $('#createNumberInput').click(function () {
             $('#telephoneNumberInputContainer').append('<input type="button" id="remove-button" value="sh">');
             $('#telephoneNumberInputContainer').append('<input type="text" name="GeneralInfo.OtherPhoneNos" id="GeneralInfo_OtherPhoneNos">');
@@ -569,7 +638,7 @@
 
         QueryAddress("#building-individual","#apartment-individual",'@Url.Action("ApartmentList", "Home")')
 
-        /////////////////////////////////////////////////////////////////////////////////////////////// 
+        ///////////////////////////////////////////////////////////////////////////////////////////////
 
         QueryAddress("#province-setup", "#district-setup", '@Url.Action("DistrictList", "Home")')
 

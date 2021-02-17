@@ -123,14 +123,17 @@
   <data name="EmailMaxLenght" xml:space="preserve">
     <value>E-Posta alanı 300 karakterden fazla olamaz.</value>
   </data>
+  <data name="MaxTCKValid" xml:space="preserve">
+    <value>Maksimum 11 Haneli TC Kimlik Numarası giriniz.</value>
+  </data>
+  <data name="MinTCKValid" xml:space="preserve">
+    <value>Minimum 11 Haneli TC Kimlik Numarası giriniz.</value>
+  </data>
   <data name="PasswordMinLenght" xml:space="preserve">
     <value>Minimum 6 karakter giriniz.</value>
   </data>
   <data name="Required" xml:space="preserve">
     <value>{0} alanı boş bırakılamaz.</value>
-  </data>
-  <data name="String1" xml:space="preserve">
-    <value />
   </data>
   <data name="ValidPhoneNumber" xml:space="preserve">
     <value>10 haneli telefon numarası giriniz.</value>

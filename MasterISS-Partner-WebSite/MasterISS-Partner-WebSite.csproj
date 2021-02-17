@@ -170,6 +170,8 @@
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserOperationsController.cs" />
+    <Compile Include="Enums\CustomerTypeEnum.cs" />
+    <Compile Include="OtherPhoneNoValidation.cs" />
     <Compile Include="Enums\BalanceRequestTypesEnum.cs" />
     <Compile Include="Enums\PermissionListEnum.cs" />
     <Compile Include="Global.asax.cs">

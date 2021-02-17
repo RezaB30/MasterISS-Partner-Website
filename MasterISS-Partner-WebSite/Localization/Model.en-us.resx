@@ -318,6 +318,9 @@
   <data name="RowNo" xml:space="preserve">
     <value>Row Number</value>
   </data>
+  <data name="SameSetupAddress" xml:space="preserve">
+    <value>Same as the Setup Address</value>
+  </data>
   <data name="SerialNo" xml:space="preserve">
     <value>Serial No</value>
   </data>

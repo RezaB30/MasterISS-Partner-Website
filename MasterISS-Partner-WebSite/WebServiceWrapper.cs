@@ -457,13 +457,13 @@ namespace MasterISS_Partner_WebSite
                         TaxOffice = addCustomerViewModel.CorporateInfo.TaxOffice,
                         Title = addCustomerViewModel.CorporateInfo.Title,
                         TradeRegistrationNo = addCustomerViewModel.CorporateInfo.TradeRegistrationNo,
-                        ExecutiveResidencyAddress = NewAddressInfo(addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.NewCustomerAddressInfoRequest, addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.PostalCode, addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.Floor),
-                        CompanyAddress = NewAddressInfo(addCustomerViewModel.CorporateInfo.CompanyAddress.NewCustomerAddressInfoRequest, addCustomerViewModel.CorporateInfo.CompanyAddress.PostalCode, addCustomerViewModel.CorporateInfo.CompanyAddress.Floor)
+                        ExecutiveResidencyAddress = NewAddressInfo(addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.NewCustomerAddressInfoRequest, (int)addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.PostalCode, addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.Floor),
+                        CompanyAddress = NewAddressInfo(addCustomerViewModel.CorporateInfo.CompanyAddress.NewCustomerAddressInfoRequest, (int)addCustomerViewModel.CorporateInfo.CompanyAddress.PostalCode, addCustomerViewModel.CorporateInfo.CompanyAddress.Floor)
                     },
 
                     CustomerGeneralInfo = new CustomerGeneralInfo()
                     {
-                        BillingAddress = NewAddressInfo(addCustomerViewModel.GeneralInfo.BillingAddress.NewCustomerAddressInfoRequest, addCustomerViewModel.GeneralInfo.BillingAddress.PostalCode, addCustomerViewModel.GeneralInfo.BillingAddress.Floor),
+                        BillingAddress = NewAddressInfo(addCustomerViewModel.GeneralInfo.BillingAddress.NewCustomerAddressInfoRequest, (int)addCustomerViewModel.GeneralInfo.BillingAddress.PostalCode, addCustomerViewModel.GeneralInfo.BillingAddress.Floor),
                         ContactPhoneNo = addCustomerViewModel.GeneralInfo.ContactPhoneNo,
                         Email = addCustomerViewModel.GeneralInfo.Email,
                         CustomerType = addCustomerViewModel.GeneralInfo.CustomerTypeId,
@@ -502,14 +502,14 @@ namespace MasterISS_Partner_WebSite
                         Nationality = addCustomerViewModel.Individual.NationalityId,
                         Profession = addCustomerViewModel.Individual.ProfessionId,
                         Sex = addCustomerViewModel.Individual.SexId,
-                        ResidencyAddress = NewAddressInfo(addCustomerViewModel.Individual.ResidencyAddress.NewCustomerAddressInfoRequest, addCustomerViewModel.Individual.ResidencyAddress.PostalCode, addCustomerViewModel.Individual.ResidencyAddress.Floor)
+                        ResidencyAddress = NewAddressInfo(addCustomerViewModel.Individual.ResidencyAddress.NewCustomerAddressInfoRequest, (int)addCustomerViewModel.Individual.ResidencyAddress.PostalCode, addCustomerViewModel.Individual.ResidencyAddress.Floor)
                     },
 
                     SubscriptionInfo = new SubscriptionRegistrationInfo()
                     {
                         BillingPeriod = addCustomerViewModel.SubscriptionInfo.BillingPeriodId,
                         ServiceID = addCustomerViewModel.SubscriptionInfo.PartnerTariffID,
-                        SetupAddress = NewAddressInfo(addCustomerViewModel.SubscriptionInfo.SetupAddress.NewCustomerAddressInfoRequest, addCustomerViewModel.SubscriptionInfo.SetupAddress.PostalCode, addCustomerViewModel.SubscriptionInfo.SetupAddress.Floor)
+                        SetupAddress = NewAddressInfo(addCustomerViewModel.SubscriptionInfo.SetupAddress.NewCustomerAddressInfoRequest, (int)addCustomerViewModel.SubscriptionInfo.SetupAddress.PostalCode, addCustomerViewModel.SubscriptionInfo.SetupAddress.Floor)
                     },
                 },
             };

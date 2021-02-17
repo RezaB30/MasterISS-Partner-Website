@@ -318,6 +318,9 @@
   <data name="RowNo" xml:space="preserve">
     <value>Sıra Numarası</value>
   </data>
+  <data name="SameSetupAddress" xml:space="preserve">
+    <value>Kurulum Adresi ile Aynı</value>
+  </data>
   <data name="SerialNo" xml:space="preserve">
     <value>Seri No</value>
   </data>

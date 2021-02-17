@@ -664,6 +664,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kurulum Adresi ile Aynı.
+        /// </summary>
+        public static string SameSetupAddress {
+            get {
+                return ResourceManager.GetString("SameSetupAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Seri No.
         /// </summary>
         public static string SerialNo {

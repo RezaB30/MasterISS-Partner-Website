@@ -54,13 +54,77 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
 
         [Display(Name = "ProfessionId", ResourceType = typeof(Localization.Model))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
-        public int ProfessionId { get; set; }
+        public int? ProfessionId { get; set; }
 
         public AdresInfoViewModel ResidencyAddress { get; set; }
 
         [Display(Name = "SexId", ResourceType = typeof(Localization.Model))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
-        public int SexId { get; set; }
+        public int? SexId { get; set; }
+
+        [Display(Name = "SameSetupAddress", ResourceType = typeof(Localization.Model))]
+        public bool SameSetupAddressByIndividual { get; set; }
+    }
+
+    public class CorporateInfoViewModel
+    {
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        [Display(Name = "CentralSystemNo", ResourceType = typeof(Localization.Model))]
+        public string CentralSystemNo { get; set; }
+
+        public AdresInfoViewModel CompanyAddress { get; set; }
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        [Display(Name = "ExecutiveBirthPlace", ResourceType = typeof(Localization.Model))]
+        public string ExecutiveBirthPlace { get; set; }
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        [Display(Name = "TaxNo", ResourceType = typeof(Localization.Model))]
+        public string TaxNo { get; set; }
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        [Display(Name = "TaxOffice", ResourceType = typeof(Localization.Model))]
+        public string TaxOffice { get; set; }
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        [Display(Name = "ExecutiveFathersName", ResourceType = typeof(Localization.Model))]
+        public string ExecutiveFathersName { get; set; }
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        [Display(Name = "ExecutiveMothersMaidenName", ResourceType = typeof(Localization.Model))]
+        public string ExecutiveMothersMaidenName { get; set; }
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        [Display(Name = "ExecutiveMothersName", ResourceType = typeof(Localization.Model))]
+        public string ExecutiveMothersName { get; set; }
+
+        [Display(Name = "ExecutiveNationalityId", ResourceType = typeof(Localization.Model))]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        public int? ExecutiveNationalityId { get; set; }
+
+        [Display(Name = "ExecutiveProfessionId", ResourceType = typeof(Localization.Model))]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        public int? ExecutiveProfessionId { get; set; }
+
+        public AdresInfoViewModel ExecutiveResidencyAddress { get; set; }
+
+        [Display(Name = "ExecutiveSexId", ResourceType = typeof(Localization.Model))]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        public short? ExecutiveSexId { get; set; }
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        [Display(Name = "Title", ResourceType = typeof(Localization.Model))]
+        public string Title { get; set; }
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        [Display(Name = "TradeRegistrationNo", ResourceType = typeof(Localization.Model))]
+        public string TradeRegistrationNo { get; set; }
+
+        [Display(Name = "SameSetupAddress", ResourceType = typeof(Localization.Model))]
+        public bool SameSetupAddressByCorporativeCompanyAddress { get; set; }
+        
+        [Display(Name = "SameSetupAddress", ResourceType = typeof(Localization.Model))]
+        public bool SameSetupAddressByCorporativeResidencyAddress { get; set; }
     }
 
     public class IDCardViewModel
@@ -71,7 +135,7 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
 
         [Display(Name = "CardTypeId", ResourceType = typeof(Localization.Model))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
-        public int CardTypeId { get; set; }
+        public int? CardTypeId { get; set; }
 
         [Display(Name = "DateOfIssue", ResourceType = typeof(Localization.Model))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
@@ -116,6 +180,8 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         public string SerialNo { get; set; }
 
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        [MaxLength(11, ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "MaxTCKValid")]
+        [MinLength(11, ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "MinTCKValid")]
         [Display(Name = "TCKNo", ResourceType = typeof(Localization.Model))]
         public string TCKNo { get; set; }
 
@@ -139,76 +205,25 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
 
         [Display(Name = "CustomerTypeId", ResourceType = typeof(Localization.Model))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
-        public int CustomerTypeId { get; set; }
+        public int? CustomerTypeId { get; set; }
 
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        [MaxLength(300, ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "EmailMaxLenght")]
+        [RegularExpression(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "EmailFormat")]
         [Display(Name = "Email", ResourceType = typeof(Localization.Model))]
         public string Email { get; set; }
 
         [Display(Name = "OtherPhoneNos", ResourceType = typeof(Localization.Model))]
+        [OtherPhoneNoValidation(ErrorMessageResourceName = "ValidPhoneNumber", ErrorMessageResourceType = typeof(Localization.Validation))]
         public List<string> OtherPhoneNos { get; set; }
 
         [Display(Name = "CultureCustomer", ResourceType = typeof(Localization.Model))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
         public string Culture { get; set; }
+
+        [Display(Name = "SameSetupAddress", ResourceType = typeof(Localization.Model))]
+        public bool SameSetupAddressByBilling { get; set; }
+
     }
 
-    public class CorporateInfoViewModel
-    {
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
-        [Display(Name = "CentralSystemNo", ResourceType = typeof(Localization.Model))]
-        public string CentralSystemNo { get; set; }
-
-        public AdresInfoViewModel CompanyAddress { get; set; }
-
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
-        [Display(Name = "ExecutiveBirthPlace", ResourceType = typeof(Localization.Model))]
-        public string ExecutiveBirthPlace { get; set; }
-
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
-        [Display(Name = "TaxNo", ResourceType = typeof(Localization.Model))]
-        public string TaxNo { get; set; }
-
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
-        [Display(Name = "TaxOffice", ResourceType = typeof(Localization.Model))]
-        public string TaxOffice { get; set; }
-
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
-        [Display(Name = "ExecutiveFathersName", ResourceType = typeof(Localization.Model))]
-        public string ExecutiveFathersName { get; set; }
-
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
-        [Display(Name = "ExecutiveMothersMaidenName", ResourceType = typeof(Localization.Model))]
-        public string ExecutiveMothersMaidenName { get; set; }
-
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
-        [Display(Name = "ExecutiveMothersName", ResourceType = typeof(Localization.Model))]
-        public string ExecutiveMothersName { get; set; }
-
-        [Display(Name = "ExecutiveNationalityId", ResourceType = typeof(Localization.Model))]
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
-        public int ExecutiveNationalityId { get; set; }
-
-        [Display(Name = "ExecutiveProfessionId", ResourceType = typeof(Localization.Model))]
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
-        public int ExecutiveProfessionId { get; set; }
-
-        public AdresInfoViewModel ExecutiveResidencyAddress { get; set; }
-
-        [Display(Name = "BBK", ResourceType = typeof(Localization.Model))]
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
-        public string ExecutiveResidencyBBK { get; set; }
-
-        [Display(Name = "ExecutiveSexId", ResourceType = typeof(Localization.Model))]
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
-        public short ExecutiveSexId { get; set; }
-
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
-        [Display(Name = "Title", ResourceType = typeof(Localization.Model))]
-        public string Title { get; set; }
-
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
-        [Display(Name = "TradeRegistrationNo", ResourceType = typeof(Localization.Model))]
-        public string TradeRegistrationNo { get; set; }
-    }
 }

@@ -123,6 +123,12 @@
   <data name="EmailMaxLenght" xml:space="preserve">
     <value>E-mail field can not be more than 300 characters.</value>
   </data>
+  <data name="MaxTCKValid" xml:space="preserve">
+    <value>Please enter maximum 11 digits Turkish Republic Identity Number.</value>
+  </data>
+  <data name="MinTCKValid" xml:space="preserve">
+    <value>Enter a minimum of 11 digits Turkish Republic Identity Number.</value>
+  </data>
   <data name="PasswordMinLenght" xml:space="preserve">
     <value>Please enter a minimum of 6 characters.</value>
   </data>
