@@ -27,7 +27,7 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
         public int PartnerTariffID { get; set; }
 
-        public AdresInfoViewModel SetupAddress { get; set; }
+        public  AddressInfoViewModel SetupAddress { get; set; }
     }
 
     public class IndividualViewModel
@@ -56,7 +56,7 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
         public int? ProfessionId { get; set; }
 
-        public AdresInfoViewModel ResidencyAddress { get; set; }
+        public  AddressInfoViewModel ResidencyAddress { get; set; }
 
         [Display(Name = "SexId", ResourceType = typeof(Localization.Model))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
@@ -72,7 +72,7 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         [Display(Name = "CentralSystemNo", ResourceType = typeof(Localization.Model))]
         public string CentralSystemNo { get; set; }
 
-        public AdresInfoViewModel CompanyAddress { get; set; }
+        public  AddressInfoViewModel CompanyAddress { get; set; }
 
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
         [Display(Name = "ExecutiveBirthPlace", ResourceType = typeof(Localization.Model))]
@@ -106,7 +106,7 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
         public int? ExecutiveProfessionId { get; set; }
 
-        public AdresInfoViewModel ExecutiveResidencyAddress { get; set; }
+        public  AddressInfoViewModel ExecutiveResidencyAddress { get; set; }
 
         [Display(Name = "ExecutiveSexId", ResourceType = typeof(Localization.Model))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
@@ -129,6 +129,9 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
 
     public class IDCardViewModel
     {
+        public TCIDCardWithChip TCIDCardWithChip { get; set; }
+        public TCBirthCertificate TCBirthCertificate { get; set; }
+
         [Display(Name = "BirthDate", ResourceType = typeof(Localization.Model))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
         public string BirthDate { get; set; }
@@ -136,14 +139,6 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         [Display(Name = "CardTypeId", ResourceType = typeof(Localization.Model))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
         public int? CardTypeId { get; set; }
-
-        [Display(Name = "DateOfIssue", ResourceType = typeof(Localization.Model))]
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
-        public string DateOfIssue { get; set; }
-
-        [Display(Name = "District", ResourceType = typeof(Localization.Model))]
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
-        public string District { get; set; }
 
         [Display(Name = "FirstName", ResourceType = typeof(Localization.Model))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
@@ -153,27 +148,8 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         [Display(Name = "LastName", ResourceType = typeof(Localization.Model))]
         public string LastName { get; set; }
 
-        [Display(Name = "Neighbourhood", ResourceType = typeof(Localization.Model))]
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
-        public string Neighbourhood { get; set; }
-
-        [Display(Name = "PageNo", ResourceType = typeof(Localization.Model))]
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
-        public string PageNo { get; set; }
-
         [Display(Name = "PassportNo", ResourceType = typeof(Localization.Model))]
         public string PassportNo { get; set; }
-
-        [Display(Name = "PlaceOfIssue", ResourceType = typeof(Localization.Model))]
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
-        public string PlaceOfIssue { get; set; }
-
-        [Display(Name = "Province", ResourceType = typeof(Localization.Model))]
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
-        public string Province { get; set; }
-
-        [Display(Name = "RowNo", ResourceType = typeof(Localization.Model))]
-        public string RowNo { get; set; }
 
         [Display(Name = "SerialNo", ResourceType = typeof(Localization.Model))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
@@ -184,9 +160,48 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         [MinLength(11, ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "MinTCKValid")]
         [Display(Name = "TCKNo", ResourceType = typeof(Localization.Model))]
         public string TCKNo { get; set; }
+    }
 
+    public class TCBirthCertificate
+    {
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
         [Display(Name = "VolumeNo", ResourceType = typeof(Localization.Model))]
         public string VolumeNo { get; set; }
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        [Display(Name = "Neighbourhood", ResourceType = typeof(Localization.Model))]
+        public string Neighbourhood { get; set; }
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        [Display(Name = "PageNo", ResourceType = typeof(Localization.Model))]
+        public string PageNo { get; set; }
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        [Display(Name = "District", ResourceType = typeof(Localization.Model))]
+        public string District { get; set; }
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        [Display(Name = "DateOfIssue", ResourceType = typeof(Localization.Model))]
+        public string DateOfIssue { get; set; }
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        [Display(Name = "PlaceOfIssue", ResourceType = typeof(Localization.Model))]
+        public string PlaceOfIssue { get; set; }
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        [Display(Name = "Province", ResourceType = typeof(Localization.Model))]
+        public string Province { get; set; }
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        [Display(Name = "RowNo", ResourceType = typeof(Localization.Model))]
+        public string RowNo { get; set; }
+    }
+
+    public class TCIDCardWithChip
+    {
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        [Display(Name = "ExpiryDate", ResourceType = typeof(Localization.Model))]
+        public string ExpiryDate { get; set; }
     }
 
     public class GeneralInfoViewModel
@@ -196,7 +211,7 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
             OtherPhoneNos = new List<string>();
         }
 
-        public AdresInfoViewModel BillingAddress { get; set; }
+        public  AddressInfoViewModel BillingAddress { get; set; }
 
         [Display(Name = "ContactPhoneNo", ResourceType = typeof(Localization.Model))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]

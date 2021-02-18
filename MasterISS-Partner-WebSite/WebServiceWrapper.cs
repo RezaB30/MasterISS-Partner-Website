@@ -432,6 +432,7 @@ namespace MasterISS_Partner_WebSite
 
         public PartnerServiceNewCustomerRegisterResponse NewCustomerRegister(AddCustomerViewModel addCustomerViewModel)
         {
+            var parseDatetime = new DatetimeParse();
             var request = new PartnerServiceNewCustomerRegisterRequest()
             {
                 Culture = Culture,
@@ -443,7 +444,7 @@ namespace MasterISS_Partner_WebSite
                     UserEmail = GetUserMail(),
                     SubUserEmail = GetUserSubMail(),
 
-                    CorporateCustomerInfo = new CorporateCustomerInfo
+                    CorporateCustomerInfo = addCustomerViewModel.GeneralInfo.CustomerTypeId == (int)Enums.CustomerTypeEnum.Individual ? null : new CorporateCustomerInfo
                     {
                         CentralSystemNo = addCustomerViewModel.CorporateInfo.CentralSystemNo,
                         ExecutiveBirthPlace = addCustomerViewModel.CorporateInfo.ExecutiveBirthPlace,
@@ -476,24 +477,24 @@ namespace MasterISS_Partner_WebSite
 
                     IDCardInfo = new IDCardInfo()
                     {
-                        BirthDate = addCustomerViewModel.IDCard.BirthDate,
+                        BirthDate = parseDatetime.ConvertDatetimeByWebService(addCustomerViewModel.IDCard.BirthDate),
                         CardType = addCustomerViewModel.IDCard.CardTypeId,
-                        DateOfIssue = addCustomerViewModel.IDCard.DateOfIssue,
-                        District = addCustomerViewModel.IDCard.District,
+                        DateOfIssue = DateOfIssueValue((int)addCustomerViewModel.IDCard.CardTypeId, addCustomerViewModel.IDCard),
+                        District = addCustomerViewModel.IDCard.TCBirthCertificate.District,
                         FirstName = addCustomerViewModel.IDCard.FirstName,
                         LastName = addCustomerViewModel.IDCard.LastName,
-                        Neighbourhood = addCustomerViewModel.IDCard.Neighbourhood,
-                        PageNo = addCustomerViewModel.IDCard.PageNo,
+                        Neighbourhood = addCustomerViewModel.IDCard.TCBirthCertificate.Neighbourhood,
+                        PageNo = addCustomerViewModel.IDCard.TCBirthCertificate.PageNo,
                         PassportNo = addCustomerViewModel.IDCard.PassportNo,
-                        PlaceOfIssue = addCustomerViewModel.IDCard.PlaceOfIssue,
-                        Province = addCustomerViewModel.IDCard.Province,
-                        RowNo = addCustomerViewModel.IDCard.RowNo,
+                        PlaceOfIssue = addCustomerViewModel.IDCard.TCBirthCertificate.PlaceOfIssue,
+                        Province = addCustomerViewModel.IDCard.TCBirthCertificate.Province,
+                        RowNo = addCustomerViewModel.IDCard.TCBirthCertificate.RowNo,
                         SerialNo = addCustomerViewModel.IDCard.SerialNo,
                         TCKNo = addCustomerViewModel.IDCard.TCKNo,
-                        VolumeNo = addCustomerViewModel.IDCard.VolumeNo,
+                        VolumeNo = addCustomerViewModel.IDCard.TCBirthCertificate.VolumeNo,
                     },
 
-                    IndividualCustomerInfo = new IndividualCustomerInfo()
+                    IndividualCustomerInfo = addCustomerViewModel.GeneralInfo.CustomerTypeId != (int)Enums.CustomerTypeEnum.Individual ? null : new IndividualCustomerInfo()
                     {
                         BirthPlace = addCustomerViewModel.Individual.BirthPlace,
                         FathersName = addCustomerViewModel.Individual.FathersName,
@@ -513,9 +514,23 @@ namespace MasterISS_Partner_WebSite
                     },
                 },
             };
+
             var response = Client.NewCustomerRegister(request);
 
             return response;
+        }
+
+        private string DateOfIssueValue(int cardTypeId, IDCardViewModel IDCardViewModel)
+        {
+            var parseDatetime = new DatetimeParse();
+
+            if (cardTypeId == (int)Enums.CardTypeEnum.TCBirthCertificate)
+            {
+                var dateOfIssue = parseDatetime.ConvertDatetimeByWebService(IDCardViewModel.TCBirthCertificate.DateOfIssue);
+                return dateOfIssue;
+            }
+            var expiryDate = parseDatetime.ConvertDatetimeByWebService(IDCardViewModel.TCIDCardWithChip.ExpiryDate);
+            return expiryDate;
         }
 
         public PartnerServiceSMSCodeResponse SendConfirmationSMS(string phoneNo)
@@ -537,7 +552,6 @@ namespace MasterISS_Partner_WebSite
 
             return response;
         }
-
         public string Hash<HAT>() where HAT : HashAlgorithm
         {
             var hashAuthenticaiton = CalculateHash<HAT>(Username + Rand + CalculateHash<HAT>(Password) + KeyFragment);

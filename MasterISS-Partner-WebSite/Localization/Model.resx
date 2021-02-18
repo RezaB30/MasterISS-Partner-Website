@@ -231,6 +231,9 @@
   <data name="ExecutiveSurname" xml:space="preserve">
     <value>Yetkili Soyadı</value>
   </data>
+  <data name="ExpiryDate" xml:space="preserve">
+    <value>Son Geçerlilik Tarihi</value>
+  </data>
   <data name="FathersName" xml:space="preserve">
     <value>Baba Adı</value>
   </data>

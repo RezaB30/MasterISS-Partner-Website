@@ -170,6 +170,8 @@
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserOperationsController.cs" />
+    <Compile Include="DatetimeParse.cs" />
+    <Compile Include="Enums\CardTypeEnum.cs" />
     <Compile Include="Enums\CustomerTypeEnum.cs" />
     <Compile Include="OtherPhoneNoValidation.cs" />
     <Compile Include="Enums\BalanceRequestTypesEnum.cs" />
@@ -343,6 +345,12 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <Content Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite.PartnerServiceReference.PartnerServiceSetupGenericAllowanceListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite.PartnerServiceReference.PartnerServiceSaleAllowanceListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite.PartnerServiceReference.PartnerServiceSaleGenericAllowanceListResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <None Include="Connected Services\PartnerServiceReference\Reference.svcmap">

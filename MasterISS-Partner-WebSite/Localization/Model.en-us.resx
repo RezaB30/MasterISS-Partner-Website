@@ -231,6 +231,9 @@
   <data name="ExecutiveSurname" xml:space="preserve">
     <value>Executive Surname</value>
   </data>
+  <data name="ExpiryDate" xml:space="preserve">
+    <value>Expiry Date</value>
+  </data>
   <data name="FathersName" xml:space="preserve">
     <value>Fathers Name</value>
   </data>

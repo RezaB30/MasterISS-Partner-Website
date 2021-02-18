@@ -403,6 +403,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Son Geçerlilik Tarihi.
+        /// </summary>
+        public static string ExpiryDate {
+            get {
+                return ResourceManager.GetString("ExpiryDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Baba Adı.
         /// </summary>
         public static string FathersName {

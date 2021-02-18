@@ -84,57 +84,57 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             return View();
         }
-
-        private void CustomerTpyeIdControlAndRemoveModel(int customerTypeId)
-        {
-            if (IsCustomerTypeIndividual(customerTypeId) == true)
-            {
-                RemoveModel("CorporateInfo");
-            }
-            else
-            {
-                RemoveModel("Individual");
-            }
-        }
-
-        private bool IsCustomerTypeIndividual(int customerTypeId)
-        {
-            if (customerTypeId == (int)CustomerTypeEnum.Individual)
-            {
-                return true;
-            }
-            return false;
-        }
+      
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult NewCustomer(AddCustomerViewModel addCustomerViewModel)
         {
-            if (addCustomerViewModel.GeneralInfo.CustomerTypeId.HasValue && addCustomerViewModel.SubscriptionInfo.SetupAddress.ApartmentId.HasValue)
+            if (addCustomerViewModel.IDCard.CardTypeId.HasValue && addCustomerViewModel.GeneralInfo.CustomerTypeId.HasValue && !string.IsNullOrEmpty(addCustomerViewModel.SubscriptionInfo.SetupAddress.Floor) && addCustomerViewModel.SubscriptionInfo.SetupAddress.PostalCode.HasValue && addCustomerViewModel.SubscriptionInfo.SetupAddress.ApartmentId.HasValue)
             {
-                CustomerTpyeIdControlAndRemoveModel((int)addCustomerViewModel.GeneralInfo.CustomerTypeId);
+                if (IsCustomerTypeIndividual((int)addCustomerViewModel.GeneralInfo.CustomerTypeId))
+                {
+                    RemoveModel("CorporateInfo");
+                    if (addCustomerViewModel.Individual.SameSetupAddressByIndividual == true)
+                    {
+                        ChangeAddressInfo(addCustomerViewModel.Individual.ResidencyAddress, addCustomerViewModel.SubscriptionInfo.SetupAddress);
+
+                        ModelState.Remove("Individual.ResidencyAddress.ApartmentId");
+                        ModelState.Remove("Individual.ResidencyAddress.Floor");
+                        ModelState.Remove("Individual.ResidencyAddress.PostalCode");
+                    }
+                }
+                else
+                {
+                    RemoveModel("Individual");
+                    if (addCustomerViewModel.CorporateInfo.SameSetupAddressByCorporativeCompanyAddress == true)
+                    {
+                        ChangeAddressInfo(addCustomerViewModel.CorporateInfo.CompanyAddress, addCustomerViewModel.SubscriptionInfo.SetupAddress);
+
+                        ModelState.Remove("CorporateInfo.CompanyAddress.ApartmentId");
+                        ModelState.Remove("CorporateInfo.CompanyAddress.PostalCode");
+                        ModelState.Remove("CorporateInfo.CompanyAddress.Floor");
+                    }
+                    if (addCustomerViewModel.CorporateInfo.SameSetupAddressByCorporativeResidencyAddress == true)
+                    {
+                        ChangeAddressInfo(addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress, addCustomerViewModel.SubscriptionInfo.SetupAddress);
+
+                        ModelState.Remove("CorporateInfo.ExecutiveResidencyAddress.ApartmentId");
+                        ModelState.Remove("CorporateInfo.ExecutiveResidencyAddress.Floor");
+                        ModelState.Remove("CorporateInfo.ExecutiveResidencyAddress.PostalCode");
+                    }
+                }
 
                 if (addCustomerViewModel.GeneralInfo.SameSetupAddressByBilling == true)
                 {
-                    addCustomerViewModel.GeneralInfo.BillingAddress.ApartmentId = addCustomerViewModel.SubscriptionInfo.SetupAddress.ApartmentId;
-                    ModelState.Remove("GeneralInfo.BillingAddress.ApartmentId");
-                }
-                if (addCustomerViewModel.Individual.SameSetupAddressByIndividual == true)
-                {
-                    addCustomerViewModel.Individual.ResidencyAddress.ApartmentId = addCustomerViewModel.SubscriptionInfo.SetupAddress.ApartmentId;
-                    ModelState.Remove("Individual.ResidencyAddress.ApartmentId");
-                }
-                if (addCustomerViewModel.CorporateInfo.SameSetupAddressByCorporativeCompanyAddress == true)
-                {
-                    addCustomerViewModel.CorporateInfo.CompanyAddress.ApartmentId = addCustomerViewModel.SubscriptionInfo.SetupAddress.ApartmentId;
-                    ModelState.Remove("CorporateInfo.CompanyAddress.ApartmentId");
-                }
-                if (addCustomerViewModel.CorporateInfo.SameSetupAddressByCorporativeResidencyAddress == true)
-                {
-                    addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.ApartmentId = addCustomerViewModel.SubscriptionInfo.SetupAddress.ApartmentId;
-                    ModelState.Remove("CorporateInfo.ExecutiveResidencyAddress.ApartmentId");
+                    ChangeAddressInfo(addCustomerViewModel.GeneralInfo.BillingAddress, addCustomerViewModel.SubscriptionInfo.SetupAddress);
 
+                    ModelState.Remove("GeneralInfo.BillingAddress.ApartmentId");
+                    ModelState.Remove("GeneralInfo.BillingAddress.PostalCode");
+                    ModelState.Remove("GeneralInfo.BillingAddress.Floor");
                 }
+
+                IdCardValidationAndRemoveModelState((int)addCustomerViewModel.IDCard.CardTypeId, addCustomerViewModel.IDCard);
 
                 if (ModelState.IsValid)
                 {
@@ -155,7 +155,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                         var companyBBK = addCustomerViewModel.CorporateInfo.CompanyAddress.ApartmentId;
                         var executiveResidencyBBK = addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.ApartmentId;
 
-                        var webServiceWrapper= new WebServiceWrapper();
+                        var webServiceWrapper = new WebServiceWrapper();
                         var companyApartmentAddress = webServiceWrapper.GetApartmentAddress((long)companyBBK);
 
                         webServiceWrapper = new WebServiceWrapper();
@@ -300,6 +300,34 @@ namespace MasterISS_Partner_WebSite.Controllers
                 return Json(new { list = list }, JsonRequestBehavior.AllowGet);
             }
             return Json(new { errorMessage = paymentDayListResponse.ResponseMessage.ErrorMessage }, JsonRequestBehavior.AllowGet);
+        }
+
+        private bool IsCustomerTypeIndividual(int customerTypeId)
+        {
+            if (customerTypeId == (int)CustomerTypeEnum.Individual)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private void ChangeAddressInfo(AddressInfoViewModel changingViewModel, AddressInfoViewModel changerViewModel)
+        {
+            changingViewModel.ApartmentId = changerViewModel.ApartmentId;
+            changingViewModel.PostalCode = changerViewModel.PostalCode;
+            changingViewModel.Floor = changerViewModel.Floor;
+        }
+
+        private void IdCardValidationAndRemoveModelState(int cardTypeId, IDCardViewModel IDCard)
+        {
+            if (cardTypeId == (int)CardTypeEnum.TCBirthCertificate)
+            {
+                RemoveModel("IDCard.TCIDCardWithChip");
+            }
+            else
+            {
+                RemoveModel("IDCard.TCBirthCertificate");
+            }
         }
 
         private void RemoveModel(string removedModel)

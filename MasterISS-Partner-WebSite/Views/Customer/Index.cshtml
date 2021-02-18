@@ -13,7 +13,6 @@
 
     <div id="IDCardInfoContainer">
         <h2>IDCardInfo</h2>
-
         <div>
             @Html.LabelFor(m => m.IDCard.BirthDate)
             @Html.EditorFor(m => m.IDCard.BirthDate)
@@ -24,18 +23,6 @@
             @Html.LabelFor(m => m.IDCard.CardTypeId)
             @Html.DropDownListFor(m => m.IDCard.CardTypeId, (SelectList)ViewBag.TckTypeList, BillView.Select)
             @Html.ValidationMessageFor(m => m.IDCard.CardTypeId)
-        </div>
-
-        <div>
-            @Html.LabelFor(m => m.IDCard.DateOfIssue)
-            @Html.EditorFor(m => m.IDCard.DateOfIssue)
-            @Html.ValidationMessageFor(m => m.IDCard.DateOfIssue)
-        </div>
-
-        <div>
-            @Html.LabelFor(m => m.IDCard.District)
-            @Html.EditorFor(m => m.IDCard.District)
-            @Html.ValidationMessageFor(m => m.IDCard.District)
         </div>
 
         <div>
@@ -51,39 +38,9 @@
         </div>
 
         <div>
-            @Html.LabelFor(m => m.IDCard.Neighbourhood)
-            @Html.EditorFor(m => m.IDCard.Neighbourhood)
-            @Html.ValidationMessageFor(m => m.IDCard.Neighbourhood)
-        </div>
-
-        <div>
-            @Html.LabelFor(m => m.IDCard.PageNo)
-            @Html.EditorFor(m => m.IDCard.PageNo)
-            @Html.ValidationMessageFor(m => m.IDCard.PageNo)
-        </div>
-
-        <div>
             @Html.LabelFor(m => m.IDCard.PassportNo)
             @Html.EditorFor(m => m.IDCard.PassportNo)
             @Html.ValidationMessageFor(m => m.IDCard.PassportNo)
-        </div>
-
-        <div>
-            @Html.LabelFor(m => m.IDCard.PlaceOfIssue)
-            @Html.EditorFor(m => m.IDCard.PlaceOfIssue)
-            @Html.ValidationMessageFor(m => m.IDCard.PlaceOfIssue)
-        </div>
-
-        <div>
-            @Html.LabelFor(m => m.IDCard.Province)
-            @Html.EditorFor(m => m.IDCard.Province)
-            @Html.ValidationMessageFor(m => m.IDCard.Province)
-        </div>
-
-        <div>
-            @Html.LabelFor(m => m.IDCard.RowNo)
-            @Html.EditorFor(m => m.IDCard.RowNo)
-            @Html.ValidationMessageFor(m => m.IDCard.RowNo)
         </div>
 
         <div>
@@ -98,13 +55,63 @@
             @Html.ValidationMessageFor(m => m.IDCard.TCKNo)
         </div>
 
-        <div>
-            @Html.LabelFor(m => m.IDCard.VolumeNo)
-            @Html.EditorFor(m => m.IDCard.VolumeNo)
-            @Html.ValidationMessageFor(m => m.IDCard.VolumeNo)
+        <div id="TCBirthCertificateContainer" style="display:none">
+
+            <div>
+                @Html.LabelFor(m => m.IDCard.TCBirthCertificate.DateOfIssue)
+                @Html.EditorFor(m => m.IDCard.TCBirthCertificate.DateOfIssue)
+                @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.DateOfIssue)
+            </div>
+
+            <div>
+                @Html.LabelFor(m => m.IDCard.TCBirthCertificate.District)
+                @Html.EditorFor(m => m.IDCard.TCBirthCertificate.District)
+                @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.District)
+            </div>
+
+            <div>
+                @Html.LabelFor(m => m.IDCard.TCBirthCertificate.Neighbourhood)
+                @Html.EditorFor(m => m.IDCard.TCBirthCertificate.Neighbourhood)
+                @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.Neighbourhood)
+            </div>
+
+            <div>
+                @Html.LabelFor(m => m.IDCard.TCBirthCertificate.PageNo)
+                @Html.EditorFor(m => m.IDCard.TCBirthCertificate.PageNo)
+                @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.PageNo)
+            </div>
+
+            <div>
+                @Html.LabelFor(m => m.IDCard.TCBirthCertificate.PlaceOfIssue)
+                @Html.EditorFor(m => m.IDCard.TCBirthCertificate.PlaceOfIssue)
+                @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.PlaceOfIssue)
+            </div>
+
+            <div>
+                @Html.LabelFor(m => m.IDCard.TCBirthCertificate.Province)
+                @Html.EditorFor(m => m.IDCard.TCBirthCertificate.Province)
+                @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.Province)
+            </div>
+
+            <div>
+                @Html.LabelFor(m => m.IDCard.TCBirthCertificate.RowNo)
+                @Html.EditorFor(m => m.IDCard.TCBirthCertificate.RowNo)
+                @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.RowNo)
+            </div>
+
+            <div>
+                @Html.LabelFor(m => m.IDCard.TCBirthCertificate.VolumeNo)
+                @Html.EditorFor(m => m.IDCard.TCBirthCertificate.VolumeNo)
+                @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.VolumeNo)
+            </div>
+
         </div>
 
-
+        <div id="TCIDCardWithChipContainer" style="display:none">
+            @Html.LabelFor(m => m.IDCard.TCIDCardWithChip.ExpiryDate)
+            @Html.EditorFor(m => m.IDCard.TCIDCardWithChip.ExpiryDate)
+            @Html.ValidationMessageFor(m => m.IDCard.TCIDCardWithChip.ExpiryDate)
+        </div>
 
     </div>
 
@@ -407,7 +414,7 @@
 
         <div>
             @Html.LabelFor(m => m.Individual.SameSetupAddressByIndividual)
-            @Html.EditorFor(m=>m.Individual.SameSetupAddressByIndividual)
+            @Html.EditorFor(m => m.Individual.SameSetupAddressByIndividual)
         </div>
 
         <h4>IndividualResidencyAddress</h4>
@@ -525,169 +532,199 @@
 @section Javascript{
     <script>
 
-        $("#GeneralInfo_SameSetupAddressByBilling").change(function () {
-            if (this.checked) {
-                $("#BillingAddressContainer").hide();
+        function TriggerSelect(triggeredSelectId) {
+            var triggeredSelectValue = $(triggeredSelectId).find(":selected").val();
+            if (triggeredSelectValue != "") {
+                $(triggeredSelectId).trigger("change");
+            }
+        }
+        function CheckValidAndHideContainer(checkId,containerId) {
+            if ($(checkId).is(':checked')) {
+                $(containerId).hide();
             }
             else {
-                $("#BillingAddressContainer").show();
+                $(containerId).show();
             }
-        });
-
-        $("#Individual_SameSetupAddressByIndividual").change(function () {
-            if (this.checked) {
-                $("#IndividualResidencyContainer").hide();
-            }
-            else {
-                $("#IndividualResidencyContainer").show();
-            }
-        });
-        
-        $("#CorporateInfo_SameSetupAddressByCorporativeResidencyAddress").change(function () {
-            if (this.checked) {
-                $("#ExecutiveResidencyContainer").hide();
-            }
-            else {
-                $("#ExecutiveResidencyContainer").show();
-            }
-        });
-
-        $("#CorporateInfo_SameSetupAddressByCorporativeCompanyAddress").change(function () {
-            if (this.checked) {
-                $("#CompanyContainer").hide();
-            }
-            else {
-                $("#CompanyContainer").show();
-            }
-        });
-
-        $("#GeneralInfo_CustomerTypeId").change(function () {
-            var value = $("#GeneralInfo_CustomerTypeId option:selected").val();
-            if (value=="1") {
-                $("#corporateCustomerInfoContainer").hide();
-                $("#individualCustomerInfoContainer").show();
-            }
-            else if (value == "") {
-                $("#corporateCustomerInfoContainer").hide();
-                $("#individualCustomerInfoContainer").hide();
-            }
-            else {
-                $("#corporateCustomerInfoContainer").show();
-                $("#individualCustomerInfoContainer").hide();
-            }
-        });
+        }
 
 
-        $('#createNumberInput').click(function () {
-            $('#telephoneNumberInputContainer').append('<input type="button" id="remove-button" value="sh">');
-            $('#telephoneNumberInputContainer').append('<input type="text" name="GeneralInfo.OtherPhoneNos" id="GeneralInfo_OtherPhoneNos">');
-            $('#telephoneNumberInputContainer').append('<br/>');
-        });
+        $(document).ready(function () {
 
-        QueryAddress("#province-company","#district-company",'@Url.Action("DistrictList", "Home")')
+            
 
-        QueryAddress("#district-company", "#ruralregions-company", '@Url.Action("RuralRegionsList", "Home")')
+            //TriggerSelect("#IDCard_CardTypeId");
+            //TriggerSelect("#GeneralInfo_CustomerTypeId");
+            //TriggerSelect("#province-company");
+            //TriggerSelect("#province");
+            //TriggerSelect("#province-individual");
+            //TriggerSelect("#province-billing");
+            //TriggerSelect("#province-setup");
+            //TriggerSelect("#partnerTariffId");
+            //TriggerCheck("#GeneralInfo_SameSetupAddressByBilling");
+            //TriggerCheck("#Individual_SameSetupAddressByIndividual");
+            //TriggerCheck("#CorporateInfo_SameSetupAddressByCorporativeResidencyAddress");
+            //TriggerCheck("#CorporateInfo_SameSetupAddressByCorporativeCompanyAddress");
 
-        QueryAddress("#ruralregions-company","#neighborhood-company",'@Url.Action("NeighborhoodList", "Home")')
-
-        QueryAddress("#neighborhood-company","#street-company",'@Url.Action("StreetList", "Home")')
-
-        QueryAddress("#street-company","#building-company",'@Url.Action("BuildingList", "Home")')
-
-        QueryAddress("#building-company", "#apartment-company", '@Url.Action("ApartmentList", "Home")')
-
-        /////////////////////////////////////////////////////////////////////////////////////
-
-        QueryAddress("#province","#district",'@Url.Action("DistrictList", "Home")')
-
-        QueryAddress("#district", "#ruralregions", '@Url.Action("RuralRegionsList", "Home")')
-
-        QueryAddress("#ruralregions","#neighborhood",'@Url.Action("NeighborhoodList", "Home")')
-
-        QueryAddress("#neighborhood","#street",'@Url.Action("StreetList", "Home")')
-
-        QueryAddress("#street","#building",'@Url.Action("BuildingList", "Home")')
-
-        QueryAddress("#building", "#apartment", '@Url.Action("ApartmentList", "Home")')
-
-        /////////////////////////////////////////////////////////////////////////////////////
-
-        QueryAddress("#province-billing","#district-billing",'@Url.Action("DistrictList", "Home")')
-
-        QueryAddress("#district-billing", "#ruralregions-billing", '@Url.Action("RuralRegionsList", "Home")')
-
-        QueryAddress("#ruralregions-billing","#neighborhood-billing",'@Url.Action("NeighborhoodList", "Home")')
-
-        QueryAddress("#neighborhood-billing","#street-billing",'@Url.Action("StreetList", "Home")')
-
-        QueryAddress("#street-billing","#building-billing",'@Url.Action("BuildingList", "Home")')
-
-        QueryAddress("#building-billing","#apartment-billing",'@Url.Action("ApartmentList", "Home")')
-
-        ///////////////////////////////////////////////////////////////////////////////////////////////
-
-        QueryAddress("#province-individual", "#district-individual", '@Url.Action("DistrictList", "Home")')
-
-        QueryAddress("#district-individual", "#ruralregions-individual", '@Url.Action("RuralRegionsList", "Home")')
-
-        QueryAddress("#ruralregions-individual","#neighborhood-individual",'@Url.Action("NeighborhoodList", "Home")')
-
-        QueryAddress("#neighborhood-individual","#street-individual",'@Url.Action("StreetList", "Home")')
-
-        QueryAddress("#street-individual","#building-individual",'@Url.Action("BuildingList", "Home")')
-
-        QueryAddress("#building-individual","#apartment-individual",'@Url.Action("ApartmentList", "Home")')
-
-        ///////////////////////////////////////////////////////////////////////////////////////////////
-
-        QueryAddress("#province-setup", "#district-setup", '@Url.Action("DistrictList", "Home")')
-
-        QueryAddress("#district-setup", "#ruralregions-setup", '@Url.Action("RuralRegionsList", "Home")')
-
-        QueryAddress("#ruralregions-setup","#neighborhood-setup",'@Url.Action("NeighborhoodList", "Home")')
-
-        QueryAddress("#neighborhood-setup","#street-setup",'@Url.Action("StreetList", "Home")')
-
-        QueryAddress("#street-setup","#building-setup",'@Url.Action("BuildingList", "Home")')
-
-        QueryAddress("#building-setup","#apartment-setup",'@Url.Action("ApartmentList", "Home")')
-
-        ///////////////////////////////////////////////////////////////////////////////////////////////
-
-        $("#partnerTariffId").change(function () {
-
-            $("#billingPeriodId").find("option").not(":first").remove();
-
-            $("#billingPeriodId").attr("disabled", "disabled")
-
-
-            var id = $("#partnerTariffId").find(":selected").val();
-
-                if (id != "") {
-                    var selectId = { "id": id }
-                    $.ajax({
-                        url: '@Url.Action("PaymentDayList", "Customer")',
-                        type: 'POST',
-                        dataType: 'JSON',
-                        contentType: 'application/json; charset=utf-8',
-                        data: JSON.stringify(selectId),
-                        complete: function (data, status) {
-                            if (status == "success") {
-                                var result = data.responseJSON.list;
-                                for (var i = 0; i < result.length; i++) {
-                                    $("#billingPeriodId").append($('<option>', {
-                                        value: result[i].Value,
-                                        text: result[i].Name,
-                                    }));
-                                }
-                                $("#billingPeriodId").attr("disabled", false)
-                            }
-                            else {
-                                console.log(data.responseJSON.errorMessage);
-                            }
-                        }
-                    });
+            $("#IDCard_CardTypeId").change(function () {
+                var tckType = $(this).find(":selected").val();
+                if (tckType == "1") {//This Is TCIDCardWithChip
+                    $("#TCBirthCertificateContainer").hide();
+                    $("#TCIDCardWithChipContainer").show();
+                }
+                else {
+                    $("#TCBirthCertificateContainer").show();
+                    $("#TCIDCardWithChipContainer").hide();
                 }
             });
+
+            CheckValidAndHideContainer("#GeneralInfo_SameSetupAddressByBilling", "#BillingAddressContainer")
+            $("#GeneralInfo_SameSetupAddressByBilling").change(function () {
+                CheckValidAndHideContainer(this, "#BillingAddressContainer")
+            });
+
+            CheckValidAndHideContainer("#Individual_SameSetupAddressByIndividual", "#IndividualResidencyContainer")
+            $("#Individual_SameSetupAddressByIndividual").change(function () {
+                CheckValidAndHideContainer(this, "#IndividualResidencyContainer")
+            });
+
+            CheckValidAndHideContainer("#CorporateInfo_SameSetupAddressByCorporativeResidencyAddress", "#ExecutiveResidencyContainer")
+            $("#CorporateInfo_SameSetupAddressByCorporativeResidencyAddress").change(function () {
+                CheckValidAndHideContainer(this, "#ExecutiveResidencyContainer")
+            });
+
+            CheckValidAndHideContainer("#CorporateInfo_SameSetupAddressByCorporativeCompanyAddress", "#CompanyContainer")
+            $("#CorporateInfo_SameSetupAddressByCorporativeCompanyAddress").change(function () {
+                CheckValidAndHideContainer(this, "#CompanyContainer")
+            });
+
+            $("#GeneralInfo_CustomerTypeId").change(function () {
+                var value = $("#GeneralInfo_CustomerTypeId option:selected").val();
+                if (value=="1") {
+                    $("#corporateCustomerInfoContainer").hide();
+                    $("#individualCustomerInfoContainer").show();
+                }
+                else if (value == "") {
+                    $("#corporateCustomerInfoContainer").hide();
+                    $("#individualCustomerInfoContainer").hide();
+                }
+                else {
+                    $("#corporateCustomerInfoContainer").show();
+                    $("#individualCustomerInfoContainer").hide();
+                }
+            });
+
+
+            $('#createNumberInput').click(function () {
+                $('#telephoneNumberInputContainer').append('<input type="button" id="remove-button" value="sh">');
+                $('#telephoneNumberInputContainer').append('<input type="text" name="GeneralInfo.OtherPhoneNos" id="GeneralInfo_OtherPhoneNos">');
+                $('#telephoneNumberInputContainer').append('<br/>');
+            });
+
+            QueryAddress("#province-company","#district-company",'@Url.Action("DistrictList", "Home")')
+
+            QueryAddress("#district-company", "#ruralregions-company", '@Url.Action("RuralRegionsList", "Home")')
+
+            QueryAddress("#ruralregions-company","#neighborhood-company",'@Url.Action("NeighborhoodList", "Home")')
+
+            QueryAddress("#neighborhood-company","#street-company",'@Url.Action("StreetList", "Home")')
+
+            QueryAddress("#street-company","#building-company",'@Url.Action("BuildingList", "Home")')
+
+            QueryAddress("#building-company", "#apartment-company", '@Url.Action("ApartmentList", "Home")')
+
+            /////////////////////////////////////////////////////////////////////////////////////
+
+            QueryAddress("#province","#district",'@Url.Action("DistrictList", "Home")')
+
+            QueryAddress("#district", "#ruralregions", '@Url.Action("RuralRegionsList", "Home")')
+
+            QueryAddress("#ruralregions","#neighborhood",'@Url.Action("NeighborhoodList", "Home")')
+
+            QueryAddress("#neighborhood","#street",'@Url.Action("StreetList", "Home")')
+
+            QueryAddress("#street","#building",'@Url.Action("BuildingList", "Home")')
+
+            QueryAddress("#building", "#apartment", '@Url.Action("ApartmentList", "Home")')
+
+            /////////////////////////////////////////////////////////////////////////////////////
+
+            QueryAddress("#province-billing","#district-billing",'@Url.Action("DistrictList", "Home")')
+
+            QueryAddress("#district-billing", "#ruralregions-billing", '@Url.Action("RuralRegionsList", "Home")')
+
+            QueryAddress("#ruralregions-billing","#neighborhood-billing",'@Url.Action("NeighborhoodList", "Home")')
+
+            QueryAddress("#neighborhood-billing","#street-billing",'@Url.Action("StreetList", "Home")')
+
+            QueryAddress("#street-billing","#building-billing",'@Url.Action("BuildingList", "Home")')
+
+            QueryAddress("#building-billing","#apartment-billing",'@Url.Action("ApartmentList", "Home")')
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////
+
+            QueryAddress("#province-individual", "#district-individual", '@Url.Action("DistrictList", "Home")')
+
+            QueryAddress("#district-individual", "#ruralregions-individual", '@Url.Action("RuralRegionsList", "Home")')
+
+            QueryAddress("#ruralregions-individual","#neighborhood-individual",'@Url.Action("NeighborhoodList", "Home")')
+
+            QueryAddress("#neighborhood-individual","#street-individual",'@Url.Action("StreetList", "Home")')
+
+            QueryAddress("#street-individual","#building-individual",'@Url.Action("BuildingList", "Home")')
+
+            QueryAddress("#building-individual","#apartment-individual",'@Url.Action("ApartmentList", "Home")')
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////
+
+            QueryAddress("#province-setup", "#district-setup", '@Url.Action("DistrictList", "Home")')
+
+            QueryAddress("#district-setup", "#ruralregions-setup", '@Url.Action("RuralRegionsList", "Home")')
+
+            QueryAddress("#ruralregions-setup","#neighborhood-setup",'@Url.Action("NeighborhoodList", "Home")')
+
+            QueryAddress("#neighborhood-setup","#street-setup",'@Url.Action("StreetList", "Home")')
+
+            QueryAddress("#street-setup","#building-setup",'@Url.Action("BuildingList", "Home")')
+
+            QueryAddress("#building-setup","#apartment-setup",'@Url.Action("ApartmentList", "Home")')
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////
+
+            $("#partnerTariffId").change(function () {
+
+                $("#billingPeriodId").find("option").not(":first").remove();
+
+                $("#billingPeriodId").attr("disabled", "disabled")
+
+
+                var id = $("#partnerTariffId").find(":selected").val();
+
+                    if (id != "") {
+                        var selectId = { "id": id }
+                        $.ajax({
+                            url: '@Url.Action("PaymentDayList", "Customer")',
+                            type: 'POST',
+                            dataType: 'JSON',
+                            contentType: 'application/json; charset=utf-8',
+                            data: JSON.stringify(selectId),
+                            complete: function (data, status) {
+                                if (status == "success") {
+                                    var result = data.responseJSON.list;
+                                    for (var i = 0; i < result.length; i++) {
+                                        $("#billingPeriodId").append($('<option>', {
+                                            value: result[i].Value,
+                                            text: result[i].Name,
+                                        }));
+                                    }
+                                    $("#billingPeriodId").attr("disabled", false)
+                                }
+                                else {
+                                    console.log(data.responseJSON.errorMessage);
+                                }
+                            }
+                        });
+                    }
+            });
+        });
     </script>
 }

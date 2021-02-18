@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace MasterISS_Partner_WebSite.ViewModels
 {
-    public class AdresInfoViewModel
+    public class AddressInfoViewModel
     {
         public long? ProvinceId { get; set; }
 
@@ -24,8 +24,10 @@ namespace MasterISS_Partner_WebSite.ViewModels
         [Required]
         public long? ApartmentId { get; set; }
 
+        [Required]
         public int? PostalCode { get; set; }
 
+        [Required]
         public string Floor { get; set; }
 
         public NewCustomerAddressInfoRequest NewCustomerAddressInfoRequest { get; set; }
