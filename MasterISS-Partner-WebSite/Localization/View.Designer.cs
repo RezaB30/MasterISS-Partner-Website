@@ -97,6 +97,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to İşleminiz yapılırken bir hata oluştu.Tekrar deneyiniz..
+        /// </summary>
+        public static string NewCustomerError {
+            get {
+                return ResourceManager.GetString("NewCustomerError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kullanıcı pasif etme işleminde hata oluştu. Tekrar deneyiniz..
         /// </summary>
         public static string PassiveError {

@@ -6,6 +6,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<div style="background-color:red">
+    @ViewBag.NewCustomerError
+</div>
 @using (Html.BeginForm("NewCustomer", "Customer", FormMethod.Post))
 {
 
@@ -126,31 +129,38 @@
         <h4>BillingAddress</h4>
         <div id="BillingAddressContainer">
             <div>
-                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.ProvinceId, (SelectList)ViewBag.Provinces, HomeView.SelectProvince, new { @id = "province-billing" })
+                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.ProvinceId, (SelectList)ViewBag.ProvincesByGeneralInfo, HomeView.SelectProvince, new { @id = "province-billing" })
+                @Html.ValidationMessageFor(gi => gi.GeneralInfo.BillingAddress.ProvinceId)
             </div>
 
             <div>
-                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.DistrictId, new SelectList(""), HomeView.SelectDistrict, new { @id = "district-billing", @disabled = "disabled" })
+                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.DistrictId, (SelectList)ViewBag.DistrictsByGeneralInfo, HomeView.SelectDistrict, new { @id = "district-billing", @disabled = "disabled" })
+                @Html.ValidationMessageFor(gi => gi.GeneralInfo.BillingAddress.DistrictId)
             </div>
 
             <div>
-                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.RuralRegionsId, new SelectList(""), HomeView.SelectRegions, new { @id = "ruralregions-billing", @disabled = "disabled" })
+                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.RuralRegionsId, (SelectList)ViewBag.RuralRegionsByGeneralInfo, HomeView.SelectRegions, new { @id = "ruralregions-billing", @disabled = "disabled" })
+                @Html.ValidationMessageFor(gi => gi.GeneralInfo.BillingAddress.RuralRegionsId)
             </div>
 
             <div>
-                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.NeighborhoodId, new SelectList(""), HomeView.SelectNeigborhood, new { @id = "neighborhood-billing", @disabled = "disabled" })
+                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.NeighborhoodId, (SelectList)ViewBag.NeigboorHoodsByGeneralInfo, HomeView.SelectNeigborhood, new { @id = "neighborhood-billing", @disabled = "disabled" })
+                @Html.ValidationMessageFor(gi => gi.GeneralInfo.BillingAddress.NeighborhoodId)
             </div>
 
             <div>
-                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.StreetId, new SelectList(""), HomeView.SelectStreet, new { @id = "street-billing", @disabled = "disabled" })
+                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.StreetId, (SelectList)ViewBag.StreetsByGeneralInfo, HomeView.SelectStreet, new { @id = "street-billing", @disabled = "disabled" })
+                @Html.ValidationMessageFor(gi => gi.GeneralInfo.BillingAddress.StreetId)
             </div>
 
             <div>
-                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.BuildingId, new SelectList(""), HomeView.SelectBuilding, new { @id = "building-billing", @disabled = "disabled" })
+                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.BuildingId, (SelectList)ViewBag.BuildingsByGeneralInfo, HomeView.SelectBuilding, new { @id = "building-billing", @disabled = "disabled" })
+                @Html.ValidationMessageFor(gi => gi.GeneralInfo.BillingAddress.BuildingId)
             </div>
 
             <div>
-                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.ApartmentId, new SelectList(""), HomeView.SelectApartment, new { @id = "apartment-billing", @disabled = "disabled" })
+                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.ApartmentId, (SelectList)ViewBag.ApartmentsByGeneralInfo, HomeView.SelectApartment, new { @id = "apartment-billing", @disabled = "disabled" })
+                @Html.ValidationMessageFor(gi => gi.GeneralInfo.BillingAddress.ApartmentId)
             </div>
 
             <div>
@@ -275,31 +285,38 @@
         <h4>ExecutiveResidencyAddress</h4>
         <div id="ExecutiveResidencyContainer">
             <div>
-                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.ProvinceId, (SelectList)ViewBag.Provinces, HomeView.SelectProvince, new { @id = "province" })
+                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.ProvinceId, (SelectList)ViewBag.ProvincesByCorporativeResidency, HomeView.SelectProvince, new { @id = "province" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.ProvinceId)
             </div>
 
             <div>
-                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.DistrictId, new SelectList(""), HomeView.SelectDistrict, new { @id = "district", @disabled = "disabled" })
+                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.DistrictId, (SelectList)ViewBag.DistrictsByCorporativeResidency, HomeView.SelectDistrict, new { @id = "district", @disabled = "disabled" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.DistrictId)
             </div>
 
             <div>
-                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.RuralRegionsId, new SelectList(""), HomeView.SelectRegions, new { @id = "ruralregions", @disabled = "disabled" })
+                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.RuralRegionsId, (SelectList)ViewBag.RuralRegionsByCorporativeResidency, HomeView.SelectRegions, new { @id = "ruralregions", @disabled = "disabled" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.RuralRegionsId)
             </div>
 
             <div>
-                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.NeighborhoodId, new SelectList(""), HomeView.SelectNeigborhood, new { @id = "neighborhood", @disabled = "disabled" })
+                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.NeighborhoodId, (SelectList)ViewBag.NeigboorHoodsByCorporativeResidency, HomeView.SelectNeigborhood, new { @id = "neighborhood", @disabled = "disabled" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.NeighborhoodId)
             </div>
 
             <div>
-                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.StreetId, new SelectList(""), HomeView.SelectStreet, new { @id = "street", @disabled = "disabled" })
+                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.StreetId, (SelectList)ViewBag.StreetsByCorporativeResidency, HomeView.SelectStreet, new { @id = "street", @disabled = "disabled" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.StreetId)
             </div>
 
             <div>
-                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.BuildingId, new SelectList(""), HomeView.SelectBuilding, new { @id = "building", @disabled = "disabled" })
+                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.BuildingId, (SelectList)ViewBag.BuildingsByCorporativeResidency, HomeView.SelectBuilding, new { @id = "building", @disabled = "disabled" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.BuildingId)
             </div>
 
             <div>
-                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.ApartmentId, new SelectList(""), HomeView.SelectApartment, new { @id = "apartment", @disabled = "disabled" })
+                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.ApartmentId, (SelectList)ViewBag.ApartmentsByCorporativeResidency, HomeView.SelectApartment, new { @id = "apartment", @disabled = "disabled" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.ApartmentId)
             </div>
 
             <div>
@@ -325,31 +342,38 @@
         <h4>CompanyAddress</h4>
         <div id="CompanyContainer">
             <div>
-                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.ProvinceId, (SelectList)ViewBag.Provinces, HomeView.SelectProvince, new { @id = "province-company" })
+                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.ProvinceId, (SelectList)ViewBag.ProvincesByCorporativeCompany, HomeView.SelectProvince, new { @id = "province-company" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.ProvinceId)
             </div>
 
             <div>
-                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.DistrictId, new SelectList(""), HomeView.SelectDistrict, new { @id = "district-company", @disabled = "disabled" })
+                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.DistrictId, (SelectList)ViewBag.DistrictsByCorporativeCompany, HomeView.SelectDistrict, new { @id = "district-company", @disabled = "disabled" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.DistrictId)
             </div>
 
             <div>
-                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.RuralRegionsId, new SelectList(""), HomeView.SelectRegions, new { @id = "ruralregions-company", @disabled = "disabled" })
+                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.RuralRegionsId, (SelectList)ViewBag.RuralRegionsByCorporativeCompany, HomeView.SelectRegions, new { @id = "ruralregions-company", @disabled = "disabled" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.RuralRegionsId)
             </div>
 
             <div>
-                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.NeighborhoodId, new SelectList(""), HomeView.SelectNeigborhood, new { @id = "neighborhood-company", @disabled = "disabled" })
+                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.NeighborhoodId, (SelectList)ViewBag.NeigboorHoodsByCorporativeCompany, HomeView.SelectNeigborhood, new { @id = "neighborhood-company", @disabled = "disabled" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.NeighborhoodId)
             </div>
 
             <div>
-                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.StreetId, new SelectList(""), HomeView.SelectStreet, new { @id = "street-company", @disabled = "disabled" })
+                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.StreetId, (SelectList)ViewBag.StreetsByCorporativeCompany, HomeView.SelectStreet, new { @id = "street-company", @disabled = "disabled" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.StreetId)
             </div>
 
             <div>
-                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.BuildingId, new SelectList(""), HomeView.SelectBuilding, new { @id = "building-company", @disabled = "disabled" })
+                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.BuildingId, (SelectList)ViewBag.BuildingsByCorporativeCompany, HomeView.SelectBuilding, new { @id = "building-company", @disabled = "disabled" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.BuildingId)
             </div>
 
             <div>
-                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.ApartmentId, new SelectList(""), HomeView.SelectApartment, new { @id = "apartment-company", @disabled = "disabled" })
+                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.ApartmentId, (SelectList)ViewBag.ApartmentsByCorporativeCompany, HomeView.SelectApartment, new { @id = "apartment-company", @disabled = "disabled" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.ApartmentId)
             </div>
 
             <div>
@@ -420,31 +444,38 @@
         <h4>IndividualResidencyAddress</h4>
         <div id="IndividualResidencyContainer">
             <div>
-                @Html.DropDownListFor(ii => ii.Individual.ResidencyAddress.ProvinceId, (SelectList)ViewBag.Provinces, HomeView.SelectProvince, new { @id = "province-individual" })
+                @Html.DropDownListFor(ii => ii.Individual.ResidencyAddress.ProvinceId, (SelectList)ViewBag.ProvincesByIndividual, HomeView.SelectProvince, new { @id = "province-individual" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.ApartmentId)
             </div>
 
             <div>
-                @Html.DropDownListFor(ii => ii.Individual.ResidencyAddress.DistrictId, new SelectList(""), HomeView.SelectDistrict, new { @id = "district-individual", @disabled = "disabled" })
+                @Html.DropDownListFor(ii => ii.Individual.ResidencyAddress.DistrictId, (SelectList)ViewBag.DistrictsByIndividual, HomeView.SelectDistrict, new { @id = "district-individual", @disabled = "disabled" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.DistrictId)
             </div>
 
             <div>
-                @Html.DropDownListFor(ii => ii.Individual.ResidencyAddress.RuralRegionsId, new SelectList(""), HomeView.SelectRegions, new { @id = "ruralregions-individual", @disabled = "disabled" })
+                @Html.DropDownListFor(ii => ii.Individual.ResidencyAddress.RuralRegionsId, (SelectList)ViewBag.RuralRegionsByIndividual, HomeView.SelectRegions, new { @id = "ruralregions-individual", @disabled = "disabled" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.RuralRegionsId)
             </div>
 
             <div>
-                @Html.DropDownListFor(ii => ii.Individual.ResidencyAddress.NeighborhoodId, new SelectList(""), HomeView.SelectNeigborhood, new { @id = "neighborhood-individual", @disabled = "disabled" })
+                @Html.DropDownListFor(ii => ii.Individual.ResidencyAddress.NeighborhoodId, (SelectList)ViewBag.NeigboorHoodsByIndividual, HomeView.SelectNeigborhood, new { @id = "neighborhood-individual", @disabled = "disabled" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.NeighborhoodId)
             </div>
 
             <div>
-                @Html.DropDownListFor(ii => ii.Individual.ResidencyAddress.StreetId, new SelectList(""), HomeView.SelectStreet, new { @id = "street-individual", @disabled = "disabled" })
+                @Html.DropDownListFor(ii => ii.Individual.ResidencyAddress.StreetId, (SelectList)ViewBag.StreetsByIndividual, HomeView.SelectStreet, new { @id = "street-individual", @disabled = "disabled" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.StreetId)
             </div>
 
             <div>
-                @Html.DropDownListFor(ii => ii.Individual.ResidencyAddress.BuildingId, new SelectList(""), HomeView.SelectBuilding, new { @id = "building-individual", @disabled = "disabled" })
+                @Html.DropDownListFor(ii => ii.Individual.ResidencyAddress.BuildingId, (SelectList)ViewBag.BuildingsByIndividual, HomeView.SelectBuilding, new { @id = "building-individual", @disabled = "disabled" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.BuildingId)
             </div>
 
             <div>
-                @Html.DropDownListFor(ii => ii.Individual.ResidencyAddress.ApartmentId, new SelectList(""), HomeView.SelectApartment, new { @id = "apartment-individual", @disabled = "disabled" })
+                @Html.DropDownListFor(ii => ii.Individual.ResidencyAddress.ApartmentId, (SelectList)ViewBag.ApartmentsByIndividual, HomeView.SelectApartment, new { @id = "apartment-individual", @disabled = "disabled" })
+                @Html.ValidationMessageFor(ii => ii.Individual.ResidencyAddress.ApartmentId)
             </div>
 
             <div>
@@ -475,38 +506,45 @@
 
         <div>
             @Html.LabelFor(m => m.SubscriptionInfo.BillingPeriodId)
-            @Html.DropDownListFor(m => m.SubscriptionInfo.BillingPeriodId, new SelectList(""), BillView.Select, new { @disabled = "disabled", @id = "billingPeriodId" })
+            @Html.DropDownListFor(m => m.SubscriptionInfo.BillingPeriodId, (SelectList)ViewBag.BillingPeriod, BillView.Select, new { @disabled = "disabled", @id = "billingPeriodId" })
             @Html.ValidationMessageFor(m => m.SubscriptionInfo.BillingPeriodId)
         </div>
 
         <h4>SetupAddress</h4>
         <div id="SetupAddressContainer">
             <div>
-                @Html.DropDownListFor(si => si.SubscriptionInfo.SetupAddress.ProvinceId, (SelectList)ViewBag.Provinces, HomeView.SelectProvince, new { @id = "province-setup" })
+                @Html.DropDownListFor(si => si.SubscriptionInfo.SetupAddress.ProvinceId, (SelectList)ViewBag.ProvincesBySetup, HomeView.SelectProvince, new { @id = "province-setup" })
+                @Html.ValidationMessageFor(si => si.SubscriptionInfo.SetupAddress.ProvinceId)
             </div>
 
             <div>
-                @Html.DropDownListFor(si => si.SubscriptionInfo.SetupAddress.DistrictId, new SelectList(""), HomeView.SelectDistrict, new { @id = "district-setup", @disabled = "disabled" })
+                @Html.DropDownListFor(si => si.SubscriptionInfo.SetupAddress.DistrictId, (SelectList)ViewBag.DistrictsBySetup, HomeView.SelectDistrict, new { @id = "district-setup", @disabled = "disabled" })
+                @Html.ValidationMessageFor(si => si.SubscriptionInfo.SetupAddress.DistrictId)
             </div>
 
             <div>
-                @Html.DropDownListFor(si => si.SubscriptionInfo.SetupAddress.RuralRegionsId, new SelectList(""), HomeView.SelectRegions, new { @id = "ruralregions-setup", @disabled = "disabled" })
+                @Html.DropDownListFor(si => si.SubscriptionInfo.SetupAddress.RuralRegionsId, (SelectList)ViewBag.RuralRegionsBySetup, HomeView.SelectRegions, new { @id = "ruralregions-setup", @disabled = "disabled" })
+                @Html.ValidationMessageFor(si => si.SubscriptionInfo.SetupAddress.RuralRegionsId)
             </div>
 
             <div>
-                @Html.DropDownListFor(si => si.SubscriptionInfo.SetupAddress.NeighborhoodId, new SelectList(""), HomeView.SelectNeigborhood, new { @id = "neighborhood-setup", @disabled = "disabled" })
+                @Html.DropDownListFor(si => si.SubscriptionInfo.SetupAddress.NeighborhoodId, (SelectList)ViewBag.NeigboorHoodsBySetup, HomeView.SelectNeigborhood, new { @id = "neighborhood-setup", @disabled = "disabled" })
+                @Html.ValidationMessageFor(si => si.SubscriptionInfo.SetupAddress.NeighborhoodId)
             </div>
 
             <div>
-                @Html.DropDownListFor(si => si.SubscriptionInfo.SetupAddress.StreetId, new SelectList(""), HomeView.SelectStreet, new { @id = "street-setup", @disabled = "disabled" })
+                @Html.DropDownListFor(si => si.SubscriptionInfo.SetupAddress.StreetId, (SelectList)ViewBag.StreetsBySetup, HomeView.SelectStreet, new { @id = "street-setup", @disabled = "disabled" })
+                @Html.ValidationMessageFor(si => si.SubscriptionInfo.SetupAddress.StreetId)
             </div>
 
             <div>
-                @Html.DropDownListFor(si => si.SubscriptionInfo.SetupAddress.BuildingId, new SelectList(""), HomeView.SelectBuilding, new { @id = "building-setup", @disabled = "disabled" })
+                @Html.DropDownListFor(si => si.SubscriptionInfo.SetupAddress.BuildingId, (SelectList)ViewBag.BuildingsBySetup, HomeView.SelectBuilding, new { @id = "building-setup", @disabled = "disabled" })
+                @Html.ValidationMessageFor(si => si.SubscriptionInfo.SetupAddress.BuildingId)
             </div>
 
             <div>
-                @Html.DropDownListFor(si => si.SubscriptionInfo.SetupAddress.ApartmentId, new SelectList(""), HomeView.SelectApartment, new { @id = "apartment-setup", @disabled = "disabled" })
+                @Html.DropDownListFor(si => si.SubscriptionInfo.SetupAddress.ApartmentId, (SelectList)ViewBag.ApartmentsBySetup, HomeView.SelectApartment, new { @id = "apartment-setup", @disabled = "disabled" })
+                @Html.ValidationMessageFor(si => si.SubscriptionInfo.SetupAddress.ApartmentId)
             </div>
 
             <div>
@@ -531,13 +569,6 @@
 
 @section Javascript{
     <script>
-
-        function TriggerSelect(triggeredSelectId) {
-            var triggeredSelectValue = $(triggeredSelectId).find(":selected").val();
-            if (triggeredSelectValue != "") {
-                $(triggeredSelectId).trigger("change");
-            }
-        }
         function CheckValidAndHideContainer(checkId,containerId) {
             if ($(checkId).is(':checked')) {
                 $(containerId).hide();
@@ -547,23 +578,7 @@
             }
         }
 
-
         $(document).ready(function () {
-
-            
-
-            //TriggerSelect("#IDCard_CardTypeId");
-            //TriggerSelect("#GeneralInfo_CustomerTypeId");
-            //TriggerSelect("#province-company");
-            //TriggerSelect("#province");
-            //TriggerSelect("#province-individual");
-            //TriggerSelect("#province-billing");
-            //TriggerSelect("#province-setup");
-            //TriggerSelect("#partnerTariffId");
-            //TriggerCheck("#GeneralInfo_SameSetupAddressByBilling");
-            //TriggerCheck("#Individual_SameSetupAddressByIndividual");
-            //TriggerCheck("#CorporateInfo_SameSetupAddressByCorporativeResidencyAddress");
-            //TriggerCheck("#CorporateInfo_SameSetupAddressByCorporativeCompanyAddress");
 
             $("#IDCard_CardTypeId").change(function () {
                 var tckType = $(this).find(":selected").val();
@@ -725,6 +740,22 @@
                         });
                     }
             });
+
+            var billingPeriodSelect = $("#billingPeriodId").find(":selected").val();
+            if (billingPeriodSelect  != "") {
+                $("#billingPeriodId").attr("disabled", false);
+            }
+
+            var cardTypeSelect = $("#IDCard_CardTypeId").find(":selected").val();
+            if (cardTypeSelect != "") {
+                $("#IDCard_CardTypeId").trigger('change');
+            }
+
+            var customerTypeSelect = $("#GeneralInfo_CustomerTypeId").find(":selected").val();
+            if (customerTypeSelect != "") {
+                $("#GeneralInfo_CustomerTypeId").trigger('change');
+            }
+
         });
     </script>
 }

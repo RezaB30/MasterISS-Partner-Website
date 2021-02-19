@@ -129,6 +129,9 @@
   <data name="MailValidError" xml:space="preserve">
     <value>This mail already exists.</value>
   </data>
+  <data name="NewCustomerError" xml:space="preserve">
+    <value>An error occurred while processing your transaction. Try again.</value>
+  </data>
   <data name="PassiveError" xml:space="preserve">
     <value>There was an error in the user inactivation process. Please try again.</value>
   </data>

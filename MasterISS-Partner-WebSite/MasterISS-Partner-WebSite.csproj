@@ -444,6 +444,7 @@
     <Content Include="Views\UserOperations\AddPermission.cshtml" />
     <Content Include="Views\Bill\CreditReportDetail.cshtml" />
     <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\Customer\Successful.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

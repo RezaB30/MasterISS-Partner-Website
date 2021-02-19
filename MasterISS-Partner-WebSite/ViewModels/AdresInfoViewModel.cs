@@ -9,25 +9,31 @@ namespace MasterISS_Partner_WebSite.ViewModels
 {
     public class AddressInfoViewModel
     {
+        [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
         public long? ProvinceId { get; set; }
 
+        [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
         public long? DistrictId { get; set; }
 
+        [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
         public long? RuralRegionsId { get; set; }
 
+        [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
         public long? NeighborhoodId { get; set; }
 
+        [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
         public long? StreetId { get; set; }
 
+        [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
         public long? BuildingId { get; set; }
 
-        [Required]
+        [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
         public long? ApartmentId { get; set; }
 
-        [Required]
+        [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
         public int? PostalCode { get; set; }
 
-        [Required]
+        [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
         public string Floor { get; set; }
 
         public NewCustomerAddressInfoRequest NewCustomerAddressInfoRequest { get; set; }

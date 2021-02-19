@@ -79,12 +79,47 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             if (string.IsNullOrEmpty(provinceList.ErrorMessage))
             {
-                ViewBag.Provinces = new SelectList(provinceList.Data.ValueNamePairList.Select(nvpl => new { Name = nvpl.Name, Value = nvpl.Value }), "Value", "Name");
+                ViewBag.ProvincesByGeneralInfo = new SelectList(provinceList.Data.ValueNamePairList.Select(nvpl => new { Name = nvpl.Name, Value = nvpl.Value }), "Value", "Name");
+                ViewBag.ProvincesByCorporativeResidency = new SelectList(provinceList.Data.ValueNamePairList.Select(nvpl => new { Name = nvpl.Name, Value = nvpl.Value }), "Value", "Name");
+                ViewBag.ProvincesByCorporativeCompany = new SelectList(provinceList.Data.ValueNamePairList.Select(nvpl => new { Name = nvpl.Name, Value = nvpl.Value }), "Value", "Name");
+                ViewBag.ProvincesByIndividual = new SelectList(provinceList.Data.ValueNamePairList.Select(nvpl => new { Name = nvpl.Name, Value = nvpl.Value }), "Value", "Name");
+                ViewBag.ProvincesBySetup = new SelectList(provinceList.Data.ValueNamePairList.Select(nvpl => new { Name = nvpl.Name, Value = nvpl.Value }), "Value", "Name");
             }
+            ViewBag.DistrictsByGeneralInfo = new SelectList("");
+            ViewBag.RuralRegionsByGeneralInfo = new SelectList("");
+            ViewBag.NeigboorHoodsByGeneralInfo = new SelectList("");
+            ViewBag.StreetsByGeneralInfo = new SelectList("");
+            ViewBag.BuildingsByGeneralInfo = new SelectList("");
+            ViewBag.ApartmentsByGeneralInfo = new SelectList("");
+            ViewBag.DistrictsBySetup = new SelectList("");
+            ViewBag.RuralRegionsBySetup = new SelectList("");
+            ViewBag.NeigboorHoodsBySetup = new SelectList("");
+            ViewBag.StreetsBySetup = new SelectList("");
+            ViewBag.BuildingsBySetup = new SelectList("");
+            ViewBag.ApartmentsBySetup = new SelectList("");
+            ViewBag.DistrictsByIndividual = new SelectList("");
+            ViewBag.RuralRegionsByIndividual =
+            ViewBag.NeigboorHoodsByIndividual = new SelectList("");
+            ViewBag.StreetsByIndividual = new SelectList("");
+            ViewBag.BuildingsByIndividual = new SelectList("");
+            ViewBag.ApartmentsByIndividual = new SelectList("");
+            ViewBag.DistrictsByCorporativeResidency = new SelectList("");
+            ViewBag.RuralRegionsByCorporativeResidency = new SelectList("");
+            ViewBag.NeigboorHoodsByCorporativeResidency = new SelectList("");
+            ViewBag.StreetsByCorporativeResidency = new SelectList("");
+            ViewBag.BuildingsByCorporativeResidency = new SelectList("");
+            ViewBag.ApartmentsByCorporativeResidency = new SelectList("");
+            ViewBag.DistrictsByCorporativeCompany = new SelectList("");
+            ViewBag.RuralRegionsByCorporativeCompany = new SelectList("");
+            ViewBag.NeigboorHoodsByCorporativeCompany = new SelectList("");
+            ViewBag.StreetsByCorporativeCompany = new SelectList("");
+            ViewBag.BuildingsByCorporativeCompany = new SelectList("");
+            ViewBag.ApartmentsByCorporativeCompany = new SelectList("");
+            ViewBag.BillingPeriod = new SelectList("");
 
             return View();
         }
-      
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -98,10 +133,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                     if (addCustomerViewModel.Individual.SameSetupAddressByIndividual == true)
                     {
                         ChangeAddressInfo(addCustomerViewModel.Individual.ResidencyAddress, addCustomerViewModel.SubscriptionInfo.SetupAddress);
-
-                        ModelState.Remove("Individual.ResidencyAddress.ApartmentId");
-                        ModelState.Remove("Individual.ResidencyAddress.Floor");
-                        ModelState.Remove("Individual.ResidencyAddress.PostalCode");
+                        RemoveModel("Individual.ResidencyAddress");
                     }
                 }
                 else
@@ -110,28 +142,19 @@ namespace MasterISS_Partner_WebSite.Controllers
                     if (addCustomerViewModel.CorporateInfo.SameSetupAddressByCorporativeCompanyAddress == true)
                     {
                         ChangeAddressInfo(addCustomerViewModel.CorporateInfo.CompanyAddress, addCustomerViewModel.SubscriptionInfo.SetupAddress);
-
-                        ModelState.Remove("CorporateInfo.CompanyAddress.ApartmentId");
-                        ModelState.Remove("CorporateInfo.CompanyAddress.PostalCode");
-                        ModelState.Remove("CorporateInfo.CompanyAddress.Floor");
+                        RemoveModel("CorporateInfo.CompanyAddress");
                     }
                     if (addCustomerViewModel.CorporateInfo.SameSetupAddressByCorporativeResidencyAddress == true)
                     {
                         ChangeAddressInfo(addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress, addCustomerViewModel.SubscriptionInfo.SetupAddress);
-
-                        ModelState.Remove("CorporateInfo.ExecutiveResidencyAddress.ApartmentId");
-                        ModelState.Remove("CorporateInfo.ExecutiveResidencyAddress.Floor");
-                        ModelState.Remove("CorporateInfo.ExecutiveResidencyAddress.PostalCode");
+                        RemoveModel("CorporateInfo.ExecutiveResidencyAddress");
                     }
                 }
 
                 if (addCustomerViewModel.GeneralInfo.SameSetupAddressByBilling == true)
                 {
                     ChangeAddressInfo(addCustomerViewModel.GeneralInfo.BillingAddress, addCustomerViewModel.SubscriptionInfo.SetupAddress);
-
-                    ModelState.Remove("GeneralInfo.BillingAddress.ApartmentId");
-                    ModelState.Remove("GeneralInfo.BillingAddress.PostalCode");
-                    ModelState.Remove("GeneralInfo.BillingAddress.Floor");
+                    RemoveModel("GeneralInfo.BillingAddress");
                 }
 
                 IdCardValidationAndRemoveModelState((int)addCustomerViewModel.IDCard.CardTypeId, addCustomerViewModel.IDCard);
@@ -190,108 +213,170 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                         if (response.ResponseMessage.ErrorCode == 0)
                         {
-                            return RedirectToAction("Successful");//Bu sayfayı ekle
+                            return RedirectToAction("Successful");
                         }
                         else
                         {
-                            ViewBag.Error = "kayıt eklerken bir hata oldu, sıkıntı";
+                            ViewBag.NewCustomerError = Localization.View.NewCustomerError;
                         }
                     }
                     else
                     {
-                        //Web Servisler çalışmazsa
-                        ViewBag.Error = "Adresler gelmiyor, sıkıntı";//bu mesajı değiştir
+                        ViewBag.NewCustomerError = Localization.View.NewCustomerError;
                     }
                 }
-                else
-                {
-                    //Modelstate hatası
-                    ViewBag.Error = "düzgün doldur bilgileri";//bu mesajıda değiştir
-                }
-
-                var wrapper = new WebServiceWrapper();
-
-                var tckTypeResponse = wrapper.GetTCKTypes();
-                if (tckTypeResponse.ResponseMessage.ErrorCode == 0)
-                {
-                    ViewBag.TckTypeList = TCKTypeList(tckTypeResponse, addCustomerViewModel.IDCard.CardTypeId ?? null);
-                }
-
-                wrapper = new WebServiceWrapper();
-
-                var sexListResponse = wrapper.GetSexesList();
-                if (sexListResponse.ResponseMessage.ErrorCode == 0)
-                {
-                    ViewBag.SexexListByCorporative = SexesList(sexListResponse, addCustomerViewModel.CorporateInfo.ExecutiveSexId ?? null);
-                    ViewBag.SexexListByIndividual = SexesList(sexListResponse, addCustomerViewModel.Individual.SexId ?? null);
-                }
-
-                wrapper = new WebServiceWrapper();
-
-                var cultureListResponse = wrapper.GetCultures();
-                if (cultureListResponse.ResponseMessage.ErrorCode == 0)
-                {
-                    ViewBag.CultureList = CultureList(cultureListResponse, addCustomerViewModel.GeneralInfo.Culture);
-                }
-
-                wrapper = new WebServiceWrapper();
-
-                var professionsListResponse = wrapper.GetProfessions();
-                if (professionsListResponse.ResponseMessage.ErrorCode == 0)
-                {
-                    ViewBag.ProfessionListByCorporative = ProfessionList(professionsListResponse, addCustomerViewModel.CorporateInfo.ExecutiveProfessionId ?? null);
-                    ViewBag.ProfessionListByIndividual = ProfessionList(professionsListResponse, addCustomerViewModel.Individual.ProfessionId ?? null);
-                }
-
-                wrapper = new WebServiceWrapper();
-
-                var nationalityListResponse = wrapper.GetNationalities();
-                if (nationalityListResponse.ResponseMessage.ErrorCode == 0)
-                {
-                    ViewBag.NationalityListByCorporative = NationalityList(nationalityListResponse, addCustomerViewModel.CorporateInfo.ExecutiveNationalityId ?? null);
-                    ViewBag.NationalityListByIndividual = NationalityList(nationalityListResponse, addCustomerViewModel.Individual.ProfessionId ?? null);
-                }
-
-                wrapper = new WebServiceWrapper();
-
-                var partnerTariffListResponse = wrapper.GetPartnerTariffs();
-                if (partnerTariffListResponse.ResponseMessage.ErrorCode == 0)
-                {
-                    ViewBag.PartnerTariffList = PartnerTariffList(partnerTariffListResponse, null);
-                }
-
-                wrapper = new WebServiceWrapper();
-
-                var customerTypeList = wrapper.GetCustomerType();
-                if (customerTypeList.ResponseMessage.ErrorCode == 0)
-                {
-                    ViewBag.CustomerTypeList = CustomerTypeList(customerTypeList, addCustomerViewModel.GeneralInfo.CustomerTypeId ?? null);
-                }
-
-                wrapper = new WebServiceWrapper();
-                var provinceList = wrapper.GetProvince();
-
-                if (string.IsNullOrEmpty(provinceList.ErrorMessage))
-                {
-                    ViewBag.Provinces = new SelectList(provinceList.Data.ValueNamePairList.Select(nvpl => new { Name = nvpl.Name, Value = nvpl.Value }), "Value", "Name");
-                }
-
-                return View("Index", addCustomerViewModel);
             }
-            else
+            var wrapper = new WebServiceWrapper();
+
+            var tckTypeResponse = wrapper.GetTCKTypes();
+            if (tckTypeResponse.ResponseMessage.ErrorCode == 0)
             {
-                TempData["CustomerIdValid"] = "Customer Type Id boş bırakma";
-                TempData["SetupApartmentIdValid"] = "Setup Apartment Id Id boş bırakma";
-                return RedirectToAction("Index");
+                ViewBag.TckTypeList = TCKTypeList(tckTypeResponse, addCustomerViewModel.IDCard.CardTypeId ?? null);
             }
+
+            wrapper = new WebServiceWrapper();
+
+            var sexListResponse = wrapper.GetSexesList();
+            if (sexListResponse.ResponseMessage.ErrorCode == 0)
+            {
+                ViewBag.SexexListByCorporative = SexesList(sexListResponse, addCustomerViewModel.CorporateInfo.ExecutiveSexId ?? null);
+                ViewBag.SexexListByIndividual = SexesList(sexListResponse, addCustomerViewModel.Individual.SexId ?? null);
+            }
+
+            wrapper = new WebServiceWrapper();
+
+            var cultureListResponse = wrapper.GetCultures();
+            if (cultureListResponse.ResponseMessage.ErrorCode == 0)
+            {
+                ViewBag.CultureList = CultureList(cultureListResponse, addCustomerViewModel.GeneralInfo.Culture);
+            }
+
+            wrapper = new WebServiceWrapper();
+
+            var professionsListResponse = wrapper.GetProfessions();
+            if (professionsListResponse.ResponseMessage.ErrorCode == 0)
+            {
+                ViewBag.ProfessionListByCorporative = ProfessionList(professionsListResponse, addCustomerViewModel.CorporateInfo.ExecutiveProfessionId ?? null);
+                ViewBag.ProfessionListByIndividual = ProfessionList(professionsListResponse, addCustomerViewModel.Individual.ProfessionId ?? null);
+            }
+
+            wrapper = new WebServiceWrapper();
+
+            var nationalityListResponse = wrapper.GetNationalities();
+            if (nationalityListResponse.ResponseMessage.ErrorCode == 0)
+            {
+                ViewBag.NationalityListByCorporative = NationalityList(nationalityListResponse, addCustomerViewModel.CorporateInfo.ExecutiveNationalityId ?? null);
+                ViewBag.NationalityListByIndividual = NationalityList(nationalityListResponse, addCustomerViewModel.Individual.ProfessionId ?? null);
+            }
+
+            wrapper = new WebServiceWrapper();
+
+            var partnerTariffListResponse = wrapper.GetPartnerTariffs();
+            if (partnerTariffListResponse.ResponseMessage.ErrorCode == 0)
+            {
+                ViewBag.PartnerTariffList = PartnerTariffList(partnerTariffListResponse, null);
+            }
+
+            wrapper = new WebServiceWrapper();
+
+            var customerTypeList = wrapper.GetCustomerType();
+            if (customerTypeList.ResponseMessage.ErrorCode == 0)
+            {
+                ViewBag.CustomerTypeList = CustomerTypeList(customerTypeList, addCustomerViewModel.GeneralInfo.CustomerTypeId ?? null);
+            }
+
+            ViewBag.BillingPeriod = PaymentDayListByViewBag(addCustomerViewModel.SubscriptionInfo.PartnerTariffID ?? null, addCustomerViewModel.SubscriptionInfo.BillingPeriodId ?? null);
+
+            //GeneralInfo=>Billing
+            ViewBag.ProvincesByGeneralInfo = ProvincesList(addCustomerViewModel.GeneralInfo.BillingAddress.ProvinceId ?? null);
+            ViewBag.DistrictsByGeneralInfo = DistrictList(addCustomerViewModel.GeneralInfo.BillingAddress.ProvinceId ?? null, addCustomerViewModel.GeneralInfo.BillingAddress.DistrictId ?? null);
+            ViewBag.RuralRegionsByGeneralInfo = RuralRegionsList(addCustomerViewModel.GeneralInfo.BillingAddress.DistrictId ?? null, addCustomerViewModel.GeneralInfo.BillingAddress.RuralRegionsId ?? null);
+            ViewBag.NeigboorHoodsByGeneralInfo = NeighborhoodList(addCustomerViewModel.GeneralInfo.BillingAddress.RuralRegionsId ?? null, addCustomerViewModel.GeneralInfo.BillingAddress.NeighborhoodId ?? null);
+            ViewBag.StreetsByGeneralInfo = StreetList(addCustomerViewModel.GeneralInfo.BillingAddress.NeighborhoodId ?? null, addCustomerViewModel.GeneralInfo.BillingAddress.StreetId ?? null);
+            ViewBag.BuildingsByGeneralInfo = BuildingList(addCustomerViewModel.GeneralInfo.BillingAddress.StreetId ?? null, addCustomerViewModel.GeneralInfo.BillingAddress.BuildingId ?? null);
+            ViewBag.ApartmentsByGeneralInfo = ApartmentList(addCustomerViewModel.GeneralInfo.BillingAddress.BuildingId ?? null, addCustomerViewModel.GeneralInfo.BillingAddress.ApartmentId ?? null);
+
+            //SubscriptionInfo=>Setup
+            ViewBag.ProvincesBySetup = ProvincesList(addCustomerViewModel.SubscriptionInfo.SetupAddress.ProvinceId ?? null);
+            ViewBag.DistrictsBySetup = DistrictList(addCustomerViewModel.SubscriptionInfo.SetupAddress.ProvinceId ?? null, addCustomerViewModel.SubscriptionInfo.SetupAddress.DistrictId ?? null);
+            ViewBag.RuralRegionsBySetup = RuralRegionsList(addCustomerViewModel.SubscriptionInfo.SetupAddress.DistrictId ?? null, addCustomerViewModel.SubscriptionInfo.SetupAddress.RuralRegionsId ?? null);
+            ViewBag.NeigboorHoodsBySetup = NeighborhoodList(addCustomerViewModel.SubscriptionInfo.SetupAddress.RuralRegionsId ?? null, addCustomerViewModel.SubscriptionInfo.SetupAddress.NeighborhoodId ?? null);
+            ViewBag.StreetsBySetup = StreetList(addCustomerViewModel.SubscriptionInfo.SetupAddress.NeighborhoodId ?? null, addCustomerViewModel.SubscriptionInfo.SetupAddress.StreetId ?? null);
+            ViewBag.BuildingsBySetup = BuildingList(addCustomerViewModel.SubscriptionInfo.SetupAddress.StreetId ?? null, addCustomerViewModel.SubscriptionInfo.SetupAddress.BuildingId ?? null);
+            ViewBag.ApartmentsBySetup = ApartmentList(addCustomerViewModel.SubscriptionInfo.SetupAddress.BuildingId ?? null, addCustomerViewModel.SubscriptionInfo.SetupAddress.ApartmentId ?? null);
+
+            if (addCustomerViewModel.GeneralInfo.CustomerTypeId == (int)CustomerTypeEnum.Individual)
+            {
+                ViewBag.ProvincesByIndividual = ProvincesList(addCustomerViewModel.Individual.ResidencyAddress.ProvinceId ?? null);
+                ViewBag.DistrictsByIndividual = DistrictList(addCustomerViewModel.Individual.ResidencyAddress.ProvinceId ?? null, addCustomerViewModel.Individual.ResidencyAddress.DistrictId ?? null);
+                ViewBag.RuralRegionsByIndividual = RuralRegionsList(addCustomerViewModel.Individual.ResidencyAddress.DistrictId ?? null, addCustomerViewModel.Individual.ResidencyAddress.RuralRegionsId ?? null);
+                ViewBag.NeigboorHoodsByIndividual = NeighborhoodList(addCustomerViewModel.Individual.ResidencyAddress.RuralRegionsId ?? null, addCustomerViewModel.Individual.ResidencyAddress.NeighborhoodId ?? null);
+                ViewBag.StreetsByIndividual = StreetList(addCustomerViewModel.Individual.ResidencyAddress.NeighborhoodId ?? null, addCustomerViewModel.Individual.ResidencyAddress.StreetId ?? null);
+                ViewBag.BuildingsByIndividual = BuildingList(addCustomerViewModel.Individual.ResidencyAddress.StreetId ?? null, addCustomerViewModel.Individual.ResidencyAddress.BuildingId ?? null);
+                ViewBag.ApartmentsByIndividual = ApartmentList(addCustomerViewModel.Individual.ResidencyAddress.BuildingId ?? null, addCustomerViewModel.Individual.ResidencyAddress.ApartmentId ?? null);
+
+                ViewBag.ProvincesByCorporativeResidency = new SelectList("");
+                ViewBag.DistrictsByCorporativeResidency = new SelectList("");
+                ViewBag.RuralRegionsByCorporativeResidency = new SelectList("");
+                ViewBag.NeigboorHoodsByCorporativeResidency = new SelectList("");
+                ViewBag.StreetsByCorporativeResidency = new SelectList("");
+                ViewBag.BuildingsByCorporativeResidency = new SelectList("");
+                ViewBag.ApartmentsByCorporativeResidency = new SelectList("");
+                ViewBag.ProvincesByCorporativeCompany = new SelectList("");
+                ViewBag.DistrictsByCorporativeCompany = new SelectList("");
+                ViewBag.RuralRegionsByCorporativeCompany = new SelectList("");
+                ViewBag.NeigboorHoodsByCorporativeCompany = new SelectList("");
+                ViewBag.StreetsByCorporativeCompany = new SelectList("");
+                ViewBag.BuildingsByCorporativeCompany = new SelectList("");
+                ViewBag.ApartmentsByCorporativeCompany = new SelectList("");
+            }
+
+            else//This is Corporative
+            {
+                ViewBag.ProvincesByCorporativeResidency = ProvincesList(addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.ProvinceId ?? null);
+                ViewBag.DistrictsByCorporativeResidency = DistrictList(addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.ProvinceId ?? null, addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.DistrictId ?? null);
+                ViewBag.RuralRegionsByCorporativeResidency = RuralRegionsList(addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.DistrictId ?? null, addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.RuralRegionsId ?? null);
+                ViewBag.NeigboorHoodsByCorporativeResidency = NeighborhoodList(addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.RuralRegionsId ?? null, addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.NeighborhoodId ?? null);
+                ViewBag.StreetsByCorporativeResidency = StreetList(addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.NeighborhoodId ?? null, addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.StreetId ?? null);
+                ViewBag.BuildingsByCorporativeResidency = BuildingList(addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.StreetId ?? null, addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.BuildingId ?? null);
+                ViewBag.ApartmentsByCorporativeResidency = ApartmentList(addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.BuildingId ?? null, addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.ApartmentId ?? null);
+
+
+                ViewBag.ProvincesByCorporativeCompany = ProvincesList(addCustomerViewModel.CorporateInfo.CompanyAddress.ProvinceId ?? null);
+                ViewBag.DistrictsByCorporativeCompany = DistrictList(addCustomerViewModel.CorporateInfo.CompanyAddress.ProvinceId ?? null, addCustomerViewModel.CorporateInfo.CompanyAddress.DistrictId ?? null);
+                ViewBag.RuralRegionsByCorporativeCompany = RuralRegionsList(addCustomerViewModel.CorporateInfo.CompanyAddress.DistrictId ?? null, addCustomerViewModel.CorporateInfo.CompanyAddress.RuralRegionsId ?? null);
+                ViewBag.NeigboorHoodsByCorporativeCompany = NeighborhoodList(addCustomerViewModel.CorporateInfo.CompanyAddress.RuralRegionsId ?? null, addCustomerViewModel.CorporateInfo.CompanyAddress.NeighborhoodId ?? null);
+                ViewBag.StreetsByCorporativeCompany = StreetList(addCustomerViewModel.CorporateInfo.CompanyAddress.NeighborhoodId ?? null, addCustomerViewModel.CorporateInfo.CompanyAddress.StreetId ?? null);
+                ViewBag.BuildingsByCorporativeCompany = BuildingList(addCustomerViewModel.CorporateInfo.CompanyAddress.StreetId ?? null, addCustomerViewModel.CorporateInfo.CompanyAddress.BuildingId ?? null);
+                ViewBag.ApartmentsByCorporativeCompany = ApartmentList(addCustomerViewModel.CorporateInfo.CompanyAddress.BuildingId ?? null, addCustomerViewModel.CorporateInfo.CompanyAddress.ApartmentId ?? null);
+
+                ViewBag.ProvincesByIndividual = new SelectList("");
+                ViewBag.DistrictsByIndividual = new SelectList("");
+                ViewBag.RuralRegionsByIndividual = new SelectList("");
+                ViewBag.NeigboorHoodsByIndividual = new SelectList("");
+                ViewBag.StreetsByIndividual = new SelectList("");
+                ViewBag.BuildingsByIndividual = new SelectList("");
+                ViewBag.ApartmentsByIndividual = new SelectList("");
+            }
+
+
+            return View("Index", addCustomerViewModel);
+
         }
 
+
+        public ActionResult Successful()
+        {
+            return View();
+        }
+
+
         [HttpPost]
-        public ActionResult PaymentDayList(long id)
+        public ActionResult PaymentDayList(long? id)
         {
             var wrapper = new WebServiceWrapper();
 
-            var paymentDayListResponse = wrapper.GetPaymentDays(id);
+            var paymentDayListResponse = wrapper.GetPaymentDays((long)id);
 
             if (paymentDayListResponse.ResponseMessage.ErrorCode == 0)
             {
@@ -300,6 +385,113 @@ namespace MasterISS_Partner_WebSite.Controllers
                 return Json(new { list = list }, JsonRequestBehavior.AllowGet);
             }
             return Json(new { errorMessage = paymentDayListResponse.ResponseMessage.ErrorMessage }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        private SelectList PaymentDayListByViewBag(long? tariffId, long? selectedValue)
+        {
+            if (tariffId.HasValue)
+            {
+                var wrapper = new WebServiceWrapper();
+                var paymentDayListResponse = wrapper.GetPaymentDays((long)tariffId);
+
+                if (paymentDayListResponse.ResponseMessage.ErrorCode == 0)
+                {
+                    var list = new SelectList(paymentDayListResponse.KeyValueItemResponse.Select(tck => new { Name = tck.Value, Value = tck.Key }), "Value", "Name", selectedValue);
+                    return list;
+                }
+            }
+            return new SelectList("");
+        }
+        private SelectList ProvincesList(long? selectedValue)
+        {
+            var wrapper = new WebServiceWrapper();
+            var provinceList = wrapper.GetProvince();
+
+            if (!string.IsNullOrEmpty(provinceList.ErrorMessage))
+            {
+                //var nullList = new SelectList("");
+                //return nullList;
+
+                //Hata Olursa Nolucak????????????????
+            }
+            var list = new SelectList(provinceList.Data.ValueNamePairList.Select(tck => new { Name = tck.Name, Value = tck.Value }), "Value", "Name", selectedValue);
+
+            return list;
+        }
+
+        private SelectList DistrictList(long? provinceId, long? selectedValue)
+        {
+            if (provinceId.HasValue)
+            {
+                var wrapper = new WebServiceWrapper();
+                var districtList = wrapper.GetDistricts((long)provinceId);
+                var list = new SelectList(districtList.Data.ValueNamePairList.Select(data => new { Name = data.Name, Value = data.Value }), "Value", "Name", selectedValue);
+                return list;
+            }
+            return new SelectList("");
+
+        }
+
+        private SelectList RuralRegionsList(long? districtId, long? selectedValue)
+        {
+            if (districtId.HasValue)
+            {
+                var wrapper = new WebServiceWrapper();
+                var ruralRegionsList = wrapper.GetRuralRegions((long)districtId);
+                var list = new SelectList(ruralRegionsList.Data.ValueNamePairList.Select(data => new { Name = data.Name, Value = data.Value }), "Value", "Name", selectedValue);
+                return list;
+            }
+            return new SelectList("");
+        }
+
+        private SelectList NeighborhoodList(long? ruralRegionsId, long? selectedValue)
+        {
+            if (ruralRegionsId.HasValue)
+            {
+                var wrapper = new WebServiceWrapper();
+                var neighborhoodList = wrapper.GetNeigbourhood((long)ruralRegionsId);
+                var list = new SelectList(neighborhoodList.Data.ValueNamePairList.Select(data => new { Name = data.Name, Value = data.Value }), "Value", "Name", selectedValue);
+                return list;
+            }
+            return new SelectList("");
+        }
+
+        private SelectList StreetList(long? neighborhoodId, long? selectedValue)
+        {
+            if (neighborhoodId.HasValue)
+            {
+                var wrapper = new WebServiceWrapper();
+                var streetList = wrapper.GetStreets((long)neighborhoodId);
+                var list = new SelectList(streetList.Data.ValueNamePairList.Select(data => new { Name = data.Name, Value = data.Value }), "Value", "Name", selectedValue);
+                return list;
+            }
+            return new SelectList("");
+        }
+
+        private SelectList BuildingList(long? streetId, long? selectedValue)
+        {
+            if (streetId.HasValue)
+            {
+                var wrapper = new WebServiceWrapper();
+                var buildList = wrapper.GetBuildings((long)streetId);
+                var list = new SelectList(buildList.Data.ValueNamePairList.Select(data => new { Name = data.Name, Value = data.Value }), "Value", "Name", selectedValue);
+                return list;
+            }
+            return new SelectList("");
+        }
+
+        private SelectList ApartmentList(long? buildingId, long? selectedValue)
+        {
+            if (buildingId.HasValue)
+            {
+                var wrapper = new WebServiceWrapper();
+                var apartmentList = wrapper.GetApartments((long)buildingId);
+                var list = new SelectList(apartmentList.Data.ValueNamePairList.Select(data => new { Name = data.Name, Value = data.Value }), "Value", "Name");
+                return list;
+            }
+            return new SelectList("");
+
         }
 
         private bool IsCustomerTypeIndividual(int customerTypeId)
@@ -314,6 +506,12 @@ namespace MasterISS_Partner_WebSite.Controllers
         private void ChangeAddressInfo(AddressInfoViewModel changingViewModel, AddressInfoViewModel changerViewModel)
         {
             changingViewModel.ApartmentId = changerViewModel.ApartmentId;
+            changingViewModel.BuildingId = changerViewModel.BuildingId;
+            changingViewModel.DistrictId= changerViewModel.DistrictId;
+            changingViewModel.NeighborhoodId= changerViewModel.NeighborhoodId;
+            changingViewModel.ProvinceId= changerViewModel.ProvinceId;
+            changingViewModel.RuralRegionsId= changerViewModel.RuralRegionsId;
+            changingViewModel.StreetId= changerViewModel.StreetId;
             changingViewModel.PostalCode = changerViewModel.PostalCode;
             changingViewModel.Floor = changerViewModel.Floor;
         }

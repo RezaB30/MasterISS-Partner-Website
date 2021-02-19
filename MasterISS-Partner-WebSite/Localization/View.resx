@@ -129,6 +129,9 @@
   <data name="MailValidError" xml:space="preserve">
     <value>Bu mail zaten mevcut.</value>
   </data>
+  <data name="NewCustomerError" xml:space="preserve">
+    <value>İşleminiz yapılırken bir hata oluştu.Tekrar deneyiniz.</value>
+  </data>
   <data name="PassiveError" xml:space="preserve">
     <value>Kullanıcı pasif etme işleminde hata oluştu. Tekrar deneyiniz.</value>
   </data>

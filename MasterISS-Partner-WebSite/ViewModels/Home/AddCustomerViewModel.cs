@@ -21,11 +21,11 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
     {
         [Display(Name = "BillingPeriodId", ResourceType = typeof(Localization.Model))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
-        public int BillingPeriodId { get; set; }
+        public int? BillingPeriodId { get; set; }
 
         [Display(Name = "PartnerTariffID", ResourceType = typeof(Localization.Model))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
-        public int PartnerTariffID { get; set; }
+        public int? PartnerTariffID { get; set; }
 
         public  AddressInfoViewModel SetupAddress { get; set; }
     }

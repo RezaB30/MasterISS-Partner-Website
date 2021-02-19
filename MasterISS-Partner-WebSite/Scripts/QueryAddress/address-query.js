@@ -1,6 +1,18 @@
 ﻿function QueryAddress(triggerSelectId, triggeredSelectId, url) {
 
     $(document).ready(function () {
+
+        var triggeredSelect = $(triggeredSelectId).find(":selected").val();
+        if (triggeredSelect != "") {
+            $(triggerSelectId).attr("disabled", false);
+            $(triggeredSelectId).attr("disabled", false);
+        }
+        var triggerSelect = $(triggerSelectId).find(":selected").val();
+        if (triggerSelect != "") {
+            $(triggeredSelectId).attr("disabled", false);
+            $(triggerSelectId).attr("disabled", false);
+        }
+
         $(triggerSelectId).change(function () {
 
             $("#service-avaibility-response").empty();
