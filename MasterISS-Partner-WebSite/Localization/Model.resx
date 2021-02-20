@@ -120,6 +120,9 @@
   <data name="Address" xml:space="preserve">
     <value>Yetkili Adresi</value>
   </data>
+  <data name="AllowanceStateName" xml:space="preserve">
+    <value>Ödenek Durumu</value>
+  </data>
   <data name="Amount" xml:space="preserve">
     <value>Tutar</value>
   </data>

@@ -2,6 +2,7 @@
 using MasterISS_Partner_WebSite.PartnerServiceReference;
 using MasterISS_Partner_WebSite.ViewModels;
 using MasterISS_Partner_WebSite.ViewModels.Home;
+using MasterISS_Partner_WebSite.ViewModels.Revenues;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -9,6 +10,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace MasterISS_Partner_WebSite
@@ -520,24 +522,116 @@ namespace MasterISS_Partner_WebSite
             return response;
         }
 
-        //public PartnerServiceAllowanceDetailsResponse GetBasicAllowanceDetails()
-        //{
-        //    var request = new PartnerServiceBasicAllowanceRequest()
-        //    {
-        //        Culture=Culture,
-        //        Hash=Hash<SHA256>(),
-        //        Rand=Rand,
-        //        Username=Username,
-        //        PartnerBasicAllowanceRequest=new PartnerBasicAllowanceRequest()
-        //        {
-                    
-        //        }
-        //    };
+        public PartnerServiceAllowanceDetailsResponse GetBasicAllowanceDetails(GetBasicAllowDetailViewModel getBasicAllowDetailViewModel)
+        {
+            var claimInfo = new ClaimInfo();
 
-        //    var response = Client.GetBasicAllowanceDetails(request);
+            var request = new PartnerServiceBasicAllowanceRequest()
+            {
+                Culture = Culture,
+                Hash = Hash<SHA256>(),
+                Rand = Rand,
+                Username = Username,
+                PartnerBasicAllowanceRequest = new PartnerBasicAllowanceRequest()
+                {
+                    AllowanceTypeId = (short?)getBasicAllowDetailViewModel.RevenuesTypeEnum,
+                    ItemPerPage = getBasicAllowDetailViewModel.PageInfo.ItemPerPage,
+                    PageNo = getBasicAllowDetailViewModel.PageInfo.PageNo,
+                    PartnerId = claimInfo.PartnerId()
+                }
+            };
 
-        //    return response;
-        //}
+            var response = Client.GetBasicAllowanceDetails(request);
+
+            return response;
+        }
+
+        public PartnerServiceSetupGenericAllowanceListResponse SetupGenericAllowanceList(PageSettingsByWebService pageSettings)
+        {
+
+            var response = Client.SetupGenericAllowanceList(PartnerServiceAllowanceRequest(pageSettings));
+
+            return response;
+        }
+
+        public PartnerServiceSetupGenericAllowanceListResponse SetupAllowanceDetails(SetupAllowanceDetailsRequest setupAllowanceDetailsRequest)
+        {
+            
+            var response = Client.SetupAllowanceDetails(PartnerServiceAllowanceDetailRequest(setupAllowanceDetailsRequest));
+
+            return response;
+        }
+
+        public PartnerServiceSetupAllowanceListResponse SetupAllowanceList(PageSettingsByWebService pageSettings)
+        {
+            
+            var response = Client.SetupAllowanceList(PartnerServiceAllowanceRequest(pageSettings));
+
+            return response;
+        }
+
+        public PartnerServiceSaleGenericAllowanceListResponse SaleGenericAllowanceList(PageSettingsByWebService pageSettings)
+        {
+            var response = Client.SaleGenericAllowanceList(PartnerServiceAllowanceRequest(pageSettings));
+
+            return response;
+        }
+
+        public PartnerServiceSaleGenericAllowanceListResponse SaleAllowanceDetails(SetupAllowanceDetailsRequest setupAllowanceDetailsRequest)
+        {
+            var response = Client.SaleAllowanceDetails(PartnerServiceAllowanceDetailRequest(setupAllowanceDetailsRequest));
+
+            return response;
+        }
+
+        public PartnerServiceSaleAllowanceListResponse SaleAllowanceList(PageSettingsByWebService pageSettings)
+        {
+            var response = Client.SaleAllowanceList(PartnerServiceAllowanceRequest(pageSettings));
+
+            return response;
+        }
+
+
+
+
+        private PartnerServiceAllowanceDetailRequest PartnerServiceAllowanceDetailRequest(SetupAllowanceDetailsRequest setupAllowanceDetailsRequest)
+        {
+            var claimInfo = new ClaimInfo();
+            var request = new PartnerServiceAllowanceDetailRequest()
+            {
+                Culture = Culture,
+                Hash = Hash<SHA256>(),
+                Rand = Rand,
+                Username = Username,
+                PartnerAllowanceDetailRequest = new PartnerAllowanceDetailRequest()
+                {
+                    PartnerId = claimInfo.PartnerId(),
+                    PageNo = setupAllowanceDetailsRequest.PageInfo.PageNo,
+                    ItemPerPage = setupAllowanceDetailsRequest.PageInfo.ItemPerPage,
+                    AllowanceCollectionID = setupAllowanceDetailsRequest.AllowanceCollectionID,
+                },
+            };
+            return request;
+        }
+
+        private PartnerServiceAllowanceRequest PartnerServiceAllowanceRequest(PageSettingsByWebService pageSettings)
+        {
+            var claimInfo = new ClaimInfo();
+            var request = new PartnerServiceAllowanceRequest()
+            {
+                Culture = Culture,
+                Hash = Hash<SHA256>(),
+                Rand = Rand,
+                Username = Username,
+                PartnerAllowanceRequest = new PartnerAllowanceRequest()
+                {
+                    ItemPerPage = pageSettings.ItemPerPage,
+                    PageNo = pageSettings.PageNo,
+                    PartnerId = claimInfo.PartnerId(),
+                },
+            };
+            return request;
+        }
 
         private string DateOfIssueValue(int cardTypeId, IDCardViewModel IDCardViewModel)
         {

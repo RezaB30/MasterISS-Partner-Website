@@ -391,25 +391,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             return Json(new { errorMessage = paymentDayListResponse.ResponseMessage.ErrorMessage }, JsonRequestBehavior.AllowGet);
         }
 
-
-        public ActionResult SmsConfirmation()
-        {
-            var customerApplicationInfo = Session["CustomerApplicationInfo"] as AddCustomerViewModel;
-
-            var wrapper = new WebServiceWrapper();
-
-            var smsConfirmation = wrapper.SendConfirmationSMS(customerApplicationInfo.GeneralInfo.ContactPhoneNo);
-
-            if (smsConfirmation.ResponseMessage.ErrorCode == 0)
-            {
-                ViewBag.SmsCode = smsConfirmation.SMSCodeResponse.Code;
-                return View();
-            }
-
-            ViewBag.Error = "hata var";
-            return View();
-        }
-
+        
         [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult SmsConfirmation(string inputCode)

@@ -169,6 +169,7 @@
     <Compile Include="Controllers\BillController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RevenuesController.cs" />
     <Compile Include="Controllers\UserOperationsController.cs" />
     <Compile Include="DatetimeParse.cs" />
     <Compile Include="Enums\CardTypeEnum.cs" />
@@ -279,6 +280,7 @@
     <Compile Include="ViewModels\AddPermissionViewModel.cs" />
     <Compile Include="ViewModels\BillCollectionViewModel.cs" />
     <Compile Include="ViewModels\CreditReportViewModel.cs" />
+    <Compile Include="ViewModels\Revenues\GetBasicAllowDetailViewModel.cs" />
     <Compile Include="ViewModels\GetBillCollectionBySubscriberNoViewModel.cs" />
     <Compile Include="ViewModels\Home\AddCustomerViewModel.cs" />
     <Compile Include="ViewModels\Home\BalanceRequestViewModel.cs" />
@@ -286,6 +288,9 @@
     <Compile Include="ViewModels\AdresInfoViewModel.cs" />
     <Compile Include="ViewModels\NewUserViewModel.cs" />
     <Compile Include="ViewModels\PayBillRequestViewModel.cs" />
+    <Compile Include="ViewModels\Revenues\GetBasicAllowenceDetailsResponseList.cs" />
+    <Compile Include="ViewModels\Revenues\PageSettingsByWebService.cs" />
+    <Compile Include="ViewModels\Revenues\SetupAllowanceDetailsRequest.cs" />
     <Compile Include="ViewModels\ServiceAvaibilityResponseViewModel.cs" />
     <Compile Include="ViewModels\Settings\BillCollectionSettingsViewModel.cs" />
     <Compile Include="ViewModels\Settings\GoogleSettingsViewModel.cs" />
@@ -447,6 +452,7 @@
     <Content Include="Views\Customer\NewCustomer.cshtml" />
     <Content Include="Views\Customer\Successful.cshtml" />
     <Content Include="Views\Customer\SmsConfirmation.cshtml" />
+    <Content Include="Views\Revenues\AllowedDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

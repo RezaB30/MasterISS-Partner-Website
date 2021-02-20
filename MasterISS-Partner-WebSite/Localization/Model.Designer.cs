@@ -70,6 +70,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ödenek Durumu.
+        /// </summary>
+        public static string AllowanceStateName {
+            get {
+                return ResourceManager.GetString("AllowanceStateName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tutar.
         /// </summary>
         public static string Amount {

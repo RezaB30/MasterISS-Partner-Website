@@ -120,6 +120,9 @@
   <data name="Address" xml:space="preserve">
     <value>Executive Address</value>
   </data>
+  <data name="AllowanceStateName" xml:space="preserve">
+    <value>Allowance State</value>
+  </data>
   <data name="Amount" xml:space="preserve">
     <value>Amount</value>
   </data>
