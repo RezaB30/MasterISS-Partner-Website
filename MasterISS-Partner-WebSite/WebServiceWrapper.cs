@@ -520,6 +520,25 @@ namespace MasterISS_Partner_WebSite
             return response;
         }
 
+        //public PartnerServiceAllowanceDetailsResponse GetBasicAllowanceDetails()
+        //{
+        //    var request = new PartnerServiceBasicAllowanceRequest()
+        //    {
+        //        Culture=Culture,
+        //        Hash=Hash<SHA256>(),
+        //        Rand=Rand,
+        //        Username=Username,
+        //        PartnerBasicAllowanceRequest=new PartnerBasicAllowanceRequest()
+        //        {
+                    
+        //        }
+        //    };
+
+        //    var response = Client.GetBasicAllowanceDetails(request);
+
+        //    return response;
+        //}
+
         private string DateOfIssueValue(int cardTypeId, IDCardViewModel IDCardViewModel)
         {
             var parseDatetime = new DatetimeParse();

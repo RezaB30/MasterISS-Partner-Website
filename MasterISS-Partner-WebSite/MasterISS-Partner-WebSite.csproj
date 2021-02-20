@@ -173,6 +173,7 @@
     <Compile Include="DatetimeParse.cs" />
     <Compile Include="Enums\CardTypeEnum.cs" />
     <Compile Include="Enums\CustomerTypeEnum.cs" />
+    <Compile Include="Enums\RevenuesTypeEnum.cs" />
     <Compile Include="OtherPhoneNoValidation.cs" />
     <Compile Include="Enums\BalanceRequestTypesEnum.cs" />
     <Compile Include="Enums\PermissionListEnum.cs" />
@@ -443,8 +444,9 @@
     <Content Include="Views\Shared\DisplayTemplates\DatetimeFormat.cshtml" />
     <Content Include="Views\UserOperations\AddPermission.cshtml" />
     <Content Include="Views\Bill\CreditReportDetail.cshtml" />
-    <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\Customer\NewCustomer.cshtml" />
     <Content Include="Views\Customer\Successful.cshtml" />
+    <Content Include="Views\Customer\SmsConfirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

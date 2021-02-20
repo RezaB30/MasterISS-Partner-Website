@@ -9,7 +9,6 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
 {
     public class AddCustomerViewModel
     {
-        public long ID { get; set; }
         public CorporateInfoViewModel CorporateInfo { get; set; }
         public GeneralInfoViewModel GeneralInfo { get; set; }
         public IDCardViewModel IDCard { get; set; }

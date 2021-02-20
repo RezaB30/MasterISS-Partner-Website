@@ -13,7 +13,7 @@ namespace MasterISS_Partner_WebSite.Controllers
     public class CustomerController : Controller
     {
         // GET: Customer
-        public ActionResult Index()
+        public ActionResult NewCustomer()
         {
             var wrapper = new WebServiceWrapper();
 
@@ -202,22 +202,26 @@ namespace MasterISS_Partner_WebSite.Controllers
                     var setupAddress = wrapperByQueryApartmentAddress.GetApartmentAddress((long)setupAddressBBK);
 
 
-                    if (setupAddress.ResponseMessage.ErrorCode == 0 && billingAddress.ResponseMessage.ErrorCode == 0)
+                    if (setupAddress.ResponseMessage.ErrorCode == 0 && billingAddress.ResponseMessage.ErrorCode == 0 && (addCustomerViewModel.Individual.ResidencyAddress.ApartmentId != null || addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.ApartmentId != null))
                     {
                         addCustomerViewModel.GeneralInfo.BillingAddress.NewCustomerAddressInfoRequest = NewCustomerAddressInfoRequest(billingAddress.AddressDetailsResponse);
 
                         addCustomerViewModel.SubscriptionInfo.SetupAddress.NewCustomerAddressInfoRequest = NewCustomerAddressInfoRequest(setupAddress.AddressDetailsResponse);
 
-                        var wrapperByNewCustomer = new WebServiceWrapper();
-                        var response = wrapperByNewCustomer.NewCustomerRegister(addCustomerViewModel);
 
-                        if (response.ResponseMessage.ErrorCode == 0)
+                        var wrapperBySMSConfirmation = new WebServiceWrapper();
+
+                        var smsConfirmation = wrapperBySMSConfirmation.SendConfirmationSMS(addCustomerViewModel.GeneralInfo.ContactPhoneNo);
+
+                        if (smsConfirmation.ResponseMessage.ErrorCode == 0)
                         {
-                            return RedirectToAction("Successful");
+                            Session["CustomerApplicationInfo"] = addCustomerViewModel;
+                            Session["SMSCode"] = smsConfirmation.SMSCodeResponse.Code;
+                            return View("SmsConfirmation");
                         }
                         else
                         {
-                            ViewBag.NewCustomerError = Localization.View.NewCustomerError;
+                            ViewBag.NewCustomerError = "SMS ile ilgili bir sıkıntı oldu.";
                         }
                     }
                     else
@@ -360,7 +364,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             }
 
 
-            return View("Index", addCustomerViewModel);
+            return View(addCustomerViewModel);
 
         }
 
@@ -388,6 +392,72 @@ namespace MasterISS_Partner_WebSite.Controllers
         }
 
 
+        public ActionResult SmsConfirmation()
+        {
+            var customerApplicationInfo = Session["CustomerApplicationInfo"] as AddCustomerViewModel;
+
+            var wrapper = new WebServiceWrapper();
+
+            var smsConfirmation = wrapper.SendConfirmationSMS(customerApplicationInfo.GeneralInfo.ContactPhoneNo);
+
+            if (smsConfirmation.ResponseMessage.ErrorCode == 0)
+            {
+                ViewBag.SmsCode = smsConfirmation.SMSCodeResponse.Code;
+                return View();
+            }
+
+            ViewBag.Error = "hata var";
+            return View();
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult SmsConfirmation(string inputCode)
+        {
+            var serviceCode = Session["SMSCode"] == null ? null : Session["SMSCode"].ToString();
+            if (!string.IsNullOrEmpty(serviceCode))
+            {
+                if (Convert.ToInt32(Session["Counter"]) < 3)
+                {
+                    if (inputCode == serviceCode)
+                    {
+                        var wrapper = new WebServiceWrapper();
+
+                        var customerApplicationInfo = Session["CustomerApplicationInfo"] as AddCustomerViewModel;
+
+                        var response = wrapper.NewCustomerRegister(customerApplicationInfo);
+
+                        if (response.ResponseMessage.ErrorCode == 0)
+                        {
+                            Session.Remove("CustomerApplicationInfo");
+                            Session.Remove("Counter");
+                            Session.Remove("SMSCode");
+
+                            return RedirectToAction("Successful");
+                        }
+                        else
+                        {
+                            return View("NewCustomer", customerApplicationInfo);
+                        }
+                    }
+                    else
+                    {
+                        ViewBag.Error = "yanlış girdin";
+                        Session["Counter"] = Convert.ToInt32(Session["Counter"]) + 1;
+                        return View();
+                    }
+                }
+                else
+                {
+                    return RedirectToAction("NewCustomer");
+                }
+            }
+
+            var customerAppInfo = Session["CustomerApplicationInfo"] as AddCustomerViewModel;
+            return View("NewCustomer", customerAppInfo);
+        }
+
+
         private SelectList PaymentDayListByViewBag(long? tariffId, long? selectedValue)
         {
             if (tariffId.HasValue)
@@ -403,6 +473,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             }
             return new SelectList("");
         }
+
         private SelectList ProvincesList(long? selectedValue)
         {
             var wrapper = new WebServiceWrapper();
@@ -507,11 +578,11 @@ namespace MasterISS_Partner_WebSite.Controllers
         {
             changingViewModel.ApartmentId = changerViewModel.ApartmentId;
             changingViewModel.BuildingId = changerViewModel.BuildingId;
-            changingViewModel.DistrictId= changerViewModel.DistrictId;
-            changingViewModel.NeighborhoodId= changerViewModel.NeighborhoodId;
-            changingViewModel.ProvinceId= changerViewModel.ProvinceId;
-            changingViewModel.RuralRegionsId= changerViewModel.RuralRegionsId;
-            changingViewModel.StreetId= changerViewModel.StreetId;
+            changingViewModel.DistrictId = changerViewModel.DistrictId;
+            changingViewModel.NeighborhoodId = changerViewModel.NeighborhoodId;
+            changingViewModel.ProvinceId = changerViewModel.ProvinceId;
+            changingViewModel.RuralRegionsId = changerViewModel.RuralRegionsId;
+            changingViewModel.StreetId = changerViewModel.StreetId;
             changingViewModel.PostalCode = changerViewModel.PostalCode;
             changingViewModel.Floor = changerViewModel.Floor;
         }

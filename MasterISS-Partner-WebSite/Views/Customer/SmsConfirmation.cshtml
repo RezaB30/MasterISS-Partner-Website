@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "SmsConfirmation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("SmsConfirmation", "Customer", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.TextBox("inputCode")
+
+    <input type="submit" value="onayla"/>
+}
+<div style="background-color:red">
+    @ViewBag.Error
+</div>
