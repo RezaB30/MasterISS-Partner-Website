@@ -593,7 +593,6 @@ namespace MasterISS_Partner_WebSite
 
 
 
-
         private PartnerServiceAllowanceDetailRequest PartnerServiceAllowanceDetailRequest(SetupAllowanceDetailsRequest setupAllowanceDetailsRequest)
         {
             var claimInfo = new ClaimInfo();

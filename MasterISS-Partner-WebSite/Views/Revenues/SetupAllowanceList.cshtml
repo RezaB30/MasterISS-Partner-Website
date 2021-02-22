@@ -1,0 +1,39 @@
+﻿@using MasterISS_Partner_WebSite.ViewModels.Revenues
+@model IEnumerable<AllowenceListViewModel>
+@{
+    ViewBag.Title = "SetupAllowanceList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table>
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(m => m.Ispaid)</th>
+            <th>@Html.DisplayNameFor(m => m.IssueDate)</th>
+            <th>@Html.DisplayNameFor(m => m.PaymentDate)</th>
+            <th>@Html.DisplayNameFor(m => m.Total)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(motelItem => item.Ispaid)</td>
+                <td>@Html.DisplayFor(motelItem => item.IssueDate)</td>
+                <td>@Html.DisplayFor(motelItem => item.PaymentDate)</td>
+                <td>@Html.DisplayFor(motelItem => item.Total)</td>
+                <td>@Html.ActionLink("aa", "SetupAllowenceDetails", new { Id = item.Id })</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div>
+    @for (int i = 1; i < (int)ViewBag.TotalCount; i++)
+    {
+        <ol>
+            <li>
+                @Html.ActionLink("ssss", "SetupAllowanceList", new { page = i })
+            </li>
+        </ol>
+    }
+</div>

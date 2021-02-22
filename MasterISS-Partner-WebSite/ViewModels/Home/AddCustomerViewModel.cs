@@ -15,7 +15,7 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         public IndividualViewModel Individual { get; set; }
         public SubscriptionInfoViewModel SubscriptionInfo { get; set; }
     }
-  
+
     public class SubscriptionInfoViewModel
     {
         [Display(Name = "BillingPeriodId", ResourceType = typeof(Localization.Model))]
@@ -26,7 +26,7 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
         public int? PartnerTariffID { get; set; }
 
-        public  AddressInfoViewModel SetupAddress { get; set; }
+        public AddressInfoViewModel SetupAddress { get; set; }
     }
 
     public class IndividualViewModel
@@ -55,7 +55,7 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
         public int? ProfessionId { get; set; }
 
-        public  AddressInfoViewModel ResidencyAddress { get; set; }
+        public AddressInfoViewModel ResidencyAddress { get; set; }
 
         [Display(Name = "SexId", ResourceType = typeof(Localization.Model))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
@@ -71,7 +71,7 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         [Display(Name = "CentralSystemNo", ResourceType = typeof(Localization.Model))]
         public string CentralSystemNo { get; set; }
 
-        public  AddressInfoViewModel CompanyAddress { get; set; }
+        public AddressInfoViewModel CompanyAddress { get; set; }
 
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
         [Display(Name = "ExecutiveBirthPlace", ResourceType = typeof(Localization.Model))]
@@ -105,7 +105,7 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
         public int? ExecutiveProfessionId { get; set; }
 
-        public  AddressInfoViewModel ExecutiveResidencyAddress { get; set; }
+        public AddressInfoViewModel ExecutiveResidencyAddress { get; set; }
 
         [Display(Name = "ExecutiveSexId", ResourceType = typeof(Localization.Model))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
@@ -121,7 +121,7 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
 
         [Display(Name = "SameSetupAddress", ResourceType = typeof(Localization.Model))]
         public bool SameSetupAddressByCorporativeCompanyAddress { get; set; }
-        
+
         [Display(Name = "SameSetupAddress", ResourceType = typeof(Localization.Model))]
         public bool SameSetupAddressByCorporativeResidencyAddress { get; set; }
     }
@@ -133,6 +133,7 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
 
         [Display(Name = "BirthDate", ResourceType = typeof(Localization.Model))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        [RegularExpression(@"(((0|1)[0-9]|2[0-9]|3[0-1])\.(0[1-9]|1[0-2])\.((19|20)\d\d))$", ErrorMessageResourceType =typeof(Localization.Validation),ErrorMessageResourceName ="DateValid")]
         public string BirthDate { get; set; }
 
         [Display(Name = "CardTypeId", ResourceType = typeof(Localization.Model))]
@@ -180,6 +181,7 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         public string District { get; set; }
 
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        [RegularExpression(@"(((0|1)[0-9]|2[0-9]|3[0-1])\.(0[1-9]|1[0-2])\.((19|20)\d\d))$", ErrorMessageResourceType =typeof(Localization.Validation),ErrorMessageResourceName ="DateValid")]
         [Display(Name = "DateOfIssue", ResourceType = typeof(Localization.Model))]
         public string DateOfIssue { get; set; }
 
@@ -199,6 +201,7 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
     public class TCIDCardWithChip
     {
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        [RegularExpression(@"(((0|1)[0-9]|2[0-9]|3[0-1])\.(0[1-9]|1[0-2])\.((19|20)\d\d))$", ErrorMessageResourceType =typeof(Localization.Validation),ErrorMessageResourceName ="DateValid")]
         [Display(Name = "ExpiryDate", ResourceType = typeof(Localization.Model))]
         public string ExpiryDate { get; set; }
     }
@@ -210,7 +213,7 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
             OtherPhoneNos = new List<string>();
         }
 
-        public  AddressInfoViewModel BillingAddress { get; set; }
+        public AddressInfoViewModel BillingAddress { get; set; }
 
         [Display(Name = "ContactPhoneNo", ResourceType = typeof(Localization.Model))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]

@@ -1,0 +1,49 @@
+﻿@using MasterISS_Partner_WebSite.ViewModels.Revenues
+@model  IEnumerable<SetupGenericAllowancesViewModel>
+@{
+    ViewBag.Title = "SetupGenericAllowanceList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>SetupGenericAllowanceList</h2>
+
+<table>
+    <thead>
+        <tr>
+            <td>@Html.DisplayNameFor(m => m.Allowance)</td>
+            <td>@Html.DisplayNameFor(m => m.AllowanceState.Name)</td>
+            <td>@Html.DisplayNameFor(m => m.AllowanceState.Value)</td>
+            <td>@Html.DisplayNameFor(m => m.CompletionDate)</td>
+            <td>@Html.DisplayNameFor(m => m.IssueDate)</td>
+            <td>@Html.DisplayNameFor(m => m.SubscriptionNo)</td>
+            <td>@Html.DisplayNameFor(m => m.SetupState.Name)</td>
+            <td>@Html.DisplayNameFor(m => m.SetupState.Value)</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Allowance)</td>
+                <td>@Html.DisplayFor(modelItem => item.AllowanceState.Name)</td>
+                <td>@Html.DisplayFor(modelItem => item.AllowanceState.Value)</td>
+                <td>@Html.DisplayFor(modelItem => item.CompletionDate)</td>
+                <td>@Html.DisplayFor(modelItem => item.IssueDate)</td>
+                <td>@Html.DisplayFor(modelItem => item.SubscriptionNo)</td>
+                <td>@Html.DisplayFor(modelItem => item.SetupState.Name)</td>
+                <td>@Html.DisplayFor(modelItem => item.SetupState.Value)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div>
+    @for (int i = 1; i < (int)ViewBag.TotalCount; i++)
+    {
+        <ol>
+            <li>
+                @Html.ActionLink("ssss", "SetupGenericAllowanceList", new { page = i })
+            </li>
+        </ol>
+    }
+
+</div>

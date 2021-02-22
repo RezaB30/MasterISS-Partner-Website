@@ -1,0 +1,46 @@
+﻿@using MasterISS_Partner_WebSite.ViewModels.Revenues
+@model IEnumerable<SaleGenericAllowancesViewModel>
+@{
+    ViewBag.Title = "SaleAllowanceDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table>
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(m => m.FirstOrDefault().Allowance)</th>
+            <th>@Html.DisplayNameFor(m => m.FirstOrDefault().AllowanceState.Name)</th>
+            <th>@Html.DisplayNameFor(m => m.FirstOrDefault().AllowanceState.Value)</th>
+            <th>@Html.DisplayNameFor(m => m.FirstOrDefault().MembershipDate)</th>
+            <th>@Html.DisplayNameFor(m => m.FirstOrDefault().SubscriptionNo)</th>
+            <th>@Html.DisplayNameFor(m => m.FirstOrDefault().SaleState.Name)</th>
+            <th>@Html.DisplayNameFor(m => m.FirstOrDefault().SaleState.Value)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(motelItem => item.Allowance)</td>
+                <td>@Html.DisplayFor(motelItem => item.AllowanceState.Name)</td>
+                <td>@Html.DisplayFor(motelItem => item.AllowanceState.Value)</td>
+                <td>@Html.DisplayFor(motelItem => item.MembershipDate)</td>
+                <td>@Html.DisplayFor(motelItem => item.SubscriptionNo)</td>
+                <td>@Html.DisplayFor(motelItem => item.SaleState.Name)</td>
+                <td>@Html.DisplayFor(motelItem => item.SaleState.Value)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div>
+    @for (int i = 0; i < (int)ViewBag.TotalCount + 1; i++)
+    {
+        <ol>
+            <li>
+                @Html.ActionLink("ssss", "SaleGenericAllowanceList", new { page = i, Id = (int)ViewBag.Id })
+            </li>
+        </ol>
+    }
+</div>
+
+

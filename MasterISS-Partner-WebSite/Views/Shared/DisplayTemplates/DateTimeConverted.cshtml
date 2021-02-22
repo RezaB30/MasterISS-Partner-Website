@@ -1,0 +1,11 @@
+﻿@model DateTime?
+
+@if (Model.Value != DateTime.MinValue)
+{
+    @: @Model.Value.ToString("dd.MM.yyyy HH:mm")
+}
+else
+{
+    @: -
+}
+

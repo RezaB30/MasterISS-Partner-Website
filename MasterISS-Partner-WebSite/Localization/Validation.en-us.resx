@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DateValid" xml:space="preserve">
+    <value>Login in the format dd.MM.yyyy</value>
+  </data>
   <data name="EmailFormat" xml:space="preserve">
     <value>Login in e-mail format.</value>
   </data>

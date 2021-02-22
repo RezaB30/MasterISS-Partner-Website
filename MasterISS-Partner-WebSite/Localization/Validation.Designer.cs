@@ -61,6 +61,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to dd.MM.yyyy formatında giriş yapınız.
+        /// </summary>
+        public static string DateValid {
+            get {
+                return ResourceManager.GetString("DateValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to E-Posta formatında giriş yapınız..
         /// </summary>
         public static string EmailFormat {

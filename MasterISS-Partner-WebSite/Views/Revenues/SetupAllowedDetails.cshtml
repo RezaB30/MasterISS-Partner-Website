@@ -1,11 +1,11 @@
 ﻿@using MasterISS_Partner_WebSite.ViewModels.Revenues
 @model  IEnumerable<GetBasicAllowenceDetailsResponseList>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "SetupAllowedDetails";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Sale</h2>
+<h2>Setup</h2>
 <table>
     <thead>
         <tr>
@@ -19,7 +19,6 @@
             {
                 <td>@Html.DisplayFor(modelItem => item.AllowanceStateName)</td>
                 <td>@Html.DisplayFor(modelItem => item.Price)</td>
-                <td>@Html.ActionLink("aa", "aa", item.AllowanceStateID)</td>
             }
         </tr>
     </tbody>

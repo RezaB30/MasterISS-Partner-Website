@@ -70,6 +70,24 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hakediş.
+        /// </summary>
+        public static string Allowance {
+            get {
+                return ResourceManager.GetString("Allowance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hakediş Durumu.
+        /// </summary>
+        public static string AllowanceState {
+            get {
+                return ResourceManager.GetString("AllowanceState", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ödenek Durumu.
         /// </summary>
         public static string AllowanceStateName {
@@ -183,6 +201,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string CompanyName {
             get {
                 return ResourceManager.GetString("CompanyName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tamamlanma Tarihi.
+        /// </summary>
+        public static string CompletionDate {
+            get {
+                return ResourceManager.GetString("CompletionDate", resourceCulture);
             }
         }
         
@@ -466,6 +493,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ödendi Mi?.
+        /// </summary>
+        public static string Ispaid {
+            get {
+                return ResourceManager.GetString("Ispaid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ISPCode.
         /// </summary>
         public static string ISPCode {
@@ -489,6 +525,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string LastName {
             get {
                 return ResourceManager.GetString("LastName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üyelik Tarihi.
+        /// </summary>
+        public static string MembershipDate {
+            get {
+                return ResourceManager.GetString("MembershipDate", resourceCulture);
             }
         }
         
@@ -583,6 +628,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ödeme Tarihi.
+        /// </summary>
+        public static string PaymentDate {
+            get {
+                return ResourceManager.GetString("PaymentDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Telefon Numarası.
         /// </summary>
         public static string PhoneNo {
@@ -615,6 +669,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string PostalCode {
             get {
                 return ResourceManager.GetString("PostalCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tutar.
+        /// </summary>
+        public static string Price {
+            get {
+                return ResourceManager.GetString("Price", resourceCulture);
             }
         }
         
@@ -745,6 +808,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Abone No.
+        /// </summary>
+        public static string SubscriptionNo {
+            get {
+                return ResourceManager.GetString("SubscriptionNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vergi Numarası.
         /// </summary>
         public static string TaxNo {
@@ -777,6 +849,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string Title {
             get {
                 return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toplam.
+        /// </summary>
+        public static string Total {
+            get {
+                return ResourceManager.GetString("Total", resourceCulture);
             }
         }
         

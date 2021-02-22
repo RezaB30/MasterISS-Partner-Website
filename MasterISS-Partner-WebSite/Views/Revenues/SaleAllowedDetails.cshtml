@@ -1,0 +1,28 @@
+﻿@using MasterISS_Partner_WebSite.ViewModels.Revenues
+@model  IEnumerable<GetBasicAllowenceDetailsResponseList>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Sale</h2>
+<table>
+    <thead>
+        <tr>
+            <td>@Html.DisplayNameFor(m => m.AllowanceStateName)</td>
+            <td>@Html.DisplayNameFor(m => m.Price)</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            @foreach (var item in Model)
+            {
+                <td>@Html.DisplayFor(modelItem => item.AllowanceStateName)</td>
+                <td>@Html.DisplayFor(modelItem => item.Price)</td>
+            }
+        </tr>
+    </tbody>
+</table>
+
+
+

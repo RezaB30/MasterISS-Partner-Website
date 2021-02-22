@@ -120,6 +120,12 @@
   <data name="Address" xml:space="preserve">
     <value>Yetkili Adresi</value>
   </data>
+  <data name="Allowance" xml:space="preserve">
+    <value>Hakediş</value>
+  </data>
+  <data name="AllowanceState" xml:space="preserve">
+    <value>Hakediş Durumu</value>
+  </data>
   <data name="AllowanceStateName" xml:space="preserve">
     <value>Ödenek Durumu</value>
   </data>
@@ -158,6 +164,9 @@
   </data>
   <data name="CompanyName" xml:space="preserve">
     <value>Firma Ünvanı</value>
+  </data>
+  <data name="CompletionDate" xml:space="preserve">
+    <value>Tamamlanma Tarihi</value>
   </data>
   <data name="ContactPhoneNo" xml:space="preserve">
     <value>İletişim Numarası</value>
@@ -252,6 +261,9 @@
   <data name="IsEnabled" xml:space="preserve">
     <value>Aktif Mi?</value>
   </data>
+  <data name="Ispaid" xml:space="preserve">
+    <value>Ödendi Mi?</value>
+  </data>
   <data name="ISPCode" xml:space="preserve">
     <value>ISPCode</value>
   </data>
@@ -260,6 +272,9 @@
   </data>
   <data name="LastName" xml:space="preserve">
     <value>Soyadı</value>
+  </data>
+  <data name="MembershipDate" xml:space="preserve">
+    <value>Üyelik Tarihi</value>
   </data>
   <data name="Message" xml:space="preserve">
     <value>Mesaj</value>
@@ -291,6 +306,9 @@
   <data name="Password" xml:space="preserve">
     <value>Şifre</value>
   </data>
+  <data name="PaymentDate" xml:space="preserve">
+    <value>Ödeme Tarihi</value>
+  </data>
   <data name="PhoneNo" xml:space="preserve">
     <value>Telefon Numarası</value>
   </data>
@@ -302,6 +320,9 @@
   </data>
   <data name="PostalCode" xml:space="preserve">
     <value>Posta Kodu</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Tutar</value>
   </data>
   <data name="ProfessionId" xml:space="preserve">
     <value>Meslek</value>
@@ -345,6 +366,9 @@
   <data name="SubscriberNo" xml:space="preserve">
     <value>Abone Numarası</value>
   </data>
+  <data name="SubscriptionNo" xml:space="preserve">
+    <value>Abone No</value>
+  </data>
   <data name="TaxNo" xml:space="preserve">
     <value>Vergi Numarası</value>
   </data>
@@ -356,6 +380,9 @@
   </data>
   <data name="Title" xml:space="preserve">
     <value>Ünvan</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Toplam</value>
   </data>
   <data name="TotalCredit" xml:space="preserve">
     <value>Toplam Kredi</value>
