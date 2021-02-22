@@ -166,6 +166,11 @@
     <Compile Include="Authentication\AdminAuthenticator.cs" />
     <Compile Include="Authentication\SubUserAuthenticator.cs" />
     <Compile Include="ClaimInfo.cs" />
+    <Compile Include="Connected Services\CustomerSetupServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\PartnerServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -280,6 +285,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="ServiceResponse.cs" />
+    <Compile Include="SetupServiceWrapper.cs" />
     <Compile Include="ViewModels\Account\ForgetPasswordWievModel.cs" />
     <Compile Include="ViewModels\Account\RegisterViewModel.cs" />
     <Compile Include="ViewModels\Account\UserSignInViewModel.cs" />
@@ -311,8 +317,63 @@
     <Compile Include="WebServiceWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Connected Services\CustomerSetupServiceReference\CustomerSetupService.wsdl" />
+    <None Include="Connected Services\CustomerSetupServiceReference\CustomerSetupService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CustomerSetupServiceReference\CustomerSetupService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CustomerSetupServiceReference\CustomerSetupService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CustomerSetupServiceReference\CustomerSetupService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CustomerSetupServiceReference\CustomerSetupService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CustomerSetupServiceReference\CustomerSetupService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CustomerSetupServiceReference\CustomerSetupService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Connected Services\CustomerSetupServiceReference\MasterISS_Partner_WebSite.CustomerSetupServiceReference.AddCustomerAttachmentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\CustomerSetupServiceReference\MasterISS_Partner_WebSite.CustomerSetupServiceReference.GetCustomerAttachmentsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\CustomerSetupServiceReference\MasterISS_Partner_WebSite.CustomerSetupServiceReference.GetCustomerContractResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\CustomerSetupServiceReference\MasterISS_Partner_WebSite.CustomerSetupServiceReference.GetCustomerCredentialResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\CustomerSetupServiceReference\MasterISS_Partner_WebSite.CustomerSetupServiceReference.GetCustomerLineDetailsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\CustomerSetupServiceReference\MasterISS_Partner_WebSite.CustomerSetupServiceReference.GetCustomerSessionInfoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\CustomerSetupServiceReference\MasterISS_Partner_WebSite.CustomerSetupServiceReference.GetTaskDetailsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\CustomerSetupServiceReference\MasterISS_Partner_WebSite.CustomerSetupServiceReference.GetTaskListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\CustomerSetupServiceReference\MasterISS_Partner_WebSite.CustomerSetupServiceReference.ParameterlessResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Connected Services\PartnerServiceReference\configuration91.svcinfo" />
     <None Include="Connected Services\PartnerServiceReference\configuration.svcinfo" />
+    <None Include="Connected Services\CustomerSetupServiceReference\configuration91.svcinfo" />
+    <None Include="Connected Services\CustomerSetupServiceReference\configuration.svcinfo" />
+    <None Include="Connected Services\CustomerSetupServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite.PartnerServiceReference.CustomerServiceAddressDetailsResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
@@ -542,6 +603,7 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\CustomerSetupServiceReference\" />
     <WCFMetadataStorage Include="Connected Services\PartnerServiceReference\" />
   </ItemGroup>
   <ItemGroup>
