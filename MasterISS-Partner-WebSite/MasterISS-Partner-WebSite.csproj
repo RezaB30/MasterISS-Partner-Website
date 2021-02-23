@@ -190,6 +190,58 @@
     <Compile Include="Enums\FaultCodeEnum.cs" />
     <Compile Include="Enums\RevenuesTypeEnum.cs" />
     <Compile Include="Enums\TaskStatusEnum.cs" />
+    <Compile Include="Enums\TaskTypesEnum.cs" />
+    <Compile Include="Enums\XDSLTypeEnum.cs" />
+    <Compile Include="Localization\AttachmentTypes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AttachmentTypes.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Localization\AttachmentTypes.en-us.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AttachmentTypes.en-us.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Localization\CustomerTypes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CustomerTypes.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Localization\CustomerTypes.en-us.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CustomerTypes.en-us.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Localization\FaultCodes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FaultCodes.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Localization\FaultCodes.en-us.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FaultCodes.en-us.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Localization\TaskStatus.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TaskStatus.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Localization\TaskStatus.en-us.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TaskStatus.en-us.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Localization\TaskTypes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TaskTypes.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Localization\TaskTypes.en-us.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TaskTypes.en-us.resx</DependentUpon>
+    </Compile>
     <Compile Include="OtherPhoneNoValidation.cs" />
     <Compile Include="Enums\BalanceRequestTypesEnum.cs" />
     <Compile Include="Enums\PermissionListEnum.cs" />
@@ -318,6 +370,7 @@
     <Compile Include="ViewModels\Setup\AddTaskStatusUpdateViewModel.cs" />
     <Compile Include="ViewModels\Setup\GetTaskListRequestViewModel.cs" />
     <Compile Include="ViewModels\Setup\Response\GetTaskListResponseViewModel.cs" />
+    <Compile Include="ViewModels\Setup\Response\TaskListDetailResponseViewModel.cs" />
     <Compile Include="ViewModels\Setup\UpdateClientGPSRequestViewModel.cs" />
     <Compile Include="ViewModels\Setup\UploadFileRequestViewModel.cs" />
     <Compile Include="ViewModels\SMSConfirmationViewModel.cs" />
@@ -541,9 +594,12 @@
     <Content Include="Views\Revenues\SetupAllowenceDetails.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\DateTimeConverted.cshtml" />
     <Content Include="Views\Setup\Index.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\HasModemFormat.cshtml" />
+    <Content Include="Views\Setup\CustomerDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\SetupCustomerInfo\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -559,6 +615,14 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Localization\AttachmentTypes.en-us.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AttachmentTypes.en-us.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\AttachmentTypes.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AttachmentTypes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Localization\BillView.en-us.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>BillView.en-us.Designer.cs</LastGenOutput>
@@ -566,6 +630,22 @@
     <EmbeddedResource Include="Localization\BillView.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>BillView.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\CustomerTypes.en-us.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CustomerTypes.en-us.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\CustomerTypes.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CustomerTypes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\FaultCodes.en-us.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FaultCodes.en-us.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\FaultCodes.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FaultCodes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Localization\HomeView.en-us.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -591,6 +671,22 @@
     <EmbeddedResource Include="Localization\PermissionList.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PermissionList.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\TaskStatus.en-us.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TaskStatus.en-us.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\TaskStatus.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TaskStatus.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\TaskTypes.en-us.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TaskTypes.en-us.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\TaskTypes.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TaskTypes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Localization\Validation.en-us.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

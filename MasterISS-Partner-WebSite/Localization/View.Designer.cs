@@ -79,6 +79,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mevcut.
+        /// </summary>
+        public static string Available {
+            get {
+                return ResourceManager.GetString("Available", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Müşteri Bilgileri.
         /// </summary>
         public static string CustomerInfo {
@@ -129,6 +138,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string NewCustomerError {
             get {
                 return ResourceManager.GetString("NewCustomerError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mevcut Değil.
+        /// </summary>
+        public static string NotAvailable {
+            get {
+                return ResourceManager.GetString("NotAvailable", resourceCulture);
             }
         }
         

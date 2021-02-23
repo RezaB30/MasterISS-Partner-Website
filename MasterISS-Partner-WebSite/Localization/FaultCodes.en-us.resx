@@ -117,73 +117,40 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ActiveError" xml:space="preserve">
-    <value>There was an error in the user activation process. Please try again.</value>
+  <data name="BuildingInstallationFault" xml:space="preserve">
+    <value>Building Installation Fault</value>
   </data>
-  <data name="AuthenticateError" xml:space="preserve">
-    <value>Login Failed.</value>
+  <data name="ClientCancelled" xml:space="preserve">
+    <value>Client Cancelled</value>
   </data>
-  <data name="Available" xml:space="preserve">
-    <value>Available</value>
+  <data name="CustomerCouldNotBeReached" xml:space="preserve">
+    <value>Customer Could Not Be Reached</value>
   </data>
-  <data name="CustomerInfo" xml:space="preserve">
-    <value>Customer Info</value>
+  <data name="CustomerDidTheSetup" xml:space="preserve">
+    <value>Customer Did The Setup</value>
   </data>
-  <data name="ErrorProcessing" xml:space="preserve">
-    <value>An error occurred while processing.</value>
+  <data name="InvalidAddress" xml:space="preserve">
+    <value>Invalid Address</value>
   </data>
-  <data name="Filter" xml:space="preserve">
-    <value>Filter</value>
+  <data name="ModemFault" xml:space="preserve">
+    <value>Modem Fault</value>
   </data>
-  <data name="MailValidError" xml:space="preserve">
-    <value>This mail already exists.</value>
+  <data name="NoFault" xml:space="preserve">
+    <value>No Fault</value>
   </data>
-  <data name="Max30Days" xml:space="preserve">
-    <value>You can do it for a maximum of 30 days.</value>
+  <data name="RendezvousMade" xml:space="preserve">
+    <value>Rendezvous Made</value>
   </data>
-  <data name="NewCustomerError" xml:space="preserve">
-    <value>An error occurred while processing your transaction. Try again.</value>
+  <data name="SetupComplete" xml:space="preserve">
+    <value>Setup Complete</value>
   </data>
-  <data name="NotAvailable" xml:space="preserve">
-    <value>Not Available</value>
+  <data name="TelekomGeneralFault" xml:space="preserve">
+    <value>Telekom General Fault</value>
   </data>
-  <data name="OnThisPage" xml:space="preserve">
-    <value>On This Page</value>
+  <data name="TelekomLineFault" xml:space="preserve">
+    <value>Telekom Line Fault</value>
   </data>
-  <data name="PassiveError" xml:space="preserve">
-    <value>There was an error in the user inactivation process. Please try again.</value>
-  </data>
-  <data name="RecordFound" xml:space="preserve">
-    <value>record found.</value>
-  </data>
-  <data name="ReturnBill" xml:space="preserve">
-    <value>Back</value>
-  </data>
-  <data name="ReturnUserOperations" xml:space="preserve">
-    <value>Back</value>
-  </data>
-  <data name="SelectRole" xml:space="preserve">
-    <value>Select Role</value>
-  </data>
-  <data name="SetupResponseErrorMessage" xml:space="preserve">
-    <value>We are currently unable to process your transaction. Please try again.</value>
-  </data>
-  <data name="Showing" xml:space="preserve">
-    <value>showing.</value>
-  </data>
-  <data name="StartDateBiggerThanEndDateError" xml:space="preserve">
-    <value>The Start Date Cannot Be Greater than the End Date.</value>
-  </data>
-  <data name="Successful" xml:space="preserve">
-    <value>Successful</value>
-  </data>
-  <data name="SuccessfulPayment" xml:space="preserve">
-    <value>Payment Successful</value>
-  </data>
-  <data name="To" xml:space="preserve">
-    <value>to</value>
-  </data>
-  <data name="Total" xml:space="preserve">
-    <value>Total</value>
+  <data name="WaitingForNewRendezvous" xml:space="preserve">
+    <value>Waiting For New Rendezvous</value>
   </data>
 </root>

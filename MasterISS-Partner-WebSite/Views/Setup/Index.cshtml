@@ -53,7 +53,7 @@
                     <td>@Html.DisplayFor(modelItem => item.TaskIssueDate)</td>
                     <td>@Html.DisplayFor(modelItem => item.CustomerPhoneNo)</td>
                     <td>@Html.DisplayFor(modelItem => item.Address)</td>
-                    <td>@Html.ActionLink(View.CustomerInfo, "Index", "SetupCustomerInfo", new { taskNo = item.TaskNo }, new { @class = "btn btn-success" })</td>
+                    <td>@Html.ActionLink(View.CustomerInfo, "CustomerDetail", "Setup", new { taskNo = item.TaskNo }, new { @class = "btn btn-success" })</td>
                 </tr>
             }
         </tbody>

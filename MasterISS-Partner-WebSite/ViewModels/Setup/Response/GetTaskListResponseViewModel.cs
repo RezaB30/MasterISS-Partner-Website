@@ -21,6 +21,7 @@ namespace MasterISS_Partner_WebSite.ViewModels.Setup.Response
         public string ContactName { get; set; }
 
         [Display(ResourceType = typeof(Localization.Model), Name = "TaskIssueDate")]
+        [UIHint("DateTimeConverted")]
         public DateTime TaskIssueDate { get; set; }
     }
 }

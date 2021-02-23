@@ -123,6 +123,9 @@
   <data name="AuthenticateError" xml:space="preserve">
     <value>Giriş İşlemi Başarısız.</value>
   </data>
+  <data name="Available" xml:space="preserve">
+    <value>Mevcut</value>
+  </data>
   <data name="CustomerInfo" xml:space="preserve">
     <value>Müşteri Bilgileri</value>
   </data>
@@ -140,6 +143,9 @@
   </data>
   <data name="NewCustomerError" xml:space="preserve">
     <value>İşleminiz yapılırken bir hata oluştu.Tekrar deneyiniz.</value>
+  </data>
+  <data name="NotAvailable" xml:space="preserve">
+    <value>Mevcut Değil</value>
   </data>
   <data name="OnThisPage" xml:space="preserve">
     <value>Bu sayfada</value>

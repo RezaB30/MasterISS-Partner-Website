@@ -1,0 +1,92 @@
+﻿@using MasterISS_Partner_WebSite.ViewModels.Setup.Response
+@using MasterISS_Partner_WebSite.Localization
+@model  TaskListDetailResponseViewModel
+@{
+    ViewBag.Title = "CustomerDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>CustomerDetail</h2>
+
+<div align="center">
+    <div class="table-container">
+        <div id="TaskDetail">
+            <table class="data-table">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Province)</th>
+                    <td>@Html.DisplayFor(model => model.Province)</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.BBK)</th>
+                    <td>@Html.DisplayFor(model => model.BBK)</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.City)</th>
+                    <td>@Html.DisplayFor(model => model.City)</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.CustomerType)</th>
+                    <td>@Html.DisplayFor(model => model.CustomerType)</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Details)</th>
+                    <td>@Html.DisplayFor(model => model.Details)</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.HasModem)</th>
+                    <td>@Html.DisplayFor(model => model.HasModem)</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.TaskStatus)</th>
+                    <td>@Html.DisplayFor(model => model.TaskStatus)</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.ModemName)</th>
+                    <td>@Html.DisplayFor(model => model.ModemName)</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.TaskType)</th>
+                    <td>@Html.DisplayFor(model => model.TaskType)</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.XDSLNo)</th>
+                    <td>@Html.DisplayFor(model => model.XDSLNo)</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.XDSLType)</th>
+                    <td>@Html.DisplayFor(model => model.XDSLType)</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.CustomerNo)</th>
+                    <td>@Html.DisplayFor(model => model.CustomerNo)</td>
+                </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.PSTN)</th>
+                    <td>@Html.DisplayFor(model => model.PSTN)</td>
+                </tr>
+            </table>
+
+            <input type="button" class="btn btn-info" id="GetTaskUpdatesInfo" value="aaaaaaaaaaaa" />
+
+            <div id="TaskUpdatesInfo" style="display:none">
+                @foreach (var item in Model.TaskUpdatesDetailList)
+                {
+                    <div class="task-updates-div">
+                        <div class="fc-date-tr">
+                            <div class="fc-td">@Html.DisplayFor(modelItem => item.FaultCodes)</div><div class="date-td">@Html.DisplayFor(modelItem => item.CreationDate)</div>
+                        </div>
+                        <div class="desc-tr">
+                            <div class="desc-td" colspan="2">@Html.DisplayFor(modelItem => item.Description)</div>
+                        </div>
+                        @if (item.ReservationDate != DateTime.MinValue)
+                        {
+                            <div class="rez-tr">
+                                <div class="rez-name-td">@Html.DisplayNameFor(modelItem => item.ReservationDate)</div><div class="rez-value-td">@Html.DisplayFor(modelItem => item.ReservationDate)</div>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -117,73 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ActiveError" xml:space="preserve">
-    <value>There was an error in the user activation process. Please try again.</value>
+  <data name="Cancellation" xml:space="preserve">
+    <value>İptal Formu</value>
   </data>
-  <data name="AuthenticateError" xml:space="preserve">
-    <value>Login Failed.</value>
+  <data name="CHURN" xml:space="preserve">
+    <value>CHURN Formu</value>
   </data>
-  <data name="Available" xml:space="preserve">
-    <value>Available</value>
+  <data name="Contract" xml:space="preserve">
+    <value>Abonelik Sözleşmesi</value>
   </data>
-  <data name="CustomerInfo" xml:space="preserve">
-    <value>Customer Info</value>
+  <data name="IDCard" xml:space="preserve">
+    <value>Kimlik Kartı</value>
   </data>
-  <data name="ErrorProcessing" xml:space="preserve">
-    <value>An error occurred while processing.</value>
+  <data name="Others" xml:space="preserve">
+    <value>Diğer</value>
   </data>
-  <data name="Filter" xml:space="preserve">
-    <value>Filter</value>
+  <data name="PSTN" xml:space="preserve">
+    <value>PSTN Formu</value>
   </data>
-  <data name="MailValidError" xml:space="preserve">
-    <value>This mail already exists.</value>
+  <data name="Setup" xml:space="preserve">
+    <value>Kurulum Formu</value>
   </data>
-  <data name="Max30Days" xml:space="preserve">
-    <value>You can do it for a maximum of 30 days.</value>
+  <data name="Transfer" xml:space="preserve">
+    <value>Devir Formu</value>
   </data>
-  <data name="NewCustomerError" xml:space="preserve">
-    <value>An error occurred while processing your transaction. Try again.</value>
-  </data>
-  <data name="NotAvailable" xml:space="preserve">
-    <value>Not Available</value>
-  </data>
-  <data name="OnThisPage" xml:space="preserve">
-    <value>On This Page</value>
-  </data>
-  <data name="PassiveError" xml:space="preserve">
-    <value>There was an error in the user inactivation process. Please try again.</value>
-  </data>
-  <data name="RecordFound" xml:space="preserve">
-    <value>record found.</value>
-  </data>
-  <data name="ReturnBill" xml:space="preserve">
-    <value>Back</value>
-  </data>
-  <data name="ReturnUserOperations" xml:space="preserve">
-    <value>Back</value>
-  </data>
-  <data name="SelectRole" xml:space="preserve">
-    <value>Select Role</value>
-  </data>
-  <data name="SetupResponseErrorMessage" xml:space="preserve">
-    <value>We are currently unable to process your transaction. Please try again.</value>
-  </data>
-  <data name="Showing" xml:space="preserve">
-    <value>showing.</value>
-  </data>
-  <data name="StartDateBiggerThanEndDateError" xml:space="preserve">
-    <value>The Start Date Cannot Be Greater than the End Date.</value>
-  </data>
-  <data name="Successful" xml:space="preserve">
-    <value>Successful</value>
-  </data>
-  <data name="SuccessfulPayment" xml:space="preserve">
-    <value>Payment Successful</value>
-  </data>
-  <data name="To" xml:space="preserve">
-    <value>to</value>
-  </data>
-  <data name="Total" xml:space="preserve">
-    <value>Total</value>
+  <data name="Transport" xml:space="preserve">
+    <value>Nakil Formu</value>
   </data>
 </root>
