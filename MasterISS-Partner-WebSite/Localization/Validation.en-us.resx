@@ -138,6 +138,12 @@
   <data name="Required" xml:space="preserve">
     <value>{0} field cannot be left blank.</value>
   </data>
+  <data name="RequiredMaxDecription" xml:space="preserve">
+    <value>Please enter a maksimum 450 characters.</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value>Login in the format dd.MM.yyyy HH:mm</value>
+  </data>
   <data name="ValidPhoneNumber" xml:space="preserve">
     <value>Enter a 10-digit phone number.</value>
   </data>

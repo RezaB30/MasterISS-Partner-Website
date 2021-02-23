@@ -123,17 +123,32 @@
   <data name="AuthenticateError" xml:space="preserve">
     <value>Giriş İşlemi Başarısız.</value>
   </data>
+  <data name="CustomerInfo" xml:space="preserve">
+    <value>Müşteri Bilgileri</value>
+  </data>
   <data name="ErrorProcessing" xml:space="preserve">
     <value>İşlem yapılırken hata oluştu.</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Filtrele</value>
   </data>
   <data name="MailValidError" xml:space="preserve">
     <value>Bu mail zaten mevcut.</value>
   </data>
+  <data name="Max30Days" xml:space="preserve">
+    <value>Maksimum 30 gün raporlama yapabilirsiniz.</value>
+  </data>
   <data name="NewCustomerError" xml:space="preserve">
     <value>İşleminiz yapılırken bir hata oluştu.Tekrar deneyiniz.</value>
   </data>
+  <data name="OnThisPage" xml:space="preserve">
+    <value>Bu sayfada</value>
+  </data>
   <data name="PassiveError" xml:space="preserve">
     <value>Kullanıcı pasif etme işleminde hata oluştu. Tekrar deneyiniz.</value>
+  </data>
+  <data name="RecordFound" xml:space="preserve">
+    <value>adet kayıt bulundu.</value>
   </data>
   <data name="ReturnBill" xml:space="preserve">
     <value>Geri</value>
@@ -144,10 +159,25 @@
   <data name="SelectRole" xml:space="preserve">
     <value>Rol Seçiniz</value>
   </data>
+  <data name="SetupResponseErrorMessage" xml:space="preserve">
+    <value>Şuan İşleminizi gerçekleştiremiyoruz. Lütfen bir daha deneyiniz</value>
+  </data>
+  <data name="Showing" xml:space="preserve">
+    <value>gösteriliyor.</value>
+  </data>
+  <data name="StartDateBiggerThanEndDateError" xml:space="preserve">
+    <value>Başlangıç Tarihi, Bitiş Tarihinden Büyük Olamaz.</value>
+  </data>
   <data name="Successful" xml:space="preserve">
     <value>Başarılı</value>
   </data>
   <data name="SuccessfulPayment" xml:space="preserve">
     <value>Ödeme Başarılı</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>ile</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Toplam</value>
   </data>
 </root>

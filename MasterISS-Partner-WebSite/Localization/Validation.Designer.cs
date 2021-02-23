@@ -61,6 +61,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to dd.MM.yyyy HH:mm formatında giriş yapınız..
+        /// </summary>
+        public static string DateFormatErrorReservationDate {
+            get {
+                return ResourceManager.GetString("DateFormatErrorReservationDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to dd.MM.yyyy formatında giriş yapınız.
         /// </summary>
         public static string DateValid {
@@ -120,6 +129,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string Required {
             get {
                 return ResourceManager.GetString("Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maksimum 450 karakter girebilirsiniz..
+        /// </summary>
+        public static string RequiredMaxDecription {
+            get {
+                return ResourceManager.GetString("RequiredMaxDecription", resourceCulture);
             }
         }
         

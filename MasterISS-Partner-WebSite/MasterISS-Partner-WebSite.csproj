@@ -181,11 +181,15 @@
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RevenuesController.cs" />
+    <Compile Include="Controllers\SetupController.cs" />
     <Compile Include="Controllers\UserOperationsController.cs" />
     <Compile Include="DatetimeParse.cs" />
+    <Compile Include="Enums\AttachmentTypeEnum.cs" />
     <Compile Include="Enums\CardTypeEnum.cs" />
     <Compile Include="Enums\CustomerTypeEnum.cs" />
+    <Compile Include="Enums\FaultCodeEnum.cs" />
     <Compile Include="Enums\RevenuesTypeEnum.cs" />
+    <Compile Include="Enums\TaskStatusEnum.cs" />
     <Compile Include="OtherPhoneNoValidation.cs" />
     <Compile Include="Enums\BalanceRequestTypesEnum.cs" />
     <Compile Include="Enums\PermissionListEnum.cs" />
@@ -311,6 +315,11 @@
     <Compile Include="ViewModels\Settings\SetupSettingsViewModel.cs" />
     <Compile Include="ViewModels\Settings\SMSApiSettingsViewModel.cs" />
     <Compile Include="ViewModels\Settings\TTelekomUserViewModel.cs" />
+    <Compile Include="ViewModels\Setup\AddTaskStatusUpdateViewModel.cs" />
+    <Compile Include="ViewModels\Setup\GetTaskListRequestViewModel.cs" />
+    <Compile Include="ViewModels\Setup\Response\GetTaskListResponseViewModel.cs" />
+    <Compile Include="ViewModels\Setup\UpdateClientGPSRequestViewModel.cs" />
+    <Compile Include="ViewModels\Setup\UploadFileRequestViewModel.cs" />
     <Compile Include="ViewModels\SMSConfirmationViewModel.cs" />
     <Compile Include="ViewModels\Settings\VerimorSettingsWiewModel.cs" />
     <Compile Include="ViewModels\UserListViewModel.cs" />
@@ -531,6 +540,7 @@
     <Content Include="Views\Revenues\SetupAllowanceList.cshtml" />
     <Content Include="Views\Revenues\SetupAllowenceDetails.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\DateTimeConverted.cshtml" />
+    <Content Include="Views\Setup\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

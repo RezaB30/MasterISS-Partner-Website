@@ -106,6 +106,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Eklenti Tipi.
+        /// </summary>
+        public static string AttachmentType {
+            get {
+                return ResourceManager.GetString("AttachmentType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bakiye Tutarı.
         /// </summary>
         public static string BalanceAmount {
@@ -214,6 +223,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to İletişim Adı.
+        /// </summary>
+        public static string ContactName {
+            get {
+                return ResourceManager.GetString("ContactName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to İletişim Numarası.
         /// </summary>
         public static string ContactPhoneNo {
@@ -237,6 +255,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string CustomerCode {
             get {
                 return ResourceManager.GetString("CustomerCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Müşteri Telefon Numarası.
+        /// </summary>
+        public static string CustomerPhoneNo {
+            get {
+                return ResourceManager.GetString("CustomerPhoneNo", resourceCulture);
             }
         }
         
@@ -282,6 +309,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string DealerCode {
             get {
                 return ResourceManager.GetString("DealerCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Açıklama.
+        /// </summary>
+        public static string Description {
+            get {
+                return ResourceManager.GetString("Description", resourceCulture);
             }
         }
         
@@ -457,6 +493,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Arıza Kodu.
+        /// </summary>
+        public static string FaultCodes {
+            get {
+                return ResourceManager.GetString("FaultCodes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Adı.
         /// </summary>
         public static string FirstName {
@@ -525,6 +570,24 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string LastName {
             get {
                 return ResourceManager.GetString("LastName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enlem.
+        /// </summary>
+        public static string Latitude {
+            get {
+                return ResourceManager.GetString("Latitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boylam.
+        /// </summary>
+        public static string Longitude {
+            get {
+                return ResourceManager.GetString("Longitude", resourceCulture);
             }
         }
         
@@ -718,6 +781,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rezervasyon Tarihi.
+        /// </summary>
+        public static string ReservationDate {
+            get {
+                return ResourceManager.GetString("ReservationDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to İkamet Adresi.
         /// </summary>
         public static string ResidencyAddress {
@@ -750,6 +822,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string SameSetupAddress {
             get {
                 return ResourceManager.GetString("SameSetupAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aranan Kişi.
+        /// </summary>
+        public static string SearchedName {
+            get {
+                return ResourceManager.GetString("SearchedName", resourceCulture);
             }
         }
         
@@ -813,6 +894,42 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string SubscriptionNo {
             get {
                 return ResourceManager.GetString("SubscriptionNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Görev Düzenlenme Tarihi.
+        /// </summary>
+        public static string TaskIssueDate {
+            get {
+                return ResourceManager.GetString("TaskIssueDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Görev Listesi Bitiş Tarihi.
+        /// </summary>
+        public static string TaskListEndDate {
+            get {
+                return ResourceManager.GetString("TaskListEndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Görev Listesi Başlangıç Tarihi.
+        /// </summary>
+        public static string TaskListStartDate {
+            get {
+                return ResourceManager.GetString("TaskListStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Görev No.
+        /// </summary>
+        public static string TaskNo {
+            get {
+                return ResourceManager.GetString("TaskNo", resourceCulture);
             }
         }
         

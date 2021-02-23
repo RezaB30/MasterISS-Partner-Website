@@ -79,11 +79,29 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Müşteri Bilgileri.
+        /// </summary>
+        public static string CustomerInfo {
+            get {
+                return ResourceManager.GetString("CustomerInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to İşlem yapılırken hata oluştu..
         /// </summary>
         public static string ErrorProcessing {
             get {
                 return ResourceManager.GetString("ErrorProcessing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filtrele.
+        /// </summary>
+        public static string Filter {
+            get {
+                return ResourceManager.GetString("Filter", resourceCulture);
             }
         }
         
@@ -97,6 +115,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Maksimum 30 gün raporlama yapabilirsiniz..
+        /// </summary>
+        public static string Max30Days {
+            get {
+                return ResourceManager.GetString("Max30Days", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to İşleminiz yapılırken bir hata oluştu.Tekrar deneyiniz..
         /// </summary>
         public static string NewCustomerError {
@@ -106,11 +133,29 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bu sayfada.
+        /// </summary>
+        public static string OnThisPage {
+            get {
+                return ResourceManager.GetString("OnThisPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kullanıcı pasif etme işleminde hata oluştu. Tekrar deneyiniz..
         /// </summary>
         public static string PassiveError {
             get {
                 return ResourceManager.GetString("PassiveError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to adet kayıt bulundu..
+        /// </summary>
+        public static string RecordFound {
+            get {
+                return ResourceManager.GetString("RecordFound", resourceCulture);
             }
         }
         
@@ -142,6 +187,33 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Şuan İşleminizi gerçekleştiremiyoruz. Lütfen bir daha deneyiniz.
+        /// </summary>
+        public static string SetupResponseErrorMessage {
+            get {
+                return ResourceManager.GetString("SetupResponseErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to gösteriliyor..
+        /// </summary>
+        public static string Showing {
+            get {
+                return ResourceManager.GetString("Showing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Başlangıç Tarihi, Bitiş Tarihinden Büyük Olamaz..
+        /// </summary>
+        public static string StartDateBiggerThanEndDateError {
+            get {
+                return ResourceManager.GetString("StartDateBiggerThanEndDateError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Başarılı.
         /// </summary>
         public static string Successful {
@@ -156,6 +228,24 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string SuccessfulPayment {
             get {
                 return ResourceManager.GetString("SuccessfulPayment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ile.
+        /// </summary>
+        public static string To {
+            get {
+                return ResourceManager.GetString("To", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toplam.
+        /// </summary>
+        public static string Total {
+            get {
+                return ResourceManager.GetString("Total", resourceCulture);
             }
         }
     }

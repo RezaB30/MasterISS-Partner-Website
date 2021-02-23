@@ -1,0 +1,82 @@
+﻿@using PagedList.Mvc
+@using MasterISS_Partner_WebSite.Localization
+@using MasterISS_Partner_WebSite.ViewModels.Setup
+@using MasterISS_Partner_WebSite.ViewModels.Setup.Response
+@model  PagedList.StaticPagedList<GetTaskListResponseViewModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var search = ViewBag.Search as GetTaskListRequestViewModel ?? new GetTaskListRequestViewModel();
+}
+
+<div>
+    @using (Html.BeginForm("Index", "Setup", FormMethod.Get))
+    {
+        <div>
+            @Html.LabelFor(m => search.TaskListStartDate)
+            @Html.EditorFor(m => search.TaskListStartDate, new { htmlAttributes = new { placeholder = DateTime.Now.ToString("dd-MM-yyyy HH:mm") } })
+            @Html.ValidationMessageFor(m => search.TaskListStartDate)
+        </div>
+
+        <div>
+            @Html.LabelFor(m => search.TaskListEndDate)
+            @Html.EditorFor(m => search.TaskListEndDate, new { htmlAttributes = new { placeholder = DateTime.Now.ToString("dd-MM-yyyy HH:mm") } })
+            @Html.ValidationMessageFor(m => search.TaskListEndDate)
+        </div>
+
+        <div>
+            @Html.LabelFor(m => search.SearchedName)
+            @Html.EditorFor(m => search.SearchedName)
+        </div>
+
+        <input type="submit" class=" btn btn-warning" value="@View.Filter" />
+    }
+</div>
+@if (ViewBag.ValidationError == null && ViewBag.Max30Days == null && ViewBag.StartTimeBiggerThanEndTime == null && ViewBag.ErrorMessage == null)
+{
+    <table>
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().TaskNo)</th>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().ContactName)</th>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().TaskIssueDate)</th>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().CustomerPhoneNo)</th>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Address)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.TaskNo)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ContactName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.TaskIssueDate)</td>
+                    <td>@Html.DisplayFor(modelItem => item.CustomerPhoneNo)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Address)</td>
+                    <td>@Html.ActionLink(View.CustomerInfo, "Index", "SetupCustomerInfo", new { taskNo = item.TaskNo }, new { @class = "btn btn-success" })</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    if (Model.TotalItemCount > 0)
+    {
+        <div>
+            @Html.PagedListPager(Model, page => Url.Action("Index", "Setup", new { page }))
+        </div>
+        <div>
+            <span>
+                @View.Total @Model.TotalItemCount @View.RecordFound @View.OnThisPage @Model.FirstItemOnPage @View.To @Model.LastItemOnPage @View.Showing
+            </span>
+        </div>
+    }
+}
+else
+{
+    <div align="center">
+        <div class="text-danger">
+            <span>@ViewBag.Max30Days</span>
+            <span>@ViewBag.ErrorMessage</span>
+            <span>@ViewBag.StartTimeBiggerThanEndTime</span>
+        </div>
+    </div>
+}

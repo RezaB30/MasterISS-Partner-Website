@@ -132,6 +132,9 @@
   <data name="Amount" xml:space="preserve">
     <value>Tutar</value>
   </data>
+  <data name="AttachmentType" xml:space="preserve">
+    <value>Eklenti Tipi</value>
+  </data>
   <data name="BalanceAmount" xml:space="preserve">
     <value>Bakiye Tutarı</value>
   </data>
@@ -168,6 +171,9 @@
   <data name="CompletionDate" xml:space="preserve">
     <value>Tamamlanma Tarihi</value>
   </data>
+  <data name="ContactName" xml:space="preserve">
+    <value>İletişim Adı</value>
+  </data>
   <data name="ContactPhoneNo" xml:space="preserve">
     <value>İletişim Numarası</value>
   </data>
@@ -176,6 +182,9 @@
   </data>
   <data name="CustomerCode" xml:space="preserve">
     <value>Müşteri Kodu</value>
+  </data>
+  <data name="CustomerPhoneNo" xml:space="preserve">
+    <value>Müşteri Telefon Numarası</value>
   </data>
   <data name="CustomerTCK" xml:space="preserve">
     <value>TC Kimlik No</value>
@@ -191,6 +200,9 @@
   </data>
   <data name="DealerCode" xml:space="preserve">
     <value>Bayi Kodu</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Açıklama</value>
   </data>
   <data name="Details" xml:space="preserve">
     <value>Detay</value>
@@ -249,6 +261,9 @@
   <data name="FathersName" xml:space="preserve">
     <value>Baba Adı</value>
   </data>
+  <data name="FaultCodes" xml:space="preserve">
+    <value>Arıza Kodu</value>
+  </data>
   <data name="FirstName" xml:space="preserve">
     <value>Adı</value>
   </data>
@@ -272,6 +287,12 @@
   </data>
   <data name="LastName" xml:space="preserve">
     <value>Soyadı</value>
+  </data>
+  <data name="Latitude" xml:space="preserve">
+    <value>Enlem</value>
+  </data>
+  <data name="Longitude" xml:space="preserve">
+    <value>Boylam</value>
   </data>
   <data name="MembershipDate" xml:space="preserve">
     <value>Üyelik Tarihi</value>
@@ -336,6 +357,9 @@
   <data name="RegisterDatetime" xml:space="preserve">
     <value>Kayıt Tarihi</value>
   </data>
+  <data name="ReservationDate" xml:space="preserve">
+    <value>Rezervasyon Tarihi</value>
+  </data>
   <data name="ResidencyAddress" xml:space="preserve">
     <value>İkamet Adresi</value>
   </data>
@@ -347,6 +371,9 @@
   </data>
   <data name="SameSetupAddress" xml:space="preserve">
     <value>Kurulum Adresi ile Aynı</value>
+  </data>
+  <data name="SearchedName" xml:space="preserve">
+    <value>Aranan Kişi</value>
   </data>
   <data name="SerialNo" xml:space="preserve">
     <value>Seri No</value>
@@ -368,6 +395,18 @@
   </data>
   <data name="SubscriptionNo" xml:space="preserve">
     <value>Abone No</value>
+  </data>
+  <data name="TaskIssueDate" xml:space="preserve">
+    <value>Görev Düzenlenme Tarihi</value>
+  </data>
+  <data name="TaskListEndDate" xml:space="preserve">
+    <value>Görev Listesi Bitiş Tarihi</value>
+  </data>
+  <data name="TaskListStartDate" xml:space="preserve">
+    <value>Görev Listesi Başlangıç Tarihi</value>
+  </data>
+  <data name="TaskNo" xml:space="preserve">
+    <value>Görev No</value>
   </data>
   <data name="TaxNo" xml:space="preserve">
     <value>Vergi Numarası</value>

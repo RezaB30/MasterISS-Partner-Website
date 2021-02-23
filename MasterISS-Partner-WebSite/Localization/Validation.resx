@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DateFormatErrorReservationDate" xml:space="preserve">
+    <value>dd.MM.yyyy HH:mm formatında giriş yapınız.</value>
+  </data>
   <data name="DateValid" xml:space="preserve">
     <value>dd.MM.yyyy formatında giriş yapınız</value>
   </data>
@@ -137,6 +140,9 @@
   </data>
   <data name="Required" xml:space="preserve">
     <value>{0} alanı boş bırakılamaz.</value>
+  </data>
+  <data name="RequiredMaxDecription" xml:space="preserve">
+    <value>Maksimum 450 karakter girebilirsiniz.</value>
   </data>
   <data name="ValidPhoneNumber" xml:space="preserve">
     <value>10 haneli telefon numarası giriniz.</value>

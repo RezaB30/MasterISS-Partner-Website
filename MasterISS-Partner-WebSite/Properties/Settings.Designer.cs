@@ -40,5 +40,14 @@ namespace MasterISS_Partner_WebSite.Properties {
                 return ((string)(this["Password"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("30")]
+        public int SearchLimit {
+            get {
+                return ((int)(this["SearchLimit"]));
+            }
+        }
     }
 }

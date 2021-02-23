@@ -128,7 +128,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                 {
                     Id = sa.ID,
                     Ispaid = sa.IsPaid,
-                    IssueDate = Convert.ToDateTime(sa.IssueDate),
+                    IssueDate =  Convert.ToDateTime(sa.IssueDate),
                     PaymentDate = Convert.ToDateTime(sa.PaymentDate),
                     Total = sa.Total
                 });
