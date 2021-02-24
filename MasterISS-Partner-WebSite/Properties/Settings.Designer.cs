@@ -49,5 +49,14 @@ namespace MasterISS_Partner_WebSite.Properties {
                 return ((int)(this["SearchLimit"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public decimal FileSizeLimit {
+            get {
+                return ((decimal)(this["FileSizeLimit"]));
+            }
+        }
     }
 }

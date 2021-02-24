@@ -160,6 +160,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lütfen &apos;.jpg&apos;,&apos;.png&apos;,&apos;.pdf&apos;,&apos;.jpeg&apos; formatında dosya gönderiniz.
+        /// </summary>
+        public static string FaultyFormat {
+            get {
+                return ResourceManager.GetString("FaultyFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filtrele.
         /// </summary>
         public static string Filter {
@@ -219,6 +228,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string Max30Days {
             get {
                 return ResourceManager.GetString("Max30Days", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dosya Boyutu Maksimum 10 MB olmalı..
+        /// </summary>
+        public static string MaxFileSizeError {
+            get {
+                return ResourceManager.GetString("MaxFileSizeError", resourceCulture);
             }
         }
         
@@ -295,11 +313,29 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Eklenti Tipini Seçiniz.
+        /// </summary>
+        public static string SelectAttachmentType {
+            get {
+                return ResourceManager.GetString("SelectAttachmentType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Arıza Türünü Seçiniz.
         /// </summary>
         public static string SelectFaultType {
             get {
                 return ResourceManager.GetString("SelectFaultType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen Dosya Seçiniz.
+        /// </summary>
+        public static string SelectFile {
+            get {
+                return ResourceManager.GetString("SelectFile", resourceCulture);
             }
         }
         
@@ -390,6 +426,24 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string UpdateTaskStatus {
             get {
                 return ResourceManager.GetString("UpdateTaskStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Belge Yükle.
+        /// </summary>
+        public static string Upload {
+            get {
+                return ResourceManager.GetString("Upload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kullanıcıya Belge Yükle.
+        /// </summary>
+        public static string UploadDocument {
+            get {
+                return ResourceManager.GetString("UploadDocument", resourceCulture);
             }
         }
         

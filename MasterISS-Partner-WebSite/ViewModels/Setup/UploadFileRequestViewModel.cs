@@ -9,7 +9,8 @@ namespace MasterISS_Partner_WebSite.ViewModels.Setup
 {
     public class UploadFileRequestViewModel
     {
-        public long? TaskNo { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
+        public long TaskNo { get; set; }
 
         [Display(ResourceType = typeof(Localization.Model), Name = "AttachmentType")]
         [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]

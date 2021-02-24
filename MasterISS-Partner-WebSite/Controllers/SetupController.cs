@@ -8,6 +8,8 @@ using System.Linq;
 using RezaB.Data;
 using System.Web.Mvc;
 using RezaB.Data.Localization;
+using System.Web;
+using System.IO;
 
 namespace MasterISS_Partner_WebSite.Controllers
 {
@@ -258,12 +260,99 @@ namespace MasterISS_Partner_WebSite.Controllers
             return View(updateTaskStatusViewModel);
         }
 
+        [HttpGet]
+        public ActionResult UploadDocument(long taskNo)
+        {
+            var request = new UploadFileRequestViewModel { TaskNo = taskNo };
+            ViewBag.AttachmentTypes = AttachmentTypes(null);
+
+            return View(request);
+        }
+
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult UploadDocument(UploadFileRequestViewModel uploadFileRequestViewModel, HttpPostedFileBase File)
+        {
+            ViewBag.AttachmentTypes = AttachmentTypes((int?)uploadFileRequestViewModel.AttachmentTypesEnum ?? null);
+
+            if (ModelState.IsValid)
+            {
+                var isValidAttachmentType = Enum.IsDefined(typeof(AttachmentTypeEnum), uploadFileRequestViewModel.AttachmentTypesEnum);
+
+                if (isValidAttachmentType)
+                {
+                    if (File != null && File.ContentLength > 0)
+                    {
+                        var fileSize = Convert.ToDecimal(File.ContentLength) / 1024 / 1024;
+
+                        if (Properties.Settings.Default.FileSizeLimit > fileSize)
+                        {
+                            var extension = Path.GetExtension(File.FileName);
+                            string[] acceptedExtension = { ".jpg", ".pdf", ".png", ".jpeg" };
+
+                            if (acceptedExtension.Contains(extension))
+                            {
+                                var fileByte = new byte[File.ContentLength];
+
+                                using (BinaryReader reader = new BinaryReader(File.InputStream))
+                                {
+                                    fileByte = reader.ReadBytes(File.ContentLength);
+                                }
+
+                                var fileData = Convert.ToBase64String(fileByte);
+
+                                var request = new UploadFileRequestViewModel
+                                {
+                                    AttachmentTypesEnum = uploadFileRequestViewModel.AttachmentTypesEnum,
+                                    Extension = extension,
+                                    FileData = fileData,
+                                    TaskNo = uploadFileRequestViewModel.TaskNo
+                                };
+
+                                var setupWrapper = new SetupServiceWrapper();
+
+                                var response = setupWrapper.AddCustomerAttachment(request);
+
+                                if (response.ResponseMessage.ErrorCode == 0)
+                                {
+                                    return RedirectToAction("Successful", "Setup", new { taskNo = uploadFileRequestViewModel.TaskNo });
+                                }
+
+                                ViewBag.UploadDocumentError = response.ResponseMessage.ErrorMessage;
+                                return View(uploadFileRequestViewModel);
+
+                            }
+                            ViewBag.UploadDocumentError = Localization.View.FaultyFormat;
+                            return View(uploadFileRequestViewModel);
+
+                        }
+                        ViewBag.UploadDocumentError = Localization.View.MaxFileSizeError;
+                        return View(uploadFileRequestViewModel);
+
+                    }
+                    ViewBag.UploadDocumentError = Localization.View.SelectFile;
+                    return View(uploadFileRequestViewModel);
+
+                }
+                return RedirectToAction("Index", "Setup");
+
+            }
+            return View(uploadFileRequestViewModel);
+        }
+
         public ActionResult Successful(long taskNo)
         {
             ViewBag.TaskNo = taskNo;
             return View();
         }
 
+        private SelectList AttachmentTypes(int? selectedValue)
+        {
+            var list = new LocalizedList<AttachmentTypeEnum, Localization.AttachmentTypes>().GetList(CultureInfo.CurrentCulture);
+            var attachmentTypesList = new SelectList(list.Select(m => new { Name = m.Value, Value = m.Key }).ToArray(), "Value", "Name", selectedValue);
+            return attachmentTypesList;
+        }
 
         private SelectList FaultTypeList(int? selectedValue)
         {

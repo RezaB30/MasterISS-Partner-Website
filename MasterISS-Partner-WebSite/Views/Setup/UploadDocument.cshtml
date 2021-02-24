@@ -1,0 +1,25 @@
+﻿@using MasterISS_Partner_WebSite.Localization
+@model MasterISS_Partner_WebSite.ViewModels.Setup.UploadFileRequestViewModel
+@{
+    ViewBag.Title = "UploadDocument";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div align="center">
+    @using (Html.BeginForm("UploadDocument", "Setup", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken();
+
+        @Html.DropDownListFor(m => m.AttachmentTypesEnum, (SelectList)ViewBag.AttachmentTypes, View.SelectAttachmentType, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.AttachmentTypesEnum, "", new { @class = "text-danger" })
+
+        @Html.HiddenFor(m => m.TaskNo)
+
+        <input type="file" name="file" id="file-button" />
+
+        @Html.ActionLink(View.Back, "CustomerDetail", "Setup", new { taskNo = Model.TaskNo }, new { @class = "btn btn-info", @id = "form-button" })
+
+        <input type="submit" id="form-button" value="@View.Upload" class="btn btn-danger" />
+    }
+    <span class="text-danger">@ViewBag.UploadDocumentError</span>
+</div>

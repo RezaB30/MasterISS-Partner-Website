@@ -150,6 +150,9 @@
   <data name="ErrorProcessing" xml:space="preserve">
     <value>An error occurred while processing.</value>
   </data>
+  <data name="FaultyFormat" xml:space="preserve">
+    <value>Send a file in '.jpg','.png','.jpeg','.pdf' format.</value>
+  </data>
   <data name="Filter" xml:space="preserve">
     <value>Filter</value>
   </data>
@@ -170,6 +173,9 @@
   </data>
   <data name="Max30Days" xml:space="preserve">
     <value>You can do it for a maximum of 30 days.</value>
+  </data>
+  <data name="MaxFileSizeError" xml:space="preserve">
+    <value>File size must be maximum 10 MB.</value>
   </data>
   <data name="NewCustomerError" xml:space="preserve">
     <value>An error occurred while processing your transaction. Try again.</value>
@@ -195,8 +201,14 @@
   <data name="ReturnUserOperations" xml:space="preserve">
     <value>Back</value>
   </data>
+  <data name="SelectAttachmentType" xml:space="preserve">
+    <value>Select Attachment Type</value>
+  </data>
   <data name="SelectFaultType" xml:space="preserve">
     <value>Select Fault Type</value>
+  </data>
+  <data name="SelectFile" xml:space="preserve">
+    <value>Please Select File</value>
   </data>
   <data name="SelectRole" xml:space="preserve">
     <value>Select Role</value>
@@ -227,6 +239,12 @@
   </data>
   <data name="UpdateTaskStatus" xml:space="preserve">
     <value>Update Task Status</value>
+  </data>
+  <data name="Upload" xml:space="preserve">
+    <value>Upload</value>
+  </data>
+  <data name="UploadDocument" xml:space="preserve">
+    <value>Add Customer Attachment</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>

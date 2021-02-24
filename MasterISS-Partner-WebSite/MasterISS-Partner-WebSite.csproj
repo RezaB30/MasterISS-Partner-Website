@@ -605,6 +605,7 @@
     <Content Include="Views\Setup\_LineInfo.cshtml" />
     <Content Include="Views\Setup\UpdateTaskStatus.cshtml" />
     <Content Include="Views\Setup\Successful.cshtml" />
+    <Content Include="Views\Setup\UploadDocument.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

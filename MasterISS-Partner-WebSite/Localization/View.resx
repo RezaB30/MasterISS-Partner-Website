@@ -150,6 +150,9 @@
   <data name="ErrorProcessing" xml:space="preserve">
     <value>İşlem yapılırken hata oluştu.</value>
   </data>
+  <data name="FaultyFormat" xml:space="preserve">
+    <value>Lütfen '.jpg','.png','.pdf','.jpeg' formatında dosya gönderiniz</value>
+  </data>
   <data name="Filter" xml:space="preserve">
     <value>Filtrele</value>
   </data>
@@ -170,6 +173,9 @@
   </data>
   <data name="Max30Days" xml:space="preserve">
     <value>Maksimum 30 gün raporlama yapabilirsiniz.</value>
+  </data>
+  <data name="MaxFileSizeError" xml:space="preserve">
+    <value>Dosya Boyutu Maksimum 10 MB olmalı.</value>
   </data>
   <data name="NewCustomerError" xml:space="preserve">
     <value>İşleminiz yapılırken bir hata oluştu.Tekrar deneyiniz.</value>
@@ -195,8 +201,14 @@
   <data name="ReturnUserOperations" xml:space="preserve">
     <value>Geri</value>
   </data>
+  <data name="SelectAttachmentType" xml:space="preserve">
+    <value>Eklenti Tipini Seçiniz</value>
+  </data>
   <data name="SelectFaultType" xml:space="preserve">
     <value>Arıza Türünü Seçiniz</value>
+  </data>
+  <data name="SelectFile" xml:space="preserve">
+    <value>Lütfen Dosya Seçiniz</value>
   </data>
   <data name="SelectRole" xml:space="preserve">
     <value>Rol Seçiniz</value>
@@ -227,6 +239,12 @@
   </data>
   <data name="UpdateTaskStatus" xml:space="preserve">
     <value>Görev Tanımını Güncelle</value>
+  </data>
+  <data name="Upload" xml:space="preserve">
+    <value>Belge Yükle</value>
+  </data>
+  <data name="UploadDocument" xml:space="preserve">
+    <value>Kullanıcıya Belge Yükle</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Evet</value>

@@ -119,6 +119,12 @@
     @Html.Raw(TempData["CustomerUpdateStatusError"])
 </div>
 
+<div align="center">
+    <div class="table-container">
+        <h3>@View.UploadDocument</h3>
+        @Html.ActionLink(View.Upload, "UploadDocument", new { taskNo }, new { @class = "btn btn-info" })
+    </div>
+</div>
 
 
 @section JavaScript{
