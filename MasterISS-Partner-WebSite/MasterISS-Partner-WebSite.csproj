@@ -192,6 +192,7 @@
     <Compile Include="Enums\TaskStatusEnum.cs" />
     <Compile Include="Enums\TaskTypesEnum.cs" />
     <Compile Include="Enums\XDSLTypeEnum.cs" />
+    <Compile Include="Helpers\TimeFormatHelper.cs" />
     <Compile Include="Localization\AttachmentTypes.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -502,6 +503,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\date-format-helper.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -609,7 +611,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\SetupCustomerInfo\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

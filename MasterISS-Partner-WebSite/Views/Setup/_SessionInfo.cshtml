@@ -1,4 +1,5 @@
-﻿@using MasterISS_Partner_WebSite.Localization
+﻿@using MasterISS_Partner_WebSite.Helpers
+@using MasterISS_Partner_WebSite.Localization
 @model MasterISS_Partner_WebSite.ViewModels.Setup.Response.GetCustomerSessionInfoResponseViewModel
 
 <h4>@View.FirstSessionInfo</h4>
@@ -25,7 +26,7 @@
     </tr>
     <tr>
         <th>@Html.DisplayNameFor(model => model.FirstSessionInfo.SessionTime)</th>
-        <td>@Html.DisplayFor(model => model.FirstSessionInfo.SessionTime)</td>
+        <td>@Html.TimeCustomFormat(model => model.FirstSessionInfo.SessionTime)</td>
     </tr>
 </table>
 
@@ -53,6 +54,6 @@
     </tr>
     <tr>
         <th>@Html.DisplayNameFor(model => model.LastSessionInfo.SessionTime)</th>
-        <td>@Html.DisplayFor(model => model.LastSessionInfo.SessionTime)</td>
+        <td>@Html.TimeCustomFormat(model => model.LastSessionInfo.SessionTime)</td>
     </tr>
 </table>

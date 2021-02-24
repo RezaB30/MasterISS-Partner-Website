@@ -144,6 +144,9 @@
   <data name="CustomerSessionInfo" xml:space="preserve">
     <value>Müşteri Oturum Bilgileri</value>
   </data>
+  <data name="Day" xml:space="preserve">
+    <value>Gün</value>
+  </data>
   <data name="DownloadTheContract" xml:space="preserve">
     <value>Sözleşmeyi İndir</value>
   </data>
@@ -162,6 +165,9 @@
   <data name="Generic200ErrorCodeMessage" xml:space="preserve">
     <value>Bir Hata Oluştu. Daha sonra tekrar deneyiniz.</value>
   </data>
+  <data name="Hours" xml:space="preserve">
+    <value>Saat</value>
+  </data>
   <data name="LastSessionInfo" xml:space="preserve">
     <value>Son Oturum Bilgileri</value>
   </data>
@@ -176,6 +182,9 @@
   </data>
   <data name="MaxFileSizeError" xml:space="preserve">
     <value>Dosya Boyutu Maksimum 10 MB olmalı.</value>
+  </data>
+  <data name="Minute" xml:space="preserve">
+    <value>Dakika</value>
   </data>
   <data name="NewCustomerError" xml:space="preserve">
     <value>İşleminiz yapılırken bir hata oluştu.Tekrar deneyiniz.</value>
@@ -200,6 +209,9 @@
   </data>
   <data name="ReturnUserOperations" xml:space="preserve">
     <value>Geri</value>
+  </data>
+  <data name="Second" xml:space="preserve">
+    <value>Saniye</value>
   </data>
   <data name="SelectAttachmentType" xml:space="preserve">
     <value>Eklenti Tipini Seçiniz</value>

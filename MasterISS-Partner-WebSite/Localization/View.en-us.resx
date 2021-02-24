@@ -144,6 +144,9 @@
   <data name="CustomerSessionInfo" xml:space="preserve">
     <value>Customer Session Info</value>
   </data>
+  <data name="Day" xml:space="preserve">
+    <value>Day</value>
+  </data>
   <data name="DownloadTheContract" xml:space="preserve">
     <value>Download The Contract</value>
   </data>
@@ -162,6 +165,9 @@
   <data name="Generic200ErrorCodeMessage" xml:space="preserve">
     <value>An Error Has Occurred. Try again later.</value>
   </data>
+  <data name="Hours" xml:space="preserve">
+    <value>Hours</value>
+  </data>
   <data name="LastSessionInfo" xml:space="preserve">
     <value>Last Session Info</value>
   </data>
@@ -176,6 +182,9 @@
   </data>
   <data name="MaxFileSizeError" xml:space="preserve">
     <value>File size must be maximum 10 MB.</value>
+  </data>
+  <data name="Minute" xml:space="preserve">
+    <value>Minute</value>
   </data>
   <data name="NewCustomerError" xml:space="preserve">
     <value>An error occurred while processing your transaction. Try again.</value>
@@ -200,6 +209,9 @@
   </data>
   <data name="ReturnUserOperations" xml:space="preserve">
     <value>Back</value>
+  </data>
+  <data name="Second" xml:space="preserve">
+    <value>Second</value>
   </data>
   <data name="SelectAttachmentType" xml:space="preserve">
     <value>Select Attachment Type</value>

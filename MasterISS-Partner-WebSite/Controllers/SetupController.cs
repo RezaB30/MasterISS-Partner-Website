@@ -127,8 +127,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                         IsOnline = response.CustomerSessionBundle.FirstSession.IsOnline,
                         NASIPAddress = response.CustomerSessionBundle.FirstSession.NASIPAddress,
                         SessionId = response.CustomerSessionBundle.FirstSession.SessionId,
-                        SessionStart = Convert.ToDateTime(response.CustomerSessionBundle.FirstSession.SessionStart),
-                        SessionTime = Convert.ToDateTime(response.CustomerSessionBundle.FirstSession.SessionTime)
+                        SessionStart = ResponseParseDatetime(response.CustomerSessionBundle.FirstSession.SessionStart),
+                        SessionTime = TimeSpan.Parse(response.CustomerSessionBundle.FirstSession.SessionTime)
                     },
                     LastSessionInfo = new SessionInfo()
                     {
@@ -136,14 +136,24 @@ namespace MasterISS_Partner_WebSite.Controllers
                         IsOnline = response.CustomerSessionBundle.LastSession.IsOnline,
                         NASIPAddress = response.CustomerSessionBundle.LastSession.NASIPAddress,
                         SessionId = response.CustomerSessionBundle.LastSession.SessionId,
-                        SessionStart = Convert.ToDateTime(response.CustomerSessionBundle.LastSession.SessionStart),
-                        SessionTime = Convert.ToDateTime(response.CustomerSessionBundle.LastSession.SessionTime)
+                        SessionStart = ResponseParseDatetime(response.CustomerSessionBundle.LastSession.SessionStart),
+                        SessionTime = TimeSpan.Parse(response.CustomerSessionBundle.LastSession.SessionTime)
                     }
                 };
                 return PartialView("_SessionInfo", sessionInfo);
             }
 
             return Content($"<div>{response.ResponseMessage.ErrorMessage}</div>");
+        }
+
+        private DateTime ResponseParseDatetime(string date)
+        {
+            if (string.IsNullOrEmpty(date))
+            {
+                return DateTime.MinValue;
+            }
+            var parsedDate = DateTime.ParseExact(date, "yyyy-MM-dd HH:mm:ss", null);
+            return parsedDate;
         }
 
         [HttpPost]
@@ -269,7 +279,6 @@ namespace MasterISS_Partner_WebSite.Controllers
             return View(request);
         }
 
-
         [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult UploadDocument(UploadFileRequestViewModel uploadFileRequestViewModel, HttpPostedFileBase File)
@@ -340,6 +349,21 @@ namespace MasterISS_Partner_WebSite.Controllers
             }
             return View(uploadFileRequestViewModel);
         }
+
+        [HttpGet]
+        public ActionResult UpdateClientLocation(long taskNo)
+        {
+            var updateGPSViewModel = new UpdateClientGPSRequestViewModel { TaskNo = taskNo };
+            return View(updateGPSViewModel);
+        }
+
+        //[ValidateAntiForgeryToken]
+        //[HttpPost]
+        //public ActionResult UpdateClientLocation(UpdateClientGPSRequestViewModel updateClientViewModel)
+        //{
+
+        //}
+
 
         public ActionResult Successful(long taskNo)
         {

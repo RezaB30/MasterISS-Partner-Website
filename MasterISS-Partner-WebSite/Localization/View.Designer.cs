@@ -142,6 +142,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gün.
+        /// </summary>
+        public static string Day {
+            get {
+                return ResourceManager.GetString("Day", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sözleşmeyi İndir.
         /// </summary>
         public static string DownloadTheContract {
@@ -196,6 +205,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Saat.
+        /// </summary>
+        public static string Hours {
+            get {
+                return ResourceManager.GetString("Hours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Son Oturum Bilgileri.
         /// </summary>
         public static string LastSessionInfo {
@@ -237,6 +255,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string MaxFileSizeError {
             get {
                 return ResourceManager.GetString("MaxFileSizeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dakika.
+        /// </summary>
+        public static string Minute {
+            get {
+                return ResourceManager.GetString("Minute", resourceCulture);
             }
         }
         
@@ -309,6 +336,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string ReturnUserOperations {
             get {
                 return ResourceManager.GetString("ReturnUserOperations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saniye.
+        /// </summary>
+        public static string Second {
+            get {
+                return ResourceManager.GetString("Second", resourceCulture);
             }
         }
         

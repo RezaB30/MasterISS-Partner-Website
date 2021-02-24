@@ -28,8 +28,7 @@ namespace MasterISS_Partner_WebSite.ViewModels.Setup.Response
         public string IPAddress { get; set; }
 
         [Display(ResourceType = typeof(Localization.Model), Name = "SessionTime")]
-        [UIHint("DateTimeConverted")]
-        public DateTime SessionTime { get; set; }
+        public TimeSpan SessionTime { get; set; }
 
         [Display(ResourceType = typeof(Localization.Model), Name = "SessionStart")]
         [UIHint("DateTimeConverted")]
