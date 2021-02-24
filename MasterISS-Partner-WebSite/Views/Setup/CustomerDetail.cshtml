@@ -102,9 +102,25 @@
     <div id="LineInfo"></div>
 </div>
 
+<div>
+    @using (Html.BeginForm("CustomerContractInfo", "Setup", new { taskNo }, FormMethod.Post))
+    {
+        <h3>@View.CustomerContractInfo</h3>
+        <input type="submit" class="btn btn-info" id="GetCustomerDetail" value="@View.DownloadTheContract" />
+    }
+
+    @Html.Raw(TempData["CustomerContractResponse"])
+</div>
+
+
+
 @section JavaScript{
     <script>
         $(document).ready(function () {
+
+            $("#GetCustomerDetail").click(function () {
+                $("#GetCustomerDetail").hide();
+            });
 
             $("#GetSessionInfo").click(function () {
                 $("#GetSessionInfo").hide();

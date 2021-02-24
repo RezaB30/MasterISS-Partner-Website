@@ -165,7 +165,6 @@ namespace MasterISS_Partner_WebSite.Controllers
             return Content($"<div>{response.ResponseMessage.ErrorMessage}</div>");
         }
 
-
         [HttpPost]
         public ActionResult CustomerLineInfo(long taskNo)
         {
@@ -189,11 +188,32 @@ namespace MasterISS_Partner_WebSite.Controllers
                     XDSLNo = response.CustomerLineDetails.XDSLNo
                 };
 
-                return PartialView("_LineInfo",lineInfo);
+                return PartialView("_LineInfo", lineInfo);
             }
 
             return Content($"<div>{response.ResponseMessage.ErrorMessage}</div>");
         }
+
+        [HttpPost]
+        public ActionResult CustomerContractInfo(long taskNo)
+        {
+            var setupWrapper = new SetupServiceWrapper();
+
+            var response = setupWrapper.GetCustomerContract(taskNo);
+
+            if (response.ResponseMessage.ErrorCode == 0)
+            {
+                var fileCode = Convert.FromBase64String(response.CustomerContract.FileCode);
+                var fileName = response.CustomerContract.FileName;
+                return File(fileCode, fileName, fileName);
+            }
+            else
+            {
+                TempData["CustomerContractResponse"] = response.ResponseMessage.ErrorMessage;
+                return RedirectToAction("CustomerDetail", "Setup", new { taskNo = taskNo });
+            }
+        }
+
 
         private string TaskStatusDescription(int value)
         {

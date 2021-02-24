@@ -88,6 +88,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Müşteri Sözleşme Bilgileri.
+        /// </summary>
+        public static string CustomerContractInfo {
+            get {
+                return ResourceManager.GetString("CustomerContractInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Müşteri Kullanıcı Bilgileri.
         /// </summary>
         public static string CustomerCredentials {
@@ -120,6 +129,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string CustomerSessionInfo {
             get {
                 return ResourceManager.GetString("CustomerSessionInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sözleşmeyi İndir.
+        /// </summary>
+        public static string DownloadTheContract {
+            get {
+                return ResourceManager.GetString("DownloadTheContract", resourceCulture);
             }
         }
         
