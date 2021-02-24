@@ -186,6 +186,12 @@
   <data name="CultureCustomer" xml:space="preserve">
     <value>Dil</value>
   </data>
+  <data name="CurrentDowloadSpeed" xml:space="preserve">
+    <value>Mevcut İndirme Hızı</value>
+  </data>
+  <data name="CurrentUploadSpeed" xml:space="preserve">
+    <value>Mevcut Yükleme Hızı</value>
+  </data>
   <data name="CustomerCode" xml:space="preserve">
     <value>Müşteri Kodu</value>
   </data>
@@ -227,6 +233,12 @@
   </data>
   <data name="Domain" xml:space="preserve">
     <value>Domain</value>
+  </data>
+  <data name="DowloadNoiseMargin" xml:space="preserve">
+    <value>Dowload Noise Margin</value>
+  </data>
+  <data name="DowloadSpeedCapasity" xml:space="preserve">
+    <value>İndirme Hızı Kapasitesi</value>
   </data>
   <data name="DueDate" xml:space="preserve">
     <value>Bitiş Tarihi</value>
@@ -290,6 +302,9 @@
   </data>
   <data name="IPAddress" xml:space="preserve">
     <value>IP Adres</value>
+  </data>
+  <data name="IsActive" xml:space="preserve">
+    <value>Aktif Mi?</value>
   </data>
   <data name="IsEnabled" xml:space="preserve">
     <value>Aktif Mi?</value>
@@ -423,6 +438,9 @@
   <data name="SexId" xml:space="preserve">
     <value>Cinsiyet</value>
   </data>
+  <data name="ShelfCardPort" xml:space="preserve">
+    <value>Shelf Card Port</value>
+  </data>
   <data name="Speed" xml:space="preserve">
     <value>Hız</value>
   </data>
@@ -473,6 +491,12 @@
   </data>
   <data name="TradeRegistrationNo" xml:space="preserve">
     <value>Ticaret Sicil Numarası</value>
+  </data>
+  <data name="UploadNoiseMargin" xml:space="preserve">
+    <value>Upload Noise Margin</value>
+  </data>
+  <data name="UploadSpeedCapasity" xml:space="preserve">
+    <value>Yükleme Hızı Kapasitesi</value>
   </data>
   <data name="UserEmail" xml:space="preserve">
     <value>Kullanıcı E-Posta</value>

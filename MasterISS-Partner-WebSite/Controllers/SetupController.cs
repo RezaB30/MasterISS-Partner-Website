@@ -117,7 +117,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             if (response.ResponseMessage.ErrorCode == 0)
             {
-                var sessionInfo = new CustomerSessionInfoResponseViewModel()
+                var sessionInfo = new GetCustomerSessionInfoResponseViewModel()
                 {
                     FirstSessionInfo = new SessionInfo()
                     {
@@ -166,6 +166,34 @@ namespace MasterISS_Partner_WebSite.Controllers
         }
 
 
+        [HttpPost]
+        public ActionResult CustomerLineInfo(long taskNo)
+        {
+            var setupWrapper = new SetupServiceWrapper();
+
+            var response = setupWrapper.GetCustomerLineDetails(taskNo);
+
+            if (response.ResponseMessage.ErrorCode == 0)
+            {
+                var lineInfo = new GetCustomerLineDetailsViewModel
+                {
+                    //Hız cevaplarında çevirme işlemi yapacak mıyız????
+                    CurrentDowloadSpeed = response.CustomerLineDetails.CurrentDownloadSpeed,
+                    CurrentUploadSpeed = response.CustomerLineDetails.CurrentUploadSpeed,
+                    DowloadNoiseMargin = response.CustomerLineDetails.DownloadNoiseMargin,
+                    DowloadSpeedCapasity = response.CustomerLineDetails.DownloadNoiseMargin,
+                    IsActive = response.CustomerLineDetails.IsActive,
+                    ShelfCardPort = response.CustomerLineDetails.ShelfCardPort,
+                    UploadNoiseMargin = response.CustomerLineDetails.UploadNoiseMargin,
+                    UploadSpeedCapasity = response.CustomerLineDetails.UploadSpeedCapacity,
+                    XDSLNo = response.CustomerLineDetails.XDSLNo
+                };
+
+                return PartialView("_LineInfo",lineInfo);
+            }
+
+            return Content($"<div>{response.ResponseMessage.ErrorMessage}</div>");
+        }
 
         private string TaskStatusDescription(int value)
         {

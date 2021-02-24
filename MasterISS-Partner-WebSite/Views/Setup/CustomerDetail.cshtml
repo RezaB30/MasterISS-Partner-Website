@@ -95,6 +95,13 @@
     <div id="CredentialsInfo"></div>
 </div>
 
+
+<div>
+    <h3>@View.CustomerLineDetails</h3>
+    <input type="button" id="GetLineInfo" class="btn btn-info" value="@View.Load" />
+    <div id="LineInfo"></div>
+</div>
+
 @section JavaScript{
     <script>
         $(document).ready(function () {
@@ -125,6 +132,21 @@
                     dataType: 'html',
                     success: function (data) {
                         $("#CredentialsInfo").html(data);
+                    },
+                });
+            });
+
+            $("#GetLineInfo").click(function () {
+                $("#GetLineInfo").hide();
+                $.ajax({
+                    url: '@Url.Action("CustomerLineInfo", "Setup")',
+                    type: 'POST',
+                    data: {
+                        taskNo : '@taskNo'
+                    },
+                    dataType: 'html',
+                    success: function (data) {
+                        $("#LineInfo").html(data);
                     },
                 });
             });

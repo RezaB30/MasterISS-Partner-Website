@@ -6,7 +6,7 @@ using System.Web;
 
 namespace MasterISS_Partner_WebSite.ViewModels.Setup.Response
 {
-    public class CustomerSessionInfoResponseViewModel
+    public class GetCustomerSessionInfoResponseViewModel
     {
         public SessionInfo FirstSessionInfo { get; set; }
         public SessionInfo LastSessionInfo { get; set; }

@@ -132,6 +132,9 @@
   <data name="CustomerInfo" xml:space="preserve">
     <value>Customer Info</value>
   </data>
+  <data name="CustomerLineDetails" xml:space="preserve">
+    <value>Customer Line Details</value>
+  </data>
   <data name="CustomerSessionInfo" xml:space="preserve">
     <value>Customer Session Info</value>
   </data>

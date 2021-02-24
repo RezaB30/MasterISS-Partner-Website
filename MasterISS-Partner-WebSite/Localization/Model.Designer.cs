@@ -268,6 +268,24 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mevcut İndirme Hızı.
+        /// </summary>
+        public static string CurrentDowloadSpeed {
+            get {
+                return ResourceManager.GetString("CurrentDowloadSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mevcut Yükleme Hızı.
+        /// </summary>
+        public static string CurrentUploadSpeed {
+            get {
+                return ResourceManager.GetString("CurrentUploadSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Müşteri Kodu.
         /// </summary>
         public static string CustomerCode {
@@ -390,6 +408,24 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string Domain {
             get {
                 return ResourceManager.GetString("Domain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dowload Noise Margin.
+        /// </summary>
+        public static string DowloadNoiseMargin {
+            get {
+                return ResourceManager.GetString("DowloadNoiseMargin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İndirme Hızı Kapasitesi.
+        /// </summary>
+        public static string DowloadSpeedCapasity {
+            get {
+                return ResourceManager.GetString("DowloadSpeedCapasity", resourceCulture);
             }
         }
         
@@ -579,6 +615,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string IPAddress {
             get {
                 return ResourceManager.GetString("IPAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aktif Mi?.
+        /// </summary>
+        public static string IsActive {
+            get {
+                return ResourceManager.GetString("IsActive", resourceCulture);
             }
         }
         
@@ -979,6 +1024,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Shelf Card Port.
+        /// </summary>
+        public static string ShelfCardPort {
+            get {
+                return ResourceManager.GetString("ShelfCardPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hız.
         /// </summary>
         public static string Speed {
@@ -1128,6 +1182,24 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string TradeRegistrationNo {
             get {
                 return ResourceManager.GetString("TradeRegistrationNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload Noise Margin.
+        /// </summary>
+        public static string UploadNoiseMargin {
+            get {
+                return ResourceManager.GetString("UploadNoiseMargin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yükleme Hızı Kapasitesi.
+        /// </summary>
+        public static string UploadSpeedCapasity {
+            get {
+                return ResourceManager.GetString("UploadSpeedCapasity", resourceCulture);
             }
         }
         

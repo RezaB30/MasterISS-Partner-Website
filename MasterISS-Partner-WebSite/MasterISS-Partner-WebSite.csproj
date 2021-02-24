@@ -369,8 +369,9 @@
     <Compile Include="ViewModels\Settings\TTelekomUserViewModel.cs" />
     <Compile Include="ViewModels\Setup\AddTaskStatusUpdateViewModel.cs" />
     <Compile Include="ViewModels\Setup\GetTaskListRequestViewModel.cs" />
-    <Compile Include="ViewModels\Setup\Response\CustomerSessionInfoResponseViewModel.cs" />
+    <Compile Include="ViewModels\Setup\Response\GetCustomerSessionInfoResponseViewModel.cs" />
     <Compile Include="ViewModels\Setup\Response\GetCustomerCredentialsResponseViewModel.cs" />
+    <Compile Include="ViewModels\Setup\Response\GetCustomerLineDetailsViewModel.cs" />
     <Compile Include="ViewModels\Setup\Response\GetTaskListResponseViewModel.cs" />
     <Compile Include="ViewModels\Setup\Response\TaskListDetailResponseViewModel.cs" />
     <Compile Include="ViewModels\Setup\UpdateClientGPSRequestViewModel.cs" />
@@ -601,6 +602,7 @@
     <Content Include="Views\Shared\DisplayTemplates\IsBoolFormat.cshtml" />
     <Content Include="Views\Setup\_SessionInfo.cshtml" />
     <Content Include="Views\Setup\_CredentialsInfo.cshtml" />
+    <Content Include="Views\Setup\_LineInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
