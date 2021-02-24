@@ -370,6 +370,7 @@
     <Compile Include="ViewModels\Setup\AddTaskStatusUpdateViewModel.cs" />
     <Compile Include="ViewModels\Setup\GetTaskListRequestViewModel.cs" />
     <Compile Include="ViewModels\Setup\Response\CustomerSessionInfoResponseViewModel.cs" />
+    <Compile Include="ViewModels\Setup\Response\GetCustomerCredentialsResponseViewModel.cs" />
     <Compile Include="ViewModels\Setup\Response\GetTaskListResponseViewModel.cs" />
     <Compile Include="ViewModels\Setup\Response\TaskListDetailResponseViewModel.cs" />
     <Compile Include="ViewModels\Setup\UpdateClientGPSRequestViewModel.cs" />
@@ -599,6 +600,7 @@
     <Content Include="Views\Setup\CustomerDetail.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\IsBoolFormat.cshtml" />
     <Content Include="Views\Setup\_SessionInfo.cshtml" />
+    <Content Include="Views\Setup\_CredentialsInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

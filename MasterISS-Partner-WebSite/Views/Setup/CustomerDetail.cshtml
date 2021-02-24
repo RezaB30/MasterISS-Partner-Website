@@ -89,9 +89,16 @@
     <div id="SessionInfo"></div>
 </div>
 
+<div>
+    <h3>@View.CustomerCredentials</h3>
+    <input type="button" class="btn btn-info" id="GetCredentialsInfo" value="@View.Load" />
+    <div id="CredentialsInfo"></div>
+</div>
+
 @section JavaScript{
     <script>
         $(document).ready(function () {
+
             $("#GetSessionInfo").click(function () {
                 $("#GetSessionInfo").hide();
                 $.ajax({
@@ -106,6 +113,22 @@
                     },
                 });
             });
+
+            $("#GetCredentialsInfo").click(function () {
+                $("#GetCredentialsInfo").hide();
+                $.ajax({
+                    url: '@Url.Action("CustomerCredentialsInfo", "Setup")',
+                    type: 'POST',
+                    data: {
+                        taskNo: '@taskNo'
+                    },
+                    dataType: 'html',
+                    success: function (data) {
+                        $("#CredentialsInfo").html(data);
+                    },
+                });
+            });
+
         });
     </script>
 }

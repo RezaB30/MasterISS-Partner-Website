@@ -88,6 +88,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Müşteri Kullanıcı Bilgileri.
+        /// </summary>
+        public static string CustomerCredentials {
+            get {
+                return ResourceManager.GetString("CustomerCredentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Müşteri Bilgileri.
         /// </summary>
         public static string CustomerInfo {

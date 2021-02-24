@@ -128,7 +128,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                         SessionStart = Convert.ToDateTime(response.CustomerSessionBundle.FirstSession.SessionStart),
                         SessionTime = Convert.ToDateTime(response.CustomerSessionBundle.FirstSession.SessionTime)
                     },
-                    LastSessionInfo=new SessionInfo()
+                    LastSessionInfo = new SessionInfo()
                     {
                         IPAddress = response.CustomerSessionBundle.LastSession.IPAddress,
                         IsOnline = response.CustomerSessionBundle.LastSession.IsOnline,
@@ -138,7 +138,28 @@ namespace MasterISS_Partner_WebSite.Controllers
                         SessionTime = Convert.ToDateTime(response.CustomerSessionBundle.LastSession.SessionTime)
                     }
                 };
-                return PartialView("_SessionInfo",sessionInfo);
+                return PartialView("_SessionInfo", sessionInfo);
+            }
+
+            return Content($"<div>{response.ResponseMessage.ErrorMessage}</div>");
+        }
+
+        [HttpPost]
+        public ActionResult CustomerCredentialsInfo(long taskNo)
+        {
+            var setupWrapper = new SetupServiceWrapper();
+
+            var response = setupWrapper.GetCustomerCredentials(taskNo);
+
+            if (response.ResponseMessage.ErrorCode == 0)
+            {
+                var creadentialsInfo = new GetCustomerCredentialsResponseViewModel
+                {
+                    Password = response.CustomerCredentials.Password,
+                    Username = response.CustomerCredentials.Username
+                };
+
+                return PartialView("_CredentialsInfo", creadentialsInfo);
             }
 
             return Content($"<div>{response.ResponseMessage.ErrorMessage}</div>");
