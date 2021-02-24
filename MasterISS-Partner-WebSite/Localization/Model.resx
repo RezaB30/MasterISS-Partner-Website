@@ -162,6 +162,9 @@
   <data name="CentralSystemNo" xml:space="preserve">
     <value>Merkezi Sistem Numarası</value>
   </data>
+  <data name="City" xml:space="preserve">
+    <value>Şehir</value>
+  </data>
   <data name="CompanyAddress" xml:space="preserve">
     <value>Şirket Adresi</value>
   </data>
@@ -177,17 +180,26 @@
   <data name="ContactPhoneNo" xml:space="preserve">
     <value>İletişim Numarası</value>
   </data>
+  <data name="CreationDate" xml:space="preserve">
+    <value>Oluşturulma Tarihi</value>
+  </data>
   <data name="CultureCustomer" xml:space="preserve">
     <value>Dil</value>
   </data>
   <data name="CustomerCode" xml:space="preserve">
     <value>Müşteri Kodu</value>
   </data>
+  <data name="CustomerNo" xml:space="preserve">
+    <value>Müşteri Numarası</value>
+  </data>
   <data name="CustomerPhoneNo" xml:space="preserve">
     <value>Müşteri Telefon Numarası</value>
   </data>
   <data name="CustomerTCK" xml:space="preserve">
     <value>TC Kimlik No</value>
+  </data>
+  <data name="CustomerType" xml:space="preserve">
+    <value>Müşteri Tipi</value>
   </data>
   <data name="CustomerTypeId" xml:space="preserve">
     <value>Müşteri Tipi</value>
@@ -273,6 +285,9 @@
   <data name="HasInfrastructure" xml:space="preserve">
     <value>Altyapı Varmı?</value>
   </data>
+  <data name="HasModem" xml:space="preserve">
+    <value>Modem Var Mı?</value>
+  </data>
   <data name="IsEnabled" xml:space="preserve">
     <value>Aktif Mi?</value>
   </data>
@@ -284,6 +299,9 @@
   </data>
   <data name="IssueDate" xml:space="preserve">
     <value>Düzenlenme Tarihi</value>
+  </data>
+  <data name="LastConnectionDate" xml:space="preserve">
+    <value>Son Bağlantı Tarihi</value>
   </data>
   <data name="LastName" xml:space="preserve">
     <value>Soyadı</value>
@@ -299,6 +317,9 @@
   </data>
   <data name="Message" xml:space="preserve">
     <value>Mesaj</value>
+  </data>
+  <data name="ModemName" xml:space="preserve">
+    <value>Modem Adı</value>
   </data>
   <data name="MothersMaidenName" xml:space="preserve">
     <value>Anne Kızlık Soyadı</value>
@@ -408,6 +429,12 @@
   <data name="TaskNo" xml:space="preserve">
     <value>Görev No</value>
   </data>
+  <data name="TaskStatus" xml:space="preserve">
+    <value>Görev Durumu</value>
+  </data>
+  <data name="TaskType" xml:space="preserve">
+    <value>Görev Türü</value>
+  </data>
   <data name="TaxNo" xml:space="preserve">
     <value>Vergi Numarası</value>
   </data>
@@ -443,5 +470,11 @@
   </data>
   <data name="VUID" xml:space="preserve">
     <value>VUID</value>
+  </data>
+  <data name="XDSLNo" xml:space="preserve">
+    <value>XDSL No</value>
+  </data>
+  <data name="XDSLType" xml:space="preserve">
+    <value>XDSL Tipi</value>
   </data>
 </root>

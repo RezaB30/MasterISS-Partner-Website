@@ -66,24 +66,21 @@
                 </tr>
             </table>
 
-            <input type="button" class="btn btn-info" id="GetTaskUpdatesInfo" value="aaaaaaaaaaaa" />
-
-            <div id="TaskUpdatesInfo" style="display:none">
+            <div id="TaskUpdatesInfo">
                 @foreach (var item in Model.TaskUpdatesDetailList)
                 {
-                    <div class="task-updates-div">
-                        <div class="fc-date-tr">
-                            <div class="fc-td">@Html.DisplayFor(modelItem => item.FaultCodes)</div><div class="date-td">@Html.DisplayFor(modelItem => item.CreationDate)</div>
+                    <div>
+                        <div>
+                            <div>@Html.DisplayFor(modelItem => item.FaultCodes)</div>
+                            <div>@Html.DisplayFor(modelItem => item.CreationDate)</div>
                         </div>
-                        <div class="desc-tr">
-                            <div class="desc-td" colspan="2">@Html.DisplayFor(modelItem => item.Description)</div>
+                        <div>
+                            <div>@Html.DisplayFor(modelItem => item.Description)</div>
                         </div>
-                        @if (item.ReservationDate != DateTime.MinValue)
-                        {
-                            <div class="rez-tr">
-                                <div class="rez-name-td">@Html.DisplayNameFor(modelItem => item.ReservationDate)</div><div class="rez-value-td">@Html.DisplayFor(modelItem => item.ReservationDate)</div>
-                            </div>
-                        }
+                        <div>
+                            <div>@Html.DisplayNameFor(modelItem => item.ReservationDate)</div>
+                            <div>@Html.DisplayFor(modelItem => item.ReservationDate)</div>
+                        </div>
                     </div>
                 }
             </div>

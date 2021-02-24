@@ -162,6 +162,9 @@
   <data name="CentralSystemNo" xml:space="preserve">
     <value>Central System Number</value>
   </data>
+  <data name="City" xml:space="preserve">
+    <value>City</value>
+  </data>
   <data name="CompanyAddress" xml:space="preserve">
     <value>Company Address</value>
   </data>
@@ -177,17 +180,26 @@
   <data name="ContactPhoneNo" xml:space="preserve">
     <value>Contact Phone No</value>
   </data>
+  <data name="CreationDate" xml:space="preserve">
+    <value>Creation Date</value>
+  </data>
   <data name="CultureCustomer" xml:space="preserve">
     <value>Culture</value>
   </data>
   <data name="CustomerCode" xml:space="preserve">
     <value>Customer Code</value>
   </data>
+  <data name="CustomerNo" xml:space="preserve">
+    <value>Customer No</value>
+  </data>
   <data name="CustomerPhoneNo" xml:space="preserve">
     <value>Customer Phone No</value>
   </data>
   <data name="CustomerTCK" xml:space="preserve">
     <value>Turkish Identity Number</value>
+  </data>
+  <data name="CustomerType" xml:space="preserve">
+    <value>Customer Type</value>
   </data>
   <data name="CustomerTypeId" xml:space="preserve">
     <value>Customer Type</value>
@@ -273,6 +285,9 @@
   <data name="HasInfrastructure" xml:space="preserve">
     <value>Is There Infrastructure</value>
   </data>
+  <data name="HasModem" xml:space="preserve">
+    <value>Has Modem ?</value>
+  </data>
   <data name="IsEnabled" xml:space="preserve">
     <value>Is Enabled?</value>
   </data>
@@ -284,6 +299,9 @@
   </data>
   <data name="IssueDate" xml:space="preserve">
     <value>Issue Date</value>
+  </data>
+  <data name="LastConnectionDate" xml:space="preserve">
+    <value>Last Connection Date</value>
   </data>
   <data name="LastName" xml:space="preserve">
     <value>Last Name</value>
@@ -299,6 +317,9 @@
   </data>
   <data name="Message" xml:space="preserve">
     <value>Message</value>
+  </data>
+  <data name="ModemName" xml:space="preserve">
+    <value>Modem Name</value>
   </data>
   <data name="MothersMaidenName" xml:space="preserve">
     <value>Mothers Maiden Name</value>
@@ -408,6 +429,12 @@
   <data name="TaskNo" xml:space="preserve">
     <value>Task No</value>
   </data>
+  <data name="TaskStatus" xml:space="preserve">
+    <value>Task Status</value>
+  </data>
+  <data name="TaskType" xml:space="preserve">
+    <value>Task Type</value>
+  </data>
   <data name="TaxNo" xml:space="preserve">
     <value>Tax Number</value>
   </data>
@@ -443,5 +470,11 @@
   </data>
   <data name="VUID" xml:space="preserve">
     <value>VUID</value>
+  </data>
+  <data name="XDSLNo" xml:space="preserve">
+    <value>XDSL No</value>
+  </data>
+  <data name="XDSLType" xml:space="preserve">
+    <value>XDSL Type</value>
   </data>
 </root>

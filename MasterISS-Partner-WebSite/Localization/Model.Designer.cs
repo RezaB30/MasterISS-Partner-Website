@@ -196,6 +196,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Şehir.
+        /// </summary>
+        public static string City {
+            get {
+                return ResourceManager.GetString("City", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Şirket Adresi.
         /// </summary>
         public static string CompanyAddress {
@@ -241,6 +250,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Oluşturulma Tarihi.
+        /// </summary>
+        public static string CreationDate {
+            get {
+                return ResourceManager.GetString("CreationDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dil.
         /// </summary>
         public static string CultureCustomer {
@@ -259,6 +277,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Müşteri Numarası.
+        /// </summary>
+        public static string CustomerNo {
+            get {
+                return ResourceManager.GetString("CustomerNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Müşteri Telefon Numarası.
         /// </summary>
         public static string CustomerPhoneNo {
@@ -273,6 +300,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string CustomerTCK {
             get {
                 return ResourceManager.GetString("CustomerTCK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Müşteri Tipi.
+        /// </summary>
+        public static string CustomerType {
+            get {
+                return ResourceManager.GetString("CustomerType", resourceCulture);
             }
         }
         
@@ -529,6 +565,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Modem Var Mı?.
+        /// </summary>
+        public static string HasModem {
+            get {
+                return ResourceManager.GetString("HasModem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aktif Mi?.
         /// </summary>
         public static string IsEnabled {
@@ -561,6 +606,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string IssueDate {
             get {
                 return ResourceManager.GetString("IssueDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Son Bağlantı Tarihi.
+        /// </summary>
+        public static string LastConnectionDate {
+            get {
+                return ResourceManager.GetString("LastConnectionDate", resourceCulture);
             }
         }
         
@@ -606,6 +660,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string Message {
             get {
                 return ResourceManager.GetString("Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modem Adı.
+        /// </summary>
+        public static string ModemName {
+            get {
+                return ResourceManager.GetString("ModemName", resourceCulture);
             }
         }
         
@@ -934,6 +997,24 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Görev Durumu.
+        /// </summary>
+        public static string TaskStatus {
+            get {
+                return ResourceManager.GetString("TaskStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Görev Türü.
+        /// </summary>
+        public static string TaskType {
+            get {
+                return ResourceManager.GetString("TaskType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vergi Numarası.
         /// </summary>
         public static string TaxNo {
@@ -1038,6 +1119,24 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string VUID {
             get {
                 return ResourceManager.GetString("VUID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to XDSL No.
+        /// </summary>
+        public static string XDSLNo {
+            get {
+                return ResourceManager.GetString("XDSLNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to XDSL Tipi.
+        /// </summary>
+        public static string XDSLType {
+            get {
+                return ResourceManager.GetString("XDSLType", resourceCulture);
             }
         }
     }
