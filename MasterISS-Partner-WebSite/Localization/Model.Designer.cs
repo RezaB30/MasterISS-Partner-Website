@@ -574,11 +574,29 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to IP Adres.
+        /// </summary>
+        public static string IPAddress {
+            get {
+                return ResourceManager.GetString("IPAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aktif Mi?.
         /// </summary>
         public static string IsEnabled {
             get {
                 return ResourceManager.GetString("IsEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Online Mı?.
+        /// </summary>
+        public static string IsOnline {
+            get {
+                return ResourceManager.GetString("IsOnline", resourceCulture);
             }
         }
         
@@ -687,6 +705,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string MothersName {
             get {
                 return ResourceManager.GetString("MothersName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NAS IP Adres.
+        /// </summary>
+        public static string NASIPAddress {
+            get {
+                return ResourceManager.GetString("NASIPAddress", resourceCulture);
             }
         }
         
@@ -903,6 +930,33 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string SerialNo {
             get {
                 return ResourceManager.GetString("SerialNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oturum Id.
+        /// </summary>
+        public static string SessionId {
+            get {
+                return ResourceManager.GetString("SessionId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Session Başlangıç Saati.
+        /// </summary>
+        public static string SessionStart {
+            get {
+                return ResourceManager.GetString("SessionStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oturum Zamanı.
+        /// </summary>
+        public static string SessionTime {
+            get {
+                return ResourceManager.GetString("SessionTime", resourceCulture);
             }
         }
         

@@ -129,11 +129,26 @@
   <data name="CustomerInfo" xml:space="preserve">
     <value>Customer Info</value>
   </data>
+  <data name="CustomerSessionInfo" xml:space="preserve">
+    <value>Customer Session Info</value>
+  </data>
   <data name="ErrorProcessing" xml:space="preserve">
     <value>An error occurred while processing.</value>
   </data>
   <data name="Filter" xml:space="preserve">
     <value>Filter</value>
+  </data>
+  <data name="FirstSessionInfo" xml:space="preserve">
+    <value>First Session Info</value>
+  </data>
+  <data name="Generic200ErrorCodeMessage" xml:space="preserve">
+    <value>An Error Has Occurred. Try again later.</value>
+  </data>
+  <data name="LastSessionInfo" xml:space="preserve">
+    <value>Last Session Info</value>
+  </data>
+  <data name="Load" xml:space="preserve">
+    <value>Load</value>
   </data>
   <data name="MailValidError" xml:space="preserve">
     <value>This mail already exists.</value>
@@ -143,6 +158,9 @@
   </data>
   <data name="NewCustomerError" xml:space="preserve">
     <value>An error occurred while processing your transaction. Try again.</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
   </data>
   <data name="NotAvailable" xml:space="preserve">
     <value>Not Available</value>
@@ -185,5 +203,8 @@
   </data>
   <data name="Total" xml:space="preserve">
     <value>Total</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
   </data>
 </root>

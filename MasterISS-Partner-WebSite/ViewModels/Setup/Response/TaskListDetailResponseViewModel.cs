@@ -66,12 +66,14 @@ namespace MasterISS_Partner_WebSite.ViewModels.Setup.Response
         public string FaultCodes { get; set; }
 
         [Display(ResourceType = typeof(Localization.Model), Name = "CreationDate")]
+        [UIHint("DateTimeConverted")]
         public DateTime CreationDate { get; set; }
 
         [Display(ResourceType = typeof(Localization.Model), Name = "Description")]
         public string Description { get; set; }
 
         [Display(ResourceType = typeof(Localization.Model), Name = "ReservationDate")]
+        [UIHint("DateTimeConverted")]
         public DateTime ReservationDate { get; set; }
     }
 }

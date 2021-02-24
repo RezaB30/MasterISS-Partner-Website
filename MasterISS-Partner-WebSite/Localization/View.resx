@@ -129,11 +129,26 @@
   <data name="CustomerInfo" xml:space="preserve">
     <value>Müşteri Bilgileri</value>
   </data>
+  <data name="CustomerSessionInfo" xml:space="preserve">
+    <value>Müşteri Oturum Bilgileri</value>
+  </data>
   <data name="ErrorProcessing" xml:space="preserve">
     <value>İşlem yapılırken hata oluştu.</value>
   </data>
   <data name="Filter" xml:space="preserve">
     <value>Filtrele</value>
+  </data>
+  <data name="FirstSessionInfo" xml:space="preserve">
+    <value>İlk Oturum Bilgileri</value>
+  </data>
+  <data name="Generic200ErrorCodeMessage" xml:space="preserve">
+    <value>Bir Hata Oluştu. Daha sonra tekrar deneyiniz.</value>
+  </data>
+  <data name="LastSessionInfo" xml:space="preserve">
+    <value>Son Oturum Bilgileri</value>
+  </data>
+  <data name="Load" xml:space="preserve">
+    <value>Yükle</value>
   </data>
   <data name="MailValidError" xml:space="preserve">
     <value>Bu mail zaten mevcut.</value>
@@ -143,6 +158,9 @@
   </data>
   <data name="NewCustomerError" xml:space="preserve">
     <value>İşleminiz yapılırken bir hata oluştu.Tekrar deneyiniz.</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Hayır</value>
   </data>
   <data name="NotAvailable" xml:space="preserve">
     <value>Mevcut Değil</value>
@@ -185,5 +203,8 @@
   </data>
   <data name="Total" xml:space="preserve">
     <value>Toplam</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Evet</value>
   </data>
 </root>

@@ -97,6 +97,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Müşteri Oturum Bilgileri.
+        /// </summary>
+        public static string CustomerSessionInfo {
+            get {
+                return ResourceManager.GetString("CustomerSessionInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to İşlem yapılırken hata oluştu..
         /// </summary>
         public static string ErrorProcessing {
@@ -111,6 +120,42 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string Filter {
             get {
                 return ResourceManager.GetString("Filter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İlk Oturum Bilgileri.
+        /// </summary>
+        public static string FirstSessionInfo {
+            get {
+                return ResourceManager.GetString("FirstSessionInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bir Hata Oluştu. Daha sonra tekrar deneyiniz..
+        /// </summary>
+        public static string Generic200ErrorCodeMessage {
+            get {
+                return ResourceManager.GetString("Generic200ErrorCodeMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Son Oturum Bilgileri.
+        /// </summary>
+        public static string LastSessionInfo {
+            get {
+                return ResourceManager.GetString("LastSessionInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yükle.
+        /// </summary>
+        public static string Load {
+            get {
+                return ResourceManager.GetString("Load", resourceCulture);
             }
         }
         
@@ -138,6 +183,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string NewCustomerError {
             get {
                 return ResourceManager.GetString("NewCustomerError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hayır.
+        /// </summary>
+        public static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
             }
         }
         
@@ -264,6 +318,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string Total {
             get {
                 return ResourceManager.GetString("Total", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Evet.
+        /// </summary>
+        public static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }

@@ -32,6 +32,9 @@
         <input type="submit" class=" btn btn-warning" value="@View.Filter" />
     }
 </div>
+
+@Html.Raw(TempData["GetTaskDetailError"])
+
 @if (ViewBag.ValidationError == null && ViewBag.Max30Days == null && ViewBag.StartTimeBiggerThanEndTime == null && ViewBag.ErrorMessage == null)
 {
     <table>

@@ -288,8 +288,14 @@
   <data name="HasModem" xml:space="preserve">
     <value>Has Modem ?</value>
   </data>
+  <data name="IPAddress" xml:space="preserve">
+    <value>IP Address</value>
+  </data>
   <data name="IsEnabled" xml:space="preserve">
     <value>Is Enabled?</value>
+  </data>
+  <data name="IsOnline" xml:space="preserve">
+    <value>Is Online ?</value>
   </data>
   <data name="Ispaid" xml:space="preserve">
     <value>Is Paid?</value>
@@ -326,6 +332,9 @@
   </data>
   <data name="MothersName" xml:space="preserve">
     <value>Mothers Name</value>
+  </data>
+  <data name="NASIPAddress" xml:space="preserve">
+    <value>NAS IP Address</value>
   </data>
   <data name="NationalityId" xml:space="preserve">
     <value>Nationality</value>
@@ -398,6 +407,15 @@
   </data>
   <data name="SerialNo" xml:space="preserve">
     <value>Serial No</value>
+  </data>
+  <data name="SessionId" xml:space="preserve">
+    <value>Session Id</value>
+  </data>
+  <data name="SessionStart" xml:space="preserve">
+    <value>Session Start Time</value>
+  </data>
+  <data name="SessionTime" xml:space="preserve">
+    <value>Session Time</value>
   </data>
   <data name="SetupAddress" xml:space="preserve">
     <value>Setup Address</value>

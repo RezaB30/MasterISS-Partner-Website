@@ -101,10 +101,50 @@ namespace MasterISS_Partner_WebSite.Controllers
                         ReservationDate = Convert.ToDateTime(tu.ReservationDate)
                     }),
                 };
+
+                ViewBag.TaskNo = taskNo;
                 return View(taskDetail);
             }
-            return View();
+            TempData["GetTaskDetailError"] = response.ResponseMessage.ErrorMessage;
+            return RedirectToAction("Index", "Setup");
         }
+
+        [HttpPost]
+        public ActionResult CustomerSessionInfo(long taskNo)
+        {
+            var setupWrapper = new SetupServiceWrapper();
+            var response = setupWrapper.GetCustomerSessionInfo(taskNo);
+
+            if (response.ResponseMessage.ErrorCode == 0)
+            {
+                var sessionInfo = new CustomerSessionInfoResponseViewModel()
+                {
+                    FirstSessionInfo = new SessionInfo()
+                    {
+                        IPAddress = response.CustomerSessionBundle.FirstSession.IPAddress,
+                        IsOnline = response.CustomerSessionBundle.FirstSession.IsOnline,
+                        NASIPAddress = response.CustomerSessionBundle.FirstSession.NASIPAddress,
+                        SessionId = response.CustomerSessionBundle.FirstSession.SessionId,
+                        SessionStart = Convert.ToDateTime(response.CustomerSessionBundle.FirstSession.SessionStart),
+                        SessionTime = Convert.ToDateTime(response.CustomerSessionBundle.FirstSession.SessionTime)
+                    },
+                    LastSessionInfo=new SessionInfo()
+                    {
+                        IPAddress = response.CustomerSessionBundle.LastSession.IPAddress,
+                        IsOnline = response.CustomerSessionBundle.LastSession.IsOnline,
+                        NASIPAddress = response.CustomerSessionBundle.LastSession.NASIPAddress,
+                        SessionId = response.CustomerSessionBundle.LastSession.SessionId,
+                        SessionStart = Convert.ToDateTime(response.CustomerSessionBundle.LastSession.SessionStart),
+                        SessionTime = Convert.ToDateTime(response.CustomerSessionBundle.LastSession.SessionTime)
+                    }
+                };
+                return PartialView("_SessionInfo",sessionInfo);
+            }
+
+            return Content($"<div>{response.ResponseMessage.ErrorMessage}</div>");
+        }
+
+
 
         private string TaskStatusDescription(int value)
         {

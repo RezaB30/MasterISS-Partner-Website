@@ -4,86 +4,108 @@
 @{
     ViewBag.Title = "CustomerDetail";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var taskNo = ViewBag.TaskNo;
 }
 
-<h2>CustomerDetail</h2>
+<div>
+    <table>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Province)</th>
+            <td>@Html.DisplayFor(model => model.Province)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.BBK)</th>
+            <td>@Html.DisplayFor(model => model.BBK)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.City)</th>
+            <td>@Html.DisplayFor(model => model.City)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.CustomerType)</th>
+            <td>@Html.DisplayFor(model => model.CustomerType)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Details)</th>
+            <td>@Html.DisplayFor(model => model.Details)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.HasModem)</th>
+            <td>@Html.DisplayFor(model => model.HasModem)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.TaskStatus)</th>
+            <td>@Html.DisplayFor(model => model.TaskStatus)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.ModemName)</th>
+            <td>@Html.DisplayFor(model => model.ModemName)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.TaskType)</th>
+            <td>@Html.DisplayFor(model => model.TaskType)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.XDSLNo)</th>
+            <td>@Html.DisplayFor(model => model.XDSLNo)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.XDSLType)</th>
+            <td>@Html.DisplayFor(model => model.XDSLType)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.CustomerNo)</th>
+            <td>@Html.DisplayFor(model => model.CustomerNo)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.PSTN)</th>
+            <td>@Html.DisplayFor(model => model.PSTN)</td>
+        </tr>
+    </table>
 
-<div align="center">
-    <div class="table-container">
-        <div id="TaskDetail">
-            <table class="data-table">
-                <tr>
-                    <th>@Html.DisplayNameFor(model => model.Province)</th>
-                    <td>@Html.DisplayFor(model => model.Province)</td>
-                </tr>
-                <tr>
-                    <th>@Html.DisplayNameFor(model => model.BBK)</th>
-                    <td>@Html.DisplayFor(model => model.BBK)</td>
-                </tr>
-                <tr>
-                    <th>@Html.DisplayNameFor(model => model.City)</th>
-                    <td>@Html.DisplayFor(model => model.City)</td>
-                </tr>
-                <tr>
-                    <th>@Html.DisplayNameFor(model => model.CustomerType)</th>
-                    <td>@Html.DisplayFor(model => model.CustomerType)</td>
-                </tr>
-                <tr>
-                    <th>@Html.DisplayNameFor(model => model.Details)</th>
-                    <td>@Html.DisplayFor(model => model.Details)</td>
-                </tr>
-                <tr>
-                    <th>@Html.DisplayNameFor(model => model.HasModem)</th>
-                    <td>@Html.DisplayFor(model => model.HasModem)</td>
-                </tr>
-                <tr>
-                    <th>@Html.DisplayNameFor(model => model.TaskStatus)</th>
-                    <td>@Html.DisplayFor(model => model.TaskStatus)</td>
-                </tr>
-                <tr>
-                    <th>@Html.DisplayNameFor(model => model.ModemName)</th>
-                    <td>@Html.DisplayFor(model => model.ModemName)</td>
-                </tr>
-                <tr>
-                    <th>@Html.DisplayNameFor(model => model.TaskType)</th>
-                    <td>@Html.DisplayFor(model => model.TaskType)</td>
-                </tr>
-                <tr>
-                    <th>@Html.DisplayNameFor(model => model.XDSLNo)</th>
-                    <td>@Html.DisplayFor(model => model.XDSLNo)</td>
-                </tr>
-                <tr>
-                    <th>@Html.DisplayNameFor(model => model.XDSLType)</th>
-                    <td>@Html.DisplayFor(model => model.XDSLType)</td>
-                </tr>
-                <tr>
-                    <th>@Html.DisplayNameFor(model => model.CustomerNo)</th>
-                    <td>@Html.DisplayFor(model => model.CustomerNo)</td>
-                </tr>
-                <tr>
-                    <th>@Html.DisplayNameFor(model => model.PSTN)</th>
-                    <td>@Html.DisplayFor(model => model.PSTN)</td>
-                </tr>
-            </table>
-
-            <div id="TaskUpdatesInfo">
-                @foreach (var item in Model.TaskUpdatesDetailList)
-                {
-                    <div>
-                        <div>
-                            <div>@Html.DisplayFor(modelItem => item.FaultCodes)</div>
-                            <div>@Html.DisplayFor(modelItem => item.CreationDate)</div>
-                        </div>
-                        <div>
-                            <div>@Html.DisplayFor(modelItem => item.Description)</div>
-                        </div>
-                        <div>
-                            <div>@Html.DisplayNameFor(modelItem => item.ReservationDate)</div>
-                            <div>@Html.DisplayFor(modelItem => item.ReservationDate)</div>
-                        </div>
-                    </div>
-                }
+    <div>
+        @foreach (var item in Model.TaskUpdatesDetailList)
+        {
+            <div>
+                <div>
+                    <div>@Html.DisplayFor(modelItem => item.FaultCodes)</div>
+                    <div>@Html.DisplayFor(modelItem => item.CreationDate)</div>
+                </div>
+                <div>
+                    <div>@Html.DisplayFor(modelItem => item.Description)</div>
+                </div>
+                <div>
+                    <div>@Html.DisplayNameFor(modelItem => item.ReservationDate)</div>
+                    <div>@Html.DisplayFor(modelItem => item.ReservationDate)</div>
+                </div>
             </div>
-        </div>
+        }
     </div>
 </div>
+
+<div>
+    <h3>@View.CustomerSessionInfo</h3>
+    <input type="button" class="btn btn-info" id="GetSessionInfo" value="@View.Load" />
+    <div id="SessionInfo"></div>
+</div>
+
+@section JavaScript{
+    <script>
+        $(document).ready(function () {
+            $("#GetSessionInfo").click(function () {
+                $("#GetSessionInfo").hide();
+                $.ajax({
+                    url: '@Url.Action("CustomerSessionInfo", "Setup")',
+                    type: 'POST',
+                    data: {
+                        taskNo : '@taskNo'
+                    },
+                    dataType: 'html',
+                    success: function (data) {
+                        $("#SessionInfo").html(data);
+                    },
+                });
+            });
+        });
+    </script>
+}

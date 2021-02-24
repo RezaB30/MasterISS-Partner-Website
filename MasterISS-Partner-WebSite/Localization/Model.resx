@@ -288,8 +288,14 @@
   <data name="HasModem" xml:space="preserve">
     <value>Modem Var Mı?</value>
   </data>
+  <data name="IPAddress" xml:space="preserve">
+    <value>IP Adres</value>
+  </data>
   <data name="IsEnabled" xml:space="preserve">
     <value>Aktif Mi?</value>
+  </data>
+  <data name="IsOnline" xml:space="preserve">
+    <value>Online Mı?</value>
   </data>
   <data name="Ispaid" xml:space="preserve">
     <value>Ödendi Mi?</value>
@@ -326,6 +332,9 @@
   </data>
   <data name="MothersName" xml:space="preserve">
     <value>Anne Adı</value>
+  </data>
+  <data name="NASIPAddress" xml:space="preserve">
+    <value>NAS IP Adres</value>
   </data>
   <data name="NationalityId" xml:space="preserve">
     <value>Uyruk</value>
@@ -398,6 +407,15 @@
   </data>
   <data name="SerialNo" xml:space="preserve">
     <value>Seri No</value>
+  </data>
+  <data name="SessionId" xml:space="preserve">
+    <value>Oturum Id</value>
+  </data>
+  <data name="SessionStart" xml:space="preserve">
+    <value>Session Başlangıç Saati</value>
+  </data>
+  <data name="SessionTime" xml:space="preserve">
+    <value>Oturum Zamanı</value>
   </data>
   <data name="SetupAddress" xml:space="preserve">
     <value>Kurulum Adresi</value>

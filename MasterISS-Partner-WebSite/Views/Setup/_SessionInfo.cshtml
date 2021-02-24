@@ -1,0 +1,58 @@
+﻿@using MasterISS_Partner_WebSite.Localization
+@model MasterISS_Partner_WebSite.ViewModels.Setup.Response.CustomerSessionInfoResponseViewModel
+
+<h4>@View.FirstSessionInfo</h4>
+<table>
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.FirstSessionInfo.IPAddress)</th>
+        <th>@Html.DisplayFor(model => model.LastSessionInfo.IPAddress)</th>
+    </tr>
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.FirstSessionInfo.IsOnline)</th>
+        <td>@Html.DisplayFor(model => model.FirstSessionInfo.IsOnline)</td>
+    </tr>
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.FirstSessionInfo.NASIPAddress)</th>
+        <td>@Html.DisplayFor(model => model.FirstSessionInfo.NASIPAddress)</td>
+    </tr>
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.FirstSessionInfo.SessionId)</th>
+        <td>@Html.DisplayFor(model => model.FirstSessionInfo.SessionId)</td>
+    </tr>
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.FirstSessionInfo.SessionStart)</th>
+        <td>@Html.DisplayFor(model => model.FirstSessionInfo.SessionStart)</td>
+    </tr>
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.FirstSessionInfo.SessionTime)</th>
+        <td>@Html.DisplayFor(model => model.FirstSessionInfo.SessionTime)</td>
+    </tr>
+</table>
+
+<h4>@View.LastSessionInfo</h4>
+<table>
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.LastSessionInfo.IPAddress)</th>
+        <th>@Html.DisplayFor(model => model.LastSessionInfo.IPAddress)</th>
+    </tr>
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.LastSessionInfo.IsOnline)</th>
+        <td>@Html.DisplayFor(model => model.LastSessionInfo.IsOnline)</td>
+    </tr>
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.LastSessionInfo.NASIPAddress)</th>
+        <td>@Html.DisplayFor(model => model.LastSessionInfo.NASIPAddress)</td>
+    </tr>
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.LastSessionInfo.SessionId)</th>
+        <td>@Html.DisplayFor(model => model.LastSessionInfo.SessionId)</td>
+    </tr>
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.LastSessionInfo.SessionStart)</th>
+        <td>@Html.DisplayFor(model => model.LastSessionInfo.SessionStart)</td>
+    </tr>
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.LastSessionInfo.SessionTime)</th>
+        <td>@Html.DisplayFor(model => model.LastSessionInfo.SessionTime)</td>
+    </tr>
+</table>
