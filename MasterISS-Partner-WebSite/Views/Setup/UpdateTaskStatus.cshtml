@@ -1,0 +1,58 @@
+﻿@using MasterISS_Partner_WebSite.Localization
+@using MasterISS_Partner_WebSite.ViewModels.Setup
+@model AddTaskStatusUpdateViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using (Html.BeginForm("UpdateTaskStatus", "Setup", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <h3>@View.UpdateTaskStatus</h3>
+
+    <div>
+        @Html.DropDownListFor(m => m.FaultCodes, (SelectList)ViewBag.FaultTypes, View.SelectFaultType, new { @class = "form-control", id = "FaultCodesDrowndown" })
+        @Html.ValidationMessageFor(m => m.FaultCodes, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group" id="RezervationDate" style="display:none">
+        @Html.LabelFor(m => m.ReservationDate)
+        @Html.EditorFor(m => m.ReservationDate, new { htmlAttributes = new { placeholder = DateTime.Now.ToString("dd.MM.yyyy HH:mm") } })
+        @Html.ValidationMessageFor(m => m.ReservationDate, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.EditorFor(m => m.Description, new { htmlAttributes = new { placeholder = Html.DisplayNameFor(m => m.Description) } })
+        @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.ActionLink(View.Back, "CustomerDetail", "Setup", new { taskNo = Model.TaskNo }, new { @class = "btn btn-info", @id = "form-button" })
+    <input type="submit" id="form-button" class=" btn btn-warning" value="@View.Update" />
+
+    @Html.HiddenFor(m => m.TaskNo)
+}
+
+
+@section JavaScript{
+    <script>
+        $(document).ready(function () {
+            var value = $('#FaultCodesDrowndown').val();
+            if (value == '9') {//Rendezvous Made
+                $('#RezervationDate').show();
+            } else {
+                $('#RezervationDate').hide();
+            }
+        });
+
+        $('#FaultCodesDrowndown').change(function () {
+            var value = $(this).val();
+            if (value == '9') {//Rendezvous Made
+                $('#RezervationDate').show();
+            } else {
+                $('#RezervationDate').hide();
+            }
+        });
+
+    </script>
+}

@@ -88,6 +88,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Geri.
+        /// </summary>
+        public static string Back {
+            get {
+                return ResourceManager.GetString("Back", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Müşteri Sözleşme Bilgileri.
         /// </summary>
         public static string CustomerContractInfo {
@@ -286,6 +295,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Arıza Türünü Seçiniz.
+        /// </summary>
+        public static string SelectFaultType {
+            get {
+                return ResourceManager.GetString("SelectFaultType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rol Seçiniz.
         /// </summary>
         public static string SelectRole {
@@ -354,6 +372,24 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string Total {
             get {
                 return ResourceManager.GetString("Total", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string Update {
+            get {
+                return ResourceManager.GetString("Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Görev Tanımını Güncelle.
+        /// </summary>
+        public static string UpdateTaskStatus {
+            get {
+                return ResourceManager.GetString("UpdateTaskStatus", resourceCulture);
             }
         }
         

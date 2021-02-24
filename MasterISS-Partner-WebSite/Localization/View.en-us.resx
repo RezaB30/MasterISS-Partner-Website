@@ -126,6 +126,9 @@
   <data name="Available" xml:space="preserve">
     <value>Available</value>
   </data>
+  <data name="Back" xml:space="preserve">
+    <value>Back</value>
+  </data>
   <data name="CustomerContractInfo" xml:space="preserve">
     <value>Customer Contract Info</value>
   </data>
@@ -192,6 +195,9 @@
   <data name="ReturnUserOperations" xml:space="preserve">
     <value>Back</value>
   </data>
+  <data name="SelectFaultType" xml:space="preserve">
+    <value>Select Fault Type</value>
+  </data>
   <data name="SelectRole" xml:space="preserve">
     <value>Select Role</value>
   </data>
@@ -215,6 +221,12 @@
   </data>
   <data name="Total" xml:space="preserve">
     <value>Total</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="UpdateTaskStatus" xml:space="preserve">
+    <value>Update Task Status</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>

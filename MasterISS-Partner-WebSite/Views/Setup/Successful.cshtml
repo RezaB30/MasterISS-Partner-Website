@@ -1,0 +1,10 @@
+﻿
+@{
+    ViewBag.Title = "Successful";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <h2>@MasterISS_Partner_WebSite.Localization.View.Successful</h2>
+    @Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.Back, "CustomerDetail", "Setup", new { taskNo = ViewBag.TaskNo }, new { @class = "btn btn-success" })
+</div>

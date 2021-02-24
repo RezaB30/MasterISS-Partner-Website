@@ -603,6 +603,8 @@
     <Content Include="Views\Setup\_SessionInfo.cshtml" />
     <Content Include="Views\Setup\_CredentialsInfo.cshtml" />
     <Content Include="Views\Setup\_LineInfo.cshtml" />
+    <Content Include="Views\Setup\UpdateTaskStatus.cshtml" />
+    <Content Include="Views\Setup\Successful.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

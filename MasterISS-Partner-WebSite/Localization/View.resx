@@ -126,6 +126,9 @@
   <data name="Available" xml:space="preserve">
     <value>Mevcut</value>
   </data>
+  <data name="Back" xml:space="preserve">
+    <value>Geri</value>
+  </data>
   <data name="CustomerContractInfo" xml:space="preserve">
     <value>Müşteri Sözleşme Bilgileri</value>
   </data>
@@ -192,6 +195,9 @@
   <data name="ReturnUserOperations" xml:space="preserve">
     <value>Geri</value>
   </data>
+  <data name="SelectFaultType" xml:space="preserve">
+    <value>Arıza Türünü Seçiniz</value>
+  </data>
   <data name="SelectRole" xml:space="preserve">
     <value>Rol Seçiniz</value>
   </data>
@@ -215,6 +221,12 @@
   </data>
   <data name="Total" xml:space="preserve">
     <value>Toplam</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="UpdateTaskStatus" xml:space="preserve">
+    <value>Görev Tanımını Güncelle</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Evet</value>

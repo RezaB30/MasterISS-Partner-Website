@@ -214,6 +214,63 @@ namespace MasterISS_Partner_WebSite.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult UpdateTaskStatus(long taskNo)
+        {
+            var request = new AddTaskStatusUpdateViewModel { TaskNo = taskNo };
+
+            ViewBag.FaultTypes = FaultTypeList(null);
+
+            return View(request);
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult UpdateTaskStatus(AddTaskStatusUpdateViewModel updateTaskStatusViewModel)
+        {
+            if (updateTaskStatusViewModel.FaultCodes != FaultCodeEnum.RendezvousMade)
+            {
+                updateTaskStatusViewModel.ReservationDate = null;
+                ModelState.Remove("ReservationDate");
+            }
+
+            if (ModelState.IsValid)
+            {
+                var isValidFaultCodes = Enum.IsDefined(typeof(FaultCodeEnum), updateTaskStatusViewModel.FaultCodes);
+
+                if (isValidFaultCodes)
+                {
+                    var setupWrapper = new SetupServiceWrapper();
+
+                    var response = setupWrapper.AddTaskStatusUpdate(updateTaskStatusViewModel);
+
+                    if (response.ResponseMessage.ErrorCode == 0)
+                    {
+                        return RedirectToAction("Successful", new { taskNo = updateTaskStatusViewModel.TaskNo });
+                    }
+
+                    TempData["CustomerUpdateStatusError"] = response.ResponseMessage.ErrorMessage;
+                    return RedirectToAction("CustomerDetail", new { taskNo = updateTaskStatusViewModel.TaskNo });
+                }
+                return RedirectToAction("Index", "Setup");
+            }
+            ViewBag.FaultTypes = FaultTypeList((int?)updateTaskStatusViewModel.FaultCodes ?? null);
+            return View(updateTaskStatusViewModel);
+        }
+
+        public ActionResult Successful(long taskNo)
+        {
+            ViewBag.TaskNo = taskNo;
+            return View();
+        }
+
+
+        private SelectList FaultTypeList(int? selectedValue)
+        {
+            var list = new LocalizedList<FaultCodeEnum, Localization.FaultCodes>().GetList(CultureInfo.CurrentCulture);
+            var faultCodesList = new SelectList(list.Select(m => new { Name = m.Value, Value = m.Key }).ToArray(), "Value", "Name", selectedValue);
+            return faultCodesList;
+        }
 
         private string TaskStatusDescription(int value)
         {

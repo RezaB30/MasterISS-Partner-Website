@@ -112,6 +112,13 @@
     @Html.Raw(TempData["CustomerContractResponse"])
 </div>
 
+<div class="table-container">
+    <h3>@View.UpdateTaskStatus</h3>
+    @Html.ActionLink(View.Update, "UpdateTaskStatus", new { taskNo }, new { @class = "btn btn-info" })
+   
+    @Html.Raw(TempData["CustomerUpdateStatusError"])
+</div>
+
 
 
 @section JavaScript{
