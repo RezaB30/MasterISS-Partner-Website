@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "SmsConfirmation";
+    ViewBag.Title = MasterISS_Partner_WebSite.Localization.View.SmsConfirmation;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -9,7 +9,7 @@
 
     @Html.TextBox("inputCode")
 
-    <input type="submit" value="onayla"/>
+    <input type="submit" value="@MasterISS_Partner_WebSite.Localization.View.Confirm"/>
 }
 <div style="background-color:red">
     @ViewBag.Error

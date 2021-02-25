@@ -4,7 +4,7 @@
 @using MasterISS_Partner_WebSite.ViewModels.Setup.Response
 @model  PagedList.StaticPagedList<GetTaskListResponseViewModel>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = View.SetupPanel;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var search = ViewBag.Search as GetTaskListRequestViewModel ?? new GetTaskListRequestViewModel();
 }

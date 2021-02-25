@@ -7,7 +7,7 @@ namespace MasterISS_Partner_WebSite.ViewModels.Revenues
 {
     public class PageSettingsByWebService
     {
-        public int PageNo { get; set; }
-        public int ItemPerPage { get; set; }
+        public int? PageNo { get; set; }
+        public int? ItemPerPage { get; set; }
     }
 }

@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace MasterISS_Partner_WebSite.Controllers
 {
-    public class CustomerController : Controller
+    public class CustomerController : BaseController
     {
         // GET: Customer
         public ActionResult NewCustomer()
@@ -221,7 +221,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                         }
                         else
                         {
-                            ViewBag.NewCustomerError = "SMS ile ilgili bir sıkıntı oldu.";
+                            ViewBag.NewCustomerError = Localization.View.GeneralErrorDescription;
                         }
                     }
                     else
@@ -391,7 +391,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             return Json(new { errorMessage = paymentDayListResponse.ResponseMessage.ErrorMessage }, JsonRequestBehavior.AllowGet);
         }
 
-        
+
         [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult SmsConfirmation(string inputCode)
@@ -417,14 +417,20 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                             return RedirectToAction("Successful");
                         }
+                        else if (response.ResponseMessage.ErrorCode == 200)
+                        {
+                            ViewBag.Error = Localization.View.GeneralErrorDescription;
+                            return View("NewCustomer", customerApplicationInfo);
+                        }
                         else
                         {
+                            ViewBag.Error = response.ResponseMessage.ErrorMessage;
                             return View("NewCustomer", customerApplicationInfo);
                         }
                     }
                     else
                     {
-                        ViewBag.Error = "yanlış girdin";
+                        ViewBag.Error = Localization.View.WrongPassword;
                         Session["Counter"] = Convert.ToInt32(Session["Counter"]) + 1;
                         return View();
                     }

@@ -13,7 +13,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 {
     //[Authorize(Roles = "Payment")]
     //[Authorize(Roles ="PaymentManager,Admin")]
-    public class BillController : Controller
+    public class BillController : BaseController
     {
         // GET: Bill
         public ActionResult Index()
@@ -32,12 +32,17 @@ namespace MasterISS_Partner_WebSite.Controllers
                 var wrapper = new WebServiceWrapper();
                 var response = wrapper.UserBillList(billListRequestViewModel.SubscriberNo);
 
-                if (string.IsNullOrEmpty(response.ErrorMessage) && response.Data.BillListResponse.Bills != null)
+                if (response.BillListResponse.Bills != null && response.ResponseMessage.ErrorCode == 0)
                 {
                     ViewBag.Search = billListRequestViewModel;
                     return View("Index", BillList(response));
                 }
-                ViewBag.ResponseError = response.ErrorMessage;
+                else if (response.ResponseMessage.ErrorCode == 200)
+                {
+                    ViewBag.ResponseError = Localization.View.GeneralErrorDescription;
+                }
+
+                ViewBag.ResponseError = response.ResponseMessage.ErrorMessage;
 
             }
             ViewBag.Error = "Error";
@@ -71,7 +76,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                     Total = response.CreditReportResponse.Total,
                 };
 
-                detail.CreditReportDetailsViewModel = new List<CreditReportDetailsViewModel>(); 
+                detail.CreditReportDetailsViewModel = new List<CreditReportDetailsViewModel>();
 
                 foreach (var item in response.CreditReportResponse.Details)
                 {
@@ -83,6 +88,11 @@ namespace MasterISS_Partner_WebSite.Controllers
                     });
                 }
                 return View(detail);
+            }
+            else if (response.ResponseMessage.ErrorCode == 200)
+            {
+                ViewBag.ErrorMessage = Localization.View.GeneralErrorDescription;
+                return View();
             }
             ViewBag.ErrorMessage = response.ResponseMessage.ErrorMessage;
             return View();
@@ -104,9 +114,9 @@ namespace MasterISS_Partner_WebSite.Controllers
             var wrapper = new WebServiceWrapper();
             var response = wrapper.UserBillList(SubscriberNo);
 
-            if (string.IsNullOrEmpty(response.ErrorMessage))
+            if (response.ResponseMessage.ErrorCode == 0)
             {
-                var userBillList = response.Data.BillListResponse.Bills.OrderBy(blr => blr.IssueDate).Select(blr => blr.ID).ToArray();
+                var userBillList = response.BillListResponse.Bills.OrderBy(blr => blr.IssueDate).Select(blr => blr.ID).ToArray();
 
                 var counter = 0;
                 for (int i = 0; i < selectedBills.Length; i++)
@@ -140,12 +150,12 @@ namespace MasterISS_Partner_WebSite.Controllers
             }
             return View(viewName: "Index", model: BillList(response));
         }
-        private BillCollectionViewModel BillList(ServiceResponse<PartnerServiceBillListResponse> response)
+        private BillCollectionViewModel BillList(PartnerServiceBillListResponse response)
         {
             var billList = new BillCollectionViewModel()
             {
-                SubscriberName = response.Data.BillListResponse.SubscriberName,
-                Bills = response.Data.BillListResponse.Bills == null ? Enumerable.Empty<BillsViewModel>() : response.Data.BillListResponse.Bills.Select(b => new BillsViewModel()
+                SubscriberName = response.BillListResponse.SubscriberName,
+                Bills = response.BillListResponse.Bills == null ? Enumerable.Empty<BillsViewModel>() : response.BillListResponse.Bills.Select(b => new BillsViewModel()
                 {
                     IssueDate = b.IssueDate,
                     BillID = b.ID,

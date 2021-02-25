@@ -44,12 +44,6 @@ namespace MasterISS_Partner_WebSite
                    .Select(c => c.Value).SingleOrDefault();
             return partnerName;
         }
-        public string GetUserPassword()
-        {
-            var userPassword = CurrentClaims().Where(c => c.Type == "UserPassword")
-                 .Select(c => c.Value).SingleOrDefault();
-            return userPassword;
-        }
         public List<Claim> CurrentClaims()
         {
             var currentClaims= ClaimsPrincipal.Current.Identities.First().Claims.ToList();

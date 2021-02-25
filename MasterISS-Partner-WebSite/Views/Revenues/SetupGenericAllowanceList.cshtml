@@ -1,11 +1,9 @@
 ﻿@using MasterISS_Partner_WebSite.ViewModels.Revenues
 @model  IEnumerable<SetupGenericAllowancesViewModel>
 @{
-    ViewBag.Title = "SetupGenericAllowanceList";
+    ViewBag.Title = MasterISS_Partner_WebSite.Localization.View.SetupGenericAllowanceList;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>SetupGenericAllowanceList</h2>
 
 <table>
     <thead>
@@ -37,13 +35,12 @@
     </tbody>
 </table>
 <div>
-    @for (int i = 1; i < (int)ViewBag.TotalCount; i++)
-    {
-        <ol>
+    <ol>
+        @for (int i = 1; i < (int)ViewBag.TotalCount; i++)
+        {
             <li>
-                @Html.ActionLink("ssss", "SetupGenericAllowanceList", new { page = i })
+                @Html.ActionLink(i.ToString(), "SetupGenericAllowanceList", new { page = i })
             </li>
-        </ol>
-    }
-
+        }
+    </ol>
 </div>

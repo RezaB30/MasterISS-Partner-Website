@@ -117,6 +117,27 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="CompanyAddress" xml:space="preserve">
+    <value>Şirket Bilgileri</value>
+  </data>
+  <data name="CorporateCustomerInfo" xml:space="preserve">
+    <value>Şirket Bilgileri</value>
+  </data>
+  <data name="ExecutiveResidencyAddress" xml:space="preserve">
+    <value>Yetkili İkamet Adresi</value>
+  </data>
+  <data name="IndividualCustomerInfo" xml:space="preserve">
+    <value>Bireysel Müşteri Bilgileri</value>
+  </data>
+  <data name="IndividualResidencyAddress" xml:space="preserve">
+    <value>Müşteri İkamet Adresi</value>
+  </data>
+  <data name="OtherPhoneNumber" xml:space="preserve">
+    <value>Diğer Telefon Numaraları</value>
+  </data>
   <data name="PayBill" xml:space="preserve">
     <value>Fatura Öde</value>
   </data>
@@ -128,6 +149,12 @@
   </data>
   <data name="Select" xml:space="preserve">
     <value>Seçiniz</value>
+  </data>
+  <data name="SetupAddress" xml:space="preserve">
+    <value>Kurulum Adresi</value>
+  </data>
+  <data name="SubscriptionInfo" xml:space="preserve">
+    <value>Abonelik Bilgileri</value>
   </data>
   <data name="TotalCredit" xml:space="preserve">
     <value>Toplam Krediniz</value>

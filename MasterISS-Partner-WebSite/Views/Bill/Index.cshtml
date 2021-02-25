@@ -2,7 +2,7 @@
 @using MasterISS_Partner_WebSite.ViewModels
 @model BillCollectionViewModel
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = View.BillList;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var search = ViewBag.Search as GetBillCollectionBySubscriberNoViewModel ?? new GetBillCollectionBySubscriberNoViewModel();
     var counter = 0;
@@ -13,7 +13,7 @@
     {
         @Html.AntiForgeryToken()
         @Html.TextBoxFor(m => search.SubscriberNo, new { @id = "subsNo" })
-        <input type="submit" value="Fatura Getir" />
+        <input type="submit" value="@View.ListBills" />
     }
 </div>
 

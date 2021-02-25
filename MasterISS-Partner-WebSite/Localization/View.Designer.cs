@@ -70,6 +70,24 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Yeni Müşteri.
+        /// </summary>
+        public static string AddCustomer {
+            get {
+                return ResourceManager.GetString("AddCustomer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kullanıcı Ekleme.
+        /// </summary>
+        public static string AddUserPage {
+            get {
+                return ResourceManager.GetString("AddUserPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Giriş İşlemi Başarısız..
         /// </summary>
         public static string AuthenticateError {
@@ -97,6 +115,69 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fatura Adresi.
+        /// </summary>
+        public static string BillingAddress {
+            get {
+                return ResourceManager.GetString("BillingAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fatura Listesi.
+        /// </summary>
+        public static string BillList {
+            get {
+                return ResourceManager.GetString("BillList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Onayla.
+        /// </summary>
+        public static string Confirm {
+            get {
+                return ResourceManager.GetString("Confirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oluştur.
+        /// </summary>
+        public static string Create {
+            get {
+                return ResourceManager.GetString("Create", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rol Oluşturma.
+        /// </summary>
+        public static string CreateRole {
+            get {
+                return ResourceManager.GetString("CreateRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kredi Rapor Detayları.
+        /// </summary>
+        public static string CreditReportDetail {
+            get {
+                return ResourceManager.GetString("CreditReportDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mevcut Kullanıcılar.
+        /// </summary>
+        public static string CurrentUsers {
+            get {
+                return ResourceManager.GetString("CurrentUsers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Müşteri Sözleşme Bilgileri.
         /// </summary>
         public static string CustomerContractInfo {
@@ -111,6 +192,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string CustomerCredentials {
             get {
                 return ResourceManager.GetString("CustomerCredentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Genel Bilgiler.
+        /// </summary>
+        public static string CustomerGeneralInfo {
+            get {
+                return ResourceManager.GetString("CustomerGeneralInfo", resourceCulture);
             }
         }
         
@@ -151,11 +241,29 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Detaylar.
+        /// </summary>
+        public static string Details {
+            get {
+                return ResourceManager.GetString("Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sözleşmeyi İndir.
         /// </summary>
         public static string DownloadTheContract {
             get {
                 return ResourceManager.GetString("DownloadTheContract", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hata.
+        /// </summary>
+        public static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
             }
         }
         
@@ -196,11 +304,29 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to İşleminiz gerçekleştirilirken bir hata oluştu..
+        /// </summary>
+        public static string GeneralErrorDescription {
+            get {
+                return ResourceManager.GetString("GeneralErrorDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bir Hata Oluştu. Daha sonra tekrar deneyiniz..
         /// </summary>
         public static string Generic200ErrorCodeMessage {
             get {
                 return ResourceManager.GetString("Generic200ErrorCodeMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ana Sayfa.
+        /// </summary>
+        public static string HomePage {
+            get {
+                return ResourceManager.GetString("HomePage", resourceCulture);
             }
         }
         
@@ -214,11 +340,29 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kimlik Bilgileri.
+        /// </summary>
+        public static string IDCardInfo {
+            get {
+                return ResourceManager.GetString("IDCardInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Son Oturum Bilgileri.
         /// </summary>
         public static string LastSessionInfo {
             get {
                 return ResourceManager.GetString("LastSessionInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Faturaları Listele.
+        /// </summary>
+        public static string ListBills {
+            get {
+                return ResourceManager.GetString("ListBills", resourceCulture);
             }
         }
         
@@ -237,6 +381,24 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string MailValidError {
             get {
                 return ResourceManager.GetString("MailValidError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aktif Yap.
+        /// </summary>
+        public static string MakeActive {
+            get {
+                return ResourceManager.GetString("MakeActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pasif Yap.
+        /// </summary>
+        public static string MakePassive {
+            get {
+                return ResourceManager.GetString("MakePassive", resourceCulture);
             }
         }
         
@@ -349,6 +511,42 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satış Hakediş Detayları.
+        /// </summary>
+        public static string SaleAllowanceDetails {
+            get {
+                return ResourceManager.GetString("SaleAllowanceDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satış Hakediş Listesi.
+        /// </summary>
+        public static string SaleAllowanceList {
+            get {
+                return ResourceManager.GetString("SaleAllowanceList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satış Hakediş Detayları.
+        /// </summary>
+        public static string SaleAllowedDetails {
+            get {
+                return ResourceManager.GetString("SaleAllowedDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satış Genel Hakediş Listesi.
+        /// </summary>
+        public static string SaleGenericAllowanceList {
+            get {
+                return ResourceManager.GetString("SaleGenericAllowanceList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aranan Yer.
         /// </summary>
         public static string SearchedPlace {
@@ -412,6 +610,51 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kurulum Hakediş Listesi.
+        /// </summary>
+        public static string SetupAllowanceList {
+            get {
+                return ResourceManager.GetString("SetupAllowanceList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kurulum Hakediş Detayları.
+        /// </summary>
+        public static string SetupAllowedDetails {
+            get {
+                return ResourceManager.GetString("SetupAllowedDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kurulum Hakediş Detayları.
+        /// </summary>
+        public static string SetupAllowenceDetails {
+            get {
+                return ResourceManager.GetString("SetupAllowenceDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kurulum Genel Hakediş Listesi.
+        /// </summary>
+        public static string SetupGenericAllowanceList {
+            get {
+                return ResourceManager.GetString("SetupGenericAllowanceList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kurulum Paneli.
+        /// </summary>
+        public static string SetupPanel {
+            get {
+                return ResourceManager.GetString("SetupPanel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Şuan İşleminizi gerçekleştiremiyoruz. Lütfen bir daha deneyiniz.
         /// </summary>
         public static string SetupResponseErrorMessage {
@@ -430,11 +673,47 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Giriş Yap.
+        /// </summary>
+        public static string SignIn {
+            get {
+                return ResourceManager.GetString("SignIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Giriş Paneli.
+        /// </summary>
+        public static string SignInPanel {
+            get {
+                return ResourceManager.GetString("SignInPanel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sms Onayı.
+        /// </summary>
+        public static string SmsConfirmation {
+            get {
+                return ResourceManager.GetString("SmsConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Başlangıç Tarihi, Bitiş Tarihinden Büyük Olamaz..
         /// </summary>
         public static string StartDateBiggerThanEndDateError {
             get {
                 return ResourceManager.GetString("StartDateBiggerThanEndDateError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kaydet.
+        /// </summary>
+        public static string Submit {
+            get {
+                return ResourceManager.GetString("Submit", resourceCulture);
             }
         }
         
@@ -484,6 +763,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Konum Güncelleme.
+        /// </summary>
+        public static string UpdateClientLocation {
+            get {
+                return ResourceManager.GetString("UpdateClientLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Müşterinin Konumunu Güncelle.
         /// </summary>
         public static string UpdateGPS {
@@ -516,6 +804,24 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string UploadDocument {
             get {
                 return ResourceManager.GetString("UploadDocument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Belge Yükle.
+        /// </summary>
+        public static string UploadDocumentPage {
+            get {
+                return ResourceManager.GetString("UploadDocumentPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yanlış SMS Şifresi.
+        /// </summary>
+        public static string WrongPassword {
+            get {
+                return ResourceManager.GetString("WrongPassword", resourceCulture);
             }
         }
         

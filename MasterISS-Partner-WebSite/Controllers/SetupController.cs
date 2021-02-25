@@ -10,10 +10,12 @@ using System.Web.Mvc;
 using RezaB.Data.Localization;
 using System.Web;
 using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace MasterISS_Partner_WebSite.Controllers
 {
-    public class SetupController : Controller
+    public class SetupController : BaseController
     {
         // GET: Setup
         public ActionResult Index([Bind(Prefix = "search")] GetTaskListRequestViewModel taskListRequestModel, int page = 1, int pageSize = 20)
@@ -107,6 +109,11 @@ namespace MasterISS_Partner_WebSite.Controllers
                 ViewBag.TaskNo = taskNo;
                 return View(taskDetail);
             }
+            else if (response.ResponseMessage.ErrorCode == 200)
+            {
+                TempData["GetTaskDetailError"] = Localization.View.Generic200ErrorCodeMessage;
+                return RedirectToAction("Index", "Setup");
+            }
             TempData["GetTaskDetailError"] = response.ResponseMessage.ErrorMessage;
             return RedirectToAction("Index", "Setup");
         }
@@ -142,7 +149,10 @@ namespace MasterISS_Partner_WebSite.Controllers
                 };
                 return PartialView("_SessionInfo", sessionInfo);
             }
-
+            else if (response.ResponseMessage.ErrorCode == 200)
+            {
+                return Content($"<div>{Localization.View.Generic200ErrorCodeMessage}</div>");
+            }
             return Content($"<div>{response.ResponseMessage.ErrorMessage}</div>");
         }
 
@@ -163,6 +173,10 @@ namespace MasterISS_Partner_WebSite.Controllers
                 };
 
                 return PartialView("_CredentialsInfo", creadentialsInfo);
+            }
+            else if (response.ResponseMessage.ErrorCode == 200)
+            {
+                return Content($"<div>{Localization.View.Generic200ErrorCodeMessage}</div>");
             }
 
             return Content($"<div>{response.ResponseMessage.ErrorMessage}</div>");
@@ -193,7 +207,10 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                 return PartialView("_LineInfo", lineInfo);
             }
-
+            else if (response.ResponseMessage.ErrorCode == 200)
+            {
+                return Content($"<div>{Localization.View.Generic200ErrorCodeMessage}</div>");
+            }
             return Content($"<div>{response.ResponseMessage.ErrorMessage}</div>");
         }
 
@@ -210,11 +227,15 @@ namespace MasterISS_Partner_WebSite.Controllers
                 var fileName = response.CustomerContract.FileName;
                 return File(fileCode, fileName, fileName);
             }
-            else
+
+            else if (response.ResponseMessage.ErrorCode == 200)
             {
-                TempData["CustomerContractResponse"] = response.ResponseMessage.ErrorMessage;
+                TempData["CustomerContractResponse"] = Localization.View.Generic200ErrorCodeMessage;
                 return RedirectToAction("CustomerDetail", "Setup", new { taskNo = taskNo });
             }
+
+            TempData["CustomerContractResponse"] = response.ResponseMessage.ErrorMessage;
+            return RedirectToAction("CustomerDetail", "Setup", new { taskNo = taskNo });
         }
 
         [HttpGet]
@@ -368,12 +389,13 @@ namespace MasterISS_Partner_WebSite.Controllers
             return View(updateClientViewModel);
         }
 
-
         public ActionResult Successful(long taskNo)
         {
             ViewBag.TaskNo = taskNo;
             return View();
         }
+
+
 
         private SelectList AttachmentTypes(int? selectedValue)
         {

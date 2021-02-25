@@ -120,6 +120,12 @@
   <data name="ActiveError" xml:space="preserve">
     <value>Kullanıcı aktif etme işleminde hata oluştu. Tekrar deneyiniz.</value>
   </data>
+  <data name="AddCustomer" xml:space="preserve">
+    <value>Yeni Müşteri</value>
+  </data>
+  <data name="AddUserPage" xml:space="preserve">
+    <value>Kullanıcı Ekleme</value>
+  </data>
   <data name="AuthenticateError" xml:space="preserve">
     <value>Giriş İşlemi Başarısız.</value>
   </data>
@@ -129,11 +135,35 @@
   <data name="Back" xml:space="preserve">
     <value>Geri</value>
   </data>
+  <data name="BillingAddress" xml:space="preserve">
+    <value>Fatura Adresi</value>
+  </data>
+  <data name="BillList" xml:space="preserve">
+    <value>Fatura Listesi</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Onayla</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Oluştur</value>
+  </data>
+  <data name="CreateRole" xml:space="preserve">
+    <value>Rol Oluşturma</value>
+  </data>
+  <data name="CreditReportDetail" xml:space="preserve">
+    <value>Kredi Rapor Detayları</value>
+  </data>
+  <data name="CurrentUsers" xml:space="preserve">
+    <value>Mevcut Kullanıcılar</value>
+  </data>
   <data name="CustomerContractInfo" xml:space="preserve">
     <value>Müşteri Sözleşme Bilgileri</value>
   </data>
   <data name="CustomerCredentials" xml:space="preserve">
     <value>Müşteri Kullanıcı Bilgileri</value>
+  </data>
+  <data name="CustomerGeneralInfo" xml:space="preserve">
+    <value>Genel Bilgiler</value>
   </data>
   <data name="CustomerInfo" xml:space="preserve">
     <value>Müşteri Bilgileri</value>
@@ -147,8 +177,14 @@
   <data name="Day" xml:space="preserve">
     <value> Gün </value>
   </data>
+  <data name="Details" xml:space="preserve">
+    <value>Detaylar</value>
+  </data>
   <data name="DownloadTheContract" xml:space="preserve">
     <value>Sözleşmeyi İndir</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Hata</value>
   </data>
   <data name="ErrorProcessing" xml:space="preserve">
     <value>İşlem yapılırken hata oluştu.</value>
@@ -162,20 +198,38 @@
   <data name="FirstSessionInfo" xml:space="preserve">
     <value>İlk Oturum Bilgileri</value>
   </data>
+  <data name="GeneralErrorDescription" xml:space="preserve">
+    <value>İşleminiz gerçekleştirilirken bir hata oluştu.</value>
+  </data>
   <data name="Generic200ErrorCodeMessage" xml:space="preserve">
     <value>Bir Hata Oluştu. Daha sonra tekrar deneyiniz.</value>
+  </data>
+  <data name="HomePage" xml:space="preserve">
+    <value>Ana Sayfa</value>
   </data>
   <data name="Hours" xml:space="preserve">
     <value> Saat </value>
   </data>
+  <data name="IDCardInfo" xml:space="preserve">
+    <value>Kimlik Bilgileri</value>
+  </data>
   <data name="LastSessionInfo" xml:space="preserve">
     <value>Son Oturum Bilgileri</value>
+  </data>
+  <data name="ListBills" xml:space="preserve">
+    <value>Faturaları Listele</value>
   </data>
   <data name="Load" xml:space="preserve">
     <value>Yükle</value>
   </data>
   <data name="MailValidError" xml:space="preserve">
     <value>Bu mail zaten mevcut.</value>
+  </data>
+  <data name="MakeActive" xml:space="preserve">
+    <value>Aktif Yap</value>
+  </data>
+  <data name="MakePassive" xml:space="preserve">
+    <value>Pasif Yap</value>
   </data>
   <data name="Map" xml:space="preserve">
     <value>Harita</value>
@@ -213,6 +267,18 @@
   <data name="ReturnUserOperations" xml:space="preserve">
     <value>Geri</value>
   </data>
+  <data name="SaleAllowanceDetails" xml:space="preserve">
+    <value>Satış Hakediş Detayları</value>
+  </data>
+  <data name="SaleAllowanceList" xml:space="preserve">
+    <value>Satış Hakediş Listesi</value>
+  </data>
+  <data name="SaleAllowedDetails" xml:space="preserve">
+    <value>Satış Hakediş Detayları</value>
+  </data>
+  <data name="SaleGenericAllowanceList" xml:space="preserve">
+    <value>Satış Genel Hakediş Listesi</value>
+  </data>
   <data name="SearchedPlace" xml:space="preserve">
     <value>Aranan Yer</value>
   </data>
@@ -234,14 +300,41 @@
   <data name="SelectRole" xml:space="preserve">
     <value>Rol Seçiniz</value>
   </data>
+  <data name="SetupAllowanceList" xml:space="preserve">
+    <value>Kurulum Hakediş Listesi</value>
+  </data>
+  <data name="SetupAllowedDetails" xml:space="preserve">
+    <value>Kurulum Hakediş Detayları</value>
+  </data>
+  <data name="SetupAllowenceDetails" xml:space="preserve">
+    <value>Kurulum Hakediş Detayları</value>
+  </data>
+  <data name="SetupGenericAllowanceList" xml:space="preserve">
+    <value>Kurulum Genel Hakediş Listesi</value>
+  </data>
+  <data name="SetupPanel" xml:space="preserve">
+    <value>Kurulum Paneli</value>
+  </data>
   <data name="SetupResponseErrorMessage" xml:space="preserve">
     <value>Şuan İşleminizi gerçekleştiremiyoruz. Lütfen bir daha deneyiniz</value>
   </data>
   <data name="Showing" xml:space="preserve">
     <value>gösteriliyor.</value>
   </data>
+  <data name="SignIn" xml:space="preserve">
+    <value>Giriş Yap</value>
+  </data>
+  <data name="SignInPanel" xml:space="preserve">
+    <value>Giriş Paneli</value>
+  </data>
+  <data name="SmsConfirmation" xml:space="preserve">
+    <value>Sms Onayı</value>
+  </data>
   <data name="StartDateBiggerThanEndDateError" xml:space="preserve">
     <value>Başlangıç Tarihi, Bitiş Tarihinden Büyük Olamaz.</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Kaydet</value>
   </data>
   <data name="Successful" xml:space="preserve">
     <value>Başarılı</value>
@@ -258,6 +351,9 @@
   <data name="Update" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="UpdateClientLocation" xml:space="preserve">
+    <value>Konum Güncelleme</value>
+  </data>
   <data name="UpdateGPS" xml:space="preserve">
     <value>Müşterinin Konumunu Güncelle</value>
   </data>
@@ -269,6 +365,12 @@
   </data>
   <data name="UploadDocument" xml:space="preserve">
     <value>Müşteriye Belge Yükle</value>
+  </data>
+  <data name="UploadDocumentPage" xml:space="preserve">
+    <value>Belge Yükle</value>
+  </data>
+  <data name="WrongPassword" xml:space="preserve">
+    <value>Yanlış SMS Şifresi</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Evet</value>

@@ -240,7 +240,7 @@ namespace MasterISS_Partner_WebSite
             return response;
         }
 
-        public ServiceResponse<PartnerServiceBillListResponse> UserBillList(string subscriberNo)
+        public PartnerServiceBillListResponse UserBillList(string subscriberNo)
         {
             var request = new PartnerServiceBillListRequest()
             {
@@ -257,17 +257,7 @@ namespace MasterISS_Partner_WebSite
             };
             var response = Client.BillsBySubscriberNo(request);
 
-            if (response.ResponseMessage.ErrorCode == 0)
-            {
-                return new ServiceResponse<PartnerServiceBillListResponse>()
-                {
-                    Data = response
-                };
-            }
-            return new ServiceResponse<PartnerServiceBillListResponse>()
-            {
-                ErrorMessage = response.ResponseMessage.ErrorMessage
-            };
+            return response;
         }
 
         public PartnerServiceAuthenticationResponse Authenticate(UserSignInViewModel userSignInModel)

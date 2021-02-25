@@ -117,6 +117,27 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Add" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="CompanyAddress" xml:space="preserve">
+    <value>Company Address</value>
+  </data>
+  <data name="CorporateCustomerInfo" xml:space="preserve">
+    <value>Company Info</value>
+  </data>
+  <data name="ExecutiveResidencyAddress" xml:space="preserve">
+    <value>Executive Residency Address</value>
+  </data>
+  <data name="IndividualCustomerInfo" xml:space="preserve">
+    <value>Individual Customer Info</value>
+  </data>
+  <data name="IndividualResidencyAddress" xml:space="preserve">
+    <value>Customer Residecy Address</value>
+  </data>
+  <data name="OtherPhoneNumber" xml:space="preserve">
+    <value>Other Phone Numbers</value>
+  </data>
   <data name="PayBill" xml:space="preserve">
     <value>Pay Bill</value>
   </data>
@@ -128,6 +149,12 @@
   </data>
   <data name="Select" xml:space="preserve">
     <value>Select</value>
+  </data>
+  <data name="SetupAddress" xml:space="preserve">
+    <value>Setup Address</value>
+  </data>
+  <data name="SubscriptionInfo" xml:space="preserve">
+    <value>Subscription Info</value>
   </data>
   <data name="TotalCredit" xml:space="preserve">
     <value>Total Credit</value>

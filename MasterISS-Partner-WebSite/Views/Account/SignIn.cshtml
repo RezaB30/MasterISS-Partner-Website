@@ -1,6 +1,7 @@
-﻿@model  MasterISS_Partner_WebSite.ViewModels.UserSignInViewModel
+﻿@using MasterISS_Partner_WebSite.Localization
+@model  MasterISS_Partner_WebSite.ViewModels.UserSignInViewModel
 @{
-    ViewBag.Title = "SignIn";
+    ViewBag.Title = View.SignInPanel;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -26,7 +27,7 @@
             @Html.ValidationMessageFor(m => m.Password)
         </div>
     </div>
-    <input value="giriş" type="submit"/>
+    <input value="@View.SignIn" type="submit"/>
 }
 
 @ViewBag.AuthenticateError

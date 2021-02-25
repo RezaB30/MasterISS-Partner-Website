@@ -1,7 +1,8 @@
 ﻿@using MasterISS_Partner_WebSite.ViewModels
+@using MasterISS_Partner_WebSite.Localization
 @model  IEnumerable<UserListViewModel>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = View.CurrentUsers;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -24,12 +25,11 @@
                 <td>@Html.DisplayFor(modelItem => item.IsEnabled)</td>
                 @if (item.IsEnabled == true)
                 {
-                    <td>@Html.ActionLink("pasif yap", "DisableUser", "UserOperations", new { userMail = item.UserSubMail }, null)</td>
+                    <td>@Html.ActionLink(View.MakePassive, "DisableUser", "UserOperations", new { userMail = item.UserSubMail }, null)</td>
                 }
                 else
                 {
-                    <td>@Html.ActionLink("aktif yap", "EnableUser", "UserOperations", new { userMail = item.UserSubMail }, null)</td>
-
+                    <td>@Html.ActionLink(View.MakeActive, "EnableUser", "UserOperations", new { userMail = item.UserSubMail }, null)</td>
                 }
             </tr>
         }

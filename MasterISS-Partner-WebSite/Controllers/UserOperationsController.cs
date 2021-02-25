@@ -12,7 +12,7 @@ using System.Web.Mvc;
 namespace MasterISS_Partner_WebSite.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class UserOperationsController : Controller
+    public class UserOperationsController : BaseController
     {
         // GET: UserOperations
         public ActionResult Index()
@@ -52,7 +52,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             var db = new PartnerWebSiteEntities();
             var list = new List<SelectListItem>();
             var localizedList = new LocalizedList<PermissionListEnum, Localization.PermissionList>();
-            var permissionList = db.Permission.Where(p => adminRoleIdList.Contains(p.RoleTypeId)).Select(p=> new SelectListItem()
+            var permissionList = db.Permission.Where(p => adminRoleIdList.Contains(p.RoleTypeId)).Select(p => new SelectListItem()
             {
                 Value = p.Id.ToString()
             }).ToArray();
@@ -61,7 +61,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             {
                 item.Text = localizedList.GetDisplayText(Convert.ToInt32(item.Value), null);
             }
-            
+
             var permissionModel = new AddPermissionViewModel()
             {
                 AvaibleRole = permissionList
@@ -154,6 +154,11 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                             return RedirectToAction("Successful");
                         }
+                        else if (response.ResponseMessage.ErrorCode == 200)
+                        {
+                            ViewBag.AddUserError = Localization.View.Generic200ErrorCodeMessage;
+                            return View(newUserViewModel);
+                        }
                         ViewBag.AddUserError = response.ResponseMessage.ErrorMessage;
                         return View(newUserViewModel);
                     }
@@ -200,6 +205,11 @@ namespace MasterISS_Partner_WebSite.Controllers
                     return RedirectToAction("Index");
                 }
             }
+            else if (response.ResponseMessage.ErrorCode == 200)
+            {
+                TempData["Error"] = Localization.View.Generic200ErrorCodeMessage;
+                return RedirectToAction("Index");
+            }
             TempData["Error"] = response.ResponseMessage.ErrorMessage;
             return RedirectToAction("Index");
         }
@@ -226,6 +236,12 @@ namespace MasterISS_Partner_WebSite.Controllers
                     return RedirectToAction("Index");
                 }
             }
+            else if (response.ResponseMessage.ErrorCode == 200)
+            {
+                TempData["Error"] = Localization.View.Generic200ErrorCodeMessage;
+                return RedirectToAction("Index");
+            }
+
             TempData["Error"] = response.ResponseMessage.ErrorMessage;
             return RedirectToAction("Index");
         }

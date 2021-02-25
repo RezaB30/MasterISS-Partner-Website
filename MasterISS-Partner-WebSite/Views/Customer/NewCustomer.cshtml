@@ -2,7 +2,7 @@
 @using MasterISS_Partner_WebSite.Localization
 @model AddCustomerViewModel
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = View.AddCustomer;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -15,7 +15,7 @@
     @Html.AntiForgeryToken()
 
     <div id="IDCardInfoContainer">
-        <h2>IDCardInfo</h2>
+        <h2>@View.IDCardInfo</h2>
         <div>
             @Html.LabelFor(m => m.IDCard.BirthDate)
             @Html.EditorFor(m => m.IDCard.BirthDate)
@@ -119,14 +119,14 @@
     </div>
 
     <div id="CustomerGeneralInfoContainer">
-        <h2>CustomerGeneralInfo</h2>
+        <h2>@View.CustomerGeneralInfo</h2>
 
         <div>
             @Html.LabelFor(gi => gi.GeneralInfo.SameSetupAddressByBilling)
             @Html.EditorFor(gi => gi.GeneralInfo.SameSetupAddressByBilling)
         </div>
 
-        <h4>BillingAddress</h4>
+        <h4>@View.BillingAddress</h4>
         <div id="BillingAddressContainer">
             <div>
                 @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.ProvinceId, (SelectList)ViewBag.ProvincesByGeneralInfo, HomeView.SelectProvince, new { @id = "province-billing" })
@@ -190,7 +190,7 @@
 
         <div>
             @Html.LabelFor(m => m.GeneralInfo.CustomerTypeId)
-            @Html.DropDownListFor(m => m.GeneralInfo.CustomerTypeId, (SelectList)ViewBag.CustomerTypeList, "Seç")
+            @Html.DropDownListFor(m => m.GeneralInfo.CustomerTypeId, (SelectList)ViewBag.CustomerTypeList, BillView.Select)
             @Html.ValidationMessageFor(m => m.GeneralInfo.CustomerTypeId)
         </div>
 
@@ -199,12 +199,12 @@
             @Html.DropDownListFor(m => m.GeneralInfo.Culture, (SelectList)ViewBag.CultureList, BillView.Select)
             @Html.ValidationMessageFor(m => m.GeneralInfo.Culture)
         </div>
-        <input type="button" id="createNumberInput" value="başka telefon ekle" />
+        <input type="button" id="createNumberInput" value="@BillView.OtherPhoneNumber" />
         <div id="telephoneNumberInputContainer"></div>
     </div>
 
     <div id="corporateCustomerInfoContainer" style="display:none">
-        <h2>CorporateCustomerInfo</h2>
+        <h2>@BillView.CorporateCustomerInfo</h2>
         <div>
             @Html.LabelFor(ci => ci.CorporateInfo.CentralSystemNo)
             @Html.EditorFor(ci => ci.CorporateInfo.CentralSystemNo)
@@ -282,7 +282,7 @@
             @Html.EditorFor(ci => ci.CorporateInfo.SameSetupAddressByCorporativeResidencyAddress)
         </div>
 
-        <h4>ExecutiveResidencyAddress</h4>
+        <h4>@BillView.ExecutiveResidencyAddress</h4>
         <div id="ExecutiveResidencyContainer">
             <div>
                 @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.ProvinceId, (SelectList)ViewBag.ProvincesByCorporativeResidency, HomeView.SelectProvince, new { @id = "province" })
@@ -339,7 +339,7 @@
             @Html.EditorFor(ci => ci.CorporateInfo.SameSetupAddressByCorporativeCompanyAddress)
         </div>
 
-        <h4>CompanyAddress</h4>
+        <h4>@BillView.CompanyAddress</h4>
         <div id="CompanyContainer">
             <div>
                 @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.ProvinceId, (SelectList)ViewBag.ProvincesByCorporativeCompany, HomeView.SelectProvince, new { @id = "province-company" })
@@ -392,7 +392,7 @@
     </div>
 
     <div id="individualCustomerInfoContainer" style="display:none">
-        <h2>IndividualCustomerInfo</h2>
+        <h2>@BillView.IndividualCustomerInfo</h2>
 
         <div>
             @Html.LabelFor(m => m.Individual.BirthPlace)
@@ -441,7 +441,7 @@
             @Html.EditorFor(m => m.Individual.SameSetupAddressByIndividual)
         </div>
 
-        <h4>IndividualResidencyAddress</h4>
+        <h4>@BillView.IndividualResidencyAddress</h4>
         <div id="IndividualResidencyContainer">
             <div>
                 @Html.DropDownListFor(ii => ii.Individual.ResidencyAddress.ProvinceId, (SelectList)ViewBag.ProvincesByIndividual, HomeView.SelectProvince, new { @id = "province-individual" })
@@ -496,11 +496,11 @@
     </div>
 
     <div id="SubscriptionInfoContainer">
-        <h2>SubscriptionInfo</h2>
+        <h2>@BillView.SubscriptionInfo</h2>
 
         <div>
             @Html.LabelFor(m => m.SubscriptionInfo.PartnerTariffID)
-            @Html.DropDownListFor(m => m.SubscriptionInfo.PartnerTariffID, (SelectList)ViewBag.PartnerTariffList, "Seç", new { @id = "partnerTariffId" })
+            @Html.DropDownListFor(m => m.SubscriptionInfo.PartnerTariffID, (SelectList)ViewBag.PartnerTariffList, BillView.Select, new { @id = "partnerTariffId" })
             @Html.ValidationMessageFor(m => m.SubscriptionInfo.PartnerTariffID)
         </div>
 
@@ -510,7 +510,7 @@
             @Html.ValidationMessageFor(m => m.SubscriptionInfo.BillingPeriodId)
         </div>
 
-        <h4>SetupAddress</h4>
+        <h4>@BillView.SetupAddress</h4>
         <div id="SetupAddressContainer">
             <div>
                 @Html.DropDownListFor(si => si.SubscriptionInfo.SetupAddress.ProvinceId, (SelectList)ViewBag.ProvincesBySetup, HomeView.SelectProvince, new { @id = "province-setup" })
@@ -563,7 +563,7 @@
 
     </div>
 
-    <input type="submit" value="ekle" />
+    <input type="submit" value="@BillView.Add" />
 }
 
 

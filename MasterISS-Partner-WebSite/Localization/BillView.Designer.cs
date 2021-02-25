@@ -61,6 +61,69 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string Add {
+            get {
+                return ResourceManager.GetString("Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Şirket Bilgileri.
+        /// </summary>
+        public static string CompanyAddress {
+            get {
+                return ResourceManager.GetString("CompanyAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Şirket Bilgileri.
+        /// </summary>
+        public static string CorporateCustomerInfo {
+            get {
+                return ResourceManager.GetString("CorporateCustomerInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yetkili İkamet Adresi.
+        /// </summary>
+        public static string ExecutiveResidencyAddress {
+            get {
+                return ResourceManager.GetString("ExecutiveResidencyAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bireysel Müşteri Bilgileri.
+        /// </summary>
+        public static string IndividualCustomerInfo {
+            get {
+                return ResourceManager.GetString("IndividualCustomerInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Müşteri İkamet Adresi.
+        /// </summary>
+        public static string IndividualResidencyAddress {
+            get {
+                return ResourceManager.GetString("IndividualResidencyAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Diğer Telefon Numaraları.
+        /// </summary>
+        public static string OtherPhoneNumber {
+            get {
+                return ResourceManager.GetString("OtherPhoneNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fatura Öde.
         /// </summary>
         public static string PayBill {
@@ -93,6 +156,24 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string Select {
             get {
                 return ResourceManager.GetString("Select", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kurulum Adresi.
+        /// </summary>
+        public static string SetupAddress {
+            get {
+                return ResourceManager.GetString("SetupAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Abonelik Bilgileri.
+        /// </summary>
+        public static string SubscriptionInfo {
+            get {
+                return ResourceManager.GetString("SubscriptionInfo", resourceCulture);
             }
         }
         

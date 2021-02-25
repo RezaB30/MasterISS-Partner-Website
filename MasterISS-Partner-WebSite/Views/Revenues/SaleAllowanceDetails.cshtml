@@ -1,7 +1,7 @@
 ﻿@using MasterISS_Partner_WebSite.ViewModels.Revenues
 @model IEnumerable<SaleGenericAllowancesViewModel>
 @{
-    ViewBag.Title = "SaleAllowanceDetails";
+    ViewBag.Title = MasterISS_Partner_WebSite.Localization.View.SaleAllowanceDetails;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -10,11 +10,9 @@
         <tr>
             <th>@Html.DisplayNameFor(m => m.FirstOrDefault().Allowance)</th>
             <th>@Html.DisplayNameFor(m => m.FirstOrDefault().AllowanceState.Name)</th>
-            <th>@Html.DisplayNameFor(m => m.FirstOrDefault().AllowanceState.Value)</th>
             <th>@Html.DisplayNameFor(m => m.FirstOrDefault().MembershipDate)</th>
             <th>@Html.DisplayNameFor(m => m.FirstOrDefault().SubscriptionNo)</th>
             <th>@Html.DisplayNameFor(m => m.FirstOrDefault().SaleState.Name)</th>
-            <th>@Html.DisplayNameFor(m => m.FirstOrDefault().SaleState.Value)</th>
         </tr>
     </thead>
     <tbody>
@@ -23,24 +21,22 @@
             <tr>
                 <td>@Html.DisplayFor(motelItem => item.Allowance)</td>
                 <td>@Html.DisplayFor(motelItem => item.AllowanceState.Name)</td>
-                <td>@Html.DisplayFor(motelItem => item.AllowanceState.Value)</td>
                 <td>@Html.DisplayFor(motelItem => item.MembershipDate)</td>
                 <td>@Html.DisplayFor(motelItem => item.SubscriptionNo)</td>
                 <td>@Html.DisplayFor(motelItem => item.SaleState.Name)</td>
-                <td>@Html.DisplayFor(motelItem => item.SaleState.Value)</td>
             </tr>
         }
     </tbody>
 </table>
 <div>
-    @for (int i = 0; i < (int)ViewBag.TotalCount + 1; i++)
-    {
-        <ol>
+    <ol>
+        @for (int i = 0; i < (int)ViewBag.TotalCount; i++)
+        {
             <li>
-                @Html.ActionLink("ssss", "SaleGenericAllowanceList", new { page = i, Id = (int)ViewBag.Id })
+                @Html.ActionLink((i + 1).ToString(), "SaleGenericAllowanceList", new { page = i, Id = (int)ViewBag.Id })
             </li>
-        </ol>
-    }
+        }
+    </ol>
 </div>
 
 

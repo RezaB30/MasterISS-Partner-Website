@@ -1,7 +1,7 @@
 ﻿@using MasterISS_Partner_WebSite.ViewModels.Revenues
 @model IEnumerable<SetupGenericAllowancesViewModel>
 @{
-    ViewBag.Title = "SetupAllowenceDetails";
+    ViewBag.Title = MasterISS_Partner_WebSite.Localization.View.SetupAllowenceDetails;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <table>
@@ -9,12 +9,12 @@
         <tr>
             <td>@Html.DisplayNameFor(m => m.FirstOrDefault().Allowance)</td>
             <td>@Html.DisplayNameFor(m => m.FirstOrDefault().AllowanceState.Name)</td>
-            <td>@Html.DisplayNameFor(m => m.FirstOrDefault().AllowanceState.Value)</td>
+            @*<td>@Html.DisplayNameFor(m => m.FirstOrDefault().AllowanceState.Value)</td>*@
             <td>@Html.DisplayNameFor(m => m.FirstOrDefault().CompletionDate)</td>
             <td>@Html.DisplayNameFor(m => m.FirstOrDefault().IssueDate)</td>
             <td>@Html.DisplayNameFor(m => m.FirstOrDefault().SubscriptionNo)</td>
             <td>@Html.DisplayNameFor(m => m.FirstOrDefault().SetupState.Name)</td>
-            <td>@Html.DisplayNameFor(m => m.FirstOrDefault().SetupState.Value)</td>
+            @*<td>@Html.DisplayNameFor(m => m.FirstOrDefault().SetupState.Value)</td>*@
         </tr>
     </thead>
     <tbody>
@@ -23,24 +23,23 @@
             <tr>
                 <td>@Html.DisplayFor(modelItem => item.Allowance)</td>
                 <td>@Html.DisplayFor(modelItem => item.AllowanceState.Name)</td>
-                <td>@Html.DisplayFor(modelItem => item.AllowanceState.Value)</td>
+                @*<td>@Html.DisplayFor(modelItem => item.AllowanceState.Value)</td>*@
                 <td>@Html.DisplayFor(modelItem => item.CompletionDate)</td>
                 <td>@Html.DisplayFor(modelItem => item.IssueDate)</td>
                 <td>@Html.DisplayFor(modelItem => item.SubscriptionNo)</td>
                 <td>@Html.DisplayFor(modelItem => item.SetupState.Name)</td>
-                <td>@Html.DisplayFor(modelItem => item.SetupState.Value)</td>
+                @*<td>@Html.DisplayFor(modelItem => item.SetupState.Value)</td>*@
             </tr>
         }
     </tbody>
 </table>
 <div>
-    @for (int i = 0; i < (int)ViewBag.TotalCount + 1; i++)
-    {
-        <ol>
+    <ol>
+        @for (int i = 1; i < (int)ViewBag.TotalCount + 1; i++)
+        {
             <li>
-                @Html.ActionLink("ssss", "SetupAllowenceDetails", new { page = i, Id = ViewBag.Id })
+                @Html.ActionLink(i.ToString(), "SetupAllowenceDetails", new { page = i, Id = ViewBag.Id })
             </li>
-        </ol>
-    }
-
+        }
+    </ol>
 </div>

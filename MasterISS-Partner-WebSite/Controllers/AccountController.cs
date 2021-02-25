@@ -15,7 +15,7 @@ using System.Web.Mvc;
 
 namespace MasterISS_Partner_WebSite.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         // GET: Account
         public ActionResult SignIn()
@@ -40,14 +40,13 @@ namespace MasterISS_Partner_WebSite.Controllers
                         using (var db = new PartnerWebSiteEntities())
                         {
                             var userPasswordHash = wrapper.CalculateHash<SHA256>(userSignInModel.Password);
-                            var userValid = db.User.Where(u => u.IsEnabled == true && u.PartnerId == authenticateResponse.AuthenticationResponse.UserID && u.Password == userPasswordHash).FirstOrDefault();
+                            var userValid = db.User.Where(u => u.IsEnabled == true && u.PartnerId == authenticateResponse.AuthenticationResponse.UserID && u.Password == userPasswordHash && u.UserSubMail == userSignInModel.Username).FirstOrDefault();
 
                             if (userValid != null || (userSignInModel.DealerCode == userSignInModel.Username))
                             {
                                 var claims = new List<Claim>
                                     {
                                         new Claim("UserMail", userSignInModel.DealerCode),
-                                        new Claim("UserPassword", userSignInModel.Password),
                                         new Claim("PartnerName", authenticateResponse.AuthenticationResponse.DisplayName),
                                         new Claim("PartnerId", authenticateResponse.AuthenticationResponse.UserID.ToString()),
                                     };
@@ -58,10 +57,10 @@ namespace MasterISS_Partner_WebSite.Controllers
                                     claims.Add(new Claim("SetupServiceUser", authenticateResponse.AuthenticationResponse.SetupServiceUser));
                                 }
 
-                                for (int i = 0; i < authenticateResponse.AuthenticationResponse.Permissions.Count(); i++)
+                                foreach (var item in authenticateResponse.AuthenticationResponse.Permissions)
                                 {
-                                    claims.Add(new Claim(ClaimTypes.Role, authenticateResponse.AuthenticationResponse.Permissions.Select(p => p.Name).ToArray()[i]));
-                                    claims.Add(new Claim("RoleId", authenticateResponse.AuthenticationResponse.Permissions.Select(p => p.ID).ToArray()[i].ToString()));
+                                    claims.Add(new Claim(ClaimTypes.Role, item.Name));
+                                    claims.Add(new Claim("RoleId", item.ID.ToString()));
                                 }
 
                                 if (userSignInModel.Username == userSignInModel.DealerCode)//Admin
@@ -70,50 +69,38 @@ namespace MasterISS_Partner_WebSite.Controllers
                                     claims.Add(new Claim(ClaimTypes.NameIdentifier, authenticateResponse.AuthenticationResponse.UserID.ToString()));
                                     claims.Add(new Claim(ClaimTypes.Email, userSignInModel.Username));
                                     claims.Add(new Claim(ClaimTypes.Name, authenticateResponse.AuthenticationResponse.DisplayName));
-                                    if (Request.GetOwinContext().AdminSignIn(claims))
-                                    {
-                                        return RedirectToAction("Index", "Home");
-                                    }
-                                    else
-                                    {
-                                        ViewBag.AuthenticateError = Localization.View.AuthenticateError;
-                                        return View(userSignInModel);
-                                    }
+
+                                    var identity = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
+                                    Request.GetOwinContext().Authentication.SignIn(identity);
                                 }
                                 else//SubUser
                                 {
-                                    var claimRoleList = claims.Where(c => c.Type == "RoleId").Select(c => c.Value);
+                                    //var currentPermissionIdListByPartnerList = new List<int>();
 
-                                    var partnerRoleList = new List<int>();
+                                    //foreach (var roleId in authenticateResponse.AuthenticationResponse.Permissions.ToArray())
+                                    //{
+                                    //    //var permissionIdListByPartnerRoleList = db.Permission.Where(p => p.RoleTypeId ==  roleId.ID).Select(p => p.Id).ToArray();
 
-                                    foreach (var item in claimRoleList)
-                                    {
-                                        partnerRoleList.Add(Convert.ToInt32(item));
-                                    }
 
-                                    var currentPermissionIdListByPartnerList = new List<int>();
+                                    //    foreach (var permissionId in permissionIdListByPartnerRoleList)
+                                    //    {
+                                    //        currentPermissionIdListByPartnerList.Add(permissionId);
+                                    //    }
+                                    //}
+                                    var permissionIdListByPartnerRoleList = db.Permission.Where(p => authenticateResponse.AuthenticationResponse.Permissions.Select(s => s.ID).Contains((short)p.RoleTypeId))
+                                        .Select(p => p.Id).ToArray();
+                                    claims.AddRange(userValid.Role.RolePermission.Where(r => permissionIdListByPartnerRoleList.Contains(r.PermissionId))
+                                        .Select(r => new Claim(ClaimTypes.Role, r.Permission.PermissionName)));
 
-                                    foreach (var roleId in partnerRoleList)
-                                    {
-                                        var permissionIdListByPartnerRoleList = db.Permission.Where(p => p.RoleTypeId == roleId).Select(p => p.Id).ToArray();
+                                    //foreach (var permissionId in currentPermissionIdListByPartnerList)
+                                    //{
+                                    //    var userAvaibleRoles = userValid.Role.RolePermission.Where(rp => rp.PermissionId == permissionId).Select(p => p.Permission).ToArray();
 
-                                        foreach (var permissionId in permissionIdListByPartnerRoleList)
-                                        {
-                                            currentPermissionIdListByPartnerList.Add(permissionId);
-                                        }
-                                    }
-
-                                    //claims.AddRange(userValid.Role.RolePermission.Select(r => new Claim(ClaimTypes.Role, r.Permission.PermissionName));
-
-                                    foreach (var permissionId in currentPermissionIdListByPartnerList)
-                                    {
-                                        var userAvaibleRoles = userValid.Role.RolePermission.Where(rp => rp.PermissionId == permissionId).Select(p => p.Permission).ToArray();
-
-                                        for (int i = 0; i < userAvaibleRoles.Length; i++)
-                                        {
-                                            claims.Add(new Claim(ClaimTypes.Role, userAvaibleRoles.Select(uar => uar.PermissionName).ToArray()[i]));
-                                        }
-                                    }
+                                    //    for (int i = 0; i < userAvaibleRoles.Length; i++)
+                                    //    {
+                                    //        claims.Add(new Claim(ClaimTypes.Role, userAvaibleRoles.Select(uar => uar.PermissionName).ToArray()[i]));
+                                    //    }
+                                    //}
 
                                     var authenticator = new SubUserAuthenticator();
                                     var isSignIn = authenticator.SignIn(Request.GetOwinContext(), userSignInModel.Username, userSignInModel.Password, claims);
@@ -129,6 +116,11 @@ namespace MasterISS_Partner_WebSite.Controllers
                         }
                     }
                     ViewBag.AuthenticateError = Localization.View.AuthenticateError;
+                    return View(userSignInModel);
+                }
+                else if (authenticateResponse.ResponseMessage.ErrorCode == 200)
+                {
+                    ViewBag.AuthenticateError = Localization.View.GeneralErrorDescription;
                     return View(userSignInModel);
                 }
                 ViewBag.AuthenticateError = authenticateResponse.ResponseMessage.ErrorMessage;

@@ -120,6 +120,12 @@
   <data name="ActiveError" xml:space="preserve">
     <value>There was an error in the user activation process. Please try again.</value>
   </data>
+  <data name="AddCustomer" xml:space="preserve">
+    <value>New Customer</value>
+  </data>
+  <data name="AddUserPage" xml:space="preserve">
+    <value>Add User Page</value>
+  </data>
   <data name="AuthenticateError" xml:space="preserve">
     <value>Login Failed.</value>
   </data>
@@ -129,11 +135,35 @@
   <data name="Back" xml:space="preserve">
     <value>Back</value>
   </data>
+  <data name="BillingAddress" xml:space="preserve">
+    <value>Billing Address</value>
+  </data>
+  <data name="BillList" xml:space="preserve">
+    <value>Bill List</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="CreateRole" xml:space="preserve">
+    <value>Creation Role</value>
+  </data>
+  <data name="CreditReportDetail" xml:space="preserve">
+    <value>Credit Report Detail</value>
+  </data>
+  <data name="CurrentUsers" xml:space="preserve">
+    <value>Current Users</value>
+  </data>
   <data name="CustomerContractInfo" xml:space="preserve">
     <value>Customer Contract Info</value>
   </data>
   <data name="CustomerCredentials" xml:space="preserve">
     <value>Customer Credentials Info</value>
+  </data>
+  <data name="CustomerGeneralInfo" xml:space="preserve">
+    <value>General Info</value>
   </data>
   <data name="CustomerInfo" xml:space="preserve">
     <value>Customer Info</value>
@@ -147,8 +177,14 @@
   <data name="Day" xml:space="preserve">
     <value> Day </value>
   </data>
+  <data name="Details" xml:space="preserve">
+    <value>Details</value>
+  </data>
   <data name="DownloadTheContract" xml:space="preserve">
     <value>Download The Contract</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
   </data>
   <data name="ErrorProcessing" xml:space="preserve">
     <value>An error occurred while processing.</value>
@@ -162,20 +198,38 @@
   <data name="FirstSessionInfo" xml:space="preserve">
     <value>First Session Info</value>
   </data>
+  <data name="GeneralErrorDescription" xml:space="preserve">
+    <value>An error occurred while processing your request.</value>
+  </data>
   <data name="Generic200ErrorCodeMessage" xml:space="preserve">
     <value>An Error Has Occurred. Try again later.</value>
+  </data>
+  <data name="HomePage" xml:space="preserve">
+    <value>Home Page</value>
   </data>
   <data name="Hours" xml:space="preserve">
     <value> Hours </value>
   </data>
+  <data name="IDCardInfo" xml:space="preserve">
+    <value>ID Card Info</value>
+  </data>
   <data name="LastSessionInfo" xml:space="preserve">
     <value>Last Session Info</value>
+  </data>
+  <data name="ListBills" xml:space="preserve">
+    <value>List Bills</value>
   </data>
   <data name="Load" xml:space="preserve">
     <value>Load</value>
   </data>
   <data name="MailValidError" xml:space="preserve">
     <value>This mail already exists.</value>
+  </data>
+  <data name="MakeActive" xml:space="preserve">
+    <value>Make Active</value>
+  </data>
+  <data name="MakePassive" xml:space="preserve">
+    <value>Make Passive</value>
   </data>
   <data name="Map" xml:space="preserve">
     <value>Map</value>
@@ -213,6 +267,18 @@
   <data name="ReturnUserOperations" xml:space="preserve">
     <value>Back</value>
   </data>
+  <data name="SaleAllowanceDetails" xml:space="preserve">
+    <value>Sale Allowance Details</value>
+  </data>
+  <data name="SaleAllowanceList" xml:space="preserve">
+    <value>Sale Allowance List</value>
+  </data>
+  <data name="SaleAllowedDetails" xml:space="preserve">
+    <value>Sale Allowed Details</value>
+  </data>
+  <data name="SaleGenericAllowanceList" xml:space="preserve">
+    <value>Sale Generic Allowance List</value>
+  </data>
   <data name="SearchedPlace" xml:space="preserve">
     <value>Searched Place</value>
   </data>
@@ -234,14 +300,41 @@
   <data name="SelectRole" xml:space="preserve">
     <value>Select Role</value>
   </data>
+  <data name="SetupAllowanceList" xml:space="preserve">
+    <value>Setup Allowance List</value>
+  </data>
+  <data name="SetupAllowedDetails" xml:space="preserve">
+    <value>Setup Allowed Details</value>
+  </data>
+  <data name="SetupAllowenceDetails" xml:space="preserve">
+    <value>Setup Allowence Details</value>
+  </data>
+  <data name="SetupGenericAllowanceList" xml:space="preserve">
+    <value>Setup Generic Allowance List</value>
+  </data>
+  <data name="SetupPanel" xml:space="preserve">
+    <value>Setup Panel</value>
+  </data>
   <data name="SetupResponseErrorMessage" xml:space="preserve">
     <value>We are currently unable to process your transaction. Please try again.</value>
   </data>
   <data name="Showing" xml:space="preserve">
     <value>showing.</value>
   </data>
+  <data name="SignIn" xml:space="preserve">
+    <value>SignIn</value>
+  </data>
+  <data name="SignInPanel" xml:space="preserve">
+    <value>SignIn Panel</value>
+  </data>
+  <data name="SmsConfirmation" xml:space="preserve">
+    <value>Sms Confirmation</value>
+  </data>
   <data name="StartDateBiggerThanEndDateError" xml:space="preserve">
     <value>The Start Date Cannot Be Greater than the End Date.</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Submit</value>
   </data>
   <data name="Successful" xml:space="preserve">
     <value>Successful</value>
@@ -258,6 +351,9 @@
   <data name="Update" xml:space="preserve">
     <value>Update</value>
   </data>
+  <data name="UpdateClientLocation" xml:space="preserve">
+    <value>Update Location</value>
+  </data>
   <data name="UpdateGPS" xml:space="preserve">
     <value>Update Customer Location</value>
   </data>
@@ -269,6 +365,12 @@
   </data>
   <data name="UploadDocument" xml:space="preserve">
     <value>Add Customer Attachment</value>
+  </data>
+  <data name="UploadDocumentPage" xml:space="preserve">
+    <value>Upload Document</value>
+  </data>
+  <data name="WrongPassword" xml:space="preserve">
+    <value>Wrong SMS Password</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>

@@ -1,7 +1,8 @@
-﻿@using MasterISS_Partner_WebSite.ViewModels
+﻿@using MasterISS_Partner_WebSite.Localization
+@using MasterISS_Partner_WebSite.ViewModels
 @model  NewUserViewModel
 @{
-    ViewBag.Title = "AddUser";
+    ViewBag.Title = View.AddUserPage;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -33,7 +34,7 @@
         @Html.ValidationMessageFor(m => m.Password)
     </div>
 
-    <input type="submit" value="ekle" />
+    <input type="submit" value="@View.Submit" />
 }
 
 @ViewBag.AddUserError
