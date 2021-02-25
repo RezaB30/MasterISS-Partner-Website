@@ -115,17 +115,22 @@
 <div class="table-container">
     <h3>@View.UpdateTaskStatus</h3>
     @Html.ActionLink(View.Update, "UpdateTaskStatus", new { taskNo }, new { @class = "btn btn-info" })
-   
+
     @Html.Raw(TempData["CustomerUpdateStatusError"])
 </div>
 
-<div align="center">
+<div>
     <div class="table-container">
         <h3>@View.UploadDocument</h3>
         @Html.ActionLink(View.Upload, "UploadDocument", new { taskNo }, new { @class = "btn btn-info" })
     </div>
 </div>
 
+<div>
+    <h3>@View.UpdateGPS</h3>
+    @Html.ActionLink(View.Update, "UpdateClientLocation", new { taskNo }, new { @class = "btn btn-info" })
+    @Html.Raw(TempData["UpdateGPSResponse"])
+</div>
 
 @section JavaScript{
     <script>

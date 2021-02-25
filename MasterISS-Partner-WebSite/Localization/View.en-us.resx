@@ -145,7 +145,7 @@
     <value>Customer Session Info</value>
   </data>
   <data name="Day" xml:space="preserve">
-    <value>Day</value>
+    <value> Day </value>
   </data>
   <data name="DownloadTheContract" xml:space="preserve">
     <value>Download The Contract</value>
@@ -166,7 +166,7 @@
     <value>An Error Has Occurred. Try again later.</value>
   </data>
   <data name="Hours" xml:space="preserve">
-    <value>Hours</value>
+    <value> Hours </value>
   </data>
   <data name="LastSessionInfo" xml:space="preserve">
     <value>Last Session Info</value>
@@ -177,6 +177,9 @@
   <data name="MailValidError" xml:space="preserve">
     <value>This mail already exists.</value>
   </data>
+  <data name="Map" xml:space="preserve">
+    <value>Map</value>
+  </data>
   <data name="Max30Days" xml:space="preserve">
     <value>You can do it for a maximum of 30 days.</value>
   </data>
@@ -184,7 +187,7 @@
     <value>File size must be maximum 10 MB.</value>
   </data>
   <data name="Minute" xml:space="preserve">
-    <value>Minute</value>
+    <value> Minute </value>
   </data>
   <data name="NewCustomerError" xml:space="preserve">
     <value>An error occurred while processing your transaction. Try again.</value>
@@ -210,8 +213,14 @@
   <data name="ReturnUserOperations" xml:space="preserve">
     <value>Back</value>
   </data>
+  <data name="SearchedPlace" xml:space="preserve">
+    <value>Searched Place</value>
+  </data>
   <data name="Second" xml:space="preserve">
-    <value>Second</value>
+    <value> Second </value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Select</value>
   </data>
   <data name="SelectAttachmentType" xml:space="preserve">
     <value>Select Attachment Type</value>
@@ -248,6 +257,9 @@
   </data>
   <data name="Update" xml:space="preserve">
     <value>Update</value>
+  </data>
+  <data name="UpdateGPS" xml:space="preserve">
+    <value>Update Customer Location</value>
   </data>
   <data name="UpdateTaskStatus" xml:space="preserve">
     <value>Update Task Status</value>

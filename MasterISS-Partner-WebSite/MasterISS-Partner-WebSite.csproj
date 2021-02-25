@@ -192,6 +192,8 @@
     <Compile Include="Enums\TaskStatusEnum.cs" />
     <Compile Include="Enums\TaskTypesEnum.cs" />
     <Compile Include="Enums\XDSLTypeEnum.cs" />
+    <Compile Include="Helpers\CustomButtonByMap.cs" />
+    <Compile Include="Helpers\CustomMap.cs" />
     <Compile Include="Helpers\TimeFormatHelper.cs" />
     <Compile Include="Localization\AttachmentTypes.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -502,6 +504,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\map.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\date-format-helper.css" />
     <Content Include="favicon.ico" />
@@ -518,6 +521,7 @@
       <DependentUpon>PartnerEntities.edmx</DependentUpon>
       <LastGenOutput>PartnerEntities.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\Map\map.js" />
     <Content Include="Scripts\QueryAddress\address-query.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -608,6 +612,7 @@
     <Content Include="Views\Setup\UpdateTaskStatus.cshtml" />
     <Content Include="Views\Setup\Successful.cshtml" />
     <Content Include="Views\Setup\UploadDocument.cshtml" />
+    <Content Include="Views\Setup\UpdateClientLocation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -24,8 +24,15 @@ namespace MasterISS_Partner_WebSite
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
 
+            bundles.Add(new StyleBundle("~/Content/custom-css").IncludeDirectory("~/Content/css/", "*.css"));
+
+
             bundles.Add(new ScriptBundle("~/QueryAdress").Include(
                 "~/Scripts/QueryAddress/address-query.js"));
+
+             bundles.Add(new ScriptBundle("~/CustomMap").Include(
+                "~/Scripts/Map/map.js"));
+
         }
     }
 }

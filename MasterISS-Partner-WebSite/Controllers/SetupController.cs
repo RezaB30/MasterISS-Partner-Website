@@ -146,15 +146,6 @@ namespace MasterISS_Partner_WebSite.Controllers
             return Content($"<div>{response.ResponseMessage.ErrorMessage}</div>");
         }
 
-        private DateTime ResponseParseDatetime(string date)
-        {
-            if (string.IsNullOrEmpty(date))
-            {
-                return DateTime.MinValue;
-            }
-            var parsedDate = DateTime.ParseExact(date, "yyyy-MM-dd HH:mm:ss", null);
-            return parsedDate;
-        }
 
         [HttpPost]
         public ActionResult CustomerCredentialsInfo(long taskNo)
@@ -357,12 +348,25 @@ namespace MasterISS_Partner_WebSite.Controllers
             return View(updateGPSViewModel);
         }
 
-        //[ValidateAntiForgeryToken]
-        //[HttpPost]
-        //public ActionResult UpdateClientLocation(UpdateClientGPSRequestViewModel updateClientViewModel)
-        //{
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult UpdateClientLocation(UpdateClientGPSRequestViewModel updateClientViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var setupWrapper = new SetupServiceWrapper();
 
-        //}
+                var response = setupWrapper.UpdateClientLocation(updateClientViewModel);
+
+                if (response.ResponseMessage.ErrorCode == 0)
+                {
+                    return RedirectToAction("Successful", "Setup", new { taskNo = updateClientViewModel.TaskNo });
+                }
+                TempData["UpdateGPSResponse"] = response.ResponseMessage.ErrorMessage;
+                return RedirectToAction("CustomerDetail", new { taskNo = updateClientViewModel.TaskNo });
+            }
+            return View(updateClientViewModel);
+        }
 
 
         public ActionResult Successful(long taskNo)
@@ -383,6 +387,16 @@ namespace MasterISS_Partner_WebSite.Controllers
             var list = new LocalizedList<FaultCodeEnum, Localization.FaultCodes>().GetList(CultureInfo.CurrentCulture);
             var faultCodesList = new SelectList(list.Select(m => new { Name = m.Value, Value = m.Key }).ToArray(), "Value", "Name", selectedValue);
             return faultCodesList;
+        }
+
+        private DateTime ResponseParseDatetime(string date)
+        {
+            if (string.IsNullOrEmpty(date))
+            {
+                return DateTime.MinValue;
+            }
+            var parsedDate = DateTime.ParseExact(date, "yyyy-MM-dd HH:mm:ss", null);
+            return parsedDate;
         }
 
         private string TaskStatusDescription(int value)

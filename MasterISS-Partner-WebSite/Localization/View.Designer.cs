@@ -142,7 +142,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Gün.
+        ///   Looks up a localized string similar to  Gün .
         /// </summary>
         public static string Day {
             get {
@@ -205,7 +205,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Saat.
+        ///   Looks up a localized string similar to  Saat .
         /// </summary>
         public static string Hours {
             get {
@@ -241,6 +241,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Harita.
+        /// </summary>
+        public static string Map {
+            get {
+                return ResourceManager.GetString("Map", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Maksimum 30 gün raporlama yapabilirsiniz..
         /// </summary>
         public static string Max30Days {
@@ -259,7 +268,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dakika.
+        ///   Looks up a localized string similar to  Dakika .
         /// </summary>
         public static string Minute {
             get {
@@ -340,11 +349,29 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Saniye.
+        ///   Looks up a localized string similar to Aranan Yer.
+        /// </summary>
+        public static string SearchedPlace {
+            get {
+                return ResourceManager.GetString("SearchedPlace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  Saniye .
         /// </summary>
         public static string Second {
             get {
                 return ResourceManager.GetString("Second", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seçiniz.
+        /// </summary>
+        public static string Select {
+            get {
+                return ResourceManager.GetString("Select", resourceCulture);
             }
         }
         
@@ -457,6 +484,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Müşterinin Konumunu Güncelle.
+        /// </summary>
+        public static string UpdateGPS {
+            get {
+                return ResourceManager.GetString("UpdateGPS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Görev Tanımını Güncelle.
         /// </summary>
         public static string UpdateTaskStatus {
@@ -475,7 +511,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kullanıcıya Belge Yükle.
+        ///   Looks up a localized string similar to Müşteriye Belge Yükle.
         /// </summary>
         public static string UploadDocument {
             get {

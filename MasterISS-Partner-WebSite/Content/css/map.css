@@ -1,0 +1,98 @@
+﻿.map-container {
+    width: 90%;
+    border-radius: 0.25em;
+    -moz-box-shadow: 0.1875em 0.1875em 0.3125em 0.375em #ccc;
+    -webkit-box-shadow: 0.1875em 0.1875em 0.3125em 0.375em #ccc;
+    box-shadow: 0.1875em 0.1875em 0.3125em 0.375em #ccc;
+}
+
+    .map-container .content-wrap {
+        align-content: center;
+    }
+
+
+        .map-container .content-wrap .m-content {
+            width: 100%;
+            height: 100%;
+        }
+
+            .map-container .content-wrap .m-content .m-header {
+                padding: 0.31em;
+            }
+
+            .map-container .content-wrap .m-content .m-body span {
+                float: left;
+                width: 12.5em;
+                min-height: 3.125em;
+                line-height: 3.125em;
+                text-align: center;
+                background-color: white;
+                margin: 1.25em 0.62em;
+            }
+
+            .map-container .content-wrap .m-content .m-body #searced-place-input {
+                width: 18.75em;
+                height: 3.125em;
+                margin: 1.25em 0.62em;
+            }
+
+            .map-container .content-wrap .m-content .m-body #map_locations {
+                width: 100%;
+                height: 100vh;
+            }
+
+@media screen and (max-width: 780px) {
+
+    .map-container {
+        width: 95%;
+    }
+
+        .map-container .content-wrap .m-content .m-body {
+            padding: 0;
+        }
+
+            .map-container .content-wrap .m-content .m-body span {
+                float: left;
+                width: 3.125em;
+                min-height: 1.56em;
+                line-height: 1.56em;
+                text-align: center;
+                background-color: white;
+                margin: 1.25em 0.62em;
+            }
+
+            .map-container .content-wrap .m-content .m-body #searced-place-input {
+                width: 7.25em;
+                height: 1.25em;
+                margin: 5.12em;
+                margin-left: -12.5em;
+            }
+
+            .map-container .content-wrap .m-content .m-body #map_locations {
+                width: 100%;
+                height: 80vh;
+            }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    .map-container {
+        width: 95%;
+    }
+
+        .map-container .content-wrap .m-content .m-body span {
+            float: left;
+            width: 9.375em;
+            min-height: 1.56em;
+            line-height: 1.56em;
+            text-align: center;
+            background-color: white;
+            margin: 1.25em 0.62em;
+        }
+
+        .map-container .content-wrap .m-content .m-body #searced-place-input {
+            float: left;
+            width: 9.37em;
+            height: 3.75em;
+            margin: 1.25em 0.62em;
+        }
+}

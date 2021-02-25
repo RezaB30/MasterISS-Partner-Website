@@ -145,7 +145,7 @@
     <value>Müşteri Oturum Bilgileri</value>
   </data>
   <data name="Day" xml:space="preserve">
-    <value>Gün</value>
+    <value> Gün </value>
   </data>
   <data name="DownloadTheContract" xml:space="preserve">
     <value>Sözleşmeyi İndir</value>
@@ -166,7 +166,7 @@
     <value>Bir Hata Oluştu. Daha sonra tekrar deneyiniz.</value>
   </data>
   <data name="Hours" xml:space="preserve">
-    <value>Saat</value>
+    <value> Saat </value>
   </data>
   <data name="LastSessionInfo" xml:space="preserve">
     <value>Son Oturum Bilgileri</value>
@@ -177,6 +177,9 @@
   <data name="MailValidError" xml:space="preserve">
     <value>Bu mail zaten mevcut.</value>
   </data>
+  <data name="Map" xml:space="preserve">
+    <value>Harita</value>
+  </data>
   <data name="Max30Days" xml:space="preserve">
     <value>Maksimum 30 gün raporlama yapabilirsiniz.</value>
   </data>
@@ -184,7 +187,7 @@
     <value>Dosya Boyutu Maksimum 10 MB olmalı.</value>
   </data>
   <data name="Minute" xml:space="preserve">
-    <value>Dakika</value>
+    <value> Dakika </value>
   </data>
   <data name="NewCustomerError" xml:space="preserve">
     <value>İşleminiz yapılırken bir hata oluştu.Tekrar deneyiniz.</value>
@@ -210,8 +213,14 @@
   <data name="ReturnUserOperations" xml:space="preserve">
     <value>Geri</value>
   </data>
+  <data name="SearchedPlace" xml:space="preserve">
+    <value>Aranan Yer</value>
+  </data>
   <data name="Second" xml:space="preserve">
-    <value>Saniye</value>
+    <value> Saniye </value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Seçiniz</value>
   </data>
   <data name="SelectAttachmentType" xml:space="preserve">
     <value>Eklenti Tipini Seçiniz</value>
@@ -249,6 +258,9 @@
   <data name="Update" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="UpdateGPS" xml:space="preserve">
+    <value>Müşterinin Konumunu Güncelle</value>
+  </data>
   <data name="UpdateTaskStatus" xml:space="preserve">
     <value>Görev Tanımını Güncelle</value>
   </data>
@@ -256,7 +268,7 @@
     <value>Belge Yükle</value>
   </data>
   <data name="UploadDocument" xml:space="preserve">
-    <value>Kullanıcıya Belge Yükle</value>
+    <value>Müşteriye Belge Yükle</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Evet</value>

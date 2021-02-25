@@ -1,0 +1,43 @@
+﻿@using MasterISS_Partner_WebSite.Helpers
+@using MasterISS_Partner_WebSite.ViewModels.Setup
+@using MasterISS_Partner_WebSite.Localization
+@model  UpdateClientGPSRequestViewModel
+@{
+    ViewBag.Title = "UpdateClientLocation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div align="center">
+    @using (Html.BeginForm("UpdateClientLocation", "Setup", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.HiddenFor(m => m.TaskNo)
+
+        <div>
+            @Html.EditorFor(m => m.Latitude, new { htmlAttributes = new { placeholder = Html.DisplayNameFor(m => m.Latitude) } })
+            @Html.ValidationMessageFor(m => m.Latitude, "", new { @class = "text-danger" })
+        </div>
+
+        <div>
+            @Html.EditorFor(m => m.Longitude, new { htmlAttributes = new { placeholder = Html.DisplayNameFor(m => m.Longitude) } })
+            @Html.ValidationMessageFor(m => m.Longitude, "", new { @class = "text-danger" })
+        </div>
+
+        @Html.MapTriggerButton("map-trigger-button", View.Select)
+
+        <input type="submit" value="@View.Update" />
+
+        @Html.ActionLink(View.Back, "CustomerDetail", "Setup", new { taskNo = Model.TaskNo }, new { @class = "btn btn-info" })
+    }
+</div>
+
+<div>
+    @Html.Map("map-container", View.Map, View.SearchedPlace)
+</div>
+
+@section JavaScript{
+    <script>
+        MapJS('.map-container', '#Latitude', '#Longitude')
+    </script>
+}

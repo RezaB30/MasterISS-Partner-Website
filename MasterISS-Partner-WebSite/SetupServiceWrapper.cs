@@ -148,8 +148,8 @@ namespace MasterISS_Partner_WebSite
 
         public ParameterlessResponse UpdateClientLocation(UpdateClientGPSRequestViewModel updateClientGPSRequestViewModel)
         {
-            var longitude = Convert.ToDecimal(updateClientGPSRequestViewModel.Longitude);
-            var latitude = Convert.ToDecimal(updateClientGPSRequestViewModel.Latitude);
+            var longitude = Convert.ToDecimal(updateClientGPSRequestViewModel.Longitude, new CultureInfo("en-US"));
+            var latitude = Convert.ToDecimal(updateClientGPSRequestViewModel.Latitude, new CultureInfo("en-US"));
 
             var request = new UpdateCustomerLocationRequest
             {
@@ -168,6 +168,8 @@ namespace MasterISS_Partner_WebSite
 
             return response;
         }
+
+
 
         private TaskNoRequest TaskNoRequest(long taskNo)
         {
