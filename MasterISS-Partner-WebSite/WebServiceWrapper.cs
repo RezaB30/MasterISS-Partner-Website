@@ -271,7 +271,7 @@ namespace MasterISS_Partner_WebSite
                 AuthenticationParameters = new AuthenticationRequest()
                 {
                     SubUserEmail = userSignInModel.Username,
-                    UserEmail = userSignInModel.DealerCode,
+                    UserEmail = userSignInModel.PartnerCode,
                     PartnerPasswordHash = CalculateHash<SHA256>(userSignInModel.Password),
                 }
             };
@@ -504,6 +504,12 @@ namespace MasterISS_Partner_WebSite
                         ServiceID = addCustomerViewModel.SubscriptionInfo.PartnerTariffID,
                         SetupAddress = NewAddressInfo(addCustomerViewModel.SubscriptionInfo.SetupAddress.NewCustomerAddressInfoRequest, (int)addCustomerViewModel.SubscriptionInfo.SetupAddress.PostalCode, addCustomerViewModel.SubscriptionInfo.SetupAddress.Floor)
                     },
+                    ExtraInfo = new ExtraInfo()
+                    {
+                        ApplicationType = addCustomerViewModel.ExtraInfo.SubscriptionRegistrationTypeId,
+                        PSTN = addCustomerViewModel.ExtraInfo.PSTN,
+                        XDSLNo = addCustomerViewModel.ExtraInfo.XDSLNo
+                    }
                 },
             };
 

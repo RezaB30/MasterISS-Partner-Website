@@ -5,17 +5,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<table>
+<table class="table table-striped">
     <thead>
         <tr>
             <td>@Html.DisplayNameFor(m => m.Allowance)</td>
             <td>@Html.DisplayNameFor(m => m.AllowanceState.Name)</td>
-            <td>@Html.DisplayNameFor(m => m.AllowanceState.Value)</td>
             <td>@Html.DisplayNameFor(m => m.CompletionDate)</td>
             <td>@Html.DisplayNameFor(m => m.IssueDate)</td>
             <td>@Html.DisplayNameFor(m => m.SubscriptionNo)</td>
             <td>@Html.DisplayNameFor(m => m.SetupState.Name)</td>
-            <td>@Html.DisplayNameFor(m => m.SetupState.Value)</td>
         </tr>
     </thead>
     <tbody>
@@ -24,22 +22,20 @@
             <tr>
                 <td>@Html.DisplayFor(modelItem => item.Allowance)</td>
                 <td>@Html.DisplayFor(modelItem => item.AllowanceState.Name)</td>
-                <td>@Html.DisplayFor(modelItem => item.AllowanceState.Value)</td>
                 <td>@Html.DisplayFor(modelItem => item.CompletionDate)</td>
                 <td>@Html.DisplayFor(modelItem => item.IssueDate)</td>
                 <td>@Html.DisplayFor(modelItem => item.SubscriptionNo)</td>
                 <td>@Html.DisplayFor(modelItem => item.SetupState.Name)</td>
-                <td>@Html.DisplayFor(modelItem => item.SetupState.Value)</td>
             </tr>
         }
     </tbody>
 </table>
 <div>
     <ol>
-        @for (int i = 1; i < (int)ViewBag.TotalCount; i++)
+        @for (int i = 0; i < (int)ViewBag.TotalCount; i++)
         {
             <li>
-                @Html.ActionLink(i.ToString(), "SetupGenericAllowanceList", new { page = i })
+                @Html.ActionLink((i + 1).ToString() + ".sayfa", "SetupGenericAllowanceList", new { page = i })
             </li>
         }
     </ol>

@@ -10,7 +10,8 @@
 @using (Html.BeginForm("AddPermission", "UserOperations", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
-
+    
+    @Html.LabelFor(m=>m.RoleName)
     @Html.EditorFor(m => m.RoleName)
 
         foreach (var item in Model.AvaibleRole)

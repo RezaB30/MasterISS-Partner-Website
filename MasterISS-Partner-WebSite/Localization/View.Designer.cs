@@ -70,11 +70,38 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string Add {
+            get {
+                return ResourceManager.GetString("Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Yeni Müşteri.
         /// </summary>
         public static string AddCustomer {
             get {
                 return ResourceManager.GetString("AddCustomer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rol Ekle.
+        /// </summary>
+        public static string AddRole {
+            get {
+                return ResourceManager.GetString("AddRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kullanıcı Ekle.
+        /// </summary>
+        public static string AddUser {
+            get {
+                return ResourceManager.GetString("AddUser", resourceCulture);
             }
         }
         
@@ -192,6 +219,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string CustomerCredentials {
             get {
                 return ResourceManager.GetString("CustomerCredentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Müşteri Detayları.
+        /// </summary>
+        public static string CustomerDetail {
+            get {
+                return ResourceManager.GetString("CustomerDetail", resourceCulture);
             }
         }
         

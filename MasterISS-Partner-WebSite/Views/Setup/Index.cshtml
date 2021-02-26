@@ -9,22 +9,22 @@
     var search = ViewBag.Search as GetTaskListRequestViewModel ?? new GetTaskListRequestViewModel();
 }
 
-<div>
+<div align="center">
     @using (Html.BeginForm("Index", "Setup", FormMethod.Get))
     {
-        <div>
+        <div class="form-group">
             @Html.LabelFor(m => search.TaskListStartDate)
             @Html.EditorFor(m => search.TaskListStartDate, new { htmlAttributes = new { placeholder = DateTime.Now.ToString("dd-MM-yyyy HH:mm") } })
             @Html.ValidationMessageFor(m => search.TaskListStartDate)
         </div>
 
-        <div>
+        <div class="form-group">
             @Html.LabelFor(m => search.TaskListEndDate)
             @Html.EditorFor(m => search.TaskListEndDate, new { htmlAttributes = new { placeholder = DateTime.Now.ToString("dd-MM-yyyy HH:mm") } })
             @Html.ValidationMessageFor(m => search.TaskListEndDate)
         </div>
 
-        <div>
+        <div class="form-group">
             @Html.LabelFor(m => search.SearchedName)
             @Html.EditorFor(m => search.SearchedName)
         </div>
@@ -37,7 +37,7 @@
 
 @if (ViewBag.ValidationError == null && ViewBag.Max30Days == null && ViewBag.StartTimeBiggerThanEndTime == null && ViewBag.ErrorMessage == null)
 {
-    <table>
+    <table class="table">
         <thead>
             <tr>
                 <th>@Html.DisplayNameFor(model => model.FirstOrDefault().TaskNo)</th>

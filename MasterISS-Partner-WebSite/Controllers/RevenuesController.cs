@@ -12,7 +12,10 @@ namespace MasterISS_Partner_WebSite.Controllers
 {
     public class RevenuesController : BaseController
     {
-        // GET: Revenues
+        public ActionResult Index()
+        {
+            return View();
+        }
         public ActionResult SaleAllowedDetails()
         {
             var wrapper = new WebServiceWrapper();
@@ -221,20 +224,20 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             var response = wrapper.SetupAllowanceList(request);
 
-            if (response.ResponseMessage.ErrorCode == 0)
+            ////Buraya log ekle error code 0 dan farklı ise
+
+            var list = response.SetupAllowanceList.SetupAllowances?.Select(sa => new AllowenceListViewModel
             {
-                var list = response.SetupAllowanceList.SetupAllowances.Select(sa => new AllowenceListViewModel
-                {
-                    Id = sa.ID,
-                    Ispaid = sa.IsPaid,
-                    IssueDate = Convert.ToDateTime(sa.IssueDate),
-                    PaymentDate = Convert.ToDateTime(sa.PaymentDate),
-                    Total = sa.Total
-                });
-                ViewBag.TotalCount = response.SetupAllowanceList.TotalPageCount;
-                return View(list);
-            }
-            return View();
+                Id = sa.ID,
+                Ispaid = sa.IsPaid,
+                IssueDate = Convert.ToDateTime(sa.IssueDate),
+                PaymentDate = Convert.ToDateTime(sa.PaymentDate),
+                Total = sa.Total
+            });
+
+            ViewBag.TotalCount = response.SetupAllowanceList.TotalPageCount;
+
+            return View(list ?? Enumerable.Empty<AllowenceListViewModel>());
         }
 
         public ActionResult SetupAllowenceDetails(int Id, int page = 0, int pageSize = 10)
@@ -251,33 +254,32 @@ namespace MasterISS_Partner_WebSite.Controllers
                 AllowanceCollectionID = Id
             };
 
+            //Buraya log ekle error code 0 dan farklı ise
+
             var response = wrapper.SetupAllowanceDetails(request);
 
-            if (response.ResponseMessage.ErrorCode == 0)
+            var list = response.SetupGenericAllowanceList.SetupGenericAllowances?.Select(setupga => new SetupGenericAllowancesViewModel
             {
-                var list = response.SetupGenericAllowanceList.SetupGenericAllowances.Select(setupga => new SetupGenericAllowancesViewModel
+                Allowance = setupga.Allowance,
+                AllowanceState = new AllowanceState
                 {
-                    Allowance = setupga.Allowance,
-                    AllowanceState = new AllowanceState
-                    {
-                        Name = setupga.AllowanceState.Name,
-                        Value = setupga.AllowanceState.Value
-                    },
-                    CompletionDate = Convert.ToDateTime(setupga.CompletionDate),
-                    IssueDate = Convert.ToDateTime(setupga.IssueDate),
-                    SetupState = new State
-                    {
-                        Name = setupga.SetupState.Name,
-                        Value = setupga.SetupState.Value,
-                    },
-                    SubscriptionNo = setupga.SubscriptionNo,
-                });
+                    Name = setupga.AllowanceState.Name,
+                    Value = setupga.AllowanceState.Value
+                },
+                CompletionDate = Convert.ToDateTime(setupga.CompletionDate),
+                IssueDate = Convert.ToDateTime(setupga.IssueDate),
+                SetupState = new State
+                {
+                    Name = setupga.SetupState.Name,
+                    Value = setupga.SetupState.Value,
+                },
+                SubscriptionNo = setupga.SubscriptionNo,
+            });
 
-                ViewBag.TotalCount = response.SetupGenericAllowanceList.TotalPageCount;
-                ViewBag.Id = Id;
-                return View(list);
-            }
-            return View();
+            ViewBag.TotalCount = response.SetupGenericAllowanceList.TotalPageCount;
+            ViewBag.Id = Id;
+
+            return View(list ?? Enumerable.Empty<SetupGenericAllowancesViewModel>());
         }
     }
 }

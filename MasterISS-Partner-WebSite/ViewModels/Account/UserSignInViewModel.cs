@@ -19,7 +19,7 @@ namespace MasterISS_Partner_WebSite.ViewModels
 
         [Display(ResourceType = typeof(Localization.Model), Name = "DealerCode")]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
-        public string DealerCode { get; set; }
+        public string PartnerCode { get; set; }
 
     }
 }

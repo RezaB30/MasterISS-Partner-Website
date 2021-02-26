@@ -6,7 +6,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<table>
+<table class="table table-striped">
     <thead>
         <tr>
             <th>@Html.DisplayNameFor(m => m.NameSurname)</th>
@@ -35,6 +35,11 @@
         }
     </tbody>
 </table>
+
+<br />
+@Html.ActionLink(View.AddUser, "AddUser", "UserOperations")
+<br />
+@Html.ActionLink(View.AddRole, "AddPermission", "UserOperations")
 
 <div style="background-color:red">
     @Html.Raw(TempData["Error"])

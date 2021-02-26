@@ -31,8 +31,10 @@ namespace MasterISS_Partner_WebSite.ViewModels
         public long? ApartmentId { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
+        [Display(Name = "PostalCode", ResourceType = typeof(Localization.Model))]
         public int? PostalCode { get; set; }
 
+        [Display(Name = "Floor", ResourceType = typeof(Localization.Model))]
         [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
         public string Floor { get; set; }
 

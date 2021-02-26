@@ -24,7 +24,8 @@
     </div>
 
     <div class="form-group">
-        @Html.EditorFor(m => m.Description, new { htmlAttributes = new { placeholder = Html.DisplayNameFor(m => m.Description) } })
+        @Html.LabelFor(m=>m.Description)
+        @Html.EditorFor(m => m.Description)
         @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
     </div>
 

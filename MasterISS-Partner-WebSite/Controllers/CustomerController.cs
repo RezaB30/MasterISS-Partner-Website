@@ -2,8 +2,11 @@
 using MasterISS_Partner_WebSite.PartnerServiceReference;
 using MasterISS_Partner_WebSite.ViewModels;
 using MasterISS_Partner_WebSite.ViewModels.Home;
+using RadiusR.DB.Enums;
+using RezaB.Data.Localization;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -16,6 +19,8 @@ namespace MasterISS_Partner_WebSite.Controllers
         public ActionResult NewCustomer()
         {
             var wrapper = new WebServiceWrapper();
+
+            ViewBag.SubscriptionRegistrationType = SubscriptionRegistrationType(null);
 
             var tckTypeResponse = wrapper.GetTCKTypes();
             if (tckTypeResponse.ResponseMessage.ErrorCode == 0)
@@ -125,7 +130,7 @@ namespace MasterISS_Partner_WebSite.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult NewCustomer(AddCustomerViewModel addCustomerViewModel)
         {
-            if (addCustomerViewModel.IDCard.CardTypeId.HasValue && addCustomerViewModel.GeneralInfo.CustomerTypeId.HasValue && !string.IsNullOrEmpty(addCustomerViewModel.SubscriptionInfo.SetupAddress.Floor) && addCustomerViewModel.SubscriptionInfo.SetupAddress.PostalCode.HasValue && addCustomerViewModel.SubscriptionInfo.SetupAddress.ApartmentId.HasValue)
+            if (addCustomerViewModel.ExtraInfo.SubscriptionRegistrationTypeId.HasValue && addCustomerViewModel.IDCard.CardTypeId.HasValue && addCustomerViewModel.GeneralInfo.CustomerTypeId.HasValue && !string.IsNullOrEmpty(addCustomerViewModel.SubscriptionInfo.SetupAddress.Floor) && addCustomerViewModel.SubscriptionInfo.SetupAddress.PostalCode.HasValue && addCustomerViewModel.SubscriptionInfo.SetupAddress.ApartmentId.HasValue)
             {
                 if (IsCustomerTypeIndividual((int)addCustomerViewModel.GeneralInfo.CustomerTypeId))
                 {
@@ -158,6 +163,11 @@ namespace MasterISS_Partner_WebSite.Controllers
                 }
 
                 IdCardValidationAndRemoveModelState((int)addCustomerViewModel.IDCard.CardTypeId, addCustomerViewModel.IDCard);
+
+                if (addCustomerViewModel.ExtraInfo.SubscriptionRegistrationTypeId != (int)RadiusR.DB.Enums.SubscriptionRegistrationType.Transition)
+                {
+                    RemoveModel("ExtraInfo");
+                }
 
                 if (ModelState.IsValid)
                 {
@@ -230,6 +240,9 @@ namespace MasterISS_Partner_WebSite.Controllers
                     }
                 }
             }
+
+            ViewBag.SubscriptionRegistrationType = SubscriptionRegistrationType(addCustomerViewModel.ExtraInfo.SubscriptionRegistrationTypeId ?? null);
+
             var wrapper = new WebServiceWrapper();
 
             var tckTypeResponse = wrapper.GetTCKTypes();
@@ -446,6 +459,8 @@ namespace MasterISS_Partner_WebSite.Controllers
         }
 
 
+
+
         private SelectList PaymentDayListByViewBag(long? tariffId, long? selectedValue)
         {
             if (tariffId.HasValue)
@@ -628,6 +643,12 @@ namespace MasterISS_Partner_WebSite.Controllers
         private SelectList PartnerTariffList(PartnerServiceKeyValueListResponse partnerTarifType, int? selectedValue)
         {
             var list = new SelectList(partnerTarifType.KeyValueItemResponse.Select(tck => new { Name = tck.Value, Value = tck.Key }), "Value", "Name", selectedValue);
+            return list;
+        }
+        private SelectList SubscriptionRegistrationType(int? selectedValue)
+        {
+            var registrationTypeLocalized = new LocalizedList<RadiusR.DB.Enums.SubscriptionRegistrationType, RadiusR.Localization.Lists.SubscriptionRegistrationType>().GetList(CultureInfo.CurrentCulture).Where(s => s.Key != (int)RadiusR.DB.Enums.SubscriptionRegistrationType.Transfer);
+            var list = new SelectList(registrationTypeLocalized.Select(r => new { Value = r.Key, Name = r.Value }), "Value", "Name", selectedValue);
             return list;
         }
 

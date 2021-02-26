@@ -9,7 +9,7 @@ namespace MasterISS_Partner_WebSite.ViewModels
     public class BillCollectionViewModel
     {
         [Required]
-        [Display(Name = "SubscriberNo", ResourceType = typeof(Localization.Model))]
+        [Display(Name = "SubscriberName", ResourceType = typeof(Localization.Model))]
         public string SubscriberName { get; set; }
         public IEnumerable<BillsViewModel> Bills { get; set; }
     }

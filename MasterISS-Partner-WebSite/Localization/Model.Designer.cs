@@ -907,11 +907,29 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ev Telefonu Numarası.
+        /// </summary>
+        public static string PSTNNo {
+            get {
+                return ResourceManager.GetString("PSTNNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kayıt Tarihi.
         /// </summary>
         public static string RegisterDatetime {
             get {
                 return ResourceManager.GetString("RegisterDatetime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Başvuru Tipi.
+        /// </summary>
+        public static string RegistrationType {
+            get {
+                return ResourceManager.GetString("RegistrationType", resourceCulture);
             }
         }
         
@@ -939,6 +957,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string RoleName {
             get {
                 return ResourceManager.GetString("RoleName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rol Adı.
+        /// </summary>
+        public static string RolePermissionName {
+            get {
+                return ResourceManager.GetString("RolePermissionName", resourceCulture);
             }
         }
         
@@ -1047,6 +1074,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string State {
             get {
                 return ResourceManager.GetString("State", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Abone Adı.
+        /// </summary>
+        public static string SubscriberName {
+            get {
+                return ResourceManager.GetString("SubscriberName", resourceCulture);
             }
         }
         
@@ -1254,6 +1290,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string XDSLNo {
             get {
                 return ResourceManager.GetString("XDSLNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mevcut Hizmet Numarası.
+        /// </summary>
+        public static string XDSLNoByExtraInfo {
+            get {
+                return ResourceManager.GetString("XDSLNoByExtraInfo", resourceCulture);
             }
         }
         

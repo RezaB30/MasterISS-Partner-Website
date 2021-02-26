@@ -399,8 +399,14 @@
   <data name="PSTN" xml:space="preserve">
     <value>PSTN</value>
   </data>
+  <data name="PSTNNo" xml:space="preserve">
+    <value>Home Phone Number</value>
+  </data>
   <data name="RegisterDatetime" xml:space="preserve">
     <value>Register Date</value>
+  </data>
+  <data name="RegistrationType" xml:space="preserve">
+    <value>Registration Type</value>
   </data>
   <data name="ReservationDate" xml:space="preserve">
     <value>Reservation Date</value>
@@ -410,6 +416,9 @@
   </data>
   <data name="RoleName" xml:space="preserve">
     <value>Role</value>
+  </data>
+  <data name="RolePermissionName" xml:space="preserve">
+    <value>Role Name</value>
   </data>
   <data name="RowNo" xml:space="preserve">
     <value>Row Number</value>
@@ -446,6 +455,9 @@
   </data>
   <data name="State" xml:space="preserve">
     <value>State</value>
+  </data>
+  <data name="SubscriberName" xml:space="preserve">
+    <value>Subscriber Name</value>
   </data>
   <data name="SubscriberNo" xml:space="preserve">
     <value>Subscriber Number</value>
@@ -515,6 +527,9 @@
   </data>
   <data name="XDSLNo" xml:space="preserve">
     <value>XDSL No</value>
+  </data>
+  <data name="XDSLNoByExtraInfo" xml:space="preserve">
+    <value>Current Service Number</value>
   </data>
   <data name="XDSLType" xml:space="preserve">
     <value>XDSL Type</value>

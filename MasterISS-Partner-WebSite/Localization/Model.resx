@@ -399,8 +399,14 @@
   <data name="PSTN" xml:space="preserve">
     <value>PSTN</value>
   </data>
+  <data name="PSTNNo" xml:space="preserve">
+    <value>Ev Telefonu Numarası</value>
+  </data>
   <data name="RegisterDatetime" xml:space="preserve">
     <value>Kayıt Tarihi</value>
+  </data>
+  <data name="RegistrationType" xml:space="preserve">
+    <value>Başvuru Tipi</value>
   </data>
   <data name="ReservationDate" xml:space="preserve">
     <value>Rezervasyon Tarihi</value>
@@ -410,6 +416,9 @@
   </data>
   <data name="RoleName" xml:space="preserve">
     <value>Rolü</value>
+  </data>
+  <data name="RolePermissionName" xml:space="preserve">
+    <value>Rol Adı</value>
   </data>
   <data name="RowNo" xml:space="preserve">
     <value>Sıra Numarası</value>
@@ -446,6 +455,9 @@
   </data>
   <data name="State" xml:space="preserve">
     <value>Durum</value>
+  </data>
+  <data name="SubscriberName" xml:space="preserve">
+    <value>Abone Adı</value>
   </data>
   <data name="SubscriberNo" xml:space="preserve">
     <value>Abone Numarası</value>
@@ -515,6 +527,9 @@
   </data>
   <data name="XDSLNo" xml:space="preserve">
     <value>XDSL No</value>
+  </data>
+  <data name="XDSLNoByExtraInfo" xml:space="preserve">
+    <value>Mevcut Hizmet Numarası</value>
   </data>
   <data name="XDSLType" xml:space="preserve">
     <value>XDSL Tipi</value>

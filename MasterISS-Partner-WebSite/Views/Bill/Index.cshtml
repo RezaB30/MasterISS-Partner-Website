@@ -23,11 +23,15 @@
 {
     using (Html.BeginForm("BillOperations", "Bill", FormMethod.Post))
     {
+        <div>
+            @Html.DisplayNameFor(m => m.SubscriberName)
+            @Html.DisplayFor(m => m.SubscriberName)
+        </div>
+
         <div id="bill-list">
-            <table>
+            <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>@Html.DisplayNameFor(m => m.SubscriberName)</th>
                         <th>@Html.DisplayNameFor(m => m.Bills.FirstOrDefault().Cost)</th>
                         <th>@Html.DisplayNameFor(m => m.Bills.FirstOrDefault().DueDate)</th>
                         <th>@Html.DisplayNameFor(m => m.Bills.FirstOrDefault().IssueDate)</th>
@@ -35,7 +39,6 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>@Html.DisplayFor(m => m.SubscriberName)</td>
                     </tr>
                     @foreach (var itemBill in Model.Bills)
                     {

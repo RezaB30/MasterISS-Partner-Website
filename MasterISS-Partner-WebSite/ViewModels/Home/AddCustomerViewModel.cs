@@ -14,6 +14,23 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         public IDCardViewModel IDCard { get; set; }
         public IndividualViewModel Individual { get; set; }
         public SubscriptionInfoViewModel SubscriptionInfo { get; set; }
+        public ExtraInfoViewModel ExtraInfo { get; set; }
+
+
+    }
+
+    public class ExtraInfoViewModel
+    {
+        [Display(Name = "RegistrationType", ResourceType = typeof(Localization.Model))]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        public int? SubscriptionRegistrationTypeId { get; set; }
+
+        [Display(Name = "PSTNNo", ResourceType = typeof(Localization.Model))]
+        public string PSTN { get; set; }
+
+        [Display(Name = "XDSLNoByExtraInfo", ResourceType = typeof(Localization.Model))]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        public string XDSLNo { get; set; }
     }
 
     public class SubscriptionInfoViewModel

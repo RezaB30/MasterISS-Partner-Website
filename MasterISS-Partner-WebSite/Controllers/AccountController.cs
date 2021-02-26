@@ -42,11 +42,11 @@ namespace MasterISS_Partner_WebSite.Controllers
                             var userPasswordHash = wrapper.CalculateHash<SHA256>(userSignInModel.Password);
                             var userValid = db.User.Where(u => u.IsEnabled == true && u.PartnerId == authenticateResponse.AuthenticationResponse.UserID && u.Password == userPasswordHash && u.UserSubMail == userSignInModel.Username).FirstOrDefault();
 
-                            if (userValid != null || (userSignInModel.DealerCode == userSignInModel.Username))
+                            if (userValid != null || (userSignInModel.PartnerCode == userSignInModel.Username))
                             {
                                 var claims = new List<Claim>
                                     {
-                                        new Claim("UserMail", userSignInModel.DealerCode),
+                                        new Claim("UserMail", userSignInModel.PartnerCode),
                                         new Claim("PartnerName", authenticateResponse.AuthenticationResponse.DisplayName),
                                         new Claim("PartnerId", authenticateResponse.AuthenticationResponse.UserID.ToString()),
                                     };
@@ -63,7 +63,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                                     claims.Add(new Claim("RoleId", item.ID.ToString()));
                                 }
 
-                                if (userSignInModel.Username == userSignInModel.DealerCode)//Admin
+                                if (userSignInModel.Username == userSignInModel.PartnerCode)//Admin
                                 {
                                     claims.Add(new Claim(ClaimTypes.Role, "Admin"));
                                     claims.Add(new Claim(ClaimTypes.NameIdentifier, authenticateResponse.AuthenticationResponse.UserID.ToString()));
@@ -72,35 +72,18 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                                     var identity = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
                                     Request.GetOwinContext().Authentication.SignIn(identity);
+
+                                    return RedirectToAction("Index", "Home");
                                 }
                                 else//SubUser
                                 {
-                                    //var currentPermissionIdListByPartnerList = new List<int>();
+                                    var responsePermissionId = authenticateResponse.AuthenticationResponse.Permissions.Select(arp => Convert.ToInt32(arp.ID));
 
-                                    //foreach (var roleId in authenticateResponse.AuthenticationResponse.Permissions.ToArray())
-                                    //{
-                                    //    //var permissionIdListByPartnerRoleList = db.Permission.Where(p => p.RoleTypeId ==  roleId.ID).Select(p => p.Id).ToArray();
-
-
-                                    //    foreach (var permissionId in permissionIdListByPartnerRoleList)
-                                    //    {
-                                    //        currentPermissionIdListByPartnerList.Add(permissionId);
-                                    //    }
-                                    //}
-                                    var permissionIdListByPartnerRoleList = db.Permission.Where(p => authenticateResponse.AuthenticationResponse.Permissions.Select(s => s.ID).Contains((short)p.RoleTypeId))
-                                        .Select(p => p.Id).ToArray();
-                                    claims.AddRange(userValid.Role.RolePermission.Where(r => permissionIdListByPartnerRoleList.Contains(r.PermissionId))
-                                        .Select(r => new Claim(ClaimTypes.Role, r.Permission.PermissionName)));
-
-                                    //foreach (var permissionId in currentPermissionIdListByPartnerList)
-                                    //{
-                                    //    var userAvaibleRoles = userValid.Role.RolePermission.Where(rp => rp.PermissionId == permissionId).Select(p => p.Permission).ToArray();
-
-                                    //    for (int i = 0; i < userAvaibleRoles.Length; i++)
-                                    //    {
-                                    //        claims.Add(new Claim(ClaimTypes.Role, userAvaibleRoles.Select(uar => uar.PermissionName).ToArray()[i]));
-                                    //    }
-                                    //}
+                                    var avaiblePermissionName = db.Permission.SelectMany(permission => responsePermissionId.Where(r => r == permission.RoleTypeId), (permission, response) => new { permission.PermissionName }).Select(p => p.PermissionName);                                    
+                                    foreach (var item in avaiblePermissionName)
+                                    {
+                                        claims.Add(new Claim(ClaimTypes.Role, item));
+                                    }
 
                                     var authenticator = new SubUserAuthenticator();
                                     var isSignIn = authenticator.SignIn(Request.GetOwinContext(), userSignInModel.Username, userSignInModel.Password, claims);

@@ -120,8 +120,17 @@
   <data name="ActiveError" xml:space="preserve">
     <value>Kullanıcı aktif etme işleminde hata oluştu. Tekrar deneyiniz.</value>
   </data>
+  <data name="Add" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
   <data name="AddCustomer" xml:space="preserve">
     <value>Yeni Müşteri</value>
+  </data>
+  <data name="AddRole" xml:space="preserve">
+    <value>Rol Ekle</value>
+  </data>
+  <data name="AddUser" xml:space="preserve">
+    <value>Kullanıcı Ekle</value>
   </data>
   <data name="AddUserPage" xml:space="preserve">
     <value>Kullanıcı Ekleme</value>
@@ -161,6 +170,9 @@
   </data>
   <data name="CustomerCredentials" xml:space="preserve">
     <value>Müşteri Kullanıcı Bilgileri</value>
+  </data>
+  <data name="CustomerDetail" xml:space="preserve">
+    <value>Müşteri Detayları</value>
   </data>
   <data name="CustomerGeneralInfo" xml:space="preserve">
     <value>Genel Bilgiler</value>

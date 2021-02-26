@@ -134,7 +134,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                         IsOnline = response.CustomerSessionBundle.FirstSession.IsOnline,
                         NASIPAddress = response.CustomerSessionBundle.FirstSession.NASIPAddress,
                         SessionId = response.CustomerSessionBundle.FirstSession.SessionId,
-                        SessionStart = ResponseParseDatetime(response.CustomerSessionBundle.FirstSession.SessionStart),
+                        SessionStart = Convert.ToDateTime(response.CustomerSessionBundle.FirstSession.SessionStart),
                         SessionTime = TimeSpan.Parse(response.CustomerSessionBundle.FirstSession.SessionTime)
                     },
                     LastSessionInfo = new SessionInfo()
@@ -143,7 +143,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                         IsOnline = response.CustomerSessionBundle.LastSession.IsOnline,
                         NASIPAddress = response.CustomerSessionBundle.LastSession.NASIPAddress,
                         SessionId = response.CustomerSessionBundle.LastSession.SessionId,
-                        SessionStart = ResponseParseDatetime(response.CustomerSessionBundle.LastSession.SessionStart),
+                        SessionStart = Convert.ToDateTime(response.CustomerSessionBundle.LastSession.SessionStart),
                         SessionTime = TimeSpan.Parse(response.CustomerSessionBundle.LastSession.SessionTime)
                     }
                 };

@@ -120,8 +120,17 @@
   <data name="ActiveError" xml:space="preserve">
     <value>There was an error in the user activation process. Please try again.</value>
   </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="AddCustomer" xml:space="preserve">
     <value>New Customer</value>
+  </data>
+  <data name="AddRole" xml:space="preserve">
+    <value>Add Role</value>
+  </data>
+  <data name="AddUser" xml:space="preserve">
+    <value>Add User</value>
   </data>
   <data name="AddUserPage" xml:space="preserve">
     <value>Add User Page</value>
@@ -161,6 +170,9 @@
   </data>
   <data name="CustomerCredentials" xml:space="preserve">
     <value>Customer Credentials Info</value>
+  </data>
+  <data name="CustomerDetail" xml:space="preserve">
+    <value>Customer Details</value>
   </data>
   <data name="CustomerGeneralInfo" xml:space="preserve">
     <value>General Info</value>
