@@ -10,20 +10,25 @@
 @using (Html.BeginForm("AddPermission", "UserOperations", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
-    
-    @Html.LabelFor(m=>m.RoleName)
+
+    @Html.LabelFor(m => m.RoleName)
     @Html.EditorFor(m => m.RoleName)
 
-        foreach (var item in Model.AvaibleRole)
-        {
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox"
-                           name="SelectedRole"
-                           value="@item.Value"
-                           @if (Model.SelectedRole.Contains(item.Value)) { <text> checked </text> } /> @item.Text
-                    </label>
-                </div>
+    foreach (var item in Model.AvaibleRole)
+    {
+        <div class="checkbox">
+            <label>
+                <input type="checkbox"
+                       name="SelectedRole"
+                       value="@item.Value"
+                       @if (Model.SelectedRole.Contains(item.Value)) { <text> checked </text> } /> @item.Text
+                </label>
+            </div>
         }
         <input type="submit" value="@View.Create" />
     }
+
+
+<div style="background-color:red">
+    @Html.Raw(TempData["RoleValid"])
+</div>

@@ -23,6 +23,7 @@
                 <td>@Html.DisplayFor(modelItem => item.UserSubMail)</td>
                 <td>@Html.DisplayFor(modelItem => item.RoleName)</td>
                 <td>@Html.DisplayFor(modelItem => item.IsEnabled)</td>
+                <td>@Html.ActionLink("Kullanıcının Rolünü Güncelle", "UpdateUserRole", new { userId = item.UserId })</td>
                 @if (item.IsEnabled == true)
                 {
                     <td>@Html.ActionLink(View.MakePassive, "DisableUser", "UserOperations", new { userMail = item.UserSubMail }, null)</td>

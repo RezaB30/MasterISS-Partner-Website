@@ -15,8 +15,13 @@ using System.Text;
 
 namespace MasterISS_Partner_WebSite.Controllers
 {
+    [Authorize(Roles = "Setup")]
+    [Authorize(Roles = "Admin,SetupManager")]
     public class SetupController : BaseController
     {
+        private TimeSpan firtSessionTime;
+        private TimeSpan lastSessionTime;
+
         // GET: Setup
         public ActionResult Index([Bind(Prefix = "search")] GetTaskListRequestViewModel taskListRequestModel, int page = 1, int pageSize = 20)
         {
@@ -26,7 +31,15 @@ namespace MasterISS_Partner_WebSite.Controllers
             {
                 taskListRequestModel.TaskListStartDate = DateTime.Now.AddDays(-30).ToString("dd.MM.yyyy HH:mm");
                 taskListRequestModel.TaskListEndDate = DateTime.Now.ToString("dd.MM.yyyy HH:mm");
+                ModelState.Clear();
+                TryValidateModel(taskListRequestModel);
             }
+
+            //else if (!string.IsNullOrEmpty(taskListRequestModel.TaskListStartDate) && string.IsNullOrEmpty(taskListRequestModel.TaskListEndDate))
+            //{
+            //Bunu sonra düşün
+            //}
+
             if (ModelState.IsValid)
             {
                 var startDate = ParseDatetime(taskListRequestModel.TaskListStartDate);
@@ -42,13 +55,14 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                         if (response.ResponseMessage.ErrorCode == 0)
                         {
-                            var list = response.SetupTasks.Where(tlresponse => tlresponse.ContactName.Contains(taskListRequestModel.SearchedName ?? "") && tlresponse.TaskStatus != (int)TaskStatusEnum.Completed).Select(st => new GetTaskListResponseViewModel
+                            var list = response.SetupTasks.Where(tlresponse => tlresponse.ContactName.Contains(taskListRequestModel.SearchedName == null ? "" : taskListRequestModel.SearchedName.ToUpper()) && tlresponse.TaskStatus != (int)TaskStatusEnum.Completed).Select(st => new GetTaskListResponseViewModel
                             {
                                 Address = st.Address,
                                 ContactName = st.ContactName,
                                 CustomerPhoneNo = st.CustomerPhoneNo,
                                 TaskIssueDate = Convert.ToDateTime(st.TaskIssueDate),
                                 TaskNo = st.TaskNo,
+                                XDSLNo=st.XDSLNo
                             });
 
                             var totalCount = list.Count();
@@ -90,7 +104,6 @@ namespace MasterISS_Partner_WebSite.Controllers
                     Province = response.SetupTask.Province,
                     SubscriberNo = response.SetupTask.SubscriberNo,
                     PSTN = response.SetupTask.PSTN,
-                    XDSLNo = response.SetupTask.XDSLNo,
                     XDSLType = (XDSLTypeEnum)response.SetupTask.XDSLType,
                     TaskStatus = TaskStatusDescription(response.SetupTask.TaskStatus),
                     TaskType = TaskTypeDescription(response.SetupTask.TaskType),
@@ -135,7 +148,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                         NASIPAddress = response.CustomerSessionBundle.FirstSession.NASIPAddress,
                         SessionId = response.CustomerSessionBundle.FirstSession.SessionId,
                         SessionStart = Convert.ToDateTime(response.CustomerSessionBundle.FirstSession.SessionStart),
-                        SessionTime = TimeSpan.Parse(response.CustomerSessionBundle.FirstSession.SessionTime)
+                        SessionTime = TimeSpan.TryParse(response.CustomerSessionBundle.FirstSession.SessionTime, out firtSessionTime) == true ? firtSessionTime : TimeSpan.Zero
                     },
                     LastSessionInfo = new SessionInfo()
                     {
@@ -144,7 +157,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                         NASIPAddress = response.CustomerSessionBundle.LastSession.NASIPAddress,
                         SessionId = response.CustomerSessionBundle.LastSession.SessionId,
                         SessionStart = Convert.ToDateTime(response.CustomerSessionBundle.LastSession.SessionStart),
-                        SessionTime = TimeSpan.Parse(response.CustomerSessionBundle.LastSession.SessionTime)
+                        SessionTime = TimeSpan.TryParse(response.CustomerSessionBundle.LastSession.SessionTime, out lastSessionTime) == true ? lastSessionTime : TimeSpan.Zero
                     }
                 };
                 return PartialView("_SessionInfo", sessionInfo);
@@ -250,6 +263,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
+        [Authorize(Roles = "UpdateTaskStatus")]
         public ActionResult UpdateTaskStatus(AddTaskStatusUpdateViewModel updateTaskStatusViewModel)
         {
             if (updateTaskStatusViewModel.FaultCodes != FaultCodeEnum.RendezvousMade)

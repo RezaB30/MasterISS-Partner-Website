@@ -138,6 +138,9 @@
   <data name="AuthenticateError" xml:space="preserve">
     <value>Giriş İşlemi Başarısız.</value>
   </data>
+  <data name="AvaibleRole" xml:space="preserve">
+    <value>Bu isimli bir rol mevcut</value>
+  </data>
   <data name="Available" xml:space="preserve">
     <value>Mevcut</value>
   </data>
@@ -278,6 +281,12 @@
   </data>
   <data name="ReturnUserOperations" xml:space="preserve">
     <value>Geri</value>
+  </data>
+  <data name="RoleNameValid" xml:space="preserve">
+    <value>Rol ismi boş geçilemez</value>
+  </data>
+  <data name="RoleValidPermission" xml:space="preserve">
+    <value>Lütfen yetki seçiniz.</value>
   </data>
   <data name="SaleAllowanceDetails" xml:space="preserve">
     <value>Satış Hakediş Detayları</value>

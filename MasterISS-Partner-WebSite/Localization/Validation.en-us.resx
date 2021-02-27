@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DateFormatErrorReservationDate" xml:space="preserve">
+    <value>Invalid Date Format</value>
+  </data>
   <data name="DateValid" xml:space="preserve">
     <value>Login in the format dd.MM.yyyy</value>
   </data>
@@ -141,10 +144,10 @@
   <data name="RequiredMaxDecription" xml:space="preserve">
     <value>Please enter a maksimum 450 characters.</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value>Login in the format dd.MM.yyyy HH:mm</value>
-  </data>
   <data name="ValidPhoneNumber" xml:space="preserve">
     <value>Enter a 10-digit phone number.</value>
+  </data>
+  <data name="XDSLNoValid" xml:space="preserve">
+    <value>XDSL Number must be 10 digits</value>
   </data>
 </root>

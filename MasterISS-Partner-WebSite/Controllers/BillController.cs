@@ -11,8 +11,8 @@ using System.Web.Mvc;
 
 namespace MasterISS_Partner_WebSite.Controllers
 {
-    //[Authorize(Roles = "Payment")]
-    //[Authorize(Roles ="PaymentManager,Admin")]
+    [Authorize(Roles = "Payment")]
+    [Authorize(Roles = "PaymentManager,Admin")]
     public class BillController : BaseController
     {
         // GET: Bill
@@ -32,14 +32,18 @@ namespace MasterISS_Partner_WebSite.Controllers
                 var wrapper = new WebServiceWrapper();
                 var response = wrapper.UserBillList(billListRequestViewModel.SubscriberNo);
 
-                if (response.BillListResponse.Bills != null && response.ResponseMessage.ErrorCode == 0)
+                if ( response.ResponseMessage.ErrorCode == 0)
                 {
-                    ViewBag.Search = billListRequestViewModel;
-                    return View("Index", BillList(response));
+                    if (response.BillListResponse.Bills != null)
+                    {
+                        ViewBag.Search = billListRequestViewModel;
+                        return View("Index", BillList(response));
+                    }
                 }
                 else if (response.ResponseMessage.ErrorCode == 200)
                 {
                     ViewBag.ResponseError = Localization.View.GeneralErrorDescription;
+                    return View("Index", BillList(response));
                 }
 
                 ViewBag.ResponseError = response.ResponseMessage.ErrorMessage;
@@ -49,6 +53,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             return View("Index");
         }
 
+        [Authorize(Roles = "PaymentCreditReportNotDetail")]
         [HttpPost]
         public ActionResult CreditReportNotDetail()
         {
@@ -63,7 +68,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             return Json(new { errorMessage = response.ResponseMessage.ErrorMessage }, JsonRequestBehavior.AllowGet);
         }
 
-        //[HttpPost]
+        [Authorize(Roles = "PaymentCreditReportDetail")]
         public ActionResult CreditReportDetail()
         {
             var wrapper = new WebServiceWrapper();
@@ -106,49 +111,54 @@ namespace MasterISS_Partner_WebSite.Controllers
         [HttpPost]
         public ActionResult BillOperations(long[] selectedBills, string SubscriberNo)
         {
-            var billListRequestViewModel = new GetBillCollectionBySubscriberNoViewModel()
+            if (selectedBills!= null)
             {
-                SubscriberNo = SubscriberNo
-            };
-
-            var wrapper = new WebServiceWrapper();
-            var response = wrapper.UserBillList(SubscriberNo);
-
-            if (response.ResponseMessage.ErrorCode == 0)
-            {
-                var userBillList = response.BillListResponse.Bills.OrderBy(blr => blr.IssueDate).Select(blr => blr.ID).ToArray();
-
-                var counter = 0;
-                for (int i = 0; i < selectedBills.Length; i++)
+                var billListRequestViewModel = new GetBillCollectionBySubscriberNoViewModel()
                 {
-                    if (userBillList[i] != selectedBills[i])
+                    SubscriberNo = SubscriberNo
+                };
+
+                var wrapper = new WebServiceWrapper();
+                var response = wrapper.UserBillList(SubscriberNo);
+
+                if (response.ResponseMessage.ErrorCode == 0)
+                {
+
+                    var userBillList = response.BillListResponse.Bills.OrderBy(blr => blr.IssueDate).Select(blr => blr.ID).ToArray();
+
+                    var counter = 0;
+                    for (int i = 0; i < selectedBills.Length; i++)
                     {
-                        counter++;
+                        if (userBillList[i] != selectedBills[i])
+                        {
+                            counter++;
+                        }
                     }
-                }
 
-                if (counter != 0)
-                {
-                    ViewBag.PayOldBillError = Localization.BillView.PayOldBillError;
-
-                    return View(viewName: "Index", model: BillList(response));
-                }
-
-                else
-                {
-                    wrapper = new WebServiceWrapper();
-                    var responsePayBill = wrapper.PayBill(selectedBills);
-                    if (!string.IsNullOrEmpty(responsePayBill.ErrorMessage))
+                    if (counter != 0)
                     {
-                        ViewBag.PayBillError = Localization.BillView.PayBillError;
+                        ViewBag.PayOldBillError = Localization.BillView.PayOldBillError;
+
+                        return View(viewName: "Index", model: BillList(response));
                     }
+
                     else
                     {
-                        return RedirectToAction("Succesfull");
+                        wrapper = new WebServiceWrapper();
+                        var responsePayBill = wrapper.PayBill(selectedBills);
+                        if (!string.IsNullOrEmpty(responsePayBill.ErrorMessage))
+                        {
+                            ViewBag.PayBillError = Localization.BillView.PayBillError;
+                        }
+                        else
+                        {
+                            return RedirectToAction("Succesfull");
+                        }
                     }
                 }
+                return View(viewName: "Index", model: BillList(response));
             }
-            return View(viewName: "Index", model: BillList(response));
+            return RedirectToAction("Index");
         }
         private BillCollectionViewModel BillList(PartnerServiceBillListResponse response)
         {

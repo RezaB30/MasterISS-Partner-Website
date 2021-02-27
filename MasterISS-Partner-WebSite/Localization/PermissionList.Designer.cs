@@ -61,20 +61,29 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Detaylı Kredi Raporu Görüntüleme.
+        /// </summary>
+        public static string PaymentCreditReportDetail {
+            get {
+                return ResourceManager.GetString("PaymentCreditReportDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bayi Bakiye Görüntüleme.
+        /// </summary>
+        public static string PaymentCreditReportNotDetail {
+            get {
+                return ResourceManager.GetString("PaymentCreditReportNotDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ödeme Temsilcisi.
         /// </summary>
         public static string PaymentManager {
             get {
                 return ResourceManager.GetString("PaymentManager", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Satış Listesi Görüntüle.
-        /// </summary>
-        public static string SaleList {
-            get {
-                return ResourceManager.GetString("SaleList", resourceCulture);
             }
         }
         
@@ -93,6 +102,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string SetupManager {
             get {
                 return ResourceManager.GetString("SetupManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Görev Durumunu Güncelleme.
+        /// </summary>
+        public static string UpdateTaskStatus {
+            get {
+                return ResourceManager.GetString("UpdateTaskStatus", resourceCulture);
             }
         }
     }

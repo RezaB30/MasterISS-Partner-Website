@@ -132,6 +132,9 @@
   <data name="Amount" xml:space="preserve">
     <value>Tutar</value>
   </data>
+  <data name="ApartmentId" xml:space="preserve">
+    <value>Daire No</value>
+  </data>
   <data name="AttachmentType" xml:space="preserve">
     <value>Eklenti Tipi</value>
   </data>
@@ -155,6 +158,9 @@
   </data>
   <data name="BirthPlace" xml:space="preserve">
     <value>Doğum Yeri</value>
+  </data>
+  <data name="BuildingId" xml:space="preserve">
+    <value>Bina No</value>
   </data>
   <data name="CardTypeId" xml:space="preserve">
     <value>Kart Tipi</value>
@@ -229,6 +235,9 @@
     <value>Altyapı Uzaklığı</value>
   </data>
   <data name="District" xml:space="preserve">
+    <value>İlçe</value>
+  </data>
+  <data name="DistrictId" xml:space="preserve">
     <value>İlçe</value>
   </data>
   <data name="Domain" xml:space="preserve">
@@ -354,6 +363,9 @@
   <data name="NationalityId" xml:space="preserve">
     <value>Uyruk</value>
   </data>
+  <data name="NeighborhoodId" xml:space="preserve">
+    <value>Mahalle</value>
+  </data>
   <data name="Neighbourhood" xml:space="preserve">
     <value>Semt</value>
   </data>
@@ -396,6 +408,9 @@
   <data name="Province" xml:space="preserve">
     <value>İl</value>
   </data>
+  <data name="ProvinceId" xml:space="preserve">
+    <value>İl</value>
+  </data>
   <data name="PSTN" xml:space="preserve">
     <value>PSTN</value>
   </data>
@@ -414,6 +429,9 @@
   <data name="ResidencyAddress" xml:space="preserve">
     <value>İkamet Adresi</value>
   </data>
+  <data name="RoleId" xml:space="preserve">
+    <value>Kullanıcının Rolü</value>
+  </data>
   <data name="RoleName" xml:space="preserve">
     <value>Rolü</value>
   </data>
@@ -422,6 +440,9 @@
   </data>
   <data name="RowNo" xml:space="preserve">
     <value>Sıra Numarası</value>
+  </data>
+  <data name="RuralRegionsId" xml:space="preserve">
+    <value>Köy</value>
   </data>
   <data name="SameSetupAddress" xml:space="preserve">
     <value>Kurulum Adresi ile Aynı</value>
@@ -455,6 +476,9 @@
   </data>
   <data name="State" xml:space="preserve">
     <value>Durum</value>
+  </data>
+  <data name="StreetId" xml:space="preserve">
+    <value>Sokak</value>
   </data>
   <data name="SubscriberName" xml:space="preserve">
     <value>Abone Adı</value>

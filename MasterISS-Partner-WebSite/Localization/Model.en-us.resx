@@ -132,6 +132,9 @@
   <data name="Amount" xml:space="preserve">
     <value>Amount</value>
   </data>
+  <data name="ApartmentId" xml:space="preserve">
+    <value>Apartment No</value>
+  </data>
   <data name="AttachmentType" xml:space="preserve">
     <value>Attachment Type</value>
   </data>
@@ -155,6 +158,9 @@
   </data>
   <data name="BirthPlace" xml:space="preserve">
     <value>Birth Place</value>
+  </data>
+  <data name="BuildingId" xml:space="preserve">
+    <value>Building No</value>
   </data>
   <data name="CardTypeId" xml:space="preserve">
     <value>Card Type</value>
@@ -229,6 +235,9 @@
     <value>Infrastructure Distance</value>
   </data>
   <data name="District" xml:space="preserve">
+    <value>District</value>
+  </data>
+  <data name="DistrictId" xml:space="preserve">
     <value>District</value>
   </data>
   <data name="Domain" xml:space="preserve">
@@ -354,6 +363,9 @@
   <data name="NationalityId" xml:space="preserve">
     <value>Nationality</value>
   </data>
+  <data name="NeighborhoodId" xml:space="preserve">
+    <value>Neighborhood</value>
+  </data>
   <data name="Neighbourhood" xml:space="preserve">
     <value>Neighbourhood</value>
   </data>
@@ -396,6 +408,9 @@
   <data name="Province" xml:space="preserve">
     <value>Province</value>
   </data>
+  <data name="ProvinceId" xml:space="preserve">
+    <value>Province</value>
+  </data>
   <data name="PSTN" xml:space="preserve">
     <value>PSTN</value>
   </data>
@@ -414,6 +429,9 @@
   <data name="ResidencyAddress" xml:space="preserve">
     <value>Residency Address</value>
   </data>
+  <data name="RoleId" xml:space="preserve">
+    <value>User's Role</value>
+  </data>
   <data name="RoleName" xml:space="preserve">
     <value>Role</value>
   </data>
@@ -422,6 +440,9 @@
   </data>
   <data name="RowNo" xml:space="preserve">
     <value>Row Number</value>
+  </data>
+  <data name="RuralRegionsId" xml:space="preserve">
+    <value>Region</value>
   </data>
   <data name="SameSetupAddress" xml:space="preserve">
     <value>Same as the Setup Address</value>
@@ -455,6 +476,9 @@
   </data>
   <data name="State" xml:space="preserve">
     <value>State</value>
+  </data>
+  <data name="StreetId" xml:space="preserve">
+    <value>Street</value>
   </data>
   <data name="SubscriberName" xml:space="preserve">
     <value>Subscriber Name</value>

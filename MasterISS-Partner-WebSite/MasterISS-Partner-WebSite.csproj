@@ -392,6 +392,7 @@
     <Compile Include="ViewModels\Setup\UploadFileRequestViewModel.cs" />
     <Compile Include="ViewModels\SMSConfirmationViewModel.cs" />
     <Compile Include="ViewModels\Settings\VerimorSettingsWiewModel.cs" />
+    <Compile Include="ViewModels\UpdateUserRoleViewModel.cs" />
     <Compile Include="ViewModels\UserListViewModel.cs" />
     <Compile Include="WebServiceWrapper.cs" />
   </ItemGroup>
@@ -625,6 +626,7 @@
     <Content Include="Views\Setup\UploadDocument.cshtml" />
     <Content Include="Views\Setup\UpdateClientLocation.cshtml" />
     <Content Include="Views\Revenues\Index.cshtml" />
+    <Content Include="Views\UserOperations\UpdateUserRole.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

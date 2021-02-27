@@ -106,6 +106,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Daire No.
+        /// </summary>
+        public static string ApartmentId {
+            get {
+                return ResourceManager.GetString("ApartmentId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Eklenti Tipi.
         /// </summary>
         public static string AttachmentType {
@@ -174,6 +183,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string BirthPlace {
             get {
                 return ResourceManager.GetString("BirthPlace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bina No.
+        /// </summary>
+        public static string BuildingId {
+            get {
+                return ResourceManager.GetString("BuildingId", resourceCulture);
             }
         }
         
@@ -399,6 +417,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string District {
             get {
                 return ResourceManager.GetString("District", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İlçe.
+        /// </summary>
+        public static string DistrictId {
+            get {
+                return ResourceManager.GetString("DistrictId", resourceCulture);
             }
         }
         
@@ -772,6 +799,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mahalle.
+        /// </summary>
+        public static string NeighborhoodId {
+            get {
+                return ResourceManager.GetString("NeighborhoodId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Semt.
         /// </summary>
         public static string Neighbourhood {
@@ -898,6 +934,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to İl.
+        /// </summary>
+        public static string ProvinceId {
+            get {
+                return ResourceManager.GetString("ProvinceId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PSTN.
         /// </summary>
         public static string PSTN {
@@ -952,6 +997,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kullanıcının Rolü.
+        /// </summary>
+        public static string RoleId {
+            get {
+                return ResourceManager.GetString("RoleId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rolü.
         /// </summary>
         public static string RoleName {
@@ -975,6 +1029,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string RowNo {
             get {
                 return ResourceManager.GetString("RowNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Köy.
+        /// </summary>
+        public static string RuralRegionsId {
+            get {
+                return ResourceManager.GetString("RuralRegionsId", resourceCulture);
             }
         }
         
@@ -1074,6 +1137,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string State {
             get {
                 return ResourceManager.GetString("State", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sokak.
+        /// </summary>
+        public static string StreetId {
+            get {
+                return ResourceManager.GetString("StreetId", resourceCulture);
             }
         }
         

@@ -10,6 +10,7 @@ namespace MasterISS_Partner_WebSite.ViewModels
     public class AddPermissionViewModel
     {
         [Display(Name = "RolePermissionName", ResourceType = typeof(Localization.Model))]
+        [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
         public string RoleName { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]

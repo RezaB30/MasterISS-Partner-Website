@@ -10,7 +10,8 @@ namespace MasterISS_Partner_WebSite.Enums
         SaleManager = 1,
         SetupManager = 2,
         PaymentManager = 3,
-        SaleList=10
-
+        UpdateTaskStatus = 10,
+        PaymentCreditReportDetail = 11,
+        PaymentCreditReportNotDetail = 14,
     }
 }

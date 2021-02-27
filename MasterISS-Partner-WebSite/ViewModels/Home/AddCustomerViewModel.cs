@@ -26,10 +26,13 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         public int? SubscriptionRegistrationTypeId { get; set; }
 
         [Display(Name = "PSTNNo", ResourceType = typeof(Localization.Model))]
+        [RegularExpression(@"^((\d{3})(\d{3})(\d{2})(\d{2}))$", ErrorMessageResourceName = "ValidPhoneNumber", ErrorMessageResourceType = typeof(Localization.Validation))]
         public string PSTN { get; set; }
 
         [Display(Name = "XDSLNoByExtraInfo", ResourceType = typeof(Localization.Model))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        [MaxLength(10, ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "XDSLNoValid")]
+        [MinLength(10, ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "XDSLNoValid")]
         public string XDSLNo { get; set; }
     }
 

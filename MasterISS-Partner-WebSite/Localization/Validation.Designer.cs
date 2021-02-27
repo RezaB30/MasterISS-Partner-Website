@@ -61,7 +61,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to dd.MM.yyyy HH:mm formatında giriş yapınız..
+        ///   Looks up a localized string similar to Geçersiz Tarih Biçimi.
         /// </summary>
         public static string DateFormatErrorReservationDate {
             get {
@@ -147,6 +147,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string ValidPhoneNumber {
             get {
                 return ResourceManager.GetString("ValidPhoneNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to XDSL Numarası 10 haneli olmalıdır.
+        /// </summary>
+        public static string XDSLNoValid {
+            get {
+                return ResourceManager.GetString("XDSLNoValid", resourceCulture);
             }
         }
     }

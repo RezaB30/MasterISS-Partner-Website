@@ -27,7 +27,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                     IsEnabled = u.IsEnabled,
                     NameSurname = u.NameSurname,
                     UserSubMail = u.UserSubMail,
-                    UserRole = u.Role.RoleName
+                    UserRole = u.Role.RoleName,
+                    UserId = u.Id
                 }).ToList();
 
                 var userlistViewModel = new List<UserListViewModel>();
@@ -38,7 +39,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                         IsEnabled = item.IsEnabled,
                         NameSurname = item.NameSurname,
                         UserSubMail = item.UserSubMail,
-                        RoleName = item.UserRole
+                        RoleName = item.UserRole,
+                        UserId = item.UserId
                     });
                 }
                 return View(userlistViewModel);
@@ -80,30 +82,42 @@ namespace MasterISS_Partner_WebSite.Controllers
                     var claimList = new ClaimInfo();
                     var partnerId = claimList.PartnerId();
 
-                    var role = new Role()
+                    var validRolename = db.Role.Where(r => r.RoleName == addPermissionViewModel.RoleName && r.PartnerId == partnerId).FirstOrDefault();
+                    if (validRolename == null)
                     {
-                        RoleName = addPermissionViewModel.RoleName,
-                        PartnerId = partnerId
-                    };
-                    db.Role.Add(role);
-
-                    for (int i = 0; i < addPermissionViewModel.SelectedRole.Count; i++)
-                    {
-                        var permissionId = addPermissionViewModel.SelectedRole.ToArray()[i];
-                        var convertedRoleId = Convert.ToInt32(permissionId);
-
-                        var rolePermission = new RolePermission()
+                        if (addPermissionViewModel.SelectedRole != null && addPermissionViewModel.SelectedRole.Count > 0)
                         {
-                            RoleId = role.Id,
-                            PermissionId = convertedRoleId
-                        };
-                        db.RolePermission.Add(rolePermission);
-                        db.SaveChanges();
+                            var role = new Role()
+                            {
+                                RoleName = addPermissionViewModel.RoleName,
+                                PartnerId = partnerId
+                            };
+                            db.Role.Add(role);
+
+                            for (int i = 0; i < addPermissionViewModel.SelectedRole.Count; i++)
+                            {
+                                var permissionId = addPermissionViewModel.SelectedRole.ToArray()[i];
+                                var convertedRoleId = Convert.ToInt32(permissionId);
+
+                                var rolePermission = new RolePermission()
+                                {
+                                    RoleId = role.Id,
+                                    PermissionId = convertedRoleId
+                                };
+                                db.RolePermission.Add(rolePermission);
+                                db.SaveChanges();
+                            }
+                            return RedirectToAction("Index");
+                        }
+                        TempData["RoleValid"] = Localization.View.RoleValidPermission;
+                        return RedirectToAction("AddPermission");
                     }
-                    return View("Index");
+                    TempData["RoleValid"] = Localization.View.AvaibleRole;
+                    return RedirectToAction("AddPermission");
                 }
             }
-            return View(addPermissionViewModel);
+            TempData["RoleValid"] = Localization.View.RoleNameValid;
+            return Redirect("AddPermission");
         }
 
         public ActionResult AddUser()
@@ -168,6 +182,53 @@ namespace MasterISS_Partner_WebSite.Controllers
             }
             return View(newUserViewModel);
 
+        }
+
+
+        public ActionResult UpdateUserRole(int userId)
+        {
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var claimInfo = new ClaimInfo();
+                var partnerId = claimInfo.PartnerId();
+                var user = db.User.Find(userId);
+                var userAvaibleRole = user.RoleId;
+                ViewBag.RoleList = new SelectList(db.Role.Where(r => r.PartnerId == partnerId).Select(r => new { Value = r.Id, Name = r.RoleName }).ToArray(), "Value", "Name");
+
+                var userViewModel = new UpdateUserRoleViewModel()
+                {
+                    RoleId = userAvaibleRole,
+                    UserEmail = user.UserSubMail,
+                    UserNameSurname = user.NameSurname,
+                    UserId = userId
+                };
+
+                return View(userViewModel);
+            }
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult UpdateUserRole(UpdateUserRoleViewModel updateUserRoleViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var db = new PartnerWebSiteEntities())
+                {
+                    var validRole = db.Role.Where(r => r.Id == updateUserRoleViewModel.RoleId).FirstOrDefault();
+                    if (validRole != null)
+                    {
+                        var user = db.User.Find(updateUserRoleViewModel.UserId);
+
+                        user.RoleId = updateUserRoleViewModel.RoleId;
+                        db.SaveChanges();
+                        return RedirectToAction("Successful");
+                    }
+                    RedirectToAction("Index");
+
+                }
+            }
+            return View(updateUserRoleViewModel);
         }
 
         private bool ValidEmail(string eMail)

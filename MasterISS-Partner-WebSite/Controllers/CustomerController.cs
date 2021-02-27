@@ -13,6 +13,8 @@ using System.Web.Mvc;
 
 namespace MasterISS_Partner_WebSite.Controllers
 {
+    [Authorize(Roles = "Sale")]
+    [Authorize(Roles = "Admin,SaleManager")]
     public class CustomerController : BaseController
     {
         // GET: Customer
@@ -166,7 +168,8 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                 if (addCustomerViewModel.ExtraInfo.SubscriptionRegistrationTypeId != (int)RadiusR.DB.Enums.SubscriptionRegistrationType.Transition)
                 {
-                    RemoveModel("ExtraInfo");
+                    addCustomerViewModel.ExtraInfo.XDSLNo = null;
+                    ModelState.Remove("ExtraInfo.XDSLNo");
                 }
 
                 if (ModelState.IsValid)
@@ -450,6 +453,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                 }
                 else
                 {
+                    Session.Remove("Counter");
                     return RedirectToAction("NewCustomer");
                 }
             }

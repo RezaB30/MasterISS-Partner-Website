@@ -124,6 +124,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bu isimli bir rol mevcut.
+        /// </summary>
+        public static string AvaibleRole {
+            get {
+                return ResourceManager.GetString("AvaibleRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mevcut.
         /// </summary>
         public static string Available {
@@ -543,6 +552,24 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string ReturnUserOperations {
             get {
                 return ResourceManager.GetString("ReturnUserOperations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rol ismi boş geçilemez.
+        /// </summary>
+        public static string RoleNameValid {
+            get {
+                return ResourceManager.GetString("RoleNameValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen yetki seçiniz..
+        /// </summary>
+        public static string RoleValidPermission {
+            get {
+                return ResourceManager.GetString("RoleValidPermission", resourceCulture);
             }
         }
         

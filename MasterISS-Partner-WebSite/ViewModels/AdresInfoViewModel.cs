@@ -10,24 +10,31 @@ namespace MasterISS_Partner_WebSite.ViewModels
     public class AddressInfoViewModel
     {
         [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
+        [Display(Name = "ProvinceId", ResourceType = typeof(Localization.Model))]
         public long? ProvinceId { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
+        [Display(Name = "DistrictId", ResourceType = typeof(Localization.Model))]
         public long? DistrictId { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
+        [Display(Name = "RuralRegionsId", ResourceType = typeof(Localization.Model))]
         public long? RuralRegionsId { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
+        [Display(Name = "NeighborhoodId", ResourceType = typeof(Localization.Model))]
         public long? NeighborhoodId { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
+        [Display(Name = "StreetId", ResourceType = typeof(Localization.Model))]
         public long? StreetId { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
+        [Display(Name = "BuildingId", ResourceType = typeof(Localization.Model))]
         public long? BuildingId { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
+        [Display(Name = "ApartmentId", ResourceType = typeof(Localization.Model))]
         public long? ApartmentId { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]

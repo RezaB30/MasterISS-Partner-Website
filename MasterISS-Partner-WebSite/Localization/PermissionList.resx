@@ -117,16 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="PaymentCreditReportDetail" xml:space="preserve">
+    <value>Detaylı Kredi Raporu Görüntüleme</value>
+  </data>
+  <data name="PaymentCreditReportNotDetail" xml:space="preserve">
+    <value>Bayi Bakiye Görüntüleme</value>
+  </data>
   <data name="PaymentManager" xml:space="preserve">
     <value>Ödeme Temsilcisi</value>
-  </data>
-  <data name="SaleList" xml:space="preserve">
-    <value>Satış Listesi Görüntüle</value>
   </data>
   <data name="SaleManager" xml:space="preserve">
     <value>Satış Temsilcisi</value>
   </data>
   <data name="SetupManager" xml:space="preserve">
     <value>Kurulum Temsilcisi</value>
+  </data>
+  <data name="UpdateTaskStatus" xml:space="preserve">
+    <value>Görev Durumunu Güncelleme</value>
   </data>
 </root>

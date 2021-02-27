@@ -8,31 +8,31 @@
 }
 
 <div id="addressQueryContainer">
-    <div>
+    <div class="form-group">
         @Html.DropDownListFor(nvpl => nvpl.ProvinceId, (SelectList)ViewBag.Provinces, HomeView.SelectProvince, new { @id = "province" })
     </div>
 
-    <div>
+    <div class="form-group">
         @Html.DropDownListFor(nvpl => nvpl.DistrictId, new SelectList(""), HomeView.SelectDistrict, new { @id = "district", @disabled = "disabled" })
     </div>
 
-    <div>
+    <div class="form-group">
         @Html.DropDownListFor(nvpl => nvpl.RuralRegionsId, new SelectList(""), HomeView.SelectRegions, new { @id = "ruralregions", @disabled = "disabled" })
     </div>
 
-    <div>
+    <div class="form-group">
         @Html.DropDownListFor(nvpl => nvpl.NeighborhoodId, new SelectList(""), HomeView.SelectNeigborhood, new { @id = "neighborhood", @disabled = "disabled" })
     </div>
 
-    <div>
+    <div class="form-group">
         @Html.DropDownListFor(nvpl => nvpl.StreetId, new SelectList(""), HomeView.SelectStreet, new { @id = "street", @disabled = "disabled" })
     </div>
 
-    <div>
+    <div class="form-group">
         @Html.DropDownListFor(nvpl => nvpl.BuildingId, new SelectList(""), HomeView.SelectBuilding, new { @id = "building", @disabled = "disabled" })
     </div>
 
-    <div>
+    <div class="form-group">
         @Html.DropDownListFor(nvpl => nvpl.ApartmentId, new SelectList(""), HomeView.SelectApartment, new { @id = "apartment", @disabled = "disabled" })
     </div>
 </div>

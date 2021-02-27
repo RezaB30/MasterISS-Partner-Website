@@ -117,16 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="PaymentCreditReportDetail" xml:space="preserve">
+    <value>Viewing a Detailed Credit Report</value>
+  </data>
+  <data name="PaymentCreditReportNotDetail" xml:space="preserve">
+    <value>Partner Balance Viewing</value>
+  </data>
   <data name="PaymentManager" xml:space="preserve">
     <value>Payment Manager</value>
-  </data>
-  <data name="SaleList" xml:space="preserve">
-    <value>Sale List Display</value>
   </data>
   <data name="SaleManager" xml:space="preserve">
     <value>Sale Manager</value>
   </data>
   <data name="SetupManager" xml:space="preserve">
     <value>Setup Manager</value>
+  </data>
+  <data name="UpdateTaskStatus" xml:space="preserve">
+    <value>Updating Task Status</value>
   </data>
 </root>

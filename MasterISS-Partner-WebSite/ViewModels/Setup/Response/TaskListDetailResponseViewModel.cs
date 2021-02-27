@@ -24,8 +24,6 @@ namespace MasterISS_Partner_WebSite.ViewModels.Setup.Response
         [Display(ResourceType = typeof(Localization.Model), Name = "BBK")]
         public string BBK { get; set; }
 
-        [Display(ResourceType = typeof(Localization.Model), Name = "XDSLNo")]
-        public string XDSLNo { get; set; }
 
         [Display(ResourceType = typeof(Localization.Model), Name = "PSTN")]
         public string PSTN { get; set; }

@@ -8,6 +8,8 @@ namespace MasterISS_Partner_WebSite.ViewModels
 {
     public class UserListViewModel
     {
+        public int UserId { get; set; }
+
         [Display(ResourceType = typeof(Localization.Model), Name = "Username")]
         public string UserSubMail { get; set; }
 

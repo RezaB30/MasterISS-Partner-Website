@@ -138,6 +138,9 @@
   <data name="AuthenticateError" xml:space="preserve">
     <value>Login Failed.</value>
   </data>
+  <data name="AvaibleRole" xml:space="preserve">
+    <value>This role avaible.</value>
+  </data>
   <data name="Available" xml:space="preserve">
     <value>Available</value>
   </data>
@@ -278,6 +281,12 @@
   </data>
   <data name="ReturnUserOperations" xml:space="preserve">
     <value>Back</value>
+  </data>
+  <data name="RoleNameValid" xml:space="preserve">
+    <value>The role name cannot be blank.</value>
+  </data>
+  <data name="RoleValidPermission" xml:space="preserve">
+    <value>Please select permission.</value>
   </data>
   <data name="SaleAllowanceDetails" xml:space="preserve">
     <value>Sale Allowance Details</value>
