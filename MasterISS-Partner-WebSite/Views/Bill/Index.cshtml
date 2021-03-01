@@ -38,8 +38,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    </tr>
                     @foreach (var itemBill in Model.Bills)
                     {
                         counter++;
@@ -66,16 +64,21 @@
     @ViewBag.PayBillError
 </div>
 
-<div>
-    @MasterISS_Partner_WebSite.Localization.BillView.TotalCredit
-    <div id="total-credit" style="background-color:red">
+@if (User.IsInRole("PaymentCreditReportNotDetail") || User.IsInRole("Admin"))
+{
+    <div>
+        @MasterISS_Partner_WebSite.Localization.BillView.TotalCredit
+        <div id="total-credit" style="background-color:red">
+        </div>
     </div>
-</div>
+}
 
-<div>
-    @Html.ActionLink("Detaylı Kredi Raporu", "CreditReportDetail")
-</div>
-
+@if (User.IsInRole("PaymentCreditReportDetail") || User.IsInRole("Admin"))
+{
+    <div>
+        @Html.ActionLink("Detaylı Kredi Raporu", "CreditReportDetail")
+    </div>
+}
 @section Javascript{
     <script>
         $(document).ready(function () {

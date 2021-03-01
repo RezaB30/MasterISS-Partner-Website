@@ -1,5 +1,6 @@
 ﻿using MasterISS_Partner_WebSite.PartnerServiceReference;
 using MasterISS_Partner_WebSite.ViewModels;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -15,6 +16,7 @@ namespace MasterISS_Partner_WebSite.Controllers
     [Authorize(Roles = "PaymentManager,Admin")]
     public class BillController : BaseController
     {
+        private static Logger Logger = LogManager.GetLogger("AppLogger");
         // GET: Bill
         public ActionResult Index()
         {
@@ -32,7 +34,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                 var wrapper = new WebServiceWrapper();
                 var response = wrapper.UserBillList(billListRequestViewModel.SubscriberNo);
 
-                if ( response.ResponseMessage.ErrorCode == 0)
+                if (response.ResponseMessage.ErrorCode == 0)
                 {
                     if (response.BillListResponse.Bills != null)
                     {
@@ -53,7 +55,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             return View("Index");
         }
 
-        [Authorize(Roles = "PaymentCreditReportNotDetail")]
+        [Authorize(Roles = "PaymentCreditReportNotDetail,Admin")]
         [HttpPost]
         public ActionResult CreditReportNotDetail()
         {
@@ -68,7 +70,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             return Json(new { errorMessage = response.ResponseMessage.ErrorMessage }, JsonRequestBehavior.AllowGet);
         }
 
-        [Authorize(Roles = "PaymentCreditReportDetail")]
+        [Authorize(Roles = "PaymentCreditReportDetail,Admin")]
         public ActionResult CreditReportDetail()
         {
             var wrapper = new WebServiceWrapper();
@@ -111,7 +113,7 @@ namespace MasterISS_Partner_WebSite.Controllers
         [HttpPost]
         public ActionResult BillOperations(long[] selectedBills, string SubscriberNo)
         {
-            if (selectedBills!= null)
+            if (selectedBills != null)
             {
                 var billListRequestViewModel = new GetBillCollectionBySubscriberNoViewModel()
                 {
@@ -152,6 +154,11 @@ namespace MasterISS_Partner_WebSite.Controllers
                         }
                         else
                         {
+                            //LOG
+                            wrapper = new WebServiceWrapper();
+                            Logger.Info("Customer's bill paid : " + SubscriberNo + ", by: " + wrapper.GetUserSubMail());
+                            //LOG
+
                             return RedirectToAction("Succesfull");
                         }
                     }

@@ -354,6 +354,9 @@
   <data name="StartDateBiggerThanEndDateError" xml:space="preserve">
     <value>The Start Date Cannot Be Greater than the End Date.</value>
   </data>
+  <data name="StartDateValid" xml:space="preserve">
+    <value>Enter the Start Date in the correct format</value>
+  </data>
   <data name="Submit" xml:space="preserve">
     <value>Submit</value>
   </data>

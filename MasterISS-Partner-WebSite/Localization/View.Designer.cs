@@ -772,6 +772,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Başlangıç Tarihini Doğru formatta giriniz.
+        /// </summary>
+        public static string StartDateValid {
+            get {
+                return ResourceManager.GetString("StartDateValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kaydet.
         /// </summary>
         public static string Submit {

@@ -765,7 +765,7 @@ namespace MasterISS_Partner_WebSite
                    .Select(c => c.Value).SingleOrDefault();
             return userMail;
         }
-        private string GetUserSubMail()
+        public string GetUserSubMail()
         {
             var claimInfo = new ClaimInfo();
 

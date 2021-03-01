@@ -1,6 +1,7 @@
 ﻿using MasterISS_Partner_WebSite.Enums;
 using MasterISS_Partner_WebSite.Models;
 using MasterISS_Partner_WebSite.ViewModels;
+using NLog;
 using RezaB.Data.Localization;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ namespace MasterISS_Partner_WebSite.Controllers
     [Authorize(Roles = "Admin")]
     public class UserOperationsController : BaseController
     {
+        private static Logger Logger = LogManager.GetLogger("AppLogger");
+
         // GET: UserOperations
         public ActionResult Index()
         {
@@ -107,6 +110,11 @@ namespace MasterISS_Partner_WebSite.Controllers
                                 db.RolePermission.Add(rolePermission);
                                 db.SaveChanges();
                             }
+                            //LOG
+                            var wrapper = new WebServiceWrapper();
+                            Logger.Info("Added permission: " + role.RoleName + ", by: " + wrapper.GetUserSubMail());
+                            //LOG
+
                             return RedirectToAction("Index");
                         }
                         TempData["RoleValid"] = Localization.View.RoleValidPermission;
@@ -166,6 +174,11 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                             db.SaveChanges();
 
+                            //LOG
+                            wrapper = new WebServiceWrapper();
+                            Logger.Info("Added User: " + newUser.UserSubMail + ", by: " + wrapper.GetUserSubMail());
+                            //LOG
+
                             return RedirectToAction("Successful");
                         }
                         else if (response.ResponseMessage.ErrorCode == 200)
@@ -183,7 +196,6 @@ namespace MasterISS_Partner_WebSite.Controllers
             return View(newUserViewModel);
 
         }
-
 
         public ActionResult UpdateUserRole(int userId)
         {
@@ -222,8 +234,16 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                         user.RoleId = updateUserRoleViewModel.RoleId;
                         db.SaveChanges();
+
+                        //LOG
+                        var wrapper = new WebServiceWrapper();
+                        Logger.Info("Updated User Role: " + user.UserSubMail + ", by: " + wrapper.GetUserSubMail());
+                        //LOG
+
                         return RedirectToAction("Successful");
                     }
+
+
                     RedirectToAction("Index");
 
                 }
@@ -260,6 +280,12 @@ namespace MasterISS_Partner_WebSite.Controllers
                     {
                         enabledUser.IsEnabled = true;
                         db.SaveChanges();
+
+                        //LOG
+                        wrapper = new WebServiceWrapper();
+                        Logger.Info("Enabled User: " + userMail + ", by: " + wrapper.GetUserSubMail());
+                        //LOG
+
                         return RedirectToAction("Successful");
                     }
                     TempData["Error"] = Localization.View.PassiveError;
@@ -291,6 +317,12 @@ namespace MasterISS_Partner_WebSite.Controllers
                     {
                         disabledUser.IsEnabled = false;
                         db.SaveChanges();
+
+                        //LOG
+                        wrapper = new WebServiceWrapper();
+                        Logger.Info("Disabled User: " + userMail + ", by: " + wrapper.GetUserSubMail());
+                        //LOG
+
                         return RedirectToAction("Successful");
                     }
                     TempData["Error"] = Localization.View.ActiveError;

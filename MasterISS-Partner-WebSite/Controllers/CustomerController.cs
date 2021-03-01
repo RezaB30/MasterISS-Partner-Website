@@ -2,6 +2,7 @@
 using MasterISS_Partner_WebSite.PartnerServiceReference;
 using MasterISS_Partner_WebSite.ViewModels;
 using MasterISS_Partner_WebSite.ViewModels.Home;
+using NLog;
 using RadiusR.DB.Enums;
 using RezaB.Data.Localization;
 using System;
@@ -17,6 +18,8 @@ namespace MasterISS_Partner_WebSite.Controllers
     [Authorize(Roles = "Admin,SaleManager")]
     public class CustomerController : BaseController
     {
+        private static Logger Logger = LogManager.GetLogger("AppLogger");
+
         // GET: Customer
         public ActionResult NewCustomer()
         {
@@ -431,6 +434,11 @@ namespace MasterISS_Partner_WebSite.Controllers
                             Session.Remove("Counter");
                             Session.Remove("SMSCode");
 
+                            //LOG
+                            wrapper = new WebServiceWrapper();
+                            Logger.Info("Added Customer: " + customerApplicationInfo.IDCard.FirstName + customerApplicationInfo.IDCard.LastName + ", by: " + wrapper.GetUserSubMail());
+                            //LOG
+
                             return RedirectToAction("Successful");
                         }
                         else if (response.ResponseMessage.ErrorCode == 200)
@@ -461,7 +469,6 @@ namespace MasterISS_Partner_WebSite.Controllers
             var customerAppInfo = Session["CustomerApplicationInfo"] as AddCustomerViewModel;
             return View("NewCustomer", customerAppInfo);
         }
-
 
 
 
@@ -649,6 +656,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             var list = new SelectList(partnerTarifType.KeyValueItemResponse.Select(tck => new { Name = tck.Value, Value = tck.Key }), "Value", "Name", selectedValue);
             return list;
         }
+
         private SelectList SubscriptionRegistrationType(int? selectedValue)
         {
             var registrationTypeLocalized = new LocalizedList<RadiusR.DB.Enums.SubscriptionRegistrationType, RadiusR.Localization.Lists.SubscriptionRegistrationType>().GetList(CultureInfo.CurrentCulture).Where(s => s.Key != (int)RadiusR.DB.Enums.SubscriptionRegistrationType.Transfer);

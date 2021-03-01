@@ -8,7 +8,7 @@
     @Styles.Render("~/Content/custom-css")
 </head>
 <body>
-    
+
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -22,11 +22,30 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Altyapı Sorgula", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Fatura", "Index", "Bill")</li>
-                    <li>@Html.ActionLink("Müşteri Ekle", "NewCustomer", "Customer")</li>
-                    <li>@Html.ActionLink("Kurulum", "Index", "Setup")</li>
-                    <li>@Html.ActionLink("Kullanıcı İşlemleri", "Index", "UserOperations")</li>
-                    <li>@Html.ActionLink("Hakedişler", "Index", "Revenues")</li>
+                    @if (User.IsInRole("Payment"))
+                    {
+                        <li>@Html.ActionLink("Fatura", "Index", "Bill")</li>
+                    }
+
+                    @if (User.IsInRole("Sale"))
+                    {
+                        <li>@Html.ActionLink("Müşteri Ekle", "NewCustomer", "Customer")</li>
+                    }
+
+                    @if (User.IsInRole("Setup"))
+                    {
+                        <li>@Html.ActionLink("Kurulum", "Index", "Setup")</li>
+                    }
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li>@Html.ActionLink("Kullanıcı İşlemleri", "Index", "UserOperations")</li>
+                    }
+
+                    @if (User.IsInRole("Setup") || User.IsInRole("Sale"))
+                    {
+                        <li>@Html.ActionLink("Hakedişler", "Index", "Revenues")</li>
+                    }
                 </ul>
 
             </div>

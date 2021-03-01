@@ -10,12 +10,14 @@ using System.Web.Mvc;
 
 namespace MasterISS_Partner_WebSite.Controllers
 {
+    [Authorize(Roles = "Admin,SaleManager,SetupManager")]
     public class RevenuesController : BaseController
     {
         public ActionResult Index()
         {
             return View();
         }
+        [Authorize(Roles = "Sale,SaleManager")]
         public ActionResult SaleAllowedDetails()
         {
             var wrapper = new WebServiceWrapper();
@@ -43,6 +45,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             return View(list);
         }
 
+        [Authorize(Roles = "Setup,SetupManager")]
         public ActionResult SetupAllowedDetails()
         {
             var wrapper = new WebServiceWrapper();
@@ -70,6 +73,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             return View(list);
         }
 
+        [Authorize(Roles = "Sale,SaleManager")]
         public ActionResult SaleGenericAllowanceList(int page = 0, int pageSize = 10)
         {
             var wrapper = new WebServiceWrapper();
@@ -106,6 +110,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             return View(list ?? Enumerable.Empty<SaleGenericAllowancesViewModel>());
         }
 
+        [Authorize(Roles = "Sale,SaleManager")]
         public ActionResult SaleAllowanceList(int page = 0, int pageSize = 10)
         {
             var wrapper = new WebServiceWrapper();
@@ -134,6 +139,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             return View(list ?? Enumerable.Empty<AllowenceListViewModel>());
         }
 
+        [Authorize(Roles = "Sale,SaleManager")]
         public ActionResult SaleAllowanceDetails(int Id, int page = 0, int pageSize = 10)
         {
             var wrapper = new WebServiceWrapper();
@@ -175,6 +181,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             return View(list ?? Enumerable.Empty<SaleGenericAllowancesViewModel>());
         }
 
+        [Authorize(Roles = "Setup,SetupManager")]
         public ActionResult SetupGenericAllowanceList(int page = 0, int pageSize = 10)
         {
             var wrapper = new WebServiceWrapper();
@@ -212,6 +219,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             return View(list ?? Enumerable.Empty<SetupGenericAllowancesViewModel>());
         }
 
+        [Authorize(Roles = "Setup,SetupManager")]
         public ActionResult SetupAllowanceList(int page = 0, int pageSize = 10)
         {
             var wrapper = new WebServiceWrapper();
@@ -240,6 +248,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             return View(list ?? Enumerable.Empty<AllowenceListViewModel>());
         }
 
+        [Authorize(Roles = "Setup,SetupManager")]
         public ActionResult SetupAllowenceDetails(int Id, int page = 0, int pageSize = 10)
         {
             var wrapper = new WebServiceWrapper();

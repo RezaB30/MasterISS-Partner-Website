@@ -12,6 +12,8 @@ using System.Web;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
+using NLog;
 
 namespace MasterISS_Partner_WebSite.Controllers
 {
@@ -19,6 +21,7 @@ namespace MasterISS_Partner_WebSite.Controllers
     [Authorize(Roles = "Admin,SetupManager")]
     public class SetupController : BaseController
     {
+        private static Logger Logger = LogManager.GetLogger("AppLogger");
         private TimeSpan firtSessionTime;
         private TimeSpan lastSessionTime;
 
@@ -27,7 +30,7 @@ namespace MasterISS_Partner_WebSite.Controllers
         {
             taskListRequestModel = taskListRequestModel ?? new GetTaskListRequestViewModel();
 
-            if (string.IsNullOrEmpty(taskListRequestModel.TaskListStartDate) || string.IsNullOrEmpty(taskListRequestModel.TaskListEndDate))
+            if (string.IsNullOrEmpty(taskListRequestModel.TaskListStartDate) && string.IsNullOrEmpty(taskListRequestModel.TaskListEndDate))
             {
                 taskListRequestModel.TaskListStartDate = DateTime.Now.AddDays(-30).ToString("dd.MM.yyyy HH:mm");
                 taskListRequestModel.TaskListEndDate = DateTime.Now.ToString("dd.MM.yyyy HH:mm");
@@ -35,10 +38,28 @@ namespace MasterISS_Partner_WebSite.Controllers
                 TryValidateModel(taskListRequestModel);
             }
 
-            //else if (!string.IsNullOrEmpty(taskListRequestModel.TaskListStartDate) && string.IsNullOrEmpty(taskListRequestModel.TaskListEndDate))
-            //{
-            //Bunu sonra düşün
-            //}
+            else if (!string.IsNullOrEmpty(taskListRequestModel.TaskListStartDate) && string.IsNullOrEmpty(taskListRequestModel.TaskListEndDate))
+            {
+                //1.yol
+                var regex = new Regex(@"^([1-9]|([012][0-9])|(3[01])).([0]{0,1}[1-9]|1[012]).\d\d\d\d (20|21|22|23|[0-1]?\d):[0-5]?\d+");
+
+                var isMatch = regex.Match(taskListRequestModel.TaskListStartDate);
+
+                if (isMatch.Success)
+                {
+                    var startDateConverted = Convert.ToDateTime(taskListRequestModel.TaskListStartDate);
+
+                    taskListRequestModel.TaskListEndDate = startDateConverted.AddDays(30).ToString("dd.MM.yyyy HH:mm");
+                }
+                else
+                {
+                    ViewBag.ErrorMessage = Localization.View.StartDateValid;
+                }
+
+                ModelState.Clear();
+
+                TryValidateModel(taskListRequestModel);
+            }
 
             if (ModelState.IsValid)
             {
@@ -62,7 +83,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                                 CustomerPhoneNo = st.CustomerPhoneNo,
                                 TaskIssueDate = Convert.ToDateTime(st.TaskIssueDate),
                                 TaskNo = st.TaskNo,
-                                XDSLNo=st.XDSLNo
+                                XDSLNo = st.XDSLNo
                             });
 
                             var totalCount = list.Count();
@@ -168,7 +189,6 @@ namespace MasterISS_Partner_WebSite.Controllers
             }
             return Content($"<div>{response.ResponseMessage.ErrorMessage}</div>");
         }
-
 
         [HttpPost]
         public ActionResult CustomerCredentialsInfo(long taskNo)
@@ -284,6 +304,11 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                     if (response.ResponseMessage.ErrorCode == 0)
                     {
+                        //LOG
+                        var wrapper = new WebServiceWrapper();
+                        Logger.Info("Updated Task Status: " + updateTaskStatusViewModel.TaskNo + ", by: " + wrapper.GetUserSubMail());
+                        //LOG
+
                         return RedirectToAction("Successful", new { taskNo = updateTaskStatusViewModel.TaskNo });
                     }
 
@@ -351,6 +376,11 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                                 if (response.ResponseMessage.ErrorCode == 0)
                                 {
+                                    //LOG
+                                    var wrapper = new WebServiceWrapper();
+                                    Logger.Info("Upload Document: " + uploadFileRequestViewModel.TaskNo + ", by: " + wrapper.GetUserSubMail());
+                                    //LOG
+
                                     return RedirectToAction("Successful", "Setup", new { taskNo = uploadFileRequestViewModel.TaskNo });
                                 }
 
@@ -395,6 +425,11 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                 if (response.ResponseMessage.ErrorCode == 0)
                 {
+                    //LOG
+                    var wrapper = new WebServiceWrapper();
+                    Logger.Info("Updated Client User: " + updateClientViewModel.TaskNo + ", by: " + wrapper.GetUserSubMail());
+                    //LOG
+
                     return RedirectToAction("Successful", "Setup", new { taskNo = updateClientViewModel.TaskNo });
                 }
                 TempData["UpdateGPSResponse"] = response.ResponseMessage.ErrorMessage;
