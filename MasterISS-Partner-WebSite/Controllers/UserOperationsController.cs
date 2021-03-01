@@ -153,41 +153,47 @@ namespace MasterISS_Partner_WebSite.Controllers
             {
                 var wrapper = new WebServiceWrapper();
 
-                var response = wrapper.AddUser(newUserViewModel);
                 if (ValidEmail(newUserViewModel.UserEmail))
                 {
                     using (var db = new PartnerWebSiteEntities())
                     {
-                        if (response.ResponseMessage.ErrorCode == 0)
+                        var roleValid = db.Role.Find(newUserViewModel.RoleId);
+                        if (roleValid != null)
                         {
-                            User newUser = new User()
+                            var response = wrapper.AddUser(newUserViewModel);
+                            if (response.ResponseMessage.ErrorCode == 0)
                             {
-                                IsEnabled = true,
-                                PartnerId = Convert.ToInt32(claimInfo.PartnerId()),
-                                Password = wrapper.CalculateHash<SHA256>(newUserViewModel.Password),
-                                UserSubMail = newUserViewModel.UserEmail,
-                                NameSurname = newUserViewModel.UserNameSurname,
-                                RoleId = newUserViewModel.RoleId
-                            };
+                                User newUser = new User()
+                                {
+                                    IsEnabled = true,
+                                    PartnerId = Convert.ToInt32(claimInfo.PartnerId()),
+                                    Password = wrapper.CalculateHash<SHA256>(newUserViewModel.Password),
+                                    UserSubMail = newUserViewModel.UserEmail,
+                                    NameSurname = newUserViewModel.UserNameSurname,
+                                    RoleId = newUserViewModel.RoleId
+                                };
 
-                            db.User.Add(newUser);
+                                db.User.Add(newUser);
 
-                            db.SaveChanges();
+                                db.SaveChanges();
 
-                            //LOG
-                            wrapper = new WebServiceWrapper();
-                            Logger.Info("Added User: " + newUser.UserSubMail + ", by: " + wrapper.GetUserSubMail());
-                            //LOG
+                                //LOG
+                                wrapper = new WebServiceWrapper();
+                                Logger.Info("Added User: " + newUser.UserSubMail + ", by: " + wrapper.GetUserSubMail());
+                                //LOG
 
-                            return RedirectToAction("Successful");
-                        }
-                        else if (response.ResponseMessage.ErrorCode == 200)
-                        {
-                            ViewBag.AddUserError = Localization.View.Generic200ErrorCodeMessage;
+                                return RedirectToAction("Successful");
+                            }
+
+                            else if (response.ResponseMessage.ErrorCode == 200)
+                            {
+                                ViewBag.AddUserError = Localization.View.Generic200ErrorCodeMessage;
+                                return View(newUserViewModel);
+                            }
+                            ViewBag.AddUserError = response.ResponseMessage.ErrorMessage;
                             return View(newUserViewModel);
                         }
-                        ViewBag.AddUserError = response.ResponseMessage.ErrorMessage;
-                        return View(newUserViewModel);
+                        return RedirectToAction("Index", "UserOperations");
                     }
                 }
                 ViewBag.AddUserError = Localization.View.MailValidError;

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/RadiusR_Customer_Setup_Service.Requests" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/RadiusR_Customer_Setup_Service.Requests" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://10.184.3.63:9902/CustomerSetupService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/RadiusR_Customer_Setup_Service.Requests.Parameters" />
+  <xs:import schemaLocation="http://10.184.3.63:9902/CustomerSetupService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/RezaB.API.WebService" />
+  <xs:complexType name="GetTaskListRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/RezaB.API.WebService" base="q1:BaseRequestOfDateSpanSHA256rkCmxvC7">
+        <xs:sequence>
+          <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/RadiusR_Customer_Setup_Service.Requests.Parameters" minOccurs="0" name="DateSpan" nillable="true" type="q2:DateSpan" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetTaskListRequest" nillable="true" type="tns:GetTaskListRequest" />
+  <xs:complexType name="TaskNoRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q3="http://schemas.datacontract.org/2004/07/RezaB.API.WebService" base="q3:BaseRequestOflongSHA256Miy85_SUl">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="TaskNo" type="xs:long" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="TaskNoRequest" nillable="true" type="tns:TaskNoRequest" />
+  <xs:complexType name="AddTaskStatusUpdateRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q4="http://schemas.datacontract.org/2004/07/RezaB.API.WebService" base="q4:BaseRequestOfTaskUpdateSHA256rkCmxvC7">
+        <xs:sequence>
+          <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/RadiusR_Customer_Setup_Service.Requests.Parameters" minOccurs="0" name="TaskUpdate" nillable="true" type="q5:TaskUpdate" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="AddTaskStatusUpdateRequest" nillable="true" type="tns:AddTaskStatusUpdateRequest" />
+  <xs:complexType name="UpdateCustomerLocationRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q6="http://schemas.datacontract.org/2004/07/RezaB.API.WebService" base="q6:BaseRequestOfLocationUpdateSHA256rkCmxvC7">
+        <xs:sequence>
+          <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/RadiusR_Customer_Setup_Service.Requests.Parameters" minOccurs="0" name="LocationUpdate" nillable="true" type="q7:LocationUpdate" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="UpdateCustomerLocationRequest" nillable="true" type="tns:UpdateCustomerLocationRequest" />
+  <xs:complexType name="AddCustomerAttachmentRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q8="http://schemas.datacontract.org/2004/07/RezaB.API.WebService" base="q8:BaseRequestOfCustomerAttachmentSHA256rkCmxvC7">
+        <xs:sequence>
+          <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/RadiusR_Customer_Setup_Service.Requests.Parameters" minOccurs="0" name="CustomerAttachment" nillable="true" type="q9:CustomerAttachment" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="AddCustomerAttachmentRequest" nillable="true" type="tns:AddCustomerAttachmentRequest" />
+</xs:schema>

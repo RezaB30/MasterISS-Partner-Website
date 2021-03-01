@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/RadiusR_Customer_Setup_Service.Responses" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/RadiusR_Customer_Setup_Service.Responses" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://10.184.3.63:9902/CustomerSetupService.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/RadiusR_Customer_Setup_Service.Responses.Parameters" />
+  <xs:import schemaLocation="http://10.184.3.63:9902/CustomerSetupService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/RezaB.API.WebService" />
+  <xs:complexType name="GetTaskListResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/RezaB.API.WebService" base="q1:BaseResponseOfArrayOfSetupTaskSHA256AfAYuic1">
+        <xs:sequence>
+          <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/RadiusR_Customer_Setup_Service.Responses.Parameters" minOccurs="0" name="SetupTasks" nillable="true" type="q2:ArrayOfSetupTask" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetTaskListResponse" nillable="true" type="tns:GetTaskListResponse" />
+  <xs:complexType name="GetTaskDetailsResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q3="http://schemas.datacontract.org/2004/07/RezaB.API.WebService" base="q3:BaseResponseOfSetupTaskSHA256AfAYuic1">
+        <xs:sequence>
+          <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/RadiusR_Customer_Setup_Service.Responses.Parameters" minOccurs="0" name="SetupTask" nillable="true" type="q4:SetupTask" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetTaskDetailsResponse" nillable="true" type="tns:GetTaskDetailsResponse" />
+  <xs:complexType name="GetCustomerCredentialResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q5="http://schemas.datacontract.org/2004/07/RezaB.API.WebService" base="q5:BaseResponseOfCustomerCredentialsSHA256AfAYuic1">
+        <xs:sequence>
+          <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/RadiusR_Customer_Setup_Service.Responses.Parameters" minOccurs="0" name="CustomerCredentials" nillable="true" type="q6:CustomerCredentials" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetCustomerCredentialResponse" nillable="true" type="tns:GetCustomerCredentialResponse" />
+  <xs:complexType name="GetCustomerLineDetailsResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q7="http://schemas.datacontract.org/2004/07/RezaB.API.WebService" base="q7:BaseResponseOfCustomerLineDetailsSHA256AfAYuic1">
+        <xs:sequence>
+          <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/RadiusR_Customer_Setup_Service.Responses.Parameters" minOccurs="0" name="CustomerLineDetails" nillable="true" type="q8:CustomerLineDetails" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetCustomerLineDetailsResponse" nillable="true" type="tns:GetCustomerLineDetailsResponse" />
+  <xs:complexType name="GetCustomerSessionInfoResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q9="http://schemas.datacontract.org/2004/07/RezaB.API.WebService" base="q9:BaseResponseOfCustomerSessionBundleSHA256AfAYuic1">
+        <xs:sequence>
+          <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/RadiusR_Customer_Setup_Service.Responses.Parameters" minOccurs="0" name="CustomerSessionBundle" nillable="true" type="q10:CustomerSessionBundle" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetCustomerSessionInfoResponse" nillable="true" type="tns:GetCustomerSessionInfoResponse" />
+  <xs:complexType name="ParameterlessResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q11="http://schemas.datacontract.org/2004/07/RezaB.API.WebService" base="q11:BaseResponseOfSHA256o_Pr6u_PMh">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ParameterlessResponse" nillable="true" type="tns:ParameterlessResponse" />
+  <xs:complexType name="AddCustomerAttachmentResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q12="http://schemas.datacontract.org/2004/07/RezaB.API.WebService" base="q12:BaseResponseOfFileMD5HashSHA256AfAYuic1">
+        <xs:sequence>
+          <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/RadiusR_Customer_Setup_Service.Responses.Parameters" minOccurs="0" name="AddedAttachment" nillable="true" type="q13:FileMD5Hash" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="AddCustomerAttachmentResponse" nillable="true" type="tns:AddCustomerAttachmentResponse" />
+  <xs:complexType name="GetCustomerContractResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q14="http://schemas.datacontract.org/2004/07/RezaB.API.WebService" base="q14:BaseResponseOfCustomerContractSHA256AfAYuic1">
+        <xs:sequence>
+          <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/RadiusR_Customer_Setup_Service.Responses.Parameters" minOccurs="0" name="CustomerContract" nillable="true" type="q15:CustomerContract" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetCustomerContractResponse" nillable="true" type="tns:GetCustomerContractResponse" />
+  <xs:complexType name="GetCustomerAttachmentsResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q16="http://schemas.datacontract.org/2004/07/RezaB.API.WebService" base="q16:BaseResponseOfArrayOfFileMD5HashSHA256AfAYuic1">
+        <xs:sequence>
+          <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/RadiusR_Customer_Setup_Service.Responses.Parameters" minOccurs="0" name="AttachmentList" nillable="true" type="q17:ArrayOfFileMD5Hash" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetCustomerAttachmentsResponse" nillable="true" type="tns:GetCustomerAttachmentsResponse" />
+</xs:schema>

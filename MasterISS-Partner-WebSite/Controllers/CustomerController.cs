@@ -1,5 +1,5 @@
 ﻿using MasterISS_Partner_WebSite.Enums;
-using MasterISS_Partner_WebSite.PartnerServiceReference;
+using MasterISS_Partner_WebSite_WebServices.PartnerServiceReference;
 using MasterISS_Partner_WebSite.ViewModels;
 using MasterISS_Partner_WebSite.ViewModels.Home;
 using NLog;

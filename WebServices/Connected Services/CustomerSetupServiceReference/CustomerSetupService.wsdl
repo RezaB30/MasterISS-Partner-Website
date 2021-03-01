@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="CustomerSetupService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="WSHttpBinding_ICustomerSetupService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://10.184.3.63:9902/CustomerSetupService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://10.184.3.63:9902/CustomerSetupService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://10.184.3.63:9902/CustomerSetupService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/RadiusR_Customer_Setup_Service.Requests" />
+      <xsd:import schemaLocation="http://10.184.3.63:9902/CustomerSetupService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/RezaB.API.WebService" />
+      <xsd:import schemaLocation="http://10.184.3.63:9902/CustomerSetupService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/RadiusR_Customer_Setup_Service.Requests.Parameters" />
+      <xsd:import schemaLocation="http://10.184.3.63:9902/CustomerSetupService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/RadiusR_Customer_Setup_Service.Responses" />
+      <xsd:import schemaLocation="http://10.184.3.63:9902/CustomerSetupService.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/RadiusR_Customer_Setup_Service.Responses.Parameters" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ICustomerSetupService_GetKeyFragment_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetKeyFragment" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerSetupService_GetKeyFragment_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetKeyFragmentResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerSetupService_GetTaskList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTaskList" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerSetupService_GetTaskList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTaskListResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerSetupService_GetTaskDetails_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTaskDetails" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerSetupService_GetTaskDetails_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTaskDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerSetupService_GetCustomerCredentials_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerCredentials" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerSetupService_GetCustomerCredentials_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerCredentialsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerSetupService_GetCustomerLineDetails_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerLineDetails" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerSetupService_GetCustomerLineDetails_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerLineDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerSetupService_GetCustomerSessionInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerSessionInfo" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerSetupService_GetCustomerSessionInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerSessionInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerSetupService_AddTaskStatusUpdate_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddTaskStatusUpdate" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerSetupService_AddTaskStatusUpdate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddTaskStatusUpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerSetupService_UpdateClientLocation_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateClientLocation" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerSetupService_UpdateClientLocation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateClientLocationResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerSetupService_AddCustomerAttachment_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddCustomerAttachment" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerSetupService_AddCustomerAttachment_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddCustomerAttachmentResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerSetupService_GetCustomerContract_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerContract" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerSetupService_GetCustomerContract_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerContractResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerSetupService_GetCustomerAttachments_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerAttachments" />
+  </wsdl:message>
+  <wsdl:message name="ICustomerSetupService_GetCustomerAttachments_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomerAttachmentsResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ICustomerSetupService">
+    <wsdl:operation name="GetKeyFragment">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerSetupService/GetKeyFragment" message="tns:ICustomerSetupService_GetKeyFragment_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerSetupService/GetKeyFragmentResponse" message="tns:ICustomerSetupService_GetKeyFragment_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTaskList">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerSetupService/GetTaskList" message="tns:ICustomerSetupService_GetTaskList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerSetupService/GetTaskListResponse" message="tns:ICustomerSetupService_GetTaskList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTaskDetails">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerSetupService/GetTaskDetails" message="tns:ICustomerSetupService_GetTaskDetails_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerSetupService/GetTaskDetailsResponse" message="tns:ICustomerSetupService_GetTaskDetails_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerCredentials">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerSetupService/GetCustomerCredentials" message="tns:ICustomerSetupService_GetCustomerCredentials_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerSetupService/GetCustomerCredentialsResponse" message="tns:ICustomerSetupService_GetCustomerCredentials_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerLineDetails">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerSetupService/GetCustomerLineDetails" message="tns:ICustomerSetupService_GetCustomerLineDetails_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerSetupService/GetCustomerLineDetailsResponse" message="tns:ICustomerSetupService_GetCustomerLineDetails_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerSessionInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerSetupService/GetCustomerSessionInfo" message="tns:ICustomerSetupService_GetCustomerSessionInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerSetupService/GetCustomerSessionInfoResponse" message="tns:ICustomerSetupService_GetCustomerSessionInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddTaskStatusUpdate">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerSetupService/AddTaskStatusUpdate" message="tns:ICustomerSetupService_AddTaskStatusUpdate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerSetupService/AddTaskStatusUpdateResponse" message="tns:ICustomerSetupService_AddTaskStatusUpdate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateClientLocation">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerSetupService/UpdateClientLocation" message="tns:ICustomerSetupService_UpdateClientLocation_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerSetupService/UpdateClientLocationResponse" message="tns:ICustomerSetupService_UpdateClientLocation_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddCustomerAttachment">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerSetupService/AddCustomerAttachment" message="tns:ICustomerSetupService_AddCustomerAttachment_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerSetupService/AddCustomerAttachmentResponse" message="tns:ICustomerSetupService_AddCustomerAttachment_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerContract">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerSetupService/GetCustomerContract" message="tns:ICustomerSetupService_GetCustomerContract_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerSetupService/GetCustomerContractResponse" message="tns:ICustomerSetupService_GetCustomerContract_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerAttachments">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICustomerSetupService/GetCustomerAttachments" message="tns:ICustomerSetupService_GetCustomerAttachments_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICustomerSetupService/GetCustomerAttachmentsResponse" message="tns:ICustomerSetupService_GetCustomerAttachments_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WSHttpBinding_ICustomerSetupService" type="tns:ICustomerSetupService">
+    <wsp:PolicyReference URI="#WSHttpBinding_ICustomerSetupService_policy" />
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetKeyFragment">
+      <soap12:operation soapAction="http://tempuri.org/ICustomerSetupService/GetKeyFragment" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTaskList">
+      <soap12:operation soapAction="http://tempuri.org/ICustomerSetupService/GetTaskList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTaskDetails">
+      <soap12:operation soapAction="http://tempuri.org/ICustomerSetupService/GetTaskDetails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerCredentials">
+      <soap12:operation soapAction="http://tempuri.org/ICustomerSetupService/GetCustomerCredentials" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerLineDetails">
+      <soap12:operation soapAction="http://tempuri.org/ICustomerSetupService/GetCustomerLineDetails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerSessionInfo">
+      <soap12:operation soapAction="http://tempuri.org/ICustomerSetupService/GetCustomerSessionInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddTaskStatusUpdate">
+      <soap12:operation soapAction="http://tempuri.org/ICustomerSetupService/AddTaskStatusUpdate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateClientLocation">
+      <soap12:operation soapAction="http://tempuri.org/ICustomerSetupService/UpdateClientLocation" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddCustomerAttachment">
+      <soap12:operation soapAction="http://tempuri.org/ICustomerSetupService/AddCustomerAttachment" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerContract">
+      <soap12:operation soapAction="http://tempuri.org/ICustomerSetupService/GetCustomerContract" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerAttachments">
+      <soap12:operation soapAction="http://tempuri.org/ICustomerSetupService/GetCustomerAttachments" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CustomerSetupService">
+    <wsdl:port name="WSHttpBinding_ICustomerSetupService" binding="tns:WSHttpBinding_ICustomerSetupService">
+      <soap12:address location="http://10.184.3.63:9902/CustomerSetupService.svc/CustomerSetupService.svc" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>http://10.184.3.63:9902/CustomerSetupService.svc/CustomerSetupService.svc</wsa10:Address>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

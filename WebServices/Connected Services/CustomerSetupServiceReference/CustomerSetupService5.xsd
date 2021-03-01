@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/RadiusR_Customer_Setup_Service.Requests.Parameters" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/RadiusR_Customer_Setup_Service.Requests.Parameters" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="DateSpan">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="EndDate" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StartDate" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DateSpan" nillable="true" type="tns:DateSpan" />
+  <xs:complexType name="TaskUpdate">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FaultCode" type="xs:short" />
+      <xs:element minOccurs="0" name="ReservationDate" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TaskNo" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TaskUpdate" nillable="true" type="tns:TaskUpdate" />
+  <xs:complexType name="LocationUpdate">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Latitude" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Longitude" type="xs:decimal" />
+      <xs:element minOccurs="0" name="TaskNo" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LocationUpdate" nillable="true" type="tns:LocationUpdate" />
+  <xs:complexType name="CustomerAttachment">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AttachmentType" type="xs:short" />
+      <xs:element minOccurs="0" name="FileData" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FileType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TaskNo" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CustomerAttachment" nillable="true" type="tns:CustomerAttachment" />
+</xs:schema>

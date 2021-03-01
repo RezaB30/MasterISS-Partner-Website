@@ -1,4 +1,4 @@
-﻿using MasterISS_Partner_WebSite.CustomerSetupServiceReference;
+﻿using MasterISS_Partner_WebSite_WebServices.CustomerSetupServiceReference;
 using MasterISS_Partner_WebSite.ViewModels.Setup;
 using System;
 using System.Collections.Generic;

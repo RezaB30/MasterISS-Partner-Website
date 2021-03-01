@@ -1,6 +1,6 @@
 ﻿using MasterISS_Partner_WebSite;
-using MasterISS_Partner_WebSite.PartnerServiceReference;
 using MasterISS_Partner_WebSite.ViewModels;
+using MasterISS_Partner_WebSite_WebServices.PartnerServiceReference;
 using MasterISS_Partner_WebSite.ViewModels.Home;
 using MasterISS_Partner_WebSite.ViewModels.Revenues;
 using System;
@@ -30,11 +30,11 @@ namespace MasterISS_Partner_WebSite
 
         public WebServiceWrapper()
         {
-            Username = MasterISS_Partner_WebSite.Properties.Settings.Default.Username;
+            Username = Properties.Settings.Default.Username;
             Culture = CultureInfo.CurrentCulture.ToString();
-            KeyFragment = new PartnerServiceClient().GetKeyFragment(MasterISS_Partner_WebSite.Properties.Settings.Default.Username);
+            KeyFragment = new PartnerServiceClient().GetKeyFragment(Properties.Settings.Default.Username);
             Rand = Guid.NewGuid().ToString("N");
-            Password = MasterISS_Partner_WebSite.Properties.Settings.Default.Password;
+            Password = Properties.Settings.Default.Password;
             Client = new PartnerServiceClient();
         }
 

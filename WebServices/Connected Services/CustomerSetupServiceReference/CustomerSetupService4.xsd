@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/RadiusR_Customer_Setup_Service.Responses.Parameters" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/RadiusR_Customer_Setup_Service.Responses.Parameters" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ArrayOfSetupTask">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SetupTask" nillable="true" type="tns:SetupTask" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSetupTask" nillable="true" type="tns:ArrayOfSetupTask" />
+  <xs:complexType name="SetupTask">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Address" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BBK" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="City" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ContactName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerPhoneNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerType" type="xs:short" />
+      <xs:element minOccurs="0" name="Details" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HasModem" type="xs:boolean" />
+      <xs:element minOccurs="0" name="LastConnectionDate" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ModemName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PSTN" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Province" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReservationDate" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SubscriberNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TaskIssueDate" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TaskNo" type="xs:long" />
+      <xs:element minOccurs="0" name="TaskStatus" type="xs:short" />
+      <xs:element minOccurs="0" name="TaskType" type="xs:short" />
+      <xs:element minOccurs="0" name="TaskUpdates" nillable="true" type="tns:ArrayOfSavedTaskUpdate" />
+      <xs:element minOccurs="0" name="XDSLNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="XDSLType" type="xs:short" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SetupTask" nillable="true" type="tns:SetupTask" />
+  <xs:complexType name="ArrayOfSavedTaskUpdate">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SavedTaskUpdate" nillable="true" type="tns:SavedTaskUpdate" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSavedTaskUpdate" nillable="true" type="tns:ArrayOfSavedTaskUpdate" />
+  <xs:complexType name="SavedTaskUpdate">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CreationDate" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FaultCode" type="xs:short" />
+      <xs:element minOccurs="0" name="ReservationDate" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SavedTaskUpdate" nillable="true" type="tns:SavedTaskUpdate" />
+  <xs:complexType name="CustomerCredentials">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Username" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CustomerCredentials" nillable="true" type="tns:CustomerCredentials" />
+  <xs:complexType name="CustomerLineDetails">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CurrentDownloadSpeed" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CurrentUploadSpeed" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DownloadNoiseMargin" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DownloadSpeedCapacity" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsActive" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ShelfCardPort" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UploadNoiseMargin" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UploadSpeedCapacity" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="XDSLNo" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CustomerLineDetails" nillable="true" type="tns:CustomerLineDetails" />
+  <xs:complexType name="CustomerSessionBundle">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FirstSession" nillable="true" type="tns:CustomerSessionInfo" />
+      <xs:element minOccurs="0" name="LastSession" nillable="true" type="tns:CustomerSessionInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CustomerSessionBundle" nillable="true" type="tns:CustomerSessionBundle" />
+  <xs:complexType name="CustomerSessionInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IPAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsOnline" type="xs:boolean" />
+      <xs:element minOccurs="0" name="NASIPAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SessionId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SessionStart" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SessionTime" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CustomerSessionInfo" nillable="true" type="tns:CustomerSessionInfo" />
+  <xs:complexType name="FileMD5Hash">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="MD5Hash" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FileMD5Hash" nillable="true" type="tns:FileMD5Hash" />
+  <xs:complexType name="CustomerContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FileCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CustomerContract" nillable="true" type="tns:CustomerContract" />
+  <xs:complexType name="ArrayOfFileMD5Hash">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FileMD5Hash" nillable="true" type="tns:FileMD5Hash" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfFileMD5Hash" nillable="true" type="tns:ArrayOfFileMD5Hash" />
+</xs:schema>

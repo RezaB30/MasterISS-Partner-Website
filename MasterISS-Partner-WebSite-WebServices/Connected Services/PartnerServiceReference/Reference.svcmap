@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="47ebeceb-6285-4242-9f70-385fb9eee6b4" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://10.184.3.63:5998/PartnerService.svc?wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="PartnerService.xsd" MetadataType="Schema" ID="97fd0f7e-de3f-45de-82ee-582427ec66e7" SourceId="1" SourceUrl="http://10.184.3.63:5998/PartnerService.svc?xsd=xsd4" />
+    <MetadataFile FileName="PartnerService1.xsd" MetadataType="Schema" ID="c46c8bb0-66a1-4576-ab42-2a676c596b8f" SourceId="1" SourceUrl="http://10.184.3.63:5998/PartnerService.svc?xsd=xsd2" />
+    <MetadataFile FileName="PartnerService2.xsd" MetadataType="Schema" ID="1f1d3a56-1b19-49df-a88d-298b73033cc8" SourceId="1" SourceUrl="http://10.184.3.63:5998/PartnerService.svc?xsd=xsd1" />
+    <MetadataFile FileName="PartnerService3.xsd" MetadataType="Schema" ID="56a84717-0290-4722-a33d-9ebefa794404" SourceId="1" SourceUrl="http://10.184.3.63:5998/PartnerService.svc?xsd=xsd6" />
+    <MetadataFile FileName="PartnerService4.xsd" MetadataType="Schema" ID="0f811ae9-8ed8-4f6e-9072-28732ca749c2" SourceId="1" SourceUrl="http://10.184.3.63:5998/PartnerService.svc?xsd=xsd0" />
+    <MetadataFile FileName="PartnerService.wsdl" MetadataType="Wsdl" ID="6be81f7b-b6cf-4f5b-b205-4908d8f06344" SourceId="1" SourceUrl="http://10.184.3.63:5998/PartnerService.svc?wsdl" />
+    <MetadataFile FileName="PartnerService5.xsd" MetadataType="Schema" ID="937d078f-875c-4052-8e1c-effd52829576" SourceId="1" SourceUrl="http://10.184.3.63:5998/PartnerService.svc?xsd=xsd5" />
+    <MetadataFile FileName="PartnerService6.xsd" MetadataType="Schema" ID="f2fce5a9-fc39-49d4-8ff3-282b22039588" SourceId="1" SourceUrl="http://10.184.3.63:5998/PartnerService.svc?xsd=xsd3" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

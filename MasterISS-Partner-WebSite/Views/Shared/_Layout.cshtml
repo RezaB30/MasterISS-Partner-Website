@@ -23,6 +23,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Altyapı Sorgula", "Index", "Home")</li>
+
                     @if (User.IsInRole("Payment"))
                     {
                         <li>@Html.ActionLink("Fatura", "Index", "Bill")</li>

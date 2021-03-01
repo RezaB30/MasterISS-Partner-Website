@@ -181,16 +181,6 @@
     <Compile Include="Authentication\AdminAuthenticator.cs" />
     <Compile Include="Authentication\SubUserAuthenticator.cs" />
     <Compile Include="ClaimInfo.cs" />
-    <Compile Include="Connected Services\CustomerSetupServiceReference\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="Connected Services\PartnerServiceReference\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BillController.cs" />
@@ -403,121 +393,6 @@
     <Compile Include="WebServiceWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\CustomerSetupServiceReference\CustomerSetupService.wsdl" />
-    <None Include="Connected Services\CustomerSetupServiceReference\CustomerSetupService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\CustomerSetupServiceReference\CustomerSetupService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\CustomerSetupServiceReference\CustomerSetupService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\CustomerSetupServiceReference\CustomerSetupService3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\CustomerSetupServiceReference\CustomerSetupService4.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\CustomerSetupServiceReference\CustomerSetupService5.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\CustomerSetupServiceReference\CustomerSetupService6.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="Connected Services\CustomerSetupServiceReference\MasterISS_Partner_WebSite.CustomerSetupServiceReference.AddCustomerAttachmentResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\CustomerSetupServiceReference\MasterISS_Partner_WebSite.CustomerSetupServiceReference.GetCustomerAttachmentsResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\CustomerSetupServiceReference\MasterISS_Partner_WebSite.CustomerSetupServiceReference.GetCustomerContractResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\CustomerSetupServiceReference\MasterISS_Partner_WebSite.CustomerSetupServiceReference.GetCustomerCredentialResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\CustomerSetupServiceReference\MasterISS_Partner_WebSite.CustomerSetupServiceReference.GetCustomerLineDetailsResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\CustomerSetupServiceReference\MasterISS_Partner_WebSite.CustomerSetupServiceReference.GetCustomerSessionInfoResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\CustomerSetupServiceReference\MasterISS_Partner_WebSite.CustomerSetupServiceReference.GetTaskDetailsResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\CustomerSetupServiceReference\MasterISS_Partner_WebSite.CustomerSetupServiceReference.GetTaskListResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\CustomerSetupServiceReference\MasterISS_Partner_WebSite.CustomerSetupServiceReference.ParameterlessResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <None Include="Connected Services\PartnerServiceReference\configuration91.svcinfo" />
-    <None Include="Connected Services\PartnerServiceReference\configuration.svcinfo" />
-    <None Include="Connected Services\CustomerSetupServiceReference\configuration91.svcinfo" />
-    <None Include="Connected Services\CustomerSetupServiceReference\configuration.svcinfo" />
-    <None Include="Connected Services\CustomerSetupServiceReference\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <Content Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite.PartnerServiceReference.CustomerServiceAddressDetailsResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite.PartnerServiceReference.CustomerServiceNameValuePair.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite.PartnerServiceReference.CustomerServiceServiceAvailabilityResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite.PartnerServiceReference.PartnerServicePaymentResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite.PartnerServiceReference.PartnerServiceAddSubUserResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite.PartnerServiceReference.PartnerServiceAuthenticationResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite.PartnerServiceReference.PartnerServiceBillListResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite.PartnerServiceReference.PartnerServiceSubUserResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite.PartnerServiceReference.PartnerServiceCreditReportResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite.PartnerServiceReference.PartnerServiceIDCardValidationResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite.PartnerServiceReference.PartnerServiceKeyValueListResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite.PartnerServiceReference.PartnerServiceNewCustomerRegisterResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite.PartnerServiceReference.PartnerServiceSMSCodeResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite.PartnerServiceReference.PartnerServiceAllowanceDetailsResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite.PartnerServiceReference.PartnerServiceSetupAllowanceListResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite.PartnerServiceReference.PartnerServiceSetupGenericAllowanceListResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite.PartnerServiceReference.PartnerServiceSaleAllowanceListResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite.PartnerServiceReference.PartnerServiceSaleGenericAllowanceListResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <None Include="Connected Services\PartnerServiceReference\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -543,28 +418,6 @@
     <Content Include="Scripts\QueryAddress\address-query.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <None Include="Connected Services\PartnerServiceReference\PartnerService.wsdl" />
-    <None Include="Connected Services\PartnerServiceReference\PartnerService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\PartnerServiceReference\PartnerService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\PartnerServiceReference\PartnerService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\PartnerServiceReference\PartnerService3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\PartnerServiceReference\PartnerService4.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\PartnerServiceReference\PartnerService5.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\PartnerServiceReference\PartnerService6.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <EntityDeploy Include="Models\PartnerEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>PartnerEntities.Designer.cs</LastGenOutput>
@@ -752,11 +605,13 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\CustomerSetupServiceReference\" />
-    <WCFMetadataStorage Include="Connected Services\PartnerServiceReference\" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <ProjectReference Include="..\MasterISS-Partner-WebSite-WebServices\MasterISS-Partner-WebSite-WebServices.csproj">
+      <Project>{6dbf8347-d6b1-4f53-9b8d-ec27536d3ab9}</Project>
+      <Name>MasterISS-Partner-WebSite-WebServices</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

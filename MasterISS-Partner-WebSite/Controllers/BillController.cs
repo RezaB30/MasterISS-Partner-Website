@@ -1,4 +1,4 @@
-﻿using MasterISS_Partner_WebSite.PartnerServiceReference;
+﻿using MasterISS_Partner_WebSite_WebServices.PartnerServiceReference;
 using MasterISS_Partner_WebSite.ViewModels;
 using NLog;
 using System;
