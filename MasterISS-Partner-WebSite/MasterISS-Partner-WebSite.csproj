@@ -210,6 +210,7 @@
     <Compile Include="Enums\XDSLTypeEnum.cs" />
     <Compile Include="Helpers\CustomButtonByMap.cs" />
     <Compile Include="Helpers\CustomMap.cs" />
+    <Compile Include="Helpers\LanguageLinkHelper.cs" />
     <Compile Include="Helpers\TimeFormatHelper.cs" />
     <Compile Include="Localization\AttachmentTypes.Designer.cs">
       <AutoGen>True</AutoGen>

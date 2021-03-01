@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using MasterISS_Partner_WebSite.Helpers
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -46,6 +47,9 @@
                     {
                         <li>@Html.ActionLink("Hakedişler", "Index", "Revenues")</li>
                     }
+
+                    <li>@Html.LanguageLink("Türkçe","tr-tr")</li>
+                    <li>@Html.LanguageLink("English","en-us")</li>
                 </ul>
 
             </div>
