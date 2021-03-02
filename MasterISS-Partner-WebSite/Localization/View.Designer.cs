@@ -169,6 +169,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Altyapı Sorgula.
+        /// </summary>
+        public static string CheckInfrastructure {
+            get {
+                return ResourceManager.GetString("CheckInfrastructure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Onayla.
         /// </summary>
         public static string Confirm {
@@ -556,6 +565,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hakedişler.
+        /// </summary>
+        public static string Revenues {
+            get {
+                return ResourceManager.GetString("Revenues", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rol ismi boş geçilemez.
         /// </summary>
         public static string RoleNameValid {
@@ -885,6 +903,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string UploadDocumentPage {
             get {
                 return ResourceManager.GetString("UploadDocumentPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kullanıcı İşlemleri.
+        /// </summary>
+        public static string UserOperations {
+            get {
+                return ResourceManager.GetString("UserOperations", resourceCulture);
             }
         }
         

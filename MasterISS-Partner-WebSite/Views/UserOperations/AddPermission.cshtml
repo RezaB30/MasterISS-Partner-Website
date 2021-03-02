@@ -13,22 +13,21 @@
 
     @Html.LabelFor(m => m.RoleName)
     @Html.EditorFor(m => m.RoleName)
+    @Html.ValidationMessageFor(m => m.RoleName)
 
-    foreach (var item in Model.AvaibleRole)
+    foreach (var item in (SelectList)ViewBag.PermissionList)
     {
-        <div class="checkbox">
+        <div>
             <label>
-                <input type="checkbox"
-                       name="SelectedRole"
-                       value="@item.Value"
-                       @if (Model.SelectedRole.Contains(item.Value)) { <text> checked </text> } /> @item.Text
-                </label>
-            </div>
-        }
-        <input type="submit" value="@View.Create" />
+                @Html.DisplayFor(m => item.Text)
+                <input class="checkbox" type="checkbox" value="@item.Value" name="AvailableRoles" />
+            </label>
+        </div>
     }
-
+    <input type="submit" value="@View.Create" />
+}
+@Html.ValidationMessageFor(m => m.AvailableRoles)
 
 <div style="background-color:red">
-    @Html.Raw(TempData["RoleValid"])
+    @ViewBag.RoleValid
 </div>

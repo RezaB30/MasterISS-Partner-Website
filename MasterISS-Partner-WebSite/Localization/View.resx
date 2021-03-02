@@ -153,6 +153,9 @@
   <data name="BillList" xml:space="preserve">
     <value>Fatura Listesi</value>
   </data>
+  <data name="CheckInfrastructure" xml:space="preserve">
+    <value>Altyapı Sorgula</value>
+  </data>
   <data name="Confirm" xml:space="preserve">
     <value>Onayla</value>
   </data>
@@ -282,6 +285,9 @@
   <data name="ReturnUserOperations" xml:space="preserve">
     <value>Geri</value>
   </data>
+  <data name="Revenues" xml:space="preserve">
+    <value>Hakedişler</value>
+  </data>
   <data name="RoleNameValid" xml:space="preserve">
     <value>Rol ismi boş geçilemez</value>
   </data>
@@ -392,6 +398,9 @@
   </data>
   <data name="UploadDocumentPage" xml:space="preserve">
     <value>Belge Yükle</value>
+  </data>
+  <data name="UserOperations" xml:space="preserve">
+    <value>Kullanıcı İşlemleri</value>
   </data>
   <data name="WrongPassword" xml:space="preserve">
     <value>Yanlış SMS Şifresi</value>

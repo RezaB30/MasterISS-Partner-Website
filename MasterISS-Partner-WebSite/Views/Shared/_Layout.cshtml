@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
+    @Styles.Render("~/bundles/css")
     @Styles.Render("~/Content/custom-css")
 </head>
 <body>
@@ -13,16 +13,11 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar">asd</span>
-                    <span class="icon-bar">asd</span>
-                    <span class="icon-bar">asd</span>
-                </button>
                 @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Altyapı Sorgula", "Index", "Home")</li>
+                    <li>@Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.CheckInfrastructure, "Index", "Home")</li>
 
                     @if (User.IsInRole("Payment"))
                     {
@@ -31,22 +26,22 @@
 
                     @if (User.IsInRole("Sale"))
                     {
-                        <li>@Html.ActionLink("Müşteri Ekle", "NewCustomer", "Customer")</li>
+                        <li>@Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.AddCustomer, "NewCustomer", "Customer")</li>
                     }
 
                     @if (User.IsInRole("Setup"))
                     {
-                        <li>@Html.ActionLink("Kurulum", "Index", "Setup")</li>
+                        <li>@Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.SetupPanel, "Index", "Setup")</li>
                     }
 
                     @if (User.IsInRole("Admin"))
                     {
-                        <li>@Html.ActionLink("Kullanıcı İşlemleri", "Index", "UserOperations")</li>
+                        <li>@Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.UserOperations, "Index", "UserOperations")</li>
                     }
 
                     @if (User.IsInRole("Setup") || User.IsInRole("Sale"))
                     {
-                        <li>@Html.ActionLink("Hakedişler", "Index", "Revenues")</li>
+                        <li>@Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.Revenues, "Index", "Revenues")</li>
                     }
 
                     <li>@Html.LanguageLink("Türkçe","tr-tr")</li>

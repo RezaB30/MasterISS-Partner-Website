@@ -14,12 +14,18 @@ namespace MasterISS_Partner_WebSite.ViewModels
         public string RoleName { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
-        public IList<string> SelectedRole { get; set; }
-        public IEnumerable<SelectListItem> AvaibleRole { get; set; }
-        public AddPermissionViewModel()
-        {
-            SelectedRole = new List<string>();
-            AvaibleRole = new List<SelectListItem>();
-        }
+        public int[] AvailableRoles { get; set; }
+        //public IList<int> SelectedRole { get; set; }
+        //public IEnumerable<SelectListItem> AvaibleRole { get; set; }
+        //public AddPermissionViewModel()
+        //{
+        //    SelectedRole = new List<int>();
+        //    AvaibleRole = new List<SelectListItem>();
+        //}
+    }
+    public class AvailableRoleList
+    {
+        public string RoleName { get; set; }
+        public int RoleId { get; set; }
     }
 }

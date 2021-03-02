@@ -153,6 +153,9 @@
   <data name="BillList" xml:space="preserve">
     <value>Bill List</value>
   </data>
+  <data name="CheckInfrastructure" xml:space="preserve">
+    <value>Check Infrastructure</value>
+  </data>
   <data name="Confirm" xml:space="preserve">
     <value>Confirm</value>
   </data>
@@ -282,6 +285,9 @@
   <data name="ReturnUserOperations" xml:space="preserve">
     <value>Back</value>
   </data>
+  <data name="Revenues" xml:space="preserve">
+    <value>Revenues</value>
+  </data>
   <data name="RoleNameValid" xml:space="preserve">
     <value>The role name cannot be blank.</value>
   </data>
@@ -392,6 +398,9 @@
   </data>
   <data name="UploadDocumentPage" xml:space="preserve">
     <value>Upload Document</value>
+  </data>
+  <data name="UserOperations" xml:space="preserve">
+    <value>User Operations</value>
   </data>
   <data name="WrongPassword" xml:space="preserve">
     <value>Wrong SMS Password</value>

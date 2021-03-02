@@ -52,32 +52,38 @@ namespace MasterISS_Partner_WebSite.Controllers
 
         public ActionResult AddPermission()
         {
+            ViewBag.PermissionList = PermissionList();
+            return View();
+        }
+
+        private SelectList PermissionList()
+        {
             var claimInfo = new ClaimInfo();
             var adminRoleIdList = claimInfo.PartnerRoleId().ToArray();
             var db = new PartnerWebSiteEntities();
             var list = new List<SelectListItem>();
             var localizedList = new LocalizedList<PermissionListEnum, Localization.PermissionList>();
-            var permissionList = db.Permission.Where(p => adminRoleIdList.Contains(p.RoleTypeId)).Select(p => new SelectListItem()
+            var permissionList = db.Permission.Where(p => adminRoleIdList.Contains(p.RoleTypeId)).Select(p => new AvailableRoleList()
             {
-                Value = p.Id.ToString()
+                RoleId = p.Id,
+                RoleName = p.PermissionName
             }).ToArray();
 
             foreach (var item in permissionList)
             {
-                item.Text = localizedList.GetDisplayText(Convert.ToInt32(item.Value), null);
+                item.RoleName = localizedList.GetDisplayText(item.RoleId, null);
             }
+            var selectListsPermission = new SelectList(permissionList.Select(pl => new { Value = pl.RoleId, Text = pl.RoleName }), "Value", "Text");
 
-            var permissionModel = new AddPermissionViewModel()
-            {
-                AvaibleRole = permissionList
-            };
-            return View(permissionModel);
+            return selectListsPermission;
         }
 
         [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult AddPermission(AddPermissionViewModel addPermissionViewModel)
         {
+            ViewBag.PermissionList = PermissionList();
+
             if (ModelState.IsValid)
             {
                 using (var db = new PartnerWebSiteEntities())
@@ -88,44 +94,52 @@ namespace MasterISS_Partner_WebSite.Controllers
                     var validRolename = db.Role.Where(r => r.RoleName == addPermissionViewModel.RoleName && r.PartnerId == partnerId).FirstOrDefault();
                     if (validRolename == null)
                     {
-                        if (addPermissionViewModel.SelectedRole != null && addPermissionViewModel.SelectedRole.Count > 0)
+                        if (addPermissionViewModel.AvailableRoles != null && addPermissionViewModel.AvailableRoles.Length > 0)
                         {
-                            var role = new Role()
-                            {
-                                RoleName = addPermissionViewModel.RoleName,
-                                PartnerId = partnerId
-                            };
-                            db.Role.Add(role);
+                            var partnerAvaibleRoles = claimList.PartnerRoleId();
 
-                            for (int i = 0; i < addPermissionViewModel.SelectedRole.Count; i++)
-                            {
-                                var permissionId = addPermissionViewModel.SelectedRole.ToArray()[i];
-                                var convertedRoleId = Convert.ToInt32(permissionId);
+                            var availablePartnerPermission = db.Permission.SelectMany(permission => partnerAvaibleRoles.Where(r => r == permission.RoleTypeId), (permission, response) => new { permission.Id }).Select(p => p.Id);
 
-                                var rolePermission = new RolePermission()
+                            var userMatchedPermissionCount = addPermissionViewModel.AvailableRoles.Where(viewmodel => availablePartnerPermission.Contains(viewmodel) == true).Count();
+
+                            if (userMatchedPermissionCount == addPermissionViewModel.AvailableRoles.Length)
+                            {
+                                var role = new Role()
                                 {
-                                    RoleId = role.Id,
-                                    PermissionId = convertedRoleId
+                                    RoleName = addPermissionViewModel.RoleName,
+                                    PartnerId = partnerId
                                 };
-                                db.RolePermission.Add(rolePermission);
-                                db.SaveChanges();
-                            }
-                            //LOG
-                            var wrapper = new WebServiceWrapper();
-                            Logger.Info("Added permission: " + role.RoleName + ", by: " + wrapper.GetUserSubMail());
-                            //LOG
+                                db.Role.Add(role);
 
-                            return RedirectToAction("Index");
+
+                                foreach (var item in addPermissionViewModel.AvailableRoles)
+                                {
+                                    var rolePermission = new RolePermission()
+                                    {
+                                        RoleId = role.Id,
+                                        PermissionId = item
+                                    };
+                                    db.RolePermission.Add(rolePermission);
+                                }
+                                db.SaveChanges();
+
+                                //LOG
+                                var wrapper = new WebServiceWrapper();
+                                Logger.Info("Added permission: " + role.RoleName + ", by: " + wrapper.GetUserSubMail());
+                                //LOG
+
+                                return RedirectToAction("Index");
+                            }
+                            return RedirectToAction("Index", "Home");
                         }
-                        TempData["RoleValid"] = Localization.View.RoleValidPermission;
-                        return RedirectToAction("AddPermission");
+                        ViewBag.RoleValid = Localization.View.RoleValidPermission;
+                        return View(addPermissionViewModel);
                     }
-                    TempData["RoleValid"] = Localization.View.AvaibleRole;
-                    return RedirectToAction("AddPermission");
+                    ViewBag.RoleValid = Localization.View.AvaibleRole;
+                    return View(addPermissionViewModel);
                 }
             }
-            TempData["RoleValid"] = Localization.View.RoleNameValid;
-            return Redirect("AddPermission");
+            return View("AddPermission");
         }
 
         public ActionResult AddUser()
