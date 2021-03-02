@@ -1,6 +1,7 @@
 ﻿using MasterISS_Partner_WebSite.Enums;
 using MasterISS_Partner_WebSite.ViewModels;
 using MasterISS_Partner_WebSite.ViewModels.Revenues;
+using NLog;
 using PagedList;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,8 @@ namespace MasterISS_Partner_WebSite.Controllers
     [Authorize(Roles = "Admin,SaleManager,SetupManager")]
     public class RevenuesController : BaseController
     {
+        private static Logger LoggerError = LogManager.GetLogger("AppLoggerError");
+
         public ActionResult Index()
         {
             return View();
@@ -34,7 +37,14 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             var basicAllowanceDetail = wrapper.GetBasicAllowanceDetails(requestByBasicAllowenceDetail);
 
-            //Buraya log ekle error code 0 dan farklı ise
+
+            if (basicAllowanceDetail.ResponseMessage.ErrorCode != 0)
+            {
+                //LOG
+                wrapper = new WebServiceWrapper();
+                LoggerError.Fatal("An error occurred while GetBasicAllowanceDetails , ErrorCode: " + basicAllowanceDetail.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
+                //LOG
+            }
 
             var list = basicAllowanceDetail.AllowanceDetailsResponse == null ? Enumerable.Empty<GetBasicAllowenceDetailsResponseList>() : basicAllowanceDetail.AllowanceDetailsResponse.Select(adr => new GetBasicAllowenceDetailsResponseList()
             {
@@ -62,7 +72,13 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             var basicAllowanceDetail = wrapper.GetBasicAllowanceDetails(requestByBasicAllowenceDetail);
 
-            //Buraya log ekle error code 0 dan farklı ise
+            if (basicAllowanceDetail.ResponseMessage.ErrorCode != 0)
+            {
+                //LOG
+                wrapper = new WebServiceWrapper();
+                LoggerError.Fatal("An error occurred while GetBasicAllowanceDetails , ErrorCode: " + basicAllowanceDetail.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
+                //LOG
+            }
 
             var list = basicAllowanceDetail.AllowanceDetailsResponse == null ? Enumerable.Empty<GetBasicAllowenceDetailsResponseList>() : basicAllowanceDetail.AllowanceDetailsResponse.Select(adr => new GetBasicAllowenceDetailsResponseList()
             {
@@ -86,7 +102,13 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             var response = wrapper.SaleGenericAllowanceList(request);
 
-            //Buraya log ekle error code 0 dan farklı ise
+            if (response.ResponseMessage.ErrorCode != 0)
+            {
+                //LOG
+                wrapper = new WebServiceWrapper();
+                LoggerError.Fatal("An error occurred while SaleGenericAllowanceList , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
+                //LOG
+            }
 
             var list = response.SaleGenericAllowanceList.SaleGenericAllowances?.Select(salega => new SaleGenericAllowancesViewModel
             {
@@ -123,7 +145,13 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             var response = wrapper.SaleAllowanceList(request);
 
-            //Buraya log ekle error code 0 dan farklı ise
+            if (response.ResponseMessage.ErrorCode != 0)
+            {
+                //LOG
+                wrapper = new WebServiceWrapper();
+                LoggerError.Fatal("An error occurred while SaleAllowanceList , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
+                //LOG
+            }
 
             var list = response.SaleAllowanceList.SaleAllowances?.Select(sa => new AllowenceListViewModel
             {
@@ -156,7 +184,13 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             var response = wrapper.SaleAllowanceDetails(request);
 
-            //Buraya log ekle error code 0 dan farklı ise
+            if (response.ResponseMessage.ErrorCode != 0)
+            {
+                //LOG
+                wrapper = new WebServiceWrapper();
+                LoggerError.Fatal("An error occurred while SaleAllowanceDetails , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
+                //LOG
+            }
 
             var list = response.SaleGenericAllowanceList.SaleGenericAllowances?.Select(salega => new SaleGenericAllowancesViewModel
             {
@@ -194,7 +228,14 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             var response = wrapper.SetupGenericAllowanceList(request);
 
-            //Buraya log ekle error code 0 dan farklı ise
+
+            if (response.ResponseMessage.ErrorCode != 0)
+            {
+                //LOG
+                wrapper = new WebServiceWrapper();
+                LoggerError.Fatal("An error occurred while SetupGenericAllowanceList , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
+                //LOG
+            }
 
             var list = response.SetupGenericAllowanceList.SetupGenericAllowances?.Select(setupga => new SetupGenericAllowancesViewModel
             {
@@ -232,7 +273,14 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             var response = wrapper.SetupAllowanceList(request);
 
-            ////Buraya log ekle error code 0 dan farklı ise
+
+            if (response.ResponseMessage.ErrorCode != 0)
+            {
+                //LOG
+                wrapper = new WebServiceWrapper();
+                LoggerError.Fatal("An error occurred while SetupAllowanceList , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
+                //LOG
+            }
 
             var list = response.SetupAllowanceList.SetupAllowances?.Select(sa => new AllowenceListViewModel
             {
@@ -263,10 +311,16 @@ namespace MasterISS_Partner_WebSite.Controllers
                 AllowanceCollectionID = Id
             };
 
-            //Buraya log ekle error code 0 dan farklı ise
 
             var response = wrapper.SetupAllowanceDetails(request);
 
+            if (response.ResponseMessage.ErrorCode != 0)
+            {
+                //LOG
+                wrapper = new WebServiceWrapper();
+                LoggerError.Fatal("An error occurred while SetupAllowanceDetails , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
+                //LOG
+            }
             var list = response.SetupGenericAllowanceList.SetupGenericAllowances?.Select(setupga => new SetupGenericAllowancesViewModel
             {
                 Allowance = setupga.Allowance,

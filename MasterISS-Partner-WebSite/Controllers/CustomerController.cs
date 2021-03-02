@@ -19,6 +19,7 @@ namespace MasterISS_Partner_WebSite.Controllers
     public class CustomerController : BaseController
     {
         private static Logger Logger = LogManager.GetLogger("AppLogger");
+        private static Logger LoggerError = LogManager.GetLogger("AppLoggerError");
 
         // GET: Customer
         public ActionResult NewCustomer()
@@ -188,6 +189,12 @@ namespace MasterISS_Partner_WebSite.Controllers
                         {
                             addCustomerViewModel.Individual.ResidencyAddress.NewCustomerAddressInfoRequest = NewCustomerAddressInfoRequest(individualAddress.AddressDetailsResponse);
                         }
+                        else
+                        {
+                            serviceWrapper = new WebServiceWrapper();
+                            LoggerError.Fatal($"An error occurred while GetApartmentAddress , individualAddress: {individualAddress.ResponseMessage.ErrorCode} , by: {serviceWrapper.GetUserSubMail()}");
+
+                        }
                     }
                     else//This Is Corporative
                     {
@@ -205,6 +212,11 @@ namespace MasterISS_Partner_WebSite.Controllers
                             addCustomerViewModel.CorporateInfo.CompanyAddress.NewCustomerAddressInfoRequest = NewCustomerAddressInfoRequest(companyApartmentAddress.AddressDetailsResponse);
 
                             addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.NewCustomerAddressInfoRequest = NewCustomerAddressInfoRequest(executiveResidencyAddress.AddressDetailsResponse);
+                        }
+                        else
+                        {
+                            webServiceWrapper = new WebServiceWrapper();
+                            LoggerError.Fatal($"An error occurred while GetApartmentAddress , CompanyApartmentAddressResponse: {companyApartmentAddress.ResponseMessage.ErrorCode} ExecutiveResidencyBBKResponseCode: {executiveResidencyAddress.ResponseMessage.ErrorCode}, by: {webServiceWrapper.GetUserSubMail()}");
                         }
                     }
 
@@ -237,11 +249,21 @@ namespace MasterISS_Partner_WebSite.Controllers
                         }
                         else
                         {
+                            //LOG
+                            wrapperBySMSConfirmation = new WebServiceWrapper();
+                            LoggerError.Fatal("An error occurred while SMSConfirmation , ErrorCode: " + smsConfirmation.ResponseMessage.ErrorCode + ", by: " + wrapperBySMSConfirmation.GetUserSubMail());
+                            //LOG
+
                             ViewBag.NewCustomerError = Localization.View.GeneralErrorDescription;
                         }
                     }
                     else
                     {
+                        //LOG
+                        wrapperByQueryApartmentAddress = new WebServiceWrapper();
+                        LoggerError.Fatal($"An error occurred while GetApartmentAddress , ErrorCode: BillingAddressResponse : {billingAddress.ResponseMessage.ErrorCode} SetupAddressResponse : {setupAddress.ResponseMessage.ErrorCode}, by: {wrapperByQueryApartmentAddress.GetUserSubMail()}");
+                        //LOG
+
                         ViewBag.NewCustomerError = Localization.View.NewCustomerError;
                     }
                 }
@@ -443,11 +465,21 @@ namespace MasterISS_Partner_WebSite.Controllers
                         }
                         else if (response.ResponseMessage.ErrorCode == 200)
                         {
+                            //LOG
+                            wrapper = new WebServiceWrapper();
+                            LoggerError.Fatal("An error occurred while NewCustomerRegister , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
+                            //LOG
+
                             ViewBag.Error = Localization.View.GeneralErrorDescription;
                             return View("NewCustomer", customerApplicationInfo);
                         }
                         else
                         {
+                            //LOG
+                            wrapper = new WebServiceWrapper();
+                            LoggerError.Fatal("An error occurred while NewCustomerRegister, ErrorCode:  " + response.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
+                            //LOG
+
                             ViewBag.Error = response.ResponseMessage.ErrorMessage;
                             return View("NewCustomer", customerApplicationInfo);
                         }

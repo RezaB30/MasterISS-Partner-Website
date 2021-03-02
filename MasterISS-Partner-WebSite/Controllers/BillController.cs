@@ -17,6 +17,8 @@ namespace MasterISS_Partner_WebSite.Controllers
     public class BillController : BaseController
     {
         private static Logger Logger = LogManager.GetLogger("AppLogger");
+        private static Logger LoggerError = LogManager.GetLogger("AppLoggerError");
+
         // GET: Bill
         public ActionResult Index()
         {
@@ -44,9 +46,19 @@ namespace MasterISS_Partner_WebSite.Controllers
                 }
                 else if (response.ResponseMessage.ErrorCode == 200)
                 {
+                    //LOG
+                    wrapper = new WebServiceWrapper();
+                    LoggerError.Fatal("An error occurred while UserBillList , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
+                    //LOG
+
                     ViewBag.ResponseError = Localization.View.GeneralErrorDescription;
                     return View("Index", BillList(response));
                 }
+
+                //LOG
+                wrapper = new WebServiceWrapper();
+                LoggerError.Fatal("An error occurred while UserBillList , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
+                //LOG
 
                 ViewBag.ResponseError = response.ResponseMessage.ErrorMessage;
 
@@ -67,6 +79,12 @@ namespace MasterISS_Partner_WebSite.Controllers
                 var totalCredit = response.CreditReportResponse.Total;
                 return Json(new { totalCredit = totalCredit }, JsonRequestBehavior.AllowGet);
             }
+
+            //LOG
+            wrapper = new WebServiceWrapper();
+            LoggerError.Fatal("An error occurred while GetCreditReport , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
+            //LOG
+
             return Json(new { errorMessage = response.ResponseMessage.ErrorMessage }, JsonRequestBehavior.AllowGet);
         }
 
@@ -98,9 +116,20 @@ namespace MasterISS_Partner_WebSite.Controllers
             }
             else if (response.ResponseMessage.ErrorCode == 200)
             {
+                //LOG
+                wrapper = new WebServiceWrapper();
+                LoggerError.Fatal("An error occurred while GetCreditReport , GetCreditReport: " + response.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
+                //LOG
+
                 ViewBag.ErrorMessage = Localization.View.GeneralErrorDescription;
                 return View();
             }
+
+            //LOG
+            wrapper = new WebServiceWrapper();
+            LoggerError.Fatal("An error occurred while GetCreditReport , GetCreditReport: " + response.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
+            //LOG
+
             ViewBag.ErrorMessage = response.ResponseMessage.ErrorMessage;
             return View();
         }
@@ -150,6 +179,11 @@ namespace MasterISS_Partner_WebSite.Controllers
                         var responsePayBill = wrapper.PayBill(selectedBills);
                         if (!string.IsNullOrEmpty(responsePayBill.ErrorMessage))
                         {
+                            //LOG
+                            wrapper = new WebServiceWrapper();
+                            LoggerError.Fatal("An error occurred while PayBill , PayBillErrorMessage: " + responsePayBill+ ", by: " + wrapper.GetUserSubMail());
+                            //LOG
+
                             ViewBag.PayBillError = Localization.BillView.PayBillError;
                         }
                         else

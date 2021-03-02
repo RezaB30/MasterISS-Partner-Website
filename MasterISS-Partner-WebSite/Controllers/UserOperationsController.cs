@@ -16,6 +16,7 @@ namespace MasterISS_Partner_WebSite.Controllers
     public class UserOperationsController : BaseController
     {
         private static Logger Logger = LogManager.GetLogger("AppLogger");
+        private static Logger LoggerError = LogManager.GetLogger("AppLoggerError");
 
         // GET: UserOperations
         public ActionResult Index()
@@ -125,7 +126,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                                 //LOG
                                 var wrapper = new WebServiceWrapper();
-                                Logger.Info("Added permission: " + role.RoleName + ", by: " + wrapper.GetUserSubMail());
+                                Logger.Info("Added role: " + role.RoleName + ", by: " + wrapper.GetUserSubMail());
                                 //LOG
 
                                 return RedirectToAction("Index");
@@ -139,7 +140,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                     return View(addPermissionViewModel);
                 }
             }
-            return View("AddPermission");
+            return View(addPermissionViewModel);
         }
 
         public ActionResult AddUser()
@@ -204,6 +205,13 @@ namespace MasterISS_Partner_WebSite.Controllers
                                 ViewBag.AddUserError = Localization.View.Generic200ErrorCodeMessage;
                                 return View(newUserViewModel);
                             }
+
+                            //LOG
+                            var wrapperGetUserSubMail = new WebServiceWrapper();
+                            LoggerError.Fatal("An error occurred while AddUser , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapperGetUserSubMail.GetUserSubMail());
+                            //LOG
+
+
                             ViewBag.AddUserError = response.ResponseMessage.ErrorMessage;
                             return View(newUserViewModel);
                         }
@@ -262,10 +270,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                         return RedirectToAction("Successful");
                     }
-
-
                     RedirectToAction("Index");
-
                 }
             }
             return View(updateUserRoleViewModel);
@@ -314,9 +319,19 @@ namespace MasterISS_Partner_WebSite.Controllers
             }
             else if (response.ResponseMessage.ErrorCode == 200)
             {
+                //LOG
+                var wrapperGetUserSubMail = new WebServiceWrapper();
+                LoggerError.Fatal("An error occurred while EnableUser , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapperGetUserSubMail.GetUserSubMail());
+                //LOG
+
                 TempData["Error"] = Localization.View.Generic200ErrorCodeMessage;
                 return RedirectToAction("Index");
             }
+            //LOG
+            wrapper = new WebServiceWrapper();
+            LoggerError.Fatal("An error occurred while EnableUser , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
+            //LOG
+
             TempData["Error"] = response.ResponseMessage.ErrorMessage;
             return RedirectToAction("Index");
         }
@@ -351,9 +366,20 @@ namespace MasterISS_Partner_WebSite.Controllers
             }
             else if (response.ResponseMessage.ErrorCode == 200)
             {
+
+                //LOG
+                var wrapperByNlog = new WebServiceWrapper();
+                LoggerError.Fatal("An error occurred while DisableUser , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapperByNlog.GetUserSubMail());
+                //LOG
+
                 TempData["Error"] = Localization.View.Generic200ErrorCodeMessage;
                 return RedirectToAction("Index");
             }
+
+            //LOG
+            var wrapperGetUserSubMail = new WebServiceWrapper();
+            LoggerError.Fatal("An error occurred while DisableUser , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapperGetUserSubMail.GetUserSubMail());
+            //LOG
 
             TempData["Error"] = response.ResponseMessage.ErrorMessage;
             return RedirectToAction("Index");

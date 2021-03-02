@@ -3,6 +3,7 @@ using MasterISS_Partner_WebSite.Authentication;
 using MasterISS_Partner_WebSite.Models;
 using MasterISS_Partner_WebSite.ViewModels;
 using Microsoft.AspNet.Identity;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,8 @@ namespace MasterISS_Partner_WebSite.Controllers
 {
     public class AccountController : BaseController
     {
+        private static Logger LoggerError = LogManager.GetLogger("AppLoggerError");
+
         // GET: Account
         public ActionResult SignIn()
         {
@@ -98,14 +101,28 @@ namespace MasterISS_Partner_WebSite.Controllers
                             return View(userSignInModel);
                         }
                     }
+
+                    //LOG
+                    LoggerError.Fatal("An error occurred while Authenticate , ErrorCode: " + authenticateResponse.ResponseMessage.ErrorCode + ", by: " + userSignInModel.Username);
+                    //LOG
+
                     ViewBag.AuthenticateError = Localization.View.AuthenticateError;
                     return View(userSignInModel);
                 }
                 else if (authenticateResponse.ResponseMessage.ErrorCode == 200)
                 {
+                    //LOG
+                    LoggerError.Fatal("An error occurred while Authenticate , ErrorCode: " + authenticateResponse.ResponseMessage.ErrorCode + ", by: " + userSignInModel.Username);
+                    //LOG
+
                     ViewBag.AuthenticateError = Localization.View.GeneralErrorDescription;
                     return View(userSignInModel);
                 }
+
+                //LOG
+                LoggerError.Fatal("An error occurred while Authenticate , ErrorCode: " + authenticateResponse.ResponseMessage.ErrorCode + ", by: " + userSignInModel.Username);
+                //LOG
+
                 ViewBag.AuthenticateError = authenticateResponse.ResponseMessage.ErrorMessage;
                 return View(userSignInModel);
             }

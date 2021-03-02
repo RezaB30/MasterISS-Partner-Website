@@ -98,23 +98,39 @@
             });
         });
 
-        //var ass = $(".bill-check").attr("dataValue",1)
-        //$(".bill-check").not(ass).prop("checked", false);
+        $(".bill-check").change(function () {
+            if (this.checked) {
+                if ($(this).attr("dataValue") != 1) {
 
+                    var thisCheckbox = $(this);
+                    var currentCheckedCheckboxDataValue= [];
+                    var checkedCheckbox = $('input[type=checkbox]:checked');
 
-        //$(".bill-check").click(function () {
-        //    var value = $(this).attr("dataValue");
-        //    $('input[type=checkbox]:checked').each(function () {
-        //        var allCheckboxDataValue = $(this).attr("dataValue");
+                    $('input[type=checkbox]:checked').each(function (index, element) {
 
-        //        if (value > allCheckboxDataValue ) {
-        //            $(".bill-check").prop("checked", false);
-        //        }
+                        var lastItem = (index == (checkedCheckbox.length - 1));
+                        currentCheckedCheckboxDataValue.push(lastItem);
+                    });
 
+                    var  checkedCheckBoxDataValue = thisCheckbox.attr("dataValue");
+                    var arraylenght = parseInt(currentCheckedCheckboxDataValue.length);
+                    if (checkedCheckBoxDataValue > arraylenght ) {
+                        thisCheckbox.prop("checked", false);
+                    }
+                }
+            }
+            else {
+                var  checkedCheckboxDataValue =parseInt($(this).attr("dataValue"));
 
+                $('input[type=checkbox]:checked').each(function (index, element) {
+                    var allCheckedCheckboxDataValue  =parseInt( $(this).attr("dataValue"))
+                    if (checkedCheckboxDataValue < allCheckedCheckboxDataValue) {
+                        $(this).prop("checked", false);
+                    }
+                });
+            }
+        });
 
-        //    });
-        //});
 
     </script>
 

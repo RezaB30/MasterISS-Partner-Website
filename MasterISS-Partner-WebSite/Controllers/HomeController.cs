@@ -1,4 +1,5 @@
 ﻿using MasterISS_Partner_WebSite.ViewModels;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace MasterISS_Partner_WebSite.Controllers
     [Authorize]
     public class HomeController : BaseController
     {
+        private static Logger LoggerError = LogManager.GetLogger("AppLoggerError");
+
         public ActionResult Index()
         {
             var wrapper = new WebServiceWrapper();
@@ -94,6 +97,11 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             if (!string.IsNullOrEmpty(response.ErrorMessage))
             {
+                //LOG
+                wrapper = new WebServiceWrapper();
+                LoggerError.Fatal("An error occurred while ServiceAvailability , ErrorMessage: " + response.ErrorMessage+ ", by: " + wrapper.GetUserSubMail());
+                //LOG
+
                 return Content($"<div>{response.ErrorMessage}</div>");
             }
 
