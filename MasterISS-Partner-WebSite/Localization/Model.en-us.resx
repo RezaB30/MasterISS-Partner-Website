@@ -138,6 +138,9 @@
   <data name="AttachmentType" xml:space="preserve">
     <value>Attachment Type</value>
   </data>
+  <data name="AvailablePermission" xml:space="preserve">
+    <value>Available Permission</value>
+  </data>
   <data name="BalanceAmount" xml:space="preserve">
     <value>Balance Amount</value>
   </data>
@@ -517,7 +520,7 @@
     <value>Turkish Identity Number</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Title</value>
+    <value>Company Title</value>
   </data>
   <data name="Total" xml:space="preserve">
     <value>Total</value>

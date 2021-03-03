@@ -17,19 +17,23 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.CheckInfrastructure, "Index", "Home")</li>
 
-                    @if (User.IsInRole("Payment"))
+                    @if (User.Identity.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink("Fatura", "Index", "Bill")</li>
+                        <li>@Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.CheckInfrastructure, "Index", "Home")</li>
                     }
 
-                    @if (User.IsInRole("Sale"))
+                    @if (User.IsInRole("Payment") && (User.IsInRole("PaymentManager") || User.IsInRole("Admin")))
+                    {
+                        <li>@Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.BillSettings, "Index", "Bill")</li>
+                    }
+
+                    @if (User.IsInRole("Sale") && (User.IsInRole("SaleManager") || User.IsInRole("Admin")))
                     {
                         <li>@Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.AddCustomer, "NewCustomer", "Customer")</li>
                     }
 
-                    @if (User.IsInRole("Setup"))
+                    @if (User.IsInRole("Setup") && (User.IsInRole("SetupManager") || User.IsInRole("Admin")))
                     {
                         <li>@Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.SetupPanel, "Index", "Setup")</li>
                     }
@@ -39,13 +43,19 @@
                         <li>@Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.UserOperations, "Index", "UserOperations")</li>
                     }
 
-                    @if (User.IsInRole("Setup") || User.IsInRole("Sale"))
+                    @if ((User.IsInRole("Setup") && (User.IsInRole("SetupManager") || User.IsInRole("Admin"))) || (User.IsInRole("Sale") && (User.IsInRole("SaleManager") || User.IsInRole("Admin"))))
                     {
                         <li>@Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.Revenues, "Index", "Revenues")</li>
                     }
 
-                    <li>@Html.LanguageLink("Türkçe","tr-tr")</li>
-                    <li>@Html.LanguageLink("English","en-us")</li>
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("Çıkış", "SignOut", "Account")</li>
+                    }
+
+                    <li>@Html.LanguageLink("Türkçe", "tr-tr")</li>
+                    <li>@Html.LanguageLink("English", "en-us")</li>
                 </ul>
 
             </div>
@@ -67,6 +77,7 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/QueryAdress")
     @Scripts.Render("~/CustomMap")
+    @Scripts.Render("~/bundleMask/jquery")
     @RenderSection("Javascript", required: false)
 </body>
 </html>

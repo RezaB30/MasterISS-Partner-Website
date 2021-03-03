@@ -89,6 +89,8 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
     {
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
         [Display(Name = "CentralSystemNo", ResourceType = typeof(Localization.Model))]
+        [MaxLength(16, ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "CentralSystemNoValid")]
+        [MinLength(16, ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "CentralSystemNoValid")]
         public string CentralSystemNo { get; set; }
 
         public AddressInfoViewModel CompanyAddress { get; set; }
@@ -99,6 +101,8 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
 
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
         [Display(Name = "TaxNo", ResourceType = typeof(Localization.Model))]
+        [MaxLength(10, ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "TaxNoValid")]
+        [MinLength(10, ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "TaxNoValid")]
         public string TaxNo { get; set; }
 
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
@@ -137,6 +141,8 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
 
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
         [Display(Name = "TradeRegistrationNo", ResourceType = typeof(Localization.Model))]
+        [MaxLength(6, ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "TradeRegistrationNoValid")]
+        [MinLength(6, ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "TradeRegistrationNoValid")]
         public string TradeRegistrationNo { get; set; }
 
         [Display(Name = "SameSetupAddress", ResourceType = typeof(Localization.Model))]

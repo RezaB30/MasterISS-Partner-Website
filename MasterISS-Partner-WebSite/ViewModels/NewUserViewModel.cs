@@ -9,7 +9,8 @@ namespace MasterISS_Partner_WebSite.ViewModels
 {
     public class NewUserViewModel
     {
-        [Required]
+        [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
+        [Display(ResourceType = typeof(Localization.Model), Name = "RoleName")]
         public int RoleId { get; set; }
 
         [MaxLength(300, ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "EmailMaxLenght")]

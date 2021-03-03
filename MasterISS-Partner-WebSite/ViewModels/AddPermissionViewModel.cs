@@ -13,15 +13,9 @@ namespace MasterISS_Partner_WebSite.ViewModels
         [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
         public string RoleName { get; set; }
 
+        [Display(Name = "AvailablePermission", ResourceType = typeof(Localization.Model))]
         [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
         public int[] AvailableRoles { get; set; }
-        //public IList<int> SelectedRole { get; set; }
-        //public IEnumerable<SelectListItem> AvaibleRole { get; set; }
-        //public AddPermissionViewModel()
-        //{
-        //    SelectedRole = new List<int>();
-        //    AvaibleRole = new List<SelectListItem>();
-        //}
     }
     public class AvailableRoleList
     {

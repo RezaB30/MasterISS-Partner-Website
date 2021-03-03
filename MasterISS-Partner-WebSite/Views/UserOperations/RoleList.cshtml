@@ -1,0 +1,19 @@
+﻿@model IEnumerable<MasterISS_Partner_WebSite.ViewModels.AvailableRoleList>
+@{
+    ViewBag.Title = "RoleList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<table>
+    <thead>
+        <tr>
+            <td>@Html.DisplayNameFor(m => m.RoleName)</td>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.RoleName)</td>
+            <td>@Html.ActionLink("rolün permissionlarını güncelle", "UpdateRolePermission", "UserOperations", new { roleId = item.RoleId }, null)</td>
+        </tr>
+    }
+</table>

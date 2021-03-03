@@ -472,18 +472,18 @@ namespace MasterISS_Partner_WebSite
                         BirthDate = parseDatetime.ConvertDatetimeByWebService(addCustomerViewModel.IDCard.BirthDate),
                         CardType = addCustomerViewModel.IDCard.CardTypeId,
                         DateOfIssue = DateOfIssueValue((int)addCustomerViewModel.IDCard.CardTypeId, addCustomerViewModel.IDCard),
-                        District = addCustomerViewModel.IDCard.TCBirthCertificate.District,
+                        District = addCustomerViewModel.IDCard.TCBirthCertificate?.District,
                         FirstName = addCustomerViewModel.IDCard.FirstName,
                         LastName = addCustomerViewModel.IDCard.LastName,
-                        Neighbourhood = addCustomerViewModel.IDCard.TCBirthCertificate.Neighbourhood,
-                        PageNo = addCustomerViewModel.IDCard.TCBirthCertificate.PageNo,
+                        Neighbourhood = addCustomerViewModel.IDCard.TCBirthCertificate?.Neighbourhood,
+                        PageNo = addCustomerViewModel.IDCard.TCBirthCertificate?.PageNo,
                         PassportNo = addCustomerViewModel.IDCard.PassportNo,
-                        PlaceOfIssue = addCustomerViewModel.IDCard.TCBirthCertificate.PlaceOfIssue,
-                        Province = addCustomerViewModel.IDCard.TCBirthCertificate.Province,
-                        RowNo = addCustomerViewModel.IDCard.TCBirthCertificate.RowNo,
+                        PlaceOfIssue = addCustomerViewModel.IDCard.TCBirthCertificate?.PlaceOfIssue,
+                        Province = addCustomerViewModel.IDCard.TCBirthCertificate?.Province,
+                        RowNo = addCustomerViewModel.IDCard.TCBirthCertificate?.RowNo,
                         SerialNo = addCustomerViewModel.IDCard.SerialNo,
                         TCKNo = addCustomerViewModel.IDCard.TCKNo,
-                        VolumeNo = addCustomerViewModel.IDCard.TCBirthCertificate.VolumeNo,
+                        VolumeNo = addCustomerViewModel.IDCard.TCBirthCertificate?.VolumeNo,
                     },
 
                     IndividualCustomerInfo = addCustomerViewModel.GeneralInfo.CustomerTypeId != (int)Enums.CustomerTypeEnum.Individual ? null : new IndividualCustomerInfo()
@@ -637,7 +637,7 @@ namespace MasterISS_Partner_WebSite
                 var dateOfIssue = parseDatetime.ConvertDatetimeByWebService(IDCardViewModel.TCBirthCertificate.DateOfIssue);
                 return dateOfIssue;
             }
-            var expiryDate = parseDatetime.ConvertDatetimeByWebService(IDCardViewModel.TCIDCardWithChip.ExpiryDate);
+            var expiryDate = parseDatetime.ConvertDatetimeByExpiryDate(IDCardViewModel.TCIDCardWithChip.ExpiryDate);
             return expiryDate;
         }
 

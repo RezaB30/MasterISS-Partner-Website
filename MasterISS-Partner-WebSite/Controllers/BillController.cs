@@ -48,7 +48,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                 {
                     //LOG
                     wrapper = new WebServiceWrapper();
-                    LoggerError.Fatal("An error occurred while UserBillList , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
+                    LoggerError.Fatal($"An error occurred while UserBillList , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage: {response.ResponseMessage.ErrorMessage} by: {wrapper.GetUserSubMail()}");
                     //LOG
 
                     ViewBag.ResponseError = Localization.View.GeneralErrorDescription;
@@ -57,7 +57,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                 //LOG
                 wrapper = new WebServiceWrapper();
-                LoggerError.Fatal("An error occurred while UserBillList , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
+                LoggerError.Fatal($"An error occurred while UserBillList , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage: {response.ResponseMessage.ErrorMessage} by: {wrapper.GetUserSubMail()}");
                 //LOG
 
                 ViewBag.ResponseError = response.ResponseMessage.ErrorMessage;
@@ -82,7 +82,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             //LOG
             wrapper = new WebServiceWrapper();
-            LoggerError.Fatal("An error occurred while GetCreditReport , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
+            LoggerError.Fatal($"An error occurred while GetCreditReport , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage: {response.ResponseMessage.ErrorMessage} by: {wrapper.GetUserSubMail()}");
             //LOG
 
             return Json(new { errorMessage = response.ResponseMessage.ErrorMessage }, JsonRequestBehavior.AllowGet);
@@ -118,7 +118,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             {
                 //LOG
                 wrapper = new WebServiceWrapper();
-                LoggerError.Fatal("An error occurred while GetCreditReport , GetCreditReport: " + response.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
+                LoggerError.Fatal($"An error occurred while GetCreditReport , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage: {response.ResponseMessage.ErrorMessage} by: {wrapper.GetUserSubMail()}");
                 //LOG
 
                 ViewBag.ErrorMessage = Localization.View.GeneralErrorDescription;
@@ -127,7 +127,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             //LOG
             wrapper = new WebServiceWrapper();
-            LoggerError.Fatal("An error occurred while GetCreditReport , GetCreditReport: " + response.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
+            LoggerError.Fatal($"An error occurred while GetCreditReport , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage: {response.ResponseMessage.ErrorMessage} by: {wrapper.GetUserSubMail()}");
             //LOG
 
             ViewBag.ErrorMessage = response.ResponseMessage.ErrorMessage;
@@ -181,7 +181,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                         {
                             //LOG
                             wrapper = new WebServiceWrapper();
-                            LoggerError.Fatal("An error occurred while PayBill , PayBillErrorMessage: " + responsePayBill+ ", by: " + wrapper.GetUserSubMail());
+                            LoggerError.Fatal($"An error occurred while PayBill , PayBillErrorMessage: {responsePayBill}, by: {wrapper.GetUserSubMail()}");
                             //LOG
 
                             ViewBag.PayBillError = Localization.BillView.PayBillError;
@@ -190,7 +190,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                         {
                             //LOG
                             wrapper = new WebServiceWrapper();
-                            Logger.Info("Customer's bill paid : " + SubscriberNo + ", by: " + wrapper.GetUserSubMail());
+                            Logger.Info($"Customer's bill paid : {SubscriberNo}, BillId: {string.Join(",", selectedBills)} by: {wrapper.GetUserSubMail()}");
                             //LOG
 
                             return RedirectToAction("Succesfull");

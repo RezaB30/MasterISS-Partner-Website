@@ -169,6 +169,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fatura İşlemleri.
+        /// </summary>
+        public static string BillSettings {
+            get {
+                return ResourceManager.GetString("BillSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Altyapı Sorgula.
         /// </summary>
         public static string CheckInfrastructure {
@@ -768,6 +777,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string SignInPanel {
             get {
                 return ResourceManager.GetString("SignInPanel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3 kere hatalı giriş yaptınız. Lütfen tekrar deneyiniz..
+        /// </summary>
+        public static string SMSCode3TimesIncorrectlyError {
+            get {
+                return ResourceManager.GetString("SMSCode3TimesIncorrectlyError", resourceCulture);
             }
         }
         

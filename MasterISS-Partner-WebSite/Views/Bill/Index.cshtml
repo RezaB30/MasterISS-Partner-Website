@@ -80,8 +80,14 @@
     </div>
 }
 @section Javascript{
+
     <script>
         $(document).ready(function () {
+
+            $(function () {
+                $("#subsNo").mask("9999999999");
+            });
+
             $.ajax({
                 url: '@Url.Action("CreditReportNotDetail", "Bill")',
                 type: 'POST',

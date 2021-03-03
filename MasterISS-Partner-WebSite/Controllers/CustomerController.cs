@@ -170,12 +170,18 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                 IdCardValidationAndRemoveModelState((int)addCustomerViewModel.IDCard.CardTypeId, addCustomerViewModel.IDCard);
 
-                if (addCustomerViewModel.ExtraInfo.SubscriptionRegistrationTypeId != (int)RadiusR.DB.Enums.SubscriptionRegistrationType.Transition)
+                if (Enum.IsDefined(typeof(RadiusR.DB.Enums.SubscriptionRegistrationType), addCustomerViewModel.ExtraInfo.SubscriptionRegistrationTypeId))
                 {
-                    addCustomerViewModel.ExtraInfo.XDSLNo = null;
-                    ModelState.Remove("ExtraInfo.XDSLNo");
+                    if (addCustomerViewModel.ExtraInfo.SubscriptionRegistrationTypeId != (int)RadiusR.DB.Enums.SubscriptionRegistrationType.Transition)
+                    {
+                        addCustomerViewModel.ExtraInfo.XDSLNo = null;
+                        ModelState.Remove("ExtraInfo.XDSLNo");
+                    }
                 }
-
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
                 if (ModelState.IsValid)
                 {
                     if (IsCustomerTypeIndividual((int)addCustomerViewModel.GeneralInfo.CustomerTypeId))
@@ -467,39 +473,42 @@ namespace MasterISS_Partner_WebSite.Controllers
                         {
                             //LOG
                             wrapper = new WebServiceWrapper();
-                            LoggerError.Fatal("An error occurred while NewCustomerRegister , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
+                            LoggerError.Fatal($"An error occurred while NewCustomerRegister , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage}, NameValuePair :{string.Join(",", response.NewCustomerRegisterResponse)} by: {wrapper.GetUserSubMail()}");
                             //LOG
 
-                            ViewBag.Error = Localization.View.GeneralErrorDescription;
-                            return View("NewCustomer", customerApplicationInfo);
+                            TempData["SMSConfirmationError"]= Localization.View.GeneralErrorDescription;
+                            return RedirectToAction("NewCustomer");
                         }
                         else
                         {
                             //LOG
                             wrapper = new WebServiceWrapper();
-                            LoggerError.Fatal("An error occurred while NewCustomerRegister, ErrorCode:  " + response.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
+                            LoggerError.Fatal($"An error occurred while NewCustomerRegister, ErrorCode:  {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage}, NameValuePair :{string.Join(",", response.NewCustomerRegisterResponse)}  by: {wrapper.GetUserSubMail()}");
                             //LOG
 
-                            ViewBag.Error = response.ResponseMessage.ErrorMessage;
-                            return View("NewCustomer", customerApplicationInfo);
+                            TempData["SMSConfirmationError"] = response.ResponseMessage.ErrorMessage;
+                            return RedirectToAction("NewCustomer");
                         }
                     }
                     else
                     {
-                        ViewBag.Error = Localization.View.WrongPassword;
+                        ViewBag.Error = Localization.View.WrongPassword + serviceCode;
                         Session["Counter"] = Convert.ToInt32(Session["Counter"]) + 1;
+
                         return View();
                     }
                 }
                 else
                 {
+                    TempData["SMSConfirmationError"] = Localization.View.SMSCode3TimesIncorrectlyError;
                     Session.Remove("Counter");
+                    Session.Remove("CustomerApplicationInfo");
+                    Session.Remove("SMSCode");
                     return RedirectToAction("NewCustomer");
                 }
             }
-
-            var customerAppInfo = Session["CustomerApplicationInfo"] as AddCustomerViewModel;
-            return View("NewCustomer", customerAppInfo);
+            TempData["SMSConfirmationError"] = Localization.View.GeneralErrorDescription;
+            return RedirectToAction("NewCustomer");
         }
 
 
@@ -637,10 +646,12 @@ namespace MasterISS_Partner_WebSite.Controllers
         {
             if (cardTypeId == (int)CardTypeEnum.TCBirthCertificate)
             {
+                IDCard.TCIDCardWithChip = null;
                 RemoveModel("IDCard.TCIDCardWithChip");
             }
             else
             {
+                IDCard.TCBirthCertificate = null;
                 RemoveModel("IDCard.TCBirthCertificate");
             }
         }

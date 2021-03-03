@@ -41,6 +41,8 @@
 @Html.ActionLink(View.AddUser, "AddUser", "UserOperations")
 <br />
 @Html.ActionLink(View.AddRole, "AddPermission", "UserOperations")
+<br />
+@Html.ActionLink("rolleri listele","RoleList", "UserOperations")
 
 <div style="background-color:red">
     @Html.Raw(TempData["Error"])

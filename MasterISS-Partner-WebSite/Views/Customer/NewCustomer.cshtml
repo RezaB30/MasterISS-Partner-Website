@@ -14,6 +14,9 @@
 
     @Html.AntiForgeryToken()
 
+    <span style="background-color:red">@Html.Raw(TempData["SMSConfirmationError"])</span>
+
+
     <div id="extraInfo">
 
         <div class="form-group">
@@ -593,6 +596,9 @@
 
 @section Javascript{
     <script>
+
+
+
         function CheckValidAndHideContainer(checkId,containerId) {
             if ($(checkId).is(':checked')) {
                 $(containerId).hide();
@@ -602,9 +608,9 @@
             }
         }
 
-
-
         $(document).ready(function () {
+
+
 
             $("#IDCard_CardTypeId").change(function () {
                 var tckType = $(this).find(":selected").val();

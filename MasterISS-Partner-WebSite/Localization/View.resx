@@ -153,6 +153,9 @@
   <data name="BillList" xml:space="preserve">
     <value>Fatura Listesi</value>
   </data>
+  <data name="BillSettings" xml:space="preserve">
+    <value>Fatura İşlemleri</value>
+  </data>
   <data name="CheckInfrastructure" xml:space="preserve">
     <value>Altyapı Sorgula</value>
   </data>
@@ -353,6 +356,9 @@
   </data>
   <data name="SignInPanel" xml:space="preserve">
     <value>Giriş Paneli</value>
+  </data>
+  <data name="SMSCode3TimesIncorrectlyError" xml:space="preserve">
+    <value>3 kere hatalı giriş yaptınız. Lütfen tekrar deneyiniz.</value>
   </data>
   <data name="SmsConfirmation" xml:space="preserve">
     <value>Sms Onayı</value>

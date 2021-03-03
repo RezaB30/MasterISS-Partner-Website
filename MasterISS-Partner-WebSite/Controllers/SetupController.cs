@@ -152,7 +152,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             {
                 //LOG
                 var wrapper = new WebServiceWrapper();
-                LoggerError.Fatal("An error occurred while GetTaskDetails , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
+                LoggerError.Fatal($"An error occurred while GetTaskDetails , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapper.GetUserSubMail()}");
                 //LOG
 
                 TempData["GetTaskDetailError"] = Localization.View.Generic200ErrorCodeMessage;
@@ -161,7 +161,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             //LOG
             var wrapperGetUserSubMail = new WebServiceWrapper();
-            LoggerError.Fatal("An error occurred while GetTaskDetails , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapperGetUserSubMail.GetUserSubMail());
+            LoggerError.Fatal($"An error occurred while GetTaskDetails , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapperGetUserSubMail.GetUserSubMail()}");
             //LOG
 
             TempData["GetTaskDetailError"] = response.ResponseMessage.ErrorMessage;
@@ -203,7 +203,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             {
                 //LOG
                 var wrapperGetUserSubMail = new WebServiceWrapper();
-                LoggerError.Fatal("An error occurred while GetCustomerSessionInfo , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapperGetUserSubMail.GetUserSubMail());
+                LoggerError.Fatal($"An error occurred while GetCustomerSessionInfo , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapperGetUserSubMail.GetUserSubMail()}");
                 //LOG
 
                 return Content($"<div>{Localization.View.Generic200ErrorCodeMessage}</div>");
@@ -211,7 +211,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             //LOG
             var wrapper = new WebServiceWrapper();
-            LoggerError.Fatal("An error occurred while GetCustomerSessionInfo , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
+            LoggerError.Fatal($"An error occurred while GetCustomerSessionInfo , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapper.GetUserSubMail()}");
             //LOG
 
             return Content($"<div>{response.ResponseMessage.ErrorMessage}</div>");
@@ -238,7 +238,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             {
                 //LOG
                 var wrapper = new WebServiceWrapper();
-                LoggerError.Fatal("An error occurred while GetCustomerCredentials , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
+                LoggerError.Fatal($"An error occurred while GetCustomerCredentials , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapper.GetUserSubMail()}");
                 //LOG
 
                 return Content($"<div>{Localization.View.Generic200ErrorCodeMessage}</div>");
@@ -246,7 +246,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             //LOG
             var wrapperBySubUserMail = new WebServiceWrapper();
-            LoggerError.Fatal("An error occurred while GetCustomerCredentials , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapperBySubUserMail.GetUserSubMail());
+            LoggerError.Fatal($"An error occurred while GetCustomerCredentials , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapperBySubUserMail.GetUserSubMail()}");
             //LOG
 
             return Content($"<div>{response.ResponseMessage.ErrorMessage}</div>");
@@ -281,7 +281,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             {
                 //LOG
                 var wrapperBySubUserMail = new WebServiceWrapper();
-                LoggerError.Fatal("An error occurred while GetCustomerLineDetails , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapperBySubUserMail.GetUserSubMail());
+                LoggerError.Fatal($"An error occurred while GetCustomerLineDetails , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapperBySubUserMail.GetUserSubMail()}");
                 //LOG
 
                 return Content($"<div>{Localization.View.Generic200ErrorCodeMessage}</div>");
@@ -289,7 +289,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             //LOG
             var wrapper = new WebServiceWrapper();
-            LoggerError.Fatal("An error occurred while GetCustomerLineDetails , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
+            LoggerError.Fatal($"An error occurred while GetCustomerLineDetails , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapper.GetUserSubMail()}");
             //LOG
 
             return Content($"<div>{response.ResponseMessage.ErrorMessage}</div>");
@@ -313,7 +313,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             {
                 //LOG
                 var wrapper = new WebServiceWrapper();
-                LoggerError.Fatal("An error occurred while GetCustomerContract , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
+                LoggerError.Fatal($"An error occurred while GetCustomerContract , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapper.GetUserSubMail()}");
                 //LOG
 
                 TempData["CustomerContractResponse"] = Localization.View.Generic200ErrorCodeMessage;
@@ -321,7 +321,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             }
             //LOG
             var wrapperByGetuserSubmail = new WebServiceWrapper();
-            LoggerError.Fatal("An error occurred while GetCustomerContract , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapperByGetuserSubmail.GetUserSubMail());
+            LoggerError.Fatal($"An error occurred while GetCustomerContract , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapperByGetuserSubmail.GetUserSubMail()}");
             //LOG
 
             TempData["CustomerContractResponse"] = response.ResponseMessage.ErrorMessage;
@@ -371,7 +371,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                     //LOG
                     var wrapperByGetUserSubmail = new WebServiceWrapper();
-                    LoggerError.Fatal("An error occurred while AddTaskStatusUpdate , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapperByGetUserSubmail.GetUserSubMail());
+                    LoggerError.Fatal($"An error occurred while AddTaskStatusUpdate , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapperByGetUserSubmail.GetUserSubMail()}");
                     //LOG
 
                     TempData["CustomerUpdateStatusError"] = response.ResponseMessage.ErrorMessage;
@@ -448,7 +448,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                                 //LOG
                                 var wrapperByGetUserSubmail = new WebServiceWrapper();
-                                LoggerError.Fatal("An error occurred while AddCustomerAttachment , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapperByGetUserSubmail.GetUserSubMail());
+                                LoggerError.Fatal($"An error occurred while AddCustomerAttachment , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapperByGetUserSubmail.GetUserSubMail()}");
                                 //LOG
 
                                 ViewBag.UploadDocumentError = response.ResponseMessage.ErrorMessage;
@@ -502,7 +502,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                 //LOG
                 var wrapperByGetUserSubmail = new WebServiceWrapper();
-                LoggerError.Fatal("An error occurred while UpdateClientLocation , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapperByGetUserSubmail.GetUserSubMail());
+                LoggerError.Fatal($"An error occurred while UpdateClientLocation , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapperByGetUserSubmail.GetUserSubMail()}");
                 //LOG
 
                 TempData["UpdateGPSResponse"] = response.ResponseMessage.ErrorMessage;

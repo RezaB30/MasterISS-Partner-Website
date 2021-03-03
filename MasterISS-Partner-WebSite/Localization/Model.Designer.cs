@@ -124,6 +124,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mevcut İzinler.
+        /// </summary>
+        public static string AvailablePermission {
+            get {
+                return ResourceManager.GetString("AvailablePermission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bakiye Tutarı.
         /// </summary>
         public static string BalanceAmount {
@@ -475,7 +484,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Yönetici Doğum Yeri.
+        ///   Looks up a localized string similar to Yetkili Doğum Yeri.
         /// </summary>
         public static string ExecutiveBirthPlace {
             get {
@@ -484,7 +493,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Yönetici Baba Adı.
+        ///   Looks up a localized string similar to Yetkili Baba Adı.
         /// </summary>
         public static string ExecutiveFathersName {
             get {
@@ -493,7 +502,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Yöneticinin Anne Kızlık Soyadı.
+        ///   Looks up a localized string similar to Yetkili Anne Kızlık Soyadı.
         /// </summary>
         public static string ExecutiveMothersMaidenName {
             get {
@@ -502,7 +511,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Yöneticinin Anne Adı.
+        ///   Looks up a localized string similar to Yetkili Anne Adı.
         /// </summary>
         public static string ExecutiveMothersName {
             get {
@@ -520,7 +529,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Yönetici Uyruğu.
+        ///   Looks up a localized string similar to Yetkili Uyruğu.
         /// </summary>
         public static string ExecutiveNationalityId {
             get {
@@ -538,7 +547,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Yönetici Mesleği.
+        ///   Looks up a localized string similar to Yetkili Mesleği.
         /// </summary>
         public static string ExecutiveProfessionId {
             get {
@@ -547,7 +556,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Yönetici İkamet Adresi.
+        ///   Looks up a localized string similar to Yetkili İkamet Adresi.
         /// </summary>
         public static string ExecutiveResidencyAddress {
             get {
@@ -556,7 +565,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Yönetici Cinsiyeti.
+        ///   Looks up a localized string similar to Yetkili Cinsiyeti.
         /// </summary>
         public static string ExecutiveSexId {
             get {
@@ -826,7 +835,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sayfa Numarası.
+        ///   Looks up a localized string similar to Aile Sıra No.
         /// </summary>
         public static string PageNo {
             get {
@@ -1258,7 +1267,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ünvan.
+        ///   Looks up a localized string similar to Şirket Ünvanı.
         /// </summary>
         public static string Title {
             get {

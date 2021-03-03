@@ -16,7 +16,7 @@ namespace MasterISS_Partner_WebSite
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.
-            
+
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js"));
 
@@ -30,8 +30,10 @@ namespace MasterISS_Partner_WebSite
             bundles.Add(new ScriptBundle("~/QueryAdress").Include(
                 "~/Scripts/QueryAddress/address-query.js"));
 
-             bundles.Add(new ScriptBundle("~/CustomMap").Include(
-                "~/Scripts/Map/map.js"));
+            bundles.Add(new ScriptBundle("~/CustomMap").Include(
+               "~/Scripts/Map/map.js"));
+
+            bundles.Add(new ScriptBundle("~/bundleMask/jquery").Include("~/Scripts/jquery.mask.js", "~/Scripts/input-upparcase.js"));
 
         }
     }

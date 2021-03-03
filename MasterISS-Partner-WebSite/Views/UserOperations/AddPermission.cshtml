@@ -15,19 +15,25 @@
     @Html.EditorFor(m => m.RoleName)
     @Html.ValidationMessageFor(m => m.RoleName)
 
-    foreach (var item in (SelectList)ViewBag.PermissionList)
+    if (ViewBag.PermissionList != null)
     {
-        <div>
-            <label>
-                @Html.DisplayFor(m => item.Text)
-                <input class="checkbox" type="checkbox" value="@item.Value" name="AvailableRoles" />
-            </label>
-        </div>
+        foreach (var item in (SelectList)ViewBag.PermissionList)
+        {
+            <div>
+                <label>
+                    @Html.DisplayFor(m => item.Text)
+                    <input class="checkbox" type="checkbox" value="@item.Value" name="AvailableRoles" />
+                </label>
+            </div>
+        }
+        <input type="submit" value="@View.Create" />
+        @Html.ValidationMessageFor(m => m.AvailableRoles)
     }
-    <input type="submit" value="@View.Create" />
+    else
+    {
+        <span>@View.GeneralErrorDescription</span>
+    }
 }
-@Html.ValidationMessageFor(m => m.AvailableRoles)
-
 <div style="background-color:red">
     @ViewBag.RoleValid
 </div>

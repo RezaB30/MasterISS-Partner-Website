@@ -138,6 +138,9 @@
   <data name="AttachmentType" xml:space="preserve">
     <value>Eklenti Tipi</value>
   </data>
+  <data name="AvailablePermission" xml:space="preserve">
+    <value>Mevcut İzinler</value>
+  </data>
   <data name="BalanceAmount" xml:space="preserve">
     <value>Bakiye Tutarı</value>
   </data>
@@ -256,34 +259,34 @@
     <value>E-Posta</value>
   </data>
   <data name="ExecutiveBirthPlace" xml:space="preserve">
-    <value>Yönetici Doğum Yeri</value>
+    <value>Yetkili Doğum Yeri</value>
   </data>
   <data name="ExecutiveFathersName" xml:space="preserve">
-    <value>Yönetici Baba Adı</value>
+    <value>Yetkili Baba Adı</value>
   </data>
   <data name="ExecutiveMothersMaidenName" xml:space="preserve">
-    <value>Yöneticinin Anne Kızlık Soyadı</value>
+    <value>Yetkili Anne Kızlık Soyadı</value>
   </data>
   <data name="ExecutiveMothersName" xml:space="preserve">
-    <value>Yöneticinin Anne Adı</value>
+    <value>Yetkili Anne Adı</value>
   </data>
   <data name="ExecutiveName" xml:space="preserve">
     <value>Yetkili Adı</value>
   </data>
   <data name="ExecutiveNationalityId" xml:space="preserve">
-    <value>Yönetici Uyruğu</value>
+    <value>Yetkili Uyruğu</value>
   </data>
   <data name="ExecutivePhoneNo" xml:space="preserve">
     <value>Yetkili Telefon No</value>
   </data>
   <data name="ExecutiveProfessionId" xml:space="preserve">
-    <value>Yönetici Mesleği</value>
+    <value>Yetkili Mesleği</value>
   </data>
   <data name="ExecutiveResidencyAddress" xml:space="preserve">
-    <value>Yönetici İkamet Adresi</value>
+    <value>Yetkili İkamet Adresi</value>
   </data>
   <data name="ExecutiveSexId" xml:space="preserve">
-    <value>Yönetici Cinsiyeti</value>
+    <value>Yetkili Cinsiyeti</value>
   </data>
   <data name="ExecutiveSurname" xml:space="preserve">
     <value>Yetkili Soyadı</value>
@@ -373,7 +376,7 @@
     <value>Diğer Telefon Numaraları</value>
   </data>
   <data name="PageNo" xml:space="preserve">
-    <value>Sayfa Numarası</value>
+    <value>Aile Sıra No</value>
   </data>
   <data name="PartnerTariffID" xml:space="preserve">
     <value>Bayi Tarifesi</value>
@@ -517,7 +520,7 @@
     <value>TC Kimlik Numarası</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Ünvan</value>
+    <value>Şirket Ünvanı</value>
   </data>
   <data name="Total" xml:space="preserve">
     <value>Toplam</value>

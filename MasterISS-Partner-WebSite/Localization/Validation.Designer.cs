@@ -61,6 +61,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Merkezi Sistem Numarası 16 haneli olmalıdır.
+        /// </summary>
+        public static string CentralSystemNoValid {
+            get {
+                return ResourceManager.GetString("CentralSystemNoValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Geçersiz Tarih Biçimi.
         /// </summary>
         public static string DateFormatErrorReservationDate {
@@ -115,6 +124,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Abone Numarası sayısal değer olmalıdır.
+        /// </summary>
+        public static string OnlyNumeric {
+            get {
+                return ResourceManager.GetString("OnlyNumeric", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Minimum 6 karakter giriniz..
         /// </summary>
         public static string PasswordMinLenght {
@@ -138,6 +156,33 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string RequiredMaxDecription {
             get {
                 return ResourceManager.GetString("RequiredMaxDecription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Abone Numarası 10 haneli olmalıdır..
+        /// </summary>
+        public static string SubscriberNoValid {
+            get {
+                return ResourceManager.GetString("SubscriberNoValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vergi Numarası 10 haneli olmalıdır.
+        /// </summary>
+        public static string TaxNoValid {
+            get {
+                return ResourceManager.GetString("TaxNoValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ticaret Sicil Numarası 6 haneli olmalıdır..
+        /// </summary>
+        public static string TradeRegistrationNoValid {
+            get {
+                return ResourceManager.GetString("TradeRegistrationNoValid", resourceCulture);
             }
         }
         

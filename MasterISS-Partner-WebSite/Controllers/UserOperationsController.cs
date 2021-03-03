@@ -208,7 +208,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                             //LOG
                             var wrapperGetUserSubMail = new WebServiceWrapper();
-                            LoggerError.Fatal("An error occurred while AddUser , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapperGetUserSubMail.GetUserSubMail());
+                            LoggerError.Fatal($"An error occurred while AddUser , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage: {response.ResponseMessage.ErrorMessage}, by: {wrapperGetUserSubMail.GetUserSubMail()}");
                             //LOG
 
 
@@ -274,6 +274,28 @@ namespace MasterISS_Partner_WebSite.Controllers
                 }
             }
             return View(updateUserRoleViewModel);
+        }
+
+        public ActionResult RoleList()
+        {
+            var claimInfo = new ClaimInfo();
+            var partnerId = claimInfo.PartnerId();
+
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var currentRoleList = db.Role.Where(r => r.PartnerId == partnerId).Select(r => new AvailableRoleList
+                {
+                    RoleId = r.Id,
+                    RoleName = r.RoleName
+                }).ToList();
+
+                return View(currentRoleList);
+            }
+        }
+
+        public ActionResult UpdateRolePermission(int roleId)
+        {
+            return View();
         }
 
         private bool ValidEmail(string eMail)

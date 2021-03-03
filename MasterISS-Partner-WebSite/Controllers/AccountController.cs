@@ -80,10 +80,9 @@ namespace MasterISS_Partner_WebSite.Controllers
                                 }
                                 else//SubUser
                                 {
-                                    var responsePermissionId = authenticateResponse.AuthenticationResponse.Permissions.Select(arp => Convert.ToInt32(arp.ID));
+                                    var subUserPermission = userValid.Role.RolePermission.Select(m => m.Permission.PermissionName).ToList();
 
-                                    var avaiblePermissionName = db.Permission.SelectMany(permission => responsePermissionId.Where(r => r == permission.RoleTypeId), (permission, response) => new { permission.PermissionName }).Select(p => p.PermissionName);                                    
-                                    foreach (var item in avaiblePermissionName)
+                                    foreach (var item in subUserPermission)
                                     {
                                         claims.Add(new Claim(ClaimTypes.Role, item));
                                     }
@@ -103,7 +102,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                     }
 
                     //LOG
-                    LoggerError.Fatal("An error occurred while Authenticate , ErrorCode: " + authenticateResponse.ResponseMessage.ErrorCode + ", by: " + userSignInModel.Username);
+                    LoggerError.Fatal($"An error occurred while Authenticate , ErrorCode: {authenticateResponse.ResponseMessage.ErrorCode}, ErrorMessage : {authenticateResponse.ResponseMessage.ErrorMessage}  by: {userSignInModel.Username}");
                     //LOG
 
                     ViewBag.AuthenticateError = Localization.View.AuthenticateError;
@@ -112,7 +111,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                 else if (authenticateResponse.ResponseMessage.ErrorCode == 200)
                 {
                     //LOG
-                    LoggerError.Fatal("An error occurred while Authenticate , ErrorCode: " + authenticateResponse.ResponseMessage.ErrorCode + ", by: " + userSignInModel.Username);
+                    LoggerError.Fatal($"An error occurred while Authenticate , ErrorCode: {authenticateResponse.ResponseMessage.ErrorCode} ErrorMessage : {authenticateResponse.ResponseMessage.ErrorMessage}, by: {userSignInModel.Username}");
                     //LOG
 
                     ViewBag.AuthenticateError = Localization.View.GeneralErrorDescription;
@@ -120,7 +119,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                 }
 
                 //LOG
-                LoggerError.Fatal("An error occurred while Authenticate , ErrorCode: " + authenticateResponse.ResponseMessage.ErrorCode + ", by: " + userSignInModel.Username);
+                LoggerError.Fatal($"An error occurred while Authenticate , ErrorCode: {authenticateResponse.ResponseMessage.ErrorCode}, ErrorMessage : {authenticateResponse.ResponseMessage.ErrorMessage} by: {userSignInModel.Username}");
                 //LOG
 
                 ViewBag.AuthenticateError = authenticateResponse.ResponseMessage.ErrorMessage;

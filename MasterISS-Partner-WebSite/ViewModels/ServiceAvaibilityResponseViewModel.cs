@@ -36,6 +36,7 @@ namespace MasterISS_Partner_WebSite.ViewModels
         public string FiberVUID { get; set; }
 
         [Display(Name = "HasInfrastructure", ResourceType = typeof(Localization.Model))]
+        [UIHint("HasModemFormat")]
         public bool HasInfrastructureFiber { get; set; }
     }
 
@@ -54,6 +55,7 @@ namespace MasterISS_Partner_WebSite.ViewModels
         public string VdslVUID { get; set; }
 
         [Display(Name = "HasInfrastructure", ResourceType = typeof(Localization.Model))]
+        [UIHint("HasModemFormat")]
         public bool HasInfrastructureVdsl { get; set; }
     }
 
@@ -72,6 +74,7 @@ namespace MasterISS_Partner_WebSite.ViewModels
         public string AdslVUID { get; set; }
 
         [Display(Name = "HasInfrastructure", ResourceType = typeof(Localization.Model))]
+        [UIHint("HasModemFormat")]
         public bool HasInfrastructureAdsl { get; set; }
     }
     

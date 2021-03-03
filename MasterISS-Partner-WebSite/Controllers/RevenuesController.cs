@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace MasterISS_Partner_WebSite.Controllers
 {
-    [Authorize(Roles = "Admin,SaleManager,SetupManager")]
+    [Authorize]
     public class RevenuesController : BaseController
     {
         private static Logger LoggerError = LogManager.GetLogger("AppLoggerError");
@@ -20,7 +20,7 @@ namespace MasterISS_Partner_WebSite.Controllers
         {
             return View();
         }
-        [Authorize(Roles = "Sale,SaleManager")]
+        [Authorize]
         public ActionResult SaleAllowedDetails()
         {
             var wrapper = new WebServiceWrapper();
@@ -42,7 +42,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             {
                 //LOG
                 wrapper = new WebServiceWrapper();
-                LoggerError.Fatal("An error occurred while GetBasicAllowanceDetails , ErrorCode: " + basicAllowanceDetail.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
+                LoggerError.Fatal($"An error occurred while GetBasicAllowanceDetails , ErrorCode: {basicAllowanceDetail.ResponseMessage.ErrorCode}, ErrorMessage : {basicAllowanceDetail.ResponseMessage.ErrorMessage} by: {wrapper.GetUserSubMail()}");
                 //LOG
             }
 
@@ -55,7 +55,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             return View(list);
         }
 
-        [Authorize(Roles = "Setup,SetupManager")]
+        [Authorize]
         public ActionResult SetupAllowedDetails()
         {
             var wrapper = new WebServiceWrapper();
@@ -76,7 +76,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             {
                 //LOG
                 wrapper = new WebServiceWrapper();
-                LoggerError.Fatal("An error occurred while GetBasicAllowanceDetails , ErrorCode: " + basicAllowanceDetail.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
+                LoggerError.Fatal($"An error occurred while GetBasicAllowanceDetails , ErrorCode: {basicAllowanceDetail.ResponseMessage.ErrorCode}, ErrorMessage : {basicAllowanceDetail.ResponseMessage.ErrorMessage}  by: {wrapper.GetUserSubMail()}");
                 //LOG
             }
 
@@ -89,7 +89,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             return View(list);
         }
 
-        [Authorize(Roles = "Sale,SaleManager")]
+        [Authorize]
         public ActionResult SaleGenericAllowanceList(int page = 0, int pageSize = 10)
         {
             var wrapper = new WebServiceWrapper();
@@ -106,7 +106,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             {
                 //LOG
                 wrapper = new WebServiceWrapper();
-                LoggerError.Fatal("An error occurred while SaleGenericAllowanceList , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
+                LoggerError.Fatal($"An error occurred while SaleGenericAllowanceList , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage}  by: {wrapper.GetUserSubMail()}");
                 //LOG
             }
 
@@ -132,7 +132,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             return View(list ?? Enumerable.Empty<SaleGenericAllowancesViewModel>());
         }
 
-        [Authorize(Roles = "Sale,SaleManager")]
+        [Authorize]
         public ActionResult SaleAllowanceList(int page = 0, int pageSize = 10)
         {
             var wrapper = new WebServiceWrapper();
@@ -149,7 +149,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             {
                 //LOG
                 wrapper = new WebServiceWrapper();
-                LoggerError.Fatal("An error occurred while SaleAllowanceList , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
+                LoggerError.Fatal($"An error occurred while SaleAllowanceList , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage}  by: {wrapper.GetUserSubMail()}");
                 //LOG
             }
 
@@ -167,7 +167,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             return View(list ?? Enumerable.Empty<AllowenceListViewModel>());
         }
 
-        [Authorize(Roles = "Sale,SaleManager")]
+        [Authorize]
         public ActionResult SaleAllowanceDetails(int Id, int page = 0, int pageSize = 10)
         {
             var wrapper = new WebServiceWrapper();
@@ -188,7 +188,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             {
                 //LOG
                 wrapper = new WebServiceWrapper();
-                LoggerError.Fatal("An error occurred while SaleAllowanceDetails , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
+                LoggerError.Fatal($"An error occurred while SaleAllowanceDetails , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage}  by: {wrapper.GetUserSubMail()}");
                 //LOG
             }
 
@@ -215,7 +215,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             return View(list ?? Enumerable.Empty<SaleGenericAllowancesViewModel>());
         }
 
-        [Authorize(Roles = "Setup,SetupManager")]
+        [Authorize]
         public ActionResult SetupGenericAllowanceList(int page = 0, int pageSize = 10)
         {
             var wrapper = new WebServiceWrapper();
@@ -233,7 +233,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             {
                 //LOG
                 wrapper = new WebServiceWrapper();
-                LoggerError.Fatal("An error occurred while SetupGenericAllowanceList , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
+                LoggerError.Fatal($"An error occurred while SetupGenericAllowanceList , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage}  by: {wrapper.GetUserSubMail()}");
                 //LOG
             }
 
@@ -260,7 +260,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             return View(list ?? Enumerable.Empty<SetupGenericAllowancesViewModel>());
         }
 
-        [Authorize(Roles = "Setup,SetupManager")]
+        [Authorize]
         public ActionResult SetupAllowanceList(int page = 0, int pageSize = 10)
         {
             var wrapper = new WebServiceWrapper();
@@ -278,7 +278,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             {
                 //LOG
                 wrapper = new WebServiceWrapper();
-                LoggerError.Fatal("An error occurred while SetupAllowanceList , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
+                LoggerError.Fatal($"An error occurred while SetupAllowanceList , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage}  by: {wrapper.GetUserSubMail()}");
                 //LOG
             }
 
@@ -296,7 +296,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             return View(list ?? Enumerable.Empty<AllowenceListViewModel>());
         }
 
-        [Authorize(Roles = "Setup,SetupManager")]
+        [Authorize]
         public ActionResult SetupAllowenceDetails(int Id, int page = 0, int pageSize = 10)
         {
             var wrapper = new WebServiceWrapper();
@@ -318,7 +318,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             {
                 //LOG
                 wrapper = new WebServiceWrapper();
-                LoggerError.Fatal("An error occurred while SetupAllowanceDetails , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
+                LoggerError.Fatal($"An error occurred while SetupAllowanceDetails , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage}  by: {wrapper.GetUserSubMail()}");
                 //LOG
             }
             var list = response.SetupGenericAllowanceList.SetupGenericAllowances?.Select(setupga => new SetupGenericAllowancesViewModel

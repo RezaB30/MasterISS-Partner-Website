@@ -414,6 +414,8 @@
       <DependentUpon>PartnerEntities.edmx</DependentUpon>
       <LastGenOutput>PartnerEntities.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\input-upparcase.js" />
+    <Content Include="Scripts\jquery.mask.js" />
     <Content Include="Scripts\Map\map.js" />
     <Content Include="Scripts\QueryAddress\address-query.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -492,6 +494,7 @@
     <Content Include="Views\Setup\UpdateClientLocation.cshtml" />
     <Content Include="Views\Revenues\Index.cshtml" />
     <Content Include="Views\UserOperations\UpdateUserRole.cshtml" />
+    <Content Include="Views\UserOperations\RoleList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
