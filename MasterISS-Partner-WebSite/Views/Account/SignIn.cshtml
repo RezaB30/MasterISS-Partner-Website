@@ -31,3 +31,11 @@
 }
 
 @ViewBag.AuthenticateError
+
+@section JavaScript{
+    <script>
+        $("input[type=text]").on("input", function (event) {
+            $(this).off("on");
+        })
+    </script>
+}

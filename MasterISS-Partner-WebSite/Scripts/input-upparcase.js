@@ -1,3 +1,6 @@
-﻿$("input[type=text]").keyup(function () {
-    $(this).val($(this).val().toLocaleUpperCase());
-});  
+﻿$("input[type=text], textarea").on("input", function () {
+    var inputId = $(this).attr("id");
+    if (inputId != "Username" && inputId != "PartnerCode" && inputId != "Password" && inputId != "UserEmail") {
+        $(this).val($(this).val().toLocaleUpperCase('tr'));
+    }
+});

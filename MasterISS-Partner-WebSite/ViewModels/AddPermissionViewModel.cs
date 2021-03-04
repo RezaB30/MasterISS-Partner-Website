@@ -17,8 +17,20 @@ namespace MasterISS_Partner_WebSite.ViewModels
         [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
         public int[] AvailableRoles { get; set; }
     }
+    public class AvailablePermissionList
+    {
+        public string PermissionName { get; set; }
+        public int PermissionId { get; set; }
+        public bool IsSelected { get; set; }
+
+        [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
+        [Display(Name = "AvailablePermission", ResourceType = typeof(Localization.Model))]
+        public int[] SelectedPermissions { get; set; }
+
+    }
     public class AvailableRoleList
     {
+        [Display(Name = "RolePermissionName", ResourceType = typeof(Localization.Model))]
         public string RoleName { get; set; }
         public int RoleId { get; set; }
     }

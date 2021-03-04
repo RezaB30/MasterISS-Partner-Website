@@ -64,17 +64,17 @@ namespace MasterISS_Partner_WebSite.Controllers
             var db = new PartnerWebSiteEntities();
             var list = new List<SelectListItem>();
             var localizedList = new LocalizedList<PermissionListEnum, Localization.PermissionList>();
-            var permissionList = db.Permission.Where(p => adminRoleIdList.Contains(p.RoleTypeId)).Select(p => new AvailableRoleList()
+            var permissionList = db.Permission.Where(p => adminRoleIdList.Contains(p.RoleTypeId)).Select(p => new AvailablePermissionList()
             {
-                RoleId = p.Id,
-                RoleName = p.PermissionName
+                PermissionId = p.Id,
+                PermissionName = p.PermissionName
             }).ToArray();
 
             foreach (var item in permissionList)
             {
-                item.RoleName = localizedList.GetDisplayText(item.RoleId, null);
+                item.PermissionName = localizedList.GetDisplayText(item.PermissionId, null);
             }
-            var selectListsPermission = new SelectList(permissionList.Select(pl => new { Value = pl.RoleId, Text = pl.RoleName }), "Value", "Text");
+            var selectListsPermission = new SelectList(permissionList.Select(pl => new { Value = pl.PermissionId, Text = pl.PermissionName }), "Value", "Text");
 
             return selectListsPermission;
         }
@@ -295,8 +295,76 @@ namespace MasterISS_Partner_WebSite.Controllers
 
         public ActionResult UpdateRolePermission(int roleId)
         {
-            return View();
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var rolePermissionList = db.RolePermission.Where(rp => rp.RoleId == roleId).Select(p => p.PermissionId);
+
+                var claimInfo = new ClaimInfo();
+                var adminRoleIdList = claimInfo.PartnerRoleId().ToArray();
+                var localizedList = new LocalizedList<PermissionListEnum, Localization.PermissionList>();
+
+                var permissionList = db.Permission.Where(p => adminRoleIdList.Contains(p.RoleTypeId)).Select(p => new AvailablePermissionList()
+                {
+                    PermissionId = p.Id,
+                    PermissionName = p.PermissionName,
+                    IsSelected = rolePermissionList.Contains(p.Id) == true,
+                }).ToArray();
+
+                foreach (var item in permissionList)
+                {
+                    item.PermissionName = localizedList.GetDisplayText(item.PermissionId, null);
+                }
+
+                ViewBag.RoleId = roleId;
+                ViewBag.RoleName = db.Role.Find(roleId).RoleName;
+
+                return View(permissionList);
+            }
         }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult UpdateRolePermission(AvailablePermissionList availablePermissionList, int roleId)
+        {
+            if (ModelState.IsValid)
+            {
+                var claimList = new ClaimInfo();
+                var partnerId = claimList.PartnerId();
+                using (var db = new PartnerWebSiteEntities())
+                {
+                    var validRolename = db.Role.Where(r => r.Id == roleId && r.PartnerId == partnerId).FirstOrDefault();
+                    if (validRolename != null)
+                    {
+                        var partnerAvaibleRoles = claimList.PartnerRoleId();
+
+                        var availablePartnerPermission = db.Permission.SelectMany(permission => partnerAvaibleRoles.Where(r => r == permission.RoleTypeId), (permission, response) => new { permission.Id }).Select(p => p.Id);
+
+                        var userMatchedPermissionCount = availablePermissionList.SelectedPermissions.Where(viewmodel => availablePartnerPermission.Contains(viewmodel) == true).Count();
+
+                        if (userMatchedPermissionCount == availablePermissionList.SelectedPermissions.Length)
+                        {
+                            var removedRolePermission = db.RolePermission.Where(rp => rp.RoleId == roleId).ToArray();
+                            db.RolePermission.RemoveRange(removedRolePermission);
+                            db.SaveChanges();
+
+                            var addedRolePermission = availablePermissionList.SelectedPermissions.Select(selectedP => new RolePermission
+                            {
+                                PermissionId = selectedP,
+                                RoleId = roleId
+                            });
+                            db.RolePermission.AddRange(addedRolePermission);
+                            db.SaveChanges();
+                        }
+
+                        return RedirectToAction("Successful");
+                    }
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            TempData["Error"] = Localization.View.RequiredPermission;
+            return RedirectToAction("UpdateRolePermission", new { roleId = roleId });
+        }
+
 
         private bool ValidEmail(string eMail)
         {

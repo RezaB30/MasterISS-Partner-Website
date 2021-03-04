@@ -329,6 +329,7 @@ namespace MasterISS_Partner_WebSite.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "UpdateTaskStatus,Admin")]
         public ActionResult UpdateTaskStatus(long taskNo)
         {
             var request = new AddTaskStatusUpdateViewModel { TaskNo = taskNo };
@@ -340,7 +341,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        [Authorize(Roles = "UpdateTaskStatus")]
+        [Authorize(Roles = "UpdateTaskStatus,Admin")]
         public ActionResult UpdateTaskStatus(AddTaskStatusUpdateViewModel updateTaskStatusViewModel)
         {
             if (updateTaskStatusViewModel.FaultCodes != FaultCodeEnum.RendezvousMade)

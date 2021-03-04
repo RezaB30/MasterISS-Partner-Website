@@ -1,0 +1,29 @@
+﻿@using MasterISS_Partner_WebSite.ViewModels
+@using MasterISS_Partner_WebSite.Localization
+@model IEnumerable<AvailablePermissionList>
+@{
+    ViewBag.Title = "UpdateRolePermission";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+   @ViewBag.RoleName
+</div>
+
+@using (Html.BeginForm("UpdateRolePermission", "UserOperations", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    foreach (var item in Model)
+    {
+        <div>
+            <label>
+                @Html.DisplayFor(m => item.PermissionName)
+                <input class="checkbox" type="checkbox" value="@item.PermissionId" name="SelectedPermissions" checked="@item.IsSelected" />
+            </label>
+        </div>
+    }
+    @Html.Hidden("roleId", (int)ViewBag.RoleId)
+    <input value="aa" type="submit" />
+}
+
+<span style="background-color:red">@Html.Raw(TempData["Error"])</span> 

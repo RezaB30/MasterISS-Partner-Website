@@ -129,8 +129,14 @@
   <data name="SaleManager" xml:space="preserve">
     <value>Sale Manager</value>
   </data>
+  <data name="SaleRevenuesList" xml:space="preserve">
+    <value>Viewing Sale Revenues Reports</value>
+  </data>
   <data name="SetupManager" xml:space="preserve">
     <value>Setup Manager</value>
+  </data>
+  <data name="SetupRevenuesList" xml:space="preserve">
+    <value>Viewing Setup Revenues Reports</value>
   </data>
   <data name="UpdateTaskStatus" xml:space="preserve">
     <value>Updating Task Status</value>

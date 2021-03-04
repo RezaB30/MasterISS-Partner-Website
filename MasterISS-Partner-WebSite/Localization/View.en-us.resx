@@ -282,6 +282,9 @@
   <data name="RecordFound" xml:space="preserve">
     <value>record found.</value>
   </data>
+  <data name="RequiredPermission" xml:space="preserve">
+    <value>Please select at least 1 Permission.</value>
+  </data>
   <data name="ReturnBill" xml:space="preserve">
     <value>Back</value>
   </data>
@@ -290,6 +293,9 @@
   </data>
   <data name="Revenues" xml:space="preserve">
     <value>Revenues</value>
+  </data>
+  <data name="RoleList" xml:space="preserve">
+    <value>Role List</value>
   </data>
   <data name="RoleNameValid" xml:space="preserve">
     <value>The role name cannot be blank.</value>
@@ -392,6 +398,9 @@
   </data>
   <data name="UpdateGPS" xml:space="preserve">
     <value>Update Customer Location</value>
+  </data>
+  <data name="UpdateRoleAuthorizations" xml:space="preserve">
+    <value>Update Role's Authorizations</value>
   </data>
   <data name="UpdateTaskStatus" xml:space="preserve">
     <value>Update Task Status</value>

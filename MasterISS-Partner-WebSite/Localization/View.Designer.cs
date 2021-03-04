@@ -556,6 +556,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lütfen en az 1 Yetki seçiniz..
+        /// </summary>
+        public static string RequiredPermission {
+            get {
+                return ResourceManager.GetString("RequiredPermission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Geri.
         /// </summary>
         public static string ReturnBill {
@@ -579,6 +588,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string Revenues {
             get {
                 return ResourceManager.GetString("Revenues", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rol Listesi.
+        /// </summary>
+        public static string RoleList {
+            get {
+                return ResourceManager.GetString("RoleList", resourceCulture);
             }
         }
         
@@ -885,6 +903,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string UpdateGPS {
             get {
                 return ResourceManager.GetString("UpdateGPS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rolün Yetkilerini Güncelle.
+        /// </summary>
+        public static string UpdateRoleAuthorizations {
+            get {
+                return ResourceManager.GetString("UpdateRoleAuthorizations", resourceCulture);
             }
         }
         

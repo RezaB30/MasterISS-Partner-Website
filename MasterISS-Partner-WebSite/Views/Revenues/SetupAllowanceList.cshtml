@@ -15,7 +15,7 @@
         </tr>
     </thead>
     <tbody>
-        @*@foreach (var item in Model)
+        @foreach (var item in Model)
             {
                 <tr>
                     <td>@Html.DisplayFor(motelItem => item.Ispaid)</td>
@@ -24,17 +24,7 @@
                     <td>@Html.DisplayFor(motelItem => item.Total)</td>
                     <td>@Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.Details, "SetupAllowenceDetails", new { Id = item.Id })</td>
                 </tr>
-            }*@
-        @for (int i = 0; i < 2; i++)
-        {
-            <tr>
-                <td>Evet(Bu Bir test verisidir)</td>
-                <td>@DateTime.Now</td>
-                <td>@DateTime.Now</td>
-                <td>11</td>
-                <td>@Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.Details, "SetupAllowenceDetails")</td>
-            </tr>
-        }
+            }
     </tbody>
 </table>
 <div>

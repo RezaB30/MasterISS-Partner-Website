@@ -13,5 +13,7 @@ namespace MasterISS_Partner_WebSite.Enums
         UpdateTaskStatus = 10,
         PaymentCreditReportDetail = 11,
         PaymentCreditReportNotDetail = 14,
+        SetupRevenuesList = 16,
+        SaleRevenuesList = 17
     }
 }

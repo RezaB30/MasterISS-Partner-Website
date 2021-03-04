@@ -184,11 +184,14 @@ namespace MasterISS_Partner_WebSite
 
             return request;
         }
-        private string DateTimeConvertedBySetupWebService(string dateToFormat)
+        private string DateTimeConvertedBySetupWebService(string dateToFormatted)
         {
-            var formattedDate = DateTime.ParseExact(dateToFormat, "dd.MM.yyyy HH:mm", null).ToString("yyyy-MM-dd HH:mm:ss");
-
-            return formattedDate;
+            if (!string.IsNullOrEmpty(dateToFormatted))
+            {
+                var formattedDate = DateTime.ParseExact(dateToFormatted, "dd.MM.yyyy HH:mm", null).ToString("yyyy-MM-dd HH:mm:ss");
+                return formattedDate;
+            }
+            return null;
         }
 
     }

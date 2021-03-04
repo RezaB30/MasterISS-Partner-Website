@@ -282,6 +282,9 @@
   <data name="RecordFound" xml:space="preserve">
     <value>adet kayıt bulundu.</value>
   </data>
+  <data name="RequiredPermission" xml:space="preserve">
+    <value>Lütfen en az 1 Yetki seçiniz.</value>
+  </data>
   <data name="ReturnBill" xml:space="preserve">
     <value>Geri</value>
   </data>
@@ -290,6 +293,9 @@
   </data>
   <data name="Revenues" xml:space="preserve">
     <value>Hakedişler</value>
+  </data>
+  <data name="RoleList" xml:space="preserve">
+    <value>Rol Listesi</value>
   </data>
   <data name="RoleNameValid" xml:space="preserve">
     <value>Rol ismi boş geçilemez</value>
@@ -392,6 +398,9 @@
   </data>
   <data name="UpdateGPS" xml:space="preserve">
     <value>Müşterinin Konumunu Güncelle</value>
+  </data>
+  <data name="UpdateRoleAuthorizations" xml:space="preserve">
+    <value>Rolün Yetkilerini Güncelle</value>
   </data>
   <data name="UpdateTaskStatus" xml:space="preserve">
     <value>Görev Tanımını Güncelle</value>

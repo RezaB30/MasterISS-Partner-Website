@@ -13,13 +13,14 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            @foreach (var item in Model)
-            {
+
+        @foreach (var item in Model)
+        {
+            <tr>
                 <td>@Html.DisplayFor(modelItem => item.AllowanceStateName)</td>
                 <td>@Html.DisplayFor(modelItem => item.Price)</td>
-            }
-        </tr>
+            </tr>
+        }
     </tbody>
 </table>
 

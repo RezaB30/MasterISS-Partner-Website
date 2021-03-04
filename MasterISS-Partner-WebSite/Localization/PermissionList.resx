@@ -129,8 +129,14 @@
   <data name="SaleManager" xml:space="preserve">
     <value>Satış Temsilcisi</value>
   </data>
+  <data name="SaleRevenuesList" xml:space="preserve">
+    <value>Satış Hakediş Raporlarını Görüntüleme</value>
+  </data>
   <data name="SetupManager" xml:space="preserve">
     <value>Kurulum Temsilcisi</value>
+  </data>
+  <data name="SetupRevenuesList" xml:space="preserve">
+    <value>Kurulum Hakediş Raporlarını Görüntüleme</value>
   </data>
   <data name="UpdateTaskStatus" xml:space="preserve">
     <value>Görev Durumunu Güncelleme</value>

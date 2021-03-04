@@ -3,7 +3,7 @@
     ViewBag.Title = "RoleList";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<table>
+<table class="table">
     <thead>
         <tr>
             <td>@Html.DisplayNameFor(m => m.RoleName)</td>
@@ -13,7 +13,7 @@
     {
         <tr>
             <td>@Html.DisplayFor(modelItem => item.RoleName)</td>
-            <td>@Html.ActionLink("rolün permissionlarını güncelle", "UpdateRolePermission", "UserOperations", new { roleId = item.RoleId }, null)</td>
+            <td>@Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.UpdateRoleAuthorizations, "UpdateRolePermission", "UserOperations", new { roleId = item.RoleId }, null)</td>
         </tr>
     }
 </table>

@@ -495,6 +495,7 @@
     <Content Include="Views\Revenues\Index.cshtml" />
     <Content Include="Views\UserOperations\UpdateUserRole.cshtml" />
     <Content Include="Views\UserOperations\RoleList.cshtml" />
+    <Content Include="Views\UserOperations\UpdateRolePermission.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

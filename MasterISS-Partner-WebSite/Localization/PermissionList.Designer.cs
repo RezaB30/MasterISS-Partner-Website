@@ -97,11 +97,29 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satış Hakediş Raporlarını Görüntüleme.
+        /// </summary>
+        public static string SaleRevenuesList {
+            get {
+                return ResourceManager.GetString("SaleRevenuesList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kurulum Temsilcisi.
         /// </summary>
         public static string SetupManager {
             get {
                 return ResourceManager.GetString("SetupManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kurulum Hakediş Raporlarını Görüntüleme.
+        /// </summary>
+        public static string SetupRevenuesList {
+            get {
+                return ResourceManager.GetString("SetupRevenuesList", resourceCulture);
             }
         }
         

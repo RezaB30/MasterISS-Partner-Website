@@ -43,7 +43,7 @@
                         <li>@Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.UserOperations, "Index", "UserOperations")</li>
                     }
 
-                    @if ((User.IsInRole("Setup") && (User.IsInRole("SetupManager") || User.IsInRole("Admin"))) || (User.IsInRole("Sale") && (User.IsInRole("SaleManager") || User.IsInRole("Admin"))))
+                    @if (User.IsInRole("Setup") || (User.IsInRole("Sale")))
                     {
                         <li>@Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.Revenues, "Index", "Revenues")</li>
                     }
