@@ -232,18 +232,22 @@ namespace MasterISS_Partner_WebSite.Controllers
                 var claimInfo = new ClaimInfo();
                 var partnerId = claimInfo.PartnerId();
                 var user = db.User.Find(userId);
-                var userAvaibleRole = user.RoleId;
-                ViewBag.RoleList = new SelectList(db.Role.Where(r => r.PartnerId == partnerId).Select(r => new { Value = r.Id, Name = r.RoleName }).ToArray(), "Value", "Name");
-
-                var userViewModel = new UpdateUserRoleViewModel()
+                if (user != null)
                 {
-                    RoleId = userAvaibleRole,
-                    UserEmail = user.UserSubMail,
-                    UserNameSurname = user.NameSurname,
-                    UserId = userId
-                };
+                    var userAvaibleRole = user.RoleId;
+                    ViewBag.RoleList = new SelectList(db.Role.Where(r => r.PartnerId == partnerId).Select(r => new { Value = r.Id, Name = r.RoleName }).ToArray(), "Value", "Name");
 
-                return View(userViewModel);
+                    var userViewModel = new UpdateUserRoleViewModel()
+                    {
+                        RoleId = userAvaibleRole,
+                        UserEmail = user.UserSubMail,
+                        UserNameSurname = user.NameSurname,
+                        UserId = userId
+                    };
+
+                    return View(userViewModel);
+                }
+                return RedirectToAction("Index", "Home");
             }
         }
 
@@ -298,27 +302,30 @@ namespace MasterISS_Partner_WebSite.Controllers
             using (var db = new PartnerWebSiteEntities())
             {
                 var rolePermissionList = db.RolePermission.Where(rp => rp.RoleId == roleId).Select(p => p.PermissionId);
-
-                var claimInfo = new ClaimInfo();
-                var adminRoleIdList = claimInfo.PartnerRoleId().ToArray();
-                var localizedList = new LocalizedList<PermissionListEnum, Localization.PermissionList>();
-
-                var permissionList = db.Permission.Where(p => adminRoleIdList.Contains(p.RoleTypeId)).Select(p => new AvailablePermissionList()
+                if (rolePermissionList != null)
                 {
-                    PermissionId = p.Id,
-                    PermissionName = p.PermissionName,
-                    IsSelected = rolePermissionList.Contains(p.Id) == true,
-                }).ToArray();
+                    var claimInfo = new ClaimInfo();
+                    var adminRoleIdList = claimInfo.PartnerRoleId().ToArray();
+                    var localizedList = new LocalizedList<PermissionListEnum, Localization.PermissionList>();
 
-                foreach (var item in permissionList)
-                {
-                    item.PermissionName = localizedList.GetDisplayText(item.PermissionId, null);
+                    var permissionList = db.Permission.Where(p => adminRoleIdList.Contains(p.RoleTypeId)).Select(p => new AvailablePermissionList()
+                    {
+                        PermissionId = p.Id,
+                        PermissionName = p.PermissionName,
+                        IsSelected = rolePermissionList.Contains(p.Id) == true,
+                    }).ToArray();
+
+                    foreach (var item in permissionList)
+                    {
+                        item.PermissionName = localizedList.GetDisplayText(item.PermissionId, null);
+                    }
+
+                    ViewBag.RoleId = roleId;
+                    ViewBag.RoleName = db.Role.Find(roleId).RoleName;
+
+                    return View(permissionList);
                 }
-
-                ViewBag.RoleId = roleId;
-                ViewBag.RoleName = db.Role.Find(roleId).RoleName;
-
-                return View(permissionList);
+                return RedirectToAction("Index", "Home");
             }
         }
 

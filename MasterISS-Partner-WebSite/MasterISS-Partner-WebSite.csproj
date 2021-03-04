@@ -193,6 +193,7 @@
     <Compile Include="Enums\AttachmentTypeEnum.cs" />
     <Compile Include="Enums\CardTypeEnum.cs" />
     <Compile Include="Enums\CustomerTypeEnum.cs" />
+    <Compile Include="Enums\ErrorCodesEnum.cs" />
     <Compile Include="Enums\FaultCodeEnum.cs" />
     <Compile Include="Enums\RevenuesTypeEnum.cs" />
     <Compile Include="Enums\TaskStatusEnum.cs" />
@@ -221,6 +222,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CustomerTypes.en-us.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Localization\ErrorCodesList.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ErrorCodesList.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Localization\ErrorCodesList.en-us.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ErrorCodesList.en-us.resx</DependentUpon>
     </Compile>
     <Compile Include="Localization\FaultCodes.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -366,17 +377,11 @@
     <Compile Include="ViewModels\IDCardValidationViewModel.cs" />
     <Compile Include="ViewModels\AdresInfoViewModel.cs" />
     <Compile Include="ViewModels\NewUserViewModel.cs" />
-    <Compile Include="ViewModels\PayBillRequestViewModel.cs" />
     <Compile Include="ViewModels\Revenues\GetBasicAllowenceDetailsResponseList.cs" />
     <Compile Include="ViewModels\Revenues\PageSettingsByWebService.cs" />
     <Compile Include="ViewModels\Revenues\AllowenceListViewModel.cs" />
     <Compile Include="ViewModels\Revenues\SetupAllowanceDetailsRequest.cs" />
     <Compile Include="ViewModels\ServiceAvaibilityResponseViewModel.cs" />
-    <Compile Include="ViewModels\Settings\BillCollectionSettingsViewModel.cs" />
-    <Compile Include="ViewModels\Settings\GoogleSettingsViewModel.cs" />
-    <Compile Include="ViewModels\Settings\SetupSettingsViewModel.cs" />
-    <Compile Include="ViewModels\Settings\SMSApiSettingsViewModel.cs" />
-    <Compile Include="ViewModels\Settings\TTelekomUserViewModel.cs" />
     <Compile Include="ViewModels\Setup\AddTaskStatusUpdateViewModel.cs" />
     <Compile Include="ViewModels\Setup\GetTaskListRequestViewModel.cs" />
     <Compile Include="ViewModels\Setup\Response\GetCustomerSessionInfoResponseViewModel.cs" />
@@ -386,8 +391,6 @@
     <Compile Include="ViewModels\Setup\Response\TaskListDetailResponseViewModel.cs" />
     <Compile Include="ViewModels\Setup\UpdateClientGPSRequestViewModel.cs" />
     <Compile Include="ViewModels\Setup\UploadFileRequestViewModel.cs" />
-    <Compile Include="ViewModels\SMSConfirmationViewModel.cs" />
-    <Compile Include="ViewModels\Settings\VerimorSettingsWiewModel.cs" />
     <Compile Include="ViewModels\UpdateUserRoleViewModel.cs" />
     <Compile Include="ViewModels\UserListViewModel.cs" />
     <Compile Include="WebServiceWrapper.cs" />
@@ -538,6 +541,14 @@
     <EmbeddedResource Include="Localization\CustomerTypes.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CustomerTypes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\ErrorCodesList.en-us.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ErrorCodesList.en-us.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\ErrorCodesList.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ErrorCodesList.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Localization\FaultCodes.en-us.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

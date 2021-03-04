@@ -312,7 +312,6 @@ namespace MasterISS_Partner_WebSite.Controllers
                 AllowanceCollectionID = Id
             };
 
-
             var response = wrapper.SetupAllowanceDetails(request);
 
             if (response.ResponseMessage.ErrorCode != 0)

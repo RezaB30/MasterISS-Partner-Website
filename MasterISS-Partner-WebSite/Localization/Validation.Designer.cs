@@ -124,7 +124,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Abone Numarası sayısal değer olmalıdır.
+        ///   Looks up a localized string similar to {0} sayısal değer olmalıdır.
         /// </summary>
         public static string OnlyNumeric {
             get {

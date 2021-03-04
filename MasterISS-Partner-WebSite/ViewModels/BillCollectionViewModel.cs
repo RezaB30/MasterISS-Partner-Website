@@ -8,7 +8,7 @@ namespace MasterISS_Partner_WebSite.ViewModels
 {
     public class BillCollectionViewModel
     {
-        [Required]
+        [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
         [Display(Name = "SubscriberName", ResourceType = typeof(Localization.Model))]
         public string SubscriberName { get; set; }
         public IEnumerable<BillsViewModel> Bills { get; set; }

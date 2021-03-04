@@ -30,12 +30,12 @@
     </tbody>
 </table>
 <div>
-    <ol>
+    <ul>
         @for (int i = 0; i < (int)ViewBag.TotalCount; i++)
         {
             <li>
                 @Html.ActionLink((i + 1).ToString(), "SetupAllowenceDetails", new { page = i, Id = ViewBag.Id })
             </li>
         }
-    </ol>
+    </ul>
 </div>

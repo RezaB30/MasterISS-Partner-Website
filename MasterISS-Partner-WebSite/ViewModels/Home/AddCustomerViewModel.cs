@@ -27,12 +27,14 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
 
         [Display(Name = "PSTNNo", ResourceType = typeof(Localization.Model))]
         [RegularExpression(@"^((\d{3})(\d{3})(\d{2})(\d{2}))$", ErrorMessageResourceName = "ValidPhoneNumber", ErrorMessageResourceType = typeof(Localization.Validation))]
+
         public string PSTN { get; set; }
 
         [Display(Name = "XDSLNoByExtraInfo", ResourceType = typeof(Localization.Model))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
         [MaxLength(10, ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "XDSLNoValid")]
         [MinLength(10, ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "XDSLNoValid")]
+        [RegularExpression("^[0-9]*$", ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "OnlyNumeric")]
         public string XDSLNo { get; set; }
     }
 
@@ -91,6 +93,7 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         [Display(Name = "CentralSystemNo", ResourceType = typeof(Localization.Model))]
         [MaxLength(16, ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "CentralSystemNoValid")]
         [MinLength(16, ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "CentralSystemNoValid")]
+        [RegularExpression("^[0-9]*$", ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "OnlyNumeric")]
         public string CentralSystemNo { get; set; }
 
         public AddressInfoViewModel CompanyAddress { get; set; }
@@ -103,6 +106,7 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         [Display(Name = "TaxNo", ResourceType = typeof(Localization.Model))]
         [MaxLength(10, ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "TaxNoValid")]
         [MinLength(10, ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "TaxNoValid")]
+        [RegularExpression("^[0-9]*$", ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "OnlyNumeric")]
         public string TaxNo { get; set; }
 
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
@@ -143,6 +147,7 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         [Display(Name = "TradeRegistrationNo", ResourceType = typeof(Localization.Model))]
         [MaxLength(6, ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "TradeRegistrationNoValid")]
         [MinLength(6, ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "TradeRegistrationNoValid")]
+        [RegularExpression("^[0-9]*$", ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "OnlyNumeric")]
         public string TradeRegistrationNo { get; set; }
 
         [Display(Name = "SameSetupAddress", ResourceType = typeof(Localization.Model))]
@@ -185,6 +190,7 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         [MaxLength(11, ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "MaxTCKValid")]
         [MinLength(11, ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "MinTCKValid")]
         [Display(Name = "TCKNo", ResourceType = typeof(Localization.Model))]
+        [RegularExpression("^[0-9]*$", ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "OnlyNumeric")]
         public string TCKNo { get; set; }
     }
 

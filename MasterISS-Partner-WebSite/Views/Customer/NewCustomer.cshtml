@@ -45,7 +45,7 @@
         <h2>@View.IDCardInfo</h2>
         <div class="form-group">
             @Html.LabelFor(m => m.IDCard.BirthDate)
-            @Html.EditorFor(m => m.IDCard.BirthDate)
+            @Html.EditorFor(m => m.IDCard.BirthDate, new { htmlAttributes = new { placeholder = DateTime.Now.ToString("dd.MM.yyyy") } })
             @Html.ValidationMessageFor(m => m.IDCard.BirthDate)
         </div>
 
@@ -89,7 +89,7 @@
 
             <div class="form-group">
                 @Html.LabelFor(m => m.IDCard.TCBirthCertificate.DateOfIssue)
-                @Html.EditorFor(m => m.IDCard.TCBirthCertificate.DateOfIssue)
+                @Html.EditorFor(m => m.IDCard.TCBirthCertificate.DateOfIssue, new { htmlAttributes = new { placeholder = DateTime.Now.ToString("dd.MM.yyyy") } })
                 @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.DateOfIssue)
             </div>
 
@@ -139,7 +139,7 @@
 
         <div id="TCIDCardWithChipContainer" style="display:none">
             @Html.LabelFor(m => m.IDCard.TCIDCardWithChip.ExpiryDate)
-            @Html.EditorFor(m => m.IDCard.TCIDCardWithChip.ExpiryDate)
+            @Html.EditorFor(m => m.IDCard.TCIDCardWithChip.ExpiryDate, new { htmlAttributes = new { placeholder = DateTime.Now.ToString("dd.MM.yyyy") } })
             @Html.ValidationMessageFor(m => m.IDCard.TCIDCardWithChip.ExpiryDate)
         </div>
 
@@ -597,8 +597,6 @@
 @section Javascript{
     <script>
 
-
-
         function CheckValidAndHideContainer(checkId,containerId) {
             if ($(checkId).is(':checked')) {
                 $(containerId).hide();
@@ -610,7 +608,18 @@
 
         $(document).ready(function () {
 
-
+            $(function () {
+                $("#ExtraInfo_XDSLNo").mask("9999999999");
+                $("#ExtraInfo_PSTN").mask("9999999999");
+                $("#IDCard_TCKNo").mask("99999999999");
+                $("#CorporateInfo_CentralSystemNo").mask("9999999999999999");
+                $("#CorporateInfo_TaxNo").mask("9999999999");
+                $("#CorporateInfo_TradeRegistrationNo").mask("999999");
+                $("#GeneralInfo_ContactPhoneNo").mask("9999999999");
+                $("#IDCard_BirthDate").mask("99.99.9999");
+                $("#IDCard_TCIDCardWithChip_ExpiryDate").mask("99.99.9999");
+                $("#IDCard_TCBirthCertificate_DateOfIssue").mask("99.99.9999");
+            });
 
             $("#IDCard_CardTypeId").change(function () {
                 var tckType = $(this).find(":selected").val();

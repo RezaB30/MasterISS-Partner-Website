@@ -139,7 +139,7 @@
     <value>Minimum 11 Haneli TC Kimlik Numarası giriniz.</value>
   </data>
   <data name="OnlyNumeric" xml:space="preserve">
-    <value>Abone Numarası sayısal değer olmalıdır</value>
+    <value>{0} sayısal değer olmalıdır</value>
   </data>
   <data name="PasswordMinLenght" xml:space="preserve">
     <value>Minimum 6 karakter giriniz.</value>

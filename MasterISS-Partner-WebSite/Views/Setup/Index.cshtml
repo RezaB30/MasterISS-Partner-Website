@@ -85,3 +85,13 @@ else
         </div>
     </div>
 }
+
+@section Javascript{
+    <script>
+        $(function () {
+            $("#search_TaskListStartDate").mask("99.99.9999 99:99");
+            $("#search_TaskListEndDate").mask("99.99.9999 99:99");
+        });
+
+    </script>
+}
