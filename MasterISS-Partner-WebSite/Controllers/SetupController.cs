@@ -57,7 +57,6 @@ namespace MasterISS_Partner_WebSite.Controllers
                 }
 
                 ModelState.Clear();
-
                 TryValidateModel(taskListRequestModel);
             }
 

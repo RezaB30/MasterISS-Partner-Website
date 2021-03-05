@@ -357,60 +357,32 @@ namespace MasterISS_Partner_WebSite.Controllers
             ViewBag.BuildingsBySetup = BuildingList(addCustomerViewModel.SubscriptionInfo.SetupAddress.StreetId ?? null, addCustomerViewModel.SubscriptionInfo.SetupAddress.BuildingId ?? null);
             ViewBag.ApartmentsBySetup = ApartmentList(addCustomerViewModel.SubscriptionInfo.SetupAddress.BuildingId ?? null, addCustomerViewModel.SubscriptionInfo.SetupAddress.ApartmentId ?? null);
 
-            if (addCustomerViewModel.GeneralInfo.CustomerTypeId == (int)CustomerTypeEnum.Individual)
-            {
-                ViewBag.ProvincesByIndividual = ProvincesList(addCustomerViewModel.Individual.ResidencyAddress.ProvinceId ?? null);
-                ViewBag.DistrictsByIndividual = DistrictList(addCustomerViewModel.Individual.ResidencyAddress.ProvinceId ?? null, addCustomerViewModel.Individual.ResidencyAddress.DistrictId ?? null);
-                ViewBag.RuralRegionsByIndividual = RuralRegionsList(addCustomerViewModel.Individual.ResidencyAddress.DistrictId ?? null, addCustomerViewModel.Individual.ResidencyAddress.RuralRegionsId ?? null);
-                ViewBag.NeigboorHoodsByIndividual = NeighborhoodList(addCustomerViewModel.Individual.ResidencyAddress.RuralRegionsId ?? null, addCustomerViewModel.Individual.ResidencyAddress.NeighborhoodId ?? null);
-                ViewBag.StreetsByIndividual = StreetList(addCustomerViewModel.Individual.ResidencyAddress.NeighborhoodId ?? null, addCustomerViewModel.Individual.ResidencyAddress.StreetId ?? null);
-                ViewBag.BuildingsByIndividual = BuildingList(addCustomerViewModel.Individual.ResidencyAddress.StreetId ?? null, addCustomerViewModel.Individual.ResidencyAddress.BuildingId ?? null);
-                ViewBag.ApartmentsByIndividual = ApartmentList(addCustomerViewModel.Individual.ResidencyAddress.BuildingId ?? null, addCustomerViewModel.Individual.ResidencyAddress.ApartmentId ?? null);
+            //Individual=>ResidencyAddress
+            ViewBag.ProvincesByIndividual = ProvincesList(addCustomerViewModel.Individual.ResidencyAddress.ProvinceId ?? null);
+            ViewBag.DistrictsByIndividual = DistrictList(addCustomerViewModel.Individual.ResidencyAddress.ProvinceId ?? null, addCustomerViewModel.Individual.ResidencyAddress.DistrictId ?? null);
+            ViewBag.RuralRegionsByIndividual = RuralRegionsList(addCustomerViewModel.Individual.ResidencyAddress.DistrictId ?? null, addCustomerViewModel.Individual.ResidencyAddress.RuralRegionsId ?? null);
+            ViewBag.NeigboorHoodsByIndividual = NeighborhoodList(addCustomerViewModel.Individual.ResidencyAddress.RuralRegionsId ?? null, addCustomerViewModel.Individual.ResidencyAddress.NeighborhoodId ?? null);
+            ViewBag.StreetsByIndividual = StreetList(addCustomerViewModel.Individual.ResidencyAddress.NeighborhoodId ?? null, addCustomerViewModel.Individual.ResidencyAddress.StreetId ?? null);
+            ViewBag.BuildingsByIndividual = BuildingList(addCustomerViewModel.Individual.ResidencyAddress.StreetId ?? null, addCustomerViewModel.Individual.ResidencyAddress.BuildingId ?? null);
+            ViewBag.ApartmentsByIndividual = ApartmentList(addCustomerViewModel.Individual.ResidencyAddress.BuildingId ?? null, addCustomerViewModel.Individual.ResidencyAddress.ApartmentId ?? null);
 
-                ViewBag.ProvincesByCorporativeResidency = new SelectList("");
-                ViewBag.DistrictsByCorporativeResidency = new SelectList("");
-                ViewBag.RuralRegionsByCorporativeResidency = new SelectList("");
-                ViewBag.NeigboorHoodsByCorporativeResidency = new SelectList("");
-                ViewBag.StreetsByCorporativeResidency = new SelectList("");
-                ViewBag.BuildingsByCorporativeResidency = new SelectList("");
-                ViewBag.ApartmentsByCorporativeResidency = new SelectList("");
-                ViewBag.ProvincesByCorporativeCompany = new SelectList("");
-                ViewBag.DistrictsByCorporativeCompany = new SelectList("");
-                ViewBag.RuralRegionsByCorporativeCompany = new SelectList("");
-                ViewBag.NeigboorHoodsByCorporativeCompany = new SelectList("");
-                ViewBag.StreetsByCorporativeCompany = new SelectList("");
-                ViewBag.BuildingsByCorporativeCompany = new SelectList("");
-                ViewBag.ApartmentsByCorporativeCompany = new SelectList("");
-            }
+            //CorporateInfo=>ExecutiveResidencyAddress
+            ViewBag.ProvincesByCorporativeResidency = ProvincesList(addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.ProvinceId ?? null);
+            ViewBag.DistrictsByCorporativeResidency = DistrictList(addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.ProvinceId ?? null, addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.DistrictId ?? null);
+            ViewBag.RuralRegionsByCorporativeResidency = RuralRegionsList(addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.DistrictId ?? null, addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.RuralRegionsId ?? null);
+            ViewBag.NeigboorHoodsByCorporativeResidency = NeighborhoodList(addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.RuralRegionsId ?? null, addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.NeighborhoodId ?? null);
+            ViewBag.StreetsByCorporativeResidency = StreetList(addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.NeighborhoodId ?? null, addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.StreetId ?? null);
+            ViewBag.BuildingsByCorporativeResidency = BuildingList(addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.StreetId ?? null, addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.BuildingId ?? null);
+            ViewBag.ApartmentsByCorporativeResidency = ApartmentList(addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.BuildingId ?? null, addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.ApartmentId ?? null);
 
-            else//This is Corporative
-            {
-                ViewBag.ProvincesByCorporativeResidency = ProvincesList(addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.ProvinceId ?? null);
-                ViewBag.DistrictsByCorporativeResidency = DistrictList(addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.ProvinceId ?? null, addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.DistrictId ?? null);
-                ViewBag.RuralRegionsByCorporativeResidency = RuralRegionsList(addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.DistrictId ?? null, addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.RuralRegionsId ?? null);
-                ViewBag.NeigboorHoodsByCorporativeResidency = NeighborhoodList(addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.RuralRegionsId ?? null, addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.NeighborhoodId ?? null);
-                ViewBag.StreetsByCorporativeResidency = StreetList(addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.NeighborhoodId ?? null, addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.StreetId ?? null);
-                ViewBag.BuildingsByCorporativeResidency = BuildingList(addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.StreetId ?? null, addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.BuildingId ?? null);
-                ViewBag.ApartmentsByCorporativeResidency = ApartmentList(addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.BuildingId ?? null, addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.ApartmentId ?? null);
-
-
-                ViewBag.ProvincesByCorporativeCompany = ProvincesList(addCustomerViewModel.CorporateInfo.CompanyAddress.ProvinceId ?? null);
-                ViewBag.DistrictsByCorporativeCompany = DistrictList(addCustomerViewModel.CorporateInfo.CompanyAddress.ProvinceId ?? null, addCustomerViewModel.CorporateInfo.CompanyAddress.DistrictId ?? null);
-                ViewBag.RuralRegionsByCorporativeCompany = RuralRegionsList(addCustomerViewModel.CorporateInfo.CompanyAddress.DistrictId ?? null, addCustomerViewModel.CorporateInfo.CompanyAddress.RuralRegionsId ?? null);
-                ViewBag.NeigboorHoodsByCorporativeCompany = NeighborhoodList(addCustomerViewModel.CorporateInfo.CompanyAddress.RuralRegionsId ?? null, addCustomerViewModel.CorporateInfo.CompanyAddress.NeighborhoodId ?? null);
-                ViewBag.StreetsByCorporativeCompany = StreetList(addCustomerViewModel.CorporateInfo.CompanyAddress.NeighborhoodId ?? null, addCustomerViewModel.CorporateInfo.CompanyAddress.StreetId ?? null);
-                ViewBag.BuildingsByCorporativeCompany = BuildingList(addCustomerViewModel.CorporateInfo.CompanyAddress.StreetId ?? null, addCustomerViewModel.CorporateInfo.CompanyAddress.BuildingId ?? null);
-                ViewBag.ApartmentsByCorporativeCompany = ApartmentList(addCustomerViewModel.CorporateInfo.CompanyAddress.BuildingId ?? null, addCustomerViewModel.CorporateInfo.CompanyAddress.ApartmentId ?? null);
-
-                ViewBag.ProvincesByIndividual = new SelectList("");
-                ViewBag.DistrictsByIndividual = new SelectList("");
-                ViewBag.RuralRegionsByIndividual = new SelectList("");
-                ViewBag.NeigboorHoodsByIndividual = new SelectList("");
-                ViewBag.StreetsByIndividual = new SelectList("");
-                ViewBag.BuildingsByIndividual = new SelectList("");
-                ViewBag.ApartmentsByIndividual = new SelectList("");
-            }
-
+            //CorporateInfo=>CompanyAddress
+            ViewBag.ProvincesByCorporativeCompany = ProvincesList(addCustomerViewModel.CorporateInfo.CompanyAddress.ProvinceId ?? null);
+            ViewBag.DistrictsByCorporativeCompany = DistrictList(addCustomerViewModel.CorporateInfo.CompanyAddress.ProvinceId ?? null, addCustomerViewModel.CorporateInfo.CompanyAddress.DistrictId ?? null);
+            ViewBag.RuralRegionsByCorporativeCompany = RuralRegionsList(addCustomerViewModel.CorporateInfo.CompanyAddress.DistrictId ?? null, addCustomerViewModel.CorporateInfo.CompanyAddress.RuralRegionsId ?? null);
+            ViewBag.NeigboorHoodsByCorporativeCompany = NeighborhoodList(addCustomerViewModel.CorporateInfo.CompanyAddress.RuralRegionsId ?? null, addCustomerViewModel.CorporateInfo.CompanyAddress.NeighborhoodId ?? null);
+            ViewBag.StreetsByCorporativeCompany = StreetList(addCustomerViewModel.CorporateInfo.CompanyAddress.NeighborhoodId ?? null, addCustomerViewModel.CorporateInfo.CompanyAddress.StreetId ?? null);
+            ViewBag.BuildingsByCorporativeCompany = BuildingList(addCustomerViewModel.CorporateInfo.CompanyAddress.StreetId ?? null, addCustomerViewModel.CorporateInfo.CompanyAddress.BuildingId ?? null);
+            ViewBag.ApartmentsByCorporativeCompany = ApartmentList(addCustomerViewModel.CorporateInfo.CompanyAddress.BuildingId ?? null, addCustomerViewModel.CorporateInfo.CompanyAddress.ApartmentId ?? null);
 
             return View(addCustomerViewModel);
 
@@ -444,7 +416,7 @@ namespace MasterISS_Partner_WebSite.Controllers
         [HttpPost]
         public ActionResult SmsConfirmation(string inputCode)
         {
-            var serviceCode = Session["SMSCode"] == null ? null : Session["SMSCode"].ToString();
+            var serviceCode = Session["SMSCode"]?.ToString();
             if (!string.IsNullOrEmpty(serviceCode))
             {
                 if (Convert.ToInt32(Session["Counter"]) < 3)

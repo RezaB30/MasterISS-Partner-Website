@@ -90,6 +90,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             if (response.ResponseMessage.ErrorCode == 0)
             {
+
                 var detail = new CreditReportViewModel
                 {
                     Total = response.CreditReportResponse.Total,
@@ -97,15 +98,14 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                 detail.CreditReportDetailsViewModel = new List<CreditReportDetailsViewModel>();
 
-                foreach (var item in response.CreditReportResponse.Details)
+                var details = response.CreditReportResponse.Details.Select(crr => new CreditReportDetailsViewModel
                 {
-                    detail.CreditReportDetailsViewModel.Add(new CreditReportDetailsViewModel()
-                    {
-                        Details = item.Details,
-                        Amount = item.Amount,
-                        Date = item.Date
-                    });
-                }
+                    Details = crr.Details,
+                    Amount = crr.Amount,
+                    Date = crr.Date
+                });
+                detail.CreditReportDetailsViewModel.AddRange(details);
+
                 return View(detail);
             }
             //LOG
@@ -127,35 +127,21 @@ namespace MasterISS_Partner_WebSite.Controllers
         {
             if (selectedBills != null)
             {
-                var billListRequestViewModel = new GetBillCollectionBySubscriberNoViewModel()
-                {
-                    SubscriberNo = SubscriberNo
-                };
-
                 var wrapper = new WebServiceWrapper();
                 var response = wrapper.UserBillList(SubscriberNo);
 
                 if (response.ResponseMessage.ErrorCode == 0)
                 {
+                    var userBillList = response.BillListResponse.Bills.OrderBy(blr => blr.IssueDate).Take(selectedBills.Length).Select(blr => blr.ID);
 
-                    var userBillList = response.BillListResponse.Bills.OrderBy(blr => blr.IssueDate).Select(blr => blr.ID).ToArray();
+                    var isMatchedBills = userBillList.SequenceEqual(selectedBills);
 
-                    var counter = 0;
-                    for (int i = 0; i < selectedBills.Length; i++)
-                    {
-                        if (userBillList[i] != selectedBills[i])
-                        {
-                            counter++;
-                        }
-                    }
-
-                    if (counter != 0)
+                    if (isMatchedBills == false)
                     {
                         ViewBag.PayOldBillError = Localization.BillView.PayOldBillError;
 
                         return View(viewName: "Index", model: BillList(response));
                     }
-
                     else
                     {
                         wrapper = new WebServiceWrapper();

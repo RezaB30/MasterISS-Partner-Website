@@ -5,6 +5,7 @@ using NLog;
 using RezaB.Data.Localization;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Web;
@@ -26,28 +27,16 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             using (var db = new PartnerWebSiteEntities())
             {
-                var userList = db.User.Where(u => u.PartnerId == partnerId).Select(u => new
+                var userList = db.User.Where(u => u.PartnerId == partnerId).Select(u => new UserListViewModel
                 {
                     IsEnabled = u.IsEnabled,
                     NameSurname = u.NameSurname,
                     UserSubMail = u.UserSubMail,
-                    UserRole = u.Role.RoleName,
-                    UserId = u.Id
+                    RoleName = u.Role.RoleName,
+                    UserId = u.Id,
                 }).ToList();
 
-                var userlistViewModel = new List<UserListViewModel>();
-                foreach (var item in userList)
-                {
-                    userlistViewModel.Add(new UserListViewModel()
-                    {
-                        IsEnabled = item.IsEnabled,
-                        NameSurname = item.NameSurname,
-                        UserSubMail = item.UserSubMail,
-                        RoleName = item.UserRole,
-                        UserId = item.UserId
-                    });
-                }
-                return View(userlistViewModel);
+                return View(userList);
             }
         }
 
@@ -55,28 +44,6 @@ namespace MasterISS_Partner_WebSite.Controllers
         {
             ViewBag.PermissionList = PermissionList();
             return View();
-        }
-
-        private SelectList PermissionList()
-        {
-            var claimInfo = new ClaimInfo();
-            var adminRoleIdList = claimInfo.PartnerRoleId().ToArray();
-            var db = new PartnerWebSiteEntities();
-            var list = new List<SelectListItem>();
-            var localizedList = new LocalizedList<PermissionListEnum, Localization.PermissionList>();
-            var permissionList = db.Permission.Where(p => adminRoleIdList.Contains(p.RoleTypeId)).Select(p => new AvailablePermissionList()
-            {
-                PermissionId = p.Id,
-                PermissionName = p.PermissionName
-            }).ToArray();
-
-            foreach (var item in permissionList)
-            {
-                item.PermissionName = localizedList.GetDisplayText(item.PermissionId, null);
-            }
-            var selectListsPermission = new SelectList(permissionList.Select(pl => new { Value = pl.PermissionId, Text = pl.PermissionName }), "Value", "Text");
-
-            return selectListsPermission;
         }
 
         [ValidateAntiForgeryToken]
@@ -112,16 +79,13 @@ namespace MasterISS_Partner_WebSite.Controllers
                                 };
                                 db.Role.Add(role);
 
-
-                                foreach (var item in addPermissionViewModel.AvailableRoles)
+                                var rolePermissions = addPermissionViewModel.AvailableRoles.Select(ar => new RolePermission
                                 {
-                                    var rolePermission = new RolePermission()
-                                    {
-                                        RoleId = role.Id,
-                                        PermissionId = item
-                                    };
-                                    db.RolePermission.Add(rolePermission);
-                                }
+                                    RoleId = role.Id,
+                                    PermissionId = ar
+                                });
+                                db.RolePermission.AddRange(rolePermissions);
+
                                 db.SaveChanges();
 
                                 //LOG
@@ -199,20 +163,12 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                                 return RedirectToAction("Successful");
                             }
-
-                            else if (response.ResponseMessage.ErrorCode == 200)
-                            {
-                                ViewBag.AddUserError = Localization.View.Generic200ErrorCodeMessage;
-                                return View(newUserViewModel);
-                            }
-
                             //LOG
                             var wrapperGetUserSubMail = new WebServiceWrapper();
                             LoggerError.Fatal($"An error occurred while AddUser , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage: {response.ResponseMessage.ErrorMessage}, by: {wrapperGetUserSubMail.GetUserSubMail()}");
                             //LOG
 
-
-                            ViewBag.AddUserError = response.ResponseMessage.ErrorMessage;
+                            ViewBag.AddUserError = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
                             return View(newUserViewModel);
                         }
                         return RedirectToAction("Index", "UserOperations");
@@ -362,7 +318,6 @@ namespace MasterISS_Partner_WebSite.Controllers
                             db.RolePermission.AddRange(addedRolePermission);
                             db.SaveChanges();
                         }
-
                         return RedirectToAction("Successful");
                     }
                     return RedirectToAction("Index", "Home");
@@ -414,22 +369,11 @@ namespace MasterISS_Partner_WebSite.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            else if (response.ResponseMessage.ErrorCode == 200)
-            {
-                //LOG
-                var wrapperGetUserSubMail = new WebServiceWrapper();
-                LoggerError.Fatal("An error occurred while EnableUser , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapperGetUserSubMail.GetUserSubMail());
-                //LOG
-
-                TempData["Error"] = Localization.View.Generic200ErrorCodeMessage;
-                return RedirectToAction("Index");
-            }
             //LOG
             wrapper = new WebServiceWrapper();
-            LoggerError.Fatal("An error occurred while EnableUser , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
+            LoggerError.Fatal($"An error occurred while EnableUser , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapper.GetUserSubMail()}");
             //LOG
-
-            TempData["Error"] = response.ResponseMessage.ErrorMessage;
+            TempData["Error"] = new LocalizedList<PermissionListEnum, Localization.PermissionList>().GetDisplayText(response.ResponseMessage.ErrorCode);
             return RedirectToAction("Index");
         }
 
@@ -461,24 +405,12 @@ namespace MasterISS_Partner_WebSite.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            else if (response.ResponseMessage.ErrorCode == 200)
-            {
-
-                //LOG
-                var wrapperByNlog = new WebServiceWrapper();
-                LoggerError.Fatal("An error occurred while DisableUser , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapperByNlog.GetUserSubMail());
-                //LOG
-
-                TempData["Error"] = Localization.View.Generic200ErrorCodeMessage;
-                return RedirectToAction("Index");
-            }
-
             //LOG
             var wrapperGetUserSubMail = new WebServiceWrapper();
-            LoggerError.Fatal("An error occurred while DisableUser , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapperGetUserSubMail.GetUserSubMail());
+            LoggerError.Fatal($"An error occurred while DisableUser , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapperGetUserSubMail.GetUserSubMail()}");
             //LOG
 
-            TempData["Error"] = response.ResponseMessage.ErrorMessage;
+            TempData["Error"] = new LocalizedList<PermissionListEnum, Localization.PermissionList>().GetDisplayText(response.ResponseMessage.ErrorCode);
             return RedirectToAction("Index");
         }
 
@@ -486,6 +418,30 @@ namespace MasterISS_Partner_WebSite.Controllers
         {
             return View();
         }
+
+
+        private SelectList PermissionList()
+        {
+            var claimInfo = new ClaimInfo();
+            var adminRoleIdList = claimInfo.PartnerRoleId().ToArray();
+            var db = new PartnerWebSiteEntities();
+            var list = new List<SelectListItem>();
+            var localizedList = new LocalizedList<PermissionListEnum, Localization.PermissionList>();
+            var permissionList = db.Permission.Where(p => adminRoleIdList.Contains(p.RoleTypeId)).Select(p => new AvailablePermissionList()
+            {
+                PermissionId = p.Id,
+                PermissionName = p.PermissionName
+            }).ToArray();
+
+            foreach (var item in permissionList)
+            {
+                item.PermissionName = localizedList.GetDisplayText(item.PermissionId, null);
+            }
+            var selectListsPermission = new SelectList(permissionList.Select(pl => new { Value = pl.PermissionId, Text = pl.PermissionName }), "Value", "Text");
+
+            return selectListsPermission;
+        }
+
 
     }
 }

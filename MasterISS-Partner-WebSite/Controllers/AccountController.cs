@@ -63,11 +63,14 @@ namespace MasterISS_Partner_WebSite.Controllers
                                     claims.Add(new Claim("SetupServiceUser", authenticateResponse.AuthenticationResponse.SetupServiceUser));
                                 }
 
-                                foreach (var item in authenticateResponse.AuthenticationResponse.Permissions)
+                                var partnerPermissionList = authenticateResponse.AuthenticationResponse.Permissions.Select(ar => new
                                 {
-                                    claims.Add(new Claim(ClaimTypes.Role, item.Name));
-                                    claims.Add(new Claim("RoleId", item.ID.ToString()));
-                                }
+                                    claimRoleNames = new Claim(ClaimTypes.Role, ar.Name),
+                                    claimRoleIds = new Claim("RoleId", ar.ID.ToString())
+                                }).ToArray();
+
+                                claims.AddRange(partnerPermissionList.Select(a => a.claimRoleNames));
+                                claims.AddRange(partnerPermissionList.Select(a => a.claimRoleIds));
 
                                 if (userSignInModel.Username == userSignInModel.PartnerCode)//Admin
                                 {
@@ -83,12 +86,9 @@ namespace MasterISS_Partner_WebSite.Controllers
                                 }
                                 else//SubUser
                                 {
-                                    var subUserPermission = userValid.Role.RolePermission.Select(m => m.Permission.PermissionName).ToList();
+                                    var subUserPermission = userValid.Role.RolePermission.Select(m => new Claim(ClaimTypes.Role, m.Permission.PermissionName)).ToList();
 
-                                    foreach (var item in subUserPermission)
-                                    {
-                                        claims.Add(new Claim(ClaimTypes.Role, item));
-                                    }
+                                    claims.AddRange(subUserPermission);
 
                                     var authenticator = new SubUserAuthenticator();
                                     var isSignIn = authenticator.SignIn(Request.GetOwinContext(), userSignInModel.Username, userSignInModel.Password, claims);
