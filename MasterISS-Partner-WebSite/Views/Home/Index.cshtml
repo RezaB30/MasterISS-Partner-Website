@@ -7,6 +7,10 @@
     var response = new ServiceAvaibilityResponseViewModel();
 }
 
+<div style="background-color:red">
+    @ViewBag.ErrorMessage
+</div>
+
 <div id="addressQueryContainer">
     <div class="form-group">
         @Html.DropDownListFor(nvpl => nvpl.ProvinceId, (SelectList)ViewBag.Provinces, HomeView.SelectProvince, new { @id = "province" })

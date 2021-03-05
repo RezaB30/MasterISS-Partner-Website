@@ -1,11 +1,14 @@
 ﻿using MasterISS_Partner_WebSite;
 using MasterISS_Partner_WebSite.Authentication;
+using MasterISS_Partner_WebSite.Enums;
 using MasterISS_Partner_WebSite.Models;
 using MasterISS_Partner_WebSite.ViewModels;
 using Microsoft.AspNet.Identity;
 using NLog;
+using RezaB.Data.Localization;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Security.Claims;
@@ -108,21 +111,11 @@ namespace MasterISS_Partner_WebSite.Controllers
                     ViewBag.AuthenticateError = Localization.View.AuthenticateError;
                     return View(userSignInModel);
                 }
-                else if (authenticateResponse.ResponseMessage.ErrorCode == 200)
-                {
-                    //LOG
-                    LoggerError.Fatal($"An error occurred while Authenticate , ErrorCode: {authenticateResponse.ResponseMessage.ErrorCode} ErrorMessage : {authenticateResponse.ResponseMessage.ErrorMessage}, by: {userSignInModel.Username}");
-                    //LOG
-
-                    ViewBag.AuthenticateError = Localization.View.GeneralErrorDescription;
-                    return View(userSignInModel);
-                }
-
                 //LOG
                 LoggerError.Fatal($"An error occurred while Authenticate , ErrorCode: {authenticateResponse.ResponseMessage.ErrorCode}, ErrorMessage : {authenticateResponse.ResponseMessage.ErrorMessage} by: {userSignInModel.Username}");
                 //LOG
 
-                ViewBag.AuthenticateError = authenticateResponse.ResponseMessage.ErrorMessage;
+                ViewBag.AuthenticateError = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(authenticateResponse.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
                 return View(userSignInModel);
             }
             return View(userSignInModel);

@@ -282,6 +282,9 @@
   <data name="RecordFound" xml:space="preserve">
     <value>adet kayıt bulundu.</value>
   </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Kaldır</value>
+  </data>
   <data name="RequiredPermission" xml:space="preserve">
     <value>Lütfen en az 1 Yetki seçiniz.</value>
   </data>

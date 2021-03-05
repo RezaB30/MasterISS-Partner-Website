@@ -118,45 +118,42 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AuthenticationFailed" xml:space="preserve">
-    <value />
+    <value>Authentication Failed</value>
   </data>
   <data name="Failed" xml:space="preserve">
-    <value />
+    <value>An Error Has Occurred. Try again later.</value>
   </data>
   <data name="InternalServerError" xml:space="preserve">
-    <value />
+    <value>An Error Has Occurred. Try again later.</value>
   </data>
   <data name="InvalidPhoneNo" xml:space="preserve">
-    <value />
+    <value>Invalid Phone Number</value>
   </data>
   <data name="MaxSubUsersReached" xml:space="preserve">
-    <value />
+    <value>Maximum User Limit Reached</value>
   </data>
   <data name="NoPermission" xml:space="preserve">
-    <value />
+    <value>You are not Permission</value>
   </data>
   <data name="NotEnoughCredit" xml:space="preserve">
-    <value>s</value>
+    <value>You do not have Enough Balance for the Make Payment </value>
   </data>
   <data name="PartnerIsNotActive" xml:space="preserve">
-    <value />
+    <value>Partner Is Not Active</value>
   </data>
   <data name="PartnerNotFound" xml:space="preserve">
-    <value />
+    <value>Partner Not Found</value>
   </data>
   <data name="PaymentPermissionNotFound" xml:space="preserve">
-    <value />
-  </data>
-  <data name="SpecialOfferError" xml:space="preserve">
-    <value />
+    <value>You are not permission to pay.</value>
   </data>
   <data name="SubscriberNotFound" xml:space="preserve">
-    <value />
+    <value>Subscriber Not Found</value>
   </data>
   <data name="SubUserExists" xml:space="preserve">
-    <value />
+    <value>This user is exists. Please add another user.</value>
   </data>
   <data name="TariffNotFound" xml:space="preserve">
-    <value />
+    <value>Tariff Not Found</value>
   </data>
 </root>

@@ -4,6 +4,7 @@ using MasterISS_Partner_WebSite_WebServices.PartnerServiceReference;
 using MasterISS_Partner_WebSite.ViewModels.Home;
 using MasterISS_Partner_WebSite.ViewModels.Revenues;
 using System;
+using RezaB.Data.Localization;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -12,6 +13,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using MasterISS_Partner_WebSite.Enums;
 
 namespace MasterISS_Partner_WebSite
 {
@@ -65,7 +67,7 @@ namespace MasterISS_Partner_WebSite
             }
             return new ServiceResponse<PartnerServicePaymentResponse>()
             {
-                ErrorMessage = response.ResponseMessage.ErrorMessage
+                ErrorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture)
             };
         }
 
@@ -93,7 +95,7 @@ namespace MasterISS_Partner_WebSite
             }
             return new ServiceResponse<CustomerServiceServiceAvailabilityResponse>()
             {
-                ErrorMessage = response.ResponseMessage.ErrorMessage
+                ErrorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture)
             };
         }
 
@@ -118,7 +120,7 @@ namespace MasterISS_Partner_WebSite
             }
             return new ServiceResponse<CustomerServiceNameValuePair>()
             {
-                ErrorMessage = response.ResponseMessage.ErrorMessage
+                ErrorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture)
             };
         }
 
@@ -135,7 +137,7 @@ namespace MasterISS_Partner_WebSite
             }
             return new ServiceResponse<CustomerServiceNameValuePair>()
             {
-                ErrorMessage = response.ResponseMessage.ErrorMessage
+                ErrorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture)
             };
         }
 
@@ -152,7 +154,7 @@ namespace MasterISS_Partner_WebSite
             }
             return new ServiceResponse<CustomerServiceNameValuePair>()
             {
-                ErrorMessage = response.ResponseMessage.ErrorMessage
+                ErrorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture)
             };
         }
 
@@ -169,7 +171,7 @@ namespace MasterISS_Partner_WebSite
             }
             return new ServiceResponse<CustomerServiceNameValuePair>()
             {
-                ErrorMessage = response.ResponseMessage.ErrorMessage
+                ErrorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture)
             };
         }
 
@@ -186,7 +188,7 @@ namespace MasterISS_Partner_WebSite
             }
             return new ServiceResponse<CustomerServiceNameValuePair>()
             {
-                ErrorMessage = response.ResponseMessage.ErrorMessage
+                ErrorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture)
             };
         }
 
@@ -203,7 +205,7 @@ namespace MasterISS_Partner_WebSite
             }
             return new ServiceResponse<CustomerServiceNameValuePair>()
             {
-                ErrorMessage = response.ResponseMessage.ErrorMessage
+                ErrorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture)
             };
         }
 
@@ -220,7 +222,7 @@ namespace MasterISS_Partner_WebSite
             }
             return new ServiceResponse<CustomerServiceNameValuePair>()
             {
-                ErrorMessage = response.ResponseMessage.ErrorMessage
+                ErrorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture)
             };
         }
 
@@ -533,7 +535,11 @@ namespace MasterISS_Partner_WebSite
                     AllowanceTypeId = (short?)getBasicAllowDetailViewModel.RevenuesTypeEnum,
                     ItemPerPage = getBasicAllowDetailViewModel.PageInfo.ItemPerPage,
                     PageNo = getBasicAllowDetailViewModel.PageInfo.PageNo,
-                    PartnerId = claimInfo.PartnerId()
+                    PartnerCredentials = new RequestBase
+                    {
+                        SubUserEmail = GetUserSubMail(),
+                        UserEmail = GetUserMail(),
+                    }
                 }
             };
 
@@ -552,7 +558,7 @@ namespace MasterISS_Partner_WebSite
 
         public PartnerServiceSetupGenericAllowanceListResponse SetupAllowanceDetails(SetupAllowanceDetailsRequest setupAllowanceDetailsRequest)
         {
-            
+
             var response = Client.SetupAllowanceDetails(PartnerServiceAllowanceDetailRequest(setupAllowanceDetailsRequest));
 
             return response;
@@ -560,7 +566,7 @@ namespace MasterISS_Partner_WebSite
 
         public PartnerServiceSetupAllowanceListResponse SetupAllowanceList(PageSettingsByWebService pageSettings)
         {
-            
+
             var response = Client.SetupAllowanceList(PartnerServiceAllowanceRequest(pageSettings));
 
             return response;
@@ -600,7 +606,11 @@ namespace MasterISS_Partner_WebSite
                 Username = Username,
                 PartnerAllowanceDetailRequest = new PartnerAllowanceDetailRequest()
                 {
-                    PartnerId = claimInfo.PartnerId(),
+                    PartnerCredentials = new RequestBase
+                    {
+                        SubUserEmail = GetUserSubMail(),
+                        UserEmail = GetUserMail(),
+                    },
                     PageNo = setupAllowanceDetailsRequest.PageInfo.PageNo,
                     ItemPerPage = setupAllowanceDetailsRequest.PageInfo.ItemPerPage,
                     AllowanceCollectionID = setupAllowanceDetailsRequest.AllowanceCollectionID,
@@ -622,7 +632,11 @@ namespace MasterISS_Partner_WebSite
                 {
                     ItemPerPage = pageSettings.ItemPerPage,
                     PageNo = pageSettings.PageNo,
-                    PartnerId = claimInfo.PartnerId(),
+                    PartnerCredentials = new RequestBase
+                    {
+                        SubUserEmail = GetUserSubMail(),
+                        UserEmail = GetUserMail(),
+                    }
                 },
             };
             return request;

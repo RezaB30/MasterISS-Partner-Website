@@ -99,7 +99,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                         LoggerError.Fatal("An error occurred while GetTaskList , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
                         //LOG
 
-                        ViewBag.ErrorMessage = Localization.View.SetupResponseErrorMessage;
+                        ViewBag.ErrorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
                         return View();
                     }
                     ViewBag.Max30Days = Localization.View.Max30Days;
@@ -148,23 +148,12 @@ namespace MasterISS_Partner_WebSite.Controllers
                 ViewBag.TaskNo = taskNo;
                 return View(taskDetail);
             }
-            else if (response.ResponseMessage.ErrorCode == 200)
-            {
-                //LOG
-                var wrapper = new WebServiceWrapper();
-                LoggerError.Fatal($"An error occurred while GetTaskDetails , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapper.GetUserSubMail()}");
-                //LOG
-
-                TempData["GetTaskDetailError"] = Localization.View.Generic200ErrorCodeMessage;
-                return RedirectToAction("Index", "Setup");
-            }
-
             //LOG
             var wrapperGetUserSubMail = new WebServiceWrapper();
             LoggerError.Fatal($"An error occurred while GetTaskDetails , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapperGetUserSubMail.GetUserSubMail()}");
             //LOG
 
-            TempData["GetTaskDetailError"] = response.ResponseMessage.ErrorMessage;
+            TempData["GetTaskDetailError"] = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture); ;
             return RedirectToAction("Index", "Setup");
         }
 
@@ -199,22 +188,12 @@ namespace MasterISS_Partner_WebSite.Controllers
                 };
                 return PartialView("_SessionInfo", sessionInfo);
             }
-            else if (response.ResponseMessage.ErrorCode == 200)
-            {
-                //LOG
-                var wrapperGetUserSubMail = new WebServiceWrapper();
-                LoggerError.Fatal($"An error occurred while GetCustomerSessionInfo , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapperGetUserSubMail.GetUserSubMail()}");
-                //LOG
-
-                return Content($"<div>{Localization.View.Generic200ErrorCodeMessage}</div>");
-            }
-
             //LOG
             var wrapper = new WebServiceWrapper();
             LoggerError.Fatal($"An error occurred while GetCustomerSessionInfo , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapper.GetUserSubMail()}");
             //LOG
 
-            return Content($"<div>{response.ResponseMessage.ErrorMessage}</div>");
+            return Content($"<div>{ new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture)}</div>");
         }
 
         [HttpPost]
@@ -234,22 +213,11 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                 return PartialView("_CredentialsInfo", creadentialsInfo);
             }
-            else if (response.ResponseMessage.ErrorCode == 200)
-            {
-                //LOG
-                var wrapper = new WebServiceWrapper();
-                LoggerError.Fatal($"An error occurred while GetCustomerCredentials , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapper.GetUserSubMail()}");
-                //LOG
-
-                return Content($"<div>{Localization.View.Generic200ErrorCodeMessage}</div>");
-            }
-
             //LOG
             var wrapperBySubUserMail = new WebServiceWrapper();
             LoggerError.Fatal($"An error occurred while GetCustomerCredentials , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapperBySubUserMail.GetUserSubMail()}");
             //LOG
-
-            return Content($"<div>{response.ResponseMessage.ErrorMessage}</div>");
+            return Content($"<div>{ new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture)}</div>");
         }
 
         [HttpPost]
@@ -277,22 +245,11 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                 return PartialView("_LineInfo", lineInfo);
             }
-            else if (response.ResponseMessage.ErrorCode == 200)
-            {
-                //LOG
-                var wrapperBySubUserMail = new WebServiceWrapper();
-                LoggerError.Fatal($"An error occurred while GetCustomerLineDetails , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapperBySubUserMail.GetUserSubMail()}");
-                //LOG
-
-                return Content($"<div>{Localization.View.Generic200ErrorCodeMessage}</div>");
-            }
-
             //LOG
             var wrapper = new WebServiceWrapper();
             LoggerError.Fatal($"An error occurred while GetCustomerLineDetails , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapper.GetUserSubMail()}");
             //LOG
-
-            return Content($"<div>{response.ResponseMessage.ErrorMessage}</div>");
+            return Content($"<div>{ new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture)}</div>");
         }
 
         [HttpPost]
@@ -308,23 +265,12 @@ namespace MasterISS_Partner_WebSite.Controllers
                 var fileName = response.CustomerContract.FileName;
                 return File(fileCode, fileName, fileName);
             }
-
-            else if (response.ResponseMessage.ErrorCode == 200)
-            {
-                //LOG
-                var wrapper = new WebServiceWrapper();
-                LoggerError.Fatal($"An error occurred while GetCustomerContract , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapper.GetUserSubMail()}");
-                //LOG
-
-                TempData["CustomerContractResponse"] = Localization.View.Generic200ErrorCodeMessage;
-                return RedirectToAction("CustomerDetail", "Setup", new { taskNo = taskNo });
-            }
             //LOG
             var wrapperByGetuserSubmail = new WebServiceWrapper();
             LoggerError.Fatal($"An error occurred while GetCustomerContract , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapperByGetuserSubmail.GetUserSubMail()}");
             //LOG
 
-            TempData["CustomerContractResponse"] = response.ResponseMessage.ErrorMessage;
+            TempData["CustomerContractResponse"] = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
             return RedirectToAction("CustomerDetail", "Setup", new { taskNo = taskNo });
         }
 
@@ -375,7 +321,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                     LoggerError.Fatal($"An error occurred while AddTaskStatusUpdate , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapperByGetUserSubmail.GetUserSubMail()}");
                     //LOG
 
-                    TempData["CustomerUpdateStatusError"] = response.ResponseMessage.ErrorMessage;
+                    TempData["CustomerUpdateStatusError"] = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
                     return RedirectToAction("CustomerDetail", new { taskNo = updateTaskStatusViewModel.TaskNo });
                 }
                 return RedirectToAction("Index", "Setup");
@@ -452,7 +398,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                                 LoggerError.Fatal($"An error occurred while AddCustomerAttachment , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapperByGetUserSubmail.GetUserSubMail()}");
                                 //LOG
 
-                                ViewBag.UploadDocumentError = response.ResponseMessage.ErrorMessage;
+                                ViewBag.UploadDocumentError = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture); ;
                                 return View(uploadFileRequestViewModel);
 
                             }
@@ -506,7 +452,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                 LoggerError.Fatal($"An error occurred while UpdateClientLocation , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapperByGetUserSubmail.GetUserSubMail()}");
                 //LOG
 
-                TempData["UpdateGPSResponse"] = response.ResponseMessage.ErrorMessage;
+                TempData["UpdateGPSResponse"] = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture); 
                 return RedirectToAction("CustomerDetail", new { taskNo = updateClientViewModel.TaskNo });
             }
             return View(updateClientViewModel);

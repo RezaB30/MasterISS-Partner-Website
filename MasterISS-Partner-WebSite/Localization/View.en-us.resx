@@ -282,6 +282,9 @@
   <data name="RecordFound" xml:space="preserve">
     <value>record found.</value>
   </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
   <data name="RequiredPermission" xml:space="preserve">
     <value>Please select at least 1 Permission.</value>
   </data>

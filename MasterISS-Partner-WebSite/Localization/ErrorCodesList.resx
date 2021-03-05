@@ -118,45 +118,42 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AuthenticationFailed" xml:space="preserve">
-    <value />
+    <value>Kimlik doğrulama başarısız</value>
   </data>
   <data name="Failed" xml:space="preserve">
-    <value />
+    <value>Bir Hata Oluştu. Daha sonra tekrar deneyiniz.</value>
   </data>
   <data name="InternalServerError" xml:space="preserve">
-    <value />
+    <value>Bir Hata Oluştu. Daha sonra tekrar deneyiniz.</value>
   </data>
   <data name="InvalidPhoneNo" xml:space="preserve">
-    <value />
+    <value>Geçersiz Telefon Numarası</value>
   </data>
   <data name="MaxSubUsersReached" xml:space="preserve">
-    <value />
+    <value>Maksimum Kullanıcı Sınırına Ulaşıldı</value>
   </data>
   <data name="NoPermission" xml:space="preserve">
-    <value />
+    <value>Yetkiniz Bulunmamaktadır</value>
   </data>
   <data name="NotEnoughCredit" xml:space="preserve">
-    <value>dd</value>
+    <value>Ödeme İşlemi için yeterli bakiyeniz bulunmamaktadır.</value>
   </data>
   <data name="PartnerIsNotActive" xml:space="preserve">
-    <value />
+    <value>Bayi aktif değil</value>
   </data>
   <data name="PartnerNotFound" xml:space="preserve">
-    <value />
+    <value>Bayi bulunamadı</value>
   </data>
   <data name="PaymentPermissionNotFound" xml:space="preserve">
-    <value>s</value>
-  </data>
-  <data name="SpecialOfferError" xml:space="preserve">
-    <value />
+    <value>Ödeme yetkiniz bulunmamaktadır.</value>
   </data>
   <data name="SubscriberNotFound" xml:space="preserve">
-    <value />
+    <value>Abone bulunamadı</value>
   </data>
   <data name="SubUserExists" xml:space="preserve">
-    <value />
+    <value>Bu kullanıcı mevcut. Lütfen başka bir kullanıcı ekleyiniz.</value>
   </data>
   <data name="TariffNotFound" xml:space="preserve">
-    <value />
+    <value>Tarife Bulunamadı</value>
   </data>
 </root>

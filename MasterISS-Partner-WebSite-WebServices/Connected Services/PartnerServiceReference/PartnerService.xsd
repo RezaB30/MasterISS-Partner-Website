@@ -363,7 +363,7 @@
       <xs:extension base="tns:PaginationRequest">
         <xs:sequence>
           <xs:element minOccurs="0" name="AllowanceTypeId" nillable="true" type="xs:short" />
-          <xs:element minOccurs="0" name="PartnerId" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="PartnerCredentials" nillable="true" type="tns:RequestBase" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -390,7 +390,7 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:PaginationRequest">
         <xs:sequence>
-          <xs:element minOccurs="0" name="PartnerId" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="PartnerCredentials" nillable="true" type="tns:RequestBase" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -411,7 +411,7 @@
       <xs:extension base="tns:PaginationRequest">
         <xs:sequence>
           <xs:element minOccurs="0" name="AllowanceCollectionID" nillable="true" type="xs:int" />
-          <xs:element minOccurs="0" name="PartnerId" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="PartnerCredentials" nillable="true" type="tns:RequestBase" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

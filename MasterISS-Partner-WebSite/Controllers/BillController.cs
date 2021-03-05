@@ -2,6 +2,7 @@
 using MasterISS_Partner_WebSite.ViewModels;
 using NLog;
 using System;
+using RezaB.Data.Localization;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -9,6 +10,7 @@ using System.Security.Claims;
 using System.Threading;
 using System.Web;
 using System.Web.Mvc;
+using MasterISS_Partner_WebSite.Enums;
 
 namespace MasterISS_Partner_WebSite.Controllers
 {
@@ -44,23 +46,12 @@ namespace MasterISS_Partner_WebSite.Controllers
                         return View("Index", BillList(response));
                     }
                 }
-                else if (response.ResponseMessage.ErrorCode == 200)
-                {
-                    //LOG
-                    wrapper = new WebServiceWrapper();
-                    LoggerError.Fatal($"An error occurred while UserBillList , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage: {response.ResponseMessage.ErrorMessage} by: {wrapper.GetUserSubMail()}");
-                    //LOG
-
-                    ViewBag.ResponseError = Localization.View.GeneralErrorDescription;
-                    return View("Index", BillList(response));
-                }
-
                 //LOG
                 wrapper = new WebServiceWrapper();
                 LoggerError.Fatal($"An error occurred while UserBillList , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage: {response.ResponseMessage.ErrorMessage} by: {wrapper.GetUserSubMail()}");
                 //LOG
 
-                ViewBag.ResponseError = response.ResponseMessage.ErrorMessage;
+                ViewBag.ResponseError = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
 
             }
             ViewBag.Error = "Error";
@@ -85,7 +76,10 @@ namespace MasterISS_Partner_WebSite.Controllers
             LoggerError.Fatal($"An error occurred while GetCreditReport , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage: {response.ResponseMessage.ErrorMessage} by: {wrapper.GetUserSubMail()}");
             //LOG
 
-            return Json(new { errorMessage = response.ResponseMessage.ErrorMessage }, JsonRequestBehavior.AllowGet);
+            return Json(new
+            {
+                errorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture)
+            }, JsonRequestBehavior.AllowGet);
         }
 
         [Authorize(Roles = "PaymentCreditReportDetail,Admin")]
@@ -114,23 +108,12 @@ namespace MasterISS_Partner_WebSite.Controllers
                 }
                 return View(detail);
             }
-            else if (response.ResponseMessage.ErrorCode == 200)
-            {
-                //LOG
-                wrapper = new WebServiceWrapper();
-                LoggerError.Fatal($"An error occurred while GetCreditReport , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage: {response.ResponseMessage.ErrorMessage} by: {wrapper.GetUserSubMail()}");
-                //LOG
-
-                ViewBag.ErrorMessage = Localization.View.GeneralErrorDescription;
-                return View();
-            }
-
             //LOG
             wrapper = new WebServiceWrapper();
             LoggerError.Fatal($"An error occurred while GetCreditReport , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage: {response.ResponseMessage.ErrorMessage} by: {wrapper.GetUserSubMail()}");
             //LOG
 
-            ViewBag.ErrorMessage = response.ResponseMessage.ErrorMessage;
+            ViewBag.ErrorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
             return View();
         }
 

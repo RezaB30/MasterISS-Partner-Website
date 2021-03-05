@@ -3756,7 +3756,7 @@ namespace MasterISS_Partner_WebSite_WebServices.PartnerServiceReference {
         private System.Nullable<short> AllowanceTypeIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<int> PartnerIdField;
+        private MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.RequestBase PartnerCredentialsField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Nullable<short> AllowanceTypeId {
@@ -3772,14 +3772,14 @@ namespace MasterISS_Partner_WebSite_WebServices.PartnerServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<int> PartnerId {
+        public MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.RequestBase PartnerCredentials {
             get {
-                return this.PartnerIdField;
+                return this.PartnerCredentialsField;
             }
             set {
-                if ((this.PartnerIdField.Equals(value) != true)) {
-                    this.PartnerIdField = value;
-                    this.RaisePropertyChanged("PartnerId");
+                if ((object.ReferenceEquals(this.PartnerCredentialsField, value) != true)) {
+                    this.PartnerCredentialsField = value;
+                    this.RaisePropertyChanged("PartnerCredentials");
                 }
             }
         }
@@ -3858,17 +3858,17 @@ namespace MasterISS_Partner_WebSite_WebServices.PartnerServiceReference {
     public partial class PartnerAllowanceRequest : MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PaginationRequest {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<int> PartnerIdField;
+        private MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.RequestBase PartnerCredentialsField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<int> PartnerId {
+        public MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.RequestBase PartnerCredentials {
             get {
-                return this.PartnerIdField;
+                return this.PartnerCredentialsField;
             }
             set {
-                if ((this.PartnerIdField.Equals(value) != true)) {
-                    this.PartnerIdField = value;
-                    this.RaisePropertyChanged("PartnerId");
+                if ((object.ReferenceEquals(this.PartnerCredentialsField, value) != true)) {
+                    this.PartnerCredentialsField = value;
+                    this.RaisePropertyChanged("PartnerCredentials");
                 }
             }
         }
@@ -3885,7 +3885,7 @@ namespace MasterISS_Partner_WebSite_WebServices.PartnerServiceReference {
         private System.Nullable<int> AllowanceCollectionIDField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<int> PartnerIdField;
+        private MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.RequestBase PartnerCredentialsField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Nullable<int> AllowanceCollectionID {
@@ -3901,14 +3901,14 @@ namespace MasterISS_Partner_WebSite_WebServices.PartnerServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<int> PartnerId {
+        public MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.RequestBase PartnerCredentials {
             get {
-                return this.PartnerIdField;
+                return this.PartnerCredentialsField;
             }
             set {
-                if ((this.PartnerIdField.Equals(value) != true)) {
-                    this.PartnerIdField = value;
-                    this.RaisePropertyChanged("PartnerId");
+                if ((object.ReferenceEquals(this.PartnerCredentialsField, value) != true)) {
+                    this.PartnerCredentialsField = value;
+                    this.RaisePropertyChanged("PartnerCredentials");
                 }
             }
         }

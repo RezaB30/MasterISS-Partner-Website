@@ -260,7 +260,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                             LoggerError.Fatal("An error occurred while SMSConfirmation , ErrorCode: " + smsConfirmation.ResponseMessage.ErrorCode + ", by: " + wrapperBySMSConfirmation.GetUserSubMail());
                             //LOG
 
-                            ViewBag.NewCustomerError = Localization.View.GeneralErrorDescription;
+                            ViewBag.NewCustomerError = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(smsConfirmation.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
+
                         }
                     }
                     else
@@ -435,7 +436,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                 return Json(new { list = list }, JsonRequestBehavior.AllowGet);
             }
-            return Json(new { errorMessage = paymentDayListResponse.ResponseMessage.ErrorMessage }, JsonRequestBehavior.AllowGet);
+            return Json(new { errorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(paymentDayListResponse.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture) }, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -469,24 +470,17 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                             return RedirectToAction("Successful");
                         }
-                        else if (response.ResponseMessage.ErrorCode == 200)
-                        {
-                            //LOG
-                            wrapper = new WebServiceWrapper();
-                            LoggerError.Fatal($"An error occurred while NewCustomerRegister , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage}, NameValuePair :{string.Join(",", response.NewCustomerRegisterResponse)} by: {wrapper.GetUserSubMail()}");
-                            //LOG
-
-                            TempData["SMSConfirmationError"]= Localization.View.GeneralErrorDescription;
-                            return RedirectToAction("NewCustomer");
-                        }
                         else
                         {
+                            Session.Remove("CustomerApplicationInfo");
+                            Session.Remove("Counter");
+                            Session.Remove("SMSCode");
                             //LOG
                             wrapper = new WebServiceWrapper();
                             LoggerError.Fatal($"An error occurred while NewCustomerRegister, ErrorCode:  {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage}, NameValuePair :{string.Join(",", response.NewCustomerRegisterResponse)}  by: {wrapper.GetUserSubMail()}");
                             //LOG
 
-                            TempData["SMSConfirmationError"] = response.ResponseMessage.ErrorMessage;
+                            TempData["SMSConfirmationError"] = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
                             return RedirectToAction("NewCustomer");
                         }
                     }
@@ -507,6 +501,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                     return RedirectToAction("NewCustomer");
                 }
             }
+            Session.Remove("CustomerApplicationInfo");
             TempData["SMSConfirmationError"] = Localization.View.GeneralErrorDescription;
             return RedirectToAction("NewCustomer");
         }

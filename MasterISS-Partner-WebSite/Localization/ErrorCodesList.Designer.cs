@@ -61,7 +61,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Kimlik doğrulama başarısız.
         /// </summary>
         public static string AuthenticationFailed {
             get {
@@ -70,7 +70,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Bir Hata Oluştu. Daha sonra tekrar deneyiniz..
         /// </summary>
         public static string Failed {
             get {
@@ -79,7 +79,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Bir Hata Oluştu. Daha sonra tekrar deneyiniz..
         /// </summary>
         public static string InternalServerError {
             get {
@@ -88,7 +88,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Geçersiz Telefon Numarası.
         /// </summary>
         public static string InvalidPhoneNo {
             get {
@@ -97,7 +97,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Maksimum Kullanıcı Sınırına Ulaşıldı.
         /// </summary>
         public static string MaxSubUsersReached {
             get {
@@ -106,7 +106,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Yetkiniz Bulunmamaktadır.
         /// </summary>
         public static string NoPermission {
             get {
@@ -115,7 +115,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to dd.
+        ///   Looks up a localized string similar to Ödeme İşlemi için yeterli bakiyeniz bulunmamaktadır..
         /// </summary>
         public static string NotEnoughCredit {
             get {
@@ -124,7 +124,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Bayi aktif değil.
         /// </summary>
         public static string PartnerIsNotActive {
             get {
@@ -133,7 +133,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Bayi bulunamadı.
         /// </summary>
         public static string PartnerNotFound {
             get {
@@ -142,7 +142,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to s.
+        ///   Looks up a localized string similar to Ödeme yetkiniz bulunmamaktadır..
         /// </summary>
         public static string PaymentPermissionNotFound {
             get {
@@ -151,16 +151,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string SpecialOfferError {
-            get {
-                return ResourceManager.GetString("SpecialOfferError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Abone bulunamadı.
         /// </summary>
         public static string SubscriberNotFound {
             get {
@@ -169,7 +160,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Bu kullanıcı mevcut. Lütfen başka bir kullanıcı ekleyiniz..
         /// </summary>
         public static string SubUserExists {
             get {
@@ -178,7 +169,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Tarife Bulunamadı.
         /// </summary>
         public static string TariffNotFound {
             get {

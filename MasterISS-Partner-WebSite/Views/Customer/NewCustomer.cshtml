@@ -40,7 +40,6 @@
 
     </div>
 
-
     <div id="IDCardInfoContainer">
         <h2>@View.IDCardInfo</h2>
         <div class="form-group">
@@ -606,6 +605,7 @@
             }
         }
 
+
         $(document).ready(function () {
 
             $(function () {
@@ -689,10 +689,14 @@
 
 
             $('#createNumberInput').click(function () {
-                $('#telephoneNumberInputContainer').append('<input type="button" id="remove-button" value="sh">');
-                $('#telephoneNumberInputContainer').append('<input type="text" name="GeneralInfo.OtherPhoneNos" id="GeneralInfo_OtherPhoneNos">');
-                $('#telephoneNumberInputContainer').append('<br/>');
+                $('#telephoneNumberInputContainer').append('<div class="input-container"><input type="button" class="remove-button" value="@MasterISS_Partner_WebSite.Localization.View.Remove"><input type="text" name="GeneralInfo.OtherPhoneNos" id="GeneralInfo_OtherPhoneNos"><br/></div>')
+                $("#GeneralInfo_OtherPhoneNos").mask("9999999999");
             });
+
+            $("#telephoneNumberInputContainer").on('click', '.remove-button', function () {
+                $(this).parent().remove();
+            });
+
 
             QueryAddress("#province-company","#district-company",'@Url.Action("DistrictList", "Home")')
 
