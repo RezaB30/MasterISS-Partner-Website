@@ -41,17 +41,8 @@ namespace MasterISS_Partner_WebSite.ViewModels.Setup.Response
         [Display(ResourceType = typeof(Localization.Model), Name = "CustomerType")]
         public string CustomerType { get; set; }
 
-        [Display(ResourceType = typeof(Localization.Model), Name = "ReservationDate")]
-        public DateTime ReservationDate { get; set; }
-
         [Display(ResourceType = typeof(Localization.Model), Name = "LastConnectionDate")]
         public DateTime LastConnectionDate { get; set; }
-
-        [Display(ResourceType = typeof(Localization.Model), Name = "TaskType")]
-        public string TaskType { get; set; }
-
-        [Display(ResourceType = typeof(Localization.Model), Name = "TaskStatus")]
-        public string TaskStatus { get; set; }
 
         [Display(ResourceType = typeof(Localization.Model), Name = "Details")]
         public string Details { get; set; }

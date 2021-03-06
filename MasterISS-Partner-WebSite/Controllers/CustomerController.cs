@@ -65,8 +65,8 @@ namespace MasterISS_Partner_WebSite.Controllers
             var nationalityListResponse = wrapper.GetNationalities();
             if (nationalityListResponse.ResponseMessage.ErrorCode == 0)
             {
-                ViewBag.NationalityListByCorporative = NationalityList(nationalityListResponse, null);
-                ViewBag.NationalityListByIndividual = NationalityList(nationalityListResponse, null);
+                ViewBag.NationalityListByCorporative = NationalityList(nationalityListResponse, (int)Enums.NationalityList.Turkey);
+                ViewBag.NationalityListByIndividual = NationalityList(nationalityListResponse, (int)Enums.NationalityList.Turkey);
             }
 
             wrapper = new WebServiceWrapper();

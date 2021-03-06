@@ -195,6 +195,7 @@
     <Compile Include="Enums\CustomerTypeEnum.cs" />
     <Compile Include="Enums\ErrorCodesEnum.cs" />
     <Compile Include="Enums\FaultCodeEnum.cs" />
+    <Compile Include="Enums\NationalityList.cs" />
     <Compile Include="Enums\RevenuesTypeEnum.cs" />
     <Compile Include="Enums\TaskStatusEnum.cs" />
     <Compile Include="Enums\TaskTypesEnum.cs" />

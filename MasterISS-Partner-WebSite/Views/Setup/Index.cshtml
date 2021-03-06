@@ -46,6 +46,9 @@
                 <th>@Html.DisplayNameFor(model => model.FirstOrDefault().TaskIssueDate)</th>
                 <th>@Html.DisplayNameFor(model => model.FirstOrDefault().CustomerPhoneNo)</th>
                 <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Address)</th>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().TaskStatus)</th>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().TaskType)</th>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().ReservationDate)</th>
             </tr>
         </thead>
         <tbody>
@@ -58,7 +61,11 @@
                     <td>@Html.DisplayFor(modelItem => item.TaskIssueDate)</td>
                     <td>@Html.DisplayFor(modelItem => item.CustomerPhoneNo)</td>
                     <td>@Html.DisplayFor(modelItem => item.Address)</td>
+                    <td>@Html.DisplayFor(modelItem => item.TaskStatus)</td>
+                    <td>@Html.DisplayFor(modelItem => item.TaskType)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ReservationDate)</td>
                     <td>@Html.ActionLink(View.CustomerInfo, "CustomerDetail", "Setup", new { taskNo = item.TaskNo }, new { @class = "btn btn-success" })</td>
+                    <td><a href="https://www.google.com/maps/search/?api=1&query=38.640649946744375,34.71515003664667">ss</a></td>
                 </tr>
             }
         </tbody>

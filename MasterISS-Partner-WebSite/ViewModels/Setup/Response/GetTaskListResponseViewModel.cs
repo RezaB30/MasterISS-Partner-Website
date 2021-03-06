@@ -24,6 +24,16 @@ namespace MasterISS_Partner_WebSite.ViewModels.Setup.Response
         [UIHint("DateTimeConverted")]
         public DateTime TaskIssueDate { get; set; }
 
+        [Display(ResourceType = typeof(Localization.Model), Name = "TaskType")]
+        public string TaskType { get; set; }
+
+        [Display(ResourceType = typeof(Localization.Model), Name = "TaskStatus")]
+        public string TaskStatus { get; set; }
+
+        [UIHint("DateTimeConverted")]
+        [Display(ResourceType = typeof(Localization.Model), Name = "ReservationDate")]
+        public DateTime ReservationDate { get; set; }
+
         [Display(ResourceType = typeof(Localization.Model), Name = "XDSLNo")]
         public string XDSLNo { get; set; }
     }

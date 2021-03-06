@@ -82,7 +82,10 @@ namespace MasterISS_Partner_WebSite.Controllers
                                 CustomerPhoneNo = st.CustomerPhoneNo,
                                 TaskIssueDate = Convert.ToDateTime(st.TaskIssueDate),
                                 TaskNo = st.TaskNo,
-                                XDSLNo = st.XDSLNo
+                                XDSLNo = st.XDSLNo,
+                                TaskStatus = TaskStatusDescription(st.TaskStatus),
+                                TaskType = TaskTypeDescription(st.TaskType),
+                                ReservationDate = Convert.ToDateTime(st.ReservationDate),
                             });
 
                             var totalCount = list.Count();
@@ -130,11 +133,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                     SubscriberNo = response.SetupTask.SubscriberNo,
                     PSTN = response.SetupTask.PSTN,
                     XDSLType = (XDSLTypeEnum)response.SetupTask.XDSLType,
-                    TaskStatus = TaskStatusDescription(response.SetupTask.TaskStatus),
-                    TaskType = TaskTypeDescription(response.SetupTask.TaskType),
                     CustomerType = CustomerTypeDescription(response.SetupTask.CustomerType),
                     LastConnectionDate = Convert.ToDateTime(response.SetupTask.LastConnectionDate),
-                    ReservationDate = Convert.ToDateTime(response.SetupTask.ReservationDate),
                     TaskUpdatesDetailList = response.SetupTask.TaskUpdates == null ? Enumerable.Empty<TaskUpdatesDetailListViewModel>() : response.SetupTask.TaskUpdates.Select(tu => new TaskUpdatesDetailListViewModel
                     {
                         FaultCodes = FaultCodesDescription(tu.FaultCode),

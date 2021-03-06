@@ -191,7 +191,7 @@
 
             <div class="form-group">
                 @Html.LabelFor(gi => gi.GeneralInfo.BillingAddress.PostalCode)
-                @Html.EditorFor(gi => gi.GeneralInfo.BillingAddress.PostalCode)
+                @Html.EditorFor(gi => gi.GeneralInfo.BillingAddress.PostalCode, new { htmlAttributes = new { @type = "text"} })
                 @Html.ValidationMessageFor(gi => gi.GeneralInfo.BillingAddress.PostalCode)
             </div>
 
@@ -347,7 +347,7 @@
 
             <div class="form-group">
                 @Html.LabelFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.PostalCode)
-                @Html.EditorFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.PostalCode)
+                @Html.EditorFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.PostalCode, new { htmlAttributes = new { @type = "text" } })
                 @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.PostalCode)
             </div>
 
@@ -404,7 +404,7 @@
 
             <div class="form-group">
                 @Html.LabelFor(ci => ci.CorporateInfo.CompanyAddress.PostalCode)
-                @Html.EditorFor(ci => ci.CorporateInfo.CompanyAddress.PostalCode)
+                @Html.EditorFor(ci => ci.CorporateInfo.CompanyAddress.PostalCode, new { htmlAttributes = new { @type = "text" } })
                 @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.PostalCode)
             </div>
 
@@ -506,7 +506,7 @@
 
             <div class="form-group">
                 @Html.LabelFor(ii => ii.Individual.ResidencyAddress.PostalCode)
-                @Html.EditorFor(ii => ii.Individual.ResidencyAddress.PostalCode)
+                @Html.EditorFor(ii => ii.Individual.ResidencyAddress.PostalCode, new { htmlAttributes = new { @type = "text" } })
                 @Html.ValidationMessageFor(ii => ii.Individual.ResidencyAddress.PostalCode)
             </div>
 
@@ -575,7 +575,7 @@
 
             <div class="form-group">
                 @Html.LabelFor(si => si.SubscriptionInfo.SetupAddress.PostalCode)
-                @Html.EditorFor(si => si.SubscriptionInfo.SetupAddress.PostalCode)
+                @Html.EditorFor(si => si.SubscriptionInfo.SetupAddress.PostalCode, new { htmlAttributes = new { @type = "text" } })
                 @Html.ValidationMessageFor(si => si.SubscriptionInfo.SetupAddress.PostalCode)
             </div>
 
