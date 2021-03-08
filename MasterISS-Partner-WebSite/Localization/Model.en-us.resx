@@ -166,7 +166,7 @@
     <value>Building No</value>
   </data>
   <data name="CardTypeId" xml:space="preserve">
-    <value>Card Type</value>
+    <value>ID Card Type</value>
   </data>
   <data name="CentralSystemNo" xml:space="preserve">
     <value>Central System Number</value>
@@ -452,6 +452,9 @@
   </data>
   <data name="SearchedName" xml:space="preserve">
     <value>Searched Person</value>
+  </data>
+  <data name="SearchedTaskNo" xml:space="preserve">
+    <value>Searched By Task No</value>
   </data>
   <data name="SerialNo" xml:space="preserve">
     <value>Serial No</value>

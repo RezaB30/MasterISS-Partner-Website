@@ -205,7 +205,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kart Tipi.
+        ///   Looks up a localized string similar to Kimlik Tipi.
         /// </summary>
         public static string CardTypeId {
             get {
@@ -1069,6 +1069,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Görev Numarasına Göre Ara.
+        /// </summary>
+        public static string SearchedTaskNo {
+            get {
+                return ResourceManager.GetString("SearchedTaskNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Seri No.
         /// </summary>
         public static string SerialNo {
@@ -1087,7 +1096,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Session Başlangıç Saati.
+        ///   Looks up a localized string similar to Oturum Başlangıç Saati.
         /// </summary>
         public static string SessionStart {
             get {

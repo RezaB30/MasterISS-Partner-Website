@@ -306,11 +306,14 @@
   <data name="RoleValidPermission" xml:space="preserve">
     <value>Lütfen yetki seçiniz.</value>
   </data>
+  <data name="RouteMap" xml:space="preserve">
+    <value>Haritaya Yönlendir</value>
+  </data>
   <data name="SaleAllowanceDetails" xml:space="preserve">
     <value>Satış Hakediş Detayları</value>
   </data>
   <data name="SaleAllowanceList" xml:space="preserve">
-    <value>Satış Hakediş Listesi</value>
+    <value>Satış Hasılat Listesi</value>
   </data>
   <data name="SaleAllowedDetails" xml:space="preserve">
     <value>Satış Hakediş Detayları</value>
@@ -340,7 +343,7 @@
     <value>Rol Seçiniz</value>
   </data>
   <data name="SetupAllowanceList" xml:space="preserve">
-    <value>Kurulum Hakediş Listesi</value>
+    <value>Kurulum Hasılat Listesi</value>
   </data>
   <data name="SetupAllowedDetails" xml:space="preserve">
     <value>Kurulum Hakediş Detayları</value>

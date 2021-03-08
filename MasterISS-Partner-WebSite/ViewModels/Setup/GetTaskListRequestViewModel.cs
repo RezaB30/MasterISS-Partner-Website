@@ -20,5 +20,9 @@ namespace MasterISS_Partner_WebSite.ViewModels.Setup
 
         [Display(ResourceType = typeof(Localization.Model), Name = "SearchedName")]
         public string SearchedName { get; set; }
+
+        [Display(ResourceType = typeof(Localization.Model), Name = "SearchedTaskNo")]
+        public long? SearchedTaskNo { get; set; }
+
     }
 }

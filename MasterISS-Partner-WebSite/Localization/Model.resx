@@ -166,7 +166,7 @@
     <value>Bina No</value>
   </data>
   <data name="CardTypeId" xml:space="preserve">
-    <value>Kart Tipi</value>
+    <value>Kimlik Tipi</value>
   </data>
   <data name="CentralSystemNo" xml:space="preserve">
     <value>Merkezi Sistem Numarası</value>
@@ -453,6 +453,9 @@
   <data name="SearchedName" xml:space="preserve">
     <value>Aranan Kişi</value>
   </data>
+  <data name="SearchedTaskNo" xml:space="preserve">
+    <value>Görev Numarasına Göre Ara</value>
+  </data>
   <data name="SerialNo" xml:space="preserve">
     <value>Seri No</value>
   </data>
@@ -460,7 +463,7 @@
     <value>Oturum Id</value>
   </data>
   <data name="SessionStart" xml:space="preserve">
-    <value>Session Başlangıç Saati</value>
+    <value>Oturum Başlangıç Saati</value>
   </data>
   <data name="SessionTime" xml:space="preserve">
     <value>Oturum Zamanı</value>

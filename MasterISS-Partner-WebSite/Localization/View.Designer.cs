@@ -628,6 +628,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Haritaya Yönlendir.
+        /// </summary>
+        public static string RouteMap {
+            get {
+                return ResourceManager.GetString("RouteMap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satış Hakediş Detayları.
         /// </summary>
         public static string SaleAllowanceDetails {
@@ -637,7 +646,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Satış Hakediş Listesi.
+        ///   Looks up a localized string similar to Satış Hasılat Listesi.
         /// </summary>
         public static string SaleAllowanceList {
             get {
@@ -727,7 +736,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kurulum Hakediş Listesi.
+        ///   Looks up a localized string similar to Kurulum Hasılat Listesi.
         /// </summary>
         public static string SetupAllowanceList {
             get {

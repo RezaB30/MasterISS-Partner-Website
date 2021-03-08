@@ -29,6 +29,11 @@
             @Html.EditorFor(m => search.SearchedName)
         </div>
 
+        <div class="form-group">
+            @Html.LabelFor(m => search.SearchedTaskNo)
+            @Html.EditorFor(m => search.SearchedTaskNo, new { htmlAttributes = new { type = "text" } })
+        </div>
+
         <input type="submit" class=" btn btn-warning" value="@View.Filter" />
     }
 </div>
@@ -65,7 +70,7 @@
                     <td>@Html.DisplayFor(modelItem => item.TaskType)</td>
                     <td>@Html.DisplayFor(modelItem => item.ReservationDate)</td>
                     <td>@Html.ActionLink(View.CustomerInfo, "CustomerDetail", "Setup", new { taskNo = item.TaskNo }, new { @class = "btn btn-success" })</td>
-                    <td><a href="https://www.google.com/maps/search/?api=1&query=38.640649946744375,34.71515003664667">ss</a></td>
+                    <td><a href="https://www.google.com/maps/search/?api=1&query=@item.AddressLatitudeandLongitude[0],@item.AddressLatitudeandLongitude[1]" target="_blank">@View.RouteMap</a></td>
                 </tr>
             }
         </tbody>
@@ -98,6 +103,7 @@ else
         $(function () {
             $("#search_TaskListStartDate").mask("99.99.9999 99:99");
             $("#search_TaskListEndDate").mask("99.99.9999 99:99");
+            $("#search_SearchedTaskNo").mask("99999");
         });
 
     </script>

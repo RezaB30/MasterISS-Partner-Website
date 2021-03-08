@@ -306,6 +306,9 @@
   <data name="RoleValidPermission" xml:space="preserve">
     <value>Please select permission.</value>
   </data>
+  <data name="RouteMap" xml:space="preserve">
+    <value>Route To Map</value>
+  </data>
   <data name="SaleAllowanceDetails" xml:space="preserve">
     <value>Sale Allowance Details</value>
   </data>

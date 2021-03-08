@@ -11,8 +11,7 @@ namespace MasterISS_Partner_WebSite.ViewModels.Setup.Response
         [Display(ResourceType = typeof(Localization.Model), Name = "TaskNo")]
         public long TaskNo { get; set; }
 
-        [Display(ResourceType = typeof(Localization.Model), Name = "SetupAddress")]
-        public string Address { get; set; }
+        public string[] AddressLatitudeandLongitude { get; set; }
 
         [Display(ResourceType = typeof(Localization.Model), Name = "CustomerPhoneNo")]
         public string CustomerPhoneNo { get; set; }
@@ -36,5 +35,8 @@ namespace MasterISS_Partner_WebSite.ViewModels.Setup.Response
 
         [Display(ResourceType = typeof(Localization.Model), Name = "XDSLNo")]
         public string XDSLNo { get; set; }
+
+        [Display(ResourceType = typeof(Localization.Model), Name = "SetupAddress")]
+        public string Address { get; set; }
     }
 }

@@ -6,11 +6,11 @@
 
 @if (User.IsInRole("SetupRevenuesList") || User.IsInRole("Admin"))
 {
-    @Html.ActionLink("Kurulum Hakediş Detayları", "SetupAllowedDetails", "Revenues")
+    @Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.SetupAllowedDetails, "SetupAllowedDetails", "Revenues")
     <br />
-    @Html.ActionLink("Kurulum Hasılat Listesi", "SetupAllowanceList", "Revenues")
+    @Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.SetupAllowanceList, "SetupAllowanceList", "Revenues")
     <br />
-    @Html.ActionLink("Kurulum Genel Hakediş Listesi", "SetupGenericAllowanceList", "Revenues")
+    @Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.SetupGenericAllowanceList, "SetupGenericAllowanceList", "Revenues")
 }
 
 <br />
@@ -19,10 +19,10 @@
 <br />
 @if (User.IsInRole("SaleRevenuesList") || User.IsInRole("Admin"))
 {
-    @Html.ActionLink("Satış Genel Hakediş Listesi", "SaleGenericAllowanceList", "Revenues")
+    @Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.SaleGenericAllowanceList, "SaleGenericAllowanceList", "Revenues")
     <br />
-    @Html.ActionLink("Satış Hasılat Listesi", "SaleAllowanceList", "Revenues")
+    @Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.SaleAllowanceList, "SaleAllowanceList", "Revenues")
     <br />
-    @Html.ActionLink("Satış Hakediş Detayları", "SaleAllowedDetails", "Revenues")
+    @Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.SaleAllowedDetails, "SaleAllowedDetails", "Revenues")
 
 }

@@ -14,6 +14,9 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using NLog;
+using GoogleMaps.LocationServices;
+using System.Net;
+using System.Xml.Linq;
 
 namespace MasterISS_Partner_WebSite.Controllers
 {
@@ -75,9 +78,9 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                         if (response.ResponseMessage.ErrorCode == 0)
                         {
-                            var list = response.SetupTasks.Where(tlresponse => tlresponse.ContactName.Contains(taskListRequestModel.SearchedName == null ? "" : taskListRequestModel.SearchedName.ToUpper()) && tlresponse.TaskStatus != (int)TaskStatusEnum.Completed).Select(st => new GetTaskListResponseViewModel
+                            var list = response.SetupTasks.Where(tlresponse => taskListRequestModel.SearchedTaskNo.HasValue == true ? tlresponse.TaskNo == taskListRequestModel.SearchedTaskNo : tlresponse.ContactName.Contains(taskListRequestModel.SearchedName == null ? "" : taskListRequestModel.SearchedName.ToUpper()) && tlresponse.TaskStatus != (int)TaskStatusEnum.Completed).Select(st => new GetTaskListResponseViewModel
                             {
-                                Address = st.Address,
+                                AddressLatitudeandLongitude = GetAddressLatituteandLongitude(st.Address),
                                 ContactName = st.ContactName,
                                 CustomerPhoneNo = st.CustomerPhoneNo,
                                 TaskIssueDate = Convert.ToDateTime(st.TaskIssueDate),
@@ -86,6 +89,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                                 TaskStatus = TaskStatusDescription(st.TaskStatus),
                                 TaskType = TaskTypeDescription(st.TaskType),
                                 ReservationDate = Convert.ToDateTime(st.ReservationDate),
+                                Address = st.Address
                             });
 
                             var totalCount = list.Count();
@@ -112,6 +116,30 @@ namespace MasterISS_Partner_WebSite.Controllers
             }
             ViewBag.ValidationError = "Error";
             return View();
+        }
+
+        private string FixedAddress(string address)
+        {
+            var fixedAddress = address.Replace("..", ".");
+
+            return fixedAddress;
+        }
+
+        private string[] GetAddressLatituteandLongitude(string address)
+        {
+            var parsedAddress = Uri.EscapeDataString(FixedAddress(address));
+            var requestUri = string.Format("https://maps.googleapis.com/maps/api/geocode/xml?address={0}&key=AIzaSyC2HjBa_I-GX4LOvp71kjtPoZQ4Uz-VBjo&libraries=places&callback=initAutocomplete", parsedAddress);
+            var request = WebRequest.Create(requestUri);
+            var response = request.GetResponse();
+            var xDocument = XDocument.Load(response.GetResponseStream());
+            var result = xDocument.Element("GeocodeResponse").Element("result");
+            var locationElement = result.Element("geometry").Element("location");
+            var lat = locationElement.Element("lat").Value;
+            var lng = locationElement.Element("lng").Value;
+
+            string[] location = { lat, lng };
+
+            return location;
         }
 
         public ActionResult CustomerDetail(long taskNo)
@@ -451,7 +479,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                 LoggerError.Fatal($"An error occurred while UpdateClientLocation , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapperByGetUserSubmail.GetUserSubMail()}");
                 //LOG
 
-                TempData["UpdateGPSResponse"] = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture); 
+                TempData["UpdateGPSResponse"] = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
                 return RedirectToAction("CustomerDetail", new { taskNo = updateClientViewModel.TaskNo });
             }
             return View(updateClientViewModel);
