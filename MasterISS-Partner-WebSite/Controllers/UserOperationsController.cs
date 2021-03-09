@@ -40,6 +40,63 @@ namespace MasterISS_Partner_WebSite.Controllers
             }
         }
 
+        [Authorize(Roles = "Setup")]
+        public ActionResult SetupTeamList()
+        {
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var claimList = new ClaimInfo();
+                var partnerId = claimList.PartnerId();
+
+                var setupTeamList = db.SetupTeam.Where(st => st.User.PartnerId == partnerId && st.User.Role.RolePermission.Select(rp => rp.Permission.Id).Contains((int)PermissionListEnum.SetupManager)).Select(st => new SetupTeamListViewModel
+                {
+                    Id = st.Id,
+                    UserDisplayName = st.User.NameSurname,
+                    WorkingStatus = st.WorkingStatus
+                }).ToList();
+
+                return View(setupTeamList);
+            }
+        }
+
+        [Authorize(Roles = "Setup")]
+        public ActionResult DisabledUserInSetupTeam(int Id)
+        {
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var setupTeam = db.SetupTeam.Find(Id);
+
+                if (setupTeam != null)
+                {
+                    setupTeam.WorkingStatus = false;
+
+                    db.SaveChanges();
+
+                    return RedirectToAction("Successful");
+                }
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        [Authorize(Roles = "Setup")]
+        public ActionResult EnabledUserInSetupTeam(int Id)
+        {
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var setupTeam = db.SetupTeam.Find(Id);
+
+                if (setupTeam != null)
+                {
+                    setupTeam.WorkingStatus = true;
+
+                    db.SaveChanges();
+
+                    return RedirectToAction("Successful");
+                }
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
         public ActionResult AddPermission()
         {
             ViewBag.PermissionList = PermissionList();
@@ -151,10 +208,19 @@ namespace MasterISS_Partner_WebSite.Controllers
                                     NameSurname = newUserViewModel.UserNameSurname,
                                     RoleId = newUserViewModel.RoleId
                                 };
-
                                 db.User.Add(newUser);
-
                                 db.SaveChanges();
+
+                                if (ValidRoleHaveSetupManagerPermission(newUserViewModel.RoleId))
+                                {
+                                    SetupTeam setupTeam = new SetupTeam
+                                    {
+                                        UserId = newUser.Id,
+                                        WorkingStatus = true
+                                    };
+                                    db.SetupTeam.Add(setupTeam);
+                                    db.SaveChanges();
+                                }
 
                                 //LOG
                                 wrapper = new WebServiceWrapper();
@@ -223,6 +289,18 @@ namespace MasterISS_Partner_WebSite.Controllers
                         user.RoleId = updateUserRoleViewModel.RoleId;
                         db.SaveChanges();
 
+                        if (!ValidRoleHaveSetupManagerPermission(updateUserRoleViewModel.RoleId))
+                        {
+                            var usersHaveUserManagerPermisison = db.SetupTeam.Where(st => st.UserId == updateUserRoleViewModel.UserId).FirstOrDefault();
+                            if (usersHaveUserManagerPermisison != null)
+                            {
+                                if (usersHaveUserManagerPermisison.WorkingStatus == true)
+                                {
+                                    usersHaveUserManagerPermisison.WorkingStatus = false;
+                                    db.SaveChanges();
+                                }
+                            }
+                        }
                         //LOG
                         var wrapper = new WebServiceWrapper();
                         Logger.Info("Updated User Role: " + user.UserSubMail + ", by: " + wrapper.GetUserSubMail());
@@ -230,7 +308,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                         return RedirectToAction("Successful");
                     }
-                    RedirectToAction("Index");
+                    RedirectToAction("Index", "Home");
                 }
             }
             return View(updateUserRoleViewModel);
@@ -317,8 +395,27 @@ namespace MasterISS_Partner_WebSite.Controllers
                             });
                             db.RolePermission.AddRange(addedRolePermission);
                             db.SaveChanges();
+
+                            if (!ValidRoleHaveSetupManagerPermission(roleId))
+                            {
+                                var usersHaveUserManagerPermisison = db.User.Where(u => u.RoleId == roleId && u.PartnerId == partnerId).Select(u => u.Id).ToList();
+
+                                if (usersHaveUserManagerPermisison.Count > 0)
+                                {
+                                    var matchedSetupTeams = db.SetupTeam.Where(st => usersHaveUserManagerPermisison.Contains(st.UserId));
+                                    if (matchedSetupTeams.Count() > 0)
+                                    {
+                                        foreach (var item in matchedSetupTeams)
+                                        {
+                                            item.WorkingStatus = false;
+                                        }
+                                        db.SaveChanges();
+                                    }
+                                }
+                            }
+
+                            return RedirectToAction("Successful");
                         }
-                        return RedirectToAction("Successful");
                     }
                     return RedirectToAction("Index", "Home");
                 }
@@ -327,6 +424,19 @@ namespace MasterISS_Partner_WebSite.Controllers
             return RedirectToAction("UpdateRolePermission", new { roleId = roleId });
         }
 
+        private bool ValidRoleHaveSetupManagerPermission(int roleId)
+        {
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var role = db.Role.Find(roleId);
+                var roleHaveSetupManagerPermission = role.RolePermission.Select(rp => rp.Permission.Id).Contains((int)PermissionListEnum.SetupManager);
+                if (roleHaveSetupManagerPermission)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
 
         private bool ValidEmail(string eMail)
         {

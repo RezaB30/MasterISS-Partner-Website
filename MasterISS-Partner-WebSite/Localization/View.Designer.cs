@@ -61,6 +61,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Aktif.
+        /// </summary>
+        public static string Active {
+            get {
+                return ResourceManager.GetString("Active", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kullanıcı aktif etme işleminde hata oluştu. Tekrar deneyiniz..
         /// </summary>
         public static string ActiveError {
@@ -430,6 +439,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kurulum Ekibini Listele.
+        /// </summary>
+        public static string ListSetupTeam {
+            get {
+                return ResourceManager.GetString("ListSetupTeam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Yükle.
         /// </summary>
         public static string Load {
@@ -534,6 +552,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string OnThisPage {
             get {
                 return ResourceManager.GetString("OnThisPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pasif.
+        /// </summary>
+        public static string Passive {
+            get {
+                return ResourceManager.GetString("Passive", resourceCulture);
             }
         }
         

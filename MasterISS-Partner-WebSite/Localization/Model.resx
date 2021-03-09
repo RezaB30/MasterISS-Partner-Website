@@ -555,6 +555,9 @@
   <data name="VUID" xml:space="preserve">
     <value>VUID</value>
   </data>
+  <data name="WorkingStatus" xml:space="preserve">
+    <value>Çalışma Durumu</value>
+  </data>
   <data name="XDSLNo" xml:space="preserve">
     <value>XDSL No</value>
   </data>

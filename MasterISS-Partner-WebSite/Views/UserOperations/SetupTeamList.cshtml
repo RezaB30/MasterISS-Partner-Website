@@ -1,0 +1,32 @@
+﻿@using MasterISS_Partner_WebSite.Localization
+@using MasterISS_Partner_WebSite.ViewModels
+@model IEnumerable<SetupTeamListViewModel>
+@{
+    ViewBag.Title = "SetupTeamList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(m => m.FirstOrDefault().UserDisplayName)</th>
+            <th>@Html.DisplayNameFor(m => m.FirstOrDefault().WorkingStatus)</th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.UserDisplayName)</td>
+            <td>@Html.DisplayFor(modelItem => item.WorkingStatus)</td>
+            @if (item.WorkingStatus == true)
+            {
+                <td>@Html.ActionLink(View.MakePassive, "DisabledUserInSetupTeam", "UserOperations", new { Id = item.Id }, null)</td>
+            }
+            else
+            {
+                <td>@Html.ActionLink(View.MakeActive, "EnabledUserInSetupTeam", "UserOperations", new { Id = item.Id }, null)</td>
+            }
+        </tr>
+    }
+
+</table>

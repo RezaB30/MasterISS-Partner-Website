@@ -43,6 +43,11 @@
 @Html.ActionLink(View.AddRole, "AddPermission", "UserOperations")
 <br />
 @Html.ActionLink(View.RoleList, "RoleList", "UserOperations")
+<br />
+@if (User.IsInRole("Setup"))
+{
+    @Html.ActionLink(View.ListSetupTeam, "SetupTeamList", "UserOperations")
+}
 
 <div style="background-color:red">
     @Html.Raw(TempData["Error"])

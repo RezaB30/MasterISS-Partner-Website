@@ -199,6 +199,7 @@
     <Compile Include="Enums\ErrorCodesEnum.cs" />
     <Compile Include="Enums\FaultCodeEnum.cs" />
     <Compile Include="Enums\NationalityList.cs" />
+    <Compile Include="Enums\PartnerTypeEnum.cs" />
     <Compile Include="Enums\RevenuesTypeEnum.cs" />
     <Compile Include="Enums\TaskStatusEnum.cs" />
     <Compile Include="Enums\TaskTypesEnum.cs" />
@@ -266,6 +267,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>TaskTypes.en-us.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SetupTeam.cs">
+      <DependentUpon>PartnerEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="OtherPhoneNoValidation.cs" />
     <Compile Include="Enums\BalanceRequestTypesEnum.cs" />
@@ -386,6 +390,7 @@
     <Compile Include="ViewModels\Revenues\AllowenceListViewModel.cs" />
     <Compile Include="ViewModels\Revenues\SetupAllowanceDetailsRequest.cs" />
     <Compile Include="ViewModels\ServiceAvaibilityResponseViewModel.cs" />
+    <Compile Include="ViewModels\SetupTeamListViewModel.cs" />
     <Compile Include="ViewModels\Setup\AddTaskStatusUpdateViewModel.cs" />
     <Compile Include="ViewModels\Setup\GetTaskListRequestViewModel.cs" />
     <Compile Include="ViewModels\Setup\Response\GetCustomerSessionInfoResponseViewModel.cs" />
@@ -503,6 +508,8 @@
     <Content Include="Views\UserOperations\UpdateUserRole.cshtml" />
     <Content Include="Views\UserOperations\RoleList.cshtml" />
     <Content Include="Views\UserOperations\UpdateRolePermission.cshtml" />
+    <Content Include="Views\UserOperations\SetupTeamList.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\WorkingTypeFormat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

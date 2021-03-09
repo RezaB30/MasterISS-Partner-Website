@@ -29,6 +29,14 @@
           <Property Name="RoleId" Type="int" Nullable="false" />
           <Property Name="PermissionId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="SetupTeam">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="WorkingStatus" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
@@ -65,6 +73,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SetupTeam_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="SetupTeam" Type="Self.SetupTeam" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SetupTeam">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_User_Role">
           <End Role="Role" Type="Self.Role" Multiplicity="1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
@@ -81,6 +101,7 @@
           <EntitySet Name="Permission" EntityType="Self.Permission" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RolePermission" EntityType="Self.RolePermission" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SetupTeam" EntityType="Self.SetupTeam" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_RolePermission_Permission" Association="Self.FK_RolePermission_Permission">
             <End Role="Permission" EntitySet="Permission" />
@@ -89,6 +110,10 @@
           <AssociationSet Name="FK_RolePermission_Role" Association="Self.FK_RolePermission_Role">
             <End Role="Role" EntitySet="Role" />
             <End Role="RolePermission" EntitySet="RolePermission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SetupTeam_User" Association="Self.FK_SetupTeam_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="SetupTeam" EntitySet="SetupTeam" />
           </AssociationSet>
           <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
             <End Role="Role" EntitySet="Role" />
@@ -103,6 +128,7 @@
           <EntitySet Name="Permission" EntityType="MasterISSPartnerWebSiteModel.Permission" />
           <EntitySet Name="Role" EntityType="MasterISSPartnerWebSiteModel.Role" />
           <EntitySet Name="RolePermission" EntityType="MasterISSPartnerWebSiteModel.RolePermission" />
+          <EntitySet Name="SetupTeam" EntityType="MasterISSPartnerWebSiteModel.SetupTeam" />
           <EntitySet Name="User" EntityType="MasterISSPartnerWebSiteModel.User" />
           <AssociationSet Name="FK_RolePermission_Permission" Association="MasterISSPartnerWebSiteModel.FK_RolePermission_Permission">
             <End Role="Permission" EntitySet="Permission" />
@@ -115,6 +141,10 @@
           <AssociationSet Name="FK_User_Role" Association="MasterISSPartnerWebSiteModel.FK_User_Role">
             <End Role="Role" EntitySet="Role" />
             <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SetupTeam_User" Association="MasterISSPartnerWebSiteModel.FK_SetupTeam_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="SetupTeam" EntitySet="SetupTeam" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Permission">
@@ -146,6 +176,15 @@
           <NavigationProperty Name="Permission" Relationship="MasterISSPartnerWebSiteModel.FK_RolePermission_Permission" FromRole="RolePermission" ToRole="Permission" />
           <NavigationProperty Name="Role" Relationship="MasterISSPartnerWebSiteModel.FK_RolePermission_Role" FromRole="RolePermission" ToRole="Role" />
         </EntityType>
+        <EntityType Name="SetupTeam">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="WorkingStatus" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="MasterISSPartnerWebSiteModel.FK_SetupTeam_User" FromRole="SetupTeam" ToRole="User" />
+        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
@@ -158,6 +197,7 @@
           <Property Name="Password" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="IsEnabled" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Role" Relationship="MasterISSPartnerWebSiteModel.FK_User_Role" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="SetupTeam" Relationship="MasterISSPartnerWebSiteModel.FK_SetupTeam_User" FromRole="User" ToRole="SetupTeam" />
         </EntityType>
         <Association Name="FK_RolePermission_Permission">
           <End Type="MasterISSPartnerWebSiteModel.Permission" Role="Permission" Multiplicity="1" />
@@ -195,6 +235,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SetupTeam_User">
+          <End Type="MasterISSPartnerWebSiteModel.User" Role="User" Multiplicity="1" />
+          <End Type="MasterISSPartnerWebSiteModel.SetupTeam" Role="SetupTeam" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SetupTeam">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -224,6 +276,15 @@
               <MappingFragment StoreEntitySet="RolePermission">
                 <ScalarProperty Name="PermissionId" ColumnName="PermissionId" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SetupTeam">
+            <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.SetupTeam">
+              <MappingFragment StoreEntitySet="SetupTeam">
+                <ScalarProperty Name="WorkingStatus" ColumnName="WorkingStatus" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

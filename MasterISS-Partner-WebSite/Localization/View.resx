@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Active" xml:space="preserve">
+    <value>Aktif</value>
+  </data>
   <data name="ActiveError" xml:space="preserve">
     <value>Kullanıcı aktif etme işleminde hata oluştu. Tekrar deneyiniz.</value>
   </data>
@@ -240,6 +243,9 @@
   <data name="ListBills" xml:space="preserve">
     <value>Faturaları Listele</value>
   </data>
+  <data name="ListSetupTeam" xml:space="preserve">
+    <value>Kurulum Ekibini Listele</value>
+  </data>
   <data name="Load" xml:space="preserve">
     <value>Yükle</value>
   </data>
@@ -275,6 +281,9 @@
   </data>
   <data name="OnThisPage" xml:space="preserve">
     <value>Bu sayfada</value>
+  </data>
+  <data name="Passive" xml:space="preserve">
+    <value>Pasif</value>
   </data>
   <data name="PassiveError" xml:space="preserve">
     <value>Kullanıcı pasif etme işleminde hata oluştu. Tekrar deneyiniz.</value>

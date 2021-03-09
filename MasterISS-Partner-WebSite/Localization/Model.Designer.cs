@@ -1375,6 +1375,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Çalışma Durumu.
+        /// </summary>
+        public static string WorkingStatus {
+            get {
+                return ResourceManager.GetString("WorkingStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to XDSL No.
         /// </summary>
         public static string XDSLNo {

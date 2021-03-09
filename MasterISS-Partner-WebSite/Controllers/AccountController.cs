@@ -57,7 +57,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                                         new Claim("PartnerId", authenticateResponse.AuthenticationResponse.UserID.ToString()),
                                     };
 
-                                if (authenticateResponse.AuthenticationResponse.Permissions.Select(pl => pl.Name).Contains("Setup"))
+                                if (authenticateResponse.AuthenticationResponse.Permissions.Select(pl => pl.Name).Contains(PartnerTypeEnum.Setup.ToString()))
                                 {
                                     claims.Add(new Claim("SetupServiceHash", authenticateResponse.AuthenticationResponse.SetupServiceHash));
                                     claims.Add(new Claim("SetupServiceUser", authenticateResponse.AuthenticationResponse.SetupServiceUser));
