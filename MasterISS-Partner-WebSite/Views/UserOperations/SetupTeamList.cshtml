@@ -26,7 +26,11 @@
             {
                 <td>@Html.ActionLink(View.MakeActive, "EnabledUserInSetupTeam", "UserOperations", new { Id = item.Id }, null)</td>
             }
+            <td>@Html.ActionLink("buna adres ekle","AddWorkAreaSetupTeamUser", "UserOperations", new { Id = item.Id }, null)</td>
         </tr>
     }
 
 </table>
+<div>
+    @Html.ActionLink(View.Back,"Index","UserOperations")
+</div>

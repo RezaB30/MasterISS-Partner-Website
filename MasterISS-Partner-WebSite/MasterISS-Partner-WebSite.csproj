@@ -271,6 +271,9 @@
     <Compile Include="Models\SetupTeam.cs">
       <DependentUpon>PartnerEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\WorkArea.cs">
+      <DependentUpon>PartnerEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="OtherPhoneNoValidation.cs" />
     <Compile Include="Enums\BalanceRequestTypesEnum.cs" />
     <Compile Include="Enums\PermissionListEnum.cs" />
@@ -375,6 +378,7 @@
     <Compile Include="ViewModels\Account\RegisterViewModel.cs" />
     <Compile Include="ViewModels\Account\UserSignInViewModel.cs" />
     <Compile Include="ViewModels\AddPermissionViewModel.cs" />
+    <Compile Include="ViewModels\AddWorkAreaSetupTeamUserViewModel.cs" />
     <Compile Include="ViewModels\BillCollectionViewModel.cs" />
     <Compile Include="ViewModels\CreditReportViewModel.cs" />
     <Compile Include="ViewModels\Revenues\GenericAllowenceListWiewModel.cs" />
@@ -510,6 +514,7 @@
     <Content Include="Views\UserOperations\UpdateRolePermission.cshtml" />
     <Content Include="Views\UserOperations\SetupTeamList.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\WorkingTypeFormat.cshtml" />
+    <Content Include="Views\UserOperations\AddWorkAreaSetupTeamUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

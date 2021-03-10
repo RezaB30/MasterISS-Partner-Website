@@ -14,6 +14,7 @@ namespace MasterISS_Partner_WebSite.Enums
         PaymentCreditReportDetail = 11,
         PaymentCreditReportNotDetail = 14,
         SetupRevenuesList = 16,
-        SaleRevenuesList = 17
+        SaleRevenuesList = 17,
+        RendezvousTeam = 18,
     }
 }

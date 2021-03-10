@@ -50,7 +50,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                 var setupTeamList = db.SetupTeam.Where(st => st.User.PartnerId == partnerId && st.User.Role.RolePermission.Select(rp => rp.Permission.Id).Contains((int)PermissionListEnum.SetupManager)).Select(st => new SetupTeamListViewModel
                 {
-                    Id = st.Id,
+                    Id = st.UserId,
                     UserDisplayName = st.User.NameSurname,
                     WorkingStatus = st.WorkingStatus
                 }).ToList();
@@ -291,14 +291,10 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                         if (!ValidRoleHaveSetupManagerPermission(updateUserRoleViewModel.RoleId))
                         {
-                            var usersHaveUserManagerPermisison = db.SetupTeam.Where(st => st.UserId == updateUserRoleViewModel.UserId).FirstOrDefault();
-                            if (usersHaveUserManagerPermisison != null)
+                            if (user.SetupTeam.WorkingStatus == true)
                             {
-                                if (usersHaveUserManagerPermisison.WorkingStatus == true)
-                                {
-                                    usersHaveUserManagerPermisison.WorkingStatus = false;
-                                    db.SaveChanges();
-                                }
+                                user.SetupTeam.WorkingStatus = false;
+                                db.SaveChanges();
                             }
                         }
                         //LOG
@@ -424,6 +420,27 @@ namespace MasterISS_Partner_WebSite.Controllers
             return RedirectToAction("UpdateRolePermission", new { roleId = roleId });
         }
 
+        public ActionResult AddWorkAreaSetupTeamUser(int Id)
+        {
+            var workAreaSetupTeamUserViewModel = new AddWorkAreaSetupTeamUserViewModel()
+            {
+                UserId = Id
+            };
+
+            var wrapper = new WebServiceWrapper();
+            var provinceList = wrapper.GetProvince();
+
+            ViewBag.Provinces = new SelectList(provinceList.Data.ValueNamePairList.Select(nvpl => new { Name = nvpl.Name, Value = nvpl.Value }), "Value", "Name");
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddWorkAreaSetupTeamUser(AddWorkAreaSetupTeamUserViewModel workAreaSetupTeamUserViewModel)
+        {
+            return View();
+        }
         private bool ValidRoleHaveSetupManagerPermission(int roleId)
         {
             using (var db = new PartnerWebSiteEntities())

@@ -126,6 +126,9 @@
   <data name="PaymentManager" xml:space="preserve">
     <value>Payment Manager</value>
   </data>
+  <data name="RendezvousTeam" xml:space="preserve">
+    <value>Rendezvous Team</value>
+  </data>
   <data name="SaleManager" xml:space="preserve">
     <value>Sale Manager</value>
   </data>

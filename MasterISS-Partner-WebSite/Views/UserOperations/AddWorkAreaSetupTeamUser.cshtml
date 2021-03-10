@@ -1,0 +1,15 @@
+﻿@using MasterISS_Partner_WebSite.ViewModels
+@using MasterISS_Partner_WebSite.Localization
+@model AddWorkAreaSetupTeamUserViewModel
+@{
+    ViewBag.Title = "AddWorkAreaSetupTeamUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("AddWorkAreaSetupTeamUser", "USerOperations", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.DropDownListFor(m => m.Provinces, (SelectList)ViewBag.Provinces, "seççççç", new { @class = "form-control" })
+
+    <input type="submit" value="ass"/>
+}

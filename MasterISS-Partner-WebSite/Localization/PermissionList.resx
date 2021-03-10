@@ -126,6 +126,9 @@
   <data name="PaymentManager" xml:space="preserve">
     <value>Ödeme Temsilcisi</value>
   </data>
+  <data name="RendezvousTeam" xml:space="preserve">
+    <value>Randevu Takımı</value>
+  </data>
   <data name="SaleManager" xml:space="preserve">
     <value>Satış Temsilcisi</value>
   </data>

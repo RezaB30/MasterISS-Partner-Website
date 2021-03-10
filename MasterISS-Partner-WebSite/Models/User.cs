@@ -17,7 +17,7 @@ namespace MasterISS_Partner_WebSite.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
-            this.SetupTeam = new HashSet<SetupTeam>();
+            this.WorkArea = new HashSet<WorkArea>();
         }
     
         public int Id { get; set; }
@@ -29,7 +29,8 @@ namespace MasterISS_Partner_WebSite.Models
         public bool IsEnabled { get; set; }
     
         public virtual Role Role { get; set; }
+        public virtual SetupTeam SetupTeam { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SetupTeam> SetupTeam { get; set; }
+        public virtual ICollection<WorkArea> WorkArea { get; set; }
     }
 }

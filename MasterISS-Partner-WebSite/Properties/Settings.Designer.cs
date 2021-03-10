@@ -67,5 +67,14 @@ namespace MasterISS_Partner_WebSite.Properties {
                 return ((global::System.TimeSpan)(this["CookieExpiration"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("00:30:00")]
+        public global::System.TimeSpan RendezvousTeamCookieTime {
+            get {
+                return ((global::System.TimeSpan)(this["RendezvousTeamCookieTime"]));
+            }
+        }
     }
 }

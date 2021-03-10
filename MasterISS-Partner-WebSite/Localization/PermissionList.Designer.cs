@@ -88,6 +88,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Randevu Takımı.
+        /// </summary>
+        public static string RendezvousTeam {
+            get {
+                return ResourceManager.GetString("RendezvousTeam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satış Temsilcisi.
         /// </summary>
         public static string SaleManager {

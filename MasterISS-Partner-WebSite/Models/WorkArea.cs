@@ -12,10 +12,18 @@ namespace MasterISS_Partner_WebSite.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class SetupTeam
+    public partial class WorkArea
     {
+        public long Id { get; set; }
         public int UserId { get; set; }
-        public bool WorkingStatus { get; set; }
+        public long ProvinceId { get; set; }
+        public string ProvinceName { get; set; }
+        public Nullable<long> DistrictId { get; set; }
+        public string Districtname { get; set; }
+        public Nullable<long> RuralId { get; set; }
+        public string RuralName { get; set; }
+        public Nullable<long> NeighbourhoodId { get; set; }
+        public string NeighbourhoodName { get; set; }
     
         public virtual User User { get; set; }
     }

@@ -8,12 +8,14 @@
         <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.Permission" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.Role" Width="1.5" PointX="0.75" PointY="3.625" />
         <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.RolePermission" Width="1.5" PointX="3" PointY="2.625" />
-        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.SetupTeam" Width="1.5" PointX="5.25" PointY="4.625" />
         <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.User" Width="1.5" PointX="2.875" PointY="5.125" />
         <AssociationConnector Association="MasterISSPartnerWebSiteModel.FK_RolePermission_Permission" />
         <AssociationConnector Association="MasterISSPartnerWebSiteModel.FK_RolePermission_Role" />
         <AssociationConnector Association="MasterISSPartnerWebSiteModel.FK_User_Role" />
+        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.SetupTeam" Width="1.5" PointX="5.125" PointY="5.75" />
         <AssociationConnector Association="MasterISSPartnerWebSiteModel.FK_SetupTeam_User" />
+        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.WorkArea" Width="1.5" PointX="5.125" PointY="8" />
+        <AssociationConnector Association="MasterISSPartnerWebSiteModel.FK_WorkArea_User" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

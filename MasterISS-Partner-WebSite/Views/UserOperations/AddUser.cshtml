@@ -37,4 +37,10 @@
     <input type="submit" value="@View.Submit" />
 }
 
-@ViewBag.AddUserError
+<div>
+    @ViewBag.AddUserError
+</div>
+
+<div>
+    @Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.Back, "Index", "UserOperations")
+</div>
