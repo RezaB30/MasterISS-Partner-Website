@@ -679,9 +679,9 @@ namespace MasterISS_Partner_WebSite
             var hashAuthenticaiton = CalculateHash<HAT>(Username + Rand + CalculateHash<HAT>(Password) + KeyFragment);
             return hashAuthenticaiton;
         }
-        private AddressInfo NewAddressInfo(NewCustomerAddressInfoRequest addressInfoRequest, int postalCode, string floor)
+        private MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.AddressInfo NewAddressInfo(NewCustomerAddressInfoRequest addressInfoRequest, int postalCode, string floor)
         {
-            var request = new AddressInfo()
+            var request = new MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.AddressInfo()
             {
                 AddressNo = addressInfoRequest.AddressNo,
                 AddressText = addressInfoRequest.AddressText,

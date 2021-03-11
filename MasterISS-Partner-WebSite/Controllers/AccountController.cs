@@ -90,12 +90,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                                     var subUserPermission = userValid.Role.RolePermission.Select(m => new Claim(ClaimTypes.Role, m.Permission.PermissionName)).ToList();
                                     claims.AddRange(subUserPermission);
 
-                                    //if (subUserPermission.Where(sup => sup.Value == PermissionListEnum.RendezvousTeam.ToString()).FirstOrDefault() != null)
-                                    //{
-                                    //    var cookie = System.Web.HttpContext.Current.Request.Cookies["MasterISSPartnerWebsite"];
-                                    //        ExpireTimeSpan = Properties.Settings.Default.RendezvousTeamCookieTime;
-                                    //}
-
+                                   
 
                                     var authenticator = new SubUserAuthenticator();
                                     var isSignIn = authenticator.SignIn(Request.GetOwinContext(), userSignInModel.Username, userSignInModel.Password, claims);

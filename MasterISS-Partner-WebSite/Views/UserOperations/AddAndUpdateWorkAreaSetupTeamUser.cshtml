@@ -1,0 +1,80 @@
+﻿@using MasterISS_Partner_WebSite.ViewModels
+@using MasterISS_Partner_WebSite.Localization
+@model WorkAreaSetupTeamUserViewModel
+@{
+    ViewBag.Title = "AddWorkAreaSetupTeamUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("AddAndUpdateWorkAreaSetupTeamUser", "UserOperations", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.DropDownListFor(m => m.ProvinceId, (SelectList)ViewBag.Provinces, "seççççç", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.ProvinceId)
+        @Html.HiddenFor(m => m.ProvinceName)
+    </div>
+
+    <div class="form-group">
+        @Html.DropDownListFor(m => m.DistrictId, (SelectList)ViewBag.District, "seççççç", new { @class = "form-control" })
+        @Html.HiddenFor(m => m.DistrictName)
+    </div>
+
+    <div class="form-group">
+        @Html.DropDownListFor(m => m.RuralId, (SelectList)ViewBag.Rurals, "seççççç", new { @class = "form-control" })
+        @Html.HiddenFor(m => m.RuralName)
+    </div>
+
+    <div class="form-group">
+        @Html.DropDownListFor(m => m.NeigborhoodId, (SelectList)ViewBag.Neigborhoods, "seççççç", new { @class = "form-control" })
+        @Html.HiddenFor(m => m.NeigborhoodName)
+    </div>
+
+    @Html.Hidden("UserId", (int)ViewBag.UserId)
+
+    if (ViewBag.WorkAreaId != null)
+    {
+        @Html.Hidden("WorkAreaId", (long)ViewBag.WorkAreaId)
+    }
+    <input type="submit" value="saa" />
+}
+@section Javascript{
+
+    <script>
+
+        function GetSelectTextandSetHiddenInput(triggerselectId,triggeredHiddenInputId) {
+
+                $(document).ready(function () {
+                    $(triggerselectId).trigger('change');
+                });
+
+                 $(triggerselectId).change(function () {
+                     var selectValue = $(this).find(":selected").val();
+                     if (selectValue != "") {
+                         var selectText = $(this).find(":selected").text();
+                         $(triggeredHiddenInputId).val(selectText);
+                     }
+                     else {
+                         $(triggeredHiddenInputId).val("");
+                     }
+                 })
+
+
+        }
+        //var customerTypeSelect = $("#GeneralInfo_CustomerTypeId").find(":selected").val();
+        //if (customerTypeSelect != "") {
+        //    $("#GeneralInfo_CustomerTypeId").trigger('change');
+        //}
+
+        GetSelectTextandSetHiddenInput("#ProvinceId", "#ProvinceName");
+        GetSelectTextandSetHiddenInput("#DistrictId", "#DistrictName");
+        GetSelectTextandSetHiddenInput("#RuralId", "#RuralName");
+        GetSelectTextandSetHiddenInput("#NeigborhoodId", "#NeigborhoodName");
+
+        QueryAddress("#ProvinceId","#DistrictId",'@Url.Action("DistrictList", "Home")')
+        QueryAddress("#DistrictId","#RuralId",'@Url.Action("RuralRegionsList", "Home")')
+        QueryAddress("#RuralId","#NeigborhoodId",'@Url.Action("NeighborhoodList", "Home")')
+
+    </script>
+}

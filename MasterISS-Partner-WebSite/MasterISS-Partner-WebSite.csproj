@@ -378,7 +378,7 @@
     <Compile Include="ViewModels\Account\RegisterViewModel.cs" />
     <Compile Include="ViewModels\Account\UserSignInViewModel.cs" />
     <Compile Include="ViewModels\AddPermissionViewModel.cs" />
-    <Compile Include="ViewModels\AddWorkAreaSetupTeamUserViewModel.cs" />
+    <Compile Include="ViewModels\WorkAreaSetupTeamUserViewModel.cs" />
     <Compile Include="ViewModels\BillCollectionViewModel.cs" />
     <Compile Include="ViewModels\CreditReportViewModel.cs" />
     <Compile Include="ViewModels\Revenues\GenericAllowenceListWiewModel.cs" />
@@ -405,8 +405,10 @@
     <Compile Include="ViewModels\Setup\UpdateClientGPSRequestViewModel.cs" />
     <Compile Include="ViewModels\Setup\UploadFileRequestViewModel.cs" />
     <Compile Include="ViewModels\UpdateUserRoleViewModel.cs" />
+    <Compile Include="ViewModels\ListWorkAreaSetupTeamUserViewModel.cs" />
     <Compile Include="ViewModels\UserListViewModel.cs" />
     <Compile Include="WebServiceWrapper.cs" />
+    <Compile Include="AddressInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -514,7 +516,8 @@
     <Content Include="Views\UserOperations\UpdateRolePermission.cshtml" />
     <Content Include="Views\UserOperations\SetupTeamList.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\WorkingTypeFormat.cshtml" />
-    <Content Include="Views\UserOperations\AddWorkAreaSetupTeamUser.cshtml" />
+    <Content Include="Views\UserOperations\AddAndUpdateWorkAreaSetupTeamUser.cshtml" />
+    <Content Include="Views\UserOperations\ListWorkAreaSetupTeamUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
