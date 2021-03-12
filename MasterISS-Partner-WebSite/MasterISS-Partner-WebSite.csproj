@@ -268,12 +268,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TaskTypes.en-us.resx</DependentUpon>
     </Compile>
-    <Compile Include="Models\SetupTeam.cs">
-      <DependentUpon>PartnerEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\WorkArea.cs">
-      <DependentUpon>PartnerEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="OtherPhoneNoValidation.cs" />
     <Compile Include="Enums\BalanceRequestTypesEnum.cs" />
     <Compile Include="Enums\PermissionListEnum.cs" />
@@ -340,33 +334,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>View.en-us.resx</DependentUpon>
     </Compile>
-    <Compile Include="Models\PartnerEntities.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PartnerEntities.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\PartnerEntities.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PartnerEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\PartnerEntities.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PartnerEntities.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Permission.cs">
-      <DependentUpon>PartnerEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Role.cs">
-      <DependentUpon>PartnerEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\RolePermission.cs">
-      <DependentUpon>PartnerEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\User.cs">
-      <DependentUpon>PartnerEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -422,29 +389,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\PartnerEntities.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>PartnerEntities.Context.cs</LastGenOutput>
-      <DependentUpon>PartnerEntities.edmx</DependentUpon>
-    </Content>
-    <Content Include="Models\PartnerEntities.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>PartnerEntities.edmx</DependentUpon>
-      <LastGenOutput>PartnerEntities.cs</LastGenOutput>
-    </Content>
     <Content Include="Scripts\input-upparcase.js" />
     <Content Include="Scripts\jquery.mask.js" />
     <Content Include="Scripts\Map\map.js" />
     <Content Include="Scripts\QueryAddress\address-query.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\PartnerEntities.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>PartnerEntities.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\PartnerEntities.edmx.diagram">
-      <DependentUpon>PartnerEntities.edmx</DependentUpon>
-    </Content>
     <Content Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -642,6 +592,10 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MasterISS-Partner-WebSite-Database\MasterISS-Partner-WebSite-Database.csproj">
+      <Project>{a8c5677c-00de-4d7f-957a-58b308e2784d}</Project>
+      <Name>MasterISS-Partner-WebSite-Database</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MasterISS-Partner-WebSite-WebServices\MasterISS-Partner-WebSite-WebServices.csproj">
       <Project>{6dbf8347-d6b1-4f53-9b8d-ec27536d3ab9}</Project>
       <Name>MasterISS-Partner-WebSite-WebServices</Name>

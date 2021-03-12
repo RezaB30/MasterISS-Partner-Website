@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Web;
-using MasterISS_Partner_WebSite.Models;
+using MasterISS_Partner_WebSite_Database.Models;
 using RezaB.Web.Authentication;
 
 namespace MasterISS_Partner_WebSite.Authentication

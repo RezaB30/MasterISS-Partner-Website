@@ -432,6 +432,9 @@
   <data name="UserOperations" xml:space="preserve">
     <value>Kullanıcı İşlemleri</value>
   </data>
+  <data name="ValidWorkArea" xml:space="preserve">
+    <value>Bu adres zaten mevcut.</value>
+  </data>
   <data name="WrongPassword" xml:space="preserve">
     <value>Yanlış SMS Şifresi</value>
   </data>

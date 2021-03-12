@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MasterISS_Partner_WebSite.Models
+namespace MasterISS_Partner_WebSite_Database.Models
 {
     using System;
     using System.Collections.Generic;

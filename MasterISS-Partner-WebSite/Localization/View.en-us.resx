@@ -432,6 +432,9 @@
   <data name="UserOperations" xml:space="preserve">
     <value>User Operations</value>
   </data>
+  <data name="ValidWorkArea" xml:space="preserve">
+    <value>This address already exists.</value>
+  </data>
   <data name="WrongPassword" xml:space="preserve">
     <value>Wrong SMS Password</value>
   </data>

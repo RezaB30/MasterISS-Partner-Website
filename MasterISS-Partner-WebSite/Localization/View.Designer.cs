@@ -1006,6 +1006,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bu adres zaten mevcut..
+        /// </summary>
+        public static string ValidWorkArea {
+            get {
+                return ResourceManager.GetString("ValidWorkArea", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Yanlış SMS Şifresi.
         /// </summary>
         public static string WrongPassword {

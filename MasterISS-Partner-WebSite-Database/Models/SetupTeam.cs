@@ -7,18 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MasterISS_Partner_WebSite.Models
+namespace MasterISS_Partner_WebSite_Database.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class RolePermission
+    public partial class SetupTeam
     {
-        public int Id { get; set; }
-        public int RoleId { get; set; }
-        public int PermissionId { get; set; }
+        public int UserId { get; set; }
+        public bool WorkingStatus { get; set; }
     
-        public virtual Permission Permission { get; set; }
-        public virtual Role Role { get; set; }
+        public virtual User User { get; set; }
     }
 }

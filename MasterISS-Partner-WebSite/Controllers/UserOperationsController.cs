@@ -1,6 +1,6 @@
 ﻿using MasterISS_Partner_WebSite.Enums;
-using MasterISS_Partner_WebSite.Models;
 using MasterISS_Partner_WebSite.ViewModels;
+using MasterISS_Partner_WebSite_Database.Models;
 using NLog;
 using RezaB.Data.Localization;
 using System;
@@ -457,6 +457,22 @@ namespace MasterISS_Partner_WebSite.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddAndUpdateWorkAreaSetupTeamUser(WorkAreaSetupTeamUserViewModel workAreaSetupTeamUserViewModel)
         {
+            var addressInfo = new AddressInfo();
+            var provinceList = addressInfo.ProvincesList((long?)workAreaSetupTeamUserViewModel.ProvinceId ?? null);
+            ViewBag.Provinces = provinceList;
+
+            var districtList = addressInfo.DistrictList(workAreaSetupTeamUserViewModel.ProvinceId, workAreaSetupTeamUserViewModel.DistrictId ?? null);
+            ViewBag.District = districtList;
+
+            var ruralList = addressInfo.RuralRegionsList(workAreaSetupTeamUserViewModel.DistrictId ?? null, workAreaSetupTeamUserViewModel.RuralId ?? null);
+            ViewBag.Rurals = ruralList;
+
+            var neigborhoodList = addressInfo.NeighborhoodList(workAreaSetupTeamUserViewModel.RuralId, workAreaSetupTeamUserViewModel.NeigborhoodId ?? null);
+            ViewBag.Neigborhoods = neigborhoodList;
+
+            ViewBag.UserId = workAreaSetupTeamUserViewModel.UserId;
+            ViewBag.WorkAreaId = null;
+
             if (ModelState.IsValid)
             {
                 using (var db = new PartnerWebSiteEntities())
@@ -466,22 +482,36 @@ namespace MasterISS_Partner_WebSite.Controllers
                         var user = db.SetupTeam.Find(workAreaSetupTeamUserViewModel.UserId);
                         if (user != null && user.WorkingStatus == true)
                         {
-                            WorkArea workArea = new WorkArea
-                            {
-                                UserId = workAreaSetupTeamUserViewModel.UserId,
-                                ProvinceId = workAreaSetupTeamUserViewModel.ProvinceId,
-                                ProvinceName = workAreaSetupTeamUserViewModel.ProvinceName,
-                                DistrictId = workAreaSetupTeamUserViewModel.DistrictId ?? null,
-                                Districtname = workAreaSetupTeamUserViewModel.DistrictName,
-                                NeighbourhoodId = workAreaSetupTeamUserViewModel.NeigborhoodId ?? null,
-                                NeighbourhoodName = workAreaSetupTeamUserViewModel.NeigborhoodName,
-                                RuralId = workAreaSetupTeamUserViewModel.RuralId ?? null,
-                                RuralName = workAreaSetupTeamUserViewModel.RuralName
-                            };
-                            db.WorkArea.Add(workArea);
-                            db.SaveChanges();
+                            var userWorkAreas = user.User.WorkArea.Select(wa => new { provinceId = wa.ProvinceId, districtId = wa.DistrictId, ruralId = wa.RuralId, neigborhoodId = wa.NeighbourhoodId });
 
-                            return RedirectToAction("Successful");
+                            var validUserWorkArea = userWorkAreas.Where(uwa => uwa.provinceId == workAreaSetupTeamUserViewModel.ProvinceId && uwa.districtId == workAreaSetupTeamUserViewModel.DistrictId && uwa.ruralId == workAreaSetupTeamUserViewModel.RuralId && uwa.neigborhoodId == workAreaSetupTeamUserViewModel.NeigborhoodId).FirstOrDefault();
+
+                            if (validUserWorkArea == null)
+                            {
+                                WorkArea workArea = new WorkArea
+                                {
+                                    UserId = workAreaSetupTeamUserViewModel.UserId,
+                                    ProvinceId = workAreaSetupTeamUserViewModel.ProvinceId,
+                                    ProvinceName = workAreaSetupTeamUserViewModel.ProvinceName,
+                                    DistrictId = workAreaSetupTeamUserViewModel.DistrictId ?? null,
+                                    Districtname = workAreaSetupTeamUserViewModel.DistrictName,
+                                    NeighbourhoodId = workAreaSetupTeamUserViewModel.NeigborhoodId ?? null,
+                                    NeighbourhoodName = workAreaSetupTeamUserViewModel.NeigborhoodName,
+                                    RuralId = workAreaSetupTeamUserViewModel.RuralId ?? null,
+                                    RuralName = workAreaSetupTeamUserViewModel.RuralName
+                                };
+                                db.WorkArea.Add(workArea);
+                                db.SaveChanges();
+
+                                //LOG
+                                var wrapper = new WebServiceWrapper();
+                                Logger.Info($"Added New WorkArea User: {user.User.UserSubMail}, by: {wrapper.GetUserSubMail()}");
+                                //LOG
+
+                                return RedirectToAction("Successful");
+                            }
+                            ViewBag.ValidWWorkArea = Localization.View.ValidWorkArea;
+                            return View(workAreaSetupTeamUserViewModel);
                         }
                         return RedirectToAction("Index", "Home");
                     }
@@ -490,17 +520,36 @@ namespace MasterISS_Partner_WebSite.Controllers
                         var validWorkArea = db.WorkArea.Where(wa => wa.UserId == workAreaSetupTeamUserViewModel.UserId && wa.Id == workAreaSetupTeamUserViewModel.WorkAreaId).FirstOrDefault();
                         if (validWorkArea != null)
                         {
+                            if (validWorkArea.ProvinceId == workAreaSetupTeamUserViewModel.ProvinceId && validWorkArea.DistrictId == workAreaSetupTeamUserViewModel.DistrictId && validWorkArea.RuralId == workAreaSetupTeamUserViewModel.RuralId && validWorkArea.NeighbourhoodId == workAreaSetupTeamUserViewModel.NeigborhoodId)
+                            {
+                                return RedirectToAction("Successful");
+                            }
 
-                            validWorkArea.ProvinceId = workAreaSetupTeamUserViewModel.ProvinceId;
-                            validWorkArea.ProvinceName = workAreaSetupTeamUserViewModel.ProvinceName;
-                            validWorkArea.DistrictId = workAreaSetupTeamUserViewModel.DistrictId ?? null;
-                            validWorkArea.Districtname = workAreaSetupTeamUserViewModel.DistrictName;
-                            validWorkArea.RuralId = workAreaSetupTeamUserViewModel.RuralId ?? null;
-                            validWorkArea.RuralName = workAreaSetupTeamUserViewModel.RuralName;
-                            validWorkArea.NeighbourhoodId = workAreaSetupTeamUserViewModel.NeigborhoodId ?? null;
-                            validWorkArea.NeighbourhoodName = workAreaSetupTeamUserViewModel.NeigborhoodName;
+                            var userOtherWorkAreas = db.WorkArea.Where(wa => wa.UserId == workAreaSetupTeamUserViewModel.UserId && wa.Id != workAreaSetupTeamUserViewModel.WorkAreaId).Select(wa => new { provinceId = wa.ProvinceId, districtId = wa.DistrictId, ruralId = wa.RuralId, neigborhoodId = wa.NeighbourhoodId });
+                            var validUserWorkArea = userOtherWorkAreas.Where(uwa => uwa.provinceId == workAreaSetupTeamUserViewModel.ProvinceId && uwa.districtId == workAreaSetupTeamUserViewModel.DistrictId && uwa.ruralId == workAreaSetupTeamUserViewModel.RuralId && uwa.neigborhoodId == workAreaSetupTeamUserViewModel.NeigborhoodId).FirstOrDefault();
+                            if (validUserWorkArea == null)
+                            {
+                                validWorkArea.ProvinceId = workAreaSetupTeamUserViewModel.ProvinceId;
+                                validWorkArea.ProvinceName = workAreaSetupTeamUserViewModel.ProvinceName;
+                                validWorkArea.DistrictId = workAreaSetupTeamUserViewModel.DistrictId ?? null;
+                                validWorkArea.Districtname = workAreaSetupTeamUserViewModel.DistrictName;
+                                validWorkArea.RuralId = workAreaSetupTeamUserViewModel.RuralId ?? null;
+                                validWorkArea.RuralName = workAreaSetupTeamUserViewModel.RuralName;
+                                validWorkArea.NeighbourhoodId = workAreaSetupTeamUserViewModel.NeigborhoodId ?? null;
+                                validWorkArea.NeighbourhoodName = workAreaSetupTeamUserViewModel.NeigborhoodName;
 
-                            db.SaveChanges();
+                                db.SaveChanges();
+
+                                //LOG
+                                var wrapper = new WebServiceWrapper();
+                                Logger.Info($"Updated WorkArea WorkAreaId: {validWorkArea.Id}, by: {wrapper.GetUserSubMail()}");
+                                //LOG
+                            }
+                            else
+                            {
+                                ViewBag.ValidWWorkArea = Localization.View.ValidWorkArea;
+                                return View(workAreaSetupTeamUserViewModel);
+                            }
                             return RedirectToAction("Successful");
                         }
                         return RedirectToAction("Index", "Home");
@@ -508,14 +557,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                 }
             }
-            var addressInfo = new AddressInfo();
-            var provinceList = addressInfo.ProvincesList((long?)workAreaSetupTeamUserViewModel.ProvinceId ?? null);
-            ViewBag.Provinces = provinceList;
-            ViewBag.District = new SelectList("");
-            ViewBag.Rurals = new SelectList("");
-            ViewBag.Neigborhoods = new SelectList("");
-            ViewBag.UserId = workAreaSetupTeamUserViewModel.UserId;
-            ViewBag.WorkAreaId = null;
+
             return View(workAreaSetupTeamUserViewModel);
         }
 

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MasterISS_Partner_WebSite.Models
+namespace MasterISS_Partner_WebSite_Database.Models
 {
     using System;
     using System.Data.Entity;
@@ -28,8 +28,8 @@ namespace MasterISS_Partner_WebSite.Models
         public virtual DbSet<Permission> Permission { get; set; }
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<RolePermission> RolePermission { get; set; }
-        public virtual DbSet<User> User { get; set; }
         public virtual DbSet<SetupTeam> SetupTeam { get; set; }
+        public virtual DbSet<User> User { get; set; }
         public virtual DbSet<WorkArea> WorkArea { get; set; }
     }
 }

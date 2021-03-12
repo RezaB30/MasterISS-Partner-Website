@@ -1,5 +1,4 @@
-﻿using MasterISS_Partner_WebSite.Models;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
 using RezaB.Web.Authentication;
 using System;

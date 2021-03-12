@@ -1,7 +1,7 @@
 ﻿using MasterISS_Partner_WebSite;
 using MasterISS_Partner_WebSite.Authentication;
 using MasterISS_Partner_WebSite.Enums;
-using MasterISS_Partner_WebSite.Models;
+using MasterISS_Partner_WebSite_Database.Models;
 using MasterISS_Partner_WebSite.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security.Cookies;
