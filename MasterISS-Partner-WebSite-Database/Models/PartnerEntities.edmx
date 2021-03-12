@@ -4,7 +4,15 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MasterISSPartnerWebSiteModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="MasterISSPartnerWebSiteModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="PartnerSetupInfo">
+          <Key>
+            <PropertyRef Name="PartnerId" />
+          </Key>
+          <Property Name="PartnerId" Type="int" Nullable="false" />
+          <Property Name="SetupServiceHash" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="SetupServiceUser" Type="nvarchar" MaxLength="64" Nullable="false" />
+        </EntityType>
         <EntityType Name="Permission">
           <Key>
             <PropertyRef Name="Id" />
@@ -29,12 +37,48 @@
           <Property Name="RoleId" Type="int" Nullable="false" />
           <Property Name="PermissionId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="SchedulerOperationsTime">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="smallint" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="SetupTeam">
           <Key>
             <PropertyRef Name="UserId" />
           </Key>
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="WorkingStatus" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TaskList">
+          <Key>
+            <PropertyRef Name="TaskNo" />
+          </Key>
+          <Property Name="TaskNo" Type="bigint" Nullable="false" />
+          <Property Name="CustomerNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="SubscriberNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="Province" Type="nvarchar(max)" />
+          <Property Name="City" Type="nvarchar(max)" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="BBK" Type="nvarchar" MaxLength="50" />
+          <Property Name="XDSLNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="PSTN" Type="nvarchar" MaxLength="50" />
+          <Property Name="HasModem" Type="bit" />
+          <Property Name="ModemName" Type="nvarchar(max)" />
+          <Property Name="XDSLType" Type="smallint" />
+          <Property Name="CustomerPhoneNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="ContactName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CustomerType" Type="smallint" />
+          <Property Name="ReservationDate" Type="nvarchar" MaxLength="50" />
+          <Property Name="TaskIssueDate" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastConnectionDate" Type="nvarchar" MaxLength="50" />
+          <Property Name="TaskType" Type="smallint" />
+          <Property Name="TaskStatus" Type="smallint" />
+          <Property Name="Details" Type="nvarchar(max)" />
+          <Property Name="AssignToRendezvousStaff" Type="bigint" />
+          <Property Name="AssignToSetupTeam" Type="bigint" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -124,10 +168,13 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="MasterISSPartnerWebSiteModelStoreContainer">
+          <EntitySet Name="PartnerSetupInfo" EntityType="Self.PartnerSetupInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Permission" EntityType="Self.Permission" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RolePermission" EntityType="Self.RolePermission" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SchedulerOperationsTime" EntityType="Self.SchedulerOperationsTime" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SetupTeam" EntityType="Self.SetupTeam" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TaskList" EntityType="Self.TaskList" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WorkArea" EntityType="Self.WorkArea" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_RolePermission_Permission" Association="Self.FK_RolePermission_Permission">
@@ -151,8 +198,7 @@
             <End Role="WorkArea" EntitySet="WorkArea" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MasterISSPartnerWebSiteModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -311,7 +357,54 @@
             <End Role="User" EntitySet="User" />
             <End Role="WorkArea" EntitySet="WorkArea" />
           </AssociationSet>
+          <EntitySet Name="PartnerSetupInfo" EntityType="MasterISSPartnerWebSiteModel.PartnerSetupInfo" />
+          <EntitySet Name="TaskList" EntityType="MasterISSPartnerWebSiteModel.TaskList" />
+          <EntitySet Name="SchedulerOperationsTime" EntityType="MasterISSPartnerWebSiteModel.SchedulerOperationsTime" />
         </EntityContainer>
+        <EntityType Name="PartnerSetupInfo">
+          <Key>
+            <PropertyRef Name="PartnerId" />
+          </Key>
+          <Property Name="PartnerId" Type="Int32" Nullable="false" />
+          <Property Name="SetupServiceHash" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="SetupServiceUser" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TaskList">
+          <Key>
+            <PropertyRef Name="TaskNo" />
+          </Key>
+          <Property Name="TaskNo" Type="Int64" Nullable="false" />
+          <Property Name="CustomerNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SubscriberNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Province" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BBK" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="XDSLNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PSTN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HasModem" Type="Boolean" />
+          <Property Name="ModemName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="XDSLType" Type="Int16" />
+          <Property Name="CustomerPhoneNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ContactName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerType" Type="Int16" />
+          <Property Name="ReservationDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TaskIssueDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastConnectionDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TaskType" Type="Int16" />
+          <Property Name="TaskStatus" Type="Int16" />
+          <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AssignToRendezvousStaff" Type="Int64" />
+          <Property Name="AssignToSetupTeam" Type="Int64" />
+        </EntityType>
+        <EntityType Name="SchedulerOperationsTime">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="Int16" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -379,6 +472,53 @@
                 <ScalarProperty Name="RuralName" ColumnName="RuralName" />
                 <ScalarProperty Name="NeighbourhoodId" ColumnName="NeighbourhoodId" />
                 <ScalarProperty Name="NeighbourhoodName" ColumnName="NeighbourhoodName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PartnerSetupInfo">
+            <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.PartnerSetupInfo">
+              <MappingFragment StoreEntitySet="PartnerSetupInfo">
+                <ScalarProperty Name="SetupServiceUser" ColumnName="SetupServiceUser" />
+                <ScalarProperty Name="SetupServiceHash" ColumnName="SetupServiceHash" />
+                <ScalarProperty Name="PartnerId" ColumnName="PartnerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaskList">
+            <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.TaskList">
+              <MappingFragment StoreEntitySet="TaskList">
+                <ScalarProperty Name="AssignToSetupTeam" ColumnName="AssignToSetupTeam" />
+                <ScalarProperty Name="AssignToRendezvousStaff" ColumnName="AssignToRendezvousStaff" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="TaskStatus" ColumnName="TaskStatus" />
+                <ScalarProperty Name="TaskType" ColumnName="TaskType" />
+                <ScalarProperty Name="LastConnectionDate" ColumnName="LastConnectionDate" />
+                <ScalarProperty Name="TaskIssueDate" ColumnName="TaskIssueDate" />
+                <ScalarProperty Name="ReservationDate" ColumnName="ReservationDate" />
+                <ScalarProperty Name="CustomerType" ColumnName="CustomerType" />
+                <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+                <ScalarProperty Name="CustomerPhoneNo" ColumnName="CustomerPhoneNo" />
+                <ScalarProperty Name="XDSLType" ColumnName="XDSLType" />
+                <ScalarProperty Name="ModemName" ColumnName="ModemName" />
+                <ScalarProperty Name="HasModem" ColumnName="HasModem" />
+                <ScalarProperty Name="PSTN" ColumnName="PSTN" />
+                <ScalarProperty Name="XDSLNo" ColumnName="XDSLNo" />
+                <ScalarProperty Name="BBK" ColumnName="BBK" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="SubscriberNo" ColumnName="SubscriberNo" />
+                <ScalarProperty Name="CustomerNo" ColumnName="CustomerNo" />
+                <ScalarProperty Name="TaskNo" ColumnName="TaskNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SchedulerOperationsTime">
+            <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.SchedulerOperationsTime">
+              <MappingFragment StoreEntitySet="SchedulerOperationsTime">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

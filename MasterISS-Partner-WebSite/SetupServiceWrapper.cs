@@ -143,7 +143,6 @@ namespace MasterISS_Partner_WebSite
             var response = Client.GetTaskList(request);
 
             return response;
-
         }
 
         public ParameterlessResponse UpdateClientLocation(UpdateClientGPSRequestViewModel updateClientGPSRequestViewModel)

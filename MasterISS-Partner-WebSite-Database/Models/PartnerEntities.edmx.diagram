@@ -16,6 +16,9 @@
         <AssociationConnector Association="MasterISSPartnerWebSiteModel.FK_User_Role" ManuallyRouted="false" />
         <AssociationConnector Association="MasterISSPartnerWebSiteModel.FK_SetupTeam_User" ManuallyRouted="false" />
         <AssociationConnector Association="MasterISSPartnerWebSiteModel.FK_WorkArea_User" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.PartnerSetupInfo" Width="1.5" PointX="4.875" PointY="0.625" />
+        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.TaskList" Width="1.5" PointX="8.875" PointY="0.625" />
+        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.SchedulerOperationsTime" Width="1.5" PointX="7.375" PointY="7.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

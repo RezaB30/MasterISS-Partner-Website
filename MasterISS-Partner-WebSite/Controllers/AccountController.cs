@@ -60,6 +60,18 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                                 if (authenticateResponse.AuthenticationResponse.Permissions.Select(pl => pl.Name).Contains(PartnerTypeEnum.Setup.ToString()))
                                 {
+                                    var validSetupInfo = db.PartnerSetupInfo.Find(authenticateResponse.AuthenticationResponse.UserID);
+                                    if (validSetupInfo == null)
+                                    {
+                                        PartnerSetupInfo partnerSetupInfo = new PartnerSetupInfo
+                                        {
+                                            PartnerId=authenticateResponse.AuthenticationResponse.UserID,
+                                            SetupServiceHash=authenticateResponse.AuthenticationResponse.SetupServiceHash,
+                                            SetupServiceUser=authenticateResponse.AuthenticationResponse.SetupServiceUser
+                                        };
+                                        db.PartnerSetupInfo.Add(partnerSetupInfo);
+                                        db.SaveChanges();
+                                    }
                                     claims.Add(new Claim("SetupServiceHash", authenticateResponse.AuthenticationResponse.SetupServiceHash));
                                     claims.Add(new Claim("SetupServiceUser", authenticateResponse.AuthenticationResponse.SetupServiceUser));
                                 }
@@ -90,7 +102,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                                     var subUserPermission = userValid.Role.RolePermission.Select(m => new Claim(ClaimTypes.Role, m.Permission.PermissionName)).ToList();
                                     claims.AddRange(subUserPermission);
 
-                                   
+
 
                                     var authenticator = new SubUserAuthenticator();
                                     var isSignIn = authenticator.SignIn(Request.GetOwinContext(), userSignInModel.Username, userSignInModel.Password, claims);

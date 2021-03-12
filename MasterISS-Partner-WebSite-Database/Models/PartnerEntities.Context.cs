@@ -31,5 +31,8 @@ namespace MasterISS_Partner_WebSite_Database.Models
         public virtual DbSet<SetupTeam> SetupTeam { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<WorkArea> WorkArea { get; set; }
+        public virtual DbSet<PartnerSetupInfo> PartnerSetupInfo { get; set; }
+        public virtual DbSet<TaskList> TaskList { get; set; }
+        public virtual DbSet<SchedulerOperationsTime> SchedulerOperationsTime { get; set; }
     }
 }
