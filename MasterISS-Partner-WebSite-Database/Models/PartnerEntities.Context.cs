@@ -25,14 +25,16 @@ namespace MasterISS_Partner_WebSite_Database.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<PartnerSetupInfo> PartnerSetupInfo { get; set; }
         public virtual DbSet<Permission> Permission { get; set; }
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<RolePermission> RolePermission { get; set; }
+        public virtual DbSet<SchedulerOperationsTime> SchedulerOperationsTime { get; set; }
         public virtual DbSet<SetupTeam> SetupTeam { get; set; }
+        public virtual DbSet<TaskList> TaskList { get; set; }
+        public virtual DbSet<UpdatedSetupStatus> UpdatedSetupStatus { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<WorkArea> WorkArea { get; set; }
-        public virtual DbSet<PartnerSetupInfo> PartnerSetupInfo { get; set; }
-        public virtual DbSet<TaskList> TaskList { get; set; }
-        public virtual DbSet<SchedulerOperationsTime> SchedulerOperationsTime { get; set; }
+        public virtual DbSet<RendezvousTeam> RendezvousTeam { get; set; }
     }
 }

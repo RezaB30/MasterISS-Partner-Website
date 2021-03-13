@@ -439,6 +439,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rezervasyon Ekibini Listele.
+        /// </summary>
+        public static string ListRendezvousTeam {
+            get {
+                return ResourceManager.GetString("ListRendezvousTeam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kurulum Ekibini Listele.
         /// </summary>
         public static string ListSetupTeam {

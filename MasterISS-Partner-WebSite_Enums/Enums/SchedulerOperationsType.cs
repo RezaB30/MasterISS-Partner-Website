@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MasterISS_Partner_WebSite_Scheduler.Enums
+namespace MasterISS_Partner_WebSite_Enums
 {
     public enum SchedulerOperationsType
     {
         GetTaskList = 1,
+        GetUpdatedStatus = 2,
     }
 }

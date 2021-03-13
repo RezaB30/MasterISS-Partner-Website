@@ -10,7 +10,7 @@ using System.Security.Claims;
 using System.Threading;
 using System.Web;
 using System.Web.Mvc;
-using MasterISS_Partner_WebSite.Enums;
+using MasterISS_Partner_WebSite_Enums;
 
 namespace MasterISS_Partner_WebSite.Controllers
 {

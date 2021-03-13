@@ -243,6 +243,9 @@
   <data name="ListBills" xml:space="preserve">
     <value>List Bills</value>
   </data>
+  <data name="ListRendezvousTeam" xml:space="preserve">
+    <value>List Rendezvous Team</value>
+  </data>
   <data name="ListSetupTeam" xml:space="preserve">
     <value>List Setup Team</value>
   </data>

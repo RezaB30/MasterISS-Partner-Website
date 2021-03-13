@@ -1,5 +1,4 @@
-﻿using MasterISS_Partner_WebSite.Enums;
-using MasterISS_Partner_WebSite_WebServices.PartnerServiceReference;
+﻿using MasterISS_Partner_WebSite_WebServices.PartnerServiceReference;
 using MasterISS_Partner_WebSite.ViewModels;
 using MasterISS_Partner_WebSite.ViewModels.Home;
 using NLog;
@@ -11,6 +10,7 @@ using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MasterISS_Partner_WebSite_Enums;
 
 namespace MasterISS_Partner_WebSite.Controllers
 {
@@ -65,8 +65,8 @@ namespace MasterISS_Partner_WebSite.Controllers
             var nationalityListResponse = wrapper.GetNationalities();
             if (nationalityListResponse.ResponseMessage.ErrorCode == 0)
             {
-                ViewBag.NationalityListByCorporative = NationalityList(nationalityListResponse, (int)Enums.NationalityList.Turkey);
-                ViewBag.NationalityListByIndividual = NationalityList(nationalityListResponse, (int)Enums.NationalityList.Turkey);
+                ViewBag.NationalityListByCorporative = NationalityList(nationalityListResponse, (int)MasterISS_Partner_WebSite_Enums.NationalityList.Turkey);
+                ViewBag.NationalityListByIndividual = NationalityList(nationalityListResponse, (int)MasterISS_Partner_WebSite_Enums.NationalityList.Turkey);
             }
 
             wrapper = new WebServiceWrapper();

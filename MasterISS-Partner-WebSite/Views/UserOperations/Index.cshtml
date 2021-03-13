@@ -47,6 +47,8 @@
 @if (User.IsInRole("Setup"))
 {
     @Html.ActionLink(View.ListSetupTeam, "SetupTeamList", "UserOperations")
+    <br />
+    @Html.ActionLink(View.ListRendezvousTeam, "RendezvousTeamList", "UserOperations")
 }
 
 <div style="background-color:red">

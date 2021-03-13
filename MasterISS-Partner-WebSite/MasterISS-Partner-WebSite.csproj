@@ -193,17 +193,6 @@
     <Compile Include="Controllers\SetupController.cs" />
     <Compile Include="Controllers\UserOperationsController.cs" />
     <Compile Include="DatetimeParse.cs" />
-    <Compile Include="Enums\AttachmentTypeEnum.cs" />
-    <Compile Include="Enums\CardTypeEnum.cs" />
-    <Compile Include="Enums\CustomerTypeEnum.cs" />
-    <Compile Include="Enums\ErrorCodesEnum.cs" />
-    <Compile Include="Enums\FaultCodeEnum.cs" />
-    <Compile Include="Enums\NationalityList.cs" />
-    <Compile Include="Enums\PartnerTypeEnum.cs" />
-    <Compile Include="Enums\RevenuesTypeEnum.cs" />
-    <Compile Include="Enums\TaskStatusEnum.cs" />
-    <Compile Include="Enums\TaskTypesEnum.cs" />
-    <Compile Include="Enums\XDSLTypeEnum.cs" />
     <Compile Include="Helpers\CustomButtonByMap.cs" />
     <Compile Include="Helpers\CustomMap.cs" />
     <Compile Include="Helpers\LanguageLinkHelper.cs" />
@@ -269,8 +258,6 @@
       <DependentUpon>TaskTypes.en-us.resx</DependentUpon>
     </Compile>
     <Compile Include="OtherPhoneNoValidation.cs" />
-    <Compile Include="Enums\BalanceRequestTypesEnum.cs" />
-    <Compile Include="Enums\PermissionListEnum.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -345,6 +332,7 @@
     <Compile Include="ViewModels\Account\RegisterViewModel.cs" />
     <Compile Include="ViewModels\Account\UserSignInViewModel.cs" />
     <Compile Include="ViewModels\AddPermissionViewModel.cs" />
+    <Compile Include="ViewModels\ListRendezvousTeamViewModel.cs" />
     <Compile Include="ViewModels\WorkAreaSetupTeamUserViewModel.cs" />
     <Compile Include="ViewModels\BillCollectionViewModel.cs" />
     <Compile Include="ViewModels\CreditReportViewModel.cs" />
@@ -468,6 +456,7 @@
     <Content Include="Views\Shared\DisplayTemplates\WorkingTypeFormat.cshtml" />
     <Content Include="Views\UserOperations\AddAndUpdateWorkAreaSetupTeamUser.cshtml" />
     <Content Include="Views\UserOperations\ListWorkAreaSetupTeamUser.cshtml" />
+    <Content Include="Views\UserOperations\RendezvousTeamList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -599,6 +588,10 @@
     <ProjectReference Include="..\MasterISS-Partner-WebSite-WebServices\MasterISS-Partner-WebSite-WebServices.csproj">
       <Project>{6dbf8347-d6b1-4f53-9b8d-ec27536d3ab9}</Project>
       <Name>MasterISS-Partner-WebSite-WebServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MasterISS-Partner-WebSite_Enums\MasterISS-Partner-WebSite-Enums.csproj">
+      <Project>{7e11b348-49ae-4d79-86da-c931ace56d65}</Project>
+      <Name>MasterISS-Partner-WebSite-Enums</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

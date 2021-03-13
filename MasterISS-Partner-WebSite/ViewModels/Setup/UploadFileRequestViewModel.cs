@@ -1,4 +1,4 @@
-﻿using MasterISS_Partner_WebSite.Enums;
+﻿using MasterISS_Partner_WebSite_Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

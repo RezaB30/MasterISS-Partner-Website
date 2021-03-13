@@ -71,6 +71,9 @@
     <Compile Include="Models\Permission.cs">
       <DependentUpon>PartnerEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\RendezvousTeam.cs">
+      <DependentUpon>PartnerEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Role.cs">
       <DependentUpon>PartnerEntities.tt</DependentUpon>
     </Compile>
@@ -84,6 +87,9 @@
       <DependentUpon>PartnerEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TaskList.cs">
+      <DependentUpon>PartnerEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UpdatedSetupStatus.cs">
       <DependentUpon>PartnerEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">

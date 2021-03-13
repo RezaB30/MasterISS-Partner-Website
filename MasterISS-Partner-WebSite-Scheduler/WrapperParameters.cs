@@ -12,5 +12,6 @@ namespace MasterISS_Partner_WebSite_Scheduler
 
         internal string Password;
 
+        internal int PartnerId;
     }
 }

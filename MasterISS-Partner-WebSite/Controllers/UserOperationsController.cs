@@ -1,6 +1,6 @@
-﻿using MasterISS_Partner_WebSite.Enums;
-using MasterISS_Partner_WebSite.ViewModels;
+﻿using MasterISS_Partner_WebSite.ViewModels;
 using MasterISS_Partner_WebSite_Database.Models;
+using MasterISS_Partner_WebSite_Enums;
 using NLog;
 using RezaB.Data.Localization;
 using System;
@@ -58,12 +58,77 @@ namespace MasterISS_Partner_WebSite.Controllers
                         ProvinceName = wa.ProvinceName,
                         DistrictName = wa.Districtname,
                         RuralName = wa.RuralName,
-                        NeigborhoodName = wa.NeighbourhoodName
-
+                        NeigborhoodName = wa.NeighbourhoodName,
                     })
                 }).ToList();
 
                 return View(setupTeamList);
+            }
+        }
+
+        [Authorize(Roles = "Setup")]
+        public ActionResult RendezvousTeamList()
+        {
+            var claimList = new ClaimInfo();
+            var partnerId = claimList.PartnerId();
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var partnerTeam = db.RendezvousTeam.Where(rt => rt.User.PartnerId == partnerId && rt.User.Role.RolePermission.Select(rp => rp.Permission.Id).Contains((int)PermissionListEnum.RendezvousTeam)).Select(rt => new ListRendezvousTeamViewModel
+                {
+                    Id = rt.UserId,
+                    NameSurname = rt.User.NameSurname,
+                    WorkingStatus = rt.WorkingStatus
+                }).ToList();
+
+                return View(partnerTeam);
+            }
+        }
+
+        [Authorize(Roles = "Setup")]
+        public ActionResult DisabledUserInRendezvousTeam(int userId)
+        {
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var rendezvousTeam = db.RendezvousTeam.Find(userId);
+
+                if (rendezvousTeam != null)
+                {
+                    rendezvousTeam.WorkingStatus = false;
+
+                    db.SaveChanges();
+
+                    //LOG
+                    var wrapper = new WebServiceWrapper();
+                    Logger.Info("Disabled User In RendezvousTeam: " + userId + ", by: " + wrapper.GetUserSubMail());
+                    //LOG
+
+                    return RedirectToAction("Successful");
+                }
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        [Authorize(Roles = "Setup")]
+        public ActionResult EnabledUserInRendezvousTeam(int userId)
+        {
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var rendezvousTeam = db.RendezvousTeam.Find(userId);
+
+                if (rendezvousTeam != null)
+                {
+                    rendezvousTeam.WorkingStatus = true;
+
+                    db.SaveChanges();
+
+                    //LOG
+                    var wrapper = new WebServiceWrapper();
+                    Logger.Info("Enabled User In RendezvousTeam: " + userId + ", by: " + wrapper.GetUserSubMail());
+                    //LOG
+
+                    return RedirectToAction("Successful");
+                }
+                return RedirectToAction("Index", "Home");
             }
         }
 
@@ -79,6 +144,11 @@ namespace MasterISS_Partner_WebSite.Controllers
                     setupTeam.WorkingStatus = false;
 
                     db.SaveChanges();
+
+                    //LOG
+                    var wrapper = new WebServiceWrapper();
+                    Logger.Info("Disabled User In SetupTeam: " + userId + ", by: " + wrapper.GetUserSubMail());
+                    //LOG
 
                     return RedirectToAction("Successful");
                 }
@@ -98,6 +168,11 @@ namespace MasterISS_Partner_WebSite.Controllers
                     setupTeam.WorkingStatus = true;
 
                     db.SaveChanges();
+
+                    //LOG
+                    var wrapper = new WebServiceWrapper();
+                    Logger.Info("Enabled User In SetupTeam: " + userId + ", by: " + wrapper.GetUserSubMail());
+                    //LOG
 
                     return RedirectToAction("Successful");
                 }
@@ -230,6 +305,17 @@ namespace MasterISS_Partner_WebSite.Controllers
                                     db.SaveChanges();
                                 }
 
+                                if (ValidRoleHaveRendezvousTeamPermission(newUserViewModel.RoleId))
+                                {
+                                    RendezvousTeam rendezvousTeam = new RendezvousTeam
+                                    {
+                                        UserId = newUser.Id,
+                                        WorkingStatus = true,
+                                    };
+                                    db.RendezvousTeam.Add(rendezvousTeam);
+                                    db.SaveChanges();
+                                }
+
                                 //LOG
                                 wrapper = new WebServiceWrapper();
                                 Logger.Info("Added User: " + newUser.UserSubMail + ", by: " + wrapper.GetUserSubMail());
@@ -299,12 +385,31 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                         if (!ValidRoleHaveSetupManagerPermission(updateUserRoleViewModel.RoleId))
                         {
-                            if (user.SetupTeam.WorkingStatus == true)
+                            var haveSetupManagerPermission = db.SetupTeam.Find(user.Id);
+                            if (haveSetupManagerPermission != null)
                             {
-                                user.SetupTeam.WorkingStatus = false;
-                                db.SaveChanges();
+                                if (user.SetupTeam.WorkingStatus == true)
+                                {
+                                    user.SetupTeam.WorkingStatus = false;
+                                    db.SaveChanges();
+                                }
                             }
                         }
+
+                        if (!ValidRoleHaveRendezvousTeamPermission(updateUserRoleViewModel.RoleId))
+                        {
+                            var haveRendezvousTeamPermission = db.RendezvousTeam.Find(user.Id);
+                            if (haveRendezvousTeamPermission != null)
+                            {
+                                if (user.RendezvousTeam.WorkingStatus == true)
+                                {
+                                    user.RendezvousTeam.WorkingStatus = false;
+                                    db.SaveChanges();
+                                }
+                            }
+
+                        }
+
                         //LOG
                         var wrapper = new WebServiceWrapper();
                         Logger.Info("Updated User Role: " + user.UserSubMail + ", by: " + wrapper.GetUserSubMail());
@@ -402,14 +507,32 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                             if (!ValidRoleHaveSetupManagerPermission(roleId))
                             {
-                                var usersHaveUserManagerPermisison = db.User.Where(u => u.RoleId == roleId && u.PartnerId == partnerId).Select(u => u.Id).ToList();
+                                var usersHaveSetupManagerPermission = db.User.Where(u => u.RoleId == roleId && u.PartnerId == partnerId).Select(u => u.Id).ToList();
 
-                                if (usersHaveUserManagerPermisison.Count > 0)
+                                if (usersHaveSetupManagerPermission.Count > 0)
                                 {
-                                    var matchedSetupTeams = db.SetupTeam.Where(st => usersHaveUserManagerPermisison.Contains(st.UserId));
+                                    var matchedSetupTeams = db.SetupTeam.Where(st => usersHaveSetupManagerPermission.Contains(st.UserId));
                                     if (matchedSetupTeams.Count() > 0)
                                     {
                                         foreach (var item in matchedSetupTeams)
+                                        {
+                                            item.WorkingStatus = false;
+                                        }
+                                        db.SaveChanges();
+                                    }
+                                }
+                            }
+
+                            if (!ValidRoleHaveRendezvousTeamPermission(roleId))
+                            {
+                                var usersHaveRendezvousTeamPermission = db.User.Where(u => u.RoleId == roleId && u.PartnerId == partnerId).Select(u => u.Id).ToList();
+
+                                if (usersHaveRendezvousTeamPermission.Count > 0)
+                                {
+                                    var matchedRendezvousTeams = db.RendezvousTeam.Where(rt => usersHaveRendezvousTeamPermission.Contains(rt.UserId));
+                                    if (matchedRendezvousTeams.Count() > 0)
+                                    {
+                                        foreach (var item in matchedRendezvousTeams)
                                         {
                                             item.WorkingStatus = false;
                                         }
@@ -623,6 +746,20 @@ namespace MasterISS_Partner_WebSite.Controllers
             {
                 var role = db.Role.Find(roleId);
                 var roleHaveSetupManagerPermission = role.RolePermission.Select(rp => rp.Permission.Id).Contains((int)PermissionListEnum.SetupManager);
+                if (roleHaveSetupManagerPermission)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        private bool ValidRoleHaveRendezvousTeamPermission(int roleId)
+        {
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var role = db.Role.Find(roleId);
+                var roleHaveSetupManagerPermission = role.RolePermission.Select(rp => rp.Permission.Id).Contains((int)PermissionListEnum.RendezvousTeam);
                 if (roleHaveSetupManagerPermission)
                 {
                     return true;

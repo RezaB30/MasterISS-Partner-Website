@@ -13,7 +13,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using MasterISS_Partner_WebSite.Enums;
+using MasterISS_Partner_WebSite_Enums;
 
 namespace MasterISS_Partner_WebSite
 {
@@ -438,7 +438,7 @@ namespace MasterISS_Partner_WebSite
                     UserEmail = GetUserMail(),
                     SubUserEmail = GetUserSubMail(),
 
-                    CorporateCustomerInfo = addCustomerViewModel.GeneralInfo.CustomerTypeId == (int)Enums.CustomerTypeEnum.Individual ? null : new CorporateCustomerInfo
+                    CorporateCustomerInfo = addCustomerViewModel.GeneralInfo.CustomerTypeId == (int)CustomerTypeEnum.Individual ? null : new CorporateCustomerInfo
                     {
                         CentralSystemNo = addCustomerViewModel.CorporateInfo.CentralSystemNo,
                         ExecutiveBirthPlace = addCustomerViewModel.CorporateInfo.ExecutiveBirthPlace,
@@ -488,7 +488,7 @@ namespace MasterISS_Partner_WebSite
                         VolumeNo = addCustomerViewModel.IDCard.TCBirthCertificate?.VolumeNo,
                     },
 
-                    IndividualCustomerInfo = addCustomerViewModel.GeneralInfo.CustomerTypeId != (int)Enums.CustomerTypeEnum.Individual ? null : new IndividualCustomerInfo()
+                    IndividualCustomerInfo = addCustomerViewModel.GeneralInfo.CustomerTypeId != (int)CustomerTypeEnum.Individual ? null : new IndividualCustomerInfo()
                     {
                         BirthPlace = addCustomerViewModel.Individual.BirthPlace,
                         FathersName = addCustomerViewModel.Individual.FathersName,
@@ -646,7 +646,7 @@ namespace MasterISS_Partner_WebSite
         {
             var parseDatetime = new DatetimeParse();
 
-            if (cardTypeId == (int)Enums.CardTypeEnum.TCBirthCertificate)
+            if (cardTypeId == (int)CardTypeEnum.TCBirthCertificate)
             {
                 var dateOfIssue = parseDatetime.ConvertDatetimeByWebService(IDCardViewModel.TCBirthCertificate.DateOfIssue);
                 return dateOfIssue;

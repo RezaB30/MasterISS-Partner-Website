@@ -1,5 +1,4 @@
-﻿using MasterISS_Partner_WebSite.Enums;
-using MasterISS_Partner_WebSite.ViewModels.Setup;
+﻿using MasterISS_Partner_WebSite.ViewModels.Setup;
 using MasterISS_Partner_WebSite.ViewModels.Setup.Response;
 using PagedList;
 using System;
@@ -17,6 +16,8 @@ using NLog;
 using GoogleMaps.LocationServices;
 using System.Net;
 using System.Xml.Linq;
+using MasterISS_Partner_WebSite_Database.Models;
+using MasterISS_Partner_WebSite_Enums;
 
 namespace MasterISS_Partner_WebSite.Controllers
 {
@@ -302,7 +303,7 @@ namespace MasterISS_Partner_WebSite.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "UpdateTaskStatus,Admin")]
+        [Authorize(Roles = "UpdateTaskStatus")]//Admin not entry
         public ActionResult UpdateTaskStatus(long taskNo)
         {
             var request = new AddTaskStatusUpdateViewModel { TaskNo = taskNo };
@@ -314,7 +315,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        [Authorize(Roles = "UpdateTaskStatus,Admin")]
+        [Authorize(Roles = "UpdateTaskStatus")]//Admin not entry
         public ActionResult UpdateTaskStatus(AddTaskStatusUpdateViewModel updateTaskStatusViewModel)
         {
             if (updateTaskStatusViewModel.FaultCodes != FaultCodeEnum.RendezvousMade)
@@ -325,31 +326,33 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             if (ModelState.IsValid)
             {
+                var datetimeNow = DateTime.Now;
                 var isValidFaultCodes = Enum.IsDefined(typeof(FaultCodeEnum), updateTaskStatusViewModel.FaultCodes);
 
                 if (isValidFaultCodes)
                 {
-                    var setupWrapper = new SetupServiceWrapper();
-
-                    var response = setupWrapper.AddTaskStatusUpdate(updateTaskStatusViewModel);
-
-                    if (response.ResponseMessage.ErrorCode == 0)
+                    var wrapper = new WebServiceWrapper();
+                    using (var db = new PartnerWebSiteEntities())
                     {
+                        UpdatedSetupStatus updatedSetupStatus = new UpdatedSetupStatus
+                        {
+                            ChangeTime = datetimeNow,
+                            Description = updateTaskStatusViewModel.Description,
+                            FaultCodes = (short)updateTaskStatusViewModel.FaultCodes,
+                            ReservationDate = updateTaskStatusViewModel.ReservationDate,
+                            UserId = db.User.Where(u => u.UserSubMail == wrapper.GetUserSubMail()).FirstOrDefault().Id,
+                            TaskNo = (long)updateTaskStatusViewModel.TaskNo,
+                        };
+                        db.UpdatedSetupStatus.Add(updatedSetupStatus);
+                        db.SaveChanges();
+
                         //LOG
-                        var wrapper = new WebServiceWrapper();
                         Logger.Info("Updated Task Status: " + updateTaskStatusViewModel.TaskNo + ", by: " + wrapper.GetUserSubMail());
                         //LOG
 
                         return RedirectToAction("Successful", new { taskNo = updateTaskStatusViewModel.TaskNo });
+
                     }
-
-                    //LOG
-                    var wrapperByGetUserSubmail = new WebServiceWrapper();
-                    LoggerError.Fatal($"An error occurred while AddTaskStatusUpdate , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapperByGetUserSubmail.GetUserSubMail()}");
-                    //LOG
-
-                    TempData["CustomerUpdateStatusError"] = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
-                    return RedirectToAction("CustomerDetail", new { taskNo = updateTaskStatusViewModel.TaskNo });
                 }
                 return RedirectToAction("Index", "Setup");
             }

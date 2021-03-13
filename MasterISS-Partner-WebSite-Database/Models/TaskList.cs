@@ -14,6 +14,12 @@ namespace MasterISS_Partner_WebSite_Database.Models
     
     public partial class TaskList
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public TaskList()
+        {
+            this.UpdatedSetupStatus = new HashSet<UpdatedSetupStatus>();
+        }
+    
         public long TaskNo { get; set; }
         public string CustomerNo { get; set; }
         public string SubscriberNo { get; set; }
@@ -37,5 +43,10 @@ namespace MasterISS_Partner_WebSite_Database.Models
         public string Details { get; set; }
         public Nullable<long> AssignToRendezvousStaff { get; set; }
         public Nullable<long> AssignToSetupTeam { get; set; }
+        public int PartnerId { get; set; }
+    
+        public virtual PartnerSetupInfo PartnerSetupInfo { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UpdatedSetupStatus> UpdatedSetupStatus { get; set; }
     }
 }

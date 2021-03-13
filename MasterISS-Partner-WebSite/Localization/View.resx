@@ -243,6 +243,9 @@
   <data name="ListBills" xml:space="preserve">
     <value>Faturaları Listele</value>
   </data>
+  <data name="ListRendezvousTeam" xml:space="preserve">
+    <value>Rezervasyon Ekibini Listele</value>
+  </data>
   <data name="ListSetupTeam" xml:space="preserve">
     <value>Kurulum Ekibini Listele</value>
   </data>

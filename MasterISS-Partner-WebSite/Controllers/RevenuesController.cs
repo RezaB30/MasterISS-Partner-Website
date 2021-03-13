@@ -1,6 +1,6 @@
-﻿using MasterISS_Partner_WebSite.Enums;
-using MasterISS_Partner_WebSite.ViewModels;
+﻿using MasterISS_Partner_WebSite.ViewModels;
 using MasterISS_Partner_WebSite.ViewModels.Revenues;
+using MasterISS_Partner_WebSite_Enums;
 using NLog;
 using PagedList;
 using System;

@@ -21,6 +21,13 @@
           <Property Name="PermissionName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="RoleTypeId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="RendezvousTeam">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="WorkingStatus" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="Id" />
@@ -79,6 +86,19 @@
           <Property Name="Details" Type="nvarchar(max)" />
           <Property Name="AssignToRendezvousStaff" Type="bigint" />
           <Property Name="AssignToSetupTeam" Type="bigint" />
+          <Property Name="PartnerId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UpdatedSetupStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TaskNo" Type="bigint" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="FaultCodes" Type="smallint" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="450" Nullable="false" />
+          <Property Name="ReservationDate" Type="nvarchar" MaxLength="50" />
+          <Property Name="ChangeTime" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -107,6 +127,18 @@
           <Property Name="NeighbourhoodId" Type="bigint" />
           <Property Name="NeighbourhoodName" Type="nvarchar" MaxLength="150" />
         </EntityType>
+        <Association Name="FK_RendezvousTeam_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="RendezvousTeam" Type="Self.RendezvousTeam" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RendezvousTeam">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_RolePermission_Permission">
           <End Role="Permission" Type="Self.Permission" Multiplicity="1" />
           <End Role="RolePermission" Type="Self.RolePermission" Multiplicity="*" />
@@ -140,6 +172,30 @@
             </Principal>
             <Dependent Role="SetupTeam">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaskList_PartnerSetupInfo">
+          <End Role="PartnerSetupInfo" Type="Self.PartnerSetupInfo" Multiplicity="1" />
+          <End Role="TaskList" Type="Self.TaskList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PartnerSetupInfo">
+              <PropertyRef Name="PartnerId" />
+            </Principal>
+            <Dependent Role="TaskList">
+              <PropertyRef Name="PartnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UpdatedSetupStatus_TaskList">
+          <End Role="TaskList" Type="Self.TaskList" Multiplicity="1" />
+          <End Role="UpdatedSetupStatus" Type="Self.UpdatedSetupStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaskList">
+              <PropertyRef Name="TaskNo" />
+            </Principal>
+            <Dependent Role="UpdatedSetupStatus">
+              <PropertyRef Name="TaskNo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -170,13 +226,19 @@
         <EntityContainer Name="MasterISSPartnerWebSiteModelStoreContainer">
           <EntitySet Name="PartnerSetupInfo" EntityType="Self.PartnerSetupInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Permission" EntityType="Self.Permission" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RendezvousTeam" EntityType="Self.RendezvousTeam" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RolePermission" EntityType="Self.RolePermission" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SchedulerOperationsTime" EntityType="Self.SchedulerOperationsTime" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SetupTeam" EntityType="Self.SetupTeam" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaskList" EntityType="Self.TaskList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UpdatedSetupStatus" EntityType="Self.UpdatedSetupStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WorkArea" EntityType="Self.WorkArea" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_RendezvousTeam_User" Association="Self.FK_RendezvousTeam_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="RendezvousTeam" EntitySet="RendezvousTeam" />
+          </AssociationSet>
           <AssociationSet Name="FK_RolePermission_Permission" Association="Self.FK_RolePermission_Permission">
             <End Role="Permission" EntitySet="Permission" />
             <End Role="RolePermission" EntitySet="RolePermission" />
@@ -188,6 +250,14 @@
           <AssociationSet Name="FK_SetupTeam_User" Association="Self.FK_SetupTeam_User">
             <End Role="User" EntitySet="User" />
             <End Role="SetupTeam" EntitySet="SetupTeam" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaskList_PartnerSetupInfo" Association="Self.FK_TaskList_PartnerSetupInfo">
+            <End Role="PartnerSetupInfo" EntitySet="PartnerSetupInfo" />
+            <End Role="TaskList" EntitySet="TaskList" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UpdatedSetupStatus_TaskList" Association="Self.FK_UpdatedSetupStatus_TaskList">
+            <End Role="TaskList" EntitySet="TaskList" />
+            <End Role="UpdatedSetupStatus" EntitySet="UpdatedSetupStatus" />
           </AssociationSet>
           <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
             <End Role="Role" EntitySet="Role" />
@@ -202,164 +272,50 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MasterISSPartnerWebSiteModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Permission">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PermissionName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="RoleTypeId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="RolePermission" Relationship="Self.FK_RolePermission_Permission" FromRole="Permission" ToRole="RolePermission" />
-        </EntityType>
-        <EntityType Name="Role">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RoleName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PartnerId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="RolePermission" Relationship="Self.FK_RolePermission_Role" FromRole="Role" ToRole="RolePermission" />
-          <NavigationProperty Name="User" Relationship="Self.FK_User_Role" FromRole="Role" ToRole="User" />
-        </EntityType>
-        <EntityType Name="RolePermission">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RoleId" Type="Int32" Nullable="false" />
-          <Property Name="PermissionId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Permission" Relationship="Self.FK_RolePermission_Permission" FromRole="RolePermission" ToRole="Permission" />
-          <NavigationProperty Name="Role" Relationship="Self.FK_RolePermission_Role" FromRole="RolePermission" ToRole="Role" />
-        </EntityType>
-        <EntityType Name="SetupTeam">
-          <Key>
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="WorkingStatus" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="User" Relationship="Self.FK_SetupTeam_User" FromRole="SetupTeam" ToRole="User" />
-        </EntityType>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PartnerId" Type="Int32" Nullable="false" />
-          <Property Name="RoleId" Type="Int32" Nullable="false" />
-          <Property Name="UserSubMail" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="NameSurname" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="IsEnabled" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Role" Relationship="Self.FK_User_Role" FromRole="User" ToRole="Role" />
-          <NavigationProperty Name="SetupTeam" Relationship="Self.FK_SetupTeam_User" FromRole="User" ToRole="SetupTeam" />
-          <NavigationProperty Name="WorkArea" Relationship="Self.FK_WorkArea_User" FromRole="User" ToRole="WorkArea" />
-        </EntityType>
-        <EntityType Name="WorkArea">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="ProvinceId" Type="Int64" Nullable="false" />
-          <Property Name="ProvinceName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="DistrictId" Type="Int64" />
-          <Property Name="Districtname" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="RuralId" Type="Int64" />
-          <Property Name="RuralName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="NeighbourhoodId" Type="Int64" />
-          <Property Name="NeighbourhoodName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="User" Relationship="Self.FK_WorkArea_User" FromRole="WorkArea" ToRole="User" />
-        </EntityType>
-        <Association Name="FK_RolePermission_Permission">
-          <End Role="Permission" Type="Self.Permission" Multiplicity="1" />
-          <End Role="RolePermission" Type="Self.RolePermission" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Permission">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="RolePermission">
-              <PropertyRef Name="PermissionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_RolePermission_Role">
-          <End Role="Role" Type="Self.Role" Multiplicity="1" />
-          <End Role="RolePermission" Type="Self.RolePermission" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Role">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="RolePermission">
-              <PropertyRef Name="RoleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_User_Role">
-          <End Role="Role" Type="Self.Role" Multiplicity="1" />
-          <End Role="User" Type="Self.User" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Role">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="User">
-              <PropertyRef Name="RoleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SetupTeam_User">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="SetupTeam" Type="Self.SetupTeam" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="SetupTeam">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_WorkArea_User">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="WorkArea" Type="Self.WorkArea" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="WorkArea">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="PartnerWebSiteEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Permission" EntityType="Self.Permission" />
-          <EntitySet Name="Role" EntityType="Self.Role" />
-          <EntitySet Name="RolePermission" EntityType="Self.RolePermission" />
-          <EntitySet Name="SetupTeam" EntityType="Self.SetupTeam" />
-          <EntitySet Name="User" EntityType="Self.User" />
-          <EntitySet Name="WorkArea" EntityType="Self.WorkArea" />
-          <AssociationSet Name="FK_RolePermission_Permission" Association="Self.FK_RolePermission_Permission">
+          <EntitySet Name="PartnerSetupInfo" EntityType="MasterISSPartnerWebSiteModel.PartnerSetupInfo" />
+          <EntitySet Name="Permission" EntityType="MasterISSPartnerWebSiteModel.Permission" />
+          <EntitySet Name="Role" EntityType="MasterISSPartnerWebSiteModel.Role" />
+          <EntitySet Name="RolePermission" EntityType="MasterISSPartnerWebSiteModel.RolePermission" />
+          <EntitySet Name="SchedulerOperationsTime" EntityType="MasterISSPartnerWebSiteModel.SchedulerOperationsTime" />
+          <EntitySet Name="SetupTeam" EntityType="MasterISSPartnerWebSiteModel.SetupTeam" />
+          <EntitySet Name="TaskList" EntityType="MasterISSPartnerWebSiteModel.TaskList" />
+          <EntitySet Name="UpdatedSetupStatus" EntityType="MasterISSPartnerWebSiteModel.UpdatedSetupStatus" />
+          <EntitySet Name="User" EntityType="MasterISSPartnerWebSiteModel.User" />
+          <EntitySet Name="WorkArea" EntityType="MasterISSPartnerWebSiteModel.WorkArea" />
+          <AssociationSet Name="FK_TaskList_PartnerSetupInfo" Association="MasterISSPartnerWebSiteModel.FK_TaskList_PartnerSetupInfo">
+            <End Role="PartnerSetupInfo" EntitySet="PartnerSetupInfo" />
+            <End Role="TaskList" EntitySet="TaskList" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RolePermission_Permission" Association="MasterISSPartnerWebSiteModel.FK_RolePermission_Permission">
             <End Role="Permission" EntitySet="Permission" />
             <End Role="RolePermission" EntitySet="RolePermission" />
           </AssociationSet>
-          <AssociationSet Name="FK_RolePermission_Role" Association="Self.FK_RolePermission_Role">
+          <AssociationSet Name="FK_RolePermission_Role" Association="MasterISSPartnerWebSiteModel.FK_RolePermission_Role">
             <End Role="Role" EntitySet="Role" />
             <End Role="RolePermission" EntitySet="RolePermission" />
           </AssociationSet>
-          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+          <AssociationSet Name="FK_User_Role" Association="MasterISSPartnerWebSiteModel.FK_User_Role">
             <End Role="Role" EntitySet="Role" />
             <End Role="User" EntitySet="User" />
           </AssociationSet>
-          <AssociationSet Name="FK_SetupTeam_User" Association="Self.FK_SetupTeam_User">
+          <AssociationSet Name="FK_SetupTeam_User" Association="MasterISSPartnerWebSiteModel.FK_SetupTeam_User">
             <End Role="User" EntitySet="User" />
             <End Role="SetupTeam" EntitySet="SetupTeam" />
           </AssociationSet>
-          <AssociationSet Name="FK_WorkArea_User" Association="Self.FK_WorkArea_User">
+          <AssociationSet Name="FK_UpdatedSetupStatus_TaskList" Association="MasterISSPartnerWebSiteModel.FK_UpdatedSetupStatus_TaskList">
+            <End Role="TaskList" EntitySet="TaskList" />
+            <End Role="UpdatedSetupStatus" EntitySet="UpdatedSetupStatus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkArea_User" Association="MasterISSPartnerWebSiteModel.FK_WorkArea_User">
             <End Role="User" EntitySet="User" />
             <End Role="WorkArea" EntitySet="WorkArea" />
           </AssociationSet>
-          <EntitySet Name="PartnerSetupInfo" EntityType="MasterISSPartnerWebSiteModel.PartnerSetupInfo" />
-          <EntitySet Name="TaskList" EntityType="MasterISSPartnerWebSiteModel.TaskList" />
-          <EntitySet Name="SchedulerOperationsTime" EntityType="MasterISSPartnerWebSiteModel.SchedulerOperationsTime" />
+          <EntitySet Name="RendezvousTeam" EntityType="MasterISSPartnerWebSiteModel.RendezvousTeam" />
+          <AssociationSet Name="FK_RendezvousTeam_User" Association="MasterISSPartnerWebSiteModel.FK_RendezvousTeam_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="RendezvousTeam" EntitySet="RendezvousTeam" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="PartnerSetupInfo">
           <Key>
@@ -368,6 +324,52 @@
           <Property Name="PartnerId" Type="Int32" Nullable="false" />
           <Property Name="SetupServiceHash" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="SetupServiceUser" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TaskList" Relationship="MasterISSPartnerWebSiteModel.FK_TaskList_PartnerSetupInfo" FromRole="PartnerSetupInfo" ToRole="TaskList" />
+        </EntityType>
+        <EntityType Name="Permission">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PermissionName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="RoleTypeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="RolePermission" Relationship="MasterISSPartnerWebSiteModel.FK_RolePermission_Permission" FromRole="Permission" ToRole="RolePermission" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PartnerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="RolePermission" Relationship="MasterISSPartnerWebSiteModel.FK_RolePermission_Role" FromRole="Role" ToRole="RolePermission" />
+          <NavigationProperty Name="User" Relationship="MasterISSPartnerWebSiteModel.FK_User_Role" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="RolePermission">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="PermissionId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Permission" Relationship="MasterISSPartnerWebSiteModel.FK_RolePermission_Permission" FromRole="RolePermission" ToRole="Permission" />
+          <NavigationProperty Name="Role" Relationship="MasterISSPartnerWebSiteModel.FK_RolePermission_Role" FromRole="RolePermission" ToRole="Role" />
+        </EntityType>
+        <EntityType Name="SchedulerOperationsTime">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="Int16" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="SetupTeam">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="WorkingStatus" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="MasterISSPartnerWebSiteModel.FK_SetupTeam_User" FromRole="SetupTeam" ToRole="User" />
         </EntityType>
         <EntityType Name="TaskList">
           <Key>
@@ -396,85 +398,165 @@
           <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="AssignToRendezvousStaff" Type="Int64" />
           <Property Name="AssignToSetupTeam" Type="Int64" />
+          <Property Name="PartnerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PartnerSetupInfo" Relationship="MasterISSPartnerWebSiteModel.FK_TaskList_PartnerSetupInfo" FromRole="TaskList" ToRole="PartnerSetupInfo" />
+          <NavigationProperty Name="UpdatedSetupStatus" Relationship="MasterISSPartnerWebSiteModel.FK_UpdatedSetupStatus_TaskList" FromRole="TaskList" ToRole="UpdatedSetupStatus" />
         </EntityType>
-        <EntityType Name="SchedulerOperationsTime">
+        <EntityType Name="UpdatedSetupStatus">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Type" Type="Int16" Nullable="false" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TaskNo" Type="Int64" Nullable="false" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="FaultCodes" Type="Int16" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="ReservationDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ChangeTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="TaskList" Relationship="MasterISSPartnerWebSiteModel.FK_UpdatedSetupStatus_TaskList" FromRole="UpdatedSetupStatus" ToRole="TaskList" />
         </EntityType>
-      </Schema>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PartnerId" Type="Int32" Nullable="false" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="UserSubMail" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="NameSurname" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="IsEnabled" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="MasterISSPartnerWebSiteModel.FK_User_Role" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="SetupTeam" Relationship="MasterISSPartnerWebSiteModel.FK_SetupTeam_User" FromRole="User" ToRole="SetupTeam" />
+          <NavigationProperty Name="WorkArea" Relationship="MasterISSPartnerWebSiteModel.FK_WorkArea_User" FromRole="User" ToRole="WorkArea" />
+          <NavigationProperty Name="RendezvousTeam" Relationship="MasterISSPartnerWebSiteModel.FK_RendezvousTeam_User" FromRole="User" ToRole="RendezvousTeam" />
+        </EntityType>
+        <EntityType Name="WorkArea">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="ProvinceId" Type="Int64" Nullable="false" />
+          <Property Name="ProvinceName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DistrictId" Type="Int64" />
+          <Property Name="Districtname" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="RuralId" Type="Int64" />
+          <Property Name="RuralName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="NeighbourhoodId" Type="Int64" />
+          <Property Name="NeighbourhoodName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="MasterISSPartnerWebSiteModel.FK_WorkArea_User" FromRole="WorkArea" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_TaskList_PartnerSetupInfo">
+          <End Type="MasterISSPartnerWebSiteModel.PartnerSetupInfo" Role="PartnerSetupInfo" Multiplicity="1" />
+          <End Type="MasterISSPartnerWebSiteModel.TaskList" Role="TaskList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PartnerSetupInfo">
+              <PropertyRef Name="PartnerId" />
+            </Principal>
+            <Dependent Role="TaskList">
+              <PropertyRef Name="PartnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RolePermission_Permission">
+          <End Type="MasterISSPartnerWebSiteModel.Permission" Role="Permission" Multiplicity="1" />
+          <End Type="MasterISSPartnerWebSiteModel.RolePermission" Role="RolePermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permission">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RolePermission">
+              <PropertyRef Name="PermissionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RolePermission_Role">
+          <End Type="MasterISSPartnerWebSiteModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="MasterISSPartnerWebSiteModel.RolePermission" Role="RolePermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RolePermission">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Type="MasterISSPartnerWebSiteModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="MasterISSPartnerWebSiteModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SetupTeam_User">
+          <End Type="MasterISSPartnerWebSiteModel.User" Role="User" Multiplicity="1" />
+          <End Type="MasterISSPartnerWebSiteModel.SetupTeam" Role="SetupTeam" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SetupTeam">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UpdatedSetupStatus_TaskList">
+          <End Type="MasterISSPartnerWebSiteModel.TaskList" Role="TaskList" Multiplicity="1" />
+          <End Type="MasterISSPartnerWebSiteModel.UpdatedSetupStatus" Role="UpdatedSetupStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaskList">
+              <PropertyRef Name="TaskNo" />
+            </Principal>
+            <Dependent Role="UpdatedSetupStatus">
+              <PropertyRef Name="TaskNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkArea_User">
+          <End Type="MasterISSPartnerWebSiteModel.User" Role="User" Multiplicity="1" />
+          <End Type="MasterISSPartnerWebSiteModel.WorkArea" Role="WorkArea" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkArea">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="RendezvousTeam">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="WorkingStatus" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="MasterISSPartnerWebSiteModel.FK_RendezvousTeam_User" FromRole="RendezvousTeam" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_RendezvousTeam_User">
+          <End Type="MasterISSPartnerWebSiteModel.User" Role="User" Multiplicity="1" />
+          <End Type="MasterISSPartnerWebSiteModel.RendezvousTeam" Role="RendezvousTeam" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RendezvousTeam">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="MasterISSPartnerWebSiteModelStoreContainer" CdmEntityContainer="PartnerWebSiteEntities">
-          <EntitySetMapping Name="Permission">
-            <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.Permission">
-              <MappingFragment StoreEntitySet="Permission">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="PermissionName" ColumnName="PermissionName" />
-                <ScalarProperty Name="RoleTypeId" ColumnName="RoleTypeId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Role">
-            <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.Role">
-              <MappingFragment StoreEntitySet="Role">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
-                <ScalarProperty Name="PartnerId" ColumnName="PartnerId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="RolePermission">
-            <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.RolePermission">
-              <MappingFragment StoreEntitySet="RolePermission">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-                <ScalarProperty Name="PermissionId" ColumnName="PermissionId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SetupTeam">
-            <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.SetupTeam">
-              <MappingFragment StoreEntitySet="SetupTeam">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="WorkingStatus" ColumnName="WorkingStatus" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="User">
-            <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.User">
-              <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="PartnerId" ColumnName="PartnerId" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-                <ScalarProperty Name="UserSubMail" ColumnName="UserSubMail" />
-                <ScalarProperty Name="NameSurname" ColumnName="NameSurname" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="IsEnabled" ColumnName="IsEnabled" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="WorkArea">
-            <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.WorkArea">
-              <MappingFragment StoreEntitySet="WorkArea">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="ProvinceId" ColumnName="ProvinceId" />
-                <ScalarProperty Name="ProvinceName" ColumnName="ProvinceName" />
-                <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
-                <ScalarProperty Name="Districtname" ColumnName="Districtname" />
-                <ScalarProperty Name="RuralId" ColumnName="RuralId" />
-                <ScalarProperty Name="RuralName" ColumnName="RuralName" />
-                <ScalarProperty Name="NeighbourhoodId" ColumnName="NeighbourhoodId" />
-                <ScalarProperty Name="NeighbourhoodName" ColumnName="NeighbourhoodName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="PartnerSetupInfo">
             <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.PartnerSetupInfo">
               <MappingFragment StoreEntitySet="PartnerSetupInfo">
@@ -484,9 +566,54 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Permission">
+            <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.Permission">
+              <MappingFragment StoreEntitySet="Permission">
+                <ScalarProperty Name="RoleTypeId" ColumnName="RoleTypeId" />
+                <ScalarProperty Name="PermissionName" ColumnName="PermissionName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="PartnerId" ColumnName="PartnerId" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RolePermission">
+            <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.RolePermission">
+              <MappingFragment StoreEntitySet="RolePermission">
+                <ScalarProperty Name="PermissionId" ColumnName="PermissionId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SchedulerOperationsTime">
+            <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.SchedulerOperationsTime">
+              <MappingFragment StoreEntitySet="SchedulerOperationsTime">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SetupTeam">
+            <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.SetupTeam">
+              <MappingFragment StoreEntitySet="SetupTeam">
+                <ScalarProperty Name="WorkingStatus" ColumnName="WorkingStatus" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="TaskList">
             <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.TaskList">
               <MappingFragment StoreEntitySet="TaskList">
+                <ScalarProperty Name="PartnerId" ColumnName="PartnerId" />
                 <ScalarProperty Name="AssignToSetupTeam" ColumnName="AssignToSetupTeam" />
                 <ScalarProperty Name="AssignToRendezvousStaff" ColumnName="AssignToRendezvousStaff" />
                 <ScalarProperty Name="Details" ColumnName="Details" />
@@ -513,12 +640,53 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="SchedulerOperationsTime">
-            <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.SchedulerOperationsTime">
-              <MappingFragment StoreEntitySet="SchedulerOperationsTime">
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
+          <EntitySetMapping Name="UpdatedSetupStatus">
+            <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.UpdatedSetupStatus">
+              <MappingFragment StoreEntitySet="UpdatedSetupStatus">
+                <ScalarProperty Name="ChangeTime" ColumnName="ChangeTime" />
+                <ScalarProperty Name="ReservationDate" ColumnName="ReservationDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="FaultCodes" ColumnName="FaultCodes" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TaskNo" ColumnName="TaskNo" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="IsEnabled" ColumnName="IsEnabled" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="NameSurname" ColumnName="NameSurname" />
+                <ScalarProperty Name="UserSubMail" ColumnName="UserSubMail" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="PartnerId" ColumnName="PartnerId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkArea">
+            <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.WorkArea">
+              <MappingFragment StoreEntitySet="WorkArea">
+                <ScalarProperty Name="NeighbourhoodName" ColumnName="NeighbourhoodName" />
+                <ScalarProperty Name="NeighbourhoodId" ColumnName="NeighbourhoodId" />
+                <ScalarProperty Name="RuralName" ColumnName="RuralName" />
+                <ScalarProperty Name="RuralId" ColumnName="RuralId" />
+                <ScalarProperty Name="Districtname" ColumnName="Districtname" />
+                <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+                <ScalarProperty Name="ProvinceName" ColumnName="ProvinceName" />
+                <ScalarProperty Name="ProvinceId" ColumnName="ProvinceId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RendezvousTeam">
+            <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.RendezvousTeam">
+              <MappingFragment StoreEntitySet="RendezvousTeam">
+                <ScalarProperty Name="WorkingStatus" ColumnName="WorkingStatus" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

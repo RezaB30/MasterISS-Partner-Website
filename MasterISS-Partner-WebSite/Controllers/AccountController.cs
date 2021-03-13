@@ -1,6 +1,5 @@
 ﻿using MasterISS_Partner_WebSite;
 using MasterISS_Partner_WebSite.Authentication;
-using MasterISS_Partner_WebSite.Enums;
 using MasterISS_Partner_WebSite_Database.Models;
 using MasterISS_Partner_WebSite.ViewModels;
 using Microsoft.AspNet.Identity;
@@ -17,6 +16,7 @@ using System.Security.Cryptography;
 using System.Threading;
 using System.Web;
 using System.Web.Mvc;
+using MasterISS_Partner_WebSite_Enums;
 
 namespace MasterISS_Partner_WebSite.Controllers
 {

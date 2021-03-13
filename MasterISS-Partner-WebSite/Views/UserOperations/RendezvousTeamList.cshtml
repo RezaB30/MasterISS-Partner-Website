@@ -1,0 +1,33 @@
+﻿@using MasterISS_Partner_WebSite.Localization
+@using MasterISS_Partner_WebSite.ViewModels
+@model IEnumerable<ListRendezvousTeamViewModel>
+@{
+    ViewBag.Title = "RendezvousTeamList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(m => m.FirstOrDefault().NameSurname)</th>
+            <th>@Html.DisplayNameFor(m => m.FirstOrDefault().WorkingStatus)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.NameSurname)</td>
+                <td>@Html.DisplayFor(modelItem => item.WorkingStatus)</td>
+                @if (item.WorkingStatus == true)
+                {
+                    <td>@Html.ActionLink(View.MakePassive, "DisabledUserInRendezvousTeam", "UserOperations", new { userId = item.Id }, null)</td>
+                }
+                else
+                {
+                    <td>@Html.ActionLink(View.MakeActive, "EnabledUserInRendezvousTeam", "UserOperations", new { userId = item.Id }, null)</td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
