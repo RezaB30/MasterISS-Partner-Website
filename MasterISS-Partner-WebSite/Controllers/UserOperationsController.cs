@@ -199,7 +199,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                     var claimList = new ClaimInfo();
                     var partnerId = claimList.PartnerId();
 
-                    var validRolename = db.Role.Where(r => r.RoleName == addPermissionViewModel.RoleName && r.PartnerId == partnerId).FirstOrDefault();
+                    var validRolename = db.Role.Where(r => r.RoleName == addPermissionViewModel.RoleName && r.PartnerId == partnerId && r.IsEnabled).FirstOrDefault();
                     if (validRolename == null)
                     {
                         if (addPermissionViewModel.AvailableRoles != null && addPermissionViewModel.AvailableRoles.Length > 0)
@@ -253,7 +253,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             var claimInfo = new ClaimInfo();
             var partnerId = claimInfo.PartnerId();
-            ViewBag.RoleList = new SelectList(db.Role.Where(r => r.PartnerId == partnerId).Select(r => new { Value = r.Id, Name = r.RoleName }).ToArray(), "Value", "Name");
+            ViewBag.RoleList = new SelectList(db.Role.Where(r => r.PartnerId == partnerId && r.IsEnabled).Select(r => new { Value = r.Id, Name = r.RoleName }).ToArray(), "Value", "Name");
 
             return View();
         }
@@ -266,7 +266,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             var partnerId = claimInfo.PartnerId();
 
             var dbRole = new PartnerWebSiteEntities();
-            ViewBag.RoleList = new SelectList(dbRole.Role.Where(r => r.PartnerId == partnerId).Select(r => new { Value = r.Id, Name = r.RoleName }).ToArray(), "Value", "Name", newUserViewModel.RoleId);
+            ViewBag.RoleList = new SelectList(dbRole.Role.Where(r => r.PartnerId == partnerId && r.IsEnabled).Select(r => new { Value = r.Id, Name = r.RoleName }).ToArray(), "Value", "Name", newUserViewModel.RoleId);
 
             if (ModelState.IsValid)
             {
@@ -351,7 +351,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                 if (user != null)
                 {
                     var userAvaibleRole = user.RoleId;
-                    ViewBag.RoleList = new SelectList(db.Role.Where(r => r.PartnerId == partnerId).Select(r => new { Value = r.Id, Name = r.RoleName }).ToArray(), "Value", "Name");
+                    ViewBag.RoleList = new SelectList(db.Role.Where(r => r.PartnerId == partnerId && r.IsEnabled).Select(r => new { Value = r.Id, Name = r.RoleName }).ToArray(), "Value", "Name");
 
                     var userViewModel = new UpdateUserRoleViewModel()
                     {
@@ -375,7 +375,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             {
                 using (var db = new PartnerWebSiteEntities())
                 {
-                    var validRole = db.Role.Where(r => r.Id == updateUserRoleViewModel.RoleId).FirstOrDefault();
+                    var validRole = db.Role.Where(r => r.Id == updateUserRoleViewModel.RoleId && r.IsEnabled).FirstOrDefault();
                     if (validRole != null)
                     {
                         var user = db.User.Find(updateUserRoleViewModel.UserId);
@@ -395,6 +395,27 @@ namespace MasterISS_Partner_WebSite.Controllers
                                 }
                             }
                         }
+                        else
+                        {
+                            var haveSetupManagerPermission = db.SetupTeam.Find(user.Id);
+                            if (haveSetupManagerPermission == null)
+                            {
+                                SetupTeam setupTeam = new SetupTeam
+                                {
+                                    UserId = user.Id,
+                                    WorkingStatus = true
+                                };
+                                db.SetupTeam.Add(setupTeam);
+                            }
+                            else
+                            {
+                                if (haveSetupManagerPermission.WorkingStatus == false)
+                                {
+                                    haveSetupManagerPermission.WorkingStatus = true;
+                                }
+                            }
+                            db.SaveChanges();
+                        }
 
                         if (!ValidRoleHaveRendezvousTeamPermission(updateUserRoleViewModel.RoleId))
                         {
@@ -407,7 +428,27 @@ namespace MasterISS_Partner_WebSite.Controllers
                                     db.SaveChanges();
                                 }
                             }
-
+                        }
+                        else
+                        {
+                            var haveRendezvousTeamPermission = db.RendezvousTeam.Find(user.Id);
+                            if (haveRendezvousTeamPermission == null)
+                            {
+                                RendezvousTeam rendezvousTeam = new RendezvousTeam
+                                {
+                                    UserId = user.Id,
+                                    WorkingStatus = true
+                                };
+                                db.RendezvousTeam.Add(rendezvousTeam);
+                            }
+                            else
+                            {
+                                if (haveRendezvousTeamPermission.WorkingStatus == false)
+                                {
+                                    haveRendezvousTeamPermission.WorkingStatus = true;
+                                }
+                            }
+                            db.SaveChanges();
                         }
 
                         //LOG
@@ -430,7 +471,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             using (var db = new PartnerWebSiteEntities())
             {
-                var currentRoleList = db.Role.Where(r => r.PartnerId == partnerId).Select(r => new AvailableRoleList
+                var currentRoleList = db.Role.Where(r => r.PartnerId == partnerId && r.IsEnabled).Select(r => new AvailableRoleList
                 {
                     RoleId = r.Id,
                     RoleName = r.RoleName
@@ -482,7 +523,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                 var partnerId = claimList.PartnerId();
                 using (var db = new PartnerWebSiteEntities())
                 {
-                    var validRolename = db.Role.Where(r => r.Id == roleId && r.PartnerId == partnerId).FirstOrDefault();
+                    var validRolename = db.Role.Where(r => r.Id == roleId && r.PartnerId == partnerId && r.IsEnabled).FirstOrDefault();
                     if (validRolename != null)
                     {
                         var partnerAvaibleRoles = claimList.PartnerRoleId();
@@ -505,44 +546,85 @@ namespace MasterISS_Partner_WebSite.Controllers
                             db.RolePermission.AddRange(addedRolePermission);
                             db.SaveChanges();
 
-                            if (!ValidRoleHaveSetupManagerPermission(roleId))
-                            {
-                                var usersHaveSetupManagerPermission = db.User.Where(u => u.RoleId == roleId && u.PartnerId == partnerId).Select(u => u.Id).ToList();
 
-                                if (usersHaveSetupManagerPermission.Count > 0)
+                            var currentUser = db.User.Where(u => u.RoleId == roleId && u.PartnerId == partnerId && u.IsEnabled).Select(u => u.Id).ToList();
+
+                            if (currentUser.Count > 0)
+                            {
+                                if (!ValidRoleHaveSetupManagerPermission(roleId))
                                 {
-                                    var matchedSetupTeams = db.SetupTeam.Where(st => usersHaveSetupManagerPermission.Contains(st.UserId));
+                                    var matchedSetupTeams = db.SetupTeam.Where(st => currentUser.Contains(st.UserId));
+
                                     if (matchedSetupTeams.Count() > 0)
                                     {
                                         foreach (var item in matchedSetupTeams)
                                         {
                                             item.WorkingStatus = false;
                                         }
-                                        db.SaveChanges();
                                     }
                                 }
-                            }
-
-                            if (!ValidRoleHaveRendezvousTeamPermission(roleId))
-                            {
-                                var usersHaveRendezvousTeamPermission = db.User.Where(u => u.RoleId == roleId && u.PartnerId == partnerId).Select(u => u.Id).ToList();
-
-                                if (usersHaveRendezvousTeamPermission.Count > 0)
+                                else
                                 {
-                                    var matchedRendezvousTeams = db.RendezvousTeam.Where(rt => usersHaveRendezvousTeamPermission.Contains(rt.UserId));
+                                    var currentSetupTeam = db.SetupTeam.Select(st => st.UserId);
+                                    var newSetupTeam = currentUser.Where(u => currentSetupTeam.Contains(u) == false).Select(st => new SetupTeam
+                                    {
+                                        UserId = st,
+                                        WorkingStatus = true
+                                    });
+                                    db.SetupTeam.AddRange(newSetupTeam);
+
+                                    var matchedSetupTeams = db.SetupTeam.Where(st => currentUser.Contains(st.UserId));
+                                    if (matchedSetupTeams.Count() > 0)
+                                    {
+                                        foreach (var item in matchedSetupTeams)
+                                        {
+                                            item.WorkingStatus = true;
+                                        }
+                                    }
+                                }
+
+                                if (!ValidRoleHaveRendezvousTeamPermission(roleId))
+                                {
+                                    var matchedRendezvousTeams = db.RendezvousTeam.Where(rt => currentUser.Contains(rt.UserId));
                                     if (matchedRendezvousTeams.Count() > 0)
                                     {
                                         foreach (var item in matchedRendezvousTeams)
                                         {
                                             item.WorkingStatus = false;
                                         }
-                                        db.SaveChanges();
                                     }
                                 }
+                                else
+                                {
+                                    var currentRendezvousTeam = db.RendezvousTeam.Select(rt => rt.UserId);
+                                    var newRendezvousTeam = currentUser.Where(u => currentRendezvousTeam.Contains(u) == false).Select(rt => new RendezvousTeam
+                                    {
+                                        UserId = rt,
+                                        WorkingStatus = true
+                                    });
+
+                                    db.RendezvousTeam.AddRange(newRendezvousTeam);
+
+                                    var matchedRendezvousTeam = db.RendezvousTeam.Where(rt => currentUser.Contains(rt.UserId));
+                                    if (matchedRendezvousTeam.Count() > 0)
+                                    {
+                                        foreach (var item in matchedRendezvousTeam)
+                                        {
+                                            item.WorkingStatus = true;
+                                        }
+                                    }
+
+                                }
+
+
+                                db.SaveChanges();
                             }
 
-                            return RedirectToAction("Successful");
+
+
                         }
+
+                        return RedirectToAction("Successful");
                     }
                     return RedirectToAction("Index", "Home");
                 }

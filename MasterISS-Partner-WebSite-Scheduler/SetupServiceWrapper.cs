@@ -189,7 +189,54 @@ namespace MasterISS_Partner_WebSite_Scheduler
             {
                 foreach (var item in WrapperParameters)
                 {
-                    //db.User.Where(u => u.PartnerId == item.PartnerId && u.Role.RolePermission.Select(rp => rp.Permission.Id).Contains((int)PermissionListEnum.RendezvousTeam)).Select(u=>u.)//Randevu Ekibiyse bu kullanıcı bunun aktif olup olmadığını kontrol et
+                    var partnerRendezvousTeam = db.RendezvousTeam.Where(rt => rt.WorkingStatus == true && rt.User.PartnerId == item.PartnerId && rt.User.IsEnabled).Select(rt => Convert.ToInt64(rt.UserId));
+                    if (partnerRendezvousTeam.Count() > 0)
+                    {
+                        var unAssignedTaskList = db.TaskList.Where(tl => tl.PartnerId == item.PartnerId && tl.AssignToRendezvousStaff == null);
+
+                        var assd = unAssignedTaskList.Select(a => a.AssignToRendezvousStaff);
+
+                        //var bb = unAssignedTaskList.Where(u => assd.Contains(u.AssignToRendezvousStaff)).Select(a => a.AssignToRendezvousStaff)
+
+                        if (true)
+                        {
+                            var mod = unAssignedTaskList.Count() % partnerRendezvousTeam.Count();
+                            var takeCount = unAssignedTaskList.Count() / partnerRendezvousTeam.Count();
+                            if (mod == 0)
+                            {
+                                foreach (var staff in partnerRendezvousTeam)
+                                {
+                                    //var tasklist = unAssignedTaskList.Where(tl => tl.AssignToRendezvousStaff == null).Take(takeCount);
+                                    var tasklist = unAssignedTaskList.Where(tl => tl.AssignToRendezvousStaff == null).FirstOrDefault();
+
+                                    if (tasklist != null)
+                                    {
+                                        tasklist.AssignToRendezvousStaff = staff;
+                                        db.SaveChanges();
+                                    }
+
+                                    //foreach (var task in tasklist)
+                                    //{
+                                    //    task.AssignToRendezvousStaff = staff;
+                                    //    db.SaveChanges();
+                                    //}
+
+                                }
+                            }
+
+                        }
+                        else
+                        {
+                            foreach (var task in unAssignedTaskList)
+                            {
+                                var currentHaveMinTaskStaff = db.TaskList.Where(tl => partnerRendezvousTeam.Contains((long)tl.AssignToRendezvousStaff) && tl.PartnerId == item.PartnerId).Select(pl => pl.AssignToRendezvousStaff).Min();
+                                task.AssignToRendezvousStaff = currentHaveMinTaskStaff.Value;
+                                db.SaveChanges();
+                            }
+                        }
+
+                    }
+
                 }
             }
         }

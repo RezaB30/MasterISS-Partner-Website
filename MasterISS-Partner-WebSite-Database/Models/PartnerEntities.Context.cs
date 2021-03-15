@@ -27,7 +27,6 @@ namespace MasterISS_Partner_WebSite_Database.Models
     
         public virtual DbSet<PartnerSetupInfo> PartnerSetupInfo { get; set; }
         public virtual DbSet<Permission> Permission { get; set; }
-        public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<RolePermission> RolePermission { get; set; }
         public virtual DbSet<SchedulerOperationsTime> SchedulerOperationsTime { get; set; }
         public virtual DbSet<SetupTeam> SetupTeam { get; set; }
@@ -36,5 +35,6 @@ namespace MasterISS_Partner_WebSite_Database.Models
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<WorkArea> WorkArea { get; set; }
         public virtual DbSet<RendezvousTeam> RendezvousTeam { get; set; }
+        public virtual DbSet<Role> Role { get; set; }
     }
 }
