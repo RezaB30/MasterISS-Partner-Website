@@ -14,9 +14,17 @@ namespace MasterISS_Partner_WebSite_Database.Models
     
     public partial class SetupTeam
     {
-        public int UserId { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public SetupTeam()
+        {
+            this.TaskList = new HashSet<TaskList>();
+        }
+    
+        public long UserId { get; set; }
         public bool WorkingStatus { get; set; }
     
         public virtual User User { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TaskList> TaskList { get; set; }
     }
 }

@@ -118,7 +118,7 @@ namespace MasterISS_Partner_WebSite_Scheduler
                                 });
                                 db.TaskList.Add(taskInfo);
                             }
-                            var scheduler = new SchedulerOperationsTime
+                            SchedulerOperationsTime scheduler = new SchedulerOperationsTime
                             {
                                 Type = (int)SchedulerOperationsType.GetTaskList,
                                 Date = DateTime.Now
@@ -137,7 +137,7 @@ namespace MasterISS_Partner_WebSite_Scheduler
             var lastChangeTime = DateTime.Now.AddDays(-29);
             using (var db = new PartnerWebSiteEntities())
             {
-                var lastLoopTime = db.SchedulerOperationsTime.Where(sot => sot.Type == (int)SchedulerOperationsType.GetUpdatedStatus).OrderByDescending(sot => sot.Date).FirstOrDefault();
+                var lastLoopTime = db.SchedulerOperationsTime.Where(sot => sot.Type == (int)SchedulerOperationsType.UpdatedStatusDatabaseToWebService).OrderByDescending(sot => sot.Date).FirstOrDefault();
                 if (lastLoopTime != null)
                 {
                     lastChangeTime = lastLoopTime.Date;
@@ -158,7 +158,7 @@ namespace MasterISS_Partner_WebSite_Scheduler
                             TaskNo = item.TaskNo,
                             Description = item.Description,
                             FaultCode = item.FaultCodes,
-                            ReservationDate = DateTimeConvertedBySetupWebService(item.ReservationDate)
+                            ReservationDate = item.ReservationDate
                         },
                     };
 
@@ -171,9 +171,9 @@ namespace MasterISS_Partner_WebSite_Scheduler
                     }
                     else
                     {
-                        var scheduler = new SchedulerOperationsTime
+                        SchedulerOperationsTime scheduler = new SchedulerOperationsTime
                         {
-                            Type = (int)SchedulerOperationsType.GetUpdatedStatus,
+                            Type = (int)SchedulerOperationsType.UpdatedStatusDatabaseToWebService,
                             Date = DateTime.Now
                         };
                         db.SchedulerOperationsTime.Add(scheduler);
@@ -183,73 +183,33 @@ namespace MasterISS_Partner_WebSite_Scheduler
             }
         }
 
-        public void ass()
+        public void ShareUnAssignedTaskToActiveRendezvousTeam()
         {
             using (var db = new PartnerWebSiteEntities())
             {
                 foreach (var item in WrapperParameters)
                 {
-                    var partnerRendezvousTeam = db.RendezvousTeam.Where(rt => rt.WorkingStatus == true && rt.User.PartnerId == item.PartnerId && rt.User.IsEnabled).Select(rt => Convert.ToInt64(rt.UserId));
-                    if (partnerRendezvousTeam.Count() > 0)
+                    var partnerRendezvousTeam = db.RendezvousTeam.Where(rt => rt.WorkingStatus == true && rt.User.PartnerId == item.PartnerId && rt.User.IsEnabled);
+                    if (partnerRendezvousTeam != null)
                     {
                         var unAssignedTaskList = db.TaskList.Where(tl => tl.PartnerId == item.PartnerId && tl.AssignToRendezvousStaff == null);
 
-                        var assd = unAssignedTaskList.Select(a => a.AssignToRendezvousStaff);
-
-                        //var bb = unAssignedTaskList.Where(u => assd.Contains(u.AssignToRendezvousStaff)).Select(a => a.AssignToRendezvousStaff)
-
-                        if (true)
+                        foreach (var task in unAssignedTaskList)
                         {
-                            var mod = unAssignedTaskList.Count() % partnerRendezvousTeam.Count();
-                            var takeCount = unAssignedTaskList.Count() / partnerRendezvousTeam.Count();
-                            if (mod == 0)
-                            {
-                                foreach (var staff in partnerRendezvousTeam)
-                                {
-                                    //var tasklist = unAssignedTaskList.Where(tl => tl.AssignToRendezvousStaff == null).Take(takeCount);
-                                    var tasklist = unAssignedTaskList.Where(tl => tl.AssignToRendezvousStaff == null).FirstOrDefault();
-
-                                    if (tasklist != null)
-                                    {
-                                        tasklist.AssignToRendezvousStaff = staff;
-                                        db.SaveChanges();
-                                    }
-
-                                    //foreach (var task in tasklist)
-                                    //{
-                                    //    task.AssignToRendezvousStaff = staff;
-                                    //    db.SaveChanges();
-                                    //}
-
-                                }
-                            }
-
+                            var currentMinHaveTaskRendezvousTeamStaff = partnerRendezvousTeam.Select(staff => new { userId = staff.UserId, taskCount = staff.TaskList.Count }).OrderBy(pt => pt.taskCount).FirstOrDefault();
+                            task.AssignToRendezvousStaff = currentMinHaveTaskRendezvousTeamStaff.userId;
+                            db.SaveChanges();
                         }
-                        else
-                        {
-                            foreach (var task in unAssignedTaskList)
-                            {
-                                var currentHaveMinTaskStaff = db.TaskList.Where(tl => partnerRendezvousTeam.Contains((long)tl.AssignToRendezvousStaff) && tl.PartnerId == item.PartnerId).Select(pl => pl.AssignToRendezvousStaff).Min();
-                                task.AssignToRendezvousStaff = currentHaveMinTaskStaff.Value;
-                                db.SaveChanges();
-                            }
-                        }
-
                     }
-
                 }
+                SchedulerOperationsTime scheduler = new SchedulerOperationsTime
+                {
+                    Type = (int)SchedulerOperationsType.SharedUnAssignedTask,
+                    Date = DateTime.Now
+                };
+                db.SchedulerOperationsTime.Add(scheduler);
+                db.SaveChanges();
             }
-        }
-
-
-        private string DateTimeConvertedBySetupWebService(string dateToFormatted)
-        {
-            if (!string.IsNullOrEmpty(dateToFormatted))
-            {
-                var formattedDate = DateTime.ParseExact(dateToFormatted, "dd.MM.yyyy HH:mm", null).ToString("yyyy-MM-dd HH:mm:ss");
-                return formattedDate;
-            }
-            return null;
         }
     }
 }

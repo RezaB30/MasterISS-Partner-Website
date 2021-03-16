@@ -16,7 +16,7 @@ namespace MasterISS_Partner_WebSite_Database.Models
     {
         public long Id { get; set; }
         public long TaskNo { get; set; }
-        public Nullable<int> UserId { get; set; }
+        public Nullable<long> UserId { get; set; }
         public short FaultCodes { get; set; }
         public string Description { get; set; }
         public string ReservationDate { get; set; }

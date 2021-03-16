@@ -119,6 +119,29 @@ namespace MasterISS_Partner_WebSite.Controllers
             return View();
         }
 
+        private void TaskList(bool isAdmin)
+        {
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var claimInfo = new ClaimInfo();
+                if (isAdmin)
+                {
+                    var taskList = db.TaskList.Where(tl => tl.PartnerId == claimInfo.PartnerId() && tl.TaskStatus != (int)TaskStatusEnum.Completed).ToList();
+                }
+                else
+                {
+                    var wrapper = new WebServiceWrapper();
+                    var userMail = wrapper.GetUserSubMail();
+                    var validRendezvousStaff = db.RendezvousTeam.Where(rt => rt.WorkingStatus == true && rt.User.UserSubMail == userMail);
+                    if (validRendezvousStaff != null)
+                    {
+                        var rendezvousStaff = validRendezvousStaff.FirstOrDefault().UserId;
+                        var taskList = db.TaskList.Where(tl => tl.AssignToRendezvousStaff == rendezvousStaff && tl.TaskStatus != (int)TaskStatusEnum.Completed && tl.PartnerId == claimInfo.PartnerId());
+                    }
+                }
+            }
+        }
+
         private string FixedAddress(string address)
         {
             var fixedAddress = address.Replace("..", ".");
@@ -339,7 +362,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                             ChangeTime = datetimeNow,
                             Description = updateTaskStatusViewModel.Description,
                             FaultCodes = (short)updateTaskStatusViewModel.FaultCodes,
-                            ReservationDate = updateTaskStatusViewModel.ReservationDate,
+                            ReservationDate = DateTimeConvertedBySetupWebService(updateTaskStatusViewModel.ReservationDate),
                             UserId = db.User.Where(u => u.UserSubMail == wrapper.GetUserSubMail()).FirstOrDefault().Id,
                             TaskNo = (long)updateTaskStatusViewModel.TaskNo,
                         };
@@ -359,6 +382,16 @@ namespace MasterISS_Partner_WebSite.Controllers
             ViewBag.FaultTypes = FaultTypeList((int?)updateTaskStatusViewModel.FaultCodes ?? null);
             return View(updateTaskStatusViewModel);
         }
+        private string DateTimeConvertedBySetupWebService(string dateToFormatted)
+        {
+            if (!string.IsNullOrEmpty(dateToFormatted))
+            {
+                var formattedDate = DateTime.ParseExact(dateToFormatted, "dd.MM.yyyy HH:mm", null).ToString("yyyy-MM-dd HH:mm:ss");
+                return formattedDate;
+            }
+            return null;
+        }
+
 
         [HttpGet]
         public ActionResult UploadDocument(long taskNo)

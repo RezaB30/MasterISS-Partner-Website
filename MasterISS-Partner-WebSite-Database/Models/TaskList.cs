@@ -46,6 +46,8 @@ namespace MasterISS_Partner_WebSite_Database.Models
         public int PartnerId { get; set; }
     
         public virtual PartnerSetupInfo PartnerSetupInfo { get; set; }
+        public virtual RendezvousTeam RendezvousTeam { get; set; }
+        public virtual SetupTeam SetupTeam { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UpdatedSetupStatus> UpdatedSetupStatus { get; set; }
     }

@@ -9,6 +9,7 @@ namespace MasterISS_Partner_WebSite_Enums
     public enum SchedulerOperationsType
     {
         GetTaskList = 1,
-        GetUpdatedStatus = 2,
+        UpdatedStatusDatabaseToWebService = 2,
+        SharedUnAssignedTask = 3,
     }
 }

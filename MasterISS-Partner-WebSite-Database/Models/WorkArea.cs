@@ -15,7 +15,7 @@ namespace MasterISS_Partner_WebSite_Database.Models
     public partial class WorkArea
     {
         public long Id { get; set; }
-        public int UserId { get; set; }
+        public long UserId { get; set; }
         public long ProvinceId { get; set; }
         public string ProvinceName { get; set; }
         public Nullable<long> DistrictId { get; set; }
