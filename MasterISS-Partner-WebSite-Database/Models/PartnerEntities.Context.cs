@@ -36,5 +36,6 @@ namespace MasterISS_Partner_WebSite_Database.Models
         public virtual DbSet<UpdatedSetupStatus> UpdatedSetupStatus { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<WorkArea> WorkArea { get; set; }
+        public virtual DbSet<SchedulerSettings> SchedulerSettings { get; set; }
     }
 }

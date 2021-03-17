@@ -8,7 +8,7 @@ namespace MasterISS_Partner_WebSite.ViewModels
 {
     public class SetupTeamListViewModel
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         [Display(ResourceType = typeof(Localization.Model), Name = "UserNameSurname")]
         public string UserDisplayName { get; set; }

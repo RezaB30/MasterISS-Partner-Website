@@ -29,8 +29,11 @@ namespace MasterISS_Partner_WebSite_Scheduler
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            this.ServiceName = "Service1";
+            // 
+            // Service1
+            // 
+            this.ServiceName = "MasterISSPartnerService";
+
         }
 
         #endregion

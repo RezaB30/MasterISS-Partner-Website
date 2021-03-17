@@ -53,6 +53,13 @@
           <Property Name="Type" Type="smallint" Nullable="false" />
           <Property Name="Date" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="SchedulerSettings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceCheckTimer" Type="time" Precision="0" Nullable="false" />
+        </EntityType>
         <EntityType Name="SetupTeam">
           <Key>
             <PropertyRef Name="UserId" />
@@ -255,6 +262,7 @@
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RolePermission" EntityType="Self.RolePermission" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SchedulerOperationsTime" EntityType="Self.SchedulerOperationsTime" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SchedulerSettings" EntityType="Self.SchedulerSettings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SetupTeam" EntityType="Self.SetupTeam" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaskList" EntityType="Self.TaskList" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UpdatedSetupStatus" EntityType="Self.UpdatedSetupStatus" Schema="dbo" store:Type="Tables" />
@@ -357,6 +365,7 @@
             <End Role="User" EntitySet="User" />
             <End Role="WorkArea" EntitySet="WorkArea" />
           </AssociationSet>
+          <EntitySet Name="SchedulerSettings" EntityType="MasterISSPartnerWebSiteModel.SchedulerSettings" />
         </EntityContainer>
         <EntityType Name="PartnerSetupInfo">
           <Key>
@@ -621,6 +630,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="SchedulerSettings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceCheckTimer" Type="Time" Nullable="false" Precision="0" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -757,6 +773,14 @@
                 <ScalarProperty Name="ProvinceName" ColumnName="ProvinceName" />
                 <ScalarProperty Name="ProvinceId" ColumnName="ProvinceId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SchedulerSettings">
+            <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.SchedulerSettings">
+              <MappingFragment StoreEntitySet="SchedulerSettings">
+                <ScalarProperty Name="ServiceCheckTimer" ColumnName="ServiceCheckTimer" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -26,6 +26,7 @@
         <AssociationConnector Association="MasterISSPartnerWebSiteModel.FK_TaskList_SetupTeam" />
         <AssociationConnector Association="MasterISSPartnerWebSiteModel.FK_UpdatedSetupStatus_TaskList" />
         <AssociationConnector Association="MasterISSPartnerWebSiteModel.FK_WorkArea_User" />
+        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.SchedulerSettings" Width="1.5" PointX="3.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

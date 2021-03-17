@@ -83,6 +83,9 @@
     <Compile Include="Models\SchedulerOperationsTime.cs">
       <DependentUpon>PartnerEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SchedulerSettings.cs">
+      <DependentUpon>PartnerEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SetupTeam.cs">
       <DependentUpon>PartnerEntities.tt</DependentUpon>
     </Compile>

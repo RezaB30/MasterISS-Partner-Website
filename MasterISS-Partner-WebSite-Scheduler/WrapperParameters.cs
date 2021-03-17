@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace MasterISS_Partner_WebSite_Scheduler
 {
-    class WrapperParameters
+    public class WrapperParameters
     {
-        internal string Username;
+        public string Username;
 
-        internal string Password;
+        public string Password;
 
-        internal int PartnerId;
+        public int PartnerId;
     }
 }
