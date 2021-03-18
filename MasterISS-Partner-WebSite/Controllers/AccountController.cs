@@ -17,6 +17,7 @@ using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using MasterISS_Partner_WebSite_Enums;
+using MasterISS_Partner_WebSite.ViewModels.Account;
 
 namespace MasterISS_Partner_WebSite.Controllers
 {
@@ -65,9 +66,9 @@ namespace MasterISS_Partner_WebSite.Controllers
                                     {
                                         PartnerSetupInfo partnerSetupInfo = new PartnerSetupInfo
                                         {
-                                            PartnerId=authenticateResponse.AuthenticationResponse.UserID,
-                                            SetupServiceHash=authenticateResponse.AuthenticationResponse.SetupServiceHash,
-                                            SetupServiceUser=authenticateResponse.AuthenticationResponse.SetupServiceUser
+                                            PartnerId = authenticateResponse.AuthenticationResponse.UserID,
+                                            SetupServiceHash = authenticateResponse.AuthenticationResponse.SetupServiceHash,
+                                            SetupServiceUser = authenticateResponse.AuthenticationResponse.SetupServiceUser
                                         };
                                         db.PartnerSetupInfo.Add(partnerSetupInfo);
                                         db.SaveChanges();
@@ -85,32 +86,15 @@ namespace MasterISS_Partner_WebSite.Controllers
                                 claims.AddRange(partnerPermissionList.Select(a => a.claimRoleNames));
                                 claims.AddRange(partnerPermissionList.Select(a => a.claimRoleIds));
 
-                                if (userSignInModel.Username == userSignInModel.PartnerCode)//Admin
+                                var subUserPermission = userValid.Role.RolePermission.Select(m => new Claim(ClaimTypes.Role, m.Permission.PermissionName)).ToList();
+                                claims.AddRange(subUserPermission);
+
+                                var authenticator = new SubUserAuthenticator();
+                                var isSignIn = authenticator.SignIn(Request.GetOwinContext(), userSignInModel.Username, userSignInModel.Password, claims);
+
+                                if (isSignIn)
                                 {
-                                    claims.Add(new Claim(ClaimTypes.Role, "Admin"));
-                                    claims.Add(new Claim(ClaimTypes.NameIdentifier, authenticateResponse.AuthenticationResponse.UserID.ToString()));
-                                    claims.Add(new Claim(ClaimTypes.Email, userSignInModel.Username));
-                                    claims.Add(new Claim(ClaimTypes.Name, authenticateResponse.AuthenticationResponse.DisplayName));
-
-                                    var identity = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
-                                    Request.GetOwinContext().Authentication.SignIn(identity);
-
                                     return RedirectToAction("Index", "Home");
-                                }
-                                else//SubUser
-                                {
-                                    var subUserPermission = userValid.Role.RolePermission.Select(m => new Claim(ClaimTypes.Role, m.Permission.PermissionName)).ToList();
-                                    claims.AddRange(subUserPermission);
-
-
-
-                                    var authenticator = new SubUserAuthenticator();
-                                    var isSignIn = authenticator.SignIn(Request.GetOwinContext(), userSignInModel.Username, userSignInModel.Password, claims);
-
-                                    if (isSignIn)
-                                    {
-                                        return RedirectToAction("Index", "Home");
-                                    }
                                 }
                             }
                             ViewBag.AuthenticateError = Localization.View.AuthenticateError;
@@ -119,20 +103,118 @@ namespace MasterISS_Partner_WebSite.Controllers
                     }
 
                     //LOG
-                    LoggerError.Fatal($"An error occurred while Authenticate , ErrorCode: {authenticateResponse.ResponseMessage.ErrorCode}, ErrorMessage : {authenticateResponse.ResponseMessage.ErrorMessage}  by: {userSignInModel.Username}");
+                    LoggerError.Fatal($"An error occurred while UserAuthenticate , ErrorCode: {authenticateResponse.ResponseMessage.ErrorCode}, ErrorMessage : {authenticateResponse.ResponseMessage.ErrorMessage}  by: {userSignInModel.Username}");
                     //LOG
 
                     ViewBag.AuthenticateError = Localization.View.AuthenticateError;
                     return View(userSignInModel);
                 }
                 //LOG
-                LoggerError.Fatal($"An error occurred while Authenticate , ErrorCode: {authenticateResponse.ResponseMessage.ErrorCode}, ErrorMessage : {authenticateResponse.ResponseMessage.ErrorMessage} by: {userSignInModel.Username}");
+                LoggerError.Fatal($"An error occurred while User Authenticate , ErrorCode: {authenticateResponse.ResponseMessage.ErrorCode}, ErrorMessage : {authenticateResponse.ResponseMessage.ErrorMessage} by: {userSignInModel.Username}");
                 //LOG
 
                 ViewBag.AuthenticateError = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(authenticateResponse.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
                 return View(userSignInModel);
             }
             return View(userSignInModel);
+        }
+
+        public ActionResult AdminSignIn()
+        {
+            return View();
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult AdminSignIn(AdminSignInViewModel adminSignInModel)//Kod Tekrarları var onları hallet.
+        {
+            if (ModelState.IsValid)
+            {
+                var wrapper = new WebServiceWrapper();
+
+                var authenticateResponse = wrapper.Authenticate(adminSignInModel);
+
+                if (authenticateResponse.ResponseMessage.ErrorCode == 0)
+                {
+                    if (authenticateResponse.AuthenticationResponse.IsAuthenticated == true)
+                    {
+                        using (var db = new PartnerWebSiteEntities())
+                        {
+                            var adminPasswordHash = wrapper.CalculateHash<SHA256>(adminSignInModel.Password);
+                            var adminValid = db.User.Where(u => u.Password == adminPasswordHash && u.UserSubMail == adminSignInModel.Username && u.RoleId == null && u.PartnerId == null).FirstOrDefault();
+                            if (adminValid == null)
+                            {
+                                User user = new User
+                                {
+                                    IsEnabled = true,
+                                    PartnerId = null,
+                                    RoleId = null,
+                                    UserSubMail = adminSignInModel.Username,
+                                    Password = adminPasswordHash,
+                                    NameSurname = authenticateResponse.AuthenticationResponse.DisplayName,
+                                };
+                                db.User.Add(user);
+                                db.SaveChanges();
+                            }
+
+                            var claims = new List<Claim>
+                            {
+                                new Claim("UserMail", adminSignInModel.Username),
+                                new Claim("PartnerName", authenticateResponse.AuthenticationResponse.DisplayName),
+                                new Claim("PartnerId", authenticateResponse.AuthenticationResponse.UserID.ToString()),
+                                new Claim(ClaimTypes.Role, "Admin")
+                            };
+
+                            if (authenticateResponse.AuthenticationResponse.Permissions.Select(pl => pl.Name).Contains(PartnerTypeEnum.Setup.ToString()))
+                            {
+                                var validSetupInfo = db.PartnerSetupInfo.Find(authenticateResponse.AuthenticationResponse.UserID);
+                                if (validSetupInfo == null)
+                                {
+                                    PartnerSetupInfo partnerSetupInfo = new PartnerSetupInfo
+                                    {
+                                        PartnerId = authenticateResponse.AuthenticationResponse.UserID,
+                                        SetupServiceHash = authenticateResponse.AuthenticationResponse.SetupServiceHash,
+                                        SetupServiceUser = authenticateResponse.AuthenticationResponse.SetupServiceUser
+                                    };
+                                    db.PartnerSetupInfo.Add(partnerSetupInfo);
+                                    db.SaveChanges();
+                                }
+                                claims.Add(new Claim("SetupServiceHash", authenticateResponse.AuthenticationResponse.SetupServiceHash));
+                                claims.Add(new Claim("SetupServiceUser", authenticateResponse.AuthenticationResponse.SetupServiceUser));
+                            }
+
+                            var partnerPermissionList = authenticateResponse.AuthenticationResponse.Permissions.Select(ar => new
+                            {
+                                claimRoleNames = new Claim(ClaimTypes.Role, ar.Name),
+                                claimRoleIds = new Claim("RoleId", ar.ID.ToString())
+                            }).ToArray();
+
+
+                            var authenticator = new SubUserAuthenticator();
+                            var isSignIn = authenticator.SignIn(Request.GetOwinContext(), adminSignInModel.Username, adminSignInModel.Password, claims);
+
+                            if (isSignIn)
+                            {
+                                return RedirectToAction("Index", "Home");
+                            }
+                        }
+                    }
+                    //LOG
+                    LoggerError.Fatal($"An error occurred while Admin Authenticate , ErrorCode: {authenticateResponse.ResponseMessage.ErrorCode}, ErrorMessage : {authenticateResponse.ResponseMessage.ErrorMessage}  by: {adminSignInModel.Username}");
+                    //LOG
+
+                    ViewBag.AuthenticateError = Localization.View.AuthenticateError;
+                    return View(adminSignInModel);
+                }
+                //LOG
+                LoggerError.Fatal($"An error occurred while Admin Authenticate, ErrorCode: {authenticateResponse.ResponseMessage.ErrorCode}, ErrorMessage : {authenticateResponse.ResponseMessage.ErrorMessage} by: {adminSignInModel.Username}");
+                //LOG
+
+                ViewBag.AuthenticateError = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(authenticateResponse.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
+                return View(adminSignInModel);
+            }
+
+            return View(adminSignInModel);
         }
 
         public ActionResult SignOut()

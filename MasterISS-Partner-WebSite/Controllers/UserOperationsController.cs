@@ -355,7 +355,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                     var userViewModel = new UpdateUserRoleViewModel()
                     {
-                        RoleId = userAvaibleRole,
+                        RoleId = (int)userAvaibleRole,
                         UserEmail = user.UserSubMail,
                         UserNameSurname = user.NameSurname,
                         UserId = userId
@@ -822,47 +822,6 @@ namespace MasterISS_Partner_WebSite.Controllers
             }
         }
 
-        private bool ValidRoleHaveSetupManagerPermission(int roleId)
-        {
-            using (var db = new PartnerWebSiteEntities())
-            {
-                var role = db.Role.Find(roleId);
-                var roleHaveSetupManagerPermission = role.RolePermission.Select(rp => rp.Permission.Id).Contains((int)PermissionListEnum.SetupManager);
-                if (roleHaveSetupManagerPermission)
-                {
-                    return true;
-                }
-                return false;
-            }
-        }
-
-        private bool ValidRoleHaveRendezvousTeamPermission(int roleId)
-        {
-            using (var db = new PartnerWebSiteEntities())
-            {
-                var role = db.Role.Find(roleId);
-                var roleHaveSetupManagerPermission = role.RolePermission.Select(rp => rp.Permission.Id).Contains((int)PermissionListEnum.RendezvousTeam);
-                if (roleHaveSetupManagerPermission)
-                {
-                    return true;
-                }
-                return false;
-            }
-        }
-
-        private bool ValidEmail(string eMail)
-        {
-            using (var db = new PartnerWebSiteEntities())
-            {
-                var valid = db.User.Where(u => u.UserSubMail == eMail).FirstOrDefault();
-                if (valid == null)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
         public ActionResult EnableUser(string userMail)
         {
             var wrapper = new WebServiceWrapper();
@@ -964,6 +923,45 @@ namespace MasterISS_Partner_WebSite.Controllers
             return selectListsPermission;
         }
 
+        private bool ValidRoleHaveSetupManagerPermission(int roleId)
+        {
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var role = db.Role.Find(roleId);
+                var roleHaveSetupManagerPermission = role.RolePermission.Select(rp => rp.Permission.Id).Contains((int)PermissionListEnum.SetupManager);
+                if (roleHaveSetupManagerPermission)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
 
+        private bool ValidRoleHaveRendezvousTeamPermission(int roleId)
+        {
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var role = db.Role.Find(roleId);
+                var roleHaveSetupManagerPermission = role.RolePermission.Select(rp => rp.Permission.Id).Contains((int)PermissionListEnum.RendezvousTeam);
+                if (roleHaveSetupManagerPermission)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        private bool ValidEmail(string eMail)
+        {
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var valid = db.User.Where(u => u.UserSubMail == eMail).FirstOrDefault();
+                if (valid == null)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

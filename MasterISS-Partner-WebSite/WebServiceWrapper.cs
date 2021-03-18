@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using MasterISS_Partner_WebSite_Enums;
+using MasterISS_Partner_WebSite.ViewModels.Account;
 
 namespace MasterISS_Partner_WebSite
 {
@@ -275,6 +276,27 @@ namespace MasterISS_Partner_WebSite
                     SubUserEmail = userSignInModel.Username,
                     UserEmail = userSignInModel.PartnerCode,
                     PartnerPasswordHash = CalculateHash<SHA256>(userSignInModel.Password),
+                }
+            };
+
+            var response = Client.Authenticate(request);
+
+            return response;
+        }
+
+        public PartnerServiceAuthenticationResponse Authenticate(AdminSignInViewModel adminSignInView)
+        {
+            var request = new PartnerServiceAuthenticationRequest()
+            {
+                Culture = Culture,
+                Hash = Hash<SHA256>(),
+                Rand = Rand,
+                Username = Username,
+                AuthenticationParameters = new AuthenticationRequest()
+                {
+                    SubUserEmail = adminSignInView.Username,
+                    UserEmail = adminSignInView.Username,
+                    PartnerPasswordHash = CalculateHash<SHA256>(adminSignInView.Password),
                 }
             };
 

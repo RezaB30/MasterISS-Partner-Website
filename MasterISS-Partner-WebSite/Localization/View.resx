@@ -138,6 +138,9 @@
   <data name="AddUserPage" xml:space="preserve">
     <value>Kullanıcı Ekleme</value>
   </data>
+  <data name="AdminPanel" xml:space="preserve">
+    <value>Admin Paneli</value>
+  </data>
   <data name="AuthenticateError" xml:space="preserve">
     <value>Giriş İşlemi Başarısız.</value>
   </data>

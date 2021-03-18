@@ -18,6 +18,7 @@ using System.Net;
 using System.Xml.Linq;
 using MasterISS_Partner_WebSite_Database.Models;
 using MasterISS_Partner_WebSite_Enums;
+using System.Collections.Generic;
 
 namespace MasterISS_Partner_WebSite.Controllers
 {
@@ -31,8 +32,12 @@ namespace MasterISS_Partner_WebSite.Controllers
         private TimeSpan lastSessionTime;
 
         // GET: Setup
-        public ActionResult Index([Bind(Prefix = "search")] GetTaskListRequestViewModel taskListRequestModel, int page = 1, int pageSize = 20)
+        public ActionResult Index([Bind(Prefix = "search")] GetTaskListRequestViewModel taskListRequestModel, int? setupTeamStaffId, int page = 1, int pageSize = 20)
         {
+            if (setupTeamStaffId.HasValue)
+            {
+
+            }
             taskListRequestModel = taskListRequestModel ?? new GetTaskListRequestViewModel();
 
             if (string.IsNullOrEmpty(taskListRequestModel.TaskListStartDate) && string.IsNullOrEmpty(taskListRequestModel.TaskListEndDate))
@@ -117,9 +122,12 @@ namespace MasterISS_Partner_WebSite.Controllers
             }
             ViewBag.ValidationError = "Error";
             return View();
+
+
+
         }
 
-        private void TaskList(bool isAdmin)
+        private List<TaskList> TaskList(bool isAdmin)
         {
             using (var db = new PartnerWebSiteEntities())
             {
@@ -127,17 +135,20 @@ namespace MasterISS_Partner_WebSite.Controllers
                 if (isAdmin)
                 {
                     var taskList = db.TaskList.Where(tl => tl.PartnerId == claimInfo.PartnerId() && tl.TaskStatus != (int)TaskStatusEnum.Completed).ToList();
+                    return taskList;
                 }
                 else
                 {
                     var wrapper = new WebServiceWrapper();
                     var userMail = wrapper.GetUserSubMail();
                     var validRendezvousStaff = db.RendezvousTeam.Where(rt => rt.WorkingStatus == true && rt.User.UserSubMail == userMail);
-                    if (validRendezvousStaff != null)
+                    if (validRendezvousStaff == null)
                     {
-                        var rendezvousStaff = validRendezvousStaff.FirstOrDefault().UserId;
-                        var taskList = db.TaskList.Where(tl => tl.AssignToRendezvousStaff == rendezvousStaff && tl.TaskStatus != (int)TaskStatusEnum.Completed && tl.PartnerId == claimInfo.PartnerId());
+                        LoggerError.Fatal("An error occurred while Setup=>TaskList: Rendezvous Staff not found ");
                     }
+                    var rendezvousStaff = validRendezvousStaff.FirstOrDefault().UserId;
+                    var taskList = db.TaskList.Where(tl => tl.AssignToRendezvousStaff == rendezvousStaff && tl.TaskStatus != (int)TaskStatusEnum.Completed && tl.PartnerId == claimInfo.PartnerId());
+                    return taskList.ToList();
                 }
             }
         }
@@ -382,6 +393,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             ViewBag.FaultTypes = FaultTypeList((int?)updateTaskStatusViewModel.FaultCodes ?? null);
             return View(updateTaskStatusViewModel);
         }
+
         private string DateTimeConvertedBySetupWebService(string dateToFormatted)
         {
             if (!string.IsNullOrEmpty(dateToFormatted))

@@ -25,7 +25,7 @@ namespace MasterISS_Partner_WebSite.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("testwebservice")]
+        [global::System.Configuration.DefaultSettingValueAttribute("netspeed-services")]
         public string Username {
             get {
                 return ((string)(this["Username"]));
@@ -34,7 +34,7 @@ namespace MasterISS_Partner_WebSite.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("12345678")]
+        [global::System.Configuration.DefaultSettingValueAttribute("BWzQGencrDqW9qxT")]
         public string Password {
             get {
                 return ((string)(this["Password"]));

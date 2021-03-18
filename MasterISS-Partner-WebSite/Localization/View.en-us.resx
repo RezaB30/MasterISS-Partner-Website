@@ -138,6 +138,9 @@
   <data name="AddUserPage" xml:space="preserve">
     <value>Add User Page</value>
   </data>
+  <data name="AdminPanel" xml:space="preserve">
+    <value>Admin Panel</value>
+  </data>
   <data name="AuthenticateError" xml:space="preserve">
     <value>Login Failed.</value>
   </data>

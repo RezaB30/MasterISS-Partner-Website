@@ -1,11 +1,11 @@
 ﻿@using MasterISS_Partner_WebSite.Localization
-@model  MasterISS_Partner_WebSite.ViewModels.UserSignInViewModel
+@model  MasterISS_Partner_WebSite.ViewModels.Account.AdminSignInViewModel
 @{
-    ViewBag.Title = View.SignInPanel;
+    ViewBag.Title = "AdminSignIn";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@using (Html.BeginForm("SignIn", "Account", FormMethod.Post))
+@using (Html.BeginForm("AdminSignIn", "Account", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     <div>
@@ -16,12 +16,6 @@
         </div>
 
         <div>
-            @Html.LabelFor(m => m.PartnerCode)
-            @Html.EditorFor(m => m.PartnerCode)
-            @Html.ValidationMessageFor(m => m.PartnerCode)
-        </div>
-
-        <div>
             @Html.LabelFor(m => m.Password)
             @Html.EditorFor(m => m.Password)
             @Html.ValidationMessageFor(m => m.Password)
@@ -29,10 +23,7 @@
     </div>
     <input value="@View.SignIn" type="submit" />
 }
-
 @ViewBag.AuthenticateError
-
-@Html.ActionLink(View.AdminPanel, "AdminSignIn", "Account")
 
 @section JavaScript{
     <script>

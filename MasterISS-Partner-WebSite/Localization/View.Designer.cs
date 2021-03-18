@@ -124,6 +124,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Admin Paneli.
+        /// </summary>
+        public static string AdminPanel {
+            get {
+                return ResourceManager.GetString("AdminPanel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Giriş İşlemi Başarısız..
         /// </summary>
         public static string AuthenticateError {

@@ -328,6 +328,7 @@
     </Compile>
     <Compile Include="ServiceResponse.cs" />
     <Compile Include="SetupServiceWrapper.cs" />
+    <Compile Include="ViewModels\Account\AdminSignInViewModel.cs" />
     <Compile Include="ViewModels\Account\ForgetPasswordWievModel.cs" />
     <Compile Include="ViewModels\Account\RegisterViewModel.cs" />
     <Compile Include="ViewModels\Account\UserSignInViewModel.cs" />
@@ -457,6 +458,7 @@
     <Content Include="Views\UserOperations\AddAndUpdateWorkAreaSetupTeamUser.cshtml" />
     <Content Include="Views\UserOperations\ListWorkAreaSetupTeamUser.cshtml" />
     <Content Include="Views\UserOperations\RendezvousTeamList.cshtml" />
+    <Content Include="Views\Account\AdminSignIn.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

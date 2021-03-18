@@ -113,8 +113,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PartnerId" Type="int" Nullable="false" />
-          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="PartnerId" Type="int" />
+          <Property Name="RoleId" Type="int" />
           <Property Name="UserSubMail" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="NameSurname" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="64" Nullable="false" />
@@ -232,7 +232,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_User_Role">
-          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Role">
@@ -320,6 +320,7 @@
           <EntitySet Name="Role" EntityType="MasterISSPartnerWebSiteModel.Role" />
           <EntitySet Name="RolePermission" EntityType="MasterISSPartnerWebSiteModel.RolePermission" />
           <EntitySet Name="SchedulerOperationsTime" EntityType="MasterISSPartnerWebSiteModel.SchedulerOperationsTime" />
+          <EntitySet Name="SchedulerSettings" EntityType="MasterISSPartnerWebSiteModel.SchedulerSettings" />
           <EntitySet Name="SetupTeam" EntityType="MasterISSPartnerWebSiteModel.SetupTeam" />
           <EntitySet Name="TaskList" EntityType="MasterISSPartnerWebSiteModel.TaskList" />
           <EntitySet Name="UpdatedSetupStatus" EntityType="MasterISSPartnerWebSiteModel.UpdatedSetupStatus" />
@@ -365,7 +366,6 @@
             <End Role="User" EntitySet="User" />
             <End Role="WorkArea" EntitySet="WorkArea" />
           </AssociationSet>
-          <EntitySet Name="SchedulerSettings" EntityType="MasterISSPartnerWebSiteModel.SchedulerSettings" />
         </EntityContainer>
         <EntityType Name="PartnerSetupInfo">
           <Key>
@@ -422,6 +422,13 @@
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Type" Type="Int16" Nullable="false" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="SchedulerSettings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceCheckTimer" Type="Time" Nullable="false" Precision="0" />
         </EntityType>
         <EntityType Name="SetupTeam">
           <Key>
@@ -483,8 +490,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PartnerId" Type="Int32" Nullable="false" />
-          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="PartnerId" Type="Int32" />
+          <Property Name="RoleId" Type="Int32" />
           <Property Name="UserSubMail" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="NameSurname" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
@@ -571,7 +578,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_User_Role">
-          <End Type="MasterISSPartnerWebSiteModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="MasterISSPartnerWebSiteModel.Role" Role="Role" Multiplicity="0..1" />
           <End Type="MasterISSPartnerWebSiteModel.User" Role="User" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Role">
@@ -630,13 +637,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="SchedulerSettings">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ServiceCheckTimer" Type="Time" Nullable="false" Precision="0" />
-        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -693,6 +693,14 @@
               <MappingFragment StoreEntitySet="SchedulerOperationsTime">
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SchedulerSettings">
+            <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.SchedulerSettings">
+              <MappingFragment StoreEntitySet="SchedulerSettings">
+                <ScalarProperty Name="ServiceCheckTimer" ColumnName="ServiceCheckTimer" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -773,14 +781,6 @@
                 <ScalarProperty Name="ProvinceName" ColumnName="ProvinceName" />
                 <ScalarProperty Name="ProvinceId" ColumnName="ProvinceId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SchedulerSettings">
-            <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.SchedulerSettings">
-              <MappingFragment StoreEntitySet="SchedulerSettings">
-                <ScalarProperty Name="ServiceCheckTimer" ColumnName="ServiceCheckTimer" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

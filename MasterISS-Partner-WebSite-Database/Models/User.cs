@@ -21,8 +21,8 @@ namespace MasterISS_Partner_WebSite_Database.Models
         }
     
         public long Id { get; set; }
-        public int PartnerId { get; set; }
-        public int RoleId { get; set; }
+        public Nullable<int> PartnerId { get; set; }
+        public Nullable<int> RoleId { get; set; }
         public string UserSubMail { get; set; }
         public string NameSurname { get; set; }
         public string Password { get; set; }
