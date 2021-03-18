@@ -53,11 +53,19 @@ namespace MasterISS_Partner_WebSite_Scheduler
         }
         private static List<SchedulerOperation> PrepareOperations(TimeSpan minute)
         {
+            SchedulerTask shareUnAssignedTaskToActiveRendezvousTeam = new SchedulerTask("ShareUnAssignedTaskToActiveRendezvousTeam", new ShareUnAssignedTaskToActiveRendezvousTeam());
+            var shareList = new List<SchedulerTask>();
+            shareList.Add(shareUnAssignedTaskToActiveRendezvousTeam);
+
+            SchedulerTask getTaskListWebServiceToDatabase = new SchedulerTask("GetTaskListWebServiceToDatabase", new GetTaskListWebServiceToDatabase(), 0, shareList);
+            var getTaskList = new List<SchedulerTask>();
+            getTaskList.Add(getTaskListWebServiceToDatabase);
+
+
+
             return new List<SchedulerOperation>()
             {
-                new SchedulerOperation("GetTaskListWebServiceToDatabase",new GetTaskListWebServiceToDatabase(),new SchedulerTimingOptions(new SchedulerIntervalTimeSpan(minute))),
-                new SchedulerOperation("ShareUnAssignedTaskToActiveRendezvousTeam",new ShareUnAssignedTaskToActiveRendezvousTeam(),new SchedulerTimingOptions(new SchedulerIntervalTimeSpan(minute))),
-                new SchedulerOperation("UpdatedTaskStatusDatabaseToWebService",new UpdatedTaskStatusDatabaseToWebService(),new SchedulerTimingOptions(new SchedulerIntervalTimeSpan(minute))),
+                new SchedulerOperation("UpdatedTaskStatusDatabaseToWebService",new UpdatedTaskStatusDatabaseToWebService(),new SchedulerTimingOptions(new SchedulerIntervalTimeSpan(minute)),0,getTaskList),
             };
         }
     }

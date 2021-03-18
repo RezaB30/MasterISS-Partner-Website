@@ -17,9 +17,8 @@ namespace MasterISS_Partner_WebSite_Scheduler
     public class SetupServiceWrapper
     {
         public IEnumerable<WrapperParameters> WrapperParameters;
-        public readonly string Culture;
-        public readonly string KeyFragment;
-        public readonly string Rand;
+        public string Culture;
+
         public Logger LoggerError = LogManager.GetLogger("AppLoggerError");
 
         public CustomerSetupServiceClient Client { get; set; }
@@ -32,10 +31,11 @@ namespace MasterISS_Partner_WebSite_Scheduler
                 {
                     Username = psi.SetupServiceUser,
                     Password = psi.SetupServiceHash,
-                    PartnerId = psi.PartnerId
+                    PartnerId = psi.PartnerId,
                 }).ToList();
 
-                LoggerError.Fatal($"ass2{partnerSetupInfos.FirstOrDefault().Username}");
+                LoggerError.Fatal($"ass2 : { string.Join(",", partnerSetupInfos.Select(p => p.Username))}");
+
 
                 //WrapperParameters = Enumerable.Empty<WrapperParameters>();
                 WrapperParameters = partnerSetupInfos;
@@ -44,10 +44,13 @@ namespace MasterISS_Partner_WebSite_Scheduler
 
             }
 
-            LoggerError.Fatal($"ass10{CultureInfo.CurrentCulture}");
+            LoggerError.Fatal($"ass10 :{CultureInfo.CurrentCulture}");
 
             Culture = CultureInfo.CurrentCulture.ToString();
-            Rand = Guid.NewGuid().ToString("N");
+            //Rand = Guid.NewGuid().ToString("N");
+
+            //LoggerError.Fatal($"ass11 : {Guid.NewGuid().ToString("N")}");
+
             Client = new CustomerSetupServiceClient();
         }
 
@@ -64,11 +67,9 @@ namespace MasterISS_Partner_WebSite_Scheduler
 
         public void Get()
         {
-            SetupServiceWrapper.LoggerError.Fatal($"ass8");
-
             try
             {
-                SetupServiceWrapper.LoggerError.Fatal($"ass3");
+                SetupServiceWrapper.LoggerError.Fatal($"ASSS1");
 
                 var endDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 var startDate = DateTime.Now.AddDays(-30);
@@ -82,11 +83,12 @@ namespace MasterISS_Partner_WebSite_Scheduler
 
                     foreach (var item in SetupServiceWrapper.WrapperParameters)
                     {
+                        var Rand = Guid.NewGuid().ToString("N");
                         var request = new GetTaskListRequest
                         {
                             Culture = SetupServiceWrapper.Culture,
-                            Hash = SetupServiceWrapper.CalculateHash<SHA256>(item.Username + SetupServiceWrapper.Rand + item.Password + SetupServiceWrapper.Client.GetKeyFragment(item.Username)),
-                            Rand = SetupServiceWrapper.Rand,
+                            Hash = SetupServiceWrapper.CalculateHash<SHA256>(item.Username + Rand + item.Password + SetupServiceWrapper.Client.GetKeyFragment(item.Username)),
+                            Rand = Rand,
                             Username = item.Username,
                             DateSpan = new DateSpan
                             {
@@ -189,6 +191,8 @@ namespace MasterISS_Partner_WebSite_Scheduler
         {
             try
             {
+                SetupServiceWrapper.LoggerError.Fatal($"ASSS2");
+
                 var dateTimeNow = DateTime.Now;
                 var lastChangeTime = DateTime.Now.AddDays(-29);
                 using (var db = new PartnerWebSiteEntities())
@@ -203,11 +207,12 @@ namespace MasterISS_Partner_WebSite_Scheduler
 
                     foreach (var item in updatedStatus)
                     {
+                        var Rand = Guid.NewGuid().ToString("N");
                         var request = new AddTaskStatusUpdateRequest
                         {
                             Culture = SetupServiceWrapper.Culture,
-                            Hash = SetupServiceWrapper.CalculateHash<SHA256>(item.TaskList.PartnerSetupInfo.SetupServiceUser + SetupServiceWrapper.Rand + item.TaskList.PartnerSetupInfo.SetupServiceHash + SetupServiceWrapper.Client.GetKeyFragment(item.TaskList.PartnerSetupInfo.SetupServiceUser)),
-                            Rand = SetupServiceWrapper.Rand,
+                            Hash = SetupServiceWrapper.CalculateHash<SHA256>(item.TaskList.PartnerSetupInfo.SetupServiceUser + Rand + item.TaskList.PartnerSetupInfo.SetupServiceHash + SetupServiceWrapper.Client.GetKeyFragment(item.TaskList.PartnerSetupInfo.SetupServiceUser)),
+                            Rand = Rand,
                             Username = item.TaskList.PartnerSetupInfo.SetupServiceUser,
                             TaskUpdate = new TaskUpdate
                             {
@@ -272,18 +277,27 @@ namespace MasterISS_Partner_WebSite_Scheduler
         {
             try
             {
+                SetupServiceWrapper.LoggerError.Fatal($"ASSS3");
                 using (var db = new PartnerWebSiteEntities())
                 {
                     foreach (var item in SetupServiceWrapper.WrapperParameters)
                     {
-                        var partnerRendezvousTeam = db.RendezvousTeam.Where(rt => rt.WorkingStatus == true && rt.User.PartnerId == item.PartnerId && rt.User.IsEnabled);
+                        var partnerRendezvousTeam = db.RendezvousTeam.Where(rt => rt.WorkingStatus == true && rt.User.PartnerId == item.PartnerId && rt.User.IsEnabled).ToList();
+
+                        SetupServiceWrapper.LoggerError.Fatal($"ass12 : {string.Join(" , ", partnerRendezvousTeam.Select(p => p.UserId))}");
+
                         if (partnerRendezvousTeam != null)
                         {
-                            var unAssignedTaskList = db.TaskList.Where(tl => tl.PartnerId == item.PartnerId && tl.AssignToRendezvousStaff == null);
+                            var unAssignedTaskList = db.TaskList.Where(tl => tl.PartnerId == item.PartnerId && tl.AssignToRendezvousStaff == null).ToList();
+
+                            SetupServiceWrapper.LoggerError.Fatal($"ass13 : {string.Join(" , ", unAssignedTaskList.Select(u => u.TaskNo))}");
 
                             foreach (var task in unAssignedTaskList)
                             {
                                 var currentMinHaveTaskRendezvousTeamStaff = partnerRendezvousTeam.Select(staff => new { userId = staff.UserId, taskCount = staff.TaskList.Count }).OrderBy(pt => pt.taskCount).FirstOrDefault();
+
+                                SetupServiceWrapper.LoggerError.Fatal($"ass14 : {string.Join(" , ", currentMinHaveTaskRendezvousTeamStaff)}");
+
                                 task.AssignToRendezvousStaff = currentMinHaveTaskRendezvousTeamStaff.userId;
                                 db.SaveChanges();
                             }
