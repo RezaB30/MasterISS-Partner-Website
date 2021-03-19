@@ -10,9 +10,9 @@ using System.Web;
 
 namespace MasterISS_Partner_WebSite.Authentication
 {
-    public static class AdminAuthenticator
+    public static class Authenticator
     {
-        public static bool AdminSignIn(this IOwinContext context, IEnumerable<Claim> claims)
+        public static bool SignIn(this IOwinContext context, IEnumerable<Claim> claims)
         {
             var identity = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
             var authManager = context.Authentication;

@@ -54,6 +54,8 @@
                 <th>@Html.DisplayNameFor(model => model.FirstOrDefault().TaskStatus)</th>
                 <th>@Html.DisplayNameFor(model => model.FirstOrDefault().TaskType)</th>
                 <th>@Html.DisplayNameFor(model => model.FirstOrDefault().ReservationDate)</th>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().RendezvousTeamStaffName)</th>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().SetupTeamStaffName)</th>
             </tr>
         </thead>
         <tbody>
@@ -69,6 +71,8 @@
                     <td>@Html.DisplayFor(modelItem => item.TaskStatus)</td>
                     <td>@Html.DisplayFor(modelItem => item.TaskType)</td>
                     <td>@Html.DisplayFor(modelItem => item.ReservationDate)</td>
+                    <td>@Html.DisplayFor(modelItem => item.RendezvousTeamStaffName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.SetupTeamStaffName)</td>
                     <td>@Html.ActionLink(View.CustomerInfo, "CustomerDetail", "Setup", new { taskNo = item.TaskNo }, new { @class = "btn btn-success" })</td>
                     <td><a href="https://www.google.com/maps/search/?api=1&query=@item.AddressLatitudeandLongitude[0],@item.AddressLatitudeandLongitude[1]" target="_blank">@View.RouteMap</a></td>
                 </tr>

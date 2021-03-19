@@ -38,5 +38,11 @@ namespace MasterISS_Partner_WebSite.ViewModels.Setup.Response
 
         [Display(ResourceType = typeof(Localization.Model), Name = "SetupAddress")]
         public string Address { get; set; }
+
+        public string RendezvousTeamStaffName { get; set; }
+
+        public int PartnerId { get; set; }
+
+        public string SetupTeamStaffName { get; set; }
     }
 }

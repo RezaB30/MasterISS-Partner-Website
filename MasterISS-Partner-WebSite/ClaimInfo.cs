@@ -29,12 +29,12 @@ namespace MasterISS_Partner_WebSite
 
             return convertedPartnerId;
         }
-        public int UserId()
+        public long UserId()
         {
             var userId = CurrentClaims().Where(c => c.Type == ClaimTypes.NameIdentifier)
                   .Select(c => c.Value).SingleOrDefault();
 
-            var convertedUserId = Convert.ToInt32(userId);
+            var convertedUserId = Convert.ToInt64(userId);
 
             return convertedUserId;
         }

@@ -35,8 +35,8 @@ namespace MasterISS_Partner_WebSite_Database.Models
         public string CustomerPhoneNo { get; set; }
         public string ContactName { get; set; }
         public Nullable<short> CustomerType { get; set; }
-        public string ReservationDate { get; set; }
-        public string TaskIssueDate { get; set; }
+        public Nullable<System.DateTime> ReservationDate { get; set; }
+        public Nullable<System.DateTime> TaskIssueDate { get; set; }
         public string LastConnectionDate { get; set; }
         public Nullable<short> TaskType { get; set; }
         public Nullable<short> TaskStatus { get; set; }

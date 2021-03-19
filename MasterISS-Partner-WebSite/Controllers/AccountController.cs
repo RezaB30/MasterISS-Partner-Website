@@ -18,6 +18,7 @@ using System.Web;
 using System.Web.Mvc;
 using MasterISS_Partner_WebSite_Enums;
 using MasterISS_Partner_WebSite.ViewModels.Account;
+using MasterISS_Partner_WebSite_WebServices.PartnerServiceReference;
 
 namespace MasterISS_Partner_WebSite.Controllers
 {
@@ -50,48 +51,22 @@ namespace MasterISS_Partner_WebSite.Controllers
                             var userPasswordHash = wrapper.CalculateHash<SHA256>(userSignInModel.Password);
                             var userValid = db.User.Where(u => u.IsEnabled == true && u.PartnerId == authenticateResponse.AuthenticationResponse.UserID && u.Password == userPasswordHash && u.UserSubMail == userSignInModel.Username).FirstOrDefault();
 
-                            if (userValid != null || (userSignInModel.PartnerCode == userSignInModel.Username))
+                            if (userValid != null)
                             {
                                 var claims = new List<Claim>
                                     {
-                                        new Claim("UserMail", userSignInModel.PartnerCode),
-                                        new Claim("PartnerName", authenticateResponse.AuthenticationResponse.DisplayName),
-                                        new Claim("PartnerId", authenticateResponse.AuthenticationResponse.UserID.ToString()),
+                                       new Claim("UserMail", userSignInModel.PartnerCode),
+                                       new Claim(ClaimTypes.NameIdentifier, userValid.Id.ToString()),
+                                       new Claim(ClaimTypes.Email, userValid.UserSubMail),
+                                       new Claim(ClaimTypes.Name,userValid.NameSurname)
                                     };
 
-                                if (authenticateResponse.AuthenticationResponse.Permissions.Select(pl => pl.Name).Contains(PartnerTypeEnum.Setup.ToString()))
-                                {
-                                    var validSetupInfo = db.PartnerSetupInfo.Find(authenticateResponse.AuthenticationResponse.UserID);
-                                    if (validSetupInfo == null)
-                                    {
-                                        PartnerSetupInfo partnerSetupInfo = new PartnerSetupInfo
-                                        {
-                                            PartnerId = authenticateResponse.AuthenticationResponse.UserID,
-                                            SetupServiceHash = authenticateResponse.AuthenticationResponse.SetupServiceHash,
-                                            SetupServiceUser = authenticateResponse.AuthenticationResponse.SetupServiceUser
-                                        };
-                                        db.PartnerSetupInfo.Add(partnerSetupInfo);
-                                        db.SaveChanges();
-                                    }
-                                    claims.Add(new Claim("SetupServiceHash", authenticateResponse.AuthenticationResponse.SetupServiceHash));
-                                    claims.Add(new Claim("SetupServiceUser", authenticateResponse.AuthenticationResponse.SetupServiceUser));
-                                }
-
-                                var partnerPermissionList = authenticateResponse.AuthenticationResponse.Permissions.Select(ar => new
-                                {
-                                    claimRoleNames = new Claim(ClaimTypes.Role, ar.Name),
-                                    claimRoleIds = new Claim("RoleId", ar.ID.ToString())
-                                }).ToArray();
-
-                                claims.AddRange(partnerPermissionList.Select(a => a.claimRoleNames));
-                                claims.AddRange(partnerPermissionList.Select(a => a.claimRoleIds));
+                                ValidResponseHaveSetupPermissionAndAddClaims(authenticateResponse, claims);
 
                                 var subUserPermission = userValid.Role.RolePermission.Select(m => new Claim(ClaimTypes.Role, m.Permission.PermissionName)).ToList();
                                 claims.AddRange(subUserPermission);
 
-                                var authenticator = new SubUserAuthenticator();
-                                var isSignIn = authenticator.SignIn(Request.GetOwinContext(), userSignInModel.Username, userSignInModel.Password, claims);
-
+                                var isSignIn = Authenticator.SignIn(Request.GetOwinContext(), claims);
                                 if (isSignIn)
                                 {
                                     return RedirectToAction("Index", "Home");
@@ -126,7 +101,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult AdminSignIn(AdminSignInViewModel adminSignInModel)//Kod Tekrarları var onları hallet.
+        public ActionResult AdminSignIn(AdminSignInViewModel adminSignInModel)
         {
             if (ModelState.IsValid)
             {
@@ -155,43 +130,21 @@ namespace MasterISS_Partner_WebSite.Controllers
                                 };
                                 db.User.Add(user);
                                 db.SaveChanges();
+                                adminValid= db.User.Where(u => u.Password == adminPasswordHash && u.UserSubMail == adminSignInModel.Username && u.RoleId == null && u.PartnerId == null).FirstOrDefault();
                             }
 
                             var claims = new List<Claim>
                             {
                                 new Claim("UserMail", adminSignInModel.Username),
-                                new Claim("PartnerName", authenticateResponse.AuthenticationResponse.DisplayName),
-                                new Claim("PartnerId", authenticateResponse.AuthenticationResponse.UserID.ToString()),
-                                new Claim(ClaimTypes.Role, "Admin")
+                                new Claim(ClaimTypes.Role, "Admin"),
+                                new Claim(ClaimTypes.NameIdentifier, adminValid.Id.ToString()),
+                                new Claim(ClaimTypes.Email, adminValid.UserSubMail),
+                                new Claim(ClaimTypes.Name,adminValid.NameSurname)
                             };
 
-                            if (authenticateResponse.AuthenticationResponse.Permissions.Select(pl => pl.Name).Contains(PartnerTypeEnum.Setup.ToString()))
-                            {
-                                var validSetupInfo = db.PartnerSetupInfo.Find(authenticateResponse.AuthenticationResponse.UserID);
-                                if (validSetupInfo == null)
-                                {
-                                    PartnerSetupInfo partnerSetupInfo = new PartnerSetupInfo
-                                    {
-                                        PartnerId = authenticateResponse.AuthenticationResponse.UserID,
-                                        SetupServiceHash = authenticateResponse.AuthenticationResponse.SetupServiceHash,
-                                        SetupServiceUser = authenticateResponse.AuthenticationResponse.SetupServiceUser
-                                    };
-                                    db.PartnerSetupInfo.Add(partnerSetupInfo);
-                                    db.SaveChanges();
-                                }
-                                claims.Add(new Claim("SetupServiceHash", authenticateResponse.AuthenticationResponse.SetupServiceHash));
-                                claims.Add(new Claim("SetupServiceUser", authenticateResponse.AuthenticationResponse.SetupServiceUser));
-                            }
+                            ValidResponseHaveSetupPermissionAndAddClaims(authenticateResponse, claims);
 
-                            var partnerPermissionList = authenticateResponse.AuthenticationResponse.Permissions.Select(ar => new
-                            {
-                                claimRoleNames = new Claim(ClaimTypes.Role, ar.Name),
-                                claimRoleIds = new Claim("RoleId", ar.ID.ToString())
-                            }).ToArray();
-
-
-                            var authenticator = new SubUserAuthenticator();
-                            var isSignIn = authenticator.SignIn(Request.GetOwinContext(), adminSignInModel.Username, adminSignInModel.Password, claims);
+                            var isSignIn = Authenticator.SignIn(Request.GetOwinContext(), claims);
 
                             if (isSignIn)
                             {
@@ -222,6 +175,45 @@ namespace MasterISS_Partner_WebSite.Controllers
             var authenticator = new SubUserAuthenticator();
             authenticator.SignOut(Request.GetOwinContext());
             return RedirectToAction("SignIn", "Account");
+        }
+
+        private void ValidResponseHaveSetupPermissionAndAddClaims(PartnerServiceAuthenticationResponse response, List<Claim> currentClaimList)
+        {
+            if (response.AuthenticationResponse.Permissions.Select(pl => pl.Name).Contains(PartnerTypeEnum.Setup.ToString()))
+            {
+                using (var db = new PartnerWebSiteEntities())
+                {
+                    var validSetupInfo = db.PartnerSetupInfo.Find(response.AuthenticationResponse.UserID);
+                    if (validSetupInfo == null)
+                    {
+                        PartnerSetupInfo partnerSetupInfo = new PartnerSetupInfo
+                        {
+                            PartnerId = response.AuthenticationResponse.UserID,
+                            SetupServiceHash = response.AuthenticationResponse.SetupServiceHash,
+                            SetupServiceUser = response.AuthenticationResponse.SetupServiceUser
+                        };
+                        db.PartnerSetupInfo.Add(partnerSetupInfo);
+                        db.SaveChanges();
+                    }
+                    currentClaimList.Add(new Claim("SetupServiceHash", response.AuthenticationResponse.SetupServiceHash));
+                    currentClaimList.Add(new Claim("SetupServiceUser", response.AuthenticationResponse.SetupServiceUser));
+                }
+            }
+
+            var partnerPermissionList = response.AuthenticationResponse.Permissions.Select(ar => new
+            {
+                claimRoleNames = new Claim(ClaimTypes.Role, ar.Name),
+                claimRoleIds = new Claim("RoleId", ar.ID.ToString())
+            }).ToArray();
+
+            currentClaimList.AddRange(partnerPermissionList.Select(a => a.claimRoleNames));
+            currentClaimList.AddRange(partnerPermissionList.Select(a => a.claimRoleIds));
+            currentClaimList.Add(new Claim("PartnerName", response.AuthenticationResponse.DisplayName));
+            currentClaimList.Add(new Claim("PartnerId", response.AuthenticationResponse.UserID.ToString()));
+
+
+
+
         }
     }
 }

@@ -181,7 +181,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
-    <Compile Include="Authentication\AdminAuthenticator.cs" />
+    <Compile Include="Authentication\Authenticator.cs" />
     <Compile Include="Authentication\SubUserAuthenticator.cs" />
     <Compile Include="ClaimInfo.cs" />
     <Compile Include="Controllers\AccountController.cs" />

@@ -86,8 +86,8 @@
           <Property Name="CustomerPhoneNo" Type="nvarchar" MaxLength="50" />
           <Property Name="ContactName" Type="nvarchar" MaxLength="50" />
           <Property Name="CustomerType" Type="smallint" />
-          <Property Name="ReservationDate" Type="nvarchar" MaxLength="50" />
-          <Property Name="TaskIssueDate" Type="nvarchar" MaxLength="50" />
+          <Property Name="ReservationDate" Type="datetime" />
+          <Property Name="TaskIssueDate" Type="datetime" />
           <Property Name="LastConnectionDate" Type="nvarchar" MaxLength="50" />
           <Property Name="TaskType" Type="smallint" />
           <Property Name="TaskStatus" Type="smallint" />
@@ -458,8 +458,8 @@
           <Property Name="CustomerPhoneNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ContactName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CustomerType" Type="Int16" />
-          <Property Name="ReservationDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="TaskIssueDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ReservationDate" Type="DateTime" Precision="3" />
+          <Property Name="TaskIssueDate" Type="DateTime" Precision="3" />
           <Property Name="LastConnectionDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TaskType" Type="Int16" />
           <Property Name="TaskStatus" Type="Int16" />

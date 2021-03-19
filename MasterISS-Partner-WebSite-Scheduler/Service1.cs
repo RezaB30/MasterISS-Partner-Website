@@ -54,12 +54,16 @@ namespace MasterISS_Partner_WebSite_Scheduler
         private static List<SchedulerOperation> PrepareOperations(TimeSpan minute)
         {
             SchedulerTask shareUnAssignedTaskToActiveRendezvousTeam = new SchedulerTask("ShareUnAssignedTaskToActiveRendezvousTeam", new ShareUnAssignedTaskToActiveRendezvousTeam());
-            var shareList = new List<SchedulerTask>();
-            shareList.Add(shareUnAssignedTaskToActiveRendezvousTeam);
+            var shareList = new List<SchedulerTask>
+            {
+                shareUnAssignedTaskToActiveRendezvousTeam
+            };
 
             SchedulerTask getTaskListWebServiceToDatabase = new SchedulerTask("GetTaskListWebServiceToDatabase", new GetTaskListWebServiceToDatabase(), 0, shareList);
-            var getTaskList = new List<SchedulerTask>();
-            getTaskList.Add(getTaskListWebServiceToDatabase);
+            var getTaskList = new List<SchedulerTask>
+            {
+                getTaskListWebServiceToDatabase
+            };
 
 
 

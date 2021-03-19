@@ -32,25 +32,21 @@ namespace MasterISS_Partner_WebSite.Controllers
         private TimeSpan lastSessionTime;
 
         // GET: Setup
-        public ActionResult Index([Bind(Prefix = "search")] GetTaskListRequestViewModel taskListRequestModel, int? setupTeamStaffId, int page = 1, int pageSize = 20)
+        public ActionResult Index([Bind(Prefix = "search")] GetTaskListRequestViewModel taskListRequestModel, int page = 1, int pageSize = 20)
         {
-            if (setupTeamStaffId.HasValue)
-            {
-
-            }
             taskListRequestModel = taskListRequestModel ?? new GetTaskListRequestViewModel();
 
             if (string.IsNullOrEmpty(taskListRequestModel.TaskListStartDate) && string.IsNullOrEmpty(taskListRequestModel.TaskListEndDate))
             {
-                taskListRequestModel.TaskListStartDate = DateTime.Now.AddDays(-30).ToString("dd.MM.yyyy HH:mm");
+                taskListRequestModel.TaskListStartDate = DateTime.Now.AddDays(-10).ToString("dd.MM.yyyy HH:mm");
                 taskListRequestModel.TaskListEndDate = DateTime.Now.ToString("dd.MM.yyyy HH:mm");
-                ModelState.Clear();
-                TryValidateModel(taskListRequestModel);
+                //ModelState.Clear();
+                //TryValidateModel(taskListRequestModel);
             }
 
             else if (!string.IsNullOrEmpty(taskListRequestModel.TaskListStartDate) && string.IsNullOrEmpty(taskListRequestModel.TaskListEndDate))
             {
-                var regex = new Regex(@"^([1-9]|([012][0-9])|(3[01])).([0]{0,1}[1-9]|1[012]).\d\d\d\d (20|21|22|23|[0-1]?\d):[0-5]?\d+");
+                var regex = new Regex(@"^([1-9]|([012][0-9])|(3[01])).([0]{0,1}[1-9]|1[012]).\d\d\d\d (20|21|22|23|[0-1]?\d):[0-5]?\d+");//dd.MM.yyyy HH:mm"
 
                 var isMatch = regex.Match(taskListRequestModel.TaskListStartDate);
 
@@ -64,9 +60,6 @@ namespace MasterISS_Partner_WebSite.Controllers
                 {
                     ViewBag.ErrorMessage = Localization.View.StartDateValid;
                 }
-
-                ModelState.Clear();
-                TryValidateModel(taskListRequestModel);
             }
 
             if (ModelState.IsValid)
@@ -76,26 +69,27 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                 if (startDate <= endDate)
                 {
-                    if (startDate.AddDays(Properties.Settings.Default.SearchLimit) >= endDate)
+                    using (var db = new PartnerWebSiteEntities())
                     {
-                        var setupWrapper = new SetupServiceWrapper();
-
-                        var response = setupWrapper.GetTaskList(taskListRequestModel);
-
-                        if (response.ResponseMessage.ErrorCode == 0)
+                        if (startDate.AddDays(Properties.Settings.Default.SearchLimit) >= endDate)
                         {
-                            var list = response.SetupTasks.Where(tlresponse => taskListRequestModel.SearchedTaskNo.HasValue == true ? tlresponse.TaskNo == taskListRequestModel.SearchedTaskNo : tlresponse.ContactName.Contains(taskListRequestModel.SearchedName == null ? "" : taskListRequestModel.SearchedName.ToUpper()) && tlresponse.TaskStatus != (int)TaskStatusEnum.Completed).Select(st => new GetTaskListResponseViewModel
+                            var taskList = TaskList(User.IsInRole("Admin"));
+
+                            var list = taskList.Where(tlresponse => tlresponse.TaskIssueDate < endDate && tlresponse.TaskIssueDate > startDate && taskListRequestModel.SearchedTaskNo.HasValue == true ? tlresponse.TaskNo == taskListRequestModel.SearchedTaskNo : tlresponse.ContactName.Contains(taskListRequestModel.SearchedName == null ? "" : taskListRequestModel.SearchedName.ToUpper())).Select(tl => new GetTaskListResponseViewModel
                             {
-                                AddressLatitudeandLongitude = GetAddressLatituteandLongitude(st.Address),
-                                ContactName = st.ContactName,
-                                CustomerPhoneNo = st.CustomerPhoneNo,
-                                TaskIssueDate = Convert.ToDateTime(st.TaskIssueDate),
-                                TaskNo = st.TaskNo,
-                                XDSLNo = st.XDSLNo,
-                                TaskStatus = TaskStatusDescription(st.TaskStatus),
-                                TaskType = TaskTypeDescription(st.TaskType),
-                                ReservationDate = Convert.ToDateTime(st.ReservationDate),
-                                Address = st.Address
+                                AddressLatitudeandLongitude = GetAddressLatituteandLongitude(tl.Address),
+                                ContactName = tl.ContactName,
+                                CustomerPhoneNo = tl.CustomerPhoneNo,
+                                TaskIssueDate = tl.TaskIssueDate == null ? DateTime.MinValue : tl.TaskIssueDate.Value,
+                                TaskNo = tl.TaskNo,
+                                XDSLNo = tl.XDSLNo,
+                                TaskStatus = TaskStatusDescription((short)tl.TaskStatus),
+                                TaskType = TaskTypeDescription((short)tl.TaskType),
+                                ReservationDate = tl.ReservationDate == null ? DateTime.MinValue : tl.ReservationDate.Value,
+                                Address = tl.Address,
+                                PartnerId = tl.PartnerId,
+                                RendezvousTeamStaffName = tl.AssignToRendezvousStaff == null ? null : db.RendezvousTeam.Find(tl.AssignToRendezvousStaff).User.NameSurname,
+                                SetupTeamStaffName = tl.AssignToSetupTeam == null ? null : db.SetupTeam.Find(tl.AssignToSetupTeam).User.NameSurname
                             });
 
                             var totalCount = list.Count();
@@ -106,13 +100,6 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                             return View(pagedListByResponseList);
                         }
-                        //LOG
-                        var wrapper = new WebServiceWrapper();
-                        LoggerError.Fatal("An error occurred while GetTaskList , ErrorCode: " + response.ResponseMessage.ErrorCode + ", by: " + wrapper.GetUserSubMail());
-                        //LOG
-
-                        ViewBag.ErrorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
-                        return View();
                     }
                     ViewBag.Max30Days = Localization.View.Max30Days;
                     return View();
@@ -132,23 +119,25 @@ namespace MasterISS_Partner_WebSite.Controllers
             using (var db = new PartnerWebSiteEntities())
             {
                 var claimInfo = new ClaimInfo();
+                var partnerId = claimInfo.PartnerId();
+
                 if (isAdmin)
                 {
-                    var taskList = db.TaskList.Where(tl => tl.PartnerId == claimInfo.PartnerId() && tl.TaskStatus != (int)TaskStatusEnum.Completed).ToList();
+                    var adminId = claimInfo.UserId();
+                    var adminValid = db.User.Find(adminId);
+                    if (adminValid == null)
+                    {
+                        LoggerError.Fatal("An error occurred while SetupController=>TaskList: Admin not found in User Table");
+                    }
+                    var taskList = db.TaskList.Where(tl => tl.PartnerId == partnerId && tl.TaskStatus != (int)TaskStatusEnum.Completed).ToList();
                     return taskList;
                 }
                 else
                 {
-                    var wrapper = new WebServiceWrapper();
-                    var userMail = wrapper.GetUserSubMail();
-                    var validRendezvousStaff = db.RendezvousTeam.Where(rt => rt.WorkingStatus == true && rt.User.UserSubMail == userMail);
-                    if (validRendezvousStaff == null)
-                    {
-                        LoggerError.Fatal("An error occurred while Setup=>TaskList: Rendezvous Staff not found ");
-                    }
-                    var rendezvousStaff = validRendezvousStaff.FirstOrDefault().UserId;
-                    var taskList = db.TaskList.Where(tl => tl.AssignToRendezvousStaff == rendezvousStaff && tl.TaskStatus != (int)TaskStatusEnum.Completed && tl.PartnerId == claimInfo.PartnerId());
-                    return taskList.ToList();
+                    var userId = claimInfo.UserId();
+
+                    var taskList = db.TaskList.Where(tl => (tl.AssignToRendezvousStaff == userId || tl.AssignToSetupTeam == userId) && tl.TaskStatus != (int)TaskStatusEnum.Completed && tl.PartnerId == partnerId).ToList();
+                    return taskList;
                 }
             }
         }
@@ -293,7 +282,6 @@ namespace MasterISS_Partner_WebSite.Controllers
             {
                 var lineInfo = new GetCustomerLineDetailsViewModel
                 {
-                    //Hız cevaplarında çevirme işlemi yapacak mıyız????
                     CurrentDowloadSpeed = response.CustomerLineDetails.CurrentDownloadSpeed,
                     CurrentUploadSpeed = response.CustomerLineDetails.CurrentUploadSpeed,
                     DowloadNoiseMargin = response.CustomerLineDetails.DownloadNoiseMargin,
@@ -337,7 +325,7 @@ namespace MasterISS_Partner_WebSite.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "UpdateTaskStatus")]//Admin not entry
+        [Authorize(Roles = "UpdateTaskStatus,Admin")]
         public ActionResult UpdateTaskStatus(long taskNo)
         {
             var request = new AddTaskStatusUpdateViewModel { TaskNo = taskNo };
@@ -349,7 +337,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        [Authorize(Roles = "UpdateTaskStatus")]//Admin not entry
+        [Authorize(Roles = "UpdateTaskStatus,Admin")]
         public ActionResult UpdateTaskStatus(AddTaskStatusUpdateViewModel updateTaskStatusViewModel)
         {
             if (updateTaskStatusViewModel.FaultCodes != FaultCodeEnum.RendezvousMade)
@@ -565,7 +553,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             return parsedDate;
         }
 
-        private string TaskStatusDescription(int value)
+        private string TaskStatusDescription(short value)
         {
             var localizedList = new LocalizedList<TaskStatusEnum, Localization.TaskStatus>();
             var displayText = localizedList.GetDisplayText(value, CultureInfo.CurrentCulture);
@@ -574,7 +562,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
         }
 
-        private string CustomerTypeDescription(int value)
+        private string CustomerTypeDescription(short value)
         {
             var localizedList = new LocalizedList<CustomerTypeEnum, Localization.CustomerTypes>();
             var displayText = localizedList.GetDisplayText(value, CultureInfo.CurrentCulture);
@@ -582,7 +570,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             return displayText;
         }
 
-        private string FaultCodesDescription(int value)
+        private string FaultCodesDescription(short value)
         {
             var localizedList = new LocalizedList<FaultCodeEnum, Localization.FaultCodes>();
             var displayText = localizedList.GetDisplayText(value, CultureInfo.CurrentCulture);
@@ -590,7 +578,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             return displayText;
         }
 
-        private string TaskTypeDescription(int value)
+        private string TaskTypeDescription(short value)
         {
             var localizedList = new LocalizedList<TaskTypesEnum, Localization.TaskTypes>();
             var displayText = localizedList.GetDisplayText(value, CultureInfo.CurrentCulture);
