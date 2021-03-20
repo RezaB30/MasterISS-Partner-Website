@@ -313,6 +313,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tarih Biçimi Doğru Değil.
+        /// </summary>
+        public static string DateFormatIsNotCorrect {
+            get {
+                return ResourceManager.GetString("DateFormatIsNotCorrect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to  Gün .
         /// </summary>
         public static string Day {

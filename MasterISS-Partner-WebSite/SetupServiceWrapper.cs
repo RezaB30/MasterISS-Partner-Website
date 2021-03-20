@@ -125,25 +125,25 @@ namespace MasterISS_Partner_WebSite
             return response;
         }
 
-        public GetTaskListResponse GetTaskList(GetTaskListRequestViewModel taskListRequestViewModel)
-        {
-            var request = new GetTaskListRequest
-            {
-                Culture = Culture,
-                Hash = SetupHash(),
-                Rand = Rand,
-                Username = Username,
-                DateSpan = new DateSpan
-                {
-                    EndDate = DateTimeConvertedBySetupWebService(taskListRequestViewModel.TaskListEndDate),
-                    StartDate = DateTimeConvertedBySetupWebService(taskListRequestViewModel.TaskListStartDate),
-                }
-            };
+        //public GetTaskListResponse GetTaskList(GetTaskListRequestViewModel taskListRequestViewModel)
+        //{
+        //    var request = new GetTaskListRequest
+        //    {
+        //        Culture = Culture,
+        //        Hash = SetupHash(),
+        //        Rand = Rand,
+        //        Username = Username,
+        //        DateSpan = new DateSpan
+        //        {
+        //            EndDate = DateTimeConvertedBySetupWebService(taskListRequestViewModel.TaskListEndDate),
+        //            StartDate = DateTimeConvertedBySetupWebService(taskListRequestViewModel.TaskListStartDate),
+        //        }
+        //    };
 
-            var response = Client.GetTaskList(request);
+        //    var response = Client.GetTaskList(request);
 
-            return response;
-        }
+        //    return response;
+        //}
 
         public ParameterlessResponse UpdateClientLocation(UpdateClientGPSRequestViewModel updateClientGPSRequestViewModel)
         {

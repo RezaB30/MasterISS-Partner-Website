@@ -73,6 +73,7 @@
                     <td>@Html.DisplayFor(modelItem => item.ReservationDate)</td>
                     <td>@Html.DisplayFor(modelItem => item.RendezvousTeamStaffName)</td>
                     <td>@Html.DisplayFor(modelItem => item.SetupTeamStaffName)</td>
+                    <td>@Html.ActionLink("kurulum ekibine ata", "ShareSetupStaff", "Setup", new { BBK = item.BBK }, null)</td>
                     <td>@Html.ActionLink(View.CustomerInfo, "CustomerDetail", "Setup", new { taskNo = item.TaskNo }, new { @class = "btn btn-success" })</td>
                     <td><a href="https://www.google.com/maps/search/?api=1&query=@item.AddressLatitudeandLongitude[0],@item.AddressLatitudeandLongitude[1]" target="_blank">@View.RouteMap</a></td>
                 </tr>

@@ -183,6 +183,7 @@
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="Authentication\Authenticator.cs" />
     <Compile Include="Authentication\SubUserAuthenticator.cs" />
+    <Compile Include="Binders\DateBinder.cs" />
     <Compile Include="ClaimInfo.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -333,6 +334,7 @@
     <Compile Include="ViewModels\Account\RegisterViewModel.cs" />
     <Compile Include="ViewModels\Account\UserSignInViewModel.cs" />
     <Compile Include="ViewModels\AddPermissionViewModel.cs" />
+    <Compile Include="ViewModels\deneme.cs" />
     <Compile Include="ViewModels\ListRendezvousTeamViewModel.cs" />
     <Compile Include="ViewModels\WorkAreaSetupTeamUserViewModel.cs" />
     <Compile Include="ViewModels\BillCollectionViewModel.cs" />

@@ -195,6 +195,12 @@ namespace MasterISS_Partner_WebSite.Controllers
                         db.PartnerSetupInfo.Add(partnerSetupInfo);
                         db.SaveChanges();
                     }
+                    else
+                    {
+                        validSetupInfo.SetupServiceHash = response.AuthenticationResponse.SetupServiceHash;
+                        validSetupInfo.SetupServiceUser = response.AuthenticationResponse.SetupServiceUser;
+                        db.SaveChanges();
+                    }
                     currentClaimList.Add(new Claim("SetupServiceHash", response.AuthenticationResponse.SetupServiceHash));
                     currentClaimList.Add(new Claim("SetupServiceUser", response.AuthenticationResponse.SetupServiceUser));
                 }

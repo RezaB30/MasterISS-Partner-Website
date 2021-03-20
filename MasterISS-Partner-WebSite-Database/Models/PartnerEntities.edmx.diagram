@@ -4,19 +4,19 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="0eec33d45b1e4cfa8e4b58dc7ecb84e6" Name="Diagram1" ZoomLevel="46">
-        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.PartnerSetupInfo" Width="1.5" PointX="5.25" PointY="5.25" />
+      <Diagram DiagramId="0eec33d45b1e4cfa8e4b58dc7ecb84e6" Name="Diagram1" ZoomLevel="57">
+        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.PartnerSetupInfo" Width="1.5" PointX="5.25" PointY="17.125" />
         <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.Permission" Width="1.5" PointX="0.75" PointY="5.5" />
-        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.RendezvousTeam" Width="1.5" PointX="5.25" PointY="8" />
+        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.RendezvousTeam" Width="1.5" PointX="5.25" PointY="14.375" />
         <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.Role" Width="1.5" PointX="0.75" PointY="8.25" />
         <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.RolePermission" Width="1.5" PointX="3" PointY="7.375" />
         <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.SchedulerOperationsTime" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.SchedulerSettings" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.SetupTeam" Width="1.5" PointX="5.25" PointY="10.5" />
-        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.TaskList" Width="1.5" PointX="7.5" PointY="7" />
-        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.UpdatedSetupStatus" Width="1.5" PointX="9.75" PointY="8.875" />
+        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.SetupTeam" Width="1.5" PointX="5.25" PointY="11.875" />
+        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.TaskList" Width="1.5" PointX="7.5" PointY="10.875" />
+        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.UpdatedSetupStatus" Width="1.5" PointX="9.75" PointY="12.75" />
         <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.User" Width="1.5" PointX="3" PointY="10.5" />
-        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.WorkArea" Width="1.5" PointX="5.25" PointY="13.125" />
+        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.WorkArea" Width="1.5" PointX="5.25" PointY="8" />
         <AssociationConnector Association="MasterISSPartnerWebSiteModel.FK_TaskList_PartnerSetupInfo" />
         <AssociationConnector Association="MasterISSPartnerWebSiteModel.FK_RolePermission_Permission" />
         <AssociationConnector Association="MasterISSPartnerWebSiteModel.FK_RendezvousTeam_User" />

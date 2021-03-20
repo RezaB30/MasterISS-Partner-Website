@@ -201,6 +201,9 @@
   <data name="CustomerSessionInfo" xml:space="preserve">
     <value>Müşteri Oturum Bilgileri</value>
   </data>
+  <data name="DateFormatIsNotCorrect" xml:space="preserve">
+    <value>Tarih Biçimi Doğru Değil</value>
+  </data>
   <data name="Day" xml:space="preserve">
     <value> Gün </value>
   </data>

@@ -8,6 +8,7 @@ namespace MasterISS_Partner_WebSite.ViewModels.Setup.Response
 {
     public class GetTaskListResponseViewModel
     {
+        public string BBK { get; set; }
         [Display(ResourceType = typeof(Localization.Model), Name = "TaskNo")]
         public long TaskNo { get; set; }
 

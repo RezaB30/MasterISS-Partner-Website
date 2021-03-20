@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MasterISS_Partner_WebSite.Binders;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -19,6 +20,9 @@ namespace MasterISS_Partner_WebSite
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.NameIdentifier;
+
+            ModelBinders.Binders[typeof(DateTime?)] = new DateBinder();
+            ModelBinders.Binders[typeof(DateTime)] = new DateBinder();
         }
     }
 }

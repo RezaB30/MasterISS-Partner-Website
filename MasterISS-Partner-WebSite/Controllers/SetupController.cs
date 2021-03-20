@@ -19,6 +19,7 @@ using System.Xml.Linq;
 using MasterISS_Partner_WebSite_Database.Models;
 using MasterISS_Partner_WebSite_Enums;
 using System.Collections.Generic;
+using MasterISS_Partner_WebSite.ViewModels;
 
 namespace MasterISS_Partner_WebSite.Controllers
 {
@@ -36,60 +37,63 @@ namespace MasterISS_Partner_WebSite.Controllers
         {
             taskListRequestModel = taskListRequestModel ?? new GetTaskListRequestViewModel();
 
-            if (string.IsNullOrEmpty(taskListRequestModel.TaskListStartDate) && string.IsNullOrEmpty(taskListRequestModel.TaskListEndDate))
+            if (taskListRequestModel.TaskListStartDate == null && taskListRequestModel.TaskListEndDate == null)
             {
-                taskListRequestModel.TaskListStartDate = DateTime.Now.AddDays(-10).ToString("dd.MM.yyyy HH:mm");
-                taskListRequestModel.TaskListEndDate = DateTime.Now.ToString("dd.MM.yyyy HH:mm");
-                //ModelState.Clear();
-                //TryValidateModel(taskListRequestModel);
+                taskListRequestModel.TaskListStartDate = DateTime.Now.AddDays(-29);
+                taskListRequestModel.TaskListEndDate = DateTime.Now;
             }
 
-            else if (!string.IsNullOrEmpty(taskListRequestModel.TaskListStartDate) && string.IsNullOrEmpty(taskListRequestModel.TaskListEndDate))
+            else if (taskListRequestModel.TaskListStartDate != null && taskListRequestModel.TaskListEndDate == null)
             {
-                var regex = new Regex(@"^([1-9]|([012][0-9])|(3[01])).([0]{0,1}[1-9]|1[012]).\d\d\d\d (20|21|22|23|[0-1]?\d):[0-5]?\d+");//dd.MM.yyyy HH:mm"
+                //var regex = new Regex(@"^([1-9]|([012][0-9])|(3[01])).([0]{0,1}[1-9]|1[012]).\d\d\d\d (20|21|22|23|[0-1]?\d):[0-5]?\d+");//dd.MM.yyyy HH:mm"
 
-                var isMatch = regex.Match(taskListRequestModel.TaskListStartDate);
+                //var isMatch = regex.Match(taskListRequestModel.TaskListStartDate.ToString());
 
-                if (isMatch.Success)
-                {
-                    var startDateConverted = Convert.ToDateTime(taskListRequestModel.TaskListStartDate);
+                //if (isMatch.Success)
+                //{
 
-                    taskListRequestModel.TaskListEndDate = startDateConverted.AddDays(30).ToString("dd.MM.yyyy HH:mm");
-                }
-                else
-                {
-                    ViewBag.ErrorMessage = Localization.View.StartDateValid;
-                }
+                var startDateConverted = taskListRequestModel.TaskListStartDate;
+
+                taskListRequestModel.TaskListEndDate = startDateConverted.Value.AddDays(29);
+
+                //}
+                //else
+                //{
+                //    ViewBag.ErrorMessage = Localization.View.StartDateValid;
+                //}
             }
 
             if (ModelState.IsValid)
             {
-                var startDate = ParseDatetime(taskListRequestModel.TaskListStartDate);
-                var endDate = ParseDatetime(taskListRequestModel.TaskListEndDate);
+                var startDate = taskListRequestModel.TaskListStartDate;
+                var endDate = taskListRequestModel.TaskListEndDate;
 
                 if (startDate <= endDate)
                 {
                     using (var db = new PartnerWebSiteEntities())
                     {
-                        if (startDate.AddDays(Properties.Settings.Default.SearchLimit) >= endDate)
+                        if (startDate.Value.AddDays(Properties.Settings.Default.SearchLimit) >= endDate)
                         {
                             var taskList = TaskList(User.IsInRole("Admin"));
 
-                            var list = taskList.Where(tlresponse => tlresponse.TaskIssueDate < endDate && tlresponse.TaskIssueDate > startDate && taskListRequestModel.SearchedTaskNo.HasValue == true ? tlresponse.TaskNo == taskListRequestModel.SearchedTaskNo : tlresponse.ContactName.Contains(taskListRequestModel.SearchedName == null ? "" : taskListRequestModel.SearchedName.ToUpper())).Select(tl => new GetTaskListResponseViewModel
+                            //var ass = taskList.First().TaskIssueDate;
+
+                            var list = taskList.Where(tlresponse => tlresponse.TaskIssueDate >= startDate && tlresponse.TaskIssueDate <= endDate).Where(tlresponse => taskListRequestModel.SearchedTaskNo.HasValue == true ? tlresponse.TaskNo == taskListRequestModel.SearchedTaskNo : tlresponse.ContactName.Contains(taskListRequestModel.SearchedName == null ? "" : taskListRequestModel.SearchedName.ToUpper())).Select(tl => new GetTaskListResponseViewModel
                             {
                                 AddressLatitudeandLongitude = GetAddressLatituteandLongitude(tl.Address),
                                 ContactName = tl.ContactName,
                                 CustomerPhoneNo = tl.CustomerPhoneNo,
-                                TaskIssueDate = tl.TaskIssueDate == null ? DateTime.MinValue : tl.TaskIssueDate.Value,
+                                TaskIssueDate = Convert.ToDateTime(tl.TaskIssueDate),
                                 TaskNo = tl.TaskNo,
                                 XDSLNo = tl.XDSLNo,
                                 TaskStatus = TaskStatusDescription((short)tl.TaskStatus),
                                 TaskType = TaskTypeDescription((short)tl.TaskType),
-                                ReservationDate = tl.ReservationDate == null ? DateTime.MinValue : tl.ReservationDate.Value,
+                                ReservationDate = Convert.ToDateTime(tl.ReservationDate),
                                 Address = tl.Address,
                                 PartnerId = tl.PartnerId,
                                 RendezvousTeamStaffName = tl.AssignToRendezvousStaff == null ? null : db.RendezvousTeam.Find(tl.AssignToRendezvousStaff).User.NameSurname,
-                                SetupTeamStaffName = tl.AssignToSetupTeam == null ? null : db.SetupTeam.Find(tl.AssignToSetupTeam).User.NameSurname
+                                SetupTeamStaffName = tl.AssignToSetupTeam == null ? null : db.SetupTeam.Find(tl.AssignToSetupTeam).User.NameSurname,
+                                BBK = tl.BBK,
                             });
 
                             var totalCount = list.Count();
@@ -164,6 +168,79 @@ namespace MasterISS_Partner_WebSite.Controllers
             string[] location = { lat, lng };
 
             return location;
+        }
+
+        public ActionResult ShareSetupStaff(string BBK)
+        {
+            var claimInfo = new ClaimInfo();
+            var partnerId = claimInfo.PartnerId();
+
+            var wrapper = new WebServiceWrapper();
+            var serviceAvailability = wrapper.GetApartmentAddress(Convert.ToInt64(BBK));
+
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var partnerSetupTeamId = db.User.Where(u => u.PartnerId == partnerId).Select(st => st.SetupTeam).Where(st => st.WorkingStatus == true).Select(st => st.UserId).ToList();
+
+                var setupTeamWorkAreas = db.WorkArea.Where(wa => partnerSetupTeamId.Contains(wa.UserId)).ToList();
+
+                var list = new List<deneme>();
+
+                foreach (var item in setupTeamWorkAreas)
+                {
+                    if (serviceAvailability.AddressDetailsResponse.DistrictID == item.DistrictId &&
+                        serviceAvailability.AddressDetailsResponse.ProvinceID == item.ProvinceId &&
+                        serviceAvailability.AddressDetailsResponse.RuralCode == item.RuralId &&
+                        serviceAvailability.AddressDetailsResponse.NeighbourhoodID == item.NeighbourhoodId
+                        )
+                    {
+                        list.Add(new deneme
+                        {
+                            ASS = true,
+                            Id = item.UserId
+                        });
+
+                        //list.Add(item.UserId);
+                    }
+                    if (serviceAvailability.AddressDetailsResponse.DistrictID == item.DistrictId &&
+                                           serviceAvailability.AddressDetailsResponse.ProvinceID == item.ProvinceId &&
+                                           serviceAvailability.AddressDetailsResponse.RuralCode == item.RuralId
+                                           )
+                    {
+                        list.Add(new deneme
+                        {
+                            ASS = list.Count() == 0 ? true : false,
+                            Id = item.UserId
+                        });
+                        //list.Add(item.UserId);
+                    }
+
+                    if (serviceAvailability.AddressDetailsResponse.DistrictID == item.DistrictId && serviceAvailability.AddressDetailsResponse.ProvinceID == item.ProvinceId)
+                    {
+                        list.Add(new deneme
+                        {
+                            ASS = list.Count() == 0 ? true : false,
+                            Id = item.UserId
+                        });
+                    }
+
+                    if (serviceAvailability.AddressDetailsResponse.ProvinceID == item.ProvinceId)
+                    {
+                        //list.Add(item.UserId);
+                        list.Add(new deneme
+                        {
+                            ASS = list.Count() == 0 ? true : false,
+                            Id = item.UserId
+                        });
+                    }
+                }
+                var ass = list;
+                var ass2 = "a";
+            }
+
+
+
+            return View();
         }
 
         public ActionResult CustomerDetail(long taskNo)
@@ -589,9 +666,13 @@ namespace MasterISS_Partner_WebSite.Controllers
 
         private DateTime ParseDatetime(string date)
         {
+            //DateTime dt;
             var convertedDate = DateTime.ParseExact(date, "dd.MM.yyyy HH:mm", null);
+            //var ass = DateTime.ParseExact(convertedDate, "yyyy-MM-dd HH:mm:ss", null);
 
-            return convertedDate;
+            //var asssss = DateTime.TryParseExact(date, "dd.MM.yyyy HH:mm", null, DateTimeStyles., out dt);
+
+            return DateTime.Now;
         }
     }
 }

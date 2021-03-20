@@ -36,8 +36,6 @@ namespace MasterISS_Partner_WebSite_Scheduler
 
                 LoggerError.Fatal($"ass2 : { string.Join(",", partnerSetupInfos.Select(p => p.Username))}");
 
-
-                //WrapperParameters = Enumerable.Empty<WrapperParameters>();
                 WrapperParameters = partnerSetupInfos;
 
                 LoggerError.Fatal($"ass9");
@@ -47,10 +45,6 @@ namespace MasterISS_Partner_WebSite_Scheduler
             LoggerError.Fatal($"ass10 :{CultureInfo.CurrentCulture}");
 
             Culture = CultureInfo.CurrentCulture.ToString();
-            //Rand = Guid.NewGuid().ToString("N");
-
-            //LoggerError.Fatal($"ass11 : {Guid.NewGuid().ToString("N")}");
-
             Client = new CustomerSetupServiceClient();
         }
 
@@ -75,6 +69,8 @@ namespace MasterISS_Partner_WebSite_Scheduler
                 var startDate = DateTime.Now.AddDays(-30);
                 using (var db = new PartnerWebSiteEntities())
                 {
+                    db.Configuration.LazyLoadingEnabled = false;
+
                     var lastGetTaskListLoopTime = db.SchedulerOperationsTime.Where(sot => sot.Type == (int)SchedulerOperationsType.GetTaskList).OrderByDescending(sot => sot.Date).FirstOrDefault();
                     if (lastGetTaskListLoopTime != null)
                     {
@@ -125,13 +121,13 @@ namespace MasterISS_Partner_WebSite_Scheduler
                                         CustomerType = taskList.CustomerType,
                                         Details = taskList.Details,
                                         HasModem = taskList.HasModem,
-                                        LastConnectionDate = taskList.LastConnectionDate,
+                                        LastConnectionDate = ParseDatetime(taskList.LastConnectionDate),
                                         ModemName = taskList.ModemName,
                                         Province = taskList.Province,
                                         PSTN = taskList.PSTN,
-                                        ReservationDate = Convert.ToDateTime(taskList.ReservationDate),
+                                        ReservationDate = ParseDatetime(taskList.ReservationDate),
                                         SubscriberNo = taskList.SubscriberNo,
-                                        TaskIssueDate = Convert.ToDateTime(taskList.TaskIssueDate),
+                                        TaskIssueDate = ParseDatetime(taskList.TaskIssueDate),
                                         TaskNo = taskList.TaskNo,
                                         TaskStatus = taskList.TaskStatus,
                                         TaskType = taskList.TaskType,
@@ -158,7 +154,18 @@ namespace MasterISS_Partner_WebSite_Scheduler
             }
 
         }
-
+        private DateTime? ParseDatetime(string date)
+        {
+            if (string.IsNullOrEmpty(date))
+            {
+                return null;
+            }
+            else
+            {
+                var convertedDate = DateTime.ParseExact( date,"yyyy-MM-dd HH:mm:ss",null).ToString("dd.MM.yyyy HH:mm:ss");
+                return Convert.ToDateTime(convertedDate);
+            }
+        }
         public override bool Run()
         {
             try
