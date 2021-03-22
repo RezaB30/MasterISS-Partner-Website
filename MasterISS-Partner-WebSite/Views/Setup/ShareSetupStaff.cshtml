@@ -1,0 +1,47 @@
+﻿@using MasterISS_Partner_WebSite.Localization
+@using MasterISS_Partner_WebSite.ViewModels
+@model  IEnumerable<SetupTeamStaffsToMatchedTheTask>
+@{
+    ViewBag.Title = "ShareSetupStaff";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="form-group">
+    @ViewBag.TaskAddress
+</div>
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(m => m.FirstOrDefault().SetupTeamStaffName)
+            </td>
+            <td>
+                @Html.DisplayNameFor(m => m.FirstOrDefault().SetupTeamStaffWorkAreas)
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SetupTeamStaffName)
+                </td>
+                <td>
+                    @foreach (var workArea in item.SetupTeamStaffWorkAreas)
+                    {
+                        <div>
+                            @Html.DisplayFor(workAreaItem => workArea.ProvinceName)
+                            @Html.DisplayFor(workAreaItem => workArea.DistrictName)
+                            @Html.DisplayFor(workAreaItem => workArea.RuralName)
+                            @Html.DisplayFor(workAreaItem => workArea.NeigborhoodName)
+                        </div>
+                    }
+                </td>
+                <td>@Html.ActionLink("buma ata görevi", "AssignTask", "Setup", new { staffId = item.SetupTeamStaffId, taskNo = (long)ViewBag.TaskNo }, null)</td>
+            </tr>
+        }
+    </tbody>
+</table>

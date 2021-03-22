@@ -1,0 +1,25 @@
+﻿@using MasterISS_Partner_WebSite.ViewModels
+@using MasterISS_Partner_WebSite.Localization
+@model  IEnumerable<ListRendezvousTeamViewModel>
+@{
+    ViewBag.Title = "ListPartnerRendezvousTeam";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td>@Html.DisplayNameFor(m => m.FirstOrDefault().NameSurname)</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.NameSurname)</td>
+                <td>@Html.ActionLink("görevi buna ata", "ChangeRendezvousTeam", "Setup", new { rendezvousStaffId = item.Id, taskNo = (long)ViewBag.TaskNo }, null)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

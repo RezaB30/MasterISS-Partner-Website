@@ -6,5 +6,12 @@
 
 <div>
     <h2>@MasterISS_Partner_WebSite.Localization.View.Successful</h2>
-    @Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.Back, "CustomerDetail", "Setup", new { taskNo = ViewBag.TaskNo }, new { @class = "btn btn-success" })
+    @if ((long?)ViewBag.TaskNo != null)
+    {
+        @Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.Back, "CustomerDetail", "Setup", new { taskNo = (long)ViewBag.TaskNo }, new { @class = "btn btn-success" })
+    }
+    else
+    {
+        @Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.Back, "Index", "Setup",new { @class = "btn btn-success" })
+    }
 </div>

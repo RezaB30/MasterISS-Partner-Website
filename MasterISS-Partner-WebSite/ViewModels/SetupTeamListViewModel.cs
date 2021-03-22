@@ -26,5 +26,6 @@ namespace MasterISS_Partner_WebSite.ViewModels
         public string DistrictName { get; set; }
         public string RuralName { get; set; }
         public string NeigborhoodName { get; set; }
+        public long? UserId { get; set; }
     }
 }

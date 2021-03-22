@@ -62,6 +62,15 @@
             @foreach (var item in Model)
             {
                 <tr>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <td>
+                            @using (Html.BeginForm("ass", "Setup", FormMethod.Get, new { @class = "ass" }))
+                            {
+                                <input class="checkbox" type="checkbox" value="@item.TaskNo" name="SelectedTask" />
+                            }
+                        </td>
+                    }
                     <td>@Html.DisplayFor(modelItem => item.TaskNo)</td>
                     <td>@Html.DisplayFor(modelItem => item.XDSLNo)</td>
                     <td>@Html.DisplayFor(modelItem => item.ContactName)</td>
@@ -73,7 +82,27 @@
                     <td>@Html.DisplayFor(modelItem => item.ReservationDate)</td>
                     <td>@Html.DisplayFor(modelItem => item.RendezvousTeamStaffName)</td>
                     <td>@Html.DisplayFor(modelItem => item.SetupTeamStaffName)</td>
-                    <td>@Html.ActionLink("kurulum ekibine ata", "ShareSetupStaff", "Setup", new { BBK = item.BBK }, null)</td>
+
+                    @if (User.IsInRole("Admin") || User.IsInRole("RendezvousTeam"))
+                    {
+                        if (string.IsNullOrEmpty(item.SetupTeamStaffName))
+                        {
+                            <td>@Html.ActionLink("kurulum ekibine ata", "ShareSetupStaff", "Setup", new { BBK = item.BBK, taskNo = item.TaskNo }, null)</td>
+                        }
+                        else
+                        {
+                            <td>@Html.ActionLink("başka bir kurulum ekibe ata", "ShareSetupStaff", "Setup", new { taskNo = item.TaskNo }, null)</td>
+                        }
+                    }
+                    @if (User.IsInRole("Admin"))
+                    {
+                        if (!string.IsNullOrEmpty(item.RendezvousTeamStaffName) && string.IsNullOrEmpty(item.SetupTeamStaffName))
+                        {
+                            <td>@Html.ActionLink("bu görevi başka bir randevu ekibine ata", "ListPartnerRendezvousTeam", "Setup", new { BBK = item.BBK, taskNo = item.TaskNo }, null)</td>
+                            <td>@Html.ActionLink("bu görevi havuza at", "SendTaskToScheduler", "Setup", new { taskNo = item.TaskNo }, null)</td>
+                        }
+
+                    }
                     <td>@Html.ActionLink(View.CustomerInfo, "CustomerDetail", "Setup", new { taskNo = item.TaskNo }, new { @class = "btn btn-success" })</td>
                     <td><a href="https://www.google.com/maps/search/?api=1&query=@item.AddressLatitudeandLongitude[0],@item.AddressLatitudeandLongitude[1]" target="_blank">@View.RouteMap</a></td>
                 </tr>
@@ -103,9 +132,31 @@ else
     </div>
 }
 
+<input class=" btn btn-success" id="Save" value="ass" />
+
 @section Javascript{
     <script>
         $(function () {
+
+            $("#Save").click(function () {
+                var array2 = [];
+                $('input[name="SelectedTask"]:checked').each(function () {
+                    var getValue = this.value;
+                    array2.push(getValue);
+                });
+
+                var array = { values: array2 };
+
+                $.ajax({
+                    url: '@Url.Action("ass", "Setup")',
+                    type: 'GET',
+                    data: array ,
+                    dataType: "json",
+                    traditional:true,
+                });
+
+            });
+
             $("#search_TaskListStartDate").mask("99.99.9999 99:99");
             $("#search_TaskListEndDate").mask("99.99.9999 99:99");
             $("#search_SearchedTaskNo").mask("99999");

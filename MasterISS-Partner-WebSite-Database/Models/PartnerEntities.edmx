@@ -27,6 +27,7 @@
           </Key>
           <Property Name="UserId" Type="bigint" Nullable="false" />
           <Property Name="WorkingStatus" Type="bit" Nullable="false" />
+          <Property Name="IsAdmin" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -66,6 +67,7 @@
           </Key>
           <Property Name="UserId" Type="bigint" Nullable="false" />
           <Property Name="WorkingStatus" Type="bit" Nullable="false" />
+          <Property Name="IsAdmin" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="TaskList">
           <Key>
@@ -391,6 +393,7 @@
           </Key>
           <Property Name="UserId" Type="Int64" Nullable="false" />
           <Property Name="WorkingStatus" Type="Boolean" Nullable="false" />
+          <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="User" Relationship="MasterISSPartnerWebSiteModel.FK_RendezvousTeam_User" FromRole="RendezvousTeam" ToRole="User" />
           <NavigationProperty Name="TaskList" Relationship="MasterISSPartnerWebSiteModel.FK_TaskList_RendezvousTeam" FromRole="RendezvousTeam" ToRole="TaskList" />
         </EntityType>
@@ -436,6 +439,7 @@
           </Key>
           <Property Name="UserId" Type="Int64" Nullable="false" />
           <Property Name="WorkingStatus" Type="Boolean" Nullable="false" />
+          <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="User" Relationship="MasterISSPartnerWebSiteModel.FK_SetupTeam_User" FromRole="SetupTeam" ToRole="User" />
           <NavigationProperty Name="TaskList" Relationship="MasterISSPartnerWebSiteModel.FK_TaskList_SetupTeam" FromRole="SetupTeam" ToRole="TaskList" />
         </EntityType>
@@ -664,6 +668,7 @@
           <EntitySetMapping Name="RendezvousTeam">
             <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.RendezvousTeam">
               <MappingFragment StoreEntitySet="RendezvousTeam">
+                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
                 <ScalarProperty Name="WorkingStatus" ColumnName="WorkingStatus" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
@@ -708,6 +713,7 @@
           <EntitySetMapping Name="SetupTeam">
             <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.SetupTeam">
               <MappingFragment StoreEntitySet="SetupTeam">
+                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
                 <ScalarProperty Name="WorkingStatus" ColumnName="WorkingStatus" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>

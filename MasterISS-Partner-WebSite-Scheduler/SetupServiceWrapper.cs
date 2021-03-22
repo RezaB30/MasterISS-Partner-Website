@@ -69,7 +69,7 @@ namespace MasterISS_Partner_WebSite_Scheduler
                 var startDate = DateTime.Now.AddDays(-30);
                 using (var db = new PartnerWebSiteEntities())
                 {
-                    db.Configuration.LazyLoadingEnabled = false;
+                    //db.Configuration.LazyLoadingEnabled = false;
 
                     var lastGetTaskListLoopTime = db.SchedulerOperationsTime.Where(sot => sot.Type == (int)SchedulerOperationsType.GetTaskList).OrderByDescending(sot => sot.Date).FirstOrDefault();
                     if (lastGetTaskListLoopTime != null)
@@ -162,7 +162,7 @@ namespace MasterISS_Partner_WebSite_Scheduler
             }
             else
             {
-                var convertedDate = DateTime.ParseExact( date,"yyyy-MM-dd HH:mm:ss",null).ToString("dd.MM.yyyy HH:mm:ss");
+                var convertedDate = DateTime.ParseExact(date, "yyyy-MM-dd HH:mm:ss", null).ToString("dd.MM.yyyy HH:mm:ss");
                 return Convert.ToDateTime(convertedDate);
             }
         }
@@ -289,7 +289,12 @@ namespace MasterISS_Partner_WebSite_Scheduler
                 {
                     foreach (var item in SetupServiceWrapper.WrapperParameters)
                     {
-                        var partnerRendezvousTeam = db.RendezvousTeam.Where(rt => rt.WorkingStatus == true && rt.User.PartnerId == item.PartnerId && rt.User.IsEnabled).ToList();
+                        var partnerRendezvousTeam = db.RendezvousTeam.Where(rt => rt.IsAdmin == false && rt.WorkingStatus == true && rt.User.PartnerId == item.PartnerId && rt.User.IsEnabled).ToList();
+
+                        if (partnerRendezvousTeam.Count() == 0)///////??????
+                        {
+                            partnerRendezvousTeam = db.RendezvousTeam.Where(rt => rt.IsAdmin == true && rt.User.PartnerId == item.PartnerId).ToList();
+                        }
 
                         SetupServiceWrapper.LoggerError.Fatal($"ass12 : {string.Join(" , ", partnerRendezvousTeam.Select(p => p.UserId))}");
 

@@ -24,10 +24,11 @@ namespace MasterISS_Partner_WebSite.Controllers
         {
             var claimInfo = new ClaimInfo();
             var partnerId = Convert.ToInt32(claimInfo.PartnerId());
+            var adminId = claimInfo.UserId();
 
             using (var db = new PartnerWebSiteEntities())
             {
-                var userList = db.User.Where(u => u.PartnerId == partnerId).Select(u => new UserListViewModel
+                var userList = db.User.Where(u => u.PartnerId == partnerId && u.Id != adminId).Select(u => new UserListViewModel
                 {
                     IsEnabled = u.IsEnabled,
                     NameSurname = u.NameSurname,
@@ -48,7 +49,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                 var claimList = new ClaimInfo();
                 var partnerId = claimList.PartnerId();
 
-                var setupTeamList = db.SetupTeam.Where(st => st.User.PartnerId == partnerId && st.User.Role.RolePermission.Select(rp => rp.Permission.Id).Contains((int)PermissionListEnum.SetupManager)).Select(st => new SetupTeamListViewModel
+                var setupTeamList = db.SetupTeam.Where(st => st.IsAdmin == false && st.User.PartnerId == partnerId && st.User.Role.RolePermission.Select(rp => rp.Permission.Id).Contains((int)PermissionListEnum.SetupManager)).Select(st => new SetupTeamListViewModel
                 {
                     Id = st.UserId,
                     UserDisplayName = st.User.NameSurname,
@@ -73,7 +74,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             var partnerId = claimList.PartnerId();
             using (var db = new PartnerWebSiteEntities())
             {
-                var partnerTeam = db.RendezvousTeam.Where(rt => rt.User.PartnerId == partnerId && rt.User.Role.RolePermission.Select(rp => rp.Permission.Id).Contains((int)PermissionListEnum.RendezvousTeam)).Select(rt => new ListRendezvousTeamViewModel
+                var partnerTeam = db.RendezvousTeam.Where(rt => rt.IsAdmin == false && rt.User.PartnerId == partnerId && rt.User.Role.RolePermission.Select(rp => rp.Permission.Id).Contains((int)PermissionListEnum.RendezvousTeam)).Select(rt => new ListRendezvousTeamViewModel
                 {
                     Id = rt.UserId,
                     NameSurname = rt.User.NameSurname,
@@ -299,7 +300,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                                     SetupTeam setupTeam = new SetupTeam
                                     {
                                         UserId = newUser.Id,
-                                        WorkingStatus = true
+                                        WorkingStatus = true,
+                                        IsAdmin = false
                                     };
                                     db.SetupTeam.Add(setupTeam);
                                     db.SaveChanges();
@@ -311,6 +313,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                                     {
                                         UserId = newUser.Id,
                                         WorkingStatus = true,
+                                        IsAdmin = false
                                     };
                                     db.RendezvousTeam.Add(rendezvousTeam);
                                     db.SaveChanges();
@@ -403,7 +406,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                                 SetupTeam setupTeam = new SetupTeam
                                 {
                                     UserId = user.Id,
-                                    WorkingStatus = true
+                                    WorkingStatus = true,
+                                    IsAdmin = false
                                 };
                                 db.SetupTeam.Add(setupTeam);
                             }
@@ -437,7 +441,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                                 RendezvousTeam rendezvousTeam = new RendezvousTeam
                                 {
                                     UserId = user.Id,
-                                    WorkingStatus = true
+                                    WorkingStatus = true,
+                                    IsAdmin = false
                                 };
                                 db.RendezvousTeam.Add(rendezvousTeam);
                             }
@@ -615,13 +620,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                                     }
 
                                 }
-
-
                                 db.SaveChanges();
                             }
-
-
-
                         }
 
                         return RedirectToAction("Successful");
@@ -672,7 +672,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             var ruralList = addressInfo.RuralRegionsList(workAreaSetupTeamUserViewModel.DistrictId ?? null, workAreaSetupTeamUserViewModel.RuralId ?? null);
             ViewBag.Rurals = ruralList;
 
-            var neigborhoodList = addressInfo.NeighborhoodList(workAreaSetupTeamUserViewModel.RuralId, workAreaSetupTeamUserViewModel.NeigborhoodId ?? null);
+            var neigborhoodList = addressInfo.NeighborhoodList(workAreaSetupTeamUserViewModel.RuralId ?? null, workAreaSetupTeamUserViewModel.NeigborhoodId ?? null);
             ViewBag.Neigborhoods = neigborhoodList;
 
             ViewBag.UserId = workAreaSetupTeamUserViewModel.UserId;

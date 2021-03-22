@@ -146,6 +146,112 @@ namespace MasterISS_Partner_WebSite.Controllers
             }
         }
 
+        public ActionResult ass(List<long> array)
+        {
+
+            return View();
+        }
+
+        public ActionResult AssignTask(long taskNo, long staffId)
+        {
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var claimInfo = new ClaimInfo();
+
+                var task = db.TaskList.Where(tl => tl.TaskNo == taskNo).FirstOrDefault();
+                if (task != null)
+                {
+                    if (task.AssignToRendezvousStaff == null)
+                    {
+                        task.AssignToRendezvousStaff = claimInfo.UserId();
+                    }
+                    task.AssignToSetupTeam = staffId;
+                    db.SaveChanges();
+
+                    //LOG
+                    Logger.Info($"AssignTask TaskNo: {taskNo}, AssignedStaff: {staffId},  by : {claimInfo.UserId()}");
+                    //LOG
+
+                    return RedirectToAction("Successful");
+                }
+                else
+                {
+                    LoggerError.Fatal("An error occurred while SetupController=>AssignTask: Not Found TaskNo in Task Table ");
+                }
+            }
+            return View();
+        }
+
+        public ActionResult ListPartnerRendezvousTeam(long taskNo)
+        {
+            var claimInfo = new ClaimInfo();
+            var partnerId = claimInfo.PartnerId();
+
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var partnerRendezvousTeam = db.User.Where(rt => rt.PartnerId == partnerId).Select(u => u.RendezvousTeam).Where(rt => rt.WorkingStatus == true && rt.IsAdmin == false).Select(rt => new ListRendezvousTeamViewModel
+                {
+                    Id = rt.UserId,
+                    NameSurname = rt.User.NameSurname,
+                }).ToArray();
+
+                ViewBag.TaskNo = taskNo;
+                return View(partnerRendezvousTeam);
+            }
+        }
+
+        public ActionResult ChangeRendezvousTeam(long rendezvousStaffId, long taskNo)
+        {
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var claimInfo = new ClaimInfo();
+                var task = db.TaskList.Find(taskNo);
+                var validRendezvousTeam = db.RendezvousTeam.Find(rendezvousStaffId);
+                if (task != null && validRendezvousTeam != null)
+                {
+                    task.AssignToRendezvousStaff = rendezvousStaffId;
+                    db.SaveChanges();
+
+                    Logger.Info($"Change Rendezvous Team => TaskNo: {taskNo}, ReendezvousTeamSStaffId: {rendezvousStaffId},  by : {claimInfo.UserId()}");
+
+                    return RedirectToAction("Successful");
+                }
+                else
+                {
+                    LoggerError.Fatal("An error occurred while SetupController=>ChangeRendezvousTeam: Not Found TaskNo or Not Found Rendezvous Staff");
+                }
+            }
+            return View();
+        }
+
+        public ActionResult SendTaskToScheduler(long taskNo)
+        {
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var task = db.TaskList.Find(taskNo);
+                if (task != null)
+                {
+                    task.AssignToRendezvousStaff = null;
+                    task.AssignToSetupTeam = null;
+                    db.SaveChanges();
+
+                    var claimInfo = new ClaimInfo();
+
+                    //LOG
+                    Logger.Info($"SendSchedulerTask TaskNo: {taskNo}, by : {claimInfo.UserId()}");
+                    //LOG
+
+                    return RedirectToAction("Successful");
+
+                }
+                else
+                {
+                    LoggerError.Fatal("An error occurred while SetupController=>SendTaskToScheduler: Not Found TaskNo in Task Table ");
+                }
+                return View();
+            }
+        }
+
         private string FixedAddress(string address)
         {
             var fixedAddress = address.Replace("..", ".");
@@ -170,7 +276,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             return location;
         }
 
-        public ActionResult ShareSetupStaff(string BBK)
+        public ActionResult ShareSetupStaff(string BBK, long taskNo)
         {
             var claimInfo = new ClaimInfo();
             var partnerId = claimInfo.PartnerId();
@@ -184,63 +290,60 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                 var setupTeamWorkAreas = db.WorkArea.Where(wa => partnerSetupTeamId.Contains(wa.UserId)).ToList();
 
-                var list = new List<deneme>();
+                var matchedWorkAreaTeamUserId = new List<long>();
 
-                foreach (var item in setupTeamWorkAreas)
+                foreach (var setupTeamWorkArea in setupTeamWorkAreas)
                 {
-                    if (serviceAvailability.AddressDetailsResponse.DistrictID == item.DistrictId &&
-                        serviceAvailability.AddressDetailsResponse.ProvinceID == item.ProvinceId &&
-                        serviceAvailability.AddressDetailsResponse.RuralCode == item.RuralId &&
-                        serviceAvailability.AddressDetailsResponse.NeighbourhoodID == item.NeighbourhoodId
-                        )
+                    if (serviceAvailability.AddressDetailsResponse.ProvinceID == setupTeamWorkArea.ProvinceId)
                     {
-                        list.Add(new deneme
-                        {
-                            ASS = true,
-                            Id = item.UserId
-                        });
-
-                        //list.Add(item.UserId);
-                    }
-                    if (serviceAvailability.AddressDetailsResponse.DistrictID == item.DistrictId &&
-                                           serviceAvailability.AddressDetailsResponse.ProvinceID == item.ProvinceId &&
-                                           serviceAvailability.AddressDetailsResponse.RuralCode == item.RuralId
-                                           )
-                    {
-                        list.Add(new deneme
-                        {
-                            ASS = list.Count() == 0 ? true : false,
-                            Id = item.UserId
-                        });
-                        //list.Add(item.UserId);
+                        matchedWorkAreaTeamUserId.Add(setupTeamWorkArea.UserId);
                     }
 
-                    if (serviceAvailability.AddressDetailsResponse.DistrictID == item.DistrictId && serviceAvailability.AddressDetailsResponse.ProvinceID == item.ProvinceId)
+                    if (setupTeamWorkArea.DistrictId.HasValue)
                     {
-                        list.Add(new deneme
+                        if (serviceAvailability.AddressDetailsResponse.DistrictID != setupTeamWorkArea.DistrictId)
                         {
-                            ASS = list.Count() == 0 ? true : false,
-                            Id = item.UserId
-                        });
+                            matchedWorkAreaTeamUserId.Remove(setupTeamWorkArea.UserId);
+                        }
                     }
 
-                    if (serviceAvailability.AddressDetailsResponse.ProvinceID == item.ProvinceId)
+                    if (setupTeamWorkArea.RuralId.HasValue)
                     {
-                        //list.Add(item.UserId);
-                        list.Add(new deneme
+                        if (serviceAvailability.AddressDetailsResponse.RuralCode != setupTeamWorkArea.RuralId)
                         {
-                            ASS = list.Count() == 0 ? true : false,
-                            Id = item.UserId
-                        });
+                            matchedWorkAreaTeamUserId.Remove(setupTeamWorkArea.UserId);
+                        }
                     }
+
+                    if (setupTeamWorkArea.NeighbourhoodId.HasValue)
+                    {
+                        if (serviceAvailability.AddressDetailsResponse.NeighbourhoodID != setupTeamWorkArea.NeighbourhoodId)
+                        {
+                            matchedWorkAreaTeamUserId.Remove(setupTeamWorkArea.UserId);
+                        }
+                    }
+
                 }
-                var ass = list;
-                var ass2 = "a";
+
+                var matchedWorkAreaTeam = db.User.Where(wa => matchedWorkAreaTeamUserId.Contains(wa.Id)).Select(user => new SetupTeamStaffsToMatchedTheTask
+                {
+                    SetupTeamStaffId = user.Id,
+                    SetupTeamStaffName = user.NameSurname,
+                    SetupTeamStaffWorkAreas = user.WorkArea.Where(matchedWorkArea => matchedWorkArea.UserId == user.Id).Select(wa => new
+                    SetupTeamUserAddressInfo()
+                    {
+                        DistrictName = wa.Districtname,
+                        NeigborhoodName = wa.NeighbourhoodName,
+                        ProvinceName = wa.ProvinceName,
+                        RuralName = wa.RuralName
+                    }).ToList()
+                }).ToList();
+
+                ViewBag.TaskAddress = serviceAvailability.AddressDetailsResponse.AddressText;
+                ViewBag.TaskNo = taskNo;
+                return View(matchedWorkAreaTeam);
+
             }
-
-
-
-            return View();
         }
 
         public ActionResult CustomerDetail(long taskNo)
@@ -598,11 +701,12 @@ namespace MasterISS_Partner_WebSite.Controllers
             return View(updateClientViewModel);
         }
 
-        public ActionResult Successful(long taskNo)
+        public ActionResult Successful(long? taskNo)
         {
             ViewBag.TaskNo = taskNo;
             return View();
         }
+
 
 
 

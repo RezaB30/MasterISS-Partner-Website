@@ -130,7 +130,33 @@ namespace MasterISS_Partner_WebSite.Controllers
                                 };
                                 db.User.Add(user);
                                 db.SaveChanges();
-                                adminValid= db.User.Where(u => u.Password == adminPasswordHash && u.UserSubMail == adminSignInModel.Username && u.RoleId == null && u.PartnerId == null).FirstOrDefault();
+                                adminValid = db.User.Where(u => u.Password == adminPasswordHash && u.UserSubMail == adminSignInModel.Username && u.RoleId == null && u.PartnerId == null).FirstOrDefault();
+                            }
+
+                            var adminValidSetupTeamTable = db.SetupTeam.Find(adminValid.Id);
+                            if (adminValidSetupTeamTable == null)
+                            {
+                                SetupTeam setupTeam = new SetupTeam
+                                {
+                                    IsAdmin = true,
+                                    UserId = adminValid.Id,
+                                    WorkingStatus = true
+                                };
+                                db.SetupTeam.Add(setupTeam);
+                                db.SaveChanges();
+                            }
+
+                            var adminValidRendezvousTeamTable = db.RendezvousTeam.Find(adminValid.Id);
+                            if (adminValidRendezvousTeamTable == null)
+                            {
+                                RendezvousTeam rendezvousTeam = new RendezvousTeam
+                                {
+                                    IsAdmin = true,
+                                    UserId = adminValid.Id,
+                                    WorkingStatus = true,
+                                };
+                                db.RendezvousTeam.Add(rendezvousTeam);
+                                db.SaveChanges();
                             }
 
                             var claims = new List<Claim>
