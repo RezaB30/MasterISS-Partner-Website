@@ -62,15 +62,6 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    @if (User.IsInRole("Admin"))
-                    {
-                        <td>
-                            @using (Html.BeginForm("ass", "Setup", FormMethod.Get, new { @class = "ass" }))
-                            {
-                                <input class="checkbox" type="checkbox" value="@item.TaskNo" name="SelectedTask" />
-                            }
-                        </td>
-                    }
                     <td>@Html.DisplayFor(modelItem => item.TaskNo)</td>
                     <td>@Html.DisplayFor(modelItem => item.XDSLNo)</td>
                     <td>@Html.DisplayFor(modelItem => item.ContactName)</td>
@@ -91,7 +82,7 @@
                         }
                         else
                         {
-                            <td>@Html.ActionLink("başka bir kurulum ekibe ata", "ShareSetupStaff", "Setup", new { taskNo = item.TaskNo }, null)</td>
+                            <td>@Html.ActionLink("başka bir kurulum ekibe ata", "ShareSetupStaff", "Setup", new { taskNo = item.TaskNo, BBK = item.BBK }, null)</td>
                         }
                     }
                     @if (User.IsInRole("Admin"))
@@ -99,7 +90,10 @@
                         if (!string.IsNullOrEmpty(item.RendezvousTeamStaffName) && string.IsNullOrEmpty(item.SetupTeamStaffName))
                         {
                             <td>@Html.ActionLink("bu görevi başka bir randevu ekibine ata", "ListPartnerRendezvousTeam", "Setup", new { BBK = item.BBK, taskNo = item.TaskNo }, null)</td>
-                            <td>@Html.ActionLink("bu görevi havuza at", "SendTaskToScheduler", "Setup", new { taskNo = item.TaskNo }, null)</td>
+                        }
+                        if (!string.IsNullOrEmpty(item.RendezvousTeamStaffName))
+                        {
+                            <td><input class="checkbox" type="checkbox" value="@item.TaskNo" name="SelectedTask" /></td>
                         }
 
                     }
@@ -132,27 +126,35 @@ else
     </div>
 }
 
-<input class=" btn btn-success" id="Save" value="ass" />
+<input class=" btn btn-success" id="send-scheduler" value="seçilen görevleri havuza at" />
+@Html.Raw(TempData["SendTaskToSchedulerError"])
 
 @section Javascript{
     <script>
         $(function () {
-
-            $("#Save").click(function () {
-                var array2 = [];
+            $("#send-scheduler").click(function () {
+                var array = [];
                 $('input[name="SelectedTask"]:checked').each(function () {
                     var getValue = this.value;
-                    array2.push(getValue);
+                    array.push(getValue);
                 });
 
-                var array = { values: array2 };
-
+                var postData = { taskNos: array };
                 $.ajax({
-                    url: '@Url.Action("ass", "Setup")',
-                    type: 'GET',
-                    data: array ,
+                    url: '@Url.Action("SendTaskToScheduler", "Setup")',
+                    type: "POST",
+                    data: postData,
                     dataType: "json",
                     traditional:true,
+                    complete: function (data, status) {
+                        if (status == "success") {
+                            window.location.href = data.responseJSON.Url
+                        }
+                        else {
+                            console.log("Failed Send Scheduler");
+                        }
+                    }
+
                 });
 
             });

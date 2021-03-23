@@ -146,12 +146,6 @@ namespace MasterISS_Partner_WebSite.Controllers
             }
         }
 
-        public ActionResult ass(List<long> array)
-        {
-
-            return View();
-        }
-
         public ActionResult AssignTask(long taskNo, long staffId)
         {
             using (var db = new PartnerWebSiteEntities())
@@ -224,32 +218,51 @@ namespace MasterISS_Partner_WebSite.Controllers
             return View();
         }
 
-        public ActionResult SendTaskToScheduler(long taskNo)
+        [HttpPost]
+        public ActionResult SendTaskToScheduler(List<long> taskNos)
         {
-            using (var db = new PartnerWebSiteEntities())
+            if (taskNos != null)
             {
-                var task = db.TaskList.Find(taskNo);
-                if (task != null)
+                var claimInfo = new ClaimInfo();
+                using (var db = new PartnerWebSiteEntities())
                 {
-                    task.AssignToRendezvousStaff = null;
-                    task.AssignToSetupTeam = null;
-                    db.SaveChanges();
+                    foreach (var taskNo in taskNos)
+                    {
+                        var task = db.TaskList.Find(taskNo);
+                        if (task != null)
+                        {
+                            task.AssignToRendezvousStaff = null;
+                            task.AssignToSetupTeam = null;
 
-                    var claimInfo = new ClaimInfo();
+                            //Log
+                            Logger.Info($"SendSchedulerTask TaskNo: {taskNo}, by : {claimInfo.UserId()}");
+                            //Log
 
-                    //LOG
-                    Logger.Info($"SendSchedulerTask TaskNo: {taskNo}, by : {claimInfo.UserId()}");
-                    //LOG
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            LoggerError.Fatal("An error occurred while SetupController=>SendTaskToScheduler: Not Found TaskNo in Task Table ");
 
-                    return RedirectToAction("Successful");
+                            TempData["SendTaskToSchedulerError"] = Localization.View.Generic200ErrorCodeMessage;
 
+                            var redirectUrlIndex = new UrlHelper(Request.RequestContext).Action("Index", "Setup");
+                            return Json(new { Url = redirectUrlIndex });
+                        }
+                    }
+
+                    var redirectUrl = new UrlHelper(Request.RequestContext).Action("Successful", "Setup");
+                    return Json(new { Url = redirectUrl });
                 }
-                else
-                {
-                    LoggerError.Fatal("An error occurred while SetupController=>SendTaskToScheduler: Not Found TaskNo in Task Table ");
-                }
-                return View();
             }
+            else
+            {
+                var redirectUrl = new UrlHelper(Request.RequestContext).Action("Index", "Setup");
+                TempData["SendTaskToSchedulerError"] = Localization.View.NotFoundTaskNo;
+
+                return Json(new { Url = redirectUrl }, JsonRequestBehavior.AllowGet);
+            }
+
         }
 
         private string FixedAddress(string address)

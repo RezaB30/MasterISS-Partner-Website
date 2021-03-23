@@ -26,6 +26,8 @@
                         @Html.DisplayFor(wa => workArea.DistrictName)
                         @Html.DisplayFor(wa => workArea.RuralName)
                         @Html.DisplayFor(wa => workArea.NeigborhoodName)
+                        @*@Html.ActionLink("bunun bu adresini sil", "DeleteStaffWorkArea", "UserOperations", new { workAreaId = workArea.Id }, null)*@
+
                     </div>
                 }
             </td>
@@ -33,7 +35,7 @@
             {
                 <td>@Html.ActionLink(View.MakePassive, "DisabledUserInSetupTeam", "UserOperations", new { userId = item.Id }, null)</td>
                 <td>@Html.ActionLink("buna adres ekle", "AddAndUpdateWorkAreaSetupTeamUser", "UserOperations", new { userId = item.Id }, null)</td>
-                <td>@Html.ActionLink("bunun adreslerini güncelle", "ListWorkAreaSetupTeamUser", "UserOperations", new { userId = item.Id }, null)</td>
+                <td>@Html.ActionLink("bunun adreslerini sil", "ListWorkAreaSetupTeamUser", "UserOperations", new { userId = item.Id }, null)</td>
             }
             else
             {
@@ -44,6 +46,9 @@
     }
 
 </table>
+
+@ViewBag.Error
+
 <div>
     @Html.ActionLink(View.Back, "Index", "UserOperations")
 </div>

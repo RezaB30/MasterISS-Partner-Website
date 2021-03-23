@@ -288,6 +288,9 @@
   <data name="NotAvailable" xml:space="preserve">
     <value>Mevcut Değil</value>
   </data>
+  <data name="NotFoundTaskNo" xml:space="preserve">
+    <value>Lütfen Seçim Yapınız.</value>
+  </data>
   <data name="OnThisPage" xml:space="preserve">
     <value>Bu sayfada</value>
   </data>

@@ -24,7 +24,9 @@
                         @Html.DisplayFor(modelItem => item.SetupTeamUserAddressInfo.NeigborhoodName)
                     </div>
                 </td>
-                <td>@Html.ActionLink("bu adresi güncelle", "UpdateWorkAreaSetupTeamUser", "UserOperations", new { workAreaId = item.WorkAreaId }, null)</td>
+               @* <td>@Html.ActionLink("bu adresi güncelle", "UpdateWorkAreaSetupTeamUser", "UserOperations", new { workAreaId = item.WorkAreaId }, null)</td>*@
+                <td>@Html.ActionLink("bu adresi sil", "DeleteStaffWorkArea", "UserOperations", new { workAreaId = item.WorkAreaId }, null)</td>
+
             </tr>
         }
     </tbody>

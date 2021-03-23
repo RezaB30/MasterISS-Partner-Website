@@ -459,7 +459,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                     }
                     else
                     {
-                        ViewBag.Error = Localization.View.WrongPassword + serviceCode;
+                        ViewBag.Error = Localization.View.WrongPassword;
                         Session["Counter"] = Convert.ToInt32(Session["Counter"]) + 1;
 
                         return View();

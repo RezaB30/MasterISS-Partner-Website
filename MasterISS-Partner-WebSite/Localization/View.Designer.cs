@@ -574,6 +574,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lütfen Seçim Yapınız..
+        /// </summary>
+        public static string NotFoundTaskNo {
+            get {
+                return ResourceManager.GetString("NotFoundTaskNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bu sayfada.
         /// </summary>
         public static string OnThisPage {
