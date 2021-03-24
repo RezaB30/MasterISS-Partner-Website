@@ -26,13 +26,12 @@
                         @Html.DisplayFor(wa => workArea.DistrictName)
                         @Html.DisplayFor(wa => workArea.RuralName)
                         @Html.DisplayFor(wa => workArea.NeigborhoodName)
-                        @*@Html.ActionLink("bunun bu adresini sil", "DeleteStaffWorkArea", "UserOperations", new { workAreaId = workArea.Id }, null)*@
-
                     </div>
                 }
             </td>
             @if (item.WorkingStatus == true)
             {
+                <td>@Html.ActionLink("çalışma saatlerini ve günlerini ayarla", "SetupTeamWorkingDaysAndHours", "UserOperations", new { userId = item.Id }, null)</td>
                 <td>@Html.ActionLink(View.MakePassive, "DisabledUserInSetupTeam", "UserOperations", new { userId = item.Id }, null)</td>
                 <td>@Html.ActionLink("buna adres ekle", "AddAndUpdateWorkAreaSetupTeamUser", "UserOperations", new { userId = item.Id }, null)</td>
                 <td>@Html.ActionLink("bunun adreslerini sil", "ListWorkAreaSetupTeamUser", "UserOperations", new { userId = item.Id }, null)</td>
@@ -48,6 +47,7 @@
 </table>
 
 @ViewBag.Error
+@Html.Raw(TempData["GenericError"])
 
 <div>
     @Html.ActionLink(View.Back, "Index", "UserOperations")

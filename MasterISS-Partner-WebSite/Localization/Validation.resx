@@ -156,6 +156,9 @@
   <data name="TaxNoValid" xml:space="preserve">
     <value>Vergi Numarası 10 haneli olmalıdır</value>
   </data>
+  <data name="TimeFormat" xml:space="preserve">
+    <value>Geçersiz Saat Biçimi</value>
+  </data>
   <data name="TradeRegistrationNoValid" xml:space="preserve">
     <value>Ticaret Sicil Numarası 6 haneli olmalıdır.</value>
   </data>

@@ -133,6 +133,7 @@ namespace MasterISS_Partner_WebSite_Scheduler
                                         TaskType = taskList.TaskType,
                                         XDSLNo = taskList.XDSLNo,
                                         XDSLType = taskList.XDSLType,
+                                        IsConfirmation = false,
                                     });
                                     db.TaskList.Add(taskInfo);
                                 }
@@ -210,7 +211,7 @@ namespace MasterISS_Partner_WebSite_Scheduler
                         lastChangeTime = lastLoopTime.Date;
                     }
 
-                    var updatedStatus = db.UpdatedSetupStatus.Where(uss => uss.ChangeTime > lastChangeTime && uss.ChangeTime < dateTimeNow).ToList();
+                    var updatedStatus = db.UpdatedSetupStatus.Where(uss => uss.ChangeTime > lastChangeTime && uss.ChangeTime < dateTimeNow && uss.TaskList.IsConfirmation == true).ToList();
 
                     foreach (var item in updatedStatus)
                     {

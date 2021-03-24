@@ -44,6 +44,7 @@ namespace MasterISS_Partner_WebSite_Database.Models
         public Nullable<long> AssignToRendezvousStaff { get; set; }
         public Nullable<long> AssignToSetupTeam { get; set; }
         public int PartnerId { get; set; }
+        public bool IsConfirmation { get; set; }
     
         public virtual PartnerSetupInfo PartnerSetupInfo { get; set; }
         public virtual RendezvousTeam RendezvousTeam { get; set; }

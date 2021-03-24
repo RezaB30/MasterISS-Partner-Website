@@ -20,5 +20,11 @@
     <Setting Name="RendezvousTeamCookieTime" Type="System.TimeSpan" Scope="Application">
       <Value Profile="(Default)">00:30:00</Value>
     </Setting>
+    <Setting Name="WorkingDaysLong" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="WokingHoursLong" Type="System.TimeSpan" Scope="Application">
+      <Value Profile="(Default)">01:00:00</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

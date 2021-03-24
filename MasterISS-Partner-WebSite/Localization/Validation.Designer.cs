@@ -178,6 +178,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Geçersiz Saat Biçimi.
+        /// </summary>
+        public static string TimeFormat {
+            get {
+                return ResourceManager.GetString("TimeFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ticaret Sicil Numarası 6 haneli olmalıdır..
         /// </summary>
         public static string TradeRegistrationNoValid {

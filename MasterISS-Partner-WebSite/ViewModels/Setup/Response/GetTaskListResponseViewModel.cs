@@ -12,6 +12,8 @@ namespace MasterISS_Partner_WebSite.ViewModels.Setup.Response
         [Display(ResourceType = typeof(Localization.Model), Name = "TaskNo")]
         public long TaskNo { get; set; }
 
+        public bool IsCorfirmation { get; set; }
+
         public string[] AddressLatitudeandLongitude { get; set; }
 
         [Display(ResourceType = typeof(Localization.Model), Name = "CustomerPhoneNo")]

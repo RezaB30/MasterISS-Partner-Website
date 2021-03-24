@@ -40,7 +40,7 @@
                         </div>
                     }
                 </td>
-                <td>@Html.ActionLink("buma ata görevi", "AssignTask", "Setup", new { staffId = item.SetupTeamStaffId, taskNo = (long)ViewBag.TaskNo }, null)</td>
+                <td>@Html.ActionLink("buma ata görevi", "UpdateTaskStatus", "Setup", new { staffId = item.SetupTeamStaffId, taskNo = (long)ViewBag.TaskNo }, null)</td>
             </tr>
         }
     </tbody>

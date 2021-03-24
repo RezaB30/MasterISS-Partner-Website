@@ -76,5 +76,23 @@ namespace MasterISS_Partner_WebSite.Properties {
                 return ((global::System.TimeSpan)(this["RendezvousTeamCookieTime"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public int WorkingDaysLong {
+            get {
+                return ((int)(this["WorkingDaysLong"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("01:00:00")]
+        public global::System.TimeSpan WokingHoursLong {
+            get {
+                return ((global::System.TimeSpan)(this["WokingHoursLong"]));
+            }
+        }
     }
 }

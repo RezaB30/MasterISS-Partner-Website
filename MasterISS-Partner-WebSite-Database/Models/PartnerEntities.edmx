@@ -68,6 +68,9 @@
           <Property Name="UserId" Type="bigint" Nullable="false" />
           <Property Name="WorkingStatus" Type="bit" Nullable="false" />
           <Property Name="IsAdmin" Type="bit" Nullable="false" />
+          <Property Name="WorkDays" Type="nvarchar" MaxLength="50" />
+          <Property Name="WorkStartTime" Type="time" Precision="0" />
+          <Property Name="WorkEndTime" Type="time" Precision="0" />
         </EntityType>
         <EntityType Name="TaskList">
           <Key>
@@ -97,6 +100,7 @@
           <Property Name="AssignToRendezvousStaff" Type="bigint" />
           <Property Name="AssignToSetupTeam" Type="bigint" />
           <Property Name="PartnerId" Type="int" Nullable="false" />
+          <Property Name="IsConfirmation" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="UpdatedSetupStatus">
           <Key>
@@ -440,6 +444,9 @@
           <Property Name="UserId" Type="Int64" Nullable="false" />
           <Property Name="WorkingStatus" Type="Boolean" Nullable="false" />
           <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
+          <Property Name="WorkDays" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WorkStartTime" Type="Time" Precision="0" />
+          <Property Name="WorkEndTime" Type="Time" Precision="0" />
           <NavigationProperty Name="User" Relationship="MasterISSPartnerWebSiteModel.FK_SetupTeam_User" FromRole="SetupTeam" ToRole="User" />
           <NavigationProperty Name="TaskList" Relationship="MasterISSPartnerWebSiteModel.FK_TaskList_SetupTeam" FromRole="SetupTeam" ToRole="TaskList" />
         </EntityType>
@@ -471,6 +478,7 @@
           <Property Name="AssignToRendezvousStaff" Type="Int64" />
           <Property Name="AssignToSetupTeam" Type="Int64" />
           <Property Name="PartnerId" Type="Int32" Nullable="false" />
+          <Property Name="IsConfirmation" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="PartnerSetupInfo" Relationship="MasterISSPartnerWebSiteModel.FK_TaskList_PartnerSetupInfo" FromRole="TaskList" ToRole="PartnerSetupInfo" />
           <NavigationProperty Name="RendezvousTeam" Relationship="MasterISSPartnerWebSiteModel.FK_TaskList_RendezvousTeam" FromRole="TaskList" ToRole="RendezvousTeam" />
           <NavigationProperty Name="SetupTeam" Relationship="MasterISSPartnerWebSiteModel.FK_TaskList_SetupTeam" FromRole="TaskList" ToRole="SetupTeam" />
@@ -713,6 +721,9 @@
           <EntitySetMapping Name="SetupTeam">
             <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.SetupTeam">
               <MappingFragment StoreEntitySet="SetupTeam">
+                <ScalarProperty Name="WorkEndTime" ColumnName="WorkEndTime" />
+                <ScalarProperty Name="WorkStartTime" ColumnName="WorkStartTime" />
+                <ScalarProperty Name="WorkDays" ColumnName="WorkDays" />
                 <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
                 <ScalarProperty Name="WorkingStatus" ColumnName="WorkingStatus" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -722,6 +733,7 @@
           <EntitySetMapping Name="TaskList">
             <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.TaskList">
               <MappingFragment StoreEntitySet="TaskList">
+                <ScalarProperty Name="IsConfirmation" ColumnName="IsConfirmation" />
                 <ScalarProperty Name="PartnerId" ColumnName="PartnerId" />
                 <ScalarProperty Name="AssignToSetupTeam" ColumnName="AssignToSetupTeam" />
                 <ScalarProperty Name="AssignToRendezvousStaff" ColumnName="AssignToRendezvousStaff" />

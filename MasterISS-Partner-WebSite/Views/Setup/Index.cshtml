@@ -76,6 +76,10 @@
 
                     @if (User.IsInRole("Admin") || User.IsInRole("RendezvousTeam"))
                     {
+                        if (!string.IsNullOrEmpty(item.SetupTeamStaffName) && item.IsCorfirmation == false)
+                        {
+                            <td>@Html.ActionLink("teyit ver", "GiveConfirmation", "Setup", new { taskNo = item.TaskNo }, null)</td>
+                        }
                         if (string.IsNullOrEmpty(item.SetupTeamStaffName))
                         {
                             <td>@Html.ActionLink("kurulum ekibine ata", "ShareSetupStaff", "Setup", new { BBK = item.BBK, taskNo = item.TaskNo }, null)</td>
@@ -91,11 +95,10 @@
                         {
                             <td>@Html.ActionLink("bu görevi başka bir randevu ekibine ata", "ListPartnerRendezvousTeam", "Setup", new { BBK = item.BBK, taskNo = item.TaskNo }, null)</td>
                         }
-                        if (!string.IsNullOrEmpty(item.RendezvousTeamStaffName))
+                        if (!string.IsNullOrEmpty(item.RendezvousTeamStaffName) && !string.IsNullOrEmpty(item.SetupTeamStaffName))
                         {
-                            <td><input class="checkbox" type="checkbox" value="@item.TaskNo" name="SelectedTask" /></td>
+                            <td>@Html.ActionLink("Görevi havuza at", "SendTaskToScheduler", "Setup", new { taskNo = item.TaskNo }, null)</td>
                         }
-
                     }
                     <td>@Html.ActionLink(View.CustomerInfo, "CustomerDetail", "Setup", new { taskNo = item.TaskNo }, new { @class = "btn btn-success" })</td>
                     <td><a href="https://www.google.com/maps/search/?api=1&query=@item.AddressLatitudeandLongitude[0],@item.AddressLatitudeandLongitude[1]" target="_blank">@View.RouteMap</a></td>
@@ -126,13 +129,13 @@ else
     </div>
 }
 
-<input class=" btn btn-success" id="send-scheduler" value="seçilen görevleri havuza at" />
 @Html.Raw(TempData["SendTaskToSchedulerError"])
+@Html.Raw(TempData["GeneralError"])
 
 @section Javascript{
     <script>
         $(function () {
-            $("#send-scheduler").click(function () {
+            @*$("#send-scheduler").click(function () {
                 var array = [];
                 $('input[name="SelectedTask"]:checked').each(function () {
                     var getValue = this.value;
@@ -154,10 +157,9 @@ else
                             console.log("Failed Send Scheduler");
                         }
                     }
-
                 });
 
-            });
+            });*@
 
             $("#search_TaskListStartDate").mask("99.99.9999 99:99");
             $("#search_TaskListEndDate").mask("99.99.9999 99:99");

@@ -218,6 +218,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CustomerTypes.en-us.resx</DependentUpon>
     </Compile>
+    <Compile Include="Localization\DayList.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DayList.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Localization\DayList.en-us.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DayList.en-us.resx</DependentUpon>
+    </Compile>
     <Compile Include="Localization\ErrorCodesList.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -337,6 +347,7 @@
     <Compile Include="ViewModels\deneme.cs" />
     <Compile Include="ViewModels\ListRendezvousTeamViewModel.cs" />
     <Compile Include="ViewModels\SetupTeamStaffsToMatchedTheTask.cs" />
+    <Compile Include="ViewModels\SetupTeamWorkingDaysAndHoursViewModel.cs" />
     <Compile Include="ViewModels\WorkAreaSetupTeamUserViewModel.cs" />
     <Compile Include="ViewModels\BillCollectionViewModel.cs" />
     <Compile Include="ViewModels\CreditReportViewModel.cs" />
@@ -464,6 +475,7 @@
     <Content Include="Views\Account\AdminSignIn.cshtml" />
     <Content Include="Views\Setup\ShareSetupStaff.cshtml" />
     <Content Include="Views\Setup\ListPartnerRendezvousTeam.cshtml" />
+    <Content Include="Views\UserOperations\SetupTeamWorkingDaysAndHours.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -506,6 +518,14 @@
     <EmbeddedResource Include="Localization\CustomerTypes.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CustomerTypes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\DayList.en-us.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DayList.en-us.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\DayList.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DayList.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Localization\ErrorCodesList.en-us.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

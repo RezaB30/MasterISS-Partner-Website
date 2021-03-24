@@ -98,7 +98,7 @@ namespace MasterISS_Partner_WebSite.Controllers
         }
 
         [Authorize(Roles = "Setup")]
-        public ActionResult EnabledUserInRendezvousTeam(int userId)
+        public ActionResult EnabledUserInRendezvousTeam(long userId)
         {
             using (var db = new PartnerWebSiteEntities())
             {
@@ -122,7 +122,7 @@ namespace MasterISS_Partner_WebSite.Controllers
         }
 
         [Authorize(Roles = "Setup")]
-        public ActionResult DisabledUserInSetupTeam(int userId)
+        public ActionResult DisabledUserInSetupTeam(long userId)
         {
             using (var db = new PartnerWebSiteEntities())
             {
@@ -164,7 +164,7 @@ namespace MasterISS_Partner_WebSite.Controllers
         }
 
         [Authorize(Roles = "Setup")]
-        public ActionResult DisabledUserInRendezvousTeam(int userId)
+        public ActionResult DisabledUserInRendezvousTeam(long userId)
         {
             using (var db = new PartnerWebSiteEntities())
             {
@@ -188,7 +188,7 @@ namespace MasterISS_Partner_WebSite.Controllers
         }
 
         [Authorize(Roles = "Setup")]
-        public ActionResult EnabledUserInSetupTeam(int userId)
+        public ActionResult EnabledUserInSetupTeam(long userId)
         {
             using (var db = new PartnerWebSiteEntities())
             {
@@ -515,6 +515,89 @@ namespace MasterISS_Partner_WebSite.Controllers
                 return View(currentRoleList);
             }
         }
+        public ActionResult SetupTeamWorkingDaysAndHours(long userId)
+        {
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var user = db.SetupTeam.Find(userId);
+                if (user != null)
+                {
+                    var setupTeamStaffsToMatchedTheTask = new SetupTeamWorkingDaysAndHoursViewModel
+                    {
+                        AvailableWorkingDays = UserWorkingDays(user.UserId),
+                        WorkingEndTime = $"{user.WorkEndTime:hh\\:mm}",
+                        WorkingStartTime = $"{user.WorkStartTime:hh\\:mm}",
+                        UserId = userId
+                    };
+
+                    return View(setupTeamStaffsToMatchedTheTask);
+                }
+                else
+                {
+                    TempData["GenericError"] = Localization.View.Generic200ErrorCodeMessage;
+                    return RedirectToAction("SetupTeamList", "UserOperations");
+                }
+            }
+        }
+
+        private List<AvailableWorkingDays> UserWorkingDays(long userId)
+        {
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var user = db.SetupTeam.Find(userId);
+
+                var localizedList = new LocalizedList<MasterISS_Partner_WebSite_Enums.Enums.DayOfWeekEnum, Localization.DayList>();
+
+                var userCurrentWorkDays = user.WorkDays?.Split(',');
+
+                var userAvailableWorkingDays = localizedList.GenericList.Select(gl => new AvailableWorkingDays
+                {
+                    DayId = gl.ID,
+                    DayName = gl.Name,
+                    IsSelected = userCurrentWorkDays == null ? false : userCurrentWorkDays.Contains(gl.ID.ToString()),
+                }).ToList();
+
+                foreach (var item in userAvailableWorkingDays)
+                {
+                    item.DayName = localizedList.GetDisplayText(item.DayId, CultureInfo.CurrentCulture);
+                }
+
+                return userAvailableWorkingDays;
+            }
+        }
+        private TimeSpan ParseTimeSpan(string parsedValue)
+        {
+            var timeSpanValue = DateTime.ParseExact(parsedValue, "HH:mm", null).TimeOfDay;
+            return timeSpanValue;
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult SetupTeamWorkingDaysAndHours(SetupTeamWorkingDaysAndHoursViewModel setupTeamWorkingDaysAndHoursView)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var db = new PartnerWebSiteEntities())
+                {
+                    var user = db.SetupTeam.Find(setupTeamWorkingDaysAndHoursView.UserId);
+                    if (user != null)
+                    {
+                        user.WorkStartTime = ParseTimeSpan(setupTeamWorkingDaysAndHoursView.WorkingStartTime);
+                        user.WorkEndTime = ParseTimeSpan(setupTeamWorkingDaysAndHoursView.WorkingEndTime);
+                        user.WorkDays = string.Join(",", setupTeamWorkingDaysAndHoursView.SelectedDays);
+                        db.SaveChanges();
+                        return RedirectToAction("Successful");
+                    }
+                    else
+                    {
+                        TempData["GenericError"] = Localization.View.Generic200ErrorCodeMessage;
+                        return RedirectToAction("SetupTeamList", "UserOperations");
+                    }
+                }
+            }
+            setupTeamWorkingDaysAndHoursView.AvailableWorkingDays = UserWorkingDays(setupTeamWorkingDaysAndHoursView.UserId);
+            return View(setupTeamWorkingDaysAndHoursView);
+        }
 
         public ActionResult UpdateRolePermission(int roleId)
         {
@@ -536,7 +619,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                     foreach (var item in permissionList)
                     {
-                        item.PermissionName = localizedList.GetDisplayText(item.PermissionId, null);
+                        item.PermissionName = localizedList.GetDisplayText(item.PermissionId, CultureInfo.CurrentCulture);
                     }
 
                     ViewBag.RoleId = roleId;
@@ -687,7 +770,6 @@ namespace MasterISS_Partner_WebSite.Controllers
 
         }
 
-
         private bool ValidWorkArea(WorkAreaSetupTeamUserViewModel workAreaSetupTeamUserViewModel)
         {
             using (var db = new PartnerWebSiteEntities())
@@ -695,23 +777,6 @@ namespace MasterISS_Partner_WebSite.Controllers
                 var user = db.SetupTeam.Find(workAreaSetupTeamUserViewModel.UserId);
                 var userWorkAreas = user.User.WorkArea.Select(wa => new { provinceId = wa.ProvinceId, districtId = wa.DistrictId, ruralId = wa.RuralId, neigborhoodId = wa.NeighbourhoodId });
 
-                //if (workAreaSetupTeamUserViewModel.DistrictId.HasValue == false)
-                //{
-                //    var userSelectedProvinceWorkArea = db.WorkArea.Where(wa => wa.UserId == workAreaSetupTeamUserViewModel.UserId && wa.ProvinceId == workAreaSetupTeamUserViewModel.ProvinceId).ToList();
-                //    if (userSelectedProvinceWorkArea.Count > 0)
-                //    {
-                //        foreach (var item in userSelectedProvinceWorkArea)
-                //        {
-                //            item.DistrictId = null;
-                //            item.Districtname = null;
-                //            item.RuralId = null;
-                //            item.RuralName = null;
-                //            item.NeighbourhoodId = null;
-                //            item.NeighbourhoodName = null;
-                //        }
-                //        db.SaveChanges();
-                //    }
-                //}
 
                 foreach (var userWorkArea in userWorkAreas)
                 {
@@ -734,6 +799,35 @@ namespace MasterISS_Partner_WebSite.Controllers
                         return false;
                     }
                 }
+
+                if (workAreaSetupTeamUserViewModel.DistrictId.HasValue == false)
+                {
+                    var userSelectedProvinceWorkArea = db.WorkArea.Where(wa => wa.UserId == workAreaSetupTeamUserViewModel.UserId && wa.ProvinceId == workAreaSetupTeamUserViewModel.ProvinceId).ToList();
+                    if (userSelectedProvinceWorkArea.Count > 0)
+                    {
+                        db.WorkArea.RemoveRange(userSelectedProvinceWorkArea);
+                        db.SaveChanges();
+                    }
+                }
+                if (workAreaSetupTeamUserViewModel.RuralId.HasValue == false)
+                {
+                    var userSelectedProvinceWorkArea = db.WorkArea.Where(wa => wa.UserId == workAreaSetupTeamUserViewModel.UserId && wa.DistrictId == workAreaSetupTeamUserViewModel.DistrictId && wa.DistrictId.HasValue).ToList();
+                    if (userSelectedProvinceWorkArea.Count > 0)
+                    {
+                        db.WorkArea.RemoveRange(userSelectedProvinceWorkArea);
+                        db.SaveChanges();
+                    }
+                }
+                if (workAreaSetupTeamUserViewModel.NeigborhoodId.HasValue == false)
+                {
+                    var userSelectedProvinceWorkArea = db.WorkArea.Where(wa => wa.UserId == workAreaSetupTeamUserViewModel.UserId && wa.NeighbourhoodId == workAreaSetupTeamUserViewModel.NeigborhoodId && wa.NeighbourhoodId.HasValue).ToList();
+                    if (userSelectedProvinceWorkArea.Count > 0)
+                    {
+                        db.WorkArea.RemoveRange(userSelectedProvinceWorkArea);
+                        db.SaveChanges();
+                    }
+                }
+
                 return true;
             }
         }

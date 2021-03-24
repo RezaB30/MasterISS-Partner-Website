@@ -45,22 +45,9 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             else if (taskListRequestModel.TaskListStartDate != null && taskListRequestModel.TaskListEndDate == null)
             {
-                //var regex = new Regex(@"^([1-9]|([012][0-9])|(3[01])).([0]{0,1}[1-9]|1[012]).\d\d\d\d (20|21|22|23|[0-1]?\d):[0-5]?\d+");//dd.MM.yyyy HH:mm"
-
-                //var isMatch = regex.Match(taskListRequestModel.TaskListStartDate.ToString());
-
-                //if (isMatch.Success)
-                //{
-
                 var startDateConverted = taskListRequestModel.TaskListStartDate;
 
                 taskListRequestModel.TaskListEndDate = startDateConverted.Value.AddDays(29);
-
-                //}
-                //else
-                //{
-                //    ViewBag.ErrorMessage = Localization.View.StartDateValid;
-                //}
             }
 
             if (ModelState.IsValid)
@@ -78,7 +65,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                             //var ass = taskList.First().TaskIssueDate;
 
-                            var list = taskList.Where(tlresponse => tlresponse.TaskIssueDate >= startDate && tlresponse.TaskIssueDate <= endDate).Where(tlresponse => taskListRequestModel.SearchedTaskNo.HasValue == true ? tlresponse.TaskNo == taskListRequestModel.SearchedTaskNo : tlresponse.ContactName.Contains(taskListRequestModel.SearchedName == null ? "" : taskListRequestModel.SearchedName.ToUpper())).Select(tl => new GetTaskListResponseViewModel
+                            var list = taskList.Where(tlresponse => tlresponse.TaskIssueDate >= startDate && tlresponse.TaskIssueDate <= endDate).Where(tlresponse => tlresponse.IsConfirmation == false && taskListRequestModel.SearchedTaskNo.HasValue == true ? tlresponse.TaskNo == taskListRequestModel.SearchedTaskNo : tlresponse.ContactName.Contains(taskListRequestModel.SearchedName == null ? "" : taskListRequestModel.SearchedName.ToUpper())).Select(tl => new GetTaskListResponseViewModel
                             {
                                 AddressLatitudeandLongitude = GetAddressLatituteandLongitude(tl.Address),
                                 ContactName = tl.ContactName,
@@ -94,6 +81,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                                 RendezvousTeamStaffName = tl.AssignToRendezvousStaff == null ? null : db.RendezvousTeam.Find(tl.AssignToRendezvousStaff).User.NameSurname,
                                 SetupTeamStaffName = tl.AssignToSetupTeam == null ? null : db.SetupTeam.Find(tl.AssignToSetupTeam).User.NameSurname,
                                 BBK = tl.BBK,
+                                IsCorfirmation = tl.IsConfirmation
+
                             });
 
                             var totalCount = list.Count();
@@ -113,9 +102,6 @@ namespace MasterISS_Partner_WebSite.Controllers
             }
             ViewBag.ValidationError = "Error";
             return View();
-
-
-
         }
 
         private List<TaskList> TaskList(bool isAdmin)
@@ -146,6 +132,29 @@ namespace MasterISS_Partner_WebSite.Controllers
             }
         }
 
+        public ActionResult GiveConfirmation(long taskNo)
+        {
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var task = db.TaskList.Find(taskNo);
+                if (task != null)
+                {
+                    task.IsConfirmation = true;
+                    db.SaveChanges();
+                    return RedirectToAction("Successful");
+                }
+                else
+                {
+                    //LOG
+                    LoggerError.Fatal("An error occurred while SetupController=>GiveConfirmation: Not Found TaskNo in Task Table ");
+                    //LOG
+
+                    TempData["GeneralError"] = Localization.View.Generic200ErrorCodeMessage;
+                    return RedirectToAction("Index", "Setup");
+                }
+            }
+        }
+
         public ActionResult AssignTask(long taskNo, long staffId)
         {
             using (var db = new PartnerWebSiteEntities())
@@ -171,9 +180,10 @@ namespace MasterISS_Partner_WebSite.Controllers
                 else
                 {
                     LoggerError.Fatal("An error occurred while SetupController=>AssignTask: Not Found TaskNo in Task Table ");
+                    TempData["GeneralError"] = Localization.View.Generic200ErrorCodeMessage;
+                    return RedirectToAction("Index", "Setup");
                 }
             }
-            return View();
         }
 
         public ActionResult ListPartnerRendezvousTeam(long taskNo)
@@ -212,57 +222,44 @@ namespace MasterISS_Partner_WebSite.Controllers
                 }
                 else
                 {
+                    //LOG
                     LoggerError.Fatal("An error occurred while SetupController=>ChangeRendezvousTeam: Not Found TaskNo or Not Found Rendezvous Staff");
+                    //LOG
+
+                    TempData["GeneralError"] = Localization.View.Generic200ErrorCodeMessage;
+                    return RedirectToAction("Index", "Setup");
                 }
             }
-            return View();
         }
 
-        [HttpPost]
-        public ActionResult SendTaskToScheduler(List<long> taskNos)
+        public ActionResult SendTaskToScheduler(long taskNo)
         {
-            if (taskNos != null)
+
+            var claimInfo = new ClaimInfo();
+            using (var db = new PartnerWebSiteEntities())
             {
-                var claimInfo = new ClaimInfo();
-                using (var db = new PartnerWebSiteEntities())
+                var task = db.TaskList.Find(taskNo);
+                if (task != null)
                 {
-                    foreach (var taskNo in taskNos)
-                    {
-                        var task = db.TaskList.Find(taskNo);
-                        if (task != null)
-                        {
-                            task.AssignToRendezvousStaff = null;
-                            task.AssignToSetupTeam = null;
+                    task.AssignToRendezvousStaff = null;
+                    task.AssignToSetupTeam = null;
 
-                            //Log
-                            Logger.Info($"SendSchedulerTask TaskNo: {taskNo}, by : {claimInfo.UserId()}");
-                            //Log
+                    //Log
+                    Logger.Info($"SendSchedulerTask TaskNo: {taskNo}, by : {claimInfo.UserId()}");
+                    //Log
 
-                            db.SaveChanges();
-                        }
-                        else
-                        {
-                            LoggerError.Fatal("An error occurred while SetupController=>SendTaskToScheduler: Not Found TaskNo in Task Table ");
+                    db.SaveChanges();
+                    return RedirectToAction("Successful");
+                }
+                else
+                {
+                    LoggerError.Fatal("An error occurred while SetupController=>SendTaskToScheduler: Not Found TaskNo in Task Table ");
 
-                            TempData["SendTaskToSchedulerError"] = Localization.View.Generic200ErrorCodeMessage;
+                    TempData["SendTaskToSchedulerError"] = Localization.View.Generic200ErrorCodeMessage;
 
-                            var redirectUrlIndex = new UrlHelper(Request.RequestContext).Action("Index", "Setup");
-                            return Json(new { Url = redirectUrlIndex });
-                        }
-                    }
-
-                    var redirectUrl = new UrlHelper(Request.RequestContext).Action("Successful", "Setup");
-                    return Json(new { Url = redirectUrl });
+                    return RedirectToAction("Index", "Setup");
                 }
             }
-            else
-            {
-                var redirectUrl = new UrlHelper(Request.RequestContext).Action("Index", "Setup");
-                TempData["SendTaskToSchedulerError"] = Localization.View.NotFoundTaskNo;
-
-                return Json(new { Url = redirectUrl }, JsonRequestBehavior.AllowGet);
-            }
-
         }
 
         private string FixedAddress(string address)
@@ -519,11 +516,34 @@ namespace MasterISS_Partner_WebSite.Controllers
 
         [HttpGet]
         [Authorize(Roles = "UpdateTaskStatus,Admin")]
-        public ActionResult UpdateTaskStatus(long taskNo)
+        public ActionResult UpdateTaskStatus(long taskNo, long? staffId)
         {
-            var request = new AddTaskStatusUpdateViewModel { TaskNo = taskNo };
+            var request = new AddTaskStatusUpdateViewModel { TaskNo = taskNo, StaffId = staffId ?? null };
 
             ViewBag.FaultTypes = FaultTypeList(null);
+
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var staff = db.SetupTeam.Find(staffId);//nullmu kontrolü
+
+                var startDate = DateTime.Now.Date;
+                var endDate = startDate.AddDays(Properties.Settings.Default.WorkingDaysLong);
+
+                var staffStartTime = staff.WorkStartTime;//nullmu kontrolü
+                var staffEndTime = staff.WorkEndTime;//nullmu kontrolü
+
+                var ass = new List<DateTime>();
+                var ass2 = new List<TimeSpan>();
+
+                for (DateTime dt = startDate; dt < endDate; dt = dt.AddDays(1))
+                {
+                    ass.Add(dt);
+                    for (TimeSpan tm = staffStartTime.Value; tm < staffEndTime.Value; tm = tm.Add(Properties.Settings.Default.WokingHoursLong))
+                    {
+                        ass2.Add(tm);
+                    }
+                }
+            }
 
             return View(request);
         }
@@ -546,7 +566,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                 if (isValidFaultCodes)
                 {
-                    var wrapper = new WebServiceWrapper();
+                    var claimInfo = new ClaimInfo();
                     using (var db = new PartnerWebSiteEntities())
                     {
                         UpdatedSetupStatus updatedSetupStatus = new UpdatedSetupStatus
@@ -555,14 +575,14 @@ namespace MasterISS_Partner_WebSite.Controllers
                             Description = updateTaskStatusViewModel.Description,
                             FaultCodes = (short)updateTaskStatusViewModel.FaultCodes,
                             ReservationDate = DateTimeConvertedBySetupWebService(updateTaskStatusViewModel.ReservationDate),
-                            UserId = db.User.Where(u => u.UserSubMail == wrapper.GetUserSubMail()).FirstOrDefault().Id,
+                            UserId = claimInfo.UserId(),
                             TaskNo = (long)updateTaskStatusViewModel.TaskNo,
                         };
                         db.UpdatedSetupStatus.Add(updatedSetupStatus);
                         db.SaveChanges();
 
                         //LOG
-                        Logger.Info("Updated Task Status: " + updateTaskStatusViewModel.TaskNo + ", by: " + wrapper.GetUserSubMail());
+                        Logger.Info("Updated Task Status: " + updateTaskStatusViewModel.TaskNo + ", by: " + claimInfo.UserId());
                         //LOG
 
                         return RedirectToAction("Successful", new { taskNo = updateTaskStatusViewModel.TaskNo });

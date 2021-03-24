@@ -117,55 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CentralSystemNoValid" xml:space="preserve">
-    <value>Central System No must be 16 digits.</value>
+  <data name="Friday" xml:space="preserve">
+    <value>Cuma</value>
   </data>
-  <data name="DateFormatErrorReservationDate" xml:space="preserve">
-    <value>Invalid Date Format</value>
+  <data name="Monday" xml:space="preserve">
+    <value>Pazartesi</value>
   </data>
-  <data name="DateValid" xml:space="preserve">
-    <value>Login in the format dd.MM.yyyy</value>
+  <data name="Saturday" xml:space="preserve">
+    <value>Cumartesi</value>
   </data>
-  <data name="EmailFormat" xml:space="preserve">
-    <value>Login in e-mail format.</value>
+  <data name="Sunday" xml:space="preserve">
+    <value>Pazar</value>
   </data>
-  <data name="EmailMaxLenght" xml:space="preserve">
-    <value>E-mail field can not be more than 300 characters.</value>
+  <data name="Thursday" xml:space="preserve">
+    <value>Perşembe</value>
   </data>
-  <data name="MaxTCKValid" xml:space="preserve">
-    <value>Please enter maximum 11 digits Turkish Republic Identity Number.</value>
+  <data name="Tuesday" xml:space="preserve">
+    <value>Salı</value>
   </data>
-  <data name="MinTCKValid" xml:space="preserve">
-    <value>Enter a minimum of 11 digits Turkish Republic Identity Number.</value>
-  </data>
-  <data name="OnlyNumeric" xml:space="preserve">
-    <value>{0} must be numerical value</value>
-  </data>
-  <data name="PasswordMinLenght" xml:space="preserve">
-    <value>Please enter a minimum of 6 characters.</value>
-  </data>
-  <data name="Required" xml:space="preserve">
-    <value>{0} field cannot be left blank.</value>
-  </data>
-  <data name="RequiredMaxDecription" xml:space="preserve">
-    <value>Please enter a maksimum 450 characters.</value>
-  </data>
-  <data name="SubscriberNoValid" xml:space="preserve">
-    <value>XDSL Number must be 10 digits</value>
-  </data>
-  <data name="TaxNoValid" xml:space="preserve">
-    <value>Tax No must be 10 digits.</value>
-  </data>
-  <data name="TimeFormat" xml:space="preserve">
-    <value>Invalid Time Format</value>
-  </data>
-  <data name="TradeRegistrationNoValid" xml:space="preserve">
-    <value>Trade Registration No must be 6 digits.</value>
-  </data>
-  <data name="ValidPhoneNumber" xml:space="preserve">
-    <value>Enter a 10-digit phone number.</value>
-  </data>
-  <data name="XDSLNoValid" xml:space="preserve">
-    <value>XDSL Number must be 10 digits</value>
+  <data name="Wednesday" xml:space="preserve">
+    <value>Çarşamba</value>
   </data>
 </root>
