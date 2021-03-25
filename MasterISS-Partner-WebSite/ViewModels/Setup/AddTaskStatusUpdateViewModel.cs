@@ -25,7 +25,7 @@ namespace MasterISS_Partner_WebSite.ViewModels.Setup
         [MaxLength(450, ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "RequiredMaxDecription")]
         [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
         public string Description { get; set; }
-
+        public List<DateTime> StaffCalendar { get; set; }
         public long? StaffId { get; set; }
 
     }

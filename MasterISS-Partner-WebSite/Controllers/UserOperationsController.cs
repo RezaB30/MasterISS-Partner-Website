@@ -577,6 +577,15 @@ namespace MasterISS_Partner_WebSite.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                foreach (var item in setupTeamWorkingDaysAndHoursView.SelectedDays)
+                {
+                    if (!Enum.IsDefined(typeof(MasterISS_Partner_WebSite_Enums.Enums.DayOfWeekEnum), item))
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+
                 using (var db = new PartnerWebSiteEntities())
                 {
                     var user = db.SetupTeam.Find(setupTeamWorkingDaysAndHoursView.UserId);
@@ -597,6 +606,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             }
             setupTeamWorkingDaysAndHoursView.AvailableWorkingDays = UserWorkingDays(setupTeamWorkingDaysAndHoursView.UserId);
             return View(setupTeamWorkingDaysAndHoursView);
+
         }
 
         public ActionResult UpdateRolePermission(int roleId)

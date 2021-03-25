@@ -30,14 +30,21 @@
     </div>
 
     @Html.ActionLink(View.Back, "CustomerDetail", "Setup", new { taskNo = Model.TaskNo }, new { @class = "btn btn-info", @id = "form-button" })
+    <h1>Bir tarih seç(1 Tane)</h1>
+    if ((User.IsInRole("Admin") || User.IsInRole("RendezvousTeam")) && Model.StaffId != null)
+    {
+        foreach (var item in Model.StaffCalendar)
+        {
+            <div>@Html.DisplayFor(modelItem=>item)</div>
+        }
+
+    }
     <input type="submit" id="form-button" class=" btn btn-warning" value="@View.Update" />
 
     @Html.HiddenFor(m => m.TaskNo)
 }
 
-@if ((User.IsInRole("Admin") || User.IsInRole("RendezvousTeam")) && Model.StaffId != null)
-{
-}
+
 
 @section JavaScript{
     <script>

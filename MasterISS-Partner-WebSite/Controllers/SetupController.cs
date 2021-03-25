@@ -63,8 +63,6 @@ namespace MasterISS_Partner_WebSite.Controllers
                         {
                             var taskList = TaskList(User.IsInRole("Admin"));
 
-                            //var ass = taskList.First().TaskIssueDate;
-
                             var list = taskList.Where(tlresponse => tlresponse.TaskIssueDate >= startDate && tlresponse.TaskIssueDate <= endDate).Where(tlresponse => tlresponse.IsConfirmation == false && taskListRequestModel.SearchedTaskNo.HasValue == true ? tlresponse.TaskNo == taskListRequestModel.SearchedTaskNo : tlresponse.ContactName.Contains(taskListRequestModel.SearchedName == null ? "" : taskListRequestModel.SearchedName.ToUpper())).Select(tl => new GetTaskListResponseViewModel
                             {
                                 AddressLatitudeandLongitude = GetAddressLatituteandLongitude(tl.Address),
@@ -532,17 +530,51 @@ namespace MasterISS_Partner_WebSite.Controllers
                 var staffStartTime = staff.WorkStartTime;//nullmu kontrolü
                 var staffEndTime = staff.WorkEndTime;//nullmu kontrolü
 
-                var ass = new List<DateTime>();
-                var ass2 = new List<TimeSpan>();
+                var staffCalendar = new List<DateTime>();
+
+                var userCurrentWorkDays = staff.WorkDays.Split(',').Select(s => Convert.ToInt32(s));
 
                 for (DateTime dt = startDate; dt < endDate; dt = dt.AddDays(1))
                 {
-                    ass.Add(dt);
-                    for (TimeSpan tm = staffStartTime.Value; tm < staffEndTime.Value; tm = tm.Add(Properties.Settings.Default.WokingHoursLong))
+                    var currentDayOfWeek = (int)dt.DayOfWeek == 0 ? 7 : (int)dt.DayOfWeek;
+                    if (userCurrentWorkDays.Contains(currentDayOfWeek))
                     {
-                        ass2.Add(tm);
+                        for (TimeSpan tm = staffStartTime.Value; tm < staffEndTime.Value; tm = tm.Add(Properties.Settings.Default.WokingHoursLong))
+                        {
+                            var addedTime = dt.Add(tm);
+                            staffCalendar.Add(addedTime);
+                        }
                     }
                 }
+
+                var staffReservationDateList = db.TaskList.Where(tl => tl.AssignToSetupTeam == staffId && tl.TaskStatus != (int)TaskStatusEnum.Completed && tl.ReservationDate.HasValue).Select(rd => rd.ReservationDate).ToList();
+
+                var removedDate = new List<DateTime>();
+
+                for (int i = 0; i < staffCalendar.Count - 1; i++)
+                {
+                    var validStaffReservation = staffReservationDateList.Any(sel => staffCalendar.ToArray()[i] < sel.Value && staffCalendar.ToArray()[i + 1] > sel.Value);
+
+                    if (validStaffReservation)
+                    {
+                        removedDate.Add(staffCalendar.ToArray()[i]);
+                    }
+                }
+
+                foreach (var item in removedDate)
+                {
+                    staffCalendar.Remove(item);
+                }
+
+                var filteredDate = staffCalendar.Where(s => s < DateTime.Now).ToList();
+
+                foreach (var item in filteredDate)
+                {
+                    staffCalendar.Remove(item);
+                }
+
+                request.StaffCalendar=staffCalendar;
+
             }
 
             return View(request);
