@@ -518,66 +518,104 @@ namespace MasterISS_Partner_WebSite.Controllers
         {
             var request = new AddTaskStatusUpdateViewModel { TaskNo = taskNo, StaffId = staffId ?? null };
 
-            ViewBag.FaultTypes = FaultTypeList(null);
+            var faultTypeList = FaultTypeList(null);
+
+
+            ViewBag.FaultTypes = faultTypeList;
 
             using (var db = new PartnerWebSiteEntities())
             {
-                var staff = db.SetupTeam.Find(staffId);//nullmu kontrolü
-
-                var startDate = DateTime.Now.Date;
-                var endDate = startDate.AddDays(Properties.Settings.Default.WorkingDaysLong);
-
-                var staffStartTime = staff.WorkStartTime;//nullmu kontrolü
-                var staffEndTime = staff.WorkEndTime;//nullmu kontrolü
-
-                var staffCalendar = new List<DateTime>();
-
-                var userCurrentWorkDays = staff.WorkDays.Split(',').Select(s => Convert.ToInt32(s));
-
-                for (DateTime dt = startDate; dt < endDate; dt = dt.AddDays(1))
+                if (User.IsInRole("Admin") || User.IsInRole("RendezvousTeam"))
                 {
-                    var currentDayOfWeek = (int)dt.DayOfWeek == 0 ? 7 : (int)dt.DayOfWeek;
-                    if (userCurrentWorkDays.Contains(currentDayOfWeek))
+                    var startDate = DateTime.Now.Date;
+                    var endDate = startDate.AddDays(Properties.Settings.Default.WorkingDaysLong);
+
+                    var staff = db.SetupTeam.Find(staffId);
+                    if (staff != null)
                     {
-                        for (TimeSpan tm = staffStartTime.Value; tm < staffEndTime.Value; tm = tm.Add(Properties.Settings.Default.WokingHoursLong))
+                        var staffCalendar = new List<DateTime>();
+
+                        var userCurrentWorkDays = staff.WorkDays.Split(',').Select(s => Convert.ToInt32(s));
+
+                        for (DateTime dt = startDate; dt < endDate; dt = dt.AddDays(1))
                         {
-                            var addedTime = dt.Add(tm);
-                            staffCalendar.Add(addedTime);
+                            var currentDayOfWeek = (int)dt.DayOfWeek == 0 ? 7 : (int)dt.DayOfWeek;
+                            if (userCurrentWorkDays.Contains(currentDayOfWeek))
+                            {
+                                staffCalendar.Add(dt);
+                            }
                         }
+                        request.StaffCalendar = staffCalendar;
+                        return View(request);
                     }
                 }
 
-                var staffReservationDateList = db.TaskList.Where(tl => tl.AssignToSetupTeam == staffId && tl.TaskStatus != (int)TaskStatusEnum.Completed && tl.ReservationDate.HasValue).Select(rd => rd.ReservationDate).ToList();
+                //LOG
+                LoggerError.Fatal($"An error occurred while UpdateTaskStatus=>Get , StaffId not found ");
+                //LOG
 
-                var removedDate = new List<DateTime>();
-
-                for (int i = 0; i < staffCalendar.Count - 1; i++)
-                {
-                    var validStaffReservation = staffReservationDateList.Any(sel => staffCalendar.ToArray()[i] < sel.Value && staffCalendar.ToArray()[i + 1] > sel.Value);
-
-                    if (validStaffReservation)
-                    {
-                        removedDate.Add(staffCalendar.ToArray()[i]);
-                    }
-                }
-
-                foreach (var item in removedDate)
-                {
-                    staffCalendar.Remove(item);
-                }
-
-                var filteredDate = staffCalendar.Where(s => s < DateTime.Now).ToList();
-
-                foreach (var item in filteredDate)
-                {
-                    staffCalendar.Remove(item);
-                }
-
-                request.StaffCalendar=staffCalendar;
-
+                return RedirectToAction("Index", "Home");
             }
 
-            return View(request);
+        }
+
+        [HttpPost]
+        public ActionResult GetStaffAvailableHours(DateTime date, long staffId)
+        {
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var staff = db.SetupTeam.Find(staffId);
+                if (staff != null)
+                {
+                    var staffStartTime = staff.WorkStartTime;
+                    var staffEndTime = staff.WorkEndTime;
+                    var timeList = new List<TimeSpan>();
+                    var currentDateList = new List<DateTime>();
+
+                    var staffReservationDateList = db.TaskList.Where(tl => tl.AssignToSetupTeam == staffId && tl.TaskStatus != (int)TaskStatusEnum.Completed && tl.ReservationDate.HasValue).Select(rd => rd.ReservationDate).ToList();
+
+
+                    for (TimeSpan tm = staffStartTime.Value; tm < staffEndTime.Value; tm = tm.Add(Properties.Settings.Default.WokingHoursLong))
+                    {
+                        var currentDate = date.Add(tm);
+                        currentDateList.Add(currentDate);
+                    }
+
+                    var removedDate = new List<DateTime>();
+
+
+                    for (int i = 0; i < currentDateList.Count - 1; i++)
+                    {
+                        var validStaffReservation = staffReservationDateList.Any(sel => currentDateList.ToArray()[i] < sel.Value && currentDateList.ToArray()[i + 1] > sel.Value);
+
+                        if (validStaffReservation)
+                        {
+                            removedDate.Add(currentDateList.ToArray()[i]);
+                        }
+                    }
+
+                    foreach (var item in removedDate)
+                    {
+                        currentDateList.Remove(item);
+                    }
+
+                    var filteredDate = currentDateList.Where(s => s < DateTime.Now).ToList();
+
+                    foreach (var item in filteredDate)
+                    {
+                        currentDateList.Remove(item);
+                    }
+
+                    var list = currentDateList.Select(cdl => cdl.ToString("HH:mm"));
+
+                    return Json(new { list = list }, JsonRequestBehavior.AllowGet);
+
+                }
+                else
+                {
+                    return Json(new { list = Localization.View.Generic200ErrorCodeMessage }, JsonRequestBehavior.AllowGet);
+                }
+            }
         }
 
         [ValidateAntiForgeryToken]
@@ -587,8 +625,12 @@ namespace MasterISS_Partner_WebSite.Controllers
         {
             if (updateTaskStatusViewModel.FaultCodes != FaultCodeEnum.RendezvousMade)
             {
-                updateTaskStatusViewModel.ReservationDate = null;
-                ModelState.Remove("ReservationDate");
+                updateTaskStatusViewModel.SelectedDate = null;
+                updateTaskStatusViewModel.SelectedTime = null;
+                updateTaskStatusViewModel.StaffId = null;
+                ModelState.Remove("SelectedDate");
+                ModelState.Remove("SelectedTime");
+                ModelState.Remove("StaffId");
             }
 
             if (ModelState.IsValid)
@@ -599,6 +641,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                 if (isValidFaultCodes)
                 {
                     var claimInfo = new ClaimInfo();
+                    var reservationDate = updateTaskStatusViewModel.SelectedDate?.Add(updateTaskStatusViewModel.SelectedTime.GetValueOrDefault());
                     using (var db = new PartnerWebSiteEntities())
                     {
                         UpdatedSetupStatus updatedSetupStatus = new UpdatedSetupStatus
@@ -606,7 +649,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                             ChangeTime = datetimeNow,
                             Description = updateTaskStatusViewModel.Description,
                             FaultCodes = (short)updateTaskStatusViewModel.FaultCodes,
-                            ReservationDate = DateTimeConvertedBySetupWebService(updateTaskStatusViewModel.ReservationDate),
+                            ReservationDate = reservationDate ?? null,
                             UserId = claimInfo.UserId(),
                             TaskNo = (long)updateTaskStatusViewModel.TaskNo,
                         };
@@ -785,7 +828,15 @@ namespace MasterISS_Partner_WebSite.Controllers
         private SelectList FaultTypeList(int? selectedValue)
         {
             var list = new LocalizedList<FaultCodeEnum, Localization.FaultCodes>().GetList(CultureInfo.CurrentCulture);
+
+            if (User.IsInRole("SetupManager") && !User.IsInRole("RendezvousTeam"))
+            {
+                var removedItem = list.Where(l => l.Key == (int)FaultCodeEnum.RendezvousMade).First().Key;
+                list.Remove(removedItem);
+            }
+
             var faultCodesList = new SelectList(list.Select(m => new { Name = m.Value, Value = m.Key }).ToArray(), "Value", "Name", selectedValue);
+
             return faultCodesList;
         }
 

@@ -15,18 +15,20 @@ namespace MasterISS_Partner_WebSite.ViewModels.Setup
         [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
         public FaultCodeEnum FaultCodes { get; set; }
 
-        [Display(ResourceType = typeof(Localization.Model), Name = "ReservationDate")]
-        [RegularExpression("^(3[01]|[12][0-9]|0[1-9]).(1[0-2]|0[1-9]).[0-9]{4} (2[0-3]|[01]?[0-9]):([0-5]?[0-9])$", ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "DateFormatErrorReservationDate")]
-        [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
-        public string ReservationDate { get; set; }
-
         [Display(ResourceType = typeof(Localization.Model), Name = "Description")]
         [DataType(DataType.MultilineText)]
         [MaxLength(450, ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "RequiredMaxDecription")]
         [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
         public string Description { get; set; }
         public List<DateTime> StaffCalendar { get; set; }
+
+        [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
         public long? StaffId { get; set; }
 
+        [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
+        public DateTime? SelectedDate { get; set; }
+
+        [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
+        public TimeSpan? SelectedTime { get; set; }
     }
 }

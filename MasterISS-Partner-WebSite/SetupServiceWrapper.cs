@@ -62,26 +62,26 @@ namespace MasterISS_Partner_WebSite
             return response;
         }
 
-        public ParameterlessResponse AddTaskStatusUpdate(AddTaskStatusUpdateViewModel taskStatusUpdateViewModel)
-        {
-            var request = new AddTaskStatusUpdateRequest
-            {
-                Culture = Culture,
-                Hash = SetupHash(),
-                Rand = Rand,
-                Username = Username,
-                TaskUpdate = new TaskUpdate
-                {
-                    TaskNo = (long)taskStatusUpdateViewModel.TaskNo,
-                    Description = taskStatusUpdateViewModel.Description,
-                    FaultCode = (short)taskStatusUpdateViewModel.FaultCodes,
-                    ReservationDate = DateTimeConvertedBySetupWebService(taskStatusUpdateViewModel.ReservationDate)
-                },
-            };
-            var response = Client.AddTaskStatusUpdate(request);
+        //public ParameterlessResponse AddTaskStatusUpdate(AddTaskStatusUpdateViewModel taskStatusUpdateViewModel)
+        //{
+        //    var request = new AddTaskStatusUpdateRequest
+        //    {
+        //        Culture = Culture,
+        //        Hash = SetupHash(),
+        //        Rand = Rand,
+        //        Username = Username,
+        //        TaskUpdate = new TaskUpdate
+        //        {
+        //            TaskNo = (long)taskStatusUpdateViewModel.TaskNo,
+        //            Description = taskStatusUpdateViewModel.Description,
+        //            FaultCode = (short)taskStatusUpdateViewModel.FaultCodes,
+        //            ReservationDate = DateTimeConvertedBySetupWebService(taskStatusUpdateViewModel.ReservationDate)
+        //        },
+        //    };
+        //    var response = Client.AddTaskStatusUpdate(request);
 
-            return response;
-        }
+        //    return response;
+        //}
 
         public GetCustomerAttachmentsResponse GetCustomerAttachments(long taskNo)
         {

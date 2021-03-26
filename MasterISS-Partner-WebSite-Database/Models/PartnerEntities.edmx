@@ -111,7 +111,7 @@
           <Property Name="UserId" Type="bigint" />
           <Property Name="FaultCodes" Type="smallint" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="450" Nullable="false" />
-          <Property Name="ReservationDate" Type="nvarchar" MaxLength="50" />
+          <Property Name="ReservationDate" Type="datetime" />
           <Property Name="ChangeTime" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
@@ -493,7 +493,7 @@
           <Property Name="UserId" Type="Int64" />
           <Property Name="FaultCodes" Type="Int16" Nullable="false" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
-          <Property Name="ReservationDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ReservationDate" Type="DateTime" Precision="3" />
           <Property Name="ChangeTime" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="TaskList" Relationship="MasterISSPartnerWebSiteModel.FK_UpdatedSetupStatus_TaskList" FromRole="UpdatedSetupStatus" ToRole="TaskList" />
         </EntityType>

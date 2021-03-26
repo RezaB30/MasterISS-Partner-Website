@@ -17,11 +17,11 @@
         @Html.ValidationMessageFor(m => m.FaultCodes, "", new { @class = "text-danger" })
     </div>
 
-    <div class="form-group" id="RezervationDate" style="display:none">
+    @*<div class="form-group" id="RezervationDate" style="display:none">
         @Html.LabelFor(m => m.ReservationDate)
         @Html.EditorFor(m => m.ReservationDate, new { htmlAttributes = new { placeholder = DateTime.Now.ToString("dd.MM.yyyy HH:mm") } })
         @Html.ValidationMessageFor(m => m.ReservationDate, "", new { @class = "text-danger" })
-    </div>
+    </div>*@
 
     <div class="form-group">
         @Html.LabelFor(m => m.Description)
@@ -30,18 +30,23 @@
     </div>
 
     @Html.ActionLink(View.Back, "CustomerDetail", "Setup", new { taskNo = Model.TaskNo }, new { @class = "btn btn-info", @id = "form-button" })
-    <h1>Bir tarih seç(1 Tane)</h1>
+
     if ((User.IsInRole("Admin") || User.IsInRole("RendezvousTeam")) && Model.StaffId != null)
     {
         foreach (var item in Model.StaffCalendar)
         {
-            <div>@Html.DisplayFor(modelItem=>item)</div>
+            <div><input value="saatlerine bak" name="@item" type="button" class="staff-work-days" /></div>
+            <div>@Html.DisplayFor(modelItem => item)</div>
         }
-
     }
+    <div class="staff-work-hours-container"></div>
+
     <input type="submit" id="form-button" class=" btn btn-warning" value="@View.Update" />
 
     @Html.HiddenFor(m => m.TaskNo)
+    @Html.HiddenFor(m => m.StaffId)
+    @Html.HiddenFor(m => m.SelectedDate)
+    @Html.HiddenFor(m => m.SelectedTime)
 }
 
 
@@ -65,6 +70,43 @@
                 $('#RezervationDate').hide();
             }
         });
+
+        $(".staff-work-days").click(function () {
+
+            var getButtonValue = $(this).attr("name");
+            var staffId = $("#StaffId").attr("value");
+            $("#SelectedDate").attr("value", getButtonValue);
+            $("#SelectedTime").attr("value", null);
+            $(".staff-work-hours-container").children().remove();
+
+            var postData = { date:getButtonValue , staffId:staffId};
+
+            $.ajax({
+                    url: '@Url.Action("GetStaffAvailableHours", "Setup")',
+                    type: "POST",
+                    dataType: "json",
+                    data: postData,
+                    complete: function (data, status) {
+                        if (status == "success") {
+                            var area = $(".staff-work-hours-container");
+                            $.each(data.responseJSON.list, function (item,value) {
+                                area.append("<input value='" + value + "' name='" + value + "' type='button' class='staff-work-hours'/>");
+                            })
+                        }
+                        else {
+                            console.log("Failed Get Staff Hours");
+                        }
+                    }
+                });
+        });
+
+
+
+        $(".staff-work-hours-container").on('click', '.staff-work-hours', function () {
+            var getButtonValue = $(this).attr("name");
+            $("#SelectedTime").attr("value", getButtonValue);
+        });
+
 
     </script>
 }
