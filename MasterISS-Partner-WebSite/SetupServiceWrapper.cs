@@ -127,22 +127,27 @@ namespace MasterISS_Partner_WebSite
 
         //public GetTaskListResponse GetTaskList(GetTaskListRequestViewModel taskListRequestViewModel)
         //{
-        //    var request = new GetTaskListRequest
-        //    {
-        //        Culture = Culture,
-        //        Hash = SetupHash(),
-        //        Rand = Rand,
-        //        Username = Username,
-        //        DateSpan = new DateSpan
-        //        {
-        //            EndDate = DateTimeConvertedBySetupWebService(taskListRequestViewModel.TaskListEndDate),
-        //            StartDate = DateTimeConvertedBySetupWebService(taskListRequestViewModel.TaskListStartDate),
-        //        }
-        //    };
+        //    //var request = new GetTaskListRequest
+        //    //{
+        //    //    Culture = Culture,
+        //    //    Hash = SetupHash(),
+        //    //    Rand = Rand,
+        //    //    Username = Username,
+        //    //    DateSpan = new DateSpan
+        //    //    {
+        //    //        EndDate = DateTimeConvertedBySetupWebService(taskListRequestViewModel.TaskListEndDate),
+        //    //        StartDate = DateTimeConvertedBySetupWebService(taskListRequestViewModel.TaskListStartDate),
+        //    //    }
+        //    //};
 
-        //    var response = Client.GetTaskList(request);
+        //    //var response = Client.GetTaskList(request).SetupTasks.First().;
 
-        //    return response;
+        //    //return response;
+        //    var rootFolder = Environment.GetEnvironmentVariable("partner_client_root");
+        //    RezaB.Files.IFileManager ass = new RezaB.Files.Local.LocalFileManager(rootFolder);
+        //    ass.
+
+
         //}
 
         public ParameterlessResponse UpdateClientLocation(UpdateClientGPSRequestViewModel updateClientGPSRequestViewModel)

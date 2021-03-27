@@ -69,8 +69,6 @@ namespace MasterISS_Partner_WebSite_Scheduler
                 var startDate = DateTime.Now.AddDays(-30);
                 using (var db = new PartnerWebSiteEntities())
                 {
-                    //db.Configuration.LazyLoadingEnabled = false;
-
                     var lastGetTaskListLoopTime = db.SchedulerOperationsTime.Where(sot => sot.Type == (int)SchedulerOperationsType.GetTaskList).OrderByDescending(sot => sot.Date).FirstOrDefault();
                     if (lastGetTaskListLoopTime != null)
                     {
@@ -227,7 +225,7 @@ namespace MasterISS_Partner_WebSite_Scheduler
                                 TaskNo = item.TaskNo,
                                 Description = item.Description,
                                 FaultCode = item.FaultCodes,
-                                ReservationDate = item.ReservationDate
+                                ReservationDate = item.ReservationDate == null ? null : item.ReservationDate.Value.ToString("yyyy-MM-dd HH:mm:ss")
                             },
                         };
 
@@ -292,10 +290,10 @@ namespace MasterISS_Partner_WebSite_Scheduler
                     {
                         var partnerRendezvousTeam = db.RendezvousTeam.Where(rt => rt.IsAdmin == false && rt.WorkingStatus == true && rt.User.PartnerId == item.PartnerId && rt.User.IsEnabled).ToList();
 
-                        if (partnerRendezvousTeam.Count() == 0)///////??????
-                        {
-                            partnerRendezvousTeam = db.RendezvousTeam.Where(rt => rt.IsAdmin == true && rt.User.PartnerId == item.PartnerId).ToList();
-                        }
+                        //if (partnerRendezvousTeam.Count() == 0)///////??????
+                        //{
+                        //    partnerRendezvousTeam = db.RendezvousTeam.Where(rt => rt.IsAdmin == true && rt.User.PartnerId == item.PartnerId).ToList();
+                        //}
 
                         SetupServiceWrapper.LoggerError.Fatal($"ass12 : {string.Join(" , ", partnerRendezvousTeam.Select(p => p.UserId))}");
 

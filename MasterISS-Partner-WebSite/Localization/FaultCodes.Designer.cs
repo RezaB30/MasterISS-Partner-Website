@@ -70,7 +70,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to İstek İptal Edildi.
+        ///   Looks up a localized string similar to Abone İptal Edildi.
         /// </summary>
         public static string ClientCancelled {
             get {

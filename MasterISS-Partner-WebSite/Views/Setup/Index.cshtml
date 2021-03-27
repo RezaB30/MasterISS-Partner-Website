@@ -56,6 +56,8 @@
                 <th>@Html.DisplayNameFor(model => model.FirstOrDefault().ReservationDate)</th>
                 <th>@Html.DisplayNameFor(model => model.FirstOrDefault().RendezvousTeamStaffName)</th>
                 <th>@Html.DisplayNameFor(model => model.FirstOrDefault().SetupTeamStaffName)</th>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().FaultCodesDisplayText)</th>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().SetupStaffEnteredMessage)</th>
             </tr>
         </thead>
         <tbody>
@@ -73,6 +75,8 @@
                     <td>@Html.DisplayFor(modelItem => item.ReservationDate)</td>
                     <td>@Html.DisplayFor(modelItem => item.RendezvousTeamStaffName)</td>
                     <td>@Html.DisplayFor(modelItem => item.SetupTeamStaffName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.FaultCodesDisplayText)</td>
+                    <td>@Html.DisplayFor(modelItem => item.SetupStaffEnteredMessage)</td>
 
                     @if (User.IsInRole("Admin") || User.IsInRole("RendezvousTeam"))
                     {

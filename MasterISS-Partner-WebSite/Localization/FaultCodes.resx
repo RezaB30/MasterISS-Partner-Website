@@ -121,7 +121,7 @@
     <value>Bina Kurulum Hatası</value>
   </data>
   <data name="ClientCancelled" xml:space="preserve">
-    <value>İstek İptal Edildi</value>
+    <value>Abone İptal Edildi</value>
   </data>
   <data name="CustomerCouldNotBeReached" xml:space="preserve">
     <value>Müşteriye Ulaşılamadı</value>

@@ -101,6 +101,12 @@
     <Reference Include="RezaB.DBUtilities, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RezaB.DBUtilities.1.0.0\lib\net452\RezaB.DBUtilities.dll</HintPath>
     </Reference>
+    <Reference Include="RezaB.Files, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RezaB.Files.1.0.1\lib\net472\RezaB.Files.dll</HintPath>
+    </Reference>
+    <Reference Include="RezaB.Files.Local, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RezaB.Files.Local.1.0.1\lib\net472\RezaB.Files.Local.dll</HintPath>
+    </Reference>
     <Reference Include="RezaB.Web, Version=1.1.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RezaB.Web.1.1.5\lib\net472\RezaB.Web.dll</HintPath>
     </Reference>
@@ -194,6 +200,7 @@
     <Compile Include="Controllers\SetupController.cs" />
     <Compile Include="Controllers\UserOperationsController.cs" />
     <Compile Include="DatetimeParse.cs" />
+    <Compile Include="FaultCodeConverter.cs" />
     <Compile Include="Helpers\CustomButtonByMap.cs" />
     <Compile Include="Helpers\CustomMap.cs" />
     <Compile Include="Helpers\LanguageLinkHelper.cs" />
