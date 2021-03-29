@@ -545,7 +545,6 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             var faultTypeList = FaultTypeList(null);
 
-
             ViewBag.FaultTypes = faultTypeList;
 
             using (var db = new PartnerWebSiteEntities())
@@ -586,20 +585,12 @@ namespace MasterISS_Partner_WebSite.Controllers
 
         }
 
-        private IEnumerable<int> StaffCurrentWorkDays(long staffId)
-        {
-            using (var db = new PartnerWebSiteEntities())
-            {
-                var staff = db.SetupTeam.Find(staffId);
-                var userCurrentWorkDays = staff.WorkDays.Split(',').Select(s => Convert.ToInt32(s));
-                return userCurrentWorkDays;
-            }
-        }
-
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult UpdateTaskStatus(AddTaskStatusUpdateViewModel updateTaskStatusViewModel)
+        public ActionResult UpdateTaskStatus(AddTaskStatusUpdateViewModel updateTaskStatusViewModel, HttpPostedFileBase File)
         {
+            ViewBag.FaultTypes = FaultTypeList((int?)updateTaskStatusViewModel.FaultCodes ?? null);
+
             if (updateTaskStatusViewModel.FaultCodes != FaultCodeEnum.RendezvousMade)
             {
                 updateTaskStatusViewModel.SelectedDate = null;
@@ -617,67 +608,105 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                 if (isValidFaultCodes)
                 {
-                    var claimInfo = new ClaimInfo();
                     var reservationDate = updateTaskStatusViewModel.SelectedDate?.Add(updateTaskStatusViewModel.SelectedTime.GetValueOrDefault());//Bu tarih uygun mu bir daha kontrol et.Hiddenleri değiştirmiş olabilir.
 
-                    var userCurrentWorkDays = StaffCurrentWorkDays(updateTaskStatusViewModel.StaffId.Value);
-
-                    var selectedValueDateOfWeek = (int)updateTaskStatusViewModel.SelectedDate.Value.DayOfWeek == 0 ? 7 : (int)updateTaskStatusViewModel.SelectedDate.Value.DayOfWeek;
-
-                    if (userCurrentWorkDays.Contains(selectedValueDateOfWeek))
+                    if (updateTaskStatusViewModel.FaultCodes == FaultCodeEnum.RendezvousMade)
                     {
+                        var userCurrentWorkDays = StaffCurrentWorkDays(updateTaskStatusViewModel.StaffId.Value);
+
+                        var selectedValueDateOfWeek = (int)updateTaskStatusViewModel.SelectedDate.Value.DayOfWeek == 0 ? 7 : (int)updateTaskStatusViewModel.SelectedDate.Value.DayOfWeek;
+
+                        if (!userCurrentWorkDays.Contains(selectedValueDateOfWeek))
+                        {
+                            return RedirectToAction("Index", "Home");
+                        }
                         var staffWorkTime = StaffWorkTimeCalendar(updateTaskStatusViewModel.StaffId.Value, updateTaskStatusViewModel.SelectedDate.Value);
 
-                        if (staffWorkTime.Contains(reservationDate.Value))
+                        if (!staffWorkTime.Contains(reservationDate.Value))
                         {
-                            using (var db = new PartnerWebSiteEntities())
+                            return RedirectToAction("Index", "Home");
+                        }
+                    }
+
+                    var claimInfo = new ClaimInfo();
+
+                    using (var db = new PartnerWebSiteEntities())
+                    {
+                        var task = db.TaskList.Find(updateTaskStatusViewModel.TaskNo);
+
+                        if (task != null)
+                        {
+                            if (File != null && File.ContentLength > 0)
                             {
-                                var task = db.TaskList.Find(updateTaskStatusViewModel.TaskNo);
+                                var fileSize = Convert.ToDecimal(File.ContentLength) / 1024 / 1024;
 
-                                if (task != null)
+                                if (Properties.Settings.Default.FileSizeLimit > fileSize)
                                 {
-                                    UpdatedSetupStatus updatedSetupStatus = new UpdatedSetupStatus
-                                    {
-                                        ChangeTime = datetimeNow,
-                                        Description = updateTaskStatusViewModel.Description,
-                                        FaultCodes = (short)updateTaskStatusViewModel.FaultCodes,
-                                        ReservationDate = reservationDate ?? null,
-                                        UserId = updateTaskStatusViewModel.StaffId == null ? claimInfo.UserId() : updateTaskStatusViewModel.StaffId,
-                                        TaskNo = (long)updateTaskStatusViewModel.TaskNo,
-                                    };
-                                    db.UpdatedSetupStatus.Add(updatedSetupStatus);
+                                    var extension = Path.GetExtension(File.FileName);
+                                    string[] acceptedExtension = { ".jpg", ".png", ".jpeg" };
 
-
-                                    if (updateTaskStatusViewModel.FaultCodes == FaultCodeEnum.RendezvousMade)
+                                    if (acceptedExtension.Contains(extension))
                                     {
-                                        task.AssignToSetupTeam = updateTaskStatusViewModel.StaffId;
-                                        task.ReservationDate = reservationDate;
+                                        var fileOperations = new FileOperations();
+                                        var saveForm = fileOperations.SaveSetupFile(File.InputStream, File.FileName, updateTaskStatusViewModel.TaskNo.Value);
+                                        if (saveForm == false)
+                                        {
+                                            ViewBag.UploadDocumentError = Localization.View.Generic200ErrorCodeMessage;
+                                            return View(updateTaskStatusViewModel);
+                                        }
                                     }
-                                    task.TaskStatus = (short?)FaultCodeConverter.GetFaultCodeTaskStatus(updateTaskStatusViewModel.FaultCodes);
-                                    db.SaveChanges();
-
-                                    //LOG
-                                    Logger.Info("Updated Task Status: " + updateTaskStatusViewModel.TaskNo + ", by: " + claimInfo.UserId());
-                                    //LOG
-
-                                    return RedirectToAction("Successful", new { taskNo = updateTaskStatusViewModel.TaskNo });
-
+                                    else
+                                    {
+                                        ViewBag.UploadDocumentError = Localization.View.FaultyFormatUpdateTaskStatus;
+                                        return View(updateTaskStatusViewModel);
+                                    }
                                 }
                                 else
                                 {
-                                    //LOG
-                                    LoggerError.Fatal($"TaskNo Not Found TaskList, TaskNo: {updateTaskStatusViewModel.TaskNo}, Id: {claimInfo.UserId()}");
-                                    //LOG
-
-                                    return RedirectToAction("Index", "Setup");
+                                    ViewBag.UploadDocumentError = Localization.View.MaxFileSizeError;
+                                    return View(updateTaskStatusViewModel);
                                 }
                             }
+
+                            UpdatedSetupStatus updatedSetupStatus = new UpdatedSetupStatus
+                            {
+                                ChangeTime = datetimeNow,
+                                Description = updateTaskStatusViewModel.Description,
+                                FaultCodes = (short)updateTaskStatusViewModel.FaultCodes,
+                                ReservationDate = reservationDate ?? null,
+                                UserId = updateTaskStatusViewModel.StaffId == null ? claimInfo.UserId() : updateTaskStatusViewModel.StaffId,
+                                TaskNo = (long)updateTaskStatusViewModel.TaskNo,
+                            };
+                            db.UpdatedSetupStatus.Add(updatedSetupStatus);
+
+
+                            if (updateTaskStatusViewModel.FaultCodes == FaultCodeEnum.RendezvousMade)
+                            {
+                                task.AssignToSetupTeam = updateTaskStatusViewModel.StaffId;
+                                task.ReservationDate = reservationDate;
+                            }
+                            task.TaskStatus = (short?)FaultCodeConverter.GetFaultCodeTaskStatus(updateTaskStatusViewModel.FaultCodes);
+                            db.SaveChanges();
+
+                            //LOG
+                            Logger.Info("Updated Task Status: " + updateTaskStatusViewModel.TaskNo + ", by: " + claimInfo.UserId());
+                            //LOG
+
+                            return RedirectToAction("Successful", new { taskNo = updateTaskStatusViewModel.TaskNo });
+
+                        }
+                        else
+                        {
+                            //LOG
+                            LoggerError.Fatal($"TaskNo Not Found TaskList, TaskNo: {updateTaskStatusViewModel.TaskNo}, Id: {claimInfo.UserId()}");
+                            //LOG
+
+                            return RedirectToAction("Index", "Setup");
                         }
                     }
                 }
                 return RedirectToAction("Index", "Setup");
             }
-            ViewBag.FaultTypes = FaultTypeList((int?)updateTaskStatusViewModel.FaultCodes ?? null);
             return View(updateTaskStatusViewModel);
         }
 
@@ -697,6 +726,16 @@ namespace MasterISS_Partner_WebSite.Controllers
                 {
                     return Json(new { list = Localization.View.Generic200ErrorCodeMessage }, JsonRequestBehavior.AllowGet);
                 }
+            }
+        }
+
+        private IEnumerable<int> StaffCurrentWorkDays(long staffId)
+        {
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var staff = db.SetupTeam.Find(staffId);
+                var userCurrentWorkDays = staff.WorkDays.Split(',').Select(s => Convert.ToInt32(s));
+                return userCurrentWorkDays;
             }
         }
 
@@ -789,44 +828,60 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                             if (acceptedExtension.Contains(extension))
                             {
-                                var fileByte = new byte[File.ContentLength];
+                                var fileOperations = new FileOperations();
 
-                                using (BinaryReader reader = new BinaryReader(File.InputStream))
+                                var saveForm = fileOperations.SaveCustomerForm(File.InputStream, (int)uploadFileRequestViewModel.AttachmentTypesEnum, File.FileName, uploadFileRequestViewModel.TaskNo);
+                                if (saveForm == true)
                                 {
-                                    fileByte = reader.ReadBytes(File.ContentLength);
-                                }
-
-                                var fileData = Convert.ToBase64String(fileByte);
-
-                                var request = new UploadFileRequestViewModel
-                                {
-                                    AttachmentTypesEnum = uploadFileRequestViewModel.AttachmentTypesEnum,
-                                    Extension = extension,
-                                    FileData = fileData,
-                                    TaskNo = uploadFileRequestViewModel.TaskNo
-                                };
-
-                                var setupWrapper = new SetupServiceWrapper();
-
-                                var response = setupWrapper.AddCustomerAttachment(request);
-
-                                if (response.ResponseMessage.ErrorCode == 0)
-                                {
-                                    //LOG
-                                    var wrapper = new WebServiceWrapper();
-                                    Logger.Info("Upload Document: " + uploadFileRequestViewModel.TaskNo + ", by: " + wrapper.GetUserSubMail());
-                                    //LOG
-
                                     return RedirectToAction("Successful", "Setup", new { taskNo = uploadFileRequestViewModel.TaskNo });
                                 }
+                                else
+                                {
+                                    ViewBag.UploadDocumentError = Localization.View.Generic200ErrorCodeMessage;
+                                    return View(uploadFileRequestViewModel);
+                                }
 
-                                //LOG
-                                var wrapperByGetUserSubmail = new WebServiceWrapper();
-                                LoggerError.Fatal($"An error occurred while AddCustomerAttachment , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapperByGetUserSubmail.GetUserSubMail()}");
-                                //LOG
 
-                                ViewBag.UploadDocumentError = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture); ;
-                                return View(uploadFileRequestViewModel);
+
+
+                                //var fileByte = new byte[File.ContentLength];
+
+                                //using (BinaryReader reader = new BinaryReader(File.InputStream))
+                                //{
+                                //    fileByte = reader.ReadBytes(File.ContentLength);
+                                //}
+
+                                //var fileData = Convert.ToBase64String(fileByte);
+
+                                //var request = new UploadFileRequestViewModel
+                                //{
+                                //    AttachmentTypesEnum = uploadFileRequestViewModel.AttachmentTypesEnum,
+                                //    Extension = extension,
+                                //    FileData = fileData,
+                                //    TaskNo = uploadFileRequestViewModel.TaskNo
+                                //};
+
+                                //var setupWrapper = new SetupServiceWrapper();
+
+                                //var response = setupWrapper.AddCustomerAttachment(request);
+
+                                //if (response.ResponseMessage.ErrorCode == 0)
+                                //{
+                                //    //LOG
+                                //    var wrapper = new WebServiceWrapper();
+                                //    Logger.Info("Upload Document: " + uploadFileRequestViewModel.TaskNo + ", by: " + wrapper.GetUserSubMail());
+                                //    //LOG
+
+                                //    return RedirectToAction("Successful", "Setup", new { taskNo = uploadFileRequestViewModel.TaskNo });
+                                //}
+
+                                ////LOG
+                                //var wrapperByGetUserSubmail = new WebServiceWrapper();
+                                //LoggerError.Fatal($"An error occurred while AddCustomerAttachment , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapperByGetUserSubmail.GetUserSubMail()}");
+                                ////LOG
+
+                                //ViewBag.UploadDocumentError = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture); ;
+                                //return View(uploadFileRequestViewModel);
 
                             }
                             ViewBag.UploadDocumentError = Localization.View.FaultyFormat;

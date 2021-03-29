@@ -7,7 +7,7 @@
 }
 
 
-@using (Html.BeginForm("UpdateTaskStatus", "Setup", FormMethod.Post))
+@using (Html.BeginForm("UpdateTaskStatus", "Setup", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <h3>@View.UpdateTaskStatus</h3>
@@ -17,17 +17,16 @@
         @Html.ValidationMessageFor(m => m.FaultCodes, "", new { @class = "text-danger" })
     </div>
 
-    @*<div class="form-group" id="RezervationDate" style="display:none">
-        @Html.LabelFor(m => m.ReservationDate)
-        @Html.EditorFor(m => m.ReservationDate, new { htmlAttributes = new { placeholder = DateTime.Now.ToString("dd.MM.yyyy HH:mm") } })
-        @Html.ValidationMessageFor(m => m.ReservationDate, "", new { @class = "text-danger" })
-    </div>*@
-
     <div class="form-group">
         @Html.LabelFor(m => m.Description)
         @Html.EditorFor(m => m.Description)
         @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
     </div>
+
+    if ((User.IsInRole("SetupManager") && !User.IsInRole("RendezvousTeam")))
+    {
+        <input type="file" name="file" id="file-button" />
+    }
 
     @Html.ActionLink(View.Back, "CustomerDetail", "Setup", new { taskNo = Model.TaskNo }, new { @class = "btn btn-info", @id = "form-button" })
 
@@ -49,7 +48,7 @@
     @Html.HiddenFor(m => m.SelectedTime)
 }
 
-
+@ViewBag.UploadDocumentError
 
 @section JavaScript{
     <script>

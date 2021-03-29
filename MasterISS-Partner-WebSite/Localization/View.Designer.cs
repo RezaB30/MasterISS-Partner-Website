@@ -376,6 +376,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lütfen &apos;.jpg&apos;,&apos;.png&apos;,&apos;.jpeg&apos; formatında dosya gönderiniz.
+        /// </summary>
+        public static string FaultyFormatUpdateTaskStatus {
+            get {
+                return ResourceManager.GetString("FaultyFormatUpdateTaskStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filtrele.
         /// </summary>
         public static string Filter {

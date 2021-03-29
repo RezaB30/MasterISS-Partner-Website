@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Web;
+using System.IO;
 
 namespace MasterISS_Partner_WebSite
 {
@@ -143,9 +144,7 @@ namespace MasterISS_Partner_WebSite
         //    //var response = Client.GetTaskList(request).SetupTasks.First().;
 
         //    //return response;
-        //    var rootFolder = Environment.GetEnvironmentVariable("partner_client_root");
-        //    RezaB.Files.IFileManager ass = new RezaB.Files.Local.LocalFileManager(rootFolder);
-        //    ass.
+            
 
 
         //}

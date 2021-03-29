@@ -222,6 +222,9 @@
   <data name="FaultyFormat" xml:space="preserve">
     <value>Lütfen '.jpg','.png','.pdf','.jpeg' formatında dosya gönderiniz</value>
   </data>
+  <data name="FaultyFormatUpdateTaskStatus" xml:space="preserve">
+    <value>Lütfen '.jpg','.png','.jpeg' formatında dosya gönderiniz</value>
+  </data>
   <data name="Filter" xml:space="preserve">
     <value>Filtrele</value>
   </data>

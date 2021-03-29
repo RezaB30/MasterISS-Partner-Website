@@ -222,6 +222,9 @@
   <data name="FaultyFormat" xml:space="preserve">
     <value>Send a file in '.jpg','.png','.jpeg','.pdf' format.</value>
   </data>
+  <data name="FaultyFormatUpdateTaskStatus" xml:space="preserve">
+    <value>Send a file in '.jpg','.png','.jpeg' format.</value>
+  </data>
   <data name="Filter" xml:space="preserve">
     <value>Filter</value>
   </data>
