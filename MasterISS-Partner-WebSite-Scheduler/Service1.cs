@@ -66,10 +66,10 @@ namespace MasterISS_Partner_WebSite_Scheduler
             };
 
 
-
             return new List<SchedulerOperation>()
             {
                 new SchedulerOperation("UpdatedTaskStatusDatabaseToWebService",new UpdatedTaskStatusDatabaseToWebService(),new SchedulerTimingOptions(new SchedulerIntervalTimeSpan(minute)),0,getTaskList),
+                new SchedulerOperation("TaskUploadedDocumentSendWebService",new TaskUploadedDocumentSendWebService() ,new SchedulerTimingOptions(new SchedulerIntervalTimeSpan(minute)),0)
             };
         }
     }

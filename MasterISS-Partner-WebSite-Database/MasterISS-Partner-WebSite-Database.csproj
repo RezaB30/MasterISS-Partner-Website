@@ -50,6 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\OperationHistory.cs">
+      <DependentUpon>PartnerEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\PartnerEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -87,6 +90,9 @@
       <DependentUpon>PartnerEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SetupTeam.cs">
+      <DependentUpon>PartnerEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TaskFormList.cs">
       <DependentUpon>PartnerEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TaskList.cs">

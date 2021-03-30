@@ -5,18 +5,21 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="0eec33d45b1e4cfa8e4b58dc7ecb84e6" Name="Diagram1" ZoomLevel="57">
-        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.PartnerSetupInfo" Width="1.5" PointX="5.25" PointY="18.75" />
-        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.Permission" Width="1.5" PointX="0.75" PointY="6" />
-        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.RendezvousTeam" Width="1.5" PointX="5.25" PointY="15.25" />
-        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.Role" Width="1.5" PointX="0.75" PointY="8.875" />
-        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.RolePermission" Width="1.5" PointX="3" PointY="7.875" />
+        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.OperationHistory" Width="1.5" PointX="9.75" PointY="10.75" />
+        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.PartnerSetupInfo" Width="1.5" PointX="5.25" PointY="5.875" />
+        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.Permission" Width="1.5" PointX="0.75" PointY="7.125" />
+        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.RendezvousTeam" Width="1.5" PointX="5.25" PointY="12.5" />
+        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.Role" Width="1.5" PointX="0.75" PointY="9.875" />
+        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.RolePermission" Width="1.5" PointX="3" PointY="9" />
         <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.SchedulerOperationsTime" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.SchedulerSettings" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.SetupTeam" Width="1.5" PointX="5.25" PointY="12" />
-        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.TaskList" Width="1.5" PointX="7.5" PointY="11.25" />
-        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.UpdatedSetupStatus" Width="1.5" PointX="9.75" PointY="13.25" />
-        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.User" Width="1.5" PointX="3" PointY="11.125" />
-        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.WorkArea" Width="1.5" PointX="5.25" PointY="8" />
+        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.SetupTeam" Width="1.5" PointX="5.25" PointY="9.125" />
+        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.TaskFormList" Width="1.5" PointX="9.75" PointY="13.875" />
+        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.TaskList" Width="1.5" PointX="7.5" PointY="8.25" />
+        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.UpdatedSetupStatus" Width="1.5" PointX="9.75" PointY="7.5" />
+        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.User" Width="1.5" PointX="3" PointY="12.125" />
+        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.WorkArea" Width="1.5" PointX="5.25" PointY="15.25" />
+        <AssociationConnector Association="MasterISSPartnerWebSiteModel.FK_OperationHistory_TaskList" />
         <AssociationConnector Association="MasterISSPartnerWebSiteModel.FK_TaskList_PartnerSetupInfo" />
         <AssociationConnector Association="MasterISSPartnerWebSiteModel.FK_RolePermission_Permission" />
         <AssociationConnector Association="MasterISSPartnerWebSiteModel.FK_RendezvousTeam_User" />
@@ -25,6 +28,7 @@
         <AssociationConnector Association="MasterISSPartnerWebSiteModel.FK_User_Role" />
         <AssociationConnector Association="MasterISSPartnerWebSiteModel.FK_SetupTeam_User" />
         <AssociationConnector Association="MasterISSPartnerWebSiteModel.FK_TaskList_SetupTeam" />
+        <AssociationConnector Association="MasterISSPartnerWebSiteModel.FK_TaskFormList_TaskList" />
         <AssociationConnector Association="MasterISSPartnerWebSiteModel.FK_UpdatedSetupStatus_TaskList" />
         <AssociationConnector Association="MasterISSPartnerWebSiteModel.FK_WorkArea_User" />
       </Diagram>

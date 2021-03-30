@@ -6,6 +6,7 @@ using RezaB.Scheduling;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -345,6 +346,86 @@ namespace MasterISS_Partner_WebSite_Scheduler
             catch (Exception)
             {
                 SetupServiceWrapper.LoggerError.Fatal($"An error occurred while ShareUnAssignedTaskToActiveRendezvousTeam");
+                return false;
+            }
+        }
+    }
+
+    public class TaskUploadedDocumentSendWebService : AbortableTask
+    {
+        private SetupServiceWrapper SetupServiceWrapper = new SetupServiceWrapper();
+
+        private void Send()
+        {
+            try
+            {
+                using (var db = new PartnerWebSiteEntities())
+                {
+                    var notSendedTaskForms = db.TaskFormList.Where(tfl => tfl.Status == false).ToList();
+                    foreach (var item in notSendedTaskForms)
+                    {
+                        var Rand = Guid.NewGuid().ToString("N");
+
+                        var convertedBase64Form = StreamExtensions.GetFileBase64StringValue(item.TaskNo, item.AttachmentType, item.FileName);
+                        if (!string.IsNullOrEmpty(convertedBase64Form))
+                        {
+                            var request = new AddCustomerAttachmentRequest
+                            {
+                                Culture = SetupServiceWrapper.Culture,
+                                Hash = SetupServiceWrapper.CalculateHash<SHA256>(item.TaskList.PartnerSetupInfo.SetupServiceUser + Rand + item.TaskList.PartnerSetupInfo.SetupServiceHash + SetupServiceWrapper.Client.GetKeyFragment(item.TaskList.PartnerSetupInfo.SetupServiceUser)),
+                                Rand = Rand,
+                                Username = item.TaskList.PartnerSetupInfo.SetupServiceUser,
+                                CustomerAttachment = new CustomerAttachment
+                                {
+                                    FileData = convertedBase64Form,
+                                    FileType = new FileInfo(item.FileName).Extension.Replace(".", ""),
+                                    TaskNo = item.TaskNo,
+                                    AttachmentType = item.AttachmentType
+                                }
+                            };
+
+                            var response = SetupServiceWrapper.Client.AddCustomerAttachment(request);
+
+                            if (response.ResponseMessage.ErrorCode == 0)
+                            {
+                                SetupServiceWrapper.LoggerError.Fatal("Success formmmmm");
+                                item.Status = true;
+                                db.SaveChanges();
+                            }
+                            else
+                            {
+                                SetupServiceWrapper.LoggerError.Fatal($"An error occurred while TaskUploadedDocumentSendWebService, ErrorCode:  {response.ResponseMessage.ErrorCode} , ErrorMessage: {response.ResponseMessage.ErrorMessage}");
+                            }
+                        }
+                        else
+                        {
+                            SetupServiceWrapper.LoggerError.Fatal($"Base64 value is null");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                SetupServiceWrapper.LoggerError.Fatal($"An error occurred while TaskUploadedDocumentSendWebService, ErrorMessage:  {ex.Message}");
+            }
+
+        }
+
+        public override bool Run()
+        {
+            try
+            {
+                if (_isAborted)
+                {
+                    SetupServiceWrapper.LoggerError.Fatal($"SendForm Aborted");
+                    return false;
+                }
+                Send();
+                return true;
+            }
+            catch (Exception)
+            {
+                SetupServiceWrapper.LoggerError.Fatal($"An error occurred while TaskUploadedDocumentSendWebService");
                 return false;
             }
         }

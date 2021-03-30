@@ -5,6 +5,17 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="MasterISSPartnerWebSiteModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="OperationHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="TaskNo" Type="bigint" Nullable="false" />
+          <Property Name="UserId" Type="bigint" Nullable="false" />
+          <Property Name="OperationType" Type="smallint" Nullable="false" />
+          <Property Name="ChangeTime" Type="datetime" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="450" Nullable="false" />
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
         <EntityType Name="PartnerSetupInfo">
           <Key>
             <PropertyRef Name="PartnerId" />
@@ -71,6 +82,16 @@
           <Property Name="WorkDays" Type="nvarchar" MaxLength="50" />
           <Property Name="WorkStartTime" Type="time" Precision="0" />
           <Property Name="WorkEndTime" Type="time" Precision="0" />
+        </EntityType>
+        <EntityType Name="TaskFormList">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TaskNo" Type="bigint" Nullable="false" />
+          <Property Name="FileName" Type="nvarchar" MaxLength="350" Nullable="false" />
+          <Property Name="AttachmentType" Type="smallint" Nullable="false" />
+          <Property Name="Status" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="TaskList">
           <Key>
@@ -141,6 +162,18 @@
           <Property Name="NeighbourhoodId" Type="bigint" />
           <Property Name="NeighbourhoodName" Type="nvarchar" MaxLength="150" />
         </EntityType>
+        <Association Name="FK_OperationHistory_TaskList">
+          <End Role="TaskList" Type="Self.TaskList" Multiplicity="1" />
+          <End Role="OperationHistory" Type="Self.OperationHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaskList">
+              <PropertyRef Name="TaskNo" />
+            </Principal>
+            <Dependent Role="OperationHistory">
+              <PropertyRef Name="TaskNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_RendezvousTeam_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="RendezvousTeam" Type="Self.RendezvousTeam" Multiplicity="0..1" />
@@ -186,6 +219,18 @@
             </Principal>
             <Dependent Role="SetupTeam">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaskFormList_TaskList">
+          <End Role="TaskList" Type="Self.TaskList" Multiplicity="1" />
+          <End Role="TaskFormList" Type="Self.TaskFormList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaskList">
+              <PropertyRef Name="TaskNo" />
+            </Principal>
+            <Dependent Role="TaskFormList">
+              <PropertyRef Name="TaskNo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -262,6 +307,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="MasterISSPartnerWebSiteModelStoreContainer">
+          <EntitySet Name="OperationHistory" EntityType="Self.OperationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PartnerSetupInfo" EntityType="Self.PartnerSetupInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Permission" EntityType="Self.Permission" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RendezvousTeam" EntityType="Self.RendezvousTeam" Schema="dbo" store:Type="Tables" />
@@ -270,10 +316,15 @@
           <EntitySet Name="SchedulerOperationsTime" EntityType="Self.SchedulerOperationsTime" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SchedulerSettings" EntityType="Self.SchedulerSettings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SetupTeam" EntityType="Self.SetupTeam" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TaskFormList" EntityType="Self.TaskFormList" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaskList" EntityType="Self.TaskList" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UpdatedSetupStatus" EntityType="Self.UpdatedSetupStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WorkArea" EntityType="Self.WorkArea" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_OperationHistory_TaskList" Association="Self.FK_OperationHistory_TaskList">
+            <End Role="TaskList" EntitySet="TaskList" />
+            <End Role="OperationHistory" EntitySet="OperationHistory" />
+          </AssociationSet>
           <AssociationSet Name="FK_RendezvousTeam_User" Association="Self.FK_RendezvousTeam_User">
             <End Role="User" EntitySet="User" />
             <End Role="RendezvousTeam" EntitySet="RendezvousTeam" />
@@ -289,6 +340,10 @@
           <AssociationSet Name="FK_SetupTeam_User" Association="Self.FK_SetupTeam_User">
             <End Role="User" EntitySet="User" />
             <End Role="SetupTeam" EntitySet="SetupTeam" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaskFormList_TaskList" Association="Self.FK_TaskFormList_TaskList">
+            <End Role="TaskList" EntitySet="TaskList" />
+            <End Role="TaskFormList" EntitySet="TaskFormList" />
           </AssociationSet>
           <AssociationSet Name="FK_TaskList_PartnerSetupInfo" Association="Self.FK_TaskList_PartnerSetupInfo">
             <End Role="PartnerSetupInfo" EntitySet="PartnerSetupInfo" />
@@ -320,6 +375,7 @@
     <edmx:ConceptualModels>
       <Schema Namespace="MasterISSPartnerWebSiteModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="PartnerWebSiteEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="OperationHistory" EntityType="MasterISSPartnerWebSiteModel.OperationHistory" />
           <EntitySet Name="PartnerSetupInfo" EntityType="MasterISSPartnerWebSiteModel.PartnerSetupInfo" />
           <EntitySet Name="Permission" EntityType="MasterISSPartnerWebSiteModel.Permission" />
           <EntitySet Name="RendezvousTeam" EntityType="MasterISSPartnerWebSiteModel.RendezvousTeam" />
@@ -328,10 +384,15 @@
           <EntitySet Name="SchedulerOperationsTime" EntityType="MasterISSPartnerWebSiteModel.SchedulerOperationsTime" />
           <EntitySet Name="SchedulerSettings" EntityType="MasterISSPartnerWebSiteModel.SchedulerSettings" />
           <EntitySet Name="SetupTeam" EntityType="MasterISSPartnerWebSiteModel.SetupTeam" />
+          <EntitySet Name="TaskFormList" EntityType="MasterISSPartnerWebSiteModel.TaskFormList" />
           <EntitySet Name="TaskList" EntityType="MasterISSPartnerWebSiteModel.TaskList" />
           <EntitySet Name="UpdatedSetupStatus" EntityType="MasterISSPartnerWebSiteModel.UpdatedSetupStatus" />
           <EntitySet Name="User" EntityType="MasterISSPartnerWebSiteModel.User" />
           <EntitySet Name="WorkArea" EntityType="MasterISSPartnerWebSiteModel.WorkArea" />
+          <AssociationSet Name="FK_OperationHistory_TaskList" Association="MasterISSPartnerWebSiteModel.FK_OperationHistory_TaskList">
+            <End Role="TaskList" EntitySet="TaskList" />
+            <End Role="OperationHistory" EntitySet="OperationHistory" />
+          </AssociationSet>
           <AssociationSet Name="FK_TaskList_PartnerSetupInfo" Association="MasterISSPartnerWebSiteModel.FK_TaskList_PartnerSetupInfo">
             <End Role="PartnerSetupInfo" EntitySet="PartnerSetupInfo" />
             <End Role="TaskList" EntitySet="TaskList" />
@@ -364,6 +425,10 @@
             <End Role="SetupTeam" EntitySet="SetupTeam" />
             <End Role="TaskList" EntitySet="TaskList" />
           </AssociationSet>
+          <AssociationSet Name="FK_TaskFormList_TaskList" Association="MasterISSPartnerWebSiteModel.FK_TaskFormList_TaskList">
+            <End Role="TaskList" EntitySet="TaskList" />
+            <End Role="TaskFormList" EntitySet="TaskFormList" />
+          </AssociationSet>
           <AssociationSet Name="FK_UpdatedSetupStatus_TaskList" Association="MasterISSPartnerWebSiteModel.FK_UpdatedSetupStatus_TaskList">
             <End Role="TaskList" EntitySet="TaskList" />
             <End Role="UpdatedSetupStatus" EntitySet="UpdatedSetupStatus" />
@@ -373,6 +438,18 @@
             <End Role="WorkArea" EntitySet="WorkArea" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="OperationHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="TaskNo" Type="Int64" Nullable="false" />
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="OperationType" Type="Int16" Nullable="false" />
+          <Property Name="ChangeTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="TaskList" Relationship="MasterISSPartnerWebSiteModel.FK_OperationHistory_TaskList" FromRole="OperationHistory" ToRole="TaskList" />
+        </EntityType>
         <EntityType Name="PartnerSetupInfo">
           <Key>
             <PropertyRef Name="PartnerId" />
@@ -450,6 +527,17 @@
           <NavigationProperty Name="User" Relationship="MasterISSPartnerWebSiteModel.FK_SetupTeam_User" FromRole="SetupTeam" ToRole="User" />
           <NavigationProperty Name="TaskList" Relationship="MasterISSPartnerWebSiteModel.FK_TaskList_SetupTeam" FromRole="SetupTeam" ToRole="TaskList" />
         </EntityType>
+        <EntityType Name="TaskFormList">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TaskNo" Type="Int64" Nullable="false" />
+          <Property Name="FileName" Type="String" Nullable="false" MaxLength="350" FixedLength="false" Unicode="true" />
+          <Property Name="AttachmentType" Type="Int16" Nullable="false" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="TaskList" Relationship="MasterISSPartnerWebSiteModel.FK_TaskFormList_TaskList" FromRole="TaskFormList" ToRole="TaskList" />
+        </EntityType>
         <EntityType Name="TaskList">
           <Key>
             <PropertyRef Name="TaskNo" />
@@ -479,9 +567,11 @@
           <Property Name="AssignToSetupTeam" Type="Int64" />
           <Property Name="PartnerId" Type="Int32" Nullable="false" />
           <Property Name="IsConfirmation" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="OperationHistory" Relationship="MasterISSPartnerWebSiteModel.FK_OperationHistory_TaskList" FromRole="TaskList" ToRole="OperationHistory" />
           <NavigationProperty Name="PartnerSetupInfo" Relationship="MasterISSPartnerWebSiteModel.FK_TaskList_PartnerSetupInfo" FromRole="TaskList" ToRole="PartnerSetupInfo" />
           <NavigationProperty Name="RendezvousTeam" Relationship="MasterISSPartnerWebSiteModel.FK_TaskList_RendezvousTeam" FromRole="TaskList" ToRole="RendezvousTeam" />
           <NavigationProperty Name="SetupTeam" Relationship="MasterISSPartnerWebSiteModel.FK_TaskList_SetupTeam" FromRole="TaskList" ToRole="SetupTeam" />
+          <NavigationProperty Name="TaskFormList" Relationship="MasterISSPartnerWebSiteModel.FK_TaskFormList_TaskList" FromRole="TaskList" ToRole="TaskFormList" />
           <NavigationProperty Name="UpdatedSetupStatus" Relationship="MasterISSPartnerWebSiteModel.FK_UpdatedSetupStatus_TaskList" FromRole="TaskList" ToRole="UpdatedSetupStatus" />
         </EntityType>
         <EntityType Name="UpdatedSetupStatus">
@@ -529,6 +619,18 @@
           <Property Name="NeighbourhoodName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="User" Relationship="MasterISSPartnerWebSiteModel.FK_WorkArea_User" FromRole="WorkArea" ToRole="User" />
         </EntityType>
+        <Association Name="FK_OperationHistory_TaskList">
+          <End Type="MasterISSPartnerWebSiteModel.TaskList" Role="TaskList" Multiplicity="1" />
+          <End Type="MasterISSPartnerWebSiteModel.OperationHistory" Role="OperationHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaskList">
+              <PropertyRef Name="TaskNo" />
+            </Principal>
+            <Dependent Role="OperationHistory">
+              <PropertyRef Name="TaskNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TaskList_PartnerSetupInfo">
           <End Type="MasterISSPartnerWebSiteModel.PartnerSetupInfo" Role="PartnerSetupInfo" Multiplicity="1" />
           <End Type="MasterISSPartnerWebSiteModel.TaskList" Role="TaskList" Multiplicity="*" />
@@ -625,6 +727,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TaskFormList_TaskList">
+          <End Type="MasterISSPartnerWebSiteModel.TaskList" Role="TaskList" Multiplicity="1" />
+          <End Type="MasterISSPartnerWebSiteModel.TaskFormList" Role="TaskFormList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaskList">
+              <PropertyRef Name="TaskNo" />
+            </Principal>
+            <Dependent Role="TaskFormList">
+              <PropertyRef Name="TaskNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UpdatedSetupStatus_TaskList">
           <End Type="MasterISSPartnerWebSiteModel.TaskList" Role="TaskList" Multiplicity="1" />
           <End Type="MasterISSPartnerWebSiteModel.UpdatedSetupStatus" Role="UpdatedSetupStatus" Multiplicity="*" />
@@ -655,6 +769,18 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="MasterISSPartnerWebSiteModelStoreContainer" CdmEntityContainer="PartnerWebSiteEntities">
+          <EntitySetMapping Name="OperationHistory">
+            <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.OperationHistory">
+              <MappingFragment StoreEntitySet="OperationHistory">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ChangeTime" ColumnName="ChangeTime" />
+                <ScalarProperty Name="OperationType" ColumnName="OperationType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TaskNo" ColumnName="TaskNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="PartnerSetupInfo">
             <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.PartnerSetupInfo">
               <MappingFragment StoreEntitySet="PartnerSetupInfo">
@@ -727,6 +853,17 @@
                 <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
                 <ScalarProperty Name="WorkingStatus" ColumnName="WorkingStatus" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaskFormList">
+            <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.TaskFormList">
+              <MappingFragment StoreEntitySet="TaskFormList">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="AttachmentType" ColumnName="AttachmentType" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="TaskNo" ColumnName="TaskNo" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

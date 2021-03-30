@@ -37,7 +37,7 @@
             <th>@Html.DisplayNameFor(model => model.ModemName)</th>
             <td>@Html.DisplayFor(model => model.ModemName)</td>
         </tr>
-       
+
         <tr>
             <th>@Html.DisplayNameFor(model => model.XDSLType)</th>
             <td>@Html.DisplayFor(model => model.XDSLType)</td>
@@ -84,7 +84,6 @@
     <div id="CredentialsInfo"></div>
 </div>
 
-
 <div>
     <h3>@View.CustomerLineDetails</h3>
     <input type="button" id="GetLineInfo" class="btn btn-info" value="@View.Load" />
@@ -121,9 +120,42 @@
     @Html.Raw(TempData["UpdateGPSResponse"])
 </div>
 
+<div>
+    <h3>Yüklenen fotoları gör</h3>
+    <input type="button" class="btn btn-info" id="GetFileList" value="@View.Load" />
+    <div id="file-list-container"></div>
+</div>
+
+<iframe id="iframe" style="display:none;"></iframe>
+
 @section JavaScript{
     <script>
         $(document).ready(function () {
+
+            $("#GetFileList").click(function () {
+                $("#GetFileList").hide();
+                $.ajax({
+                    url: '@Url.Action("GetFileList", "Setup")',
+                    type: 'POST',
+                    data: {
+                        taskNo : '@taskNo'
+                    },
+                    dataType: 'json',
+                    complete: function (data, status) {
+                        if (status = "success") {
+                            var cultureInfo = '@System.Globalization.CultureInfo.CurrentCulture.Name';
+                            var area = $("#file-list-container");
+                            $.each(data.responseJSON.list, function (item, value) {
+                                item = item + 1;
+                                area.append('<a href="/' + cultureInfo + '/Setup/GetFileTask?fileName=' + value + '&taskNo=' +@taskNo+'" target="_blank">"' + item +'.foto" </a><br />');
+                            });
+                        }
+                        else {
+                            console.log("Failed Get Staff Hours");
+                        }
+                    }
+                });
+            });
 
             $("#GetCustomerDetail").click(function () {
                 $("#GetCustomerDetail").hide();

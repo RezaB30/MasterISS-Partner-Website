@@ -130,7 +130,7 @@ namespace MasterISS_Partner_WebSite
                     var createDirectory = fileManager.CreateDirectory("SetupOperations");
                     if (createDirectory.InternalException != null)
                     {
-                        LoggerError.Fatal($"An Error Occurred FileOperations=> createDirectory : Error Message : {createDirectory.InternalException.Message}");
+                        LoggerError.Fatal($"An Error Occurred SaveSetupFile=> createDirectory : Error Message : {createDirectory.InternalException.Message}");
                         return false;
                     }
                 }
@@ -143,7 +143,7 @@ namespace MasterISS_Partner_WebSite
 
                     if (validTaskNo.InternalException != null)
                     {
-                        LoggerError.Fatal($"An Error Occurred validTaskNo => Error Message : {validTaskNo.InternalException.Message}");
+                        LoggerError.Fatal($"An Error Occurred SaveSetupFile validTaskNo => Error Message : {validTaskNo.InternalException.Message}");
                         return false;
                     }
                     else
@@ -153,7 +153,7 @@ namespace MasterISS_Partner_WebSite
                             var createDirectoryTask = fileManager.CreateDirectory(taskNo.ToString());
                             if (createDirectoryTask.InternalException != null)
                             {
-                                LoggerError.Fatal($"An Error Occurred createDirectoryTask => Error Message : {createDirectoryTask.InternalException.Message}");
+                                LoggerError.Fatal($"An Error Occurred  SaveSetupFile createDirectoryTask => Error Message : {createDirectoryTask.InternalException.Message}");
                                 return false;
                             }
                         }
@@ -162,34 +162,176 @@ namespace MasterISS_Partner_WebSite
 
                         if (enterTask.InternalException == null)
                         {
-                            var saveFile = fileManager.SaveFile(fileName, stream, true);
+                            var saveFile = fileManager.SaveFile(fileName, stream, false);
                             if (saveFile.InternalException == null)
                             {
                                 return true;
                             }
                             else
                             {
-                                LoggerError.Fatal($"An Error Occurred FileOperations=> fileManager.SaveFile() : Error Message : {saveFile.InternalException.Message}");
+                                LoggerError.Fatal($"An Error Occurred SaveSetupFile=> fileManager.SaveFile() : Error Message : {saveFile.InternalException.Message}");
                                 return false;
                             }
                         }
                         else
                         {
-                            LoggerError.Fatal($"An Error Occurred FileOperations=> Enter task: Error Message : {enterTask.InternalException.Message}");
+                            LoggerError.Fatal($"An Error Occurred SaveSetupFile=> Enter task: Error Message : {enterTask.InternalException.Message}");
                             return false;
                         }
                     }
                 }
                 else
                 {
-                    LoggerError.Fatal($"An Error Occurred FileOperations=> fileManager.EnterDirectoryPath() : Error Message : {enterSetupOperations.InternalException.Message}");
+                    LoggerError.Fatal($"An Error Occurred SaveSetupFile=> fileManager.EnterDirectoryPath() : Error Message : {enterSetupOperations.InternalException.Message}");
                     return false;
                 }
             }
             else
             {
-                LoggerError.Fatal($"An Error Occurred FileOperations=> validFileSetup : Error Message : {validFileSetup.InternalException.Message}");
+                LoggerError.Fatal($"An Error Occurred SaveSetupFile=> validFileSetup : Error Message : {validFileSetup.InternalException.Message}");
                 return false;
+            }
+        }
+
+        public IEnumerable<string> GetSetupFileList(long taskNo)
+        {
+            var fileManager = GetLocalFileManager();
+
+            var validFileSetup = fileManager.DirectoryExists("SetupOperations");
+            if (validFileSetup.InternalException == null)
+            {
+                if (validFileSetup.Result == false)
+                {
+                    return null;
+                }
+
+                var enterSetupOperations = fileManager.EnterDirectoryPath("SetupOperations");
+                if (enterSetupOperations.InternalException == null)
+                {
+                    var validTaskFile = fileManager.DirectoryExists(taskNo.ToString());
+
+                    if (validTaskFile.InternalException == null)
+                    {
+                        if (validTaskFile.Result == false)
+                        {
+                            return null;
+                        }
+
+                        var enterTaskFile = fileManager.EnterDirectoryPath(taskNo.ToString());
+                        if (enterTaskFile.InternalException == null)
+                        {
+                            var getList = fileManager.GetFileList();
+
+                            if (getList.InternalException == null)
+                            {
+                                return getList.Result;
+                            }
+                            else
+                            {
+                                LoggerError.Fatal($"An Error Occurred GetSetupFile=> getList : Error Message : {getList.InternalException.Message}");
+                                return null;
+                            }
+                        }
+                        else
+                        {
+                            LoggerError.Fatal($"An Error Occurred GetSetupFile=> enterTaskFile : Error Message : {enterTaskFile.InternalException.Message}");
+                            return null;
+                        }
+                    }
+                    else
+                    {
+                        LoggerError.Fatal($"An Error Occurred GetSetupFile=> validTaskFile : Error Message : {validTaskFile.InternalException.Message}");
+                        return null;
+                    }
+                }
+                else
+                {
+                    LoggerError.Fatal($"An Error Occurred GetSetupFile=> enterSetupOperations : Error Message : {enterSetupOperations.InternalException.Message}");
+                    return null;
+                }
+            }
+            else
+            {
+                LoggerError.Fatal($"An Error Occurred GetSetupFile=> validFileSetup : Error Message : {validFileSetup.InternalException.Message}");
+                return null;
+            }
+        }
+
+        public Stream GetFile(long taskNo, string filename)
+        {
+            var fileManager = GetLocalFileManager();
+
+            var validFileSetup = fileManager.DirectoryExists("SetupOperations");
+            if (validFileSetup.InternalException == null)
+            {
+                if (validFileSetup.Result == false)
+                {
+                    return null;
+                }
+
+                var enterSetupOperations = fileManager.EnterDirectoryPath("SetupOperations");
+                if (enterSetupOperations.InternalException == null)
+                {
+                    var validTaskFile = fileManager.DirectoryExists(taskNo.ToString());
+
+                    if (validTaskFile.InternalException == null)
+                    {
+                        if (validTaskFile.Result == false)
+                        {
+                            return null;
+                        }
+
+                        var enterTaskFile = fileManager.EnterDirectoryPath(taskNo.ToString());
+                        if (enterTaskFile.InternalException == null)
+                        {
+                            var validFile = fileManager.FileExists(filename);
+                            if (validFile.InternalException == null)
+                            {
+                                if (validFile.Result == false)
+                                {
+                                    LoggerError.Fatal($"File Not Found");
+                                    return null;
+                                }
+                                var getFile = fileManager.GetFile(filename);
+                                if (getFile.InternalException == null)
+                                {
+                                    return getFile.Result;
+                                }
+                                else
+                                {
+                                    LoggerError.Fatal($"An Error Occurred GetSetupFile=> getFile : Error Message : {getFile.InternalException.Message}");
+                                    return null;
+                                }
+                            }
+                            else
+                            {
+                                LoggerError.Fatal($"An Error Occurred GetSetupFile=> validFile : Error Message : {validFile.InternalException.Message}");
+                                return null;
+                            }
+
+                        }
+                        else
+                        {
+                            LoggerError.Fatal($"An Error Occurred GetSetupFile=> enterTaskFile : Error Message : {enterTaskFile.InternalException.Message}");
+                            return null;
+                        }
+                    }
+                    else
+                    {
+                        LoggerError.Fatal($"An Error Occurred GetSetupFile=> validTaskFile : Error Message : {validTaskFile.InternalException.Message}");
+                        return null;
+                    }
+                }
+                else
+                {
+                    LoggerError.Fatal($"An Error Occurred GetSetupFile=> enterSetupOperations : Error Message : {enterSetupOperations.InternalException.Message}");
+                    return null;
+                }
+            }
+            else
+            {
+                LoggerError.Fatal($"An Error Occurred GetSetupFile=> validFileSetup : Error Message : {validFileSetup.InternalException.Message}");
+                return null;
             }
         }
 

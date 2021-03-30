@@ -17,6 +17,8 @@ namespace MasterISS_Partner_WebSite_Database.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TaskList()
         {
+            this.OperationHistory = new HashSet<OperationHistory>();
+            this.TaskFormList = new HashSet<TaskFormList>();
             this.UpdatedSetupStatus = new HashSet<UpdatedSetupStatus>();
         }
     
@@ -46,9 +48,13 @@ namespace MasterISS_Partner_WebSite_Database.Models
         public int PartnerId { get; set; }
         public bool IsConfirmation { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OperationHistory> OperationHistory { get; set; }
         public virtual PartnerSetupInfo PartnerSetupInfo { get; set; }
         public virtual RendezvousTeam RendezvousTeam { get; set; }
         public virtual SetupTeam SetupTeam { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TaskFormList> TaskFormList { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UpdatedSetupStatus> UpdatedSetupStatus { get; set; }
     }

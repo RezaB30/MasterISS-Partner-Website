@@ -795,7 +795,6 @@ namespace MasterISS_Partner_WebSite.Controllers
             return null;
         }
 
-
         [HttpGet]
         public ActionResult UploadDocument(long taskNo)
         {
@@ -833,6 +832,19 @@ namespace MasterISS_Partner_WebSite.Controllers
                                 var saveForm = fileOperations.SaveCustomerForm(File.InputStream, (int)uploadFileRequestViewModel.AttachmentTypesEnum, File.FileName, uploadFileRequestViewModel.TaskNo);
                                 if (saveForm == true)
                                 {
+                                    using (var db = new PartnerWebSiteEntities())
+                                    {
+                                        TaskFormList taskFormList = new TaskFormList
+                                        {
+                                            AttachmentType = (short)uploadFileRequestViewModel.AttachmentTypesEnum,
+                                            FileName = File.FileName,
+                                            Status = false,
+                                            TaskNo = uploadFileRequestViewModel.TaskNo,
+                                        };
+                                        db.TaskFormList.Add(taskFormList);
+                                        db.SaveChanges();
+                                    }
+
                                     return RedirectToAction("Successful", "Setup", new { taskNo = uploadFileRequestViewModel.TaskNo });
                                 }
                                 else
@@ -840,49 +852,6 @@ namespace MasterISS_Partner_WebSite.Controllers
                                     ViewBag.UploadDocumentError = Localization.View.Generic200ErrorCodeMessage;
                                     return View(uploadFileRequestViewModel);
                                 }
-
-
-
-
-                                //var fileByte = new byte[File.ContentLength];
-
-                                //using (BinaryReader reader = new BinaryReader(File.InputStream))
-                                //{
-                                //    fileByte = reader.ReadBytes(File.ContentLength);
-                                //}
-
-                                //var fileData = Convert.ToBase64String(fileByte);
-
-                                //var request = new UploadFileRequestViewModel
-                                //{
-                                //    AttachmentTypesEnum = uploadFileRequestViewModel.AttachmentTypesEnum,
-                                //    Extension = extension,
-                                //    FileData = fileData,
-                                //    TaskNo = uploadFileRequestViewModel.TaskNo
-                                //};
-
-                                //var setupWrapper = new SetupServiceWrapper();
-
-                                //var response = setupWrapper.AddCustomerAttachment(request);
-
-                                //if (response.ResponseMessage.ErrorCode == 0)
-                                //{
-                                //    //LOG
-                                //    var wrapper = new WebServiceWrapper();
-                                //    Logger.Info("Upload Document: " + uploadFileRequestViewModel.TaskNo + ", by: " + wrapper.GetUserSubMail());
-                                //    //LOG
-
-                                //    return RedirectToAction("Successful", "Setup", new { taskNo = uploadFileRequestViewModel.TaskNo });
-                                //}
-
-                                ////LOG
-                                //var wrapperByGetUserSubmail = new WebServiceWrapper();
-                                //LoggerError.Fatal($"An error occurred while AddCustomerAttachment , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapperByGetUserSubmail.GetUserSubMail()}");
-                                ////LOG
-
-                                //ViewBag.UploadDocumentError = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture); ;
-                                //return View(uploadFileRequestViewModel);
-
                             }
                             ViewBag.UploadDocumentError = Localization.View.FaultyFormat;
                             return View(uploadFileRequestViewModel);
@@ -938,6 +907,38 @@ namespace MasterISS_Partner_WebSite.Controllers
                 return RedirectToAction("CustomerDetail", new { taskNo = updateClientViewModel.TaskNo });
             }
             return View(updateClientViewModel);
+        }
+
+        [HttpPost]
+        public ActionResult GetFileList(long taskNo)
+        {
+            var fileOperations = new FileOperations();
+
+            var taskFileList = fileOperations.GetSetupFileList(taskNo);
+
+            if (taskFileList == null)
+            {
+                return Json(new { list = Localization.View.Generic200ErrorCodeMessage }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { list = taskFileList }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public ActionResult GetFileTask(string fileName, long taskNo)
+        {
+            var fileOperations = new FileOperations();
+            var getFile = fileOperations.GetFile(taskNo, fileName);
+
+            if (getFile != null)
+            {
+                return File(getFile, fileName);
+            }
+
+            TempData["GeneralError"] = Localization.View.Generic200ErrorCodeMessage;
+            return RedirectToAction("Index", "Home");
+
         }
 
         public ActionResult Successful(long? taskNo)
