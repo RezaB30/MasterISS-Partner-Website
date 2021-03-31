@@ -20,6 +20,9 @@ using MasterISS_Partner_WebSite_Database.Models;
 using MasterISS_Partner_WebSite_Enums;
 using System.Collections.Generic;
 using MasterISS_Partner_WebSite.ViewModels;
+using MasterISS_Partner_WebSite_Enums.Enums;
+using System.Net.Http;
+using Newtonsoft.Json;
 
 namespace MasterISS_Partner_WebSite.Controllers
 {
@@ -67,7 +70,6 @@ namespace MasterISS_Partner_WebSite.Controllers
                             {
                                 AddressLatitudeandLongitude = GetAddressLatituteandLongitude(tl.Address),
                                 ContactName = tl.ContactName,
-                                CustomerPhoneNo = tl.CustomerPhoneNo,
                                 TaskIssueDate = Convert.ToDateTime(tl.TaskIssueDate),
                                 TaskNo = tl.TaskNo,
                                 XDSLNo = tl.XDSLNo,
@@ -80,8 +82,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                                 SetupTeamStaffName = tl.AssignToSetupTeam == null ? null : db.SetupTeam.Find(tl.AssignToSetupTeam).User.NameSurname,
                                 BBK = tl.BBK,
                                 IsCorfirmation = tl.IsConfirmation,
-                                FaultCodesDisplayText = GetFaultCodesOrDescription(tl.TaskNo, false),
-                                SetupStaffEnteredMessage = GetFaultCodesOrDescription(tl.TaskNo, true)
+                                FaultCodesDisplayText = tl.TaskStatus == (int)TaskStatusEnum.New ? null : GetFaultCodesOrDescription(tl.TaskNo, false),
+                                SetupStaffEnteredMessage = tl.TaskStatus == (int)TaskStatusEnum.New ? null : GetFaultCodesOrDescription(tl.TaskNo, true)
                             });
 
                             var totalCount = list.Count();
@@ -126,6 +128,40 @@ namespace MasterISS_Partner_WebSite.Controllers
 
         }
 
+        public ActionResult CallCustomer(long taskNo)
+        {
+            //using (var db = new PartnerWebSiteEntities())
+            //{
+            //    var validTask = db.TaskList.Find(taskNo);
+            //    if (validTask != null)
+            //    {
+            //        var claimInfo = new ClaimInfo();
+            //        var sourceNumber = claimInfo.UserPhoneNumber();
+            //        var formattedSourceNumber = string.Format("90{0}", sourceNumber);
+            //        var customerPhoneNumber = "905387829318";
+
+            //        var Url = string.Format("http://api.bulutsantralim.com/bridge?key=" + Properties.Settings.Default.VerimorKey + "&source={0}&destination={1}", formattedSourceNumber, customerPhoneNumber);
+
+
+            //        using (var httpClient = new HttpClient())
+            //        {
+            //            var response = httpClient.GetAsync(Url).Result;
+            //            if (response.StatusCode == HttpStatusCode.OK)
+            //            {
+            //                return RedirectToAction("Index", "Setup");
+            //            }
+            //            else
+            //            {
+            //                TempData["GeneralError"] = Localization.View.Generic200ErrorCodeMessage;
+            //                return RedirectToAction("Index", "Setup");
+            //            }
+
+            //        }
+            //    }
+            return RedirectToAction("Index", "Home");
+            //}
+        }
+
         private List<TaskList> TaskList(bool isAdmin)
         {
             using (var db = new PartnerWebSiteEntities())
@@ -148,7 +184,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                 {
                     var userId = claimInfo.UserId();
 
-                    var taskList = db.TaskList.Where(tl => (tl.AssignToRendezvousStaff == userId || tl.AssignToSetupTeam == userId) && tl.PartnerId == partnerId).ToList();
+                    var taskList = db.TaskList.Where(tl => (tl.AssignToRendezvousStaff == userId || tl.AssignToSetupTeam == userId) && tl.PartnerId == partnerId && tl.IsConfirmation == false).ToList();
                     return taskList;
                 }
             }
@@ -161,8 +197,20 @@ namespace MasterISS_Partner_WebSite.Controllers
                 var task = db.TaskList.Find(taskNo);
                 if (task != null)
                 {
+                    var claimInfo = new ClaimInfo();
                     task.IsConfirmation = true;
+
+                    OperationHistory operationHistory = new OperationHistory
+                    {
+                        ChangeTime = DateTime.Now,
+                        Description = new LocalizedList<OperationTypeEnum, Localization.OperationHistoryType>().GetDisplayText((short)OperationTypeEnum.GiveConfirmation, CultureInfo.CurrentCulture),
+                        OperationType = (short)OperationTypeEnum.GiveConfirmation,
+                        TaskNo = taskNo,
+                        UserId = claimInfo.UserId()
+                    };
+                    db.OperationHistory.Add(operationHistory);
                     db.SaveChanges();
+
                     return RedirectToAction("Successful");
                 }
                 else
@@ -177,36 +225,43 @@ namespace MasterISS_Partner_WebSite.Controllers
             }
         }
 
-        public ActionResult AssignTask(long taskNo, long staffId)
-        {
-            using (var db = new PartnerWebSiteEntities())
-            {
-                var claimInfo = new ClaimInfo();
+        //public ActionResult AssignTask(long taskNo, long staffId)
+        //{
+        //    using (var db = new PartnerWebSiteEntities())
+        //    {
+        //        var claimInfo = new ClaimInfo();
+        //        var wrapper = new WebServiceWrapper();
+        //        var task = db.TaskList.Where(tl => tl.TaskNo == taskNo).FirstOrDefault();
+        //        if (task != null)
+        //        {
+        //            var validStaff = db.SetupTeam.Find(staffId);
+        //            if (validStaff != null)
+        //            {
+        //                if (task.AssignToRendezvousStaff == null)
+        //                {
+        //                    task.AssignToRendezvousStaff = claimInfo.UserId();
+        //                }
+        //                task.AssignToSetupTeam = staffId;
 
-                var task = db.TaskList.Where(tl => tl.TaskNo == taskNo).FirstOrDefault();
-                if (task != null)
-                {
-                    if (task.AssignToRendezvousStaff == null)
-                    {
-                        task.AssignToRendezvousStaff = claimInfo.UserId();
-                    }
-                    task.AssignToSetupTeam = staffId;
-                    db.SaveChanges();
+        //                Logger.Info($"AssignTask TaskNo: {taskNo}, AssignedStaff: {staffId},  by : {claimInfo.UserId()}");
 
-                    //LOG
-                    Logger.Info($"AssignTask TaskNo: {taskNo}, AssignedStaff: {staffId},  by : {claimInfo.UserId()}");
-                    //LOG
-
-                    return RedirectToAction("Successful");
-                }
-                else
-                {
-                    LoggerError.Fatal("An error occurred while SetupController=>AssignTask: Not Found TaskNo in Task Table ");
-                    TempData["GeneralError"] = Localization.View.Generic200ErrorCodeMessage;
-                    return RedirectToAction("Index", "Setup");
-                }
-            }
-        }
+        //                return RedirectToAction("Successful");
+        //            }
+        //            else
+        //            {
+        //                LoggerError.Fatal("An error occurred while SetupController=>AssignTask: Not Found Staff in SetupTeam Table ");
+        //                TempData["GeneralError"] = Localization.View.Generic200ErrorCodeMessage;
+        //                return RedirectToAction("Index", "Setup");
+        //            }
+        //        }
+        //        else
+        //        {
+        //            LoggerError.Fatal("An error occurred while SetupController=>AssignTask: Not Found TaskNo in Task Table ");
+        //            TempData["GeneralError"] = Localization.View.Generic200ErrorCodeMessage;
+        //            return RedirectToAction("Index", "Setup");
+        //        }
+        //    }
+        //}
 
         public ActionResult ListPartnerRendezvousTeam(long taskNo)
         {
@@ -257,6 +312,7 @@ namespace MasterISS_Partner_WebSite.Controllers
         public ActionResult SendTaskToScheduler(long taskNo)
         {
             var claimInfo = new ClaimInfo();
+            var wrapper = new WebServiceWrapper();
             using (var db = new PartnerWebSiteEntities())
             {
                 var task = db.TaskList.Find(taskNo);
@@ -267,6 +323,17 @@ namespace MasterISS_Partner_WebSite.Controllers
                     task.ReservationDate = null;
                     task.TaskType = (int)TaskTypesEnum.Setup;
                     task.TaskStatus = (int)TaskStatusEnum.New;
+
+                    OperationHistory operationHistory = new OperationHistory
+                    {
+                        ChangeTime = DateTime.Now,
+                        Description = string.Format($"{new LocalizedList<OperationTypeEnum, Localization.OperationHistoryType>().GetDisplayText((short)OperationTypeEnum.SentPool, CultureInfo.CurrentCulture)}, {Localization.View.By}: {wrapper.GetUserSubMail()} "),
+                        OperationType = (short)OperationTypeEnum.SentPool,
+                        TaskNo = taskNo,
+                        UserId = claimInfo.UserId()
+                    };
+                    db.OperationHistory.Add(operationHistory);
+                    db.SaveChanges();
 
                     //Log
                     Logger.Info($"SendSchedulerTask TaskNo: {taskNo}, by : {claimInfo.UserId()}");
@@ -418,7 +485,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             LoggerError.Fatal($"An error occurred while GetTaskDetails , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapperGetUserSubMail.GetUserSubMail()}");
             //LOG
 
-            TempData["GetTaskDetailError"] = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture); ;
+            TempData["GetTaskDetailError"] = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
             return RedirectToAction("Index", "Setup");
         }
 
@@ -605,7 +672,8 @@ namespace MasterISS_Partner_WebSite.Controllers
             {
                 var datetimeNow = DateTime.Now;
                 var isValidFaultCodes = Enum.IsDefined(typeof(FaultCodeEnum), updateTaskStatusViewModel.FaultCodes);
-
+                var claimInfo = new ClaimInfo();
+                var wrapper = new WebServiceWrapper();
                 if (isValidFaultCodes)
                 {
                     var reservationDate = updateTaskStatusViewModel.SelectedDate?.Add(updateTaskStatusViewModel.SelectedTime.GetValueOrDefault());//Bu tarih uygun mu bir daha kontrol et.Hiddenleri değiştirmiş olabilir.
@@ -626,9 +694,35 @@ namespace MasterISS_Partner_WebSite.Controllers
                         {
                             return RedirectToAction("Index", "Home");
                         }
+                        using (var db = new PartnerWebSiteEntities())
+                        {
+                            var validStaff = db.SetupTeam.Find(updateTaskStatusViewModel.StaffId);
+                            if (validStaff != null)
+                            {
+                                var assignTaskDescription = new LocalizedList<OperationTypeEnum, Localization.OperationHistoryType>().GetDisplayText((short)OperationTypeEnum.AssignTask, CultureInfo.CurrentCulture);
+
+                                OperationHistory operationHistory = new OperationHistory
+                                {
+                                    ChangeTime = DateTime.Now,
+                                    UserId = claimInfo.UserId(),
+                                    OperationType = (short)OperationTypeEnum.AssignTask,
+                                    Description = string.Format($"{assignTaskDescription}, {Localization.View.By}: {wrapper.GetUserSubMail()}, {Localization.View.SetupTeam}: {validStaff.User.UserSubMail} "),
+                                    TaskNo = updateTaskStatusViewModel.TaskNo.Value,
+                                };
+                                db.OperationHistory.Add(operationHistory);
+                                db.SaveChanges();
+                            }
+                            else
+                            {
+                                LoggerError.Fatal($" Setup=>UpdateTaskStatus, Staff Not Found SetupTeam, StaffId: {updateTaskStatusViewModel.StaffId}, Id: {claimInfo.UserId()}");
+
+                                return RedirectToAction("Index", "Home");
+                            }
+
+                        }
+
                     }
 
-                    var claimInfo = new ClaimInfo();
 
                     using (var db = new PartnerWebSiteEntities())
                     {

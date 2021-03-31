@@ -16,9 +16,6 @@ namespace MasterISS_Partner_WebSite.ViewModels.Setup.Response
 
         public string[] AddressLatitudeandLongitude { get; set; }
 
-        [Display(ResourceType = typeof(Localization.Model), Name = "CustomerPhoneNo")]
-        public string CustomerPhoneNo { get; set; }
-
         [Display(ResourceType = typeof(Localization.Model), Name = "ContactName")]
         public string ContactName { get; set; }
 

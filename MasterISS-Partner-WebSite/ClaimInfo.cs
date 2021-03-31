@@ -38,6 +38,13 @@ namespace MasterISS_Partner_WebSite
 
             return convertedUserId;
         }
+        public string UserPhoneNumber()
+        {
+            var phoneNo = CurrentClaims().Where(c => c.Type == ClaimTypes.MobilePhone)
+                  .Select(c => c.Value).SingleOrDefault();
+
+            return phoneNo;
+        }
         public string GetPartnerName()
         {
             var partnerName = CurrentClaims().Where(c => c.Type == "PartnerName")
@@ -46,7 +53,7 @@ namespace MasterISS_Partner_WebSite
         }
         public List<Claim> CurrentClaims()
         {
-            var currentClaims= ClaimsPrincipal.Current.Identities.First().Claims.ToList();
+            var currentClaims = ClaimsPrincipal.Current.Identities.First().Claims.ToList();
             return currentClaims;
         }
         public IEnumerable<int> PartnerRoleId()
@@ -60,7 +67,7 @@ namespace MasterISS_Partner_WebSite
             {
                 roleIds.Add(Convert.ToInt32(item));
             }
-             return roleIds;
+            return roleIds;
         }
     }
 }

@@ -162,6 +162,9 @@
   <data name="BillSettings" xml:space="preserve">
     <value>Fatura İşlemleri</value>
   </data>
+  <data name="By" xml:space="preserve">
+    <value>tarafından</value>
+  </data>
   <data name="CheckInfrastructure" xml:space="preserve">
     <value>Altyapı Sorgula</value>
   </data>
@@ -383,6 +386,9 @@
   </data>
   <data name="SetupResponseErrorMessage" xml:space="preserve">
     <value>Şuan İşleminizi gerçekleştiremiyoruz. Lütfen bir daha deneyiniz</value>
+  </data>
+  <data name="SetupTeam" xml:space="preserve">
+    <value>Kurulum Ekibi</value>
   </data>
   <data name="Showing" xml:space="preserve">
     <value>gösteriliyor.</value>

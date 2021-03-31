@@ -58,7 +58,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                                        new Claim("UserMail", userSignInModel.PartnerCode),
                                        new Claim(ClaimTypes.NameIdentifier, userValid.Id.ToString()),
                                        new Claim(ClaimTypes.Email, userValid.UserSubMail),
-                                       new Claim(ClaimTypes.Name,userValid.NameSurname)
+                                       new Claim(ClaimTypes.Name,userValid.NameSurname),
+                                       new Claim(ClaimTypes.MobilePhone,userValid.PhoneNumber)
                                     };
 
                                 ValidResponseHaveSetupPermissionAndAddClaims(authenticateResponse, claims);
@@ -165,7 +166,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                                 new Claim(ClaimTypes.Role, "Admin"),
                                 new Claim(ClaimTypes.NameIdentifier, adminValid.Id.ToString()),
                                 new Claim(ClaimTypes.Email, adminValid.UserSubMail),
-                                new Claim(ClaimTypes.Name,adminValid.NameSurname)
+                                new Claim(ClaimTypes.Name,adminValid.NameSurname),
+                                new Claim(ClaimTypes.MobilePhone,adminValid.PhoneNumber),
                             };
 
                             ValidResponseHaveSetupPermissionAndAddClaims(authenticateResponse, claims);

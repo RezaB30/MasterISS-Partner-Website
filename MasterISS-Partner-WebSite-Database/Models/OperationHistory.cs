@@ -14,12 +14,12 @@ namespace MasterISS_Partner_WebSite_Database.Models
     
     public partial class OperationHistory
     {
+        public long Id { get; set; }
         public long TaskNo { get; set; }
         public long UserId { get; set; }
         public short OperationType { get; set; }
         public System.DateTime ChangeTime { get; set; }
         public string Description { get; set; }
-        public long Id { get; set; }
     
         public virtual TaskList TaskList { get; set; }
     }

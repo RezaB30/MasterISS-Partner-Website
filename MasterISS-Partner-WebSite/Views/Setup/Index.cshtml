@@ -49,7 +49,7 @@
                 <th>@Html.DisplayNameFor(model => model.FirstOrDefault().XDSLNo)</th>
                 <th>@Html.DisplayNameFor(model => model.FirstOrDefault().ContactName)</th>
                 <th>@Html.DisplayNameFor(model => model.FirstOrDefault().TaskIssueDate)</th>
-                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().CustomerPhoneNo)</th>
+                <th>müşteriyi ara</th>
                 <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Address)</th>
                 <th>@Html.DisplayNameFor(model => model.FirstOrDefault().TaskStatus)</th>
                 <th>@Html.DisplayNameFor(model => model.FirstOrDefault().TaskType)</th>
@@ -68,7 +68,7 @@
                     <td>@Html.DisplayFor(modelItem => item.XDSLNo)</td>
                     <td>@Html.DisplayFor(modelItem => item.ContactName)</td>
                     <td>@Html.DisplayFor(modelItem => item.TaskIssueDate)</td>
-                    <td>@Html.DisplayFor(modelItem => item.CustomerPhoneNo)</td>
+                    <td>@Html.ActionLink("ara", "CallCustomer", new { taskNo = item.TaskNo })</td>
                     <td>@Html.DisplayFor(modelItem => item.Address)</td>
                     <td>@Html.DisplayFor(modelItem => item.TaskStatus)</td>
                     <td>@Html.DisplayFor(modelItem => item.TaskType)</td>

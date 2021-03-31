@@ -196,6 +196,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to tarafından.
+        /// </summary>
+        public static string By {
+            get {
+                return ResourceManager.GetString("By", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Altyapı Sorgula.
         /// </summary>
         public static string CheckInfrastructure {
@@ -858,6 +867,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string SetupResponseErrorMessage {
             get {
                 return ResourceManager.GetString("SetupResponseErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kurulum Ekibi.
+        /// </summary>
+        public static string SetupTeam {
+            get {
+                return ResourceManager.GetString("SetupTeam", resourceCulture);
             }
         }
         

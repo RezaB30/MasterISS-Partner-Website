@@ -162,6 +162,9 @@
   <data name="BillSettings" xml:space="preserve">
     <value>Bill Settings</value>
   </data>
+  <data name="By" xml:space="preserve">
+    <value>by</value>
+  </data>
   <data name="CheckInfrastructure" xml:space="preserve">
     <value>Check Infrastructure</value>
   </data>
@@ -383,6 +386,9 @@
   </data>
   <data name="SetupResponseErrorMessage" xml:space="preserve">
     <value>We are currently unable to process your transaction. Please try again.</value>
+  </data>
+  <data name="SetupTeam" xml:space="preserve">
+    <value>Setup Team</value>
   </data>
   <data name="Showing" xml:space="preserve">
     <value>showing.</value>

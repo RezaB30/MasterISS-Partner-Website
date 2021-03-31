@@ -94,5 +94,14 @@ namespace MasterISS_Partner_WebSite.Properties {
                 return ((global::System.TimeSpan)(this["WokingHoursLong"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Kf1056629-c65a-47c7-9bff-c42471d167cb")]
+        public string VerimorKey {
+            get {
+                return ((string)(this["VerimorKey"]));
+            }
+        }
     }
 }

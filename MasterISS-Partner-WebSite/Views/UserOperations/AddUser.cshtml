@@ -33,6 +33,12 @@
         @Html.EditorFor(m => m.Password)
         @Html.ValidationMessageFor(m => m.Password)
     </div>
+    
+    <div class="form-group">
+        @Html.LabelFor(m => m.PhoneNumber)
+        @Html.EditorFor(m => m.PhoneNumber)
+        @Html.ValidationMessageFor(m => m.PhoneNumber)
+    </div>
 
     <input type="submit" value="@View.Submit" />
 }

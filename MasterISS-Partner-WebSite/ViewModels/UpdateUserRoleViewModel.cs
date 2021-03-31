@@ -21,5 +21,10 @@ namespace MasterISS_Partner_WebSite.ViewModels
         [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
         public int UserId { get; set; }
 
+        [Display(ResourceType = typeof(Localization.Model), Name = "PhoneNo")]
+        [RegularExpression(@"^((\d{3})(\d{3})(\d{2})(\d{2}))$", ErrorMessageResourceName = "ValidPhoneNumber", ErrorMessageResourceType = typeof(Localization.Validation))]
+        [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
+        public string PhoneNumber { get; set; }
+
     }
 }

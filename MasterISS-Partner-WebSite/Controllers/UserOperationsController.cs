@@ -320,7 +320,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                                     Password = wrapper.CalculateHash<SHA256>(newUserViewModel.Password),
                                     UserSubMail = newUserViewModel.UserEmail,
                                     NameSurname = newUserViewModel.UserNameSurname,
-                                    RoleId = newUserViewModel.RoleId
+                                    RoleId = newUserViewModel.RoleId,
+                                    PhoneNumber = newUserViewModel.PhoneNumber
                                 };
                                 db.User.Add(newUser);
                                 db.SaveChanges();
@@ -391,7 +392,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                         RoleId = (int)userAvaibleRole,
                         UserEmail = user.UserSubMail,
                         UserNameSurname = user.NameSurname,
-                        UserId = userId
+                        UserId = userId,
+                        PhoneNumber = user.PhoneNumber
                     };
 
                     return View(userViewModel);
@@ -412,89 +414,99 @@ namespace MasterISS_Partner_WebSite.Controllers
                     if (validRole != null)
                     {
                         var user = db.User.Find(updateUserRoleViewModel.UserId);
-
-                        user.RoleId = updateUserRoleViewModel.RoleId;
-                        db.SaveChanges();
-
-                        if (!ValidRoleHaveSetupManagerPermission(updateUserRoleViewModel.RoleId))
+                        if (user != null)
                         {
-                            var haveSetupManagerPermission = db.SetupTeam.Find(user.Id);
-                            if (haveSetupManagerPermission != null)
+                            user.RoleId = updateUserRoleViewModel.RoleId;
+                            user.PhoneNumber = updateUserRoleViewModel.PhoneNumber;
+                            db.SaveChanges();
+
+                            if (!ValidRoleHaveSetupManagerPermission(updateUserRoleViewModel.RoleId))
                             {
-                                if (user.SetupTeam.WorkingStatus == true)
+                                var haveSetupManagerPermission = db.SetupTeam.Find(user.Id);
+                                if (haveSetupManagerPermission != null)
                                 {
-                                    user.SetupTeam.WorkingStatus = false;
-                                    db.SaveChanges();
+                                    if (user.SetupTeam.WorkingStatus == true)
+                                    {
+                                        user.SetupTeam.WorkingStatus = false;
+                                        db.SaveChanges();
+                                    }
                                 }
-                            }
-                        }
-                        else
-                        {
-                            var haveSetupManagerPermission = db.SetupTeam.Find(user.Id);
-                            if (haveSetupManagerPermission == null)
-                            {
-                                SetupTeam setupTeam = new SetupTeam
-                                {
-                                    UserId = user.Id,
-                                    WorkingStatus = true,
-                                    IsAdmin = false
-                                };
-                                db.SetupTeam.Add(setupTeam);
                             }
                             else
                             {
-                                if (haveSetupManagerPermission.WorkingStatus == false)
+                                var haveSetupManagerPermission = db.SetupTeam.Find(user.Id);
+                                if (haveSetupManagerPermission == null)
                                 {
-                                    haveSetupManagerPermission.WorkingStatus = true;
+                                    SetupTeam setupTeam = new SetupTeam
+                                    {
+                                        UserId = user.Id,
+                                        WorkingStatus = true,
+                                        IsAdmin = false
+                                    };
+                                    db.SetupTeam.Add(setupTeam);
                                 }
+                                else
+                                {
+                                    if (haveSetupManagerPermission.WorkingStatus == false)
+                                    {
+                                        haveSetupManagerPermission.WorkingStatus = true;
+                                    }
+                                }
+                                db.SaveChanges();
                             }
-                            db.SaveChanges();
-                        }
 
-                        if (!ValidRoleHaveRendezvousTeamPermission(updateUserRoleViewModel.RoleId))
-                        {
-                            var haveRendezvousTeamPermission = db.RendezvousTeam.Find(user.Id);
-                            if (haveRendezvousTeamPermission != null)
+                            if (!ValidRoleHaveRendezvousTeamPermission(updateUserRoleViewModel.RoleId))
                             {
-                                if (user.RendezvousTeam.WorkingStatus == true)
+                                var haveRendezvousTeamPermission = db.RendezvousTeam.Find(user.Id);
+                                if (haveRendezvousTeamPermission != null)
                                 {
-                                    user.RendezvousTeam.WorkingStatus = false;
-                                    db.SaveChanges();
+                                    if (user.RendezvousTeam.WorkingStatus == true)
+                                    {
+                                        user.RendezvousTeam.WorkingStatus = false;
+                                        db.SaveChanges();
+                                    }
                                 }
-                            }
-                        }
-                        else
-                        {
-                            var haveRendezvousTeamPermission = db.RendezvousTeam.Find(user.Id);
-                            if (haveRendezvousTeamPermission == null)
-                            {
-                                RendezvousTeam rendezvousTeam = new RendezvousTeam
-                                {
-                                    UserId = user.Id,
-                                    WorkingStatus = true,
-                                    IsAdmin = false
-                                };
-                                db.RendezvousTeam.Add(rendezvousTeam);
                             }
                             else
                             {
-                                if (haveRendezvousTeamPermission.WorkingStatus == false)
+                                var haveRendezvousTeamPermission = db.RendezvousTeam.Find(user.Id);
+                                if (haveRendezvousTeamPermission == null)
                                 {
-                                    haveRendezvousTeamPermission.WorkingStatus = true;
+                                    RendezvousTeam rendezvousTeam = new RendezvousTeam
+                                    {
+                                        UserId = user.Id,
+                                        WorkingStatus = true,
+                                        IsAdmin = false
+                                    };
+                                    db.RendezvousTeam.Add(rendezvousTeam);
                                 }
+                                else
+                                {
+                                    if (haveRendezvousTeamPermission.WorkingStatus == false)
+                                    {
+                                        haveRendezvousTeamPermission.WorkingStatus = true;
+                                    }
+                                }
+                                db.SaveChanges();
                             }
-                            db.SaveChanges();
+
+                            //LOG
+                            var wrapper = new WebServiceWrapper();
+                            Logger.Info("Updated User Role: " + user.UserSubMail + ", by: " + wrapper.GetUserSubMail());
+                            //LOG
+
+                            return RedirectToAction("Successful");
                         }
-
-                        //LOG
-                        var wrapper = new WebServiceWrapper();
-                        Logger.Info("Updated User Role: " + user.UserSubMail + ", by: " + wrapper.GetUserSubMail());
-                        //LOG
-
-                        return RedirectToAction("Successful");
+                        RedirectToAction("Index", "Home");
                     }
                     RedirectToAction("Index", "Home");
                 }
+            }
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var claimInfo = new ClaimInfo();
+                var partnerId = claimInfo.PartnerId();
+                ViewBag.RoleList = new SelectList(db.Role.Where(r => r.PartnerId == partnerId && r.IsEnabled).Select(r => new { Value = r.Id, Name = r.RoleName }).ToArray(), "Value", "Name",updateUserRoleViewModel.RoleId);
             }
             return View(updateUserRoleViewModel);
         }

@@ -256,6 +256,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FaultCodes.en-us.resx</DependentUpon>
     </Compile>
+    <Compile Include="Localization\OperationHistoryType.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OperationHistoryType.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Localization\OperationHistoryType.en-us.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OperationHistoryType.en-us.resx</DependentUpon>
+    </Compile>
     <Compile Include="Localization\TaskStatus.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -352,7 +362,6 @@
     <Compile Include="ViewModels\Account\RegisterViewModel.cs" />
     <Compile Include="ViewModels\Account\UserSignInViewModel.cs" />
     <Compile Include="ViewModels\AddPermissionViewModel.cs" />
-    <Compile Include="ViewModels\deneme.cs" />
     <Compile Include="ViewModels\ListRendezvousTeamViewModel.cs" />
     <Compile Include="ViewModels\SetupTeamStaffsToMatchedTheTask.cs" />
     <Compile Include="ViewModels\SetupTeamWorkingDaysAndHoursViewModel.cs" />
@@ -567,6 +576,14 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Model.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\OperationHistoryType.en-us.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>OperationHistoryType.en-us.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\OperationHistoryType.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>OperationHistoryType.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Localization\PermissionList.en.us.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
