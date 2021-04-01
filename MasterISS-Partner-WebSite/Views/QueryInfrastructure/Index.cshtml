@@ -1,0 +1,80 @@
+﻿@using MasterISS_Partner_WebSite.ViewModels;
+@using MasterISS_Partner_WebSite.Localization;
+@model  AddressInfoViewModel
+@{
+    ViewBag.Title = MasterISS_Partner_WebSite.Localization.View.HomePage;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var response = new ServiceAvaibilityResponseViewModel();
+}
+
+<div style="background-color:red">
+    @ViewBag.ErrorMessage
+</div>
+
+<div id="addressQueryContainer">
+    <div class="form-group">
+        @Html.DropDownListFor(nvpl => nvpl.ProvinceId, (SelectList)ViewBag.Provinces, HomeView.SelectProvince, new { @id = "province" })
+    </div>
+
+    <div class="form-group">
+        @Html.DropDownListFor(nvpl => nvpl.DistrictId, new SelectList(""), HomeView.SelectDistrict, new { @id = "district", @disabled = "disabled" })
+    </div>
+
+    <div class="form-group">
+        @Html.DropDownListFor(nvpl => nvpl.RuralRegionsId, new SelectList(""), HomeView.SelectRegions, new { @id = "ruralregions", @disabled = "disabled" })
+    </div>
+
+    <div class="form-group">
+        @Html.DropDownListFor(nvpl => nvpl.NeighborhoodId, new SelectList(""), HomeView.SelectNeigborhood, new { @id = "neighborhood", @disabled = "disabled" })
+    </div>
+
+    <div class="form-group">
+        @Html.DropDownListFor(nvpl => nvpl.StreetId, new SelectList(""), HomeView.SelectStreet, new { @id = "street", @disabled = "disabled" })
+    </div>
+
+    <div class="form-group">
+        @Html.DropDownListFor(nvpl => nvpl.BuildingId, new SelectList(""), HomeView.SelectBuilding, new { @id = "building", @disabled = "disabled" })
+    </div>
+
+    <div class="form-group">
+        @Html.DropDownListFor(nvpl => nvpl.ApartmentId, new SelectList(""), HomeView.SelectApartment, new { @id = "apartment", @disabled = "disabled" })
+    </div>
+</div>
+
+<div id="service-avaibility-response">
+</div>
+
+@section Javascript{
+    <script>
+
+        QueryAddress("#province","#district",'@Url.Action("DistrictList", "QueryInfrastructure")')
+
+        QueryAddress("#district", "#ruralregions", '@Url.Action("RuralRegionsList", "QueryInfrastructure")')
+
+        QueryAddress("#ruralregions","#neighborhood",'@Url.Action("NeighborhoodList", "QueryInfrastructure")')
+
+        QueryAddress("#neighborhood","#street",'@Url.Action("StreetList", "QueryInfrastructure")')
+
+        QueryAddress("#street","#building",'@Url.Action("BuildingList", "QueryInfrastructure")')
+
+        QueryAddress("#building","#apartment",'@Url.Action("ApartmentList", "QueryInfrastructure")')
+
+
+        $("#apartment").change(function () {
+            var bbk = $("#apartment").find(":selected").val();
+            var selectId = { "bbk": bbk }
+            $("#service-avaibility-response").empty();
+             $.ajax({
+                    url: '@Url.Action("ServiceAvailability", "Home")',
+                    type: 'POST',
+                    dataType: 'html',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(selectId),
+                    success: function (data) {
+                        $("#service-avaibility-response").html(data);
+                    },
+                });
+        });
+
+    </script>
+}
