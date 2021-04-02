@@ -556,6 +556,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Metre.
+        /// </summary>
+        public static string Meter {
+            get {
+                return ResourceManager.GetString("Meter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to  Dakika .
         /// </summary>
         public static string Minute {
@@ -624,6 +633,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string PassiveError {
             get {
                 return ResourceManager.GetString("PassiveError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yeniden Sorgula.
+        /// </summary>
+        public static string QueryAgain {
+            get {
+                return ResourceManager.GetString("QueryAgain", resourceCulture);
             }
         }
         

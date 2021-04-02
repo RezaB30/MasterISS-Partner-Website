@@ -88,7 +88,6 @@ namespace MasterISS_Partner_WebSite.Controllers
             return Json(new { list = list, errorMessage = apartmentList.ErrorMessage }, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
         public ActionResult ServiceAvailability(string bbk)
         {
             var wrapper = new WebServiceWrapper();
@@ -101,40 +100,42 @@ namespace MasterISS_Partner_WebSite.Controllers
                 wrapper = new WebServiceWrapper();
                 LoggerError.Fatal("An error occurred while ServiceAvailability , ErrorMessage: " + response.ErrorMessage + ", by: " + wrapper.GetUserSubMail());
                 //LOG
-
-                return Content($"<div>{response.ErrorMessage}</div>");
+                TempData["Error"] = response.ErrorMessage;
+                return RedirectToAction("Index");
             }
+
 
             var serviceAvaibilityViewModel = new ServiceAvaibilityResponseViewModel()
             {
-                Address = response.Data.ServiceAvailabilityResponse.address,
-                BBK = response.Data.ServiceAvailabilityResponse.BBK,
                 FIBER = new FIBER()
                 {
                     HasInfrastructureFiber = response.Data.ServiceAvailabilityResponse.FIBER.HasInfrastructureFiber,
-                    FiberDistance = response.Data.ServiceAvailabilityResponse.FIBER.FiberDistance,
+                    FiberDistance = response.Data.ServiceAvailabilityResponse.FIBER.FiberDistance ?? 0,
                     FiberVUID = response.Data.ServiceAvailabilityResponse.FIBER.FiberSVUID,
                     FiberPortState = response.Data.ServiceAvailabilityResponse.FIBER.FiberPortState,
-                    FiberSpeed = response.Data.ServiceAvailabilityResponse.FIBER.FiberSpeed / 1024
+                    FiberSpeed = response.Data.ServiceAvailabilityResponse.FIBER.FiberSpeed / 1024 ?? 0,
+                    PortState = response.Data.ServiceAvailabilityResponse.FIBER.PortState
                 },
                 ADSL = new ADSL()
                 {
                     AdslPortState = response.Data.ServiceAvailabilityResponse.ADSL.AdslPortState,
-                    AdslDistance = response.Data.ServiceAvailabilityResponse.ADSL.AdslDistance,
-                    AdslSpeed = response.Data.ServiceAvailabilityResponse.ADSL.AdslSpeed / 1024,
+                    AdslDistance = response.Data.ServiceAvailabilityResponse.ADSL.AdslDistance ?? 0,
+                    AdslSpeed = response.Data.ServiceAvailabilityResponse.ADSL.AdslSpeed / 1024 ?? 0,
                     AdslVUID = response.Data.ServiceAvailabilityResponse.ADSL.AdslSVUID,
-                    HasInfrastructureAdsl = response.Data.ServiceAvailabilityResponse.ADSL.HasInfrastructureAdsl
+                    HasInfrastructureAdsl = response.Data.ServiceAvailabilityResponse.ADSL.HasInfrastructureAdsl,
+                    PortState = response.Data.ServiceAvailabilityResponse.ADSL.PortState
                 },
                 VDSL = new VDSL()
                 {
                     HasInfrastructureVdsl = response.Data.ServiceAvailabilityResponse.VDSL.HasInfrastructureVdsl,
-                    VdslDistance = response.Data.ServiceAvailabilityResponse.VDSL.VdslDistance,
+                    VdslDistance = response.Data.ServiceAvailabilityResponse.VDSL.VdslDistance??0,
                     VdslPortState = response.Data.ServiceAvailabilityResponse.VDSL.VdslPortState,
-                    VdslSpeed = response.Data.ServiceAvailabilityResponse.VDSL.VdslSpeed / 1024,
-                    VdslVUID = response.Data.ServiceAvailabilityResponse.VDSL.VdslSVUID
+                    VdslSpeed = response.Data.ServiceAvailabilityResponse.VDSL.VdslSpeed / 1024 ?? 0,
+                    VdslVUID = response.Data.ServiceAvailabilityResponse.VDSL.VdslSVUID,
+                    PortState = response.Data.ServiceAvailabilityResponse.VDSL.PortState
                 }
             };
-            return PartialView("_ServiceAvaibility", serviceAvaibilityViewModel);
+            return View(serviceAvaibilityViewModel);
         }
 
     }

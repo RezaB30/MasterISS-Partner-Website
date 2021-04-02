@@ -52,6 +52,7 @@
     <Compile Include="Enums\OperationTypeEnum.cs" />
     <Compile Include="Enums\PartnerTypeEnum.cs" />
     <Compile Include="Enums\PermissionListEnum.cs" />
+    <Compile Include="Enums\PortStateEnum.cs" />
     <Compile Include="Enums\RevenuesTypeEnum.cs" />
     <Compile Include="Enums\SchedulerOperationsType.cs" />
     <Compile Include="Enums\TaskStatusEnum.cs" />

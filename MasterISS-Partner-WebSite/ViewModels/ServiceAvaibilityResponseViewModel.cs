@@ -38,6 +38,8 @@ namespace MasterISS_Partner_WebSite.ViewModels
         [Display(Name = "HasInfrastructure", ResourceType = typeof(Localization.Model))]
         [UIHint("HasModemFormat")]
         public bool HasInfrastructureFiber { get; set; }
+
+        public int PortState { get; set; }
     }
 
     public class VDSL
@@ -57,7 +59,11 @@ namespace MasterISS_Partner_WebSite.ViewModels
         [Display(Name = "HasInfrastructure", ResourceType = typeof(Localization.Model))]
         [UIHint("HasModemFormat")]
         public bool HasInfrastructureVdsl { get; set; }
+
+        public int PortState { get; set; }
+
     }
+
 
     public class ADSL
     {
@@ -76,6 +82,9 @@ namespace MasterISS_Partner_WebSite.ViewModels
         [Display(Name = "HasInfrastructure", ResourceType = typeof(Localization.Model))]
         [UIHint("HasModemFormat")]
         public bool HasInfrastructureAdsl { get; set; }
+
+        public int PortState { get; set; }
+
     }
-    
+
 }

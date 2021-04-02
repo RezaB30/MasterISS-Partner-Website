@@ -282,6 +282,9 @@
   <data name="MaxFileSizeError" xml:space="preserve">
     <value>Dosya Boyutu Maksimum 10 MB olmalı.</value>
   </data>
+  <data name="Meter" xml:space="preserve">
+    <value>Metre</value>
+  </data>
   <data name="Minute" xml:space="preserve">
     <value> Dakika </value>
   </data>
@@ -305,6 +308,9 @@
   </data>
   <data name="PassiveError" xml:space="preserve">
     <value>Kullanıcı pasif etme işleminde hata oluştu. Tekrar deneyiniz.</value>
+  </data>
+  <data name="QueryAgain" xml:space="preserve">
+    <value>Yeniden Sorgula</value>
   </data>
   <data name="RecordFound" xml:space="preserve">
     <value>adet kayıt bulundu.</value>

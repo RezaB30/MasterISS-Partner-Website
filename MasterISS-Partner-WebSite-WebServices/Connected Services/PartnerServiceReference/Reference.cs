@@ -4996,6 +4996,9 @@ namespace MasterISS_Partner_WebSite_WebServices.PartnerServiceReference {
             private string IssueDateField;
             
             [System.Runtime.Serialization.OptionalFieldAttribute()]
+            private string ServiceNameField;
+            
+            [System.Runtime.Serialization.OptionalFieldAttribute()]
             private decimal TotalField;
             
             public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -5042,6 +5045,19 @@ namespace MasterISS_Partner_WebSite_WebServices.PartnerServiceReference {
                     if ((object.ReferenceEquals(this.IssueDateField, value) != true)) {
                         this.IssueDateField = value;
                         this.RaisePropertyChanged("IssueDate");
+                    }
+                }
+            }
+            
+            [System.Runtime.Serialization.DataMemberAttribute()]
+            public string ServiceName {
+                get {
+                    return this.ServiceNameField;
+                }
+                set {
+                    if ((object.ReferenceEquals(this.ServiceNameField, value) != true)) {
+                        this.ServiceNameField = value;
+                        this.RaisePropertyChanged("ServiceName");
                     }
                 }
             }

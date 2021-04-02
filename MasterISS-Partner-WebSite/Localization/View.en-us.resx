@@ -282,6 +282,9 @@
   <data name="MaxFileSizeError" xml:space="preserve">
     <value>File size must be maximum 10 MB.</value>
   </data>
+  <data name="Meter" xml:space="preserve">
+    <value>Meter</value>
+  </data>
   <data name="Minute" xml:space="preserve">
     <value> Minute </value>
   </data>
@@ -305,6 +308,9 @@
   </data>
   <data name="PassiveError" xml:space="preserve">
     <value>There was an error in the user inactivation process. Please try again.</value>
+  </data>
+  <data name="QueryAgain" xml:space="preserve">
+    <value>Query Again</value>
   </data>
   <data name="RecordFound" xml:space="preserve">
     <value>record found.</value>

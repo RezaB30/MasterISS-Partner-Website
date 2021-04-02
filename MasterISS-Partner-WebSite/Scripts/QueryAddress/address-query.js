@@ -1,5 +1,6 @@
 ﻿function QueryAddress(triggerSelectId, triggeredSelectId, url) {
 
+
     $(document).ready(function () {
 
         var triggeredSelect = $(triggeredSelectId).find(":selected").val();
@@ -15,13 +16,12 @@
 
         $(triggerSelectId).change(function () {
 
-            $("#service-avaibility-response").empty();
-
             $(triggeredSelectId).find("option").not(":first").remove();
             $(triggeredSelectId).attr("disabled", "disabled");
 
             if (triggeredSelectId != "#apartment") {
                 $(triggeredSelectId).trigger('change');
+                $("#bbk").val("");
             }
 
             var id = $(this).find(":selected").val();

@@ -235,7 +235,7 @@
     <value>Details</value>
   </data>
   <data name="Distance" xml:space="preserve">
-    <value>Infrastructure Distance</value>
+    <value>Switchboard / Field Cabinet Estimated Distance</value>
   </data>
   <data name="District" xml:space="preserve">
     <value>District</value>

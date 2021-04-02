@@ -1,13 +1,18 @@
 ﻿@using MasterISS_Partner_WebSite.ViewModels;
 @using MasterISS_Partner_WebSite.Localization;
-@model  AddressInfoViewModel
+@model  BillCollectionViewModel
 @{
     ViewBag.Title = "ass";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var search = ViewBag.Search as GetBillCollectionBySubscriberNoViewModel ?? new GetBillCollectionBySubscriberNoViewModel();
+    var counter = 0;
 }
 <div class="d-flex flex-column-fluid">
     <!--begin::Container-->
     <div class="container">
+
+
+        @ViewBag.ResponseError
 
         <!--begin::Dashboard-->
         <!--begin::Row-->
@@ -43,7 +48,7 @@
                                         <!--begin::Title-->
                                         <div>
                                             <div class="text-dark-75 font-weight-bold">Bakiyeniz</div>
-                                            <div class="text-info font-weight-bolder font-size-h3">820 TL</div>
+                                            <div class="text-info font-weight-bolder font-size-h3">@ViewBag.TotalCredit TL</div>
                                         </div>
                                         <!--end::Title-->
 
@@ -84,7 +89,7 @@
                                         <!--begin::Title-->
                                         <div>
                                             <div class="text-dark-75 font-weight-bold">Yeni Başvuru</div>
-                                            <div class="text-primary font-weight-bolder font-size-h3">10 Adet</div>
+                                            <div class="text-primary font-weight-bolder font-size-h3">@ViewBag.TotalNewSetup Adet</div>
                                         </div>
                                         <!--end::Title-->
 
@@ -125,7 +130,7 @@
                                         <!--begin::Title-->
                                         <div>
                                             <div class="text-dark-75 font-weight-bold">Bekleyen Kurulum</div>
-                                            <div class="text-danger font-weight-bolder font-size-h3">5 Adet</div>
+                                            <div class="text-danger font-weight-bolder font-size-h3">@ViewBag.TotalInProgressSetup Adet</div>
                                         </div>
                                         <!--end::Title-->
 
@@ -170,7 +175,7 @@
                                         <!--begin::Title-->
                                         <div>
                                             <div class="text-dark-75 font-weight-bold">Fatura Tahsilatı</div>
-                                            <div class="text-warning font-weight-bolder font-size-h3">620 TL</div>
+                                            <div class="text-warning font-weight-bolder font-size-h3">ass TL</div>
                                         </div>
                                         <!--end::Title-->
 
@@ -211,7 +216,7 @@
                                         <!--begin::Title-->
                                         <div>
                                             <div class="text-dark-75 font-weight-bold">Biten Kurulum</div>
-                                            <div class="text-success font-weight-bolder font-size-h3">4 Adet</div>
+                                            <div class="text-success font-weight-bolder font-size-h3">@ViewBag.TotalCompletedSetup Adet</div>
                                         </div>
                                         <!--end::Title-->
 
@@ -236,109 +241,155 @@
             <div class="card flex-grow-1 card-spacer-x pt-6">
                 <div class="form-group">
                     <h3 class="text-info font-size-h4">Fatura Sorgulama & Ödeme</h3>
-                    <div class="input-group">
-                        <input type="text" class="form-control h-auto p-4 border-1 text-info font-size-h6" placeholder="Abone numarasını yazınız...">
-                        <div class="input-group-append">
-                            <button class="btn btn-info" type="button">Fatura Sorgula!</button>
+                    @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+                    {
+                        <div class="input-group">
+                            @Html.AntiForgeryToken()
+                            @Html.TextBoxFor(m => search.SubscriberNo, new { @id = "subsNo", @class = "form-control h-auto p-4 border-1 text-info font-size-h6", @placeholder = "Abone numarasını yazınız..." })
+                            <div class="input-group-append">
+                                <button class="btn btn-info" type="submit">@View.ListBills</button>
+                            </div>
                         </div>
-                    </div>
+                    }
                 </div>
 
-                <!--end::Header-->
-                <form action="/Home/PayBills" class="pb-5 w-100 w-md-550px w-lg-700px" id="kt_form2" method="post">
-                    <!--begin: Wizard Step 1-->
-                    <!--begin::Title-->
-                    <span class="pb-10 pb-lg-15"></span>
-
-                    <div class="alert alert-light text-dark-75 font-size-lg">
-                        <span class="text-info font-weight-bold">AVNİ ALKAN</span> <span>abonesine ait faturaları ödemek için aşağıdaki listeden seçim yapınız.</span>
-                    </div><hr class="my-8">
-                    <div class="login-form login-signin">
-                        <!--begin::Form-->
+                @if (ViewBag.Error == null)
+                {
+                    <!--end::Header-->
+                    using (Html.BeginForm("BillOperations", "Home", FormMethod.Post, new { @class = "pb-5 w-100 w-md-550px w-lg-700px", @id = "kt_form2" }))
+                    {
+                        <!--begin: Wizard Step 1-->
                         <!--begin::Title-->
+                        <span class="pb-10 pb-lg-15"></span>
 
-                        <span class="text-dark-50 font-weight font-size-h5 mt-5">
+                        <div class="alert alert-light text-dark-75 font-size-lg">
+                            <span class="text-info font-weight-bold">@Html.DisplayFor(m => m.SubscriberName)</span> <span>abonesine ait faturaları ödemek için aşağıdaki listeden seçim yapınız.</span>
+                        </div><hr class="my-8">
+                        <div class="login-form login-signin">
+                            <!--begin::Form-->
+                            <!--begin::Title-->
 
-                        </span>
-                    </div>
-                    <!--begin::Title-->
-                    <!--begin::Table-->
-                    <div class="table-responsive">
-                        <table class="table table-head-custom table-vertical-center" id="kt_advance_table_widget_4">
-                            <thead>
-                                <tr class="text-left">
-                                    <th class="pl-0" style="width: 30px">
-                                        <label class="checkbox checkbox checkbox-inline mr-2">
-                                            <input type="checkbox" value="1">
-                                            <span></span>
-                                        </label>
-                                    </th>
-                                    <th class="pl-0" style="min-width: 130px"><span class="text-info">Fatura</span></th>
-                                    <th style="min-width: 120px"><span class="text-info">Dönem</span></th>
-                                    <th style="min-width: 120px">
-                                        <span class="text-info">Son Ödeme</span>
-                                    </th>
-                                    <th style="min-width: 120px"><span class="text-info">Tutar</span></th>
-                                </tr>
-                            </thead>
+                            <span class="text-dark-50 font-weight font-size-h5 mt-5">
 
-                            <tbody>
-                                <tr>
-                                    <td class="pl-0 py-6">
-                                        <label class="checkbox checkbox checkbox-inline">
-                                            <input type="checkbox" name="selectedBills" value="527878">
-                                            <span></span>
-                                        </label>
-                                    </td>
-                                    <td class="pl-0">
-                                        <span class="text-dark-75 font-size-lg font-weight d-block">NET EKO 8M E KADAR</span>
-                                    </td>
-                                    <td>
-                                        <span class="text-dark-75 font-size-lg font-weight d-block ">23.07.2020</span>
-                                    </td>
-                                    <td>
-                                        <span class="text-dark font-size-lg font-weight-bold d-block ">02.08.2020</span>
-                                    </td>
-                                    <td>
-                                        <span class="text-dark-75 font-size-lg font-weight d-block ">58.00 TL</span>
-                                    </td>
-                                </tr>
+                            </span>
+                        </div>
 
+                        <!--begin::Title-->
+                        <!--begin::Table-->
+                        <div class="table-responsive">
+                            <table class="table table-head-custom table-vertical-center" id="kt_advance_table_widget_4">
+                                <thead>
+                                    <tr class="text-left">
+                                        <th class="pl-0" style="width: 30px">
+                                            <label class="checkbox checkbox checkbox-inline mr-2">
+                                                <input type="checkbox" id="container-check">
+                                                <span></span>
+                                            </label>
+                                        </th>
+                                        <th class="pl-0" style="min-width: 130px"><span class="text-info">Fatura</span></th>
+                                        <th style="min-width: 120px"><span class="text-info">@Html.DisplayNameFor(m => m.Bills.FirstOrDefault().IssueDate)</span></th>
+                                        <th style="min-width: 120px">
+                                            <span class="text-info">@Html.DisplayNameFor(m => m.Bills.FirstOrDefault().DueDate)</span>
+                                        </th>
+                                        <th style="min-width: 120px"><span class="text-info">@Html.DisplayNameFor(m => m.Bills.FirstOrDefault().Cost)</span></th>
+                                    </tr>
+                                </thead>
 
-                                <tr>
-                                    <td class="pl-0 py-6">
-                                        <label class="checkbox checkbox checkbox-inline">
-                                            <input type="checkbox" name="selectedBills" value="527878">
-                                            <span></span>
-                                        </label>
-                                    </td>
-                                    <td class="pl-0">
-                                        <span class="text-dark-75 font-size-lg font-weight d-block">NET EKO 8M E KADAR</span>
-                                    </td>
-                                    <td>
-                                        <span class="text-dark-75 font-size-lg font-weight d-block ">23.07.2020</span>
-                                    </td>
-                                    <td>
-                                        <span class="text-dark font-size-lg font-weight-bold d-block ">02.08.2020</span>
-                                    </td>
-                                    <td>
-                                        <span class="text-dark-75 font-size-lg font-weight d-block ">58.00 TL</span>
-                                    </td>
-                                </tr>
+                                <tbody>
+                                    @foreach (var itemBill in Model.Bills)
+                                    {
+                                        counter++;
+                                        <tr>
+                                            <td class="pl-0 py-6">
+                                                <label class="checkbox checkbox checkbox-inline">
+                                                    <input type="checkbox" name="selectedBills" value="@itemBill.BillID" dataValue="@counter">
+                                                    <span></span>
+                                                </label>
+                                            </td>
 
+                                            <td class="pl-0">
+                                                <span class="text-dark-75 font-size-lg font-weight d-block">NET EKO 8M E KADAR</span>
+                                            </td>
 
-                            </tbody>
-                        </table>
+                                            <td>
+                                                <span class="text-dark-75 font-size-lg font-weight d-block ">@Html.DisplayFor(modelItem => itemBill.IssueDate)</span>
+                                            </td>
+                                            <td>
+                                                <span class="text-dark font-size-lg font-weight-bold d-block ">@Html.DisplayFor(modelItem => itemBill.DueDate)</span>
+                                            </td>
 
-
-                        <!--end::Table-->
-                    </div>
-                    <div class="pb-lg-0 pb-5">
-                        <button type="submit" class="btn btn-danger font-weight-bolder font-size-h8 px-8 py-3 my-3 mr-3">Ödeme Yap</button>
-                    </div>
-
-                </form>
+                                            <td>
+                                                <span class="text-dark-75 font-size-lg font-weight d-block ">@Html.DisplayFor(modelItem => itemBill.Cost)</span>
+                                            </td>
+                                        </tr>
+                                    }
+                                    @Html.Hidden("SubscriberNo", search.SubscriberNo)
+                                </tbody>
+                            </table>
+                            <!--end::Table-->
+                        </div>
+                        <div class="pb-lg-0 pb-5">
+                            <button type="submit" class="btn btn-danger font-weight-bolder font-size-h8 px-8 py-3 my-3 mr-3" id="pay-button">@BillView.PayBill</button>
+                        </div>
+                    }
+                }
+                <div style="background-color:red">
+                    @ViewBag.PayOldBillError
+                    @ViewBag.PayBillError
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+@section Javascript{
+    <script>
+        $("#subsNo").mask("9999999999");
+        $("#container-check").click(function () {
+            if (this.checked) {
+                $('input[type=checkbox]').each(function (index, element) {
+                    $(this).prop("checked", true);
+                });
+            }
+            else {
+                $('input[type=checkbox]').each(function (index, element) {
+                    $(this).prop("checked", false);
+                });
+            }
+        });
+
+        $('input[type=checkbox]').click(function () {
+            if (this.checked) {
+                if ($(this).attr("dataValue") != 1) {
+
+                    var thisCheckbox = $(this);
+                    var currentCheckedCheckboxDataValue = [];
+                    var checkedCheckbox = $('input[type=checkbox]:checked');
+
+                    $('input[type=checkbox]:checked').each(function (index, element) {
+
+                        var lastItem = (index == (checkedCheckbox.length - 1));
+                        currentCheckedCheckboxDataValue.push(lastItem);
+                    });
+
+                    var checkedCheckBoxDataValue = thisCheckbox.attr("dataValue");
+                    var arraylenght = parseInt(currentCheckedCheckboxDataValue.length);
+                    if (checkedCheckBoxDataValue > arraylenght) {
+                        thisCheckbox.prop("checked", false);
+                    }
+                }
+            }
+            else {
+                var checkedCheckboxDataValue = parseInt($(this).attr("dataValue"));
+
+                $('input[type=checkbox]:checked').each(function (index, element) {
+                    var allCheckedCheckboxDataValue = parseInt($(this).attr("dataValue"))
+                    if (checkedCheckboxDataValue < allCheckedCheckboxDataValue) {
+                        $(this).prop("checked", false);
+                    }
+                });
+            }
+        });
+    </script>
+
+}

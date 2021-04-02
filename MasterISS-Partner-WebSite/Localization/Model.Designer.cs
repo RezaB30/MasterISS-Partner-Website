@@ -412,7 +412,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Altyapı Uzaklığı.
+        ///   Looks up a localized string similar to Santral/Saha Dolabı Tahmini Mesafe.
         /// </summary>
         public static string Distance {
             get {
