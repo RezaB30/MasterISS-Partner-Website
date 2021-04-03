@@ -178,6 +178,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fatura.
+        /// </summary>
+        public static string BillName {
+            get {
+                return ResourceManager.GetString("BillName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Doğum Tarihi.
         /// </summary>
         public static string BirthDate {
@@ -205,7 +214,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kimlik Tipi.
+        ///   Looks up a localized string similar to Kimlik Tipini Seçiniz.
         /// </summary>
         public static string CardTypeId {
             get {
@@ -268,7 +277,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to İletişim Numarası.
+        ///   Looks up a localized string similar to Müşteri GSM Numaranızı Yazınız.
         /// </summary>
         public static string ContactPhoneNo {
             get {
@@ -286,7 +295,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dil.
+        ///   Looks up a localized string similar to Online işlem merkezi için Dil Seçimi.
         /// </summary>
         public static string CultureCustomer {
             get {
@@ -381,6 +390,33 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string DateOfIssue {
             get {
                 return ResourceManager.GetString("DateOfIssue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Veriliş Tarihi (Gün).
+        /// </summary>
+        public static string DateOfIssueDay {
+            get {
+                return ResourceManager.GetString("DateOfIssueDay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Veriliş Tarihi (Ay).
+        /// </summary>
+        public static string DateOfIssueMonth {
+            get {
+                return ResourceManager.GetString("DateOfIssueMonth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Veriliş Tarihi (Yıl).
+        /// </summary>
+        public static string DateOfIssueYear {
+            get {
+                return ResourceManager.GetString("DateOfIssueYear", resourceCulture);
             }
         }
         
@@ -588,6 +624,33 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string ExpiryDate {
             get {
                 return ResourceManager.GetString("ExpiryDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kimlik Geçerlilik Tarihi (Gün).
+        /// </summary>
+        public static string ExpiryDay {
+            get {
+                return ResourceManager.GetString("ExpiryDay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kimlik Geçerlilik Tarihi (Ay).
+        /// </summary>
+        public static string ExpiryMonth {
+            get {
+                return ResourceManager.GetString("ExpiryMonth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kimlik Geçerlilik Tarihi (Yıl).
+        /// </summary>
+        public static string ExpiryYear {
+            get {
+                return ResourceManager.GetString("ExpiryYear", resourceCulture);
             }
         }
         
@@ -844,7 +907,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bayi Tarifesi.
+        ///   Looks up a localized string similar to Tarife Seçimi.
         /// </summary>
         public static string PartnerTariffID {
             get {
@@ -979,7 +1042,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Başvuru Tipi.
+        ///   Looks up a localized string similar to Başvuru Türü.
         /// </summary>
         public static string RegistrationType {
             get {
@@ -1074,6 +1137,33 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string SearchedTaskNo {
             get {
                 return ResourceManager.GetString("SearchedTaskNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Doğum Günü.
+        /// </summary>
+        public static string SelectedBirthDay {
+            get {
+                return ResourceManager.GetString("SelectedBirthDay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Doğum Ayı.
+        /// </summary>
+        public static string SelectedBirthMonth {
+            get {
+                return ResourceManager.GetString("SelectedBirthMonth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Doğum Yılı.
+        /// </summary>
+        public static string SelectedBirthYear {
+            get {
+                return ResourceManager.GetString("SelectedBirthYear", resourceCulture);
             }
         }
         

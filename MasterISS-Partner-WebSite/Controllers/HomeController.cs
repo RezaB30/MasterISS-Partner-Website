@@ -226,7 +226,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                     IssueDate = b.IssueDate,
                     BillID = b.ID,
                     DueDate = b.DueDate,
-                    Cost = b.Total
+                    Cost = b.Total,
+                    BillName = b.ServiceName
                 })
             };
             return billList;

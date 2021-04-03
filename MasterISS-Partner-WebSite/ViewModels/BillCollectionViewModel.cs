@@ -29,5 +29,7 @@ namespace MasterISS_Partner_WebSite.ViewModels
         [UIHint("DatetimeFormat")]
         public string DueDate { get; set; }
 
+        [Display(Name = "BillName", ResourceType = typeof(Localization.Model))]
+        public string BillName { get; set; }
     }
 }

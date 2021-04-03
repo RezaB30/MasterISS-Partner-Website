@@ -286,7 +286,7 @@
                                                 <span></span>
                                             </label>
                                         </th>
-                                        <th class="pl-0" style="min-width: 130px"><span class="text-info">Fatura</span></th>
+                                        <th class="pl-0" style="min-width: 130px"><span class="text-info">@Html.DisplayNameFor(m => m.Bills.FirstOrDefault().BillName)</span></th>
                                         <th style="min-width: 120px"><span class="text-info">@Html.DisplayNameFor(m => m.Bills.FirstOrDefault().IssueDate)</span></th>
                                         <th style="min-width: 120px">
                                             <span class="text-info">@Html.DisplayNameFor(m => m.Bills.FirstOrDefault().DueDate)</span>
@@ -308,7 +308,7 @@
                                             </td>
 
                                             <td class="pl-0">
-                                                <span class="text-dark-75 font-size-lg font-weight d-block">NET EKO 8M E KADAR</span>
+                                                <span class="text-dark-75 font-size-lg font-weight d-block">@Html.DisplayFor(modelItem => itemBill.BillName)</span>
                                             </td>
 
                                             <td>

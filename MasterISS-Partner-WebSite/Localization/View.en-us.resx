@@ -141,6 +141,9 @@
   <data name="AdminPanel" xml:space="preserve">
     <value>Admin Panel</value>
   </data>
+  <data name="ApplicationInformation" xml:space="preserve">
+    <value>Application Information</value>
+  </data>
   <data name="AuthenticateError" xml:space="preserve">
     <value>Login Failed.</value>
   </data>
@@ -247,7 +250,10 @@
     <value> Hours </value>
   </data>
   <data name="IDCardInfo" xml:space="preserve">
-    <value>ID Card Info</value>
+    <value>Contact Info</value>
+  </data>
+  <data name="IDInfo" xml:space="preserve">
+    <value>Your Identity Information</value>
   </data>
   <data name="LastSessionInfo" xml:space="preserve">
     <value>Last Session Info</value>
@@ -467,5 +473,17 @@
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>
+  </data>
+  <data name="YourEmail" xml:space="preserve">
+    <value>Your E-Mail</value>
+  </data>
+  <data name="YourGsmNumber" xml:space="preserve">
+    <value>Your GSM Number</value>
+  </data>
+  <data name="YourLastName" xml:space="preserve">
+    <value>Your Last Name</value>
+  </data>
+  <data name="YourName" xml:space="preserve">
+    <value>Your Name</value>
   </data>
 </root>

@@ -21,6 +21,8 @@ namespace MasterISS_Partner_WebSite.Controllers
         private static Logger Logger = LogManager.GetLogger("AppLogger");
         private static Logger LoggerError = LogManager.GetLogger("AppLoggerError");
 
+
+
         // GET: Customer
         public ActionResult NewCustomer()
         {
@@ -109,7 +111,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             ViewBag.BuildingsBySetup = new SelectList("");
             ViewBag.ApartmentsBySetup = new SelectList("");
             ViewBag.DistrictsByIndividual = new SelectList("");
-            ViewBag.RuralRegionsByIndividual =
+            ViewBag.RuralRegionsByIndividual = new SelectList("");
             ViewBag.NeigboorHoodsByIndividual = new SelectList("");
             ViewBag.StreetsByIndividual = new SelectList("");
             ViewBag.BuildingsByIndividual = new SelectList("");
@@ -127,6 +129,19 @@ namespace MasterISS_Partner_WebSite.Controllers
             ViewBag.BuildingsByCorporativeCompany = new SelectList("");
             ViewBag.ApartmentsByCorporativeCompany = new SelectList("");
             ViewBag.BillingPeriod = new SelectList("");
+
+            ViewBag.DayList = DayList(null);
+            ViewBag.MonthList = Monthlist(null);
+            ViewBag.YearList = YearList(null);
+
+            ViewBag.DayListByExpiryDate = DayList(null);
+            ViewBag.MonthListByExpiryDate = Monthlist(null);
+            ViewBag.YearListByExpiryDate = YearList(null);
+
+            ViewBag.DayListByIssueDate = DayList(null);
+            ViewBag.MonthListByIssueDate = Monthlist(null);
+            ViewBag.YearListByIssueDate = YearList(null);
+
 
             return View();
         }
@@ -225,6 +240,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                             LoggerError.Fatal($"An error occurred while GetApartmentAddress , CompanyApartmentAddressResponse: {companyApartmentAddress.ResponseMessage.ErrorCode} ExecutiveResidencyBBKResponseCode: {executiveResidencyAddress.ResponseMessage.ErrorCode}, by: {webServiceWrapper.GetUserSubMail()}");
                         }
                     }
+
 
                     var billingAddressBBK = addCustomerViewModel.GeneralInfo.BillingAddress.ApartmentId;
                     var setupAddressBBK = addCustomerViewModel.SubscriptionInfo.SetupAddress.ApartmentId;
@@ -610,6 +626,46 @@ namespace MasterISS_Partner_WebSite.Controllers
         private SelectList TCKTypeList(PartnerServiceKeyValueListResponse tckType, int? selectedValue)
         {
             var list = new SelectList(tckType.KeyValueItemResponse.Select(tck => new { Name = tck.Value, Value = tck.Key }), "Value", "Name", selectedValue);
+            return list;
+        }
+
+        private SelectList YearList(int? selectedValue)
+        {
+            var startDate = 1940;
+            var yearList = new List<int>();
+
+            for (int i = startDate; i < DateTime.Now.Year; i++)
+            {
+                yearList.Add(i);
+            }
+
+            var list = new SelectList(yearList.Select(yl => new { Name = yl.ToString(), Value = yl }), "Value", "Name", selectedValue ?? null);
+            return list;
+        }
+
+        private SelectList Monthlist(int? selectedValue)
+        {
+            var monthList = new List<int>();
+
+            for (int i = 1; i <= 12; i++)
+            {
+                monthList.Add(i);
+            }
+
+            var list = new SelectList(monthList.Select(yl => new { Name = yl.ToString(), Value = yl }), "Value", "Name", selectedValue ?? null);
+            return list;
+        }
+
+        private SelectList DayList(int? selectedValue)
+        {
+            var dayList = new List<int>();
+
+            for (int i = 1; i <= 31; i++)
+            {
+                dayList.Add(i);
+            }
+
+            var list = new SelectList(dayList.Select(yl => new { Name = yl.ToString(), Value = yl }), "Value", "Name", selectedValue ?? null);
             return list;
         }
     }

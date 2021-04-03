@@ -156,6 +156,9 @@
   <data name="BillingPeriodId" xml:space="preserve">
     <value>Fatura Dönemi</value>
   </data>
+  <data name="BillName" xml:space="preserve">
+    <value>Fatura</value>
+  </data>
   <data name="BirthDate" xml:space="preserve">
     <value>Doğum Tarihi</value>
   </data>
@@ -166,7 +169,7 @@
     <value>Bina No</value>
   </data>
   <data name="CardTypeId" xml:space="preserve">
-    <value>Kimlik Tipi</value>
+    <value>Kimlik Tipini Seçiniz</value>
   </data>
   <data name="CentralSystemNo" xml:space="preserve">
     <value>Merkezi Sistem Numarası</value>
@@ -187,13 +190,13 @@
     <value>İletişim Adı</value>
   </data>
   <data name="ContactPhoneNo" xml:space="preserve">
-    <value>İletişim Numarası</value>
+    <value>Müşteri GSM Numaranızı Yazınız</value>
   </data>
   <data name="CreationDate" xml:space="preserve">
     <value>Oluşturulma Tarihi</value>
   </data>
   <data name="CultureCustomer" xml:space="preserve">
-    <value>Dil</value>
+    <value>Online işlem merkezi için Dil Seçimi</value>
   </data>
   <data name="CurrentDowloadSpeed" xml:space="preserve">
     <value>Mevcut İndirme Hızı</value>
@@ -224,6 +227,15 @@
   </data>
   <data name="DateOfIssue" xml:space="preserve">
     <value>Veriliş Tarihi</value>
+  </data>
+  <data name="DateOfIssueDay" xml:space="preserve">
+    <value>Veriliş Tarihi (Gün)</value>
+  </data>
+  <data name="DateOfIssueMonth" xml:space="preserve">
+    <value>Veriliş Tarihi (Ay)</value>
+  </data>
+  <data name="DateOfIssueYear" xml:space="preserve">
+    <value>Veriliş Tarihi (Yıl)</value>
   </data>
   <data name="DealerCode" xml:space="preserve">
     <value>Bayi Kodu</value>
@@ -293,6 +305,15 @@
   </data>
   <data name="ExpiryDate" xml:space="preserve">
     <value>Son Geçerlilik Tarihi</value>
+  </data>
+  <data name="ExpiryDay" xml:space="preserve">
+    <value>Kimlik Geçerlilik Tarihi (Gün)</value>
+  </data>
+  <data name="ExpiryMonth" xml:space="preserve">
+    <value>Kimlik Geçerlilik Tarihi (Ay)</value>
+  </data>
+  <data name="ExpiryYear" xml:space="preserve">
+    <value>Kimlik Geçerlilik Tarihi (Yıl)</value>
   </data>
   <data name="FathersName" xml:space="preserve">
     <value>Baba Adı</value>
@@ -379,7 +400,7 @@
     <value>Aile Sıra No</value>
   </data>
   <data name="PartnerTariffID" xml:space="preserve">
-    <value>Bayi Tarifesi</value>
+    <value>Tarife Seçimi</value>
   </data>
   <data name="PassportNo" xml:space="preserve">
     <value>Pasaport Numarası</value>
@@ -424,7 +445,7 @@
     <value>Kayıt Tarihi</value>
   </data>
   <data name="RegistrationType" xml:space="preserve">
-    <value>Başvuru Tipi</value>
+    <value>Başvuru Türü</value>
   </data>
   <data name="ReservationDate" xml:space="preserve">
     <value>Rezervasyon Tarihi</value>
@@ -455,6 +476,15 @@
   </data>
   <data name="SearchedTaskNo" xml:space="preserve">
     <value>Görev Numarasına Göre Ara</value>
+  </data>
+  <data name="SelectedBirthDay" xml:space="preserve">
+    <value>Doğum Günü</value>
+  </data>
+  <data name="SelectedBirthMonth" xml:space="preserve">
+    <value>Doğum Ayı</value>
+  </data>
+  <data name="SelectedBirthYear" xml:space="preserve">
+    <value>Doğum Yılı</value>
   </data>
   <data name="SerialNo" xml:space="preserve">
     <value>Seri No</value>

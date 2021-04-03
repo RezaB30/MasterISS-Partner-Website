@@ -164,7 +164,7 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
 
         [Display(Name = "BirthDate", ResourceType = typeof(Localization.Model))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
-        [RegularExpression(@"(((0|1)[0-9]|2[0-9]|3[0-1])\.(0[1-9]|1[0-2])\.((19|20)\d\d))$", ErrorMessageResourceType =typeof(Localization.Validation),ErrorMessageResourceName ="DateValid")]
+        [RegularExpression(@"(((0|1)[0-9]|2[0-9]|3[0-1])\.(0[1-9]|1[0-2])\.((19|20)\d\d))$", ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "DateValid")]
         public string BirthDate { get; set; }
 
         [Display(Name = "CardTypeId", ResourceType = typeof(Localization.Model))]
@@ -192,6 +192,18 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         [Display(Name = "TCKNo", ResourceType = typeof(Localization.Model))]
         [RegularExpression("^[0-9]*$", ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "OnlyNumeric")]
         public string TCKNo { get; set; }
+
+        [Display(Name = "SelectedBirthDay", ResourceType = typeof(Localization.Model))]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        public int? SelectedBirthDay { get; set; }
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        [Display(Name = "SelectedBirthMonth", ResourceType = typeof(Localization.Model))]
+        public int? SelectedBirthMonth { get; set; }
+        
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        [Display(Name = "SelectedBirthYear", ResourceType = typeof(Localization.Model))]
+        public int? SelectedBirthYear { get; set; }
     }
 
     public class TCBirthCertificate
@@ -213,9 +225,21 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         public string District { get; set; }
 
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
-        [RegularExpression(@"(((0|1)[0-9]|2[0-9]|3[0-1])\.(0[1-9]|1[0-2])\.((19|20)\d\d))$", ErrorMessageResourceType =typeof(Localization.Validation),ErrorMessageResourceName ="DateValid")]
+        [RegularExpression(@"(((0|1)[0-9]|2[0-9]|3[0-1])\.(0[1-9]|1[0-2])\.((19|20)\d\d))$", ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "DateValid")]
         [Display(Name = "DateOfIssue", ResourceType = typeof(Localization.Model))]
         public string DateOfIssue { get; set; }
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        [Display(Name = "DateOfIssueDay", ResourceType = typeof(Localization.Model))]
+        public int? DateOfIssueDay { get; set; }
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        [Display(Name = "DateOfIssueMonth", ResourceType = typeof(Localization.Model))]
+        public int? DateOfIssueMonth { get; set; }
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        [Display(Name = "DateOfIssueYear ", ResourceType = typeof(Localization.Model))]
+        public int? DateOfIssueYear { get; set; }
 
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
         [Display(Name = "PlaceOfIssue", ResourceType = typeof(Localization.Model))]
@@ -233,9 +257,21 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
     public class TCIDCardWithChip
     {
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
-        [RegularExpression(@"(((0|1)[0-9]|2[0-9]|3[0-1])\.(0[1-9]|1[0-2])\.((19|20)\d\d))$", ErrorMessageResourceType =typeof(Localization.Validation),ErrorMessageResourceName ="DateValid")]
+        [RegularExpression(@"(((0|1)[0-9]|2[0-9]|3[0-1])\.(0[1-9]|1[0-2])\.((19|20)\d\d))$", ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "DateValid")]
         [Display(Name = "ExpiryDate", ResourceType = typeof(Localization.Model))]
         public string ExpiryDate { get; set; }
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        [Display(Name = "ExpiryDay", ResourceType = typeof(Localization.Model))]
+        public int? ExpiryDay { get; set; }
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        [Display(Name = "ExpiryMonth", ResourceType = typeof(Localization.Model))]
+        public int? ExpiryMonth { get; set; }
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        [Display(Name = "ExpiryYear", ResourceType = typeof(Localization.Model))]
+        public int? ExpiryYear { get; set; }
     }
 
     public class GeneralInfoViewModel

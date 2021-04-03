@@ -156,6 +156,9 @@
   <data name="BillingPeriodId" xml:space="preserve">
     <value>Billing Period</value>
   </data>
+  <data name="BillName" xml:space="preserve">
+    <value>Bill</value>
+  </data>
   <data name="BirthDate" xml:space="preserve">
     <value>Birth Date</value>
   </data>
@@ -166,7 +169,7 @@
     <value>Building No</value>
   </data>
   <data name="CardTypeId" xml:space="preserve">
-    <value>ID Card Type</value>
+    <value>Select ID Card Type</value>
   </data>
   <data name="CentralSystemNo" xml:space="preserve">
     <value>Central System Number</value>
@@ -187,13 +190,13 @@
     <value>Contact Name</value>
   </data>
   <data name="ContactPhoneNo" xml:space="preserve">
-    <value>Contact Phone No</value>
+    <value>Enter Your Customer GSM Number</value>
   </data>
   <data name="CreationDate" xml:space="preserve">
     <value>Creation Date</value>
   </data>
   <data name="CultureCustomer" xml:space="preserve">
-    <value>Culture</value>
+    <value>Language Selection for Online Operation Center</value>
   </data>
   <data name="CurrentDowloadSpeed" xml:space="preserve">
     <value>Current Dowload Speed</value>
@@ -224,6 +227,15 @@
   </data>
   <data name="DateOfIssue" xml:space="preserve">
     <value>Date Of Issue</value>
+  </data>
+  <data name="DateOfIssueDay" xml:space="preserve">
+    <value>Date Of Issue (Day)</value>
+  </data>
+  <data name="DateOfIssueMonth" xml:space="preserve">
+    <value>Date Of Issue (Month)</value>
+  </data>
+  <data name="DateOfIssueYear" xml:space="preserve">
+    <value>Date Of Issue (Year)</value>
   </data>
   <data name="DealerCode" xml:space="preserve">
     <value>Dealer Code</value>
@@ -293,6 +305,15 @@
   </data>
   <data name="ExpiryDate" xml:space="preserve">
     <value>Expiry Date</value>
+  </data>
+  <data name="ExpiryDay" xml:space="preserve">
+    <value>Expiry Date (Day)</value>
+  </data>
+  <data name="ExpiryMonth" xml:space="preserve">
+    <value>Expiry Date (Month)</value>
+  </data>
+  <data name="ExpiryYear" xml:space="preserve">
+    <value>Expiry Date (Year)</value>
   </data>
   <data name="FathersName" xml:space="preserve">
     <value>Fathers Name</value>
@@ -379,7 +400,7 @@
     <value>Page No</value>
   </data>
   <data name="PartnerTariffID" xml:space="preserve">
-    <value>Partner Tariff</value>
+    <value>Choise Tariff</value>
   </data>
   <data name="PassportNo" xml:space="preserve">
     <value>Passport Number</value>
@@ -455,6 +476,15 @@
   </data>
   <data name="SearchedTaskNo" xml:space="preserve">
     <value>Searched By Task No</value>
+  </data>
+  <data name="SelectedBirthDay" xml:space="preserve">
+    <value>Birth Day</value>
+  </data>
+  <data name="SelectedBirthMonth" xml:space="preserve">
+    <value>Birth Month</value>
+  </data>
+  <data name="SelectedBirthYear" xml:space="preserve">
+    <value>Birth Year</value>
   </data>
   <data name="SerialNo" xml:space="preserve">
     <value>Serial No</value>

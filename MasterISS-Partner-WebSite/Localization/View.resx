@@ -141,6 +141,9 @@
   <data name="AdminPanel" xml:space="preserve">
     <value>Admin Paneli</value>
   </data>
+  <data name="ApplicationInformation" xml:space="preserve">
+    <value>Başvuru Bilgileri</value>
+  </data>
   <data name="AuthenticateError" xml:space="preserve">
     <value>Giriş İşlemi Başarısız.</value>
   </data>
@@ -247,7 +250,10 @@
     <value> Saat </value>
   </data>
   <data name="IDCardInfo" xml:space="preserve">
-    <value>Kimlik Bilgileri</value>
+    <value>İletişim Bilgileri</value>
+  </data>
+  <data name="IDInfo" xml:space="preserve">
+    <value>Kimlik Bilgileriniz</value>
   </data>
   <data name="LastSessionInfo" xml:space="preserve">
     <value>Son Oturum Bilgileri</value>
@@ -467,5 +473,17 @@
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Evet</value>
+  </data>
+  <data name="YourEmail" xml:space="preserve">
+    <value>E-Posta Adresiniz</value>
+  </data>
+  <data name="YourGsmNumber" xml:space="preserve">
+    <value>GSM Numaranız</value>
+  </data>
+  <data name="YourLastName" xml:space="preserve">
+    <value>Soyadınız</value>
+  </data>
+  <data name="YourName" xml:space="preserve">
+    <value>Adınız</value>
   </data>
 </root>

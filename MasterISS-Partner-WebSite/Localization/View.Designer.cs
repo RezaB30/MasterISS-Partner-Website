@@ -133,6 +133,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Başvuru Bilgileri.
+        /// </summary>
+        public static string ApplicationInformation {
+            get {
+                return ResourceManager.GetString("ApplicationInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Giriş İşlemi Başarısız..
         /// </summary>
         public static string AuthenticateError {
@@ -448,11 +457,20 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kimlik Bilgileri.
+        ///   Looks up a localized string similar to İletişim Bilgileri.
         /// </summary>
         public static string IDCardInfo {
             get {
                 return ResourceManager.GetString("IDCardInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kimlik Bilgileriniz.
+        /// </summary>
+        public static string IDInfo {
+            get {
+                return ResourceManager.GetString("IDInfo", resourceCulture);
             }
         }
         
@@ -1110,6 +1128,42 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string Yes {
             get {
                 return ResourceManager.GetString("Yes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to E-Posta Adresiniz.
+        /// </summary>
+        public static string YourEmail {
+            get {
+                return ResourceManager.GetString("YourEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GSM Numaranız.
+        /// </summary>
+        public static string YourGsmNumber {
+            get {
+                return ResourceManager.GetString("YourGsmNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Soyadınız.
+        /// </summary>
+        public static string YourLastName {
+            get {
+                return ResourceManager.GetString("YourLastName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adınız.
+        /// </summary>
+        public static string YourName {
+            get {
+                return ResourceManager.GetString("YourName", resourceCulture);
             }
         }
     }
