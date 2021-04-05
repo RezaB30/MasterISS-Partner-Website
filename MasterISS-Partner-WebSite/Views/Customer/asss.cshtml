@@ -1,0 +1,587 @@
+﻿
+@*@{
+    ViewBag.Title = "asss";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm("NewCustomer", "Customer", FormMethod.Post))
+{
+
+    @Html.AntiForgeryToken()
+
+    <span style="background-color:red">@Html.Raw(TempData["SMSConfirmationError"])</span>
+
+
+    <div id="extraInfo">
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.ExtraInfo.SubscriptionRegistrationTypeId)
+            @Html.DropDownListFor(m => m.ExtraInfo.SubscriptionRegistrationTypeId, (SelectList)ViewBag.SubscriptionRegistrationType, BillView.Select)
+            @Html.ValidationMessageFor(m => m.ExtraInfo.SubscriptionRegistrationTypeId)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.ExtraInfo.PSTN)
+            @Html.EditorFor(m => m.ExtraInfo.PSTN)
+            @Html.ValidationMessageFor(m => m.ExtraInfo.PSTN)
+        </div>
+
+        <div class="form-group" id="xdslNoContainer" style="display:none">
+            @Html.LabelFor(m => m.ExtraInfo.XDSLNo)
+            @Html.EditorFor(m => m.ExtraInfo.XDSLNo)
+            @Html.ValidationMessageFor(m => m.ExtraInfo.XDSLNo)
+        </div>
+
+
+    </div>
+
+    <div id="IDCardInfoContainer">
+        <h2>@View.IDCardInfo</h2>
+        <div class="form-group">
+            @Html.LabelFor(m => m.IDCard.BirthDate)
+            @Html.EditorFor(m => m.IDCard.BirthDate, new { htmlAttributes = new { placeholder = DateTime.Now.ToString("dd.MM.yyyy") } })
+            @Html.ValidationMessageFor(m => m.IDCard.BirthDate)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.IDCard.CardTypeId)
+            @Html.DropDownListFor(m => m.IDCard.CardTypeId, (SelectList)ViewBag.TckTypeList, BillView.Select)
+            @Html.ValidationMessageFor(m => m.IDCard.CardTypeId)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.IDCard.FirstName)
+            @Html.EditorFor(m => m.IDCard.FirstName)
+            @Html.ValidationMessageFor(m => m.IDCard.FirstName)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.IDCard.LastName)
+            @Html.EditorFor(m => m.IDCard.LastName)
+            @Html.ValidationMessageFor(m => m.IDCard.LastName)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.IDCard.PassportNo)
+            @Html.EditorFor(m => m.IDCard.PassportNo)
+            @Html.ValidationMessageFor(m => m.IDCard.PassportNo)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.IDCard.SerialNo)
+            @Html.EditorFor(m => m.IDCard.SerialNo)
+            @Html.ValidationMessageFor(m => m.IDCard.SerialNo)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.IDCard.TCKNo)
+            @Html.EditorFor(m => m.IDCard.TCKNo)
+            @Html.ValidationMessageFor(m => m.IDCard.TCKNo)
+        </div>
+
+        <div id="TCBirthCertificateContainer" style="display:none">
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.IDCard.TCBirthCertificate.DateOfIssue)
+                @Html.EditorFor(m => m.IDCard.TCBirthCertificate.DateOfIssue, new { htmlAttributes = new { placeholder = DateTime.Now.ToString("dd.MM.yyyy") } })
+                @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.DateOfIssue)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.IDCard.TCBirthCertificate.District)
+                @Html.EditorFor(m => m.IDCard.TCBirthCertificate.District)
+                @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.District)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.IDCard.TCBirthCertificate.Neighbourhood)
+                @Html.EditorFor(m => m.IDCard.TCBirthCertificate.Neighbourhood)
+                @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.Neighbourhood)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.IDCard.TCBirthCertificate.PageNo)
+                @Html.EditorFor(m => m.IDCard.TCBirthCertificate.PageNo)
+                @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.PageNo)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.IDCard.TCBirthCertificate.PlaceOfIssue)
+                @Html.EditorFor(m => m.IDCard.TCBirthCertificate.PlaceOfIssue)
+                @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.PlaceOfIssue)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.IDCard.TCBirthCertificate.Province)
+                @Html.EditorFor(m => m.IDCard.TCBirthCertificate.Province)
+                @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.Province)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.IDCard.TCBirthCertificate.RowNo)
+                @Html.EditorFor(m => m.IDCard.TCBirthCertificate.RowNo)
+                @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.RowNo)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.IDCard.TCBirthCertificate.VolumeNo)
+                @Html.EditorFor(m => m.IDCard.TCBirthCertificate.VolumeNo)
+                @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.VolumeNo)
+            </div>
+
+        </div>
+
+        <div id="TCIDCardWithChipContainer" style="display:none">
+            @Html.LabelFor(m => m.IDCard.TCIDCardWithChip.ExpiryDate)
+            @Html.EditorFor(m => m.IDCard.TCIDCardWithChip.ExpiryDate, new { htmlAttributes = new { placeholder = DateTime.Now.ToString("dd.MM.yyyy") } })
+            @Html.ValidationMessageFor(m => m.IDCard.TCIDCardWithChip.ExpiryDate)
+        </div>
+
+    </div>
+
+    <div id="CustomerGeneralInfoContainer">
+        <h2>@View.CustomerGeneralInfo</h2>
+
+        <div class="form-group">
+            @Html.LabelFor(gi => gi.GeneralInfo.SameSetupAddressByBilling)
+            @Html.EditorFor(gi => gi.GeneralInfo.SameSetupAddressByBilling)
+        </div>
+
+        <h4>@View.BillingAddress</h4>
+        <div id="BillingAddressContainer">
+            <div class="form-group">
+                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.ProvinceId, (SelectList)ViewBag.ProvincesByGeneralInfo, HomeView.SelectProvince, new { @id = "province-billing" })
+                @Html.ValidationMessageFor(gi => gi.GeneralInfo.BillingAddress.ProvinceId)
+            </div>
+
+            <div class="form-group">
+                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.DistrictId, (SelectList)ViewBag.DistrictsByGeneralInfo, HomeView.SelectDistrict, new { @id = "district-billing", @disabled = "disabled" })
+                @Html.ValidationMessageFor(gi => gi.GeneralInfo.BillingAddress.DistrictId)
+            </div>
+
+            <div class="form-group">
+                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.RuralRegionsId, (SelectList)ViewBag.RuralRegionsByGeneralInfo, HomeView.SelectRegions, new { @id = "ruralregions-billing", @disabled = "disabled" })
+                @Html.ValidationMessageFor(gi => gi.GeneralInfo.BillingAddress.RuralRegionsId)
+            </div>
+
+            <div class="form-group">
+                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.NeighborhoodId, (SelectList)ViewBag.NeigboorHoodsByGeneralInfo, HomeView.SelectNeigborhood, new { @id = "neighborhood-billing", @disabled = "disabled" })
+                @Html.ValidationMessageFor(gi => gi.GeneralInfo.BillingAddress.NeighborhoodId)
+            </div>
+
+            <div class="form-group">
+                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.StreetId, (SelectList)ViewBag.StreetsByGeneralInfo, HomeView.SelectStreet, new { @id = "street-billing", @disabled = "disabled" })
+                @Html.ValidationMessageFor(gi => gi.GeneralInfo.BillingAddress.StreetId)
+            </div>
+
+            <div class="form-group">
+                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.BuildingId, (SelectList)ViewBag.BuildingsByGeneralInfo, HomeView.SelectBuilding, new { @id = "building-billing", @disabled = "disabled" })
+                @Html.ValidationMessageFor(gi => gi.GeneralInfo.BillingAddress.BuildingId)
+            </div>
+
+            <div class="form-group">
+                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.ApartmentId, (SelectList)ViewBag.ApartmentsByGeneralInfo, HomeView.SelectApartment, new { @id = "apartment-billing", @disabled = "disabled" })
+                @Html.ValidationMessageFor(gi => gi.GeneralInfo.BillingAddress.ApartmentId)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(gi => gi.GeneralInfo.BillingAddress.PostalCode)
+                @Html.EditorFor(gi => gi.GeneralInfo.BillingAddress.PostalCode, new { htmlAttributes = new { @type = "text" } })
+                @Html.ValidationMessageFor(gi => gi.GeneralInfo.BillingAddress.PostalCode)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(gi => gi.GeneralInfo.BillingAddress.Floor)
+                @Html.EditorFor(gi => gi.GeneralInfo.BillingAddress.Floor)
+                @Html.ValidationMessageFor(gi => gi.GeneralInfo.BillingAddress.Floor)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.GeneralInfo.ContactPhoneNo)
+            @Html.EditorFor(m => m.GeneralInfo.ContactPhoneNo)
+            @Html.ValidationMessageFor(m => m.GeneralInfo.ContactPhoneNo)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.GeneralInfo.Email)
+            @Html.EditorFor(m => m.GeneralInfo.Email)
+            @Html.ValidationMessageFor(m => m.GeneralInfo.Email)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.GeneralInfo.CustomerTypeId)
+            @Html.DropDownListFor(m => m.GeneralInfo.CustomerTypeId, (SelectList)ViewBag.CustomerTypeList, BillView.Select)
+            @Html.ValidationMessageFor(m => m.GeneralInfo.CustomerTypeId)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.GeneralInfo.Culture)
+            @Html.DropDownListFor(m => m.GeneralInfo.Culture, (SelectList)ViewBag.CultureList, BillView.Select)
+            @Html.ValidationMessageFor(m => m.GeneralInfo.Culture)
+        </div>
+        <input type="button" id="createNumberInput" value="@BillView.OtherPhoneNumber" />
+        <div id="telephoneNumberInputContainer"></div>
+    </div>
+
+    <div id="corporateCustomerInfoContainer" style="display:none">
+        <h2>@BillView.CorporateCustomerInfo</h2>
+        <div class="form-group">
+            @Html.LabelFor(ci => ci.CorporateInfo.CentralSystemNo)
+            @Html.EditorFor(ci => ci.CorporateInfo.CentralSystemNo)
+            @Html.ValidationMessageFor(ci => ci.CorporateInfo.CentralSystemNo)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(ci => ci.CorporateInfo.ExecutiveBirthPlace)
+            @Html.EditorFor(ci => ci.CorporateInfo.ExecutiveBirthPlace)
+            @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveBirthPlace)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(ci => ci.CorporateInfo.ExecutiveFathersName)
+            @Html.EditorFor(ci => ci.CorporateInfo.ExecutiveFathersName)
+            @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveFathersName)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(ci => ci.CorporateInfo.ExecutiveMothersMaidenName)
+            @Html.EditorFor(ci => ci.CorporateInfo.ExecutiveMothersMaidenName)
+            @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveMothersMaidenName)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(ci => ci.CorporateInfo.ExecutiveMothersName)
+            @Html.EditorFor(ci => ci.CorporateInfo.ExecutiveMothersName)
+            @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveMothersName)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(ci => ci.CorporateInfo.ExecutiveNationalityId)
+            @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveNationalityId, (SelectList)ViewBag.NationalityListByCorporative, BillView.Select)
+            @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveNationalityId)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(ci => ci.CorporateInfo.ExecutiveProfessionId)
+            @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveProfessionId, (SelectList)ViewBag.ProfessionListByCorporative, BillView.Select)
+            @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveProfessionId)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(ci => ci.CorporateInfo.ExecutiveSexId)
+            @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveSexId, (SelectList)ViewBag.SexexListByCorporative, BillView.Select)
+            @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveSexId)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(ci => ci.CorporateInfo.TaxNo)
+            @Html.EditorFor(ci => ci.CorporateInfo.TaxNo)
+            @Html.ValidationMessageFor(ci => ci.CorporateInfo.TaxNo)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(ci => ci.CorporateInfo.TaxOffice)
+            @Html.EditorFor(ci => ci.CorporateInfo.TaxOffice)
+            @Html.ValidationMessageFor(ci => ci.CorporateInfo.TaxOffice)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(ci => ci.CorporateInfo.Title)
+            @Html.EditorFor(ci => ci.CorporateInfo.Title)
+            @Html.ValidationMessageFor(ci => ci.CorporateInfo.Title)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(ci => ci.CorporateInfo.TradeRegistrationNo)
+            @Html.EditorFor(ci => ci.CorporateInfo.TradeRegistrationNo)
+            @Html.ValidationMessageFor(ci => ci.CorporateInfo.TradeRegistrationNo)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(ci => ci.CorporateInfo.SameSetupAddressByCorporativeResidencyAddress)
+            @Html.EditorFor(ci => ci.CorporateInfo.SameSetupAddressByCorporativeResidencyAddress)
+        </div>
+
+        <h4>@BillView.ExecutiveResidencyAddress</h4>
+        <div id="ExecutiveResidencyContainer">
+            <div class="form-group">
+                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.ProvinceId, (SelectList)ViewBag.ProvincesByCorporativeResidency, HomeView.SelectProvince, new { @id = "province" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.ProvinceId)
+            </div>
+
+            <div class="form-group">
+                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.DistrictId, (SelectList)ViewBag.DistrictsByCorporativeResidency, HomeView.SelectDistrict, new { @id = "district", @disabled = "disabled" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.DistrictId)
+            </div>
+
+            <div class="form-group">
+                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.RuralRegionsId, (SelectList)ViewBag.RuralRegionsByCorporativeResidency, HomeView.SelectRegions, new { @id = "ruralregions", @disabled = "disabled" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.RuralRegionsId)
+            </div>
+
+            <div class="form-group">
+                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.NeighborhoodId, (SelectList)ViewBag.NeigboorHoodsByCorporativeResidency, HomeView.SelectNeigborhood, new { @id = "neighborhood", @disabled = "disabled" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.NeighborhoodId)
+            </div>
+
+            <div class="form-group">
+                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.StreetId, (SelectList)ViewBag.StreetsByCorporativeResidency, HomeView.SelectStreet, new { @id = "street", @disabled = "disabled" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.StreetId)
+            </div>
+
+            <div class="form-group">
+                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.BuildingId, (SelectList)ViewBag.BuildingsByCorporativeResidency, HomeView.SelectBuilding, new { @id = "building", @disabled = "disabled" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.BuildingId)
+            </div>
+
+            <div class="form-group">
+                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.ApartmentId, (SelectList)ViewBag.ApartmentsByCorporativeResidency, HomeView.SelectApartment, new { @id = "apartment", @disabled = "disabled" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.ApartmentId)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.PostalCode)
+                @Html.EditorFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.PostalCode, new { htmlAttributes = new { @type = "text" } })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.PostalCode)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.Floor)
+                @Html.EditorFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.Floor)
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.Floor)
+            </div>
+
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(ci => ci.CorporateInfo.SameSetupAddressByCorporativeCompanyAddress)
+            @Html.EditorFor(ci => ci.CorporateInfo.SameSetupAddressByCorporativeCompanyAddress)
+        </div>
+
+        <h4>@BillView.CompanyAddress</h4>
+        <div id="CompanyContainer">
+            <div class="form-group">
+                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.ProvinceId, (SelectList)ViewBag.ProvincesByCorporativeCompany, HomeView.SelectProvince, new { @id = "province-company" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.ProvinceId)
+            </div>
+
+            <div class="form-group">
+                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.DistrictId, (SelectList)ViewBag.DistrictsByCorporativeCompany, HomeView.SelectDistrict, new { @id = "district-company", @disabled = "disabled" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.DistrictId)
+            </div>
+
+            <div class="form-group">
+                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.RuralRegionsId, (SelectList)ViewBag.RuralRegionsByCorporativeCompany, HomeView.SelectRegions, new { @id = "ruralregions-company", @disabled = "disabled" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.RuralRegionsId)
+            </div>
+
+            <div class="form-group">
+                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.NeighborhoodId, (SelectList)ViewBag.NeigboorHoodsByCorporativeCompany, HomeView.SelectNeigborhood, new { @id = "neighborhood-company", @disabled = "disabled" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.NeighborhoodId)
+            </div>
+
+            <div class="form-group">
+                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.StreetId, (SelectList)ViewBag.StreetsByCorporativeCompany, HomeView.SelectStreet, new { @id = "street-company", @disabled = "disabled" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.StreetId)
+            </div>
+
+            <div class="form-group">
+                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.BuildingId, (SelectList)ViewBag.BuildingsByCorporativeCompany, HomeView.SelectBuilding, new { @id = "building-company", @disabled = "disabled" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.BuildingId)
+            </div>
+
+            <div class="form-group">
+                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.ApartmentId, (SelectList)ViewBag.ApartmentsByCorporativeCompany, HomeView.SelectApartment, new { @id = "apartment-company", @disabled = "disabled" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.ApartmentId)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(ci => ci.CorporateInfo.CompanyAddress.PostalCode)
+                @Html.EditorFor(ci => ci.CorporateInfo.CompanyAddress.PostalCode, new { htmlAttributes = new { @type = "text" } })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.PostalCode)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(ci => ci.CorporateInfo.CompanyAddress.Floor)
+                @Html.EditorFor(ci => ci.CorporateInfo.CompanyAddress.Floor)
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.Floor)
+            </div>
+        </div>
+
+    </div>
+
+    <div id="individualCustomerInfoContainer" style="display:none">
+        <h2>@BillView.IndividualCustomerInfo</h2>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Individual.BirthPlace)
+            @Html.EditorFor(m => m.Individual.BirthPlace)
+            @Html.ValidationMessageFor(m => m.Individual.BirthPlace)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Individual.FathersName)
+            @Html.EditorFor(m => m.Individual.FathersName)
+            @Html.ValidationMessageFor(m => m.Individual.FathersName)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Individual.MothersMaidenName)
+            @Html.EditorFor(m => m.Individual.MothersMaidenName)
+            @Html.ValidationMessageFor(m => m.Individual.MothersMaidenName)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Individual.MothersName)
+            @Html.EditorFor(m => m.Individual.MothersName)
+            @Html.ValidationMessageFor(m => m.Individual.MothersName)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Individual.NationalityId)
+            @Html.DropDownListFor(m => m.Individual.NationalityId, (SelectList)ViewBag.NationalityListByIndividual, BillView.Select)
+            @Html.ValidationMessageFor(m => m.Individual.NationalityId)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Individual.ProfessionId)
+            @Html.DropDownListFor(m => m.Individual.ProfessionId, (SelectList)ViewBag.ProfessionListByIndividual, BillView.Select)
+            @Html.ValidationMessageFor(m => m.Individual.ProfessionId)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Individual.SexId)
+            @Html.DropDownListFor(m => m.Individual.SexId, (SelectList)ViewBag.SexexListByIndividual, BillView.Select)
+            @Html.ValidationMessageFor(m => m.Individual.SexId)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Individual.SameSetupAddressByIndividual)
+            @Html.EditorFor(m => m.Individual.SameSetupAddressByIndividual)
+        </div>
+
+        <h4>@BillView.IndividualResidencyAddress</h4>
+        <div id="IndividualResidencyContainer">
+            <div>
+                @Html.DropDownListFor(ii => ii.Individual.ResidencyAddress.ProvinceId, (SelectList)ViewBag.ProvincesByIndividual, HomeView.SelectProvince, new { @id = "province-individual" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.ApartmentId)
+            </div>
+
+            <div>
+                @Html.DropDownListFor(ii => ii.Individual.ResidencyAddress.DistrictId, (SelectList)ViewBag.DistrictsByIndividual, HomeView.SelectDistrict, new { @id = "district-individual", @disabled = "disabled" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.DistrictId)
+            </div>
+
+            <div>
+                @Html.DropDownListFor(ii => ii.Individual.ResidencyAddress.RuralRegionsId, (SelectList)ViewBag.RuralRegionsByIndividual, HomeView.SelectRegions, new { @id = "ruralregions-individual", @disabled = "disabled" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.RuralRegionsId)
+            </div>
+
+            <div>
+                @Html.DropDownListFor(ii => ii.Individual.ResidencyAddress.NeighborhoodId, (SelectList)ViewBag.NeigboorHoodsByIndividual, HomeView.SelectNeigborhood, new { @id = "neighborhood-individual", @disabled = "disabled" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.NeighborhoodId)
+            </div>
+
+            <div>
+                @Html.DropDownListFor(ii => ii.Individual.ResidencyAddress.StreetId, (SelectList)ViewBag.StreetsByIndividual, HomeView.SelectStreet, new { @id = "street-individual", @disabled = "disabled" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.StreetId)
+            </div>
+
+            <div>
+                @Html.DropDownListFor(ii => ii.Individual.ResidencyAddress.BuildingId, (SelectList)ViewBag.BuildingsByIndividual, HomeView.SelectBuilding, new { @id = "building-individual", @disabled = "disabled" })
+                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.BuildingId)
+            </div>
+
+            <div>
+                @Html.DropDownListFor(ii => ii.Individual.ResidencyAddress.ApartmentId, (SelectList)ViewBag.ApartmentsByIndividual, HomeView.SelectApartment, new { @id = "apartment-individual", @disabled = "disabled" })
+                @Html.ValidationMessageFor(ii => ii.Individual.ResidencyAddress.ApartmentId)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(ii => ii.Individual.ResidencyAddress.PostalCode)
+                @Html.EditorFor(ii => ii.Individual.ResidencyAddress.PostalCode, new { htmlAttributes = new { @type = "text" } })
+                @Html.ValidationMessageFor(ii => ii.Individual.ResidencyAddress.PostalCode)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(ii => ii.Individual.ResidencyAddress.Floor)
+                @Html.EditorFor(ii => ii.Individual.ResidencyAddress.Floor)
+                @Html.ValidationMessageFor(ii => ii.Individual.ResidencyAddress.Floor)
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <div id="SubscriptionInfoContainer">
+        <h2>@BillView.SubscriptionInfo</h2>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.SubscriptionInfo.PartnerTariffID)
+            @Html.DropDownListFor(m => m.SubscriptionInfo.PartnerTariffID, (SelectList)ViewBag.PartnerTariffList, BillView.Select, new { @id = "partnerTariffId" })
+            @Html.ValidationMessageFor(m => m.SubscriptionInfo.PartnerTariffID)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.SubscriptionInfo.BillingPeriodId)
+            @Html.DropDownListFor(m => m.SubscriptionInfo.BillingPeriodId, (SelectList)ViewBag.BillingPeriod, BillView.Select, new { @disabled = "disabled", @id = "billingPeriodId" })
+            @Html.ValidationMessageFor(m => m.SubscriptionInfo.BillingPeriodId)
+        </div>
+
+        <h4>@BillView.SetupAddress</h4>
+        <div id="SetupAddressContainer">
+            <div class="form-group">
+                @Html.DropDownListFor(si => si.SubscriptionInfo.SetupAddress.ProvinceId, (SelectList)ViewBag.ProvincesBySetup, HomeView.SelectProvince, new { @id = "province-setup" })
+                @Html.ValidationMessageFor(si => si.SubscriptionInfo.SetupAddress.ProvinceId)
+            </div>
+
+            <div class="form-group">
+                @Html.DropDownListFor(si => si.SubscriptionInfo.SetupAddress.DistrictId, (SelectList)ViewBag.DistrictsBySetup, HomeView.SelectDistrict, new { @id = "district-setup", @disabled = "disabled" })
+                @Html.ValidationMessageFor(si => si.SubscriptionInfo.SetupAddress.DistrictId)
+            </div>
+
+            <div class="form-group">
+                @Html.DropDownListFor(si => si.SubscriptionInfo.SetupAddress.RuralRegionsId, (SelectList)ViewBag.RuralRegionsBySetup, HomeView.SelectRegions, new { @id = "ruralregions-setup", @disabled = "disabled" })
+                @Html.ValidationMessageFor(si => si.SubscriptionInfo.SetupAddress.RuralRegionsId)
+            </div>
+
+            <div class="form-group">
+                @Html.DropDownListFor(si => si.SubscriptionInfo.SetupAddress.NeighborhoodId, (SelectList)ViewBag.NeigboorHoodsBySetup, HomeView.SelectNeigborhood, new { @id = "neighborhood-setup", @disabled = "disabled" })
+                @Html.ValidationMessageFor(si => si.SubscriptionInfo.SetupAddress.NeighborhoodId)
+            </div>
+
+            <div class="form-group">
+                @Html.DropDownListFor(si => si.SubscriptionInfo.SetupAddress.StreetId, (SelectList)ViewBag.StreetsBySetup, HomeView.SelectStreet, new { @id = "street-setup", @disabled = "disabled" })
+                @Html.ValidationMessageFor(si => si.SubscriptionInfo.SetupAddress.StreetId)
+            </div>
+
+            <div class="form-group">
+                @Html.DropDownListFor(si => si.SubscriptionInfo.SetupAddress.BuildingId, (SelectList)ViewBag.BuildingsBySetup, HomeView.SelectBuilding, new { @id = "building-setup", @disabled = "disabled" })
+                @Html.ValidationMessageFor(si => si.SubscriptionInfo.SetupAddress.BuildingId)
+            </div>
+
+            <div class="form-group">
+                @Html.DropDownListFor(si => si.SubscriptionInfo.SetupAddress.ApartmentId, (SelectList)ViewBag.ApartmentsBySetup, HomeView.SelectApartment, new { @id = "apartment-setup", @disabled = "disabled" })
+                @Html.ValidationMessageFor(si => si.SubscriptionInfo.SetupAddress.ApartmentId)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(si => si.SubscriptionInfo.SetupAddress.PostalCode)
+                @Html.EditorFor(si => si.SubscriptionInfo.SetupAddress.PostalCode, new { htmlAttributes = new { @type = "text" } })
+                @Html.ValidationMessageFor(si => si.SubscriptionInfo.SetupAddress.PostalCode)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(si => si.SubscriptionInfo.SetupAddress.Floor)
+                @Html.EditorFor(si => si.SubscriptionInfo.SetupAddress.Floor)
+                @Html.ValidationMessageFor(si => si.SubscriptionInfo.SetupAddress.Floor)
+            </div>
+
+        </div>
+
+    </div>
+
+    <input type="submit" value="@View.Add" />
+}*@

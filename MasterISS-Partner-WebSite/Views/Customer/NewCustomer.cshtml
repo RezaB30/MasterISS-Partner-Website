@@ -9,588 +9,6 @@
 <div style="background-color:red">
     @ViewBag.NewCustomerError
 </div>
-@using (Html.BeginForm("NewCustomer", "Customer", FormMethod.Post))
-{
-
-    @Html.AntiForgeryToken()
-
-    <span style="background-color:red">@Html.Raw(TempData["SMSConfirmationError"])</span>
-
-
-    <div id="extraInfo">
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.ExtraInfo.SubscriptionRegistrationTypeId)
-            @Html.DropDownListFor(m => m.ExtraInfo.SubscriptionRegistrationTypeId, (SelectList)ViewBag.SubscriptionRegistrationType, BillView.Select)
-            @Html.ValidationMessageFor(m => m.ExtraInfo.SubscriptionRegistrationTypeId)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.ExtraInfo.PSTN)
-            @Html.EditorFor(m => m.ExtraInfo.PSTN)
-            @Html.ValidationMessageFor(m => m.ExtraInfo.PSTN)
-        </div>
-
-        <div class="form-group" id="xdslNoContainer" style="display:none">
-            @Html.LabelFor(m => m.ExtraInfo.XDSLNo)
-            @Html.EditorFor(m => m.ExtraInfo.XDSLNo)
-            @Html.ValidationMessageFor(m => m.ExtraInfo.XDSLNo)
-        </div>
-
-
-    </div>
-
-    <div id="IDCardInfoContainer">
-        <h2>@View.IDCardInfo</h2>
-        <div class="form-group">
-            @Html.LabelFor(m => m.IDCard.BirthDate)
-            @Html.EditorFor(m => m.IDCard.BirthDate, new { htmlAttributes = new { placeholder = DateTime.Now.ToString("dd.MM.yyyy") } })
-            @Html.ValidationMessageFor(m => m.IDCard.BirthDate)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.IDCard.CardTypeId)
-            @Html.DropDownListFor(m => m.IDCard.CardTypeId, (SelectList)ViewBag.TckTypeList, BillView.Select)
-            @Html.ValidationMessageFor(m => m.IDCard.CardTypeId)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.IDCard.FirstName)
-            @Html.EditorFor(m => m.IDCard.FirstName)
-            @Html.ValidationMessageFor(m => m.IDCard.FirstName)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.IDCard.LastName)
-            @Html.EditorFor(m => m.IDCard.LastName)
-            @Html.ValidationMessageFor(m => m.IDCard.LastName)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.IDCard.PassportNo)
-            @Html.EditorFor(m => m.IDCard.PassportNo)
-            @Html.ValidationMessageFor(m => m.IDCard.PassportNo)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.IDCard.SerialNo)
-            @Html.EditorFor(m => m.IDCard.SerialNo)
-            @Html.ValidationMessageFor(m => m.IDCard.SerialNo)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.IDCard.TCKNo)
-            @Html.EditorFor(m => m.IDCard.TCKNo)
-            @Html.ValidationMessageFor(m => m.IDCard.TCKNo)
-        </div>
-
-        <div id="TCBirthCertificateContainer" style="display:none">
-
-            <div class="form-group">
-                @Html.LabelFor(m => m.IDCard.TCBirthCertificate.DateOfIssue)
-                @Html.EditorFor(m => m.IDCard.TCBirthCertificate.DateOfIssue, new { htmlAttributes = new { placeholder = DateTime.Now.ToString("dd.MM.yyyy") } })
-                @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.DateOfIssue)
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(m => m.IDCard.TCBirthCertificate.District)
-                @Html.EditorFor(m => m.IDCard.TCBirthCertificate.District)
-                @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.District)
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(m => m.IDCard.TCBirthCertificate.Neighbourhood)
-                @Html.EditorFor(m => m.IDCard.TCBirthCertificate.Neighbourhood)
-                @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.Neighbourhood)
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(m => m.IDCard.TCBirthCertificate.PageNo)
-                @Html.EditorFor(m => m.IDCard.TCBirthCertificate.PageNo)
-                @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.PageNo)
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(m => m.IDCard.TCBirthCertificate.PlaceOfIssue)
-                @Html.EditorFor(m => m.IDCard.TCBirthCertificate.PlaceOfIssue)
-                @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.PlaceOfIssue)
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(m => m.IDCard.TCBirthCertificate.Province)
-                @Html.EditorFor(m => m.IDCard.TCBirthCertificate.Province)
-                @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.Province)
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(m => m.IDCard.TCBirthCertificate.RowNo)
-                @Html.EditorFor(m => m.IDCard.TCBirthCertificate.RowNo)
-                @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.RowNo)
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(m => m.IDCard.TCBirthCertificate.VolumeNo)
-                @Html.EditorFor(m => m.IDCard.TCBirthCertificate.VolumeNo)
-                @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.VolumeNo)
-            </div>
-
-        </div>
-
-        <div id="TCIDCardWithChipContainer" style="display:none">
-            @Html.LabelFor(m => m.IDCard.TCIDCardWithChip.ExpiryDate)
-            @Html.EditorFor(m => m.IDCard.TCIDCardWithChip.ExpiryDate, new { htmlAttributes = new { placeholder = DateTime.Now.ToString("dd.MM.yyyy") } })
-            @Html.ValidationMessageFor(m => m.IDCard.TCIDCardWithChip.ExpiryDate)
-        </div>
-
-    </div>
-
-    <div id="CustomerGeneralInfoContainer">
-        <h2>@View.CustomerGeneralInfo</h2>
-
-        <div class="form-group">
-            @Html.LabelFor(gi => gi.GeneralInfo.SameSetupAddressByBilling)
-            @Html.EditorFor(gi => gi.GeneralInfo.SameSetupAddressByBilling)
-        </div>
-
-        <h4>@View.BillingAddress</h4>
-        <div id="BillingAddressContainer">
-            <div class="form-group">
-                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.ProvinceId, (SelectList)ViewBag.ProvincesByGeneralInfo, HomeView.SelectProvince, new { @id = "province-billing" })
-                @Html.ValidationMessageFor(gi => gi.GeneralInfo.BillingAddress.ProvinceId)
-            </div>
-
-            <div class="form-group">
-                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.DistrictId, (SelectList)ViewBag.DistrictsByGeneralInfo, HomeView.SelectDistrict, new { @id = "district-billing", @disabled = "disabled" })
-                @Html.ValidationMessageFor(gi => gi.GeneralInfo.BillingAddress.DistrictId)
-            </div>
-
-            <div class="form-group">
-                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.RuralRegionsId, (SelectList)ViewBag.RuralRegionsByGeneralInfo, HomeView.SelectRegions, new { @id = "ruralregions-billing", @disabled = "disabled" })
-                @Html.ValidationMessageFor(gi => gi.GeneralInfo.BillingAddress.RuralRegionsId)
-            </div>
-
-            <div class="form-group">
-                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.NeighborhoodId, (SelectList)ViewBag.NeigboorHoodsByGeneralInfo, HomeView.SelectNeigborhood, new { @id = "neighborhood-billing", @disabled = "disabled" })
-                @Html.ValidationMessageFor(gi => gi.GeneralInfo.BillingAddress.NeighborhoodId)
-            </div>
-
-            <div class="form-group">
-                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.StreetId, (SelectList)ViewBag.StreetsByGeneralInfo, HomeView.SelectStreet, new { @id = "street-billing", @disabled = "disabled" })
-                @Html.ValidationMessageFor(gi => gi.GeneralInfo.BillingAddress.StreetId)
-            </div>
-
-            <div class="form-group">
-                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.BuildingId, (SelectList)ViewBag.BuildingsByGeneralInfo, HomeView.SelectBuilding, new { @id = "building-billing", @disabled = "disabled" })
-                @Html.ValidationMessageFor(gi => gi.GeneralInfo.BillingAddress.BuildingId)
-            </div>
-
-            <div class="form-group">
-                @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.ApartmentId, (SelectList)ViewBag.ApartmentsByGeneralInfo, HomeView.SelectApartment, new { @id = "apartment-billing", @disabled = "disabled" })
-                @Html.ValidationMessageFor(gi => gi.GeneralInfo.BillingAddress.ApartmentId)
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(gi => gi.GeneralInfo.BillingAddress.PostalCode)
-                @Html.EditorFor(gi => gi.GeneralInfo.BillingAddress.PostalCode, new { htmlAttributes = new { @type = "text" } })
-                @Html.ValidationMessageFor(gi => gi.GeneralInfo.BillingAddress.PostalCode)
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(gi => gi.GeneralInfo.BillingAddress.Floor)
-                @Html.EditorFor(gi => gi.GeneralInfo.BillingAddress.Floor)
-                @Html.ValidationMessageFor(gi => gi.GeneralInfo.BillingAddress.Floor)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.GeneralInfo.ContactPhoneNo)
-            @Html.EditorFor(m => m.GeneralInfo.ContactPhoneNo)
-            @Html.ValidationMessageFor(m => m.GeneralInfo.ContactPhoneNo)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.GeneralInfo.Email)
-            @Html.EditorFor(m => m.GeneralInfo.Email)
-            @Html.ValidationMessageFor(m => m.GeneralInfo.Email)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.GeneralInfo.CustomerTypeId)
-            @Html.DropDownListFor(m => m.GeneralInfo.CustomerTypeId, (SelectList)ViewBag.CustomerTypeList, BillView.Select)
-            @Html.ValidationMessageFor(m => m.GeneralInfo.CustomerTypeId)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.GeneralInfo.Culture)
-            @Html.DropDownListFor(m => m.GeneralInfo.Culture, (SelectList)ViewBag.CultureList, BillView.Select)
-            @Html.ValidationMessageFor(m => m.GeneralInfo.Culture)
-        </div>
-        <input type="button" id="createNumberInput" value="@BillView.OtherPhoneNumber" />
-        <div id="telephoneNumberInputContainer"></div>
-    </div>
-
-    <div id="corporateCustomerInfoContainer" style="display:none">
-        <h2>@BillView.CorporateCustomerInfo</h2>
-        <div class="form-group">
-            @Html.LabelFor(ci => ci.CorporateInfo.CentralSystemNo)
-            @Html.EditorFor(ci => ci.CorporateInfo.CentralSystemNo)
-            @Html.ValidationMessageFor(ci => ci.CorporateInfo.CentralSystemNo)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(ci => ci.CorporateInfo.ExecutiveBirthPlace)
-            @Html.EditorFor(ci => ci.CorporateInfo.ExecutiveBirthPlace)
-            @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveBirthPlace)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(ci => ci.CorporateInfo.ExecutiveFathersName)
-            @Html.EditorFor(ci => ci.CorporateInfo.ExecutiveFathersName)
-            @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveFathersName)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(ci => ci.CorporateInfo.ExecutiveMothersMaidenName)
-            @Html.EditorFor(ci => ci.CorporateInfo.ExecutiveMothersMaidenName)
-            @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveMothersMaidenName)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(ci => ci.CorporateInfo.ExecutiveMothersName)
-            @Html.EditorFor(ci => ci.CorporateInfo.ExecutiveMothersName)
-            @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveMothersName)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(ci => ci.CorporateInfo.ExecutiveNationalityId)
-            @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveNationalityId, (SelectList)ViewBag.NationalityListByCorporative, BillView.Select)
-            @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveNationalityId)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(ci => ci.CorporateInfo.ExecutiveProfessionId)
-            @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveProfessionId, (SelectList)ViewBag.ProfessionListByCorporative, BillView.Select)
-            @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveProfessionId)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(ci => ci.CorporateInfo.ExecutiveSexId)
-            @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveSexId, (SelectList)ViewBag.SexexListByCorporative, BillView.Select)
-            @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveSexId)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(ci => ci.CorporateInfo.TaxNo)
-            @Html.EditorFor(ci => ci.CorporateInfo.TaxNo)
-            @Html.ValidationMessageFor(ci => ci.CorporateInfo.TaxNo)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(ci => ci.CorporateInfo.TaxOffice)
-            @Html.EditorFor(ci => ci.CorporateInfo.TaxOffice)
-            @Html.ValidationMessageFor(ci => ci.CorporateInfo.TaxOffice)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(ci => ci.CorporateInfo.Title)
-            @Html.EditorFor(ci => ci.CorporateInfo.Title)
-            @Html.ValidationMessageFor(ci => ci.CorporateInfo.Title)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(ci => ci.CorporateInfo.TradeRegistrationNo)
-            @Html.EditorFor(ci => ci.CorporateInfo.TradeRegistrationNo)
-            @Html.ValidationMessageFor(ci => ci.CorporateInfo.TradeRegistrationNo)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(ci => ci.CorporateInfo.SameSetupAddressByCorporativeResidencyAddress)
-            @Html.EditorFor(ci => ci.CorporateInfo.SameSetupAddressByCorporativeResidencyAddress)
-        </div>
-
-        <h4>@BillView.ExecutiveResidencyAddress</h4>
-        <div id="ExecutiveResidencyContainer">
-            <div class="form-group">
-                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.ProvinceId, (SelectList)ViewBag.ProvincesByCorporativeResidency, HomeView.SelectProvince, new { @id = "province" })
-                @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.ProvinceId)
-            </div>
-
-            <div class="form-group">
-                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.DistrictId, (SelectList)ViewBag.DistrictsByCorporativeResidency, HomeView.SelectDistrict, new { @id = "district", @disabled = "disabled" })
-                @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.DistrictId)
-            </div>
-
-            <div class="form-group">
-                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.RuralRegionsId, (SelectList)ViewBag.RuralRegionsByCorporativeResidency, HomeView.SelectRegions, new { @id = "ruralregions", @disabled = "disabled" })
-                @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.RuralRegionsId)
-            </div>
-
-            <div class="form-group">
-                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.NeighborhoodId, (SelectList)ViewBag.NeigboorHoodsByCorporativeResidency, HomeView.SelectNeigborhood, new { @id = "neighborhood", @disabled = "disabled" })
-                @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.NeighborhoodId)
-            </div>
-
-            <div class="form-group">
-                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.StreetId, (SelectList)ViewBag.StreetsByCorporativeResidency, HomeView.SelectStreet, new { @id = "street", @disabled = "disabled" })
-                @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.StreetId)
-            </div>
-
-            <div class="form-group">
-                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.BuildingId, (SelectList)ViewBag.BuildingsByCorporativeResidency, HomeView.SelectBuilding, new { @id = "building", @disabled = "disabled" })
-                @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.BuildingId)
-            </div>
-
-            <div class="form-group">
-                @Html.DropDownListFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.ApartmentId, (SelectList)ViewBag.ApartmentsByCorporativeResidency, HomeView.SelectApartment, new { @id = "apartment", @disabled = "disabled" })
-                @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.ApartmentId)
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.PostalCode)
-                @Html.EditorFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.PostalCode, new { htmlAttributes = new { @type = "text" } })
-                @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.PostalCode)
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.Floor)
-                @Html.EditorFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.Floor)
-                @Html.ValidationMessageFor(ci => ci.CorporateInfo.ExecutiveResidencyAddress.Floor)
-            </div>
-
-        </div>
-
-
-        <div class="form-group">
-            @Html.LabelFor(ci => ci.CorporateInfo.SameSetupAddressByCorporativeCompanyAddress)
-            @Html.EditorFor(ci => ci.CorporateInfo.SameSetupAddressByCorporativeCompanyAddress)
-        </div>
-
-        <h4>@BillView.CompanyAddress</h4>
-        <div id="CompanyContainer">
-            <div class="form-group">
-                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.ProvinceId, (SelectList)ViewBag.ProvincesByCorporativeCompany, HomeView.SelectProvince, new { @id = "province-company" })
-                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.ProvinceId)
-            </div>
-
-            <div class="form-group">
-                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.DistrictId, (SelectList)ViewBag.DistrictsByCorporativeCompany, HomeView.SelectDistrict, new { @id = "district-company", @disabled = "disabled" })
-                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.DistrictId)
-            </div>
-
-            <div class="form-group">
-                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.RuralRegionsId, (SelectList)ViewBag.RuralRegionsByCorporativeCompany, HomeView.SelectRegions, new { @id = "ruralregions-company", @disabled = "disabled" })
-                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.RuralRegionsId)
-            </div>
-
-            <div class="form-group">
-                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.NeighborhoodId, (SelectList)ViewBag.NeigboorHoodsByCorporativeCompany, HomeView.SelectNeigborhood, new { @id = "neighborhood-company", @disabled = "disabled" })
-                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.NeighborhoodId)
-            </div>
-
-            <div class="form-group">
-                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.StreetId, (SelectList)ViewBag.StreetsByCorporativeCompany, HomeView.SelectStreet, new { @id = "street-company", @disabled = "disabled" })
-                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.StreetId)
-            </div>
-
-            <div class="form-group">
-                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.BuildingId, (SelectList)ViewBag.BuildingsByCorporativeCompany, HomeView.SelectBuilding, new { @id = "building-company", @disabled = "disabled" })
-                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.BuildingId)
-            </div>
-
-            <div class="form-group">
-                @Html.DropDownListFor(ci => ci.CorporateInfo.CompanyAddress.ApartmentId, (SelectList)ViewBag.ApartmentsByCorporativeCompany, HomeView.SelectApartment, new { @id = "apartment-company", @disabled = "disabled" })
-                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.ApartmentId)
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(ci => ci.CorporateInfo.CompanyAddress.PostalCode)
-                @Html.EditorFor(ci => ci.CorporateInfo.CompanyAddress.PostalCode, new { htmlAttributes = new { @type = "text" } })
-                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.PostalCode)
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(ci => ci.CorporateInfo.CompanyAddress.Floor)
-                @Html.EditorFor(ci => ci.CorporateInfo.CompanyAddress.Floor)
-                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.Floor)
-            </div>
-        </div>
-
-    </div>
-
-    <div id="individualCustomerInfoContainer" style="display:none">
-        <h2>@BillView.IndividualCustomerInfo</h2>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.Individual.BirthPlace)
-            @Html.EditorFor(m => m.Individual.BirthPlace)
-            @Html.ValidationMessageFor(m => m.Individual.BirthPlace)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.Individual.FathersName)
-            @Html.EditorFor(m => m.Individual.FathersName)
-            @Html.ValidationMessageFor(m => m.Individual.FathersName)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.Individual.MothersMaidenName)
-            @Html.EditorFor(m => m.Individual.MothersMaidenName)
-            @Html.ValidationMessageFor(m => m.Individual.MothersMaidenName)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.Individual.MothersName)
-            @Html.EditorFor(m => m.Individual.MothersName)
-            @Html.ValidationMessageFor(m => m.Individual.MothersName)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.Individual.NationalityId)
-            @Html.DropDownListFor(m => m.Individual.NationalityId, (SelectList)ViewBag.NationalityListByIndividual, BillView.Select)
-            @Html.ValidationMessageFor(m => m.Individual.NationalityId)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.Individual.ProfessionId)
-            @Html.DropDownListFor(m => m.Individual.ProfessionId, (SelectList)ViewBag.ProfessionListByIndividual, BillView.Select)
-            @Html.ValidationMessageFor(m => m.Individual.ProfessionId)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.Individual.SexId)
-            @Html.DropDownListFor(m => m.Individual.SexId, (SelectList)ViewBag.SexexListByIndividual, BillView.Select)
-            @Html.ValidationMessageFor(m => m.Individual.SexId)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.Individual.SameSetupAddressByIndividual)
-            @Html.EditorFor(m => m.Individual.SameSetupAddressByIndividual)
-        </div>
-
-        <h4>@BillView.IndividualResidencyAddress</h4>
-        <div id="IndividualResidencyContainer">
-            <div>
-                @Html.DropDownListFor(ii => ii.Individual.ResidencyAddress.ProvinceId, (SelectList)ViewBag.ProvincesByIndividual, HomeView.SelectProvince, new { @id = "province-individual" })
-                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.ApartmentId)
-            </div>
-
-            <div>
-                @Html.DropDownListFor(ii => ii.Individual.ResidencyAddress.DistrictId, (SelectList)ViewBag.DistrictsByIndividual, HomeView.SelectDistrict, new { @id = "district-individual", @disabled = "disabled" })
-                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.DistrictId)
-            </div>
-
-            <div>
-                @Html.DropDownListFor(ii => ii.Individual.ResidencyAddress.RuralRegionsId, (SelectList)ViewBag.RuralRegionsByIndividual, HomeView.SelectRegions, new { @id = "ruralregions-individual", @disabled = "disabled" })
-                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.RuralRegionsId)
-            </div>
-
-            <div>
-                @Html.DropDownListFor(ii => ii.Individual.ResidencyAddress.NeighborhoodId, (SelectList)ViewBag.NeigboorHoodsByIndividual, HomeView.SelectNeigborhood, new { @id = "neighborhood-individual", @disabled = "disabled" })
-                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.NeighborhoodId)
-            </div>
-
-            <div>
-                @Html.DropDownListFor(ii => ii.Individual.ResidencyAddress.StreetId, (SelectList)ViewBag.StreetsByIndividual, HomeView.SelectStreet, new { @id = "street-individual", @disabled = "disabled" })
-                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.StreetId)
-            </div>
-
-            <div>
-                @Html.DropDownListFor(ii => ii.Individual.ResidencyAddress.BuildingId, (SelectList)ViewBag.BuildingsByIndividual, HomeView.SelectBuilding, new { @id = "building-individual", @disabled = "disabled" })
-                @Html.ValidationMessageFor(ci => ci.CorporateInfo.CompanyAddress.BuildingId)
-            </div>
-
-            <div>
-                @Html.DropDownListFor(ii => ii.Individual.ResidencyAddress.ApartmentId, (SelectList)ViewBag.ApartmentsByIndividual, HomeView.SelectApartment, new { @id = "apartment-individual", @disabled = "disabled" })
-                @Html.ValidationMessageFor(ii => ii.Individual.ResidencyAddress.ApartmentId)
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(ii => ii.Individual.ResidencyAddress.PostalCode)
-                @Html.EditorFor(ii => ii.Individual.ResidencyAddress.PostalCode, new { htmlAttributes = new { @type = "text" } })
-                @Html.ValidationMessageFor(ii => ii.Individual.ResidencyAddress.PostalCode)
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(ii => ii.Individual.ResidencyAddress.Floor)
-                @Html.EditorFor(ii => ii.Individual.ResidencyAddress.Floor)
-                @Html.ValidationMessageFor(ii => ii.Individual.ResidencyAddress.Floor)
-            </div>
-
-        </div>
-
-
-    </div>
-
-    <div id="SubscriptionInfoContainer">
-        <h2>@BillView.SubscriptionInfo</h2>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.SubscriptionInfo.PartnerTariffID)
-            @Html.DropDownListFor(m => m.SubscriptionInfo.PartnerTariffID, (SelectList)ViewBag.PartnerTariffList, BillView.Select, new { @id = "partnerTariffId" })
-            @Html.ValidationMessageFor(m => m.SubscriptionInfo.PartnerTariffID)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.SubscriptionInfo.BillingPeriodId)
-            @Html.DropDownListFor(m => m.SubscriptionInfo.BillingPeriodId, (SelectList)ViewBag.BillingPeriod, BillView.Select, new { @disabled = "disabled", @id = "billingPeriodId" })
-            @Html.ValidationMessageFor(m => m.SubscriptionInfo.BillingPeriodId)
-        </div>
-
-        <h4>@BillView.SetupAddress</h4>
-        <div id="SetupAddressContainer">
-            <div class="form-group">
-                @Html.DropDownListFor(si => si.SubscriptionInfo.SetupAddress.ProvinceId, (SelectList)ViewBag.ProvincesBySetup, HomeView.SelectProvince, new { @id = "province-setup" })
-                @Html.ValidationMessageFor(si => si.SubscriptionInfo.SetupAddress.ProvinceId)
-            </div>
-
-            <div class="form-group">
-                @Html.DropDownListFor(si => si.SubscriptionInfo.SetupAddress.DistrictId, (SelectList)ViewBag.DistrictsBySetup, HomeView.SelectDistrict, new { @id = "district-setup", @disabled = "disabled" })
-                @Html.ValidationMessageFor(si => si.SubscriptionInfo.SetupAddress.DistrictId)
-            </div>
-
-            <div class="form-group">
-                @Html.DropDownListFor(si => si.SubscriptionInfo.SetupAddress.RuralRegionsId, (SelectList)ViewBag.RuralRegionsBySetup, HomeView.SelectRegions, new { @id = "ruralregions-setup", @disabled = "disabled" })
-                @Html.ValidationMessageFor(si => si.SubscriptionInfo.SetupAddress.RuralRegionsId)
-            </div>
-
-            <div class="form-group">
-                @Html.DropDownListFor(si => si.SubscriptionInfo.SetupAddress.NeighborhoodId, (SelectList)ViewBag.NeigboorHoodsBySetup, HomeView.SelectNeigborhood, new { @id = "neighborhood-setup", @disabled = "disabled" })
-                @Html.ValidationMessageFor(si => si.SubscriptionInfo.SetupAddress.NeighborhoodId)
-            </div>
-
-            <div class="form-group">
-                @Html.DropDownListFor(si => si.SubscriptionInfo.SetupAddress.StreetId, (SelectList)ViewBag.StreetsBySetup, HomeView.SelectStreet, new { @id = "street-setup", @disabled = "disabled" })
-                @Html.ValidationMessageFor(si => si.SubscriptionInfo.SetupAddress.StreetId)
-            </div>
-
-            <div class="form-group">
-                @Html.DropDownListFor(si => si.SubscriptionInfo.SetupAddress.BuildingId, (SelectList)ViewBag.BuildingsBySetup, HomeView.SelectBuilding, new { @id = "building-setup", @disabled = "disabled" })
-                @Html.ValidationMessageFor(si => si.SubscriptionInfo.SetupAddress.BuildingId)
-            </div>
-
-            <div class="form-group">
-                @Html.DropDownListFor(si => si.SubscriptionInfo.SetupAddress.ApartmentId, (SelectList)ViewBag.ApartmentsBySetup, HomeView.SelectApartment, new { @id = "apartment-setup", @disabled = "disabled" })
-                @Html.ValidationMessageFor(si => si.SubscriptionInfo.SetupAddress.ApartmentId)
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(si => si.SubscriptionInfo.SetupAddress.PostalCode)
-                @Html.EditorFor(si => si.SubscriptionInfo.SetupAddress.PostalCode, new { htmlAttributes = new { @type = "text" } })
-                @Html.ValidationMessageFor(si => si.SubscriptionInfo.SetupAddress.PostalCode)
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(si => si.SubscriptionInfo.SetupAddress.Floor)
-                @Html.EditorFor(si => si.SubscriptionInfo.SetupAddress.Floor)
-                @Html.ValidationMessageFor(si => si.SubscriptionInfo.SetupAddress.Floor)
-            </div>
-
-        </div>
-
-    </div>
-
-    <input type="submit" value="@View.Add" />
-}
 
 <div class="d-flex flex-column-fluid my-10">
     <div class="container">
@@ -611,7 +29,11 @@
             <!--end::Title-->
             <!--begin::Form-->
             <div class="d-flex justify-content-center flex-row-fluid ">
-                <form action="/basvur?Length=11" class="pb-5 w-100 w-md-450px w-lg-500px fv-plugins-bootstrap fv-plugins-framework" data-ajax="true" data-ajax-complete="RegisterResult" data-ajax-method="POST" dataform="register" id="kt_form" method="post" novalidate="novalidate">
+                @using (Html.BeginForm("NewCustomer", "Customer", FormMethod.Post, new { @class = "pb-5 w-100 w-md-450px w-lg-500px fv-plugins-bootstrap fv-plugins-framework" }))
+                {
+
+                    @Html.AntiForgeryToken()
+
                     <!--begin: Wizard Step 1-->
                     <div class="pb-0" data-wizard-type="step-content" data-wizard-state="current">
                         <!--begin::Title-->
@@ -630,6 +52,20 @@
                             <div class="separator separator-dashed my-4"></div>
 
                             <div class="fv-plugins-message-container"></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-5 col-md-5">
+                                <div class="form-group fv-plugins-icon-container">
+                                    <input type="button" id="createNumberInput" class="btn btn-block font-weight-bolder btn-success btn-hover-warning mt-12" value="@BillView.OtherPhoneNumber" />
+                                    <div class="fv-plugins-message-container"></div>
+                                    <div class="fv-plugins-message-container"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-7 col-md-7">
+                                <div id="telephoneNumberInputContainer"></div>
+                            </div>
                         </div>
                         <!--end::Form Group-->
                         <!--end: Wizard Step 1-->
@@ -679,6 +115,7 @@
 
                             </div>
 
+
                         </div>
                         <!--end: Wizard Step 3-->
                         <!--begin: Wizard Step 4-->
@@ -695,60 +132,621 @@
 
                             <div class="form-group">
                                 <label class="font-size-lg font-weight-bolder m-2 text-dark">@Html.DisplayNameFor(m => m.ExtraInfo.SubscriptionRegistrationTypeId)</label>
-
-                                @Html.DropDownListFor(m => m.ExtraInfo.SubscriptionRegistrationTypeId, (SelectList)ViewBag.SubscriptionRegistrationType, BillView.Select, new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })//id="seeAnotherFieldGroup"
+                                @Html.DropDownListFor(m => m.ExtraInfo.SubscriptionRegistrationTypeId, (SelectList)ViewBag.SubscriptionRegistrationType, BillView.Select, new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })@*,@id= "seeAnotherFieldGroup"*@
                                 @Html.ValidationMessageFor(m => m.ExtraInfo.SubscriptionRegistrationTypeId)
                             </div>
 
-
-                            <div class="form-group" id="otherFieldGroupDiv">
-                                <div class="alert alert-custom alert-outline-primary fade show mb-5" role="alert">
-                                    <div class="alert-icon"><i class="animate__animated animate__flash flaticon-exclamation-2"></i></div>
-                                    <div class="alert-text">10 Haneli Hizmet Numarası mevcut operatörün faturasından veya online işlem merkezine giriş yaparak öğrenilebilir. </div>
-                                    <div class="alert-close">
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true"><i class="ki ki-close"></i></span>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-6">
-                                        @Html.LabelFor(m => m.ExtraInfo.XDSLNo, new { @class = "font-size-lg font-weight-bolder m-2 text-dark" })
-                                        @Html.EditorFor(m => m.ExtraInfo.XDSLNo, new { htmlAttributes = new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg w-100", @autocomplete = "off", @id = "kt_inputmask_15", im_insert = "true" } })
-                                        @Html.ValidationMessageFor(m => m.ExtraInfo.XDSLNo)
+                            <div id="xdslNoContainer" style="display:none">
+                                <div class="form-group" id="otherFieldGroupDiv">
+                                    <div class="alert alert-custom alert-outline-primary fade show mb-5" role="alert">
+                                        <div class="alert-icon"><i class="animate__animated animate__flash flaticon-exclamation-2"></i></div>
+                                        <div class="alert-text">10 Haneli Hizmet Numarası mevcut operatörün faturasından veya online işlem merkezine giriş yaparak öğrenilebilir. </div>
+                                        <div class="alert-close">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true"><i class="ki ki-close"></i></span>
+                                            </button>
+                                        </div>
                                     </div>
 
-                                    <div class="col-lg-6 col-md-6">
-                                        <label for="otherField2" class="font-size-lg font-weight-bolder m-2 text-dark">Mevcut Operatör Adı</label>
-                                        <input type="text" class="form-control h-auto p-3 border-0 rounded-lg font-size-lg w-100" id="otherField2">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6">
+                                            @Html.LabelFor(m => m.ExtraInfo.XDSLNo, new { @class = "font-size-lg font-weight-bolder m-2 text-dark" })
+                                            @Html.EditorFor(m => m.ExtraInfo.XDSLNo, new { htmlAttributes = new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg w-100", @autocomplete = "off", @id = "kt_inputmask_15", im_insert = "true" } })
+                                            @Html.ValidationMessageFor(m => m.ExtraInfo.XDSLNo)
+                                        </div>
+
+                                        <div class="col-lg-6 col-md-6">
+                                            <label for="otherField2" class="font-size-lg font-weight-bolder m-2 text-dark">Mevcut Operatör Adı</label>
+                                            <input type="text" class="form-control h-auto p-3 border-0 rounded-lg font-size-lg w-100" id="otherField2">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-
                             <!--end::Form Group-->
                             <!--begin::Form Group-->
 
                             <div class="form-group">
-                                <label class="font-size-lg font-weight-bolder m-2 text-dark">Ev Telefonunuz Var mı?</label>
-                                <select class="form-control h-auto p-3 border-0 rounded-lg font-size-lg" id="tseeAnotherFieldGroup">
-                                    <option value="">Seçim Yapınız</option>
-                                    <option value="no">Hayır</option>
-                                    <option value="yes">Evet</option>
-                                </select>
+                                @Html.LabelFor(m => m.ExtraInfo.HavePSTNId, new { @class = "font-size-lg font-weight-bolder m-2 text-dark" })
+                                @Html.DropDownListFor(m => m.ExtraInfo.HavePSTNId, (SelectList)ViewBag.HavePSTN, BillView.Select, new { @id = "pstnSelect", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
                             </div>
 
-                            <div class="form-group" id="totherFieldGroupDiv">
+                            <div class="form-group" id="pstnContainer" style="display:none">
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6">
                                         @Html.LabelFor(m => m.ExtraInfo.PSTN, new { @class = "font-size-lg font-weight-bolder m-2 text-dark" })
                                         @Html.EditorFor(m => m.ExtraInfo.PSTN, new { htmlAttributes = new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg w-100", @autocomplete = "off", @id = "kt_inputmask_14", im_insert = "true" } })
                                         @Html.ValidationMessageFor(m => m.ExtraInfo.PSTN)
                                     </div>
-
                                 </div>
                             </div>
 
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12">
+                                    @Html.LabelFor(m => m.GeneralInfo.CustomerTypeId, new { @class = "font-size-lg font-weight-bolder m-2 text-dark" })
+                                    @Html.DropDownListFor(m => m.GeneralInfo.CustomerTypeId, (SelectList)ViewBag.CustomerTypeList, BillView.Select, new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                    @Html.ValidationMessageFor(m => m.GeneralInfo.CustomerTypeId)
+                                </div>
+                            </div>
+
+                            <div class="separator separator-dashed my-3"></div>
+                            <div id="individualCustomerInfoContainer" style="display:none">
+                                <div class="lg-5">
+                                    <h3 class="font-weight-bolder text-dark-50 font-size-h3">@BillView.IndividualCustomerInfo</h3><hr class="my-4">
+                                </div>
+                                <div class="pb-0 pb-lg-0">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-group fv-plugins-icon-container">
+                                                @Html.LabelFor(m => m.Individual.MothersName, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                @Html.EditorFor(m => m.Individual.MothersName, new { htmlAttributes = new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg", @placeholder = Html.DisplayNameFor(m => m.Individual.MothersName), @autocomplete = "off" } })
+                                                @Html.ValidationMessageFor(m => m.Individual.MothersName)
+                                                <div class="fv-plugins-message-container"></div>
+                                                <div class="fv-plugins-message-container"></div>
+                                            </div>
+                                        </div>
+                                        <!--end::Form Group-->
+                                        <!--begin::Form Group-->
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-group fv-plugins-icon-container">
+                                                @Html.LabelFor(m => m.Individual.FathersName, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                @Html.EditorFor(m => m.Individual.FathersName, new { htmlAttributes = new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg", @placeholder = Html.DisplayNameFor(m => m.Individual.FathersName), @autocomplete = "off" } })
+                                                @Html.ValidationMessageFor(m => m.Individual.FathersName)
+                                                <div class="fv-plugins-message-container"></div>
+                                                <div class="fv-plugins-message-container"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-group fv-plugins-icon-container">
+                                                @Html.LabelFor(m => m.Individual.SexId, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                @Html.DropDownListFor(m => m.Individual.SexId, (SelectList)ViewBag.SexexListByIndividual, BillView.Select, new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                                @Html.ValidationMessageFor(m => m.Individual.SexId)
+                                                <div class="fv-plugins-message-container"></div>
+                                                <div class="fv-plugins-message-container"></div>
+                                            </div>
+                                        </div>
+                                        <!--end::Form Group-->
+                                        <!--begin::Form Group-->
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-group fv-plugins-icon-container">
+                                                @Html.LabelFor(m => m.Individual.BirthPlace, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                @Html.EditorFor(m => m.Individual.BirthPlace, new { htmlAttributes = new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg", @placeholder = Html.DisplayNameFor(m => m.Individual.BirthPlace), @autocomplete = "off" } })
+                                                @Html.ValidationMessageFor(m => m.Individual.BirthPlace)
+                                                <div class="fv-plugins-message-container"></div>
+                                                <div class="fv-plugins-message-container"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <!--end::Form Group-->
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="form-group fv-plugins-icon-container">
+                                            @Html.LabelFor(ci => ci.Individual.MothersMaidenName, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                            @Html.EditorFor(m => m.Individual.MothersMaidenName, new { htmlAttributes = new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg", @placeholder = Html.DisplayNameFor(m => m.Individual.MothersMaidenName), @autocomplete = "off" } })
+                                            @Html.ValidationMessageFor(ci => ci.Individual.MothersMaidenName)
+                                            <div class="fv-plugins-message-container"></div>
+                                            <div class="fv-plugins-message-container"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12">
+                                        @Html.LabelFor(m => m.Individual.NationalityId, new { @class = "font-size-lg font-weight-bolder m-2 text-dark" })
+                                        @Html.DropDownListFor(m => m.Individual.NationalityId, (SelectList)ViewBag.NationalityListByIndividual, BillView.Select, new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                        @Html.ValidationMessageFor(m => m.Individual.NationalityId)
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12">
+                                        @Html.LabelFor(m => m.Individual.ProfessionId, new { @class = "font-size-lg font-weight-bolder m-2 text-dark" })
+                                        @Html.DropDownListFor(m => m.Individual.ProfessionId, (SelectList)ViewBag.ProfessionListByIndividual, BillView.Select, new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                        @Html.ValidationMessageFor(m => m.Individual.ProfessionId)
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.Individual.SameSetupAddressByIndividual)
+                                        @Html.EditorFor(m => m.Individual.SameSetupAddressByIndividual)
+                                    </div>
+                                </div>
+
+                                <div class="separator separator-dashed my-3"></div>
+                                <div id="IndividualResidencyContainer">
+                                    <div class="lg-5">
+                                        <h3 class="font-weight-bolder text-dark-50 font-size-h3">@BillView.IndividualResidencyAddress</h3><hr class="my-4">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-group fv-plugins-icon-container">
+                                                @Html.LabelFor(gi => gi.Individual.ResidencyAddress.ProvinceId, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                @Html.DropDownListFor(gi => gi.Individual.ResidencyAddress.ProvinceId, (SelectList)ViewBag.ProvincesByIndividual, HomeView.SelectProvince, new { @id = "province-individual", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                                @Html.ValidationMessageFor(gi => gi.Individual.ResidencyAddress.ProvinceId)
+                                                <div class="fv-plugins-message-container"></div>
+                                                <div class="fv-plugins-message-container"></div>
+                                            </div>
+                                        </div>
+                                        <!--end::Form Group-->
+                                        <!--begin::Form Group-->
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-group fv-plugins-icon-container">
+                                                @Html.LabelFor(gi => gi.Individual.ResidencyAddress.DistrictId, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                @Html.DropDownListFor(gi => gi.Individual.ResidencyAddress.DistrictId, (SelectList)ViewBag.DistrictsByIndividual, HomeView.SelectDistrict, new { @disabled = "disabled", @id = "district-individual", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                                @Html.ValidationMessageFor(gi => gi.Individual.ResidencyAddress.DistrictId)
+                                                <div class="fv-plugins-message-container"></div>
+                                                <div class="fv-plugins-message-container"></div>
+                                            </div>
+                                            <!--end::Form Group-->
+                                        </div>
+                                    </div>
+
+                                    <!--begin::Form Group-->
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-group fv-plugins-icon-container">
+                                                @Html.LabelFor(gi => gi.Individual.ResidencyAddress.RuralRegionsId, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                @Html.DropDownListFor(gi => gi.Individual.ResidencyAddress.RuralRegionsId, (SelectList)ViewBag.RuralRegionsByIndividual, HomeView.SelectRegions, new { @disabled = "disabled", @id = "ruralregions-individual", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                                @Html.ValidationMessageFor(gi => gi.Individual.ResidencyAddress.RuralRegionsId)
+                                                <div class="fv-plugins-message-container"></div>
+                                                <div class="fv-plugins-message-container"></div>
+                                            </div>
+                                        </div>
+                                        <!--end::Form Group-->
+                                        <!--begin::Form Group-->
+
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-group fv-plugins-icon-container">
+                                                @Html.LabelFor(gi => gi.Individual.ResidencyAddress.NeighborhoodId, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                @Html.DropDownListFor(gi => gi.Individual.ResidencyAddress.NeighborhoodId, (SelectList)ViewBag.NeigboorHoodsByIndividual, HomeView.SelectNeigborhood, new { @disabled = "disabled", @id = "neighborhood-individual", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                                @Html.ValidationMessageFor(gi => gi.Individual.ResidencyAddress.NeighborhoodId)
+                                                <div class="fv-plugins-message-container"></div>
+                                                <div class="fv-plugins-message-container"></div>
+                                                <div class="fv-plugins-message-container"></div>
+                                            </div>
+                                            <!--end::Form Group-->
+                                        </div>
+                                    </div>
+
+                                    <!--begin::Form Group-->
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-group fv-plugins-icon-container">
+                                                @Html.LabelFor(gi => gi.Individual.ResidencyAddress.StreetId, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                @Html.DropDownListFor(gi => gi.Individual.ResidencyAddress.StreetId, (SelectList)ViewBag.StreetsByIndividual, HomeView.SelectStreet, new { @disabled = "disabled", @id = "street-individual", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                                @Html.ValidationMessageFor(gi => gi.Individual.ResidencyAddress.StreetId)
+                                                <div class="fv-plugins-message-container"></div>
+                                                <div class="fv-plugins-message-container"></div>
+                                            </div>
+                                        </div>
+                                        <!--end::Form Group-->
+                                        <!--begin::Form Group-->
+
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-group fv-plugins-icon-container">
+                                                @Html.LabelFor(gi => gi.Individual.ResidencyAddress.BuildingId, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                @Html.DropDownListFor(gi => gi.Individual.ResidencyAddress.BuildingId, (SelectList)ViewBag.BuildingsByIndividual, HomeView.SelectBuilding, new { @disabled = "disabled", @id = "building-individual", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                                @Html.ValidationMessageFor(gi => gi.Individual.ResidencyAddress.BuildingId)
+                                                <div class="fv-plugins-message-container"></div>
+                                                <div class="fv-plugins-message-container"></div>
+                                            </div>
+                                            <!--end::Form Group-->
+                                        </div>
+                                    </div>
+
+                                    <!--begin::Form Group-->
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-group fv-plugins-icon-container">
+                                                @Html.LabelFor(gi => gi.Individual.ResidencyAddress.ApartmentId, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                @Html.DropDownListFor(gi => gi.Individual.ResidencyAddress.ApartmentId, (SelectList)ViewBag.ApartmentsByIndividual, HomeView.SelectApartment, new { @disabled = "disabled", @id = "apartment-individual", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                                @Html.ValidationMessageFor(gi => gi.Individual.ResidencyAddress.ApartmentId)
+                                                <div class="fv-plugins-message-container"></div>
+                                                <div class="fv-plugins-message-container"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-group fv-plugins-icon-container">
+                                                @Html.LabelFor(gi => gi.Individual.ResidencyAddress.Floor, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                @Html.EditorFor(gi => gi.Individual.ResidencyAddress.Floor, new { htmlAttributes = new { @type = "text", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg", @autocomplete = "off" } })
+                                                @Html.ValidationMessageFor(gi => gi.Individual.ResidencyAddress.Floor)
+                                                <div class="fv-plugins-message-container"></div>
+                                                <div class="fv-plugins-message-container"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-group fv-plugins-icon-container">
+                                                @Html.LabelFor(gi => gi.Individual.ResidencyAddress.PostalCode, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                @Html.EditorFor(gi => gi.Individual.ResidencyAddress.PostalCode, new { htmlAttributes = new { @type = "text", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg", @autocomplete = "off" } })
+                                                @Html.ValidationMessageFor(gi => gi.Individual.ResidencyAddress.PostalCode)
+                                                <div class="fv-plugins-message-container"></div>
+                                                <div class="fv-plugins-message-container"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>@*IndividualResidencyContainer=>end*@
+
+                            </div>@*containerEndIndividual*@
+
+                            <div class="separator separator-dashed my-3"></div>
+                            <div id="corporateCustomerInfoContainer" style="display:none">
+                                <div class="lg-5">
+                                    <h3 class="font-weight-bolder text-dark-50 font-size-h3">@BillView.CorporateCustomerInfo</h3><hr class="my-4">
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6">
+                                        @Html.LabelFor(m => m.CorporateInfo.CentralSystemNo, new { @class = "font-size-lg font-weight-bolder m-2 text-dark" })
+                                        @Html.EditorFor(m => m.CorporateInfo.CentralSystemNo, new { htmlAttributes = new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg w-100", @placeholder = Html.DisplayNameFor(m => m.CorporateInfo.CentralSystemNo), @autocomplete = "off" } })
+                                        @Html.ValidationMessageFor(m => m.CorporateInfo.CentralSystemNo)
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        @Html.LabelFor(m => m.CorporateInfo.ExecutiveBirthPlace, new { @class = "font-size-lg font-weight-bolder m-2 text-dark" })
+                                        @Html.EditorFor(m => m.CorporateInfo.ExecutiveBirthPlace, new { htmlAttributes = new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg w-100", @placeholder = Html.DisplayNameFor(m => m.CorporateInfo.ExecutiveBirthPlace), @autocomplete = "off" } })
+                                        @Html.ValidationMessageFor(m => m.CorporateInfo.ExecutiveBirthPlace)
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6">
+                                        @Html.LabelFor(m => m.CorporateInfo.ExecutiveFathersName, new { @class = "font-size-lg font-weight-bolder m-2 text-dark" })
+                                        @Html.EditorFor(m => m.CorporateInfo.ExecutiveFathersName, new { htmlAttributes = new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg w-100", @placeholder = Html.DisplayNameFor(m => m.CorporateInfo.ExecutiveFathersName), @autocomplete = "off" } })
+                                        @Html.ValidationMessageFor(m => m.CorporateInfo.ExecutiveFathersName)
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-6">
+                                        @Html.LabelFor(m => m.CorporateInfo.ExecutiveMothersName, new { @class = "font-size-lg font-weight-bolder m-2 text-dark" })
+                                        @Html.EditorFor(m => m.CorporateInfo.ExecutiveMothersName, new { htmlAttributes = new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg w-100", @placeholder = Html.DisplayNameFor(m => m.CorporateInfo.ExecutiveMothersMaidenName), @autocomplete = "off" } })
+                                        @Html.ValidationMessageFor(m => m.CorporateInfo.ExecutiveMothersName)
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12">
+                                        @Html.LabelFor(m => m.CorporateInfo.ExecutiveMothersMaidenName, new { @class = "font-size-lg font-weight-bolder m-2 text-dark" })
+                                        @Html.EditorFor(m => m.CorporateInfo.ExecutiveMothersMaidenName, new { htmlAttributes = new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg w-100", @placeholder = Html.DisplayNameFor(m => m.CorporateInfo.ExecutiveMothersMaidenName), @autocomplete = "off" } })
+                                        @Html.ValidationMessageFor(m => m.CorporateInfo.ExecutiveMothersMaidenName)
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12">
+                                        @Html.LabelFor(m => m.CorporateInfo.ExecutiveNationalityId, new { @class = "font-size-lg font-weight-bolder m-2 text-dark" })
+                                        @Html.DropDownListFor(m => m.CorporateInfo.ExecutiveNationalityId, (SelectList)ViewBag.NationalityListByCorporative, BillView.Select, new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                        @Html.ValidationMessageFor(m => m.CorporateInfo.ExecutiveNationalityId)
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12">
+                                        @Html.LabelFor(m => m.CorporateInfo.ExecutiveProfessionId, new { @class = "font-size-lg font-weight-bolder m-2 text-dark" })
+                                        @Html.DropDownListFor(m => m.CorporateInfo.ExecutiveProfessionId, (SelectList)ViewBag.ProfessionListByCorporative, BillView.Select, new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                        @Html.ValidationMessageFor(m => m.CorporateInfo.ExecutiveProfessionId)
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6">
+                                        @Html.LabelFor(m => m.CorporateInfo.ExecutiveSexId, new { @class = "font-size-lg font-weight-bolder m-2 text-dark" })
+                                        @Html.DropDownListFor(m => m.CorporateInfo.ExecutiveSexId, (SelectList)ViewBag.SexexListByCorporative, BillView.Select, new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                        @Html.ValidationMessageFor(m => m.CorporateInfo.ExecutiveSexId)
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        @Html.LabelFor(m => m.CorporateInfo.TaxNo, new { @class = "font-size-lg font-weight-bolder m-2 text-dark" })
+                                        @Html.EditorFor(m => m.CorporateInfo.TaxNo, new { htmlAttributes = new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg w-100", @placeholder = Html.DisplayNameFor(m => m.CorporateInfo.TaxNo), @autocomplete = "off" } })
+                                        @Html.ValidationMessageFor(m => m.CorporateInfo.TaxNo)
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6">
+                                        @Html.LabelFor(m => m.CorporateInfo.TaxOffice, new { @class = "font-size-lg font-weight-bolder m-2 text-dark" })
+                                        @Html.EditorFor(m => m.CorporateInfo.TaxOffice, new { htmlAttributes = new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg w-100", @placeholder = Html.DisplayNameFor(m => m.CorporateInfo.TaxOffice), @autocomplete = "off" } })
+                                        @Html.ValidationMessageFor(m => m.CorporateInfo.TaxOffice)
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        @Html.LabelFor(m => m.CorporateInfo.Title, new { @class = "font-size-lg font-weight-bolder m-2 text-dark" })
+                                        @Html.EditorFor(m => m.CorporateInfo.Title, new { htmlAttributes = new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg w-100", @autocomplete = "off" } })
+                                        @Html.ValidationMessageFor(m => m.CorporateInfo.Title)
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6">
+                                        @Html.LabelFor(m => m.CorporateInfo.TradeRegistrationNo, new { @class = "font-size-lg font-weight-bolder m-2 text-dark" })
+                                        @Html.EditorFor(m => m.CorporateInfo.TradeRegistrationNo, new { htmlAttributes = new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg w-100", @placeholder = Html.DisplayNameFor(m => m.CorporateInfo.TradeRegistrationNo), @autocomplete = "off" } })
+                                        @Html.ValidationMessageFor(m => m.CorporateInfo.TradeRegistrationNo)
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group">
+                                        @Html.LabelFor(ci => ci.CorporateInfo.SameSetupAddressByCorporativeResidencyAddress)
+                                        @Html.EditorFor(ci => ci.CorporateInfo.SameSetupAddressByCorporativeResidencyAddress)
+                                    </div>
+                                </div>
+
+                                <div class="separator separator-dashed my-3"></div>
+                                <div id="ExecutiveResidencyContainer">
+                                    <div class="lg-5">
+                                        <h3 class="font-weight-bolder text-dark-50 font-size-h3">@BillView.ExecutiveResidencyAddress</h3><hr class="my-4">
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-group fv-plugins-icon-container">
+                                                @Html.LabelFor(gi => gi.CorporateInfo.ExecutiveResidencyAddress.ProvinceId, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                @Html.DropDownListFor(gi => gi.CorporateInfo.ExecutiveResidencyAddress.ProvinceId, (SelectList)ViewBag.ProvincesByCorporativeResidency, HomeView.SelectProvince, new { @id = "province", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                                @Html.ValidationMessageFor(gi => gi.CorporateInfo.ExecutiveResidencyAddress.ProvinceId)
+                                                <div class="fv-plugins-message-container"></div>
+                                                <div class="fv-plugins-message-container"></div>
+                                            </div>
+                                        </div>
+                                        <!--end::Form Group-->
+                                        <!--begin::Form Group-->
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-group fv-plugins-icon-container">
+                                                @Html.LabelFor(gi => gi.CorporateInfo.ExecutiveResidencyAddress.DistrictId, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                @Html.DropDownListFor(gi => gi.CorporateInfo.ExecutiveResidencyAddress.DistrictId, (SelectList)ViewBag.DistrictsByCorporativeResidency, HomeView.SelectDistrict, new { @disabled = "disabled", @id = "district", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                                @Html.ValidationMessageFor(gi => gi.CorporateInfo.ExecutiveResidencyAddress.DistrictId)
+                                                <div class="fv-plugins-message-container"></div>
+                                                <div class="fv-plugins-message-container"></div>
+                                            </div>
+                                            <!--end::Form Group-->
+                                        </div>
+                                    </div>
+
+                                    <!--begin::Form Group-->
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-group fv-plugins-icon-container">
+                                                @Html.LabelFor(gi => gi.CorporateInfo.ExecutiveResidencyAddress.RuralRegionsId, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                @Html.DropDownListFor(gi => gi.CorporateInfo.ExecutiveResidencyAddress.RuralRegionsId, (SelectList)ViewBag.RuralRegionsByCorporativeResidency, HomeView.SelectRegions, new { @disabled = "disabled", @id = "ruralregions", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                                @Html.ValidationMessageFor(gi => gi.CorporateInfo.ExecutiveResidencyAddress.RuralRegionsId)
+                                                <div class="fv-plugins-message-container"></div>
+                                                <div class="fv-plugins-message-container"></div>
+                                            </div>
+                                        </div>
+                                        <!--end::Form Group-->
+                                        <!--begin::Form Group-->
+
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-group fv-plugins-icon-container">
+                                                @Html.LabelFor(gi => gi.CorporateInfo.ExecutiveResidencyAddress.NeighborhoodId, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                @Html.DropDownListFor(gi => gi.CorporateInfo.ExecutiveResidencyAddress.NeighborhoodId, (SelectList)ViewBag.NeigboorHoodsByCorporativeResidency, HomeView.SelectNeigborhood, new { @disabled = "disabled", @id = "neighborhood", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                                @Html.ValidationMessageFor(gi => gi.CorporateInfo.ExecutiveResidencyAddress.NeighborhoodId)
+                                                <div class="fv-plugins-message-container"></div>
+                                                <div class="fv-plugins-message-container"></div>
+                                                <div class="fv-plugins-message-container"></div>
+                                            </div>
+                                            <!--end::Form Group-->
+                                        </div>
+                                    </div>
+
+                                    <!--begin::Form Group-->
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-group fv-plugins-icon-container">
+                                                @Html.LabelFor(gi => gi.CorporateInfo.ExecutiveResidencyAddress.StreetId, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                @Html.DropDownListFor(gi => gi.CorporateInfo.ExecutiveResidencyAddress.StreetId, (SelectList)ViewBag.StreetsByCorporativeResidency, HomeView.SelectStreet, new { @disabled = "disabled", @id = "street", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                                @Html.ValidationMessageFor(gi => gi.CorporateInfo.ExecutiveResidencyAddress.StreetId)
+                                                <div class="fv-plugins-message-container"></div>
+                                                <div class="fv-plugins-message-container"></div>
+                                            </div>
+                                        </div>
+                                        <!--end::Form Group-->
+                                        <!--begin::Form Group-->
+
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-group fv-plugins-icon-container">
+                                                @Html.LabelFor(gi => gi.CorporateInfo.ExecutiveResidencyAddress.BuildingId, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                @Html.DropDownListFor(gi => gi.CorporateInfo.ExecutiveResidencyAddress.BuildingId, (SelectList)ViewBag.BuildingsByCorporativeResidency, HomeView.SelectBuilding, new { @disabled = "disabled", @id = "building", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                                @Html.ValidationMessageFor(gi => gi.CorporateInfo.ExecutiveResidencyAddress.BuildingId)
+                                                <div class="fv-plugins-message-container"></div>
+                                                <div class="fv-plugins-message-container"></div>
+                                            </div>
+                                            <!--end::Form Group-->
+                                        </div>
+                                    </div>
+
+                                    <!--begin::Form Group-->
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-group fv-plugins-icon-container">
+                                                @Html.LabelFor(gi => gi.CorporateInfo.ExecutiveResidencyAddress.ApartmentId, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                @Html.DropDownListFor(gi => gi.CorporateInfo.ExecutiveResidencyAddress.ApartmentId, (SelectList)ViewBag.ApartmentsByCorporativeResidency, HomeView.SelectApartment, new { @disabled = "disabled", @id = "apartment", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                                @Html.ValidationMessageFor(gi => gi.CorporateInfo.ExecutiveResidencyAddress.ApartmentId)
+                                                <div class="fv-plugins-message-container"></div>
+                                                <span hidden="" id="address-text"></span>
+                                                <div class="fv-plugins-message-container"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-group fv-plugins-icon-container">
+                                                @Html.LabelFor(gi => gi.CorporateInfo.ExecutiveResidencyAddress.Floor, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                @Html.EditorFor(gi => gi.CorporateInfo.ExecutiveResidencyAddress.Floor, new { htmlAttributes = new { @type = "text", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg", @autocomplete = "off" } })
+                                                @Html.ValidationMessageFor(gi => gi.CorporateInfo.ExecutiveResidencyAddress.Floor)
+                                                <div class="fv-plugins-message-container"></div>
+                                                <div class="fv-plugins-message-container"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-group fv-plugins-icon-container">
+                                                @Html.LabelFor(gi => gi.CorporateInfo.ExecutiveResidencyAddress.PostalCode, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                @Html.EditorFor(gi => gi.CorporateInfo.ExecutiveResidencyAddress.PostalCode, new { htmlAttributes = new { @type = "text", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg", @autocomplete = "off" } })
+                                                @Html.ValidationMessageFor(gi => gi.CorporateInfo.ExecutiveResidencyAddress.PostalCode)
+                                                <div class="fv-plugins-message-container"></div>
+                                                <div class="fv-plugins-message-container"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group">
+                                        @Html.LabelFor(ci => ci.CorporateInfo.SameSetupAddressByCorporativeCompanyAddress)
+                                        @Html.EditorFor(ci => ci.CorporateInfo.SameSetupAddressByCorporativeCompanyAddress)
+                                    </div>
+                                </div>
+                                <div class="separator separator-dashed my-3"></div>
+                                <div id="CompanyContainer">
+                                    <div class="lg-5">
+                                        <h3 class="font-weight-bolder text-dark-50 font-size-h3">@BillView.CompanyAddress</h3><hr class="my-4">
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-group fv-plugins-icon-container">
+                                                @Html.LabelFor(gi => gi.CorporateInfo.CompanyAddress.ProvinceId, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                @Html.DropDownListFor(gi => gi.CorporateInfo.CompanyAddress.ProvinceId, (SelectList)ViewBag.ProvincesByCorporativeCompany, HomeView.SelectProvince, new { @id = "province-company", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                                @Html.ValidationMessageFor(gi => gi.CorporateInfo.CompanyAddress.ProvinceId)
+                                                <div class="fv-plugins-message-container"></div>
+                                                <div class="fv-plugins-message-container"></div>
+                                            </div>
+                                        </div>
+                                        <!--end::Form Group-->
+                                        <!--begin::Form Group-->
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-group fv-plugins-icon-container">
+                                                @Html.LabelFor(gi => gi.CorporateInfo.CompanyAddress.DistrictId, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                @Html.DropDownListFor(gi => gi.CorporateInfo.CompanyAddress.DistrictId, (SelectList)ViewBag.DistrictsByCorporativeCompany, HomeView.SelectDistrict, new { @disabled = "disabled", @id = "district-company", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                                @Html.ValidationMessageFor(gi => gi.CorporateInfo.CompanyAddress.DistrictId)
+                                                <div class="fv-plugins-message-container"></div>
+                                                <div class="fv-plugins-message-container"></div>
+                                            </div>
+                                            <!--end::Form Group-->
+                                        </div>
+                                    </div>
+
+                                    <!--begin::Form Group-->
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-group fv-plugins-icon-container">
+                                                @Html.LabelFor(gi => gi.CorporateInfo.CompanyAddress.RuralRegionsId, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                @Html.DropDownListFor(gi => gi.CorporateInfo.CompanyAddress.RuralRegionsId, (SelectList)ViewBag.RuralRegionsByCorporativeCompany, HomeView.SelectRegions, new { @disabled = "disabled", @id = "ruralregions-company", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                                @Html.ValidationMessageFor(gi => gi.CorporateInfo.CompanyAddress.RuralRegionsId)
+                                                <div class="fv-plugins-message-container"></div>
+                                                <div class="fv-plugins-message-container"></div>
+                                            </div>
+                                        </div>
+                                        <!--end::Form Group-->
+                                        <!--begin::Form Group-->
+
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-group fv-plugins-icon-container">
+                                                @Html.LabelFor(gi => gi.CorporateInfo.CompanyAddress.NeighborhoodId, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                @Html.DropDownListFor(gi => gi.CorporateInfo.CompanyAddress.NeighborhoodId, (SelectList)ViewBag.NeigboorHoodsByCorporativeCompany, HomeView.SelectNeigborhood, new { @disabled = "disabled", @id = "neighborhood-company", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                                @Html.ValidationMessageFor(gi => gi.CorporateInfo.CompanyAddress.NeighborhoodId)
+                                                <div class="fv-plugins-message-container"></div>
+                                                <div class="fv-plugins-message-container"></div>
+                                                <div class="fv-plugins-message-container"></div>
+                                            </div>
+                                            <!--end::Form Group-->
+                                        </div>
+                                    </div>
+
+                                    <!--begin::Form Group-->
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-group fv-plugins-icon-container">
+                                                @Html.LabelFor(gi => gi.CorporateInfo.CompanyAddress.StreetId, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                @Html.DropDownListFor(gi => gi.CorporateInfo.CompanyAddress.StreetId, (SelectList)ViewBag.StreetsByCorporativeCompany, HomeView.SelectStreet, new { @disabled = "disabled", @id = "street-company", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                                @Html.ValidationMessageFor(gi => gi.CorporateInfo.CompanyAddress.StreetId)
+                                                <div class="fv-plugins-message-container"></div>
+                                                <div class="fv-plugins-message-container"></div>
+                                            </div>
+                                        </div>
+                                        <!--end::Form Group-->
+                                        <!--begin::Form Group-->
+
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-group fv-plugins-icon-container">
+                                                @Html.LabelFor(gi => gi.CorporateInfo.CompanyAddress.BuildingId, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                @Html.DropDownListFor(gi => gi.CorporateInfo.CompanyAddress.BuildingId, (SelectList)ViewBag.BuildingsByCorporativeCompany, HomeView.SelectBuilding, new { @disabled = "disabled", @id = "building-company", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                                @Html.ValidationMessageFor(gi => gi.CorporateInfo.CompanyAddress.BuildingId)
+                                                <div class="fv-plugins-message-container"></div>
+                                                <div class="fv-plugins-message-container"></div>
+                                            </div>
+                                            <!--end::Form Group-->
+                                        </div>
+                                    </div>
+
+                                    <!--begin::Form Group-->
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-group fv-plugins-icon-container">
+                                                @Html.LabelFor(gi => gi.CorporateInfo.CompanyAddress.ApartmentId, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                @Html.DropDownListFor(gi => gi.CorporateInfo.CompanyAddress.ApartmentId, (SelectList)ViewBag.ApartmentsByCorporativeCompany, HomeView.SelectApartment, new { @disabled = "disabled", @id = "apartment-company", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                                @Html.ValidationMessageFor(gi => gi.CorporateInfo.CompanyAddress.ApartmentId)
+                                                <div class="fv-plugins-message-container"></div>
+                                                <span hidden="" id="address-text"></span>
+                                                <div class="fv-plugins-message-container"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-group fv-plugins-icon-container">
+                                                @Html.LabelFor(gi => gi.CorporateInfo.CompanyAddress.Floor, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                @Html.EditorFor(gi => gi.CorporateInfo.CompanyAddress.Floor, new { htmlAttributes = new { @type = "text", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg", @autocomplete = "off" } })
+                                                @Html.ValidationMessageFor(gi => gi.CorporateInfo.CompanyAddress.Floor)
+                                                <div class="fv-plugins-message-container"></div>
+                                                <div class="fv-plugins-message-container"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-group fv-plugins-icon-container">
+                                                @Html.LabelFor(gi => gi.CorporateInfo.CompanyAddress.PostalCode, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                @Html.EditorFor(gi => gi.CorporateInfo.CompanyAddress.PostalCode, new { htmlAttributes = new { @type = "text", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg", @autocomplete = "off" } })
+                                                @Html.ValidationMessageFor(gi => gi.CorporateInfo.CompanyAddress.PostalCode)
+                                                <div class="fv-plugins-message-container"></div>
+                                                <div class="fv-plugins-message-container"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group">
+                                    @Html.LabelFor(gi => gi.GeneralInfo.SameSetupAddressByBilling)
+                                    @Html.EditorFor(gi => gi.GeneralInfo.SameSetupAddressByBilling)
+                                </div>
+                            </div>
                             <div class="separator separator-dashed my-3"></div>
                             <div id="BillingAddressContainer">
                                 <div class="lg-5">
@@ -770,7 +768,7 @@
                                     <div class="col-lg-6 col-md-6">
                                         <div class="form-group fv-plugins-icon-container">
                                             @Html.LabelFor(gi => gi.GeneralInfo.BillingAddress.DistrictId, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
-                                            @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.DistrictId, (SelectList)ViewBag.DistrictsByGeneralInfo, HomeView.SelectProvince, new { @disabled = "disabled", @id = "district-billing", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                            @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.DistrictId, (SelectList)ViewBag.DistrictsByGeneralInfo, HomeView.SelectDistrict, new { @disabled = "disabled", @id = "district-billing", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
                                             @Html.ValidationMessageFor(gi => gi.GeneralInfo.BillingAddress.DistrictId)
                                             <div class="fv-plugins-message-container"></div>
                                             <div class="fv-plugins-message-container"></div>
@@ -784,7 +782,7 @@
                                     <div class="col-lg-6 col-md-6">
                                         <div class="form-group fv-plugins-icon-container">
                                             @Html.LabelFor(gi => gi.GeneralInfo.BillingAddress.RuralRegionsId, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
-                                            @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.RuralRegionsId, (SelectList)ViewBag.RuralRegionsByGeneralInfo, HomeView.SelectProvince, new { @disabled = "disabled", @id = "ruralregions-billing", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                            @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.RuralRegionsId, (SelectList)ViewBag.RuralRegionsByGeneralInfo, HomeView.SelectRegions, new { @disabled = "disabled", @id = "ruralregions-billing", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
                                             @Html.ValidationMessageFor(gi => gi.GeneralInfo.BillingAddress.RuralRegionsId)
                                             <div class="fv-plugins-message-container"></div>
                                             <div class="fv-plugins-message-container"></div>
@@ -796,7 +794,7 @@
                                     <div class="col-lg-6 col-md-6">
                                         <div class="form-group fv-plugins-icon-container">
                                             @Html.LabelFor(gi => gi.GeneralInfo.BillingAddress.NeighborhoodId, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
-                                            @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.NeighborhoodId, (SelectList)ViewBag.NeigboorHoodsByGeneralInfo, HomeView.SelectProvince, new { @disabled = "disabled", @id = "neighborhood-billing", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                            @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.NeighborhoodId, (SelectList)ViewBag.NeigboorHoodsByGeneralInfo, HomeView.SelectNeigborhood, new { @disabled = "disabled", @id = "neighborhood-billing", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
                                             @Html.ValidationMessageFor(gi => gi.GeneralInfo.BillingAddress.NeighborhoodId)
                                             <div class="fv-plugins-message-container"></div>
                                             <div class="fv-plugins-message-container"></div>
@@ -811,7 +809,7 @@
                                     <div class="col-lg-6 col-md-6">
                                         <div class="form-group fv-plugins-icon-container">
                                             @Html.LabelFor(gi => gi.GeneralInfo.BillingAddress.StreetId, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
-                                            @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.StreetId, (SelectList)ViewBag.StreetsByGeneralInfo, HomeView.SelectProvince, new { @disabled = "disabled", @id = "street-billing", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                            @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.StreetId, (SelectList)ViewBag.StreetsByGeneralInfo, HomeView.SelectStreet, new { @disabled = "disabled", @id = "street-billing", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
                                             @Html.ValidationMessageFor(gi => gi.GeneralInfo.BillingAddress.StreetId)
                                             <div class="fv-plugins-message-container"></div>
                                             <div class="fv-plugins-message-container"></div>
@@ -823,7 +821,7 @@
                                     <div class="col-lg-6 col-md-6">
                                         <div class="form-group fv-plugins-icon-container">
                                             @Html.LabelFor(gi => gi.GeneralInfo.BillingAddress.BuildingId, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
-                                            @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.BuildingId, (SelectList)ViewBag.BuildingsByGeneralInfo, HomeView.SelectProvince, new { @disabled = "disabled", @id = "building-billing", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                            @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.BuildingId, (SelectList)ViewBag.BuildingsByGeneralInfo, HomeView.SelectBuilding, new { @disabled = "disabled", @id = "building-billing", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
                                             @Html.ValidationMessageFor(gi => gi.GeneralInfo.BillingAddress.BuildingId)
                                             <div class="fv-plugins-message-container"></div>
                                             <div class="fv-plugins-message-container"></div>
@@ -837,7 +835,7 @@
                                     <div class="col-lg-6 col-md-6">
                                         <div class="form-group fv-plugins-icon-container">
                                             @Html.LabelFor(gi => gi.GeneralInfo.BillingAddress.ApartmentId, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
-                                            @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.ApartmentId, (SelectList)ViewBag.ApartmentsByGeneralInfo, HomeView.SelectProvince, new { @disabled = "disabled", @id = "apartment-billing", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                            @Html.DropDownListFor(gi => gi.GeneralInfo.BillingAddress.ApartmentId, (SelectList)ViewBag.ApartmentsByGeneralInfo, HomeView.SelectApartment, new { @disabled = "disabled", @id = "apartment-billing", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
                                             @Html.ValidationMessageFor(gi => gi.GeneralInfo.BillingAddress.ApartmentId)
                                             <div class="fv-plugins-message-container"></div>
                                             <span hidden="" id="address-text"></span>
@@ -892,6 +890,11 @@
                                 </div>
 
                                 <div class="form-group">
+                                    @Html.LabelFor(m => m.SubscriptionInfo.BillingPeriodId, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                    @Html.DropDownListFor(m => m.SubscriptionInfo.BillingPeriodId, (SelectList)ViewBag.BillingPeriod, BillView.Select, new { @disabled = "disabled", @id = "billingPeriodId", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                    @Html.ValidationMessageFor(m => m.SubscriptionInfo.BillingPeriodId)
+                                </div>
+                                <div class="form-group">
                                     <label class="font-size-lg font-weight-bold m-2 text-dark">Modem İsteniyor mu?</label>
                                     <select name="modem" class="form-control h-auto p-3 border-0 rounded-lg font-size-lg">
                                         <option value="" selected="selected">Hayır</option>
@@ -939,6 +942,16 @@
                                 <div class="fv-plugins-message-container"></div>
                                 <div class="fv-plugins-message-container"></div>
                             </div>
+
+
+                            <div class="form-group fv-plugins-icon-container">
+                                @Html.LabelFor(m => m.IDCard.PassportNo, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                @Html.EditorFor(m => m.IDCard.PassportNo, new { htmlAttributes = new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg", @placeholder = Html.DisplayNameFor(m => m.IDCard.PassportNo), @im_insert = "true", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(m => m.IDCard.PassportNo)
+                                <div class="fv-plugins-message-container"></div>
+                                <div class="fv-plugins-message-container"></div>
+                            </div>
+
                             <!--begin::Form Group-->
                             <div class="row">
                                 <div class="col-xl-4">
@@ -976,69 +989,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="pb-0 pb-lg-0">
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-6">
-                                        <div class="form-group fv-plugins-icon-container">
-                                            @Html.LabelFor(m => m.Individual.MothersName, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
-                                            @Html.EditorFor(m => m.Individual.MothersName, new { htmlAttributes = new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg", @placeholder = Html.DisplayNameFor(m => m.Individual.MothersName), @autocomplete = "off" } })
-                                            @Html.ValidationMessageFor(m => m.Individual.MothersName)
-                                            <div class="fv-plugins-message-container"></div>
-                                            <div class="fv-plugins-message-container"></div>
-                                        </div>
-                                    </div>
-                                    <!--end::Form Group-->
-                                    <!--begin::Form Group-->
-                                    <div class="col-lg-6 col-md-6">
-                                        <div class="form-group fv-plugins-icon-container">
-                                            @Html.LabelFor(m => m.Individual.FathersName, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
-                                            @Html.EditorFor(m => m.Individual.FathersName, new { htmlAttributes = new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg", @placeholder = Html.DisplayNameFor(m => m.Individual.FathersName), @autocomplete = "off" } })
-                                            @Html.ValidationMessageFor(m => m.Individual.FathersName)
-                                            <div class="fv-plugins-message-container"></div>
-                                            <div class="fv-plugins-message-container"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
                             <!--end::Form Group-->
                             <!--begin::Form Group-->
                             <div class="pb-0 pb-lg-0">
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-6">
-                                        <div class="form-group fv-plugins-icon-container">
-                                            @Html.LabelFor(m => m.Individual.SexId, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
-                                            @Html.DropDownListFor(m => m.Individual.SexId, (SelectList)ViewBag.SexexListByIndividual, BillView.Select, new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
-                                            @Html.ValidationMessageFor(m => m.Individual.SexId)
-                                            <div class="fv-plugins-message-container"></div>
-                                            <div class="fv-plugins-message-container"></div>
-                                        </div>
-                                    </div>
-                                    <!--end::Form Group-->
-                                    <!--begin::Form Group-->
-                                    <div class="col-lg-6 col-md-6">
-                                        <div class="form-group fv-plugins-icon-container">
-                                            @Html.LabelFor(m => m.Individual.BirthPlace, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
-                                            @Html.EditorFor(m => m.Individual.BirthPlace, new { htmlAttributes = new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg", @placeholder = Html.DisplayNameFor(m => m.Individual.BirthPlace), @autocomplete = "off" } })
-                                            @Html.ValidationMessageFor(m => m.Individual.BirthPlace)
-                                            <div class="fv-plugins-message-container"></div>
-                                            <div class="fv-plugins-message-container"></div>
-                                        </div>
-                                    </div>
-                                </div>
+
                                 <div class="pb-0 pb-lg-5">
                                     <div class="row">
                                         <!--end::Form Group-->
-                                        <div class="col-lg-6 col-md-6">
-                                            <div class="form-group fv-plugins-icon-container">
-
-                                                @Html.LabelFor(ci => ci.Individual.MothersMaidenName, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
-                                                @Html.EditorFor(m => m.Individual.MothersMaidenName, new { htmlAttributes = new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg", @placeholder = Html.DisplayNameFor(m => m.Individual.MothersMaidenName), @autocomplete = "off" } })
-                                                @Html.ValidationMessageFor(ci => ci.Individual.MothersMaidenName)
-                                                <div class="fv-plugins-message-container"></div>
-                                                <div class="fv-plugins-message-container"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 col-md-6">
+                                        <div class="col-lg-12 col-md-12">
                                             <div class="form-group fv-plugins-icon-container">
                                                 @Html.LabelFor(m => m.IDCard.SerialNo, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
                                                 @Html.EditorFor(m => m.IDCard.SerialNo, new { htmlAttributes = new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg", @placeholder = Html.DisplayNameFor(m => m.IDCard.SerialNo), @autocomplete = "off" } })
@@ -1049,66 +1008,114 @@
                                         </div>
                                     </div>
 
-                                    <div class="row">
-                                        <!--end::Form Group--> <!--extra parameters-->
-                                        <div class="col-lg-6 col-md-6">
-                                            <div class="form-group fv-plugins-icon-container">
-                                                @Html.LabelFor(m => m.IDCard.TCBirthCertificate.RowNo, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
-                                                @Html.EditorFor(m => m.IDCard.TCBirthCertificate.RowNo, new { htmlAttributes = new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg", @placeholder = Html.DisplayNameFor(m => m.IDCard.TCBirthCertificate.RowNo), @autocomplete = "off" } })
-                                                @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.RowNo)
-                                                <div class="fv-plugins-message-container"></div>
+
+                                    <div id="TCBirthCertificateContainer" style="display:none">
+                                        <div class="row">
+                                            <!--end::Form Group--> <!--extra parameters-->
+                                            <div class="col-lg-6 col-md-6">
+                                                <div class="form-group fv-plugins-icon-container">
+                                                    @Html.LabelFor(m => m.IDCard.TCBirthCertificate.RowNo, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                    @Html.EditorFor(m => m.IDCard.TCBirthCertificate.RowNo, new { htmlAttributes = new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg", @placeholder = Html.DisplayNameFor(m => m.IDCard.TCBirthCertificate.RowNo), @autocomplete = "off" } })
+                                                    @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.RowNo)
+                                                    <div class="fv-plugins-message-container"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6">
+                                                <div class="form-group fv-plugins-icon-container">
+                                                    @Html.LabelFor(m => m.IDCard.TCBirthCertificate.VolumeNo, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                    @Html.EditorFor(m => m.IDCard.TCBirthCertificate.VolumeNo, new { htmlAttributes = new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg", @placeholder = Html.DisplayNameFor(m => m.IDCard.TCBirthCertificate.VolumeNo), @autocomplete = "off" } })
+                                                    @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.VolumeNo)
+                                                    <div class="fv-plugins-message-container"></div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6 col-md-6">
-                                            <div class="form-group fv-plugins-icon-container">
-                                                @Html.LabelFor(m => m.IDCard.TCBirthCertificate.VolumeNo, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
-                                                @Html.EditorFor(m => m.IDCard.TCBirthCertificate.VolumeNo, new { htmlAttributes = new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg", @placeholder = Html.DisplayNameFor(m => m.IDCard.TCBirthCertificate.VolumeNo), @autocomplete = "off" } })
-                                                @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.VolumeNo)
-                                                <div class="fv-plugins-message-container"></div>
+                                        <div class="row">
+                                            <!--end::Form Group-->
+                                            <div class="col-lg-6 col-md-6">
+                                                <div class="form-group fv-plugins-icon-container">
+                                                    @Html.LabelFor(m => m.IDCard.TCBirthCertificate.PageNo, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                    @Html.EditorFor(m => m.IDCard.TCBirthCertificate.PageNo, new { htmlAttributes = new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg", @placeholder = Html.DisplayNameFor(m => m.IDCard.TCBirthCertificate.PageNo), @autocomplete = "off" } })
+                                                    @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.PageNo)
+                                                    <div class="fv-plugins-message-container"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6">
+                                                <div class="form-group fv-plugins-icon-container">
+                                                    @Html.LabelFor(m => m.IDCard.TCBirthCertificate.PlaceOfIssue, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                    @Html.EditorFor(m => m.IDCard.TCBirthCertificate.PlaceOfIssue, new { htmlAttributes = new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg", @placeholder = Html.DisplayNameFor(m => m.IDCard.TCBirthCertificate.PlaceOfIssue), @autocomplete = "off" } })
+                                                    @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.PlaceOfIssue)
+                                                    <div class="fv-plugins-message-container"></div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <!--end::Form Group-->
+                                            <div class="col-lg-4 col-md-4">
+                                                <div class="form-group fv-plugins-icon-container">
+                                                    @Html.LabelFor(m => m.IDCard.TCBirthCertificate.Province, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                    @Html.EditorFor(m => m.IDCard.TCBirthCertificate.Province, new { htmlAttributes = new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg", @placeholder = Html.DisplayNameFor(m => m.IDCard.TCBirthCertificate.Province), @autocomplete = "off" } })
+                                                    @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.Province)
+                                                    <div class="fv-plugins-message-container"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4">
+                                                <div class="form-group fv-plugins-icon-container">
+                                                    @Html.LabelFor(m => m.IDCard.TCBirthCertificate.District, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                    @Html.EditorFor(m => m.IDCard.TCBirthCertificate.District, new { htmlAttributes = new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg", @placeholder = Html.DisplayNameFor(m => m.IDCard.TCBirthCertificate.Province), @autocomplete = "off" } })
+                                                    @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.District)
+                                                    <div class="fv-plugins-message-container"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4">
+                                                <div class="form-group fv-plugins-icon-container">
+                                                    @Html.LabelFor(m => m.IDCard.TCBirthCertificate.Neighbourhood, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                    @Html.EditorFor(m => m.IDCard.TCBirthCertificate.Neighbourhood, new { htmlAttributes = new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg", @placeholder = Html.DisplayNameFor(m => m.IDCard.TCBirthCertificate.Neighbourhood), @autocomplete = "off" } })
+                                                    @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.Neighbourhood)
+                                                    <div class="fv-plugins-message-container"></div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <!--end::Form Group-->
-                                        <div class="col-lg-6 col-md-6">
-                                            <div class="form-group fv-plugins-icon-container">
-                                                @Html.LabelFor(m => m.IDCard.TCBirthCertificate.PageNo, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
-                                                @Html.EditorFor(m => m.IDCard.TCBirthCertificate.PageNo, new { htmlAttributes = new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg", @placeholder = Html.DisplayNameFor(m => m.IDCard.TCBirthCertificate.PageNo), @autocomplete = "off" } })
-                                                @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.PageNo)
-                                                <div class="fv-plugins-message-container"></div>
+                                        <div class="row">
+                                            <div class="col-xl-4">
+                                                <!--begin::Input-->
+                                                <div class="form-group fv-plugins-icon-container">
+                                                    @Html.LabelFor(m => m.IDCard.TCBirthCertificate.DateOfIssueDay, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                    @Html.DropDownListFor(m => m.IDCard.TCBirthCertificate.DateOfIssueDay, (SelectList)ViewBag.DayListByIssueDate, BillView.Select, new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                                    @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.DateOfIssueDay)
+                                                    <div class="fv-plugins-message-container"></div><div class="fv-plugins-message-container"></div>
+                                                    <div class="fv-plugins-message-container"></div>
+                                                </div>
+                                                <!--end::Input-->
                                             </div>
-                                        </div>
-                                        <div class="col-lg-6 col-md-6">
-                                            <div class="form-group fv-plugins-icon-container">
-                                                @Html.LabelFor(m => m.IDCard.TCBirthCertificate.Province, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
-                                                @Html.EditorFor(m => m.IDCard.TCBirthCertificate.Province, new { htmlAttributes = new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg", @placeholder = Html.DisplayNameFor(m => m.IDCard.TCBirthCertificate.Province), @autocomplete = "off" } })
-                                                @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.Province)
-                                                <div class="fv-plugins-message-container"></div>
+                                            <div class="col-xl-4">
+                                                <!--begin::Input-->
+                                                <div class="form-group fv-plugins-icon-container">
+                                                    @Html.LabelFor(m => m.IDCard.TCBirthCertificate.DateOfIssueMonth, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                    @Html.DropDownListFor(m => m.IDCard.TCBirthCertificate.DateOfIssueMonth, (SelectList)ViewBag.MonthListByIssueDate, BillView.Select, new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                                    @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.DateOfIssueMonth)
+                                                    <div class="fv-plugins-message-container"></div>
+                                                    <div class="fv-plugins-message-container"></div>
+                                                    <div class="fv-plugins-message-container"></div>
+                                                </div>
+                                                <!--end::Input-->
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <!--end::Form Group-->
-                                        <div class="col-lg-6 col-md-6">
-                                            <div class="form-group fv-plugins-icon-container">
-                                                @Html.LabelFor(m => m.IDCard.TCBirthCertificate.District, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
-                                                @Html.EditorFor(m => m.IDCard.TCBirthCertificate.District, new { htmlAttributes = new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg", @placeholder = Html.DisplayNameFor(m => m.IDCard.TCBirthCertificate.Province), @autocomplete = "off" } })
-                                                @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.District)
-                                                <div class="fv-plugins-message-container"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 col-md-6">
-                                            <div class="form-group fv-plugins-icon-container">
-                                                @Html.LabelFor(m => m.IDCard.TCBirthCertificate.Neighbourhood, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
-                                                @Html.EditorFor(m => m.IDCard.TCBirthCertificate.Neighbourhood, new { htmlAttributes = new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg", @placeholder = Html.DisplayNameFor(m => m.IDCard.TCBirthCertificate.Neighbourhood), @autocomplete = "off" } })
-                                                @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.Neighbourhood)
-                                                <div class="fv-plugins-message-container"></div>
+                                            <div class="col-xl-4">
+                                                <!--begin::Input-->
+                                                <div class="form-group fv-plugins-icon-container">
+                                                    @Html.LabelFor(m => m.IDCard.TCBirthCertificate.DateOfIssueYear, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                                    @Html.DropDownListFor(m => m.IDCard.TCBirthCertificate.DateOfIssueYear, (SelectList)ViewBag.YearListByIssueDate, BillView.Select, new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                                    @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.DateOfIssueYear)
+                                                    <div class="fv-plugins-message-container"></div>
+                                                    <div class="fv-plugins-message-container"></div>
+                                                    <div class="fv-plugins-message-container"></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <!--extra finish-->
                                     <!--veriliş tarihi yada son geçerlilik tarihi-->
-                                    <div class="row">
+                                    <div class="row" id="TCIDCardWithChipContainer" style="display:none">
                                         <div class="col-xl-4">
                                             <!--begin::Input-->
                                             <div class="form-group fv-plugins-icon-container">
@@ -1145,56 +1152,137 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="row">
-                                        <div class="col-xl-4">
-                                            <!--begin::Input-->
-                                            <div class="form-group fv-plugins-icon-container">
-                                                @Html.LabelFor(m => m.IDCard.TCBirthCertificate.DateOfIssueDay, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
-                                                @Html.DropDownListFor(m => m.IDCard.TCBirthCertificate.DateOfIssueDay, (SelectList)ViewBag.DayListByIssueDate, BillView.Select, new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
-                                                @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.DateOfIssueDay)
-                                                <div class="fv-plugins-message-container"></div><div class="fv-plugins-message-container"></div>
-                                                <div class="fv-plugins-message-container"></div>
-                                            </div>
-                                            <!--end::Input-->
-                                        </div>
-                                        <div class="col-xl-4">
-                                            <!--begin::Input-->
-                                            <div class="form-group fv-plugins-icon-container">
-                                                @Html.LabelFor(m => m.IDCard.TCBirthCertificate.DateOfIssueMonth, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
-                                                @Html.DropDownListFor(m => m.IDCard.TCBirthCertificate.DateOfIssueMonth, (SelectList)ViewBag.MonthListByIssueDate, BillView.Select, new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
-                                                @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.DateOfIssueMonth)
-                                                <div class="fv-plugins-message-container"></div>
-                                                <div class="fv-plugins-message-container"></div>
-                                                <div class="fv-plugins-message-container"></div>
-                                            </div>
-                                            <!--end::Input-->
-                                        </div>
-                                        <div class="col-xl-4">
-                                            <!--begin::Input-->
-                                            @*<div class="form-group fv-plugins-icon-container">
-                                                @Html.LabelFor(m => m.IDCard.TCBirthCertificate.DateOfIssueYear, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
-                                                @Html.DropDownListFor(m => m.IDCard.TCBirthCertificate.DateOfIssueYear, (SelectList)ViewBag.YearListByIssueDate, BillView.Select, new { @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
-                                                @Html.ValidationMessageFor(m => m.IDCard.TCBirthCertificate.DateOfIssueYear)
-                                                <div class="fv-plugins-message-container"></div>
-                                                <div class="fv-plugins-message-container"></div>
-                                                <div class="fv-plugins-message-container"></div>
-                                            </div>*@
-                                        </div>
-                                    </div>
-
-
                                 </div>
                             </div>
+
+                            <div class="separator separator-dashed my-3"></div>
+                            <div id="BillingAddressContainer">
+                                <div class="lg-5">
+                                    <h3 class="font-weight-bolder text-dark-50 font-size-h3">@BillView.SetupAddress</h3><hr class="my-4">
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="form-group fv-plugins-icon-container">
+                                            @Html.LabelFor(gi => gi.SubscriptionInfo.SetupAddress.ProvinceId, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                            @Html.DropDownListFor(gi => gi.SubscriptionInfo.SetupAddress.ProvinceId, (SelectList)ViewBag.ProvincesBySetup, HomeView.SelectProvince, new { @id = "province-setup", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                            @Html.ValidationMessageFor(gi => gi.SubscriptionInfo.SetupAddress.ProvinceId)
+                                            <div class="fv-plugins-message-container"></div>
+                                            <div class="fv-plugins-message-container"></div>
+                                        </div>
+                                    </div>
+                                    <!--end::Form Group-->
+                                    <!--begin::Form Group-->
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="form-group fv-plugins-icon-container">
+                                            @Html.LabelFor(gi => gi.SubscriptionInfo.SetupAddress.DistrictId, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                            @Html.DropDownListFor(gi => gi.SubscriptionInfo.SetupAddress.DistrictId, (SelectList)ViewBag.DistrictsBySetup, HomeView.SelectDistrict, new { @disabled = "disabled", @id = "district-setup", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                            @Html.ValidationMessageFor(gi => gi.SubscriptionInfo.SetupAddress.DistrictId)
+                                            <div class="fv-plugins-message-container"></div>
+                                            <div class="fv-plugins-message-container"></div>
+                                        </div>
+                                        <!--end::Form Group-->
+                                    </div>
+                                </div>
+
+                                <!--begin::Form Group-->
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="form-group fv-plugins-icon-container">
+                                            @Html.LabelFor(gi => gi.SubscriptionInfo.SetupAddress.RuralRegionsId, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                            @Html.DropDownListFor(gi => gi.SubscriptionInfo.SetupAddress.RuralRegionsId, (SelectList)ViewBag.RuralRegionsBySetup, HomeView.SelectRegions, new { @disabled = "disabled", @id = "ruralregions-setup", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                            @Html.ValidationMessageFor(gi => gi.SubscriptionInfo.SetupAddress.RuralRegionsId)
+                                            <div class="fv-plugins-message-container"></div>
+                                            <div class="fv-plugins-message-container"></div>
+                                        </div>
+                                    </div>
+                                    <!--end::Form Group-->
+                                    <!--begin::Form Group-->
+
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="form-group fv-plugins-icon-container">
+                                            @Html.LabelFor(gi => gi.SubscriptionInfo.SetupAddress.NeighborhoodId, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                            @Html.DropDownListFor(gi => gi.SubscriptionInfo.SetupAddress.NeighborhoodId, (SelectList)ViewBag.NeigboorHoodsBySetup, HomeView.SelectNeigborhood, new { @disabled = "disabled", @id = "neighborhood-setup", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                            @Html.ValidationMessageFor(gi => gi.SubscriptionInfo.SetupAddress.NeighborhoodId)
+                                            <div class="fv-plugins-message-container"></div>
+                                            <div class="fv-plugins-message-container"></div>
+                                            <div class="fv-plugins-message-container"></div>
+                                        </div>
+                                        <!--end::Form Group-->
+                                    </div>
+                                </div>
+
+                                <!--begin::Form Group-->
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="form-group fv-plugins-icon-container">
+                                            @Html.LabelFor(gi => gi.SubscriptionInfo.SetupAddress.StreetId, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                            @Html.DropDownListFor(gi => gi.SubscriptionInfo.SetupAddress.StreetId, (SelectList)ViewBag.StreetsBySetup, HomeView.SelectStreet, new { @disabled = "disabled", @id = "street-setup", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                            @Html.ValidationMessageFor(gi => gi.SubscriptionInfo.SetupAddress.StreetId)
+                                            <div class="fv-plugins-message-container"></div>
+                                            <div class="fv-plugins-message-container"></div>
+                                        </div>
+                                    </div>
+                                    <!--end::Form Group-->
+                                    <!--begin::Form Group-->
+
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="form-group fv-plugins-icon-container">
+                                            @Html.LabelFor(gi => gi.SubscriptionInfo.SetupAddress.BuildingId, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                            @Html.DropDownListFor(gi => gi.SubscriptionInfo.SetupAddress.BuildingId, (SelectList)ViewBag.BuildingsBySetup, HomeView.SelectBuilding, new { @disabled = "disabled", @id = "building-setup", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                            @Html.ValidationMessageFor(gi => gi.SubscriptionInfo.SetupAddress.BuildingId)
+                                            <div class="fv-plugins-message-container"></div>
+                                            <div class="fv-plugins-message-container"></div>
+                                        </div>
+                                        <!--end::Form Group-->
+                                    </div>
+                                </div>
+
+                                <!--begin::Form Group-->
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="form-group fv-plugins-icon-container">
+                                            @Html.LabelFor(gi => gi.SubscriptionInfo.SetupAddress.ApartmentId, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                            @Html.DropDownListFor(gi => gi.SubscriptionInfo.SetupAddress.ApartmentId, (SelectList)ViewBag.ApartmentsBySetup, HomeView.SelectApartment, new { @disabled = "disabled", @id = "apartment-setup", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
+                                            @Html.ValidationMessageFor(gi => gi.SubscriptionInfo.SetupAddress.ApartmentId)
+                                            <div class="fv-plugins-message-container"></div>
+                                            <span hidden="" id="address-text"></span>
+                                            <div class="fv-plugins-message-container"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="form-group fv-plugins-icon-container">
+                                            @Html.LabelFor(gi => gi.SubscriptionInfo.SetupAddress.Floor, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                            @Html.EditorFor(gi => gi.SubscriptionInfo.SetupAddress.Floor, new { htmlAttributes = new { @type = "text", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg", @autocomplete = "off" } })
+                                            @Html.ValidationMessageFor(gi => gi.SubscriptionInfo.SetupAddress.Floor)
+                                            <div class="fv-plugins-message-container"></div>
+                                            <div class="fv-plugins-message-container"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="form-group fv-plugins-icon-container">
+                                            @Html.LabelFor(gi => gi.SubscriptionInfo.SetupAddress.PostalCode, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
+                                            @Html.EditorFor(gi => gi.SubscriptionInfo.SetupAddress.PostalCode, new { htmlAttributes = new { @type = "text", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg", @autocomplete = "off" } })
+                                            @Html.ValidationMessageFor(gi => gi.SubscriptionInfo.SetupAddress.PostalCode)
+                                            <div class="fv-plugins-message-container"></div>
+                                            <div class="fv-plugins-message-container"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
 
                         </div>
                         <!--end::Form Group-->
                         <!--end: Wizard Step 6-->
-                        <a href="altyapisonuc" class="btn btn-block font-weight-bolder btn-danger btn-hover-warning mt-12">Başvuru Gönder</a>
+                        <input type="submit" class="btn btn-block font-weight-bolder btn-danger btn-hover-warning mt-12" value="ass">
                         <!--end: Wizard Actions-->
                     </div>
                     <!--end::Form-->
-                </form>
+                }
             </div>
             <!--end::Content-->
         </div>
@@ -1267,6 +1355,18 @@
                 }
             });
 
+            $("#pstnSelect").change(function () {
+                var value = $("#pstnSelect option:selected").val();
+                if (value == "0") {
+                    $("#pstnContainer").hide();
+                }
+
+                else {
+                    $("#pstnContainer").show();
+                }
+            });
+
+
             CheckValidAndHideContainer("#GeneralInfo_SameSetupAddressByBilling", "#BillingAddressContainer")
             $("#GeneralInfo_SameSetupAddressByBilling").change(function () {
                 CheckValidAndHideContainer(this, "#BillingAddressContainer")
@@ -1287,6 +1387,7 @@
                 CheckValidAndHideContainer(this, "#CompanyContainer")
             });
 
+
             $("#GeneralInfo_CustomerTypeId").change(function () {
                 var value = $("#GeneralInfo_CustomerTypeId option:selected").val();
                 if (value=="1") {
@@ -1303,9 +1404,8 @@
                 }
             });
 
-
             $('#createNumberInput').click(function () {
-                $('#telephoneNumberInputContainer').append('<div class="input-container"><input type="button" class="remove-button" value="@MasterISS_Partner_WebSite.Localization.View.Remove"><input type="text" name="GeneralInfo.OtherPhoneNos" id="GeneralInfo_OtherPhoneNos"><br/></div>')
+                $('#telephoneNumberInputContainer').append('<div class="input-container"><input type="button" class="remove-button btn btn-block font-weight-bolder btn-danger btn-hover-warning mt-12" value="@MasterISS_Partner_WebSite.Localization.View.Remove"><input type="text" class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" name="GeneralInfo.OtherPhoneNos" id="GeneralInfo_OtherPhoneNos"><br/></div>')
                 $("#GeneralInfo_OtherPhoneNos").mask("9999999999");
             });
 
@@ -1433,6 +1533,11 @@
             var customerTypeSelect = $("#GeneralInfo_CustomerTypeId").find(":selected").val();
             if (customerTypeSelect != "") {
                 $("#GeneralInfo_CustomerTypeId").trigger('change');
+            }
+
+            var pstnSelectvalue = $("#pstnSelect").find(":selected").val()
+            if (pstnSelectvalue != "") {
+                $("#pstnSelect").trigger('change');
             }
 
         });

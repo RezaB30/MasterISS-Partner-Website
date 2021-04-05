@@ -26,9 +26,12 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         public int? SubscriptionRegistrationTypeId { get; set; }
 
         [Display(Name = "PSTNNo", ResourceType = typeof(Localization.Model))]
-        [RegularExpression(@"^((\d{3})(\d{3})(\d{2})(\d{2}))$", ErrorMessageResourceName = "ValidPhoneNumber", ErrorMessageResourceType = typeof(Localization.Validation))]
+        //[RegularExpression(@"^(((\d{3})) (\d{3})-(\d{2})(\d{2}))$", ErrorMessageResourceName = "ValidPhoneNumber", ErrorMessageResourceType = typeof(Localization.Validation))]
 
         public string PSTN { get; set; }
+
+        public int? HavePSTNId { get; set; }
+
 
         [Display(Name = "XDSLNoByExtraInfo", ResourceType = typeof(Localization.Model))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
@@ -162,9 +165,9 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         public TCIDCardWithChip TCIDCardWithChip { get; set; }
         public TCBirthCertificate TCBirthCertificate { get; set; }
 
-        [Display(Name = "BirthDate", ResourceType = typeof(Localization.Model))]
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
-        [RegularExpression(@"(((0|1)[0-9]|2[0-9]|3[0-1])\.(0[1-9]|1[0-2])\.((19|20)\d\d))$", ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "DateValid")]
+        //[Display(Name = "BirthDate", ResourceType = typeof(Localization.Model))]
+        //[Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        //[RegularExpression(@"(((0|1)[0-9]|2[0-9]|3[0-1])\.(0[1-9]|1[0-2])\.((19|20)\d\d))$", ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "DateValid")]
         public string BirthDate { get; set; }
 
         [Display(Name = "CardTypeId", ResourceType = typeof(Localization.Model))]
@@ -200,7 +203,7 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
         [Display(Name = "SelectedBirthMonth", ResourceType = typeof(Localization.Model))]
         public int? SelectedBirthMonth { get; set; }
-        
+
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
         [Display(Name = "SelectedBirthYear", ResourceType = typeof(Localization.Model))]
         public int? SelectedBirthYear { get; set; }
@@ -224,9 +227,9 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         [Display(Name = "District", ResourceType = typeof(Localization.Model))]
         public string District { get; set; }
 
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
-        [RegularExpression(@"(((0|1)[0-9]|2[0-9]|3[0-1])\.(0[1-9]|1[0-2])\.((19|20)\d\d))$", ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "DateValid")]
-        [Display(Name = "DateOfIssue", ResourceType = typeof(Localization.Model))]
+        //[Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        //[RegularExpression(@"(((0|1)[0-9]|2[0-9]|3[0-1])\.(0[1-9]|1[0-2])\.((19|20)\d\d))$", ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "DateValid")]
+        //[Display(Name = "DateOfIssue", ResourceType = typeof(Localization.Model))]
         public string DateOfIssue { get; set; }
 
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
@@ -238,7 +241,7 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         public int? DateOfIssueMonth { get; set; }
 
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
-        [Display(Name = "DateOfIssueYear ", ResourceType = typeof(Localization.Model))]
+        [Display(Name = "DateOfIssueYear", ResourceType = typeof(Localization.Model))]
         public int? DateOfIssueYear { get; set; }
 
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
@@ -256,9 +259,9 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
 
     public class TCIDCardWithChip
     {
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
-        [RegularExpression(@"(((0|1)[0-9]|2[0-9]|3[0-1])\.(0[1-9]|1[0-2])\.((19|20)\d\d))$", ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "DateValid")]
-        [Display(Name = "ExpiryDate", ResourceType = typeof(Localization.Model))]
+        //[Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
+        //[RegularExpression(@"(((0|1)[0-9]|2[0-9]|3[0-1])\.(0[1-9]|1[0-2])\.((19|20)\d\d))$", ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "DateValid")]
+        //[Display(Name = "ExpiryDate", ResourceType = typeof(Localization.Model))]
         public string ExpiryDate { get; set; }
 
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
@@ -285,7 +288,7 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
 
         [Display(Name = "ContactPhoneNo", ResourceType = typeof(Localization.Model))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
-        [RegularExpression(@"^((\d{3})(\d{3})(\d{2})(\d{2}))$", ErrorMessageResourceName = "ValidPhoneNumber", ErrorMessageResourceType = typeof(Localization.Validation))]
+        //[RegularExpression(@"^((\d{3})(\d{3})(\d{2})(\d{2}))$", ErrorMessageResourceName = "ValidPhoneNumber", ErrorMessageResourceType = typeof(Localization.Validation))]
         public string ContactPhoneNo { get; set; }
 
         [Display(Name = "CustomerTypeId", ResourceType = typeof(Localization.Model))]

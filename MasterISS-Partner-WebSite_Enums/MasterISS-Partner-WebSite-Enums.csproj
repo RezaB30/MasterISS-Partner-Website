@@ -48,6 +48,7 @@
     <Compile Include="Enums\DayOfWeekEnum.cs" />
     <Compile Include="Enums\ErrorCodesEnum.cs" />
     <Compile Include="Enums\FaultCodeEnum.cs" />
+    <Compile Include="Enums\HavePSTN.cs" />
     <Compile Include="Enums\NationalityList.cs" />
     <Compile Include="Enums\OperationTypeEnum.cs" />
     <Compile Include="Enums\PartnerTypeEnum.cs" />

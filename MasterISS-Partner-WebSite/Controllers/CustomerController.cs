@@ -22,7 +22,6 @@ namespace MasterISS_Partner_WebSite.Controllers
         private static Logger LoggerError = LogManager.GetLogger("AppLoggerError");
 
 
-
         // GET: Customer
         public ActionResult NewCustomer()
         {
@@ -142,10 +141,17 @@ namespace MasterISS_Partner_WebSite.Controllers
             ViewBag.MonthListByIssueDate = Monthlist(null);
             ViewBag.YearListByIssueDate = YearList(null);
 
+            ViewBag.HavePSTN = HavePSTN(null);
 
             return View();
         }
 
+        private string ReplacePhoneNo(string phoneNo)
+        {
+            var replacedNumber = phoneNo.Replace("(", "").Replace(")", "").Replace("-", "").Replace(" ", "");
+
+            return replacedNumber;
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -199,6 +205,12 @@ namespace MasterISS_Partner_WebSite.Controllers
                 }
                 if (ModelState.IsValid)
                 {
+                    addCustomerViewModel.GeneralInfo.ContactPhoneNo = ReplacePhoneNo(addCustomerViewModel.GeneralInfo.ContactPhoneNo);
+                    addCustomerViewModel.ExtraInfo.PSTN = ReplacePhoneNo(addCustomerViewModel.ExtraInfo.PSTN);
+
+                    DateTime birthDay = new DateTime(addCustomerViewModel.IDCard.SelectedBirthYear.Value, addCustomerViewModel.IDCard.SelectedBirthMonth.Value, addCustomerViewModel.IDCard.SelectedBirthDay.Value);
+                    addCustomerViewModel.IDCard.BirthDate = birthDay.ToString();
+
                     if (IsCustomerTypeIndividual((int)addCustomerViewModel.GeneralInfo.CustomerTypeId))
                     {
                         var individualResidencyBBK = addCustomerViewModel.Individual.ResidencyAddress.ApartmentId;
@@ -401,6 +413,13 @@ namespace MasterISS_Partner_WebSite.Controllers
             ViewBag.BuildingsByCorporativeCompany = addressInfo.BuildingList(addCustomerViewModel.CorporateInfo.CompanyAddress.StreetId ?? null, addCustomerViewModel.CorporateInfo.CompanyAddress.BuildingId ?? null);
             ViewBag.ApartmentsByCorporativeCompany = addressInfo.ApartmentList(addCustomerViewModel.CorporateInfo.CompanyAddress.BuildingId ?? null, addCustomerViewModel.CorporateInfo.CompanyAddress.ApartmentId ?? null);
 
+            ViewBag.DayList = DayList(addCustomerViewModel.IDCard.SelectedBirthDay ?? null);
+            ViewBag.MonthList = Monthlist(addCustomerViewModel.IDCard.SelectedBirthMonth ?? null);
+            ViewBag.YearList = YearList(addCustomerViewModel.IDCard.SelectedBirthYear ?? null);
+
+            ViewBag.HavePSTN = HavePSTN(addCustomerViewModel.ExtraInfo.HavePSTNId);
+
+
             return View(addCustomerViewModel);
 
         }
@@ -540,11 +559,31 @@ namespace MasterISS_Partner_WebSite.Controllers
             {
                 IDCard.TCIDCardWithChip = null;
                 RemoveModel("IDCard.TCIDCardWithChip");
+                DateTime issueDate = new DateTime(IDCard.TCBirthCertificate.DateOfIssueYear.Value, IDCard.TCBirthCertificate.DateOfIssueMonth.Value, IDCard.TCBirthCertificate.DateOfIssueDay.Value);
+                IDCard.TCBirthCertificate.DateOfIssue = issueDate.ToString("dd.MM.yyyy");
+
+                ViewBag.DayListByIssueDate = DayList(IDCard.TCBirthCertificate.DateOfIssueDay ?? null);
+                ViewBag.MonthListByIssueDate = Monthlist(IDCard.TCBirthCertificate.DateOfIssueMonth ?? null);
+                ViewBag.YearListByIssueDate = YearList(IDCard.TCBirthCertificate.DateOfIssueYear ?? null);
+
+                ViewBag.DayListByExpiryDate = DayList(null);
+                ViewBag.MonthListByExpiryDate = Monthlist(null);
+                ViewBag.YearListByExpiryDate = YearList(null);
             }
             else
             {
+                ViewBag.DayListByExpiryDate = DayList(IDCard.TCIDCardWithChip.ExpiryDay ?? null);
+                ViewBag.MonthListByExpiryDate = Monthlist(IDCard.TCIDCardWithChip.ExpiryMonth ?? null);
+                ViewBag.YearListByExpiryDate = YearList(IDCard.TCIDCardWithChip.ExpiryYear ?? null);
+
+                ViewBag.DayListByIssueDate = DayList(null);
+                ViewBag.MonthListByIssueDate = Monthlist(null);
+                ViewBag.YearListByIssueDate = YearList(null);
+
                 IDCard.TCBirthCertificate = null;
                 RemoveModel("IDCard.TCBirthCertificate");
+                DateTime expiryDate = new DateTime(IDCard.TCIDCardWithChip.ExpiryYear.Value, IDCard.TCIDCardWithChip.ExpiryMonth.Value, IDCard.TCIDCardWithChip.ExpiryDay.Value);
+                IDCard.TCIDCardWithChip.ExpiryDate = expiryDate.ToString("dd.MM.yyyy");
             }
         }
 
@@ -627,6 +666,15 @@ namespace MasterISS_Partner_WebSite.Controllers
         {
             var list = new SelectList(tckType.KeyValueItemResponse.Select(tck => new { Name = tck.Value, Value = tck.Key }), "Value", "Name", selectedValue);
             return list;
+        }
+
+        private SelectList HavePSTN(int? selectedValue)
+        {
+            var havePstnList = new LocalizedList<MasterISS_Partner_WebSite_Enums.Enums.HavePSTN, Localization.HavePSTN>().GetList(CultureInfo.CurrentCulture);
+
+            var selectList = new SelectList(havePstnList.Select(pstnL => new { Name = pstnL.Value, Value = pstnL.Key }), "Value", "Name", selectedValue);
+
+            return selectList;
         }
 
         private SelectList YearList(int? selectedValue)

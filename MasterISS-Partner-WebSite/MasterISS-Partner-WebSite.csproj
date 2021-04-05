@@ -256,6 +256,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FaultCodes.en-us.resx</DependentUpon>
     </Compile>
+    <Compile Include="Localization\HavePSTN.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HavePSTN.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Localization\HavePSTN.en-us.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HavePSTN.en-us.resx</DependentUpon>
+    </Compile>
     <Compile Include="Localization\OperationHistoryType.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -2070,6 +2080,7 @@
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\QueryInfrastructure\Index.cshtml" />
     <Content Include="Views\QueryInfrastructure\ServiceAvailability.cshtml" />
+    <Content Include="Views\Customer\asss.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2130,6 +2141,14 @@
     <EmbeddedResource Include="Localization\FaultCodes.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>FaultCodes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\HavePSTN.en-us.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>HavePSTN.en-us.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\HavePSTN.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>HavePSTN.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Localization\HomeView.en-us.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
