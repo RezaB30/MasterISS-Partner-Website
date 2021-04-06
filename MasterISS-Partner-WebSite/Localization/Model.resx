@@ -333,6 +333,9 @@
   <data name="HasModem" xml:space="preserve">
     <value>Modem Var Mı?</value>
   </data>
+  <data name="HavePSTNId" xml:space="preserve">
+    <value>Ev Telefonunuz Var mı?</value>
+  </data>
   <data name="IPAddress" xml:space="preserve">
     <value>IP Adres</value>
   </data>
@@ -447,6 +450,9 @@
   <data name="RegistrationType" xml:space="preserve">
     <value>Başvuru Türü</value>
   </data>
+  <data name="RendezvousTeam" xml:space="preserve">
+    <value>Randevu Ekibi</value>
+  </data>
   <data name="ReservationDate" xml:space="preserve">
     <value>Rezervasyon Tarihi</value>
   </data>
@@ -475,7 +481,7 @@
     <value>Aranan Kişi</value>
   </data>
   <data name="SearchedTaskNo" xml:space="preserve">
-    <value>Görev Numarasına Göre Ara</value>
+    <value>Görev Numarası</value>
   </data>
   <data name="SelectedBirthDay" xml:space="preserve">
     <value>Doğum Günü</value>
@@ -500,6 +506,9 @@
   </data>
   <data name="SetupAddress" xml:space="preserve">
     <value>Kurulum Adresi</value>
+  </data>
+  <data name="SetupTeam" xml:space="preserve">
+    <value>Kurulum Ekibi</value>
   </data>
   <data name="SexId" xml:space="preserve">
     <value>Cinsiyet</value>

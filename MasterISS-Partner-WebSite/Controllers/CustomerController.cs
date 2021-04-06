@@ -209,7 +209,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                     addCustomerViewModel.ExtraInfo.PSTN = ReplacePhoneNo(addCustomerViewModel.ExtraInfo.PSTN);
 
                     DateTime birthDay = new DateTime(addCustomerViewModel.IDCard.SelectedBirthYear.Value, addCustomerViewModel.IDCard.SelectedBirthMonth.Value, addCustomerViewModel.IDCard.SelectedBirthDay.Value);
-                    addCustomerViewModel.IDCard.BirthDate = birthDay.ToString();
+                    addCustomerViewModel.IDCard.BirthDate = birthDay.ToString("dd.MM.yyyy");
 
                     if (IsCustomerTypeIndividual((int)addCustomerViewModel.GeneralInfo.CustomerTypeId))
                     {
@@ -419,6 +419,14 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             ViewBag.HavePSTN = HavePSTN(addCustomerViewModel.ExtraInfo.HavePSTNId);
 
+
+            ViewBag.DayListByIssueDate = DayList(addCustomerViewModel.IDCard.TCBirthCertificate.DateOfIssueDay ?? null);
+            ViewBag.MonthListByIssueDate = Monthlist(addCustomerViewModel.IDCard.TCBirthCertificate.DateOfIssueMonth ?? null);
+            ViewBag.YearListByIssueDate = YearList(addCustomerViewModel.IDCard.TCBirthCertificate.DateOfIssueYear ?? null);
+
+            ViewBag.DayListByExpiryDate = DayList(addCustomerViewModel.IDCard.TCIDCardWithChip.ExpiryDay?? null);
+            ViewBag.MonthListByExpiryDate = Monthlist(addCustomerViewModel.IDCard.TCIDCardWithChip.ExpiryMonth ?? null);
+            ViewBag.YearListByExpiryDate = YearList(addCustomerViewModel.IDCard.TCIDCardWithChip.ExpiryYear ?? null);
 
             return View(addCustomerViewModel);
 

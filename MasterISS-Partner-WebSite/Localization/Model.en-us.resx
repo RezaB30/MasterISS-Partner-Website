@@ -333,6 +333,9 @@
   <data name="HasModem" xml:space="preserve">
     <value>Has Modem ?</value>
   </data>
+  <data name="HavePSTNId" xml:space="preserve">
+    <value>Do You Have a Home Phone?</value>
+  </data>
   <data name="IPAddress" xml:space="preserve">
     <value>IP Address</value>
   </data>
@@ -447,6 +450,9 @@
   <data name="RegistrationType" xml:space="preserve">
     <value>Registration Type</value>
   </data>
+  <data name="RendezvousTeam" xml:space="preserve">
+    <value>Rendezvous Team</value>
+  </data>
   <data name="ReservationDate" xml:space="preserve">
     <value>Reservation Date</value>
   </data>
@@ -475,7 +481,7 @@
     <value>Searched Person</value>
   </data>
   <data name="SearchedTaskNo" xml:space="preserve">
-    <value>Searched By Task No</value>
+    <value>Task No</value>
   </data>
   <data name="SelectedBirthDay" xml:space="preserve">
     <value>Birth Day</value>
@@ -500,6 +506,9 @@
   </data>
   <data name="SetupAddress" xml:space="preserve">
     <value>Setup Address</value>
+  </data>
+  <data name="SetupTeam" xml:space="preserve">
+    <value>Setup Team</value>
   </data>
   <data name="SexId" xml:space="preserve">
     <value>Gender</value>

@@ -1,0 +1,259 @@
+﻿@using MasterISS_Partner_WebSite.ViewModels.Setup.Response
+@using MasterISS_Partner_WebSite.Localization
+@model  TaskListDetailResponseViewModel
+@{
+    //ViewBag.Title = View.CustomerDetail;
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+    //var taskNo = ViewBag.TaskNo;
+}
+<div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="py-2">
+                <span class="text-dark-75 font-weight-bolder d-block font-size-h5">Müşteri Kullanıcı Bilgileri</span>
+                <span class="text-muted font-size-lg">@Html.DisplayFor(m => m.CustomerName)</span>
+            </div>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
+            </button>
+        </div>
+        <div class="modal-body">
+            <!--begin::Info-->
+            <div class="d-flex mb-3">
+                <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.Province)</span>
+                <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.Province)</span>
+            </div>
+            <div class="separator separator-dashed mt-1 my-2"></div>
+
+            <div class="d-flex mb-3">
+                <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.BBK)</span>
+                <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.BBK)</span>
+            </div>
+            <div class="separator separator-dashed mt-1 my-2"></div>
+
+            <div class="d-flex mb-3">
+                <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.City)</span>
+                <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.City)</span>
+            </div>
+            <div class="separator separator-dashed mt-1 my-2"></div>
+
+            <div class="d-flex mb-3">
+                <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.CustomerType)</span>
+                <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.CustomerType)</span>
+            </div>
+            <div class="separator separator-dashed mt-1 my-2"></div>
+
+            <div class="d-flex mb-3">
+                <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.HasModem)</span>
+                <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.HasModem)</span>
+            </div>
+            <div class="separator separator-dashed mt-1 my-2"></div>
+
+            <div class="d-flex mb-3">
+                <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.ModemName)</span>
+                <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.ModemName)</span>
+            </div>
+            <div class="separator separator-dashed mt-1 my-2"></div>
+
+            <div class="d-flex mb-3">
+                <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.XDSLType)</span>
+                <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.XDSLType)</span>
+            </div>
+            <div class="separator separator-dashed mt-1 my-2"></div>
+
+            <div class="d-flex mb-3">
+                <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.CustomerNo)</span>
+                <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.CustomerNo)</span>
+            </div>
+            <div class="separator separator-dashed mt-1 my-2"></div>
+
+            <div class="d-flex mb-3">
+                <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.PSTN)</span>
+                <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.PSTN)</span>
+            </div>
+            <div class="separator separator-dashed mt-1 my-2"></div>
+
+            <h2>Detaylar</h2>
+            <div class="separator separator-info mt-1 my-2"></div>
+
+            <div>
+                @foreach (var item in Model.TaskUpdatesDetailList)
+                {
+                    <div>
+                        <div class="d-flex mb-3">
+                            <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => item.FaultCodes)</span>
+                            <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => item.FaultCodes)</span>
+                        </div>
+                        <div class="separator separator-dashed mt-1 my-2"></div>
+
+                        <div class="d-flex mb-3">
+                            <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => item.CreationDate)</span>
+                            <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => item.CreationDate)</span>
+                        </div>
+                        <div class="separator separator-dashed mt-1 my-2"></div>
+
+                        <div class="d-flex mb-3">
+                            <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => item.Description)</span>
+                            <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => item.Description)</span>
+                        </div>
+                        <div class="separator separator-dashed mt-1 my-2"></div>
+
+                        <div class="d-flex mb-3">
+                            <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => item.ReservationDate)</span>
+                            <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => item.ReservationDate)</span>
+                        </div>
+                        <div class="separator separator-dashed mt-1 my-2"></div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+@*<div>
+        <h3>@View.CustomerSessionInfo</h3>
+        <input type="button" class="btn btn-info" id="GetSessionInfo" value="@View.Load" />
+        <div id="SessionInfo"></div>
+    </div>
+
+    <div>
+        <h3>@View.CustomerCredentials</h3>
+        <input type="button" class="btn btn-info" id="GetCredentialsInfo" value="@View.Load" />
+        <div id="CredentialsInfo"></div>
+    </div>
+
+    <div>
+        <h3>@View.CustomerLineDetails</h3>
+        <input type="button" id="GetLineInfo" class="btn btn-info" value="@View.Load" />
+        <div id="LineInfo"></div>
+    </div>
+
+    <div>
+        @using (Html.BeginForm("CustomerContractInfo", "Setup", new { taskNo }, FormMethod.Post))
+        {
+            <h3>@View.CustomerContractInfo</h3>
+            <input type="submit" class="btn btn-info" id="GetCustomerDetail" value="@View.DownloadTheContract" />
+        }
+
+        @Html.Raw(TempData["CustomerContractResponse"])
+    </div>
+
+    <div class="table-container">
+        <h3>@View.UpdateTaskStatus</h3>
+        @Html.ActionLink(View.Update, "UpdateTaskStatus", new { taskNo }, new { @class = "btn btn-info" })
+
+        @Html.Raw(TempData["CustomerUpdateStatusError"])
+    </div>
+
+    <div>
+        <div class="table-container">
+            <h3>@View.UploadDocument</h3>
+            @Html.ActionLink(View.Upload, "UploadDocument", new { taskNo }, new { @class = "btn btn-info" })
+        </div>
+    </div>
+
+    <div>
+        <h3>@View.UpdateGPS</h3>
+        @Html.ActionLink(View.Update, "UpdateClientLocation", new { taskNo }, new { @class = "btn btn-info" })
+        @Html.Raw(TempData["UpdateGPSResponse"])
+    </div>
+
+    <div>
+        <h3>Yüklenen fotoları gör</h3>
+        <input type="button" class="btn btn-info" id="GetFileList" value="@View.Load" />
+        <div id="file-list-container"></div>
+    </div>*@
+
+
+@section JavaScript{
+    @*<script>
+            $(document).ready(function () {
+
+                $("#GetFileList").click(function () {
+                    $("#GetFileList").hide();
+                    $.ajax({
+                        url: '@Url.Action("GetFileList", "Setup")',
+                        type: 'POST',
+                        data: {
+                            taskNo : '@taskNo'
+                        },
+                        dataType: 'json',
+                        complete: function (data, status) {
+                            if (status = "success") {
+                                var cultureInfo = '@System.Globalization.CultureInfo.CurrentCulture.Name';
+                                var area = $("#file-list-container");
+                                $.each(data.responseJSON.list, function (item, value) {
+                                    item = item + 1;
+                                    area.append('<a href="/' + cultureInfo + '/Setup/GetFileTask?fileName=' + value + '&taskNo=' +@taskNo+'" target="_blank">"' + item +'.foto" </a><br />');
+                                });
+                            }
+                            else {
+                                console.log("Failed Get Staff Hours");
+                            }
+                        }
+                    });
+                });
+
+                $("#GetCustomerDetail").click(function () {
+                    $("#GetCustomerDetail").hide();
+                });
+
+                $("#GetSessionInfo").click(function () {
+                    $("#GetSessionInfo").hide();
+                    $.ajax({
+                        url: '@Url.Action("CustomerSessionInfo", "Setup")',
+                        type: 'POST',
+                        data: {
+                            taskNo : '@taskNo'
+                        },
+                        dataType: 'html',
+                        success: function (data) {
+                            $("#SessionInfo").html(data);
+                        },
+                    });
+                });
+
+                $("#GetCredentialsInfo").click(function () {
+                    $("#GetCredentialsInfo").hide();
+                    $.ajax({
+                        url: '@Url.Action("CustomerCredentialsInfo", "Setup")',
+                        type: 'POST',
+                        data: {
+                            taskNo: '@taskNo'
+                        },
+                        dataType: 'html',
+                        success: function (data) {
+                            $("#CredentialsInfo").html(data);
+                        },
+                    });
+                });
+
+                $("#GetLineInfo").click(function () {
+                    $("#GetLineInfo").hide();
+                    $.ajax({
+                        url: '@Url.Action("CustomerLineInfo", "Setup")',
+                        type: 'POST',
+                        data: {
+                            taskNo : '@taskNo'
+                        },
+                        dataType: 'html',
+                        success: function (data) {
+                            $("#LineInfo").html(data);
+                        },
+                    });
+                });
+
+            });
+        </script>*@
+}

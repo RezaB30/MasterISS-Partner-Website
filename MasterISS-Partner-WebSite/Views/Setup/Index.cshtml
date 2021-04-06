@@ -8,167 +8,376 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var search = ViewBag.Search as GetTaskListRequestViewModel ?? new GetTaskListRequestViewModel();
 }
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <!--begin::Subheader-->
+    <div class="subheader py-2 py-lg-6 subheader-transparent" id="kt_subheader">
+        <div class="container">
 
-<div align="center">
-    @using (Html.BeginForm("Index", "Setup", FormMethod.Get))
-    {
-        <div class="form-group">
-            @Html.LabelFor(m => search.TaskListStartDate)
-            @Html.EditorFor(m => search.TaskListStartDate, new { htmlAttributes = new { placeholder = DateTime.Now.ToString("dd.MM.yyyy HH:mm") } })
-            @Html.ValidationMessageFor(m => search.TaskListStartDate)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => search.TaskListEndDate)
-            @Html.EditorFor(m => search.TaskListEndDate, new { htmlAttributes = new { placeholder = DateTime.Now.ToString("dd.MM.yyyy HH:mm") } })
-            @Html.ValidationMessageFor(m => search.TaskListEndDate)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => search.SearchedName)
-            @Html.EditorFor(m => search.SearchedName)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => search.SearchedTaskNo)
-            @Html.EditorFor(m => search.SearchedTaskNo, new { htmlAttributes = new { type = "text" } })
-        </div>
-
-        <input type="submit" class=" btn btn-warning" value="@View.Filter" />
-    }
-</div>
-
-@Html.Raw(TempData["GetTaskDetailError"])
-
-@if (ViewBag.ValidationError == null && ViewBag.Max30Days == null && ViewBag.StartTimeBiggerThanEndTime == null && ViewBag.ErrorMessage == null)
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().TaskNo)</th>
-                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().XDSLNo)</th>
-                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().ContactName)</th>
-                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().TaskIssueDate)</th>
-                <th>müşteriyi ara</th>
-                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Address)</th>
-                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().TaskStatus)</th>
-                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().TaskType)</th>
-                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().ReservationDate)</th>
-                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().RendezvousTeamStaffName)</th>
-                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().SetupTeamStaffName)</th>
-                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().FaultCodesDisplayText)</th>
-                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().SetupStaffEnteredMessage)</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
+            @using (Html.BeginForm("Index", "Setup", FormMethod.Get, new { @class = "mb-15 my-8" }))
             {
-                <tr>
-                    <td>@Html.DisplayFor(modelItem => item.TaskNo)</td>
-                    <td>@Html.DisplayFor(modelItem => item.XDSLNo)</td>
-                    <td>@Html.DisplayFor(modelItem => item.ContactName)</td>
-                    <td>@Html.DisplayFor(modelItem => item.TaskIssueDate)</td>
-                    <td>@Html.ActionLink("ara", "CallCustomer", new { taskNo = item.TaskNo })</td>
-                    <td>@Html.DisplayFor(modelItem => item.Address)</td>
-                    <td>@Html.DisplayFor(modelItem => item.TaskStatus)</td>
-                    <td>@Html.DisplayFor(modelItem => item.TaskType)</td>
-                    <td>@Html.DisplayFor(modelItem => item.ReservationDate)</td>
-                    <td>@Html.DisplayFor(modelItem => item.RendezvousTeamStaffName)</td>
-                    <td>@Html.DisplayFor(modelItem => item.SetupTeamStaffName)</td>
-                    <td>@Html.DisplayFor(modelItem => item.FaultCodesDisplayText)</td>
-                    <td>@Html.DisplayFor(modelItem => item.SetupStaffEnteredMessage)</td>
+                <div class="row mb-8">
+                    <div class="col-lg-4 mb-lg-0 mb-12">
+                        <label>Tarih Aralığı:</label>
+                        <div class="input-daterange input-group" id="kt_datepicker">
+                            @Html.EditorFor(m => search.TaskListStartDate, new { htmlAttributes = new { @placeholder = DateTime.Now.ToString("dd.MM.yyyy HH:mm"), @class = "form-control" } })
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                    <i class="la la-ellipsis-h"></i>
+                                </span>
+                            </div>
+                            @Html.EditorFor(m => search.TaskListEndDate, new { htmlAttributes = new { @placeholder = DateTime.Now.ToString("dd.MM.yyyy HH:mm"), @class = "form-control" } })
+                        </div>
+                    </div>
+                    <div class="col-lg-2 mb-lg-0 mb-6">
+                        @Html.LabelFor(m => search.SearchedName)
+                        @Html.EditorFor(m => search.SearchedName, new { htmlAttributes = new { @placeholder = Html.DisplayNameFor(m => search.SearchedName), @class = "form-control datatable-input", @data_col_index = "1" } })
+                    </div>
+                    <div class="col-lg-2 mb-lg-0 mb-6">
+                        <label>Görev Türü:</label>
+                        <select class="form-control datatable-input" data-col-index="2">
+                            <option value="">Seçim Yapınız</option>
+                            <option value="Kurulum">Kurulum</option>
+                            <option value="Arıza">Arıza</option>
+                            <option value="ortak Çalışma">Ortak çalışma</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-2 mb-lg-0 mb-6">
+                        <label>Görev Durumu:</label>
+                        <select class="form-control datatable-input" data-col-index="2">
+                            <option value="">Seçim Yapınız</option>
+                            <option value="1">Arıza Yok</option>
+                            <option value="2">Geçersiz adres</option>
+                            <option value="3">Telekom Hat Arizası</option>
+                            <option value="4">İstek İptal Edildi</option>
+                            <option value="5">Modem Arızası</option>
+                            <option value="6">Telekom Genel Arızası</option>
+                            <option value="7">Bina Kurulum Hatası</option>
+                            <option value="8">Müşteriye Ulaşılamadı</option>
+                            <option value="9">Randevu Alındı</option>
+                            <option value="10">Kurulum Tamamlandı</option>
+                            <option value="11">Müşteri Kurulumu Yaptı</option>
+                            <option value="12">Yeni Rezervasyon Bekleniyor.</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-2 mb-lg-0 mb-6">
+                        @Html.LabelFor(m => search.SearchedTaskNo)
+                        @Html.EditorFor(m => search.SearchedTaskNo, new { htmlAttributes = new { @class = "form-control datatable-input", @data_col_index = "4", @type = "text" } })
+                    </div>
+                </div>
 
-                    @if (User.IsInRole("Admin") || User.IsInRole("RendezvousTeam"))
-                    {
-                        if (!string.IsNullOrEmpty(item.SetupTeamStaffName) && item.IsCorfirmation == false)
-                        {
-                            <td>@Html.ActionLink("teyit ver", "GiveConfirmation", "Setup", new { taskNo = item.TaskNo }, null)</td>
-                        }
-                        if (string.IsNullOrEmpty(item.SetupTeamStaffName))
-                        {
-                            <td>@Html.ActionLink("kurulum ekibine ata", "ShareSetupStaff", "Setup", new { BBK = item.BBK, taskNo = item.TaskNo }, null)</td>
-                        }
-                        else
-                        {
-                            <td>@Html.ActionLink("başka bir kurulum ekibe ata", "ShareSetupStaff", "Setup", new { taskNo = item.TaskNo, BBK = item.BBK }, null)</td>
-                        }
-                    }
-                    @if (User.IsInRole("Admin"))
-                    {
-                        if (!string.IsNullOrEmpty(item.RendezvousTeamStaffName) && string.IsNullOrEmpty(item.SetupTeamStaffName))
-                        {
-                            <td>@Html.ActionLink("bu görevi başka bir randevu ekibine ata", "ListPartnerRendezvousTeam", "Setup", new { BBK = item.BBK, taskNo = item.TaskNo }, null)</td>
-                        }
-                        if (!string.IsNullOrEmpty(item.RendezvousTeamStaffName) && !string.IsNullOrEmpty(item.SetupTeamStaffName))
-                        {
-                            <td>@Html.ActionLink("Görevi havuza at", "SendTaskToScheduler", "Setup", new { taskNo = item.TaskNo }, null)</td>
-                        }
-                    }
-                    <td>@Html.ActionLink(View.CustomerInfo, "CustomerDetail", "Setup", new { taskNo = item.TaskNo }, new { @class = "btn btn-success" })</td>
-                    <td><a href="https://www.google.com/maps/search/?api=1&query=@item.AddressLatitudeandLongitude[0],@item.AddressLatitudeandLongitude[1]" target="_blank">@View.RouteMap</a></td>
-                </tr>
+                <div class="row mt-8">
+                    <div class="col-lg-2 mb-lg-0 mb-6">
+                        @Html.ValidationMessageFor(m => search.TaskListStartDate)
+                    </div>
+                    <div class="col-lg-2 mb-lg-0 mb-6">
+                        @Html.ValidationMessageFor(m => search.TaskListEndDate)
+                    </div>
+                </div>
+
+                <div class="row mt-8">
+                    <div class="col-lg-12">
+                        <button type="submit" class="btn btn-primary btn-primary--icon" id="kt_search">
+                            <span>
+                                <i class="la la-search"></i>
+                                <span>@View.Filter</span>
+                            </span>
+                        </button>&nbsp;&nbsp;
+                        <button type="button" class="btn btn-secondary btn-secondary--icon" id="kt_reset">
+                            <span>
+                                <i class="la la-close"></i>
+                                <span>Sıfırla</span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
             }
-        </tbody>
-    </table>
-    if (Model.TotalItemCount > 0)
-    {
-        <div>
-            @Html.PagedListPager(Model, page => Url.Action("Index", "Setup", new { page }))
-        </div>
-        <div>
-            <span>
-                @View.Total @Model.TotalItemCount @View.RecordFound @View.OnThisPage @Model.FirstItemOnPage @View.To @Model.LastItemOnPage @View.Showing
-            </span>
-        </div>
-    }
-}
-else
-{
-    <div align="center">
-        <div class="text-danger">
-            <span>@ViewBag.Max30Days</span>
-            <span>@ViewBag.ErrorMessage</span>
-            <span>@ViewBag.StartTimeBiggerThanEndTime</span>
+
+            <span style="color:red">@Html.Raw(TempData["GetTaskDetailError"])</span>
+
+            @if (ViewBag.ValidationError == null && ViewBag.Max30Days == null && ViewBag.StartTimeBiggerThanEndTime == null && ViewBag.ErrorMessage == null)
+            {
+                <div class="row">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-xl-4">
+                            <!--begin::Card-->
+                            <div class="card card-custom gutter-b card-stretch">
+                                <div class=" ribbon ribbon-left">
+                                    <div class="ribbon-target bg-info" style="top: 10px; left: -2px;">@Html.DisplayFor(modelItem => item.TaskStatus)</div>
+                                </div>                                                    <!--begin::Body-->
+                                <div class="card-body pt-4 d-flex flex-column justify-content-between">
+                                    <!--begin::Toolbar-->
+                                    <div class="d-flex justify-content-end">
+                                        <div class="dropdown dropdown-inline" data-toggle="tooltip" title="" data-placement="left" data-original-title="Quick actions">
+                                            <a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="ki ki-bold-more-hor"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
+                                                <!--begin::Navigation-->
+                                                <ul class="navi navi-hover">
+                                                    <li class="navi-header font-weight-bold py-4">
+                                                        <span class="font-size-lg">İşlem Menüsü</span>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
+                                                        </button>
+                                                    </li>
+                                                    <li class="navi-separator mb-3 opacity-70"></li>
+                                                    <li class="navi-item">
+                                                        <div class="navi-link">
+                                                            <span class="navi-text" data-toggle="modal" data-target="#exampleModalCenter2">
+                                                                <span class="btn-sm btn btn-block btn-outline-info">Oturum Bilgileri</span>
+                                                            </span>
+                                                        </div>
+                                                    </li>
+
+
+                                                    <li class="navi-item">
+                                                        <div class="navi-link">
+                                                            <span class="navi-text" data-toggle="modal" data-target=".exampleModalCenter">
+                                                                <input class="btn-sm btn btn-block btn-outline-info" value="Kullanıcı Bilgileri" id="customer-info-button" dataValue="@item.TaskNo" />
+                                                            </span>
+                                                        </div>
+                                                    </li>
+
+                                                    <li class="navi-item">
+                                                        <div class="navi-link">
+                                                            <span class="navi-text" data-toggle="modal" data-target="#exampleModalCenter3">
+                                                                <span class="btn-sm btn btn-block btn-outline-info">Hat Bilgileri</span>
+                                                            </span>
+                                                        </div>
+
+                                                    </li>
+
+                                                    <li class="navi-item">
+                                                        <a href="https://netspeed.com.tr/sozlesme/basvuruformuvesozlesme.pdf" target="_blank" class="navi-link">
+                                                            <span class="navi-text">
+                                                                <span class="btn-sm btn btn-block btn-outline-info">Sözleşme İndir</span>
+                                                            </span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="navi-item">
+                                                        <div class="navi-link">
+                                                            <span class="navi-text" data-toggle="modal" data-target="#exampleModalCenter5">
+                                                                <span class="btn-sm btn btn-block btn-outline-info">Belge Yükle</span>
+                                                            </span>
+                                                        </div>
+
+                                                    </li>
+                                                    <li class="navi-item">
+                                                        <div class="navi-link">
+                                                            <span class="navi-text" data-toggle="modal" data-target="#exampleModalCenter6">
+                                                                <span class="btn-sm btn btn-block btn-outline-info">Konum Değiştir</span>
+                                                            </span>
+                                                        </div>
+
+                                                    </li>
+                                                    <li class="navi-separator mt-3 opacity-70"></li>
+                                                    <li class="navi-footer py-4">
+                                                        <a class="btn btn-light-warning btn-block text-info text-hover-white info font-weight-bold btn-sm" data-toggle="modal" data-target="#exampleModalCenter4">
+                                                            <i class="ki ki-plus text-info icon-sm"></i>Görev Değiştir Not Ekle
+                                                        </a>
+                                                    </li>
+                                                </ul> <!--end::Navigation-->
+                                            </div>
+                                        </div>
+                                    </div> <!--end::Toolbar--> <!--begin::User-->
+                                    <div class="d-flex align-items-center my-4 mb-2">
+
+                                        <!--begin::Title-->
+                                        <div class="d-flex flex-column">
+
+                                            <span class=" font-weight-bold text-hover-primary font-size-h5 mb-0">@Html.DisplayFor(modelItem => item.ContactName)</span>
+                                        </div>
+                                        <!--end::Title-->
+                                    </div>
+                                    <div class="separator separator-dashed mt-2 my-2"></div> <!--end::User--> <!--begin::Info-->
+                                    <div class="d-flex mb-2">
+                                        <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.FirstOrDefault().TaskNo)</span>
+                                        <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(modelItem => item.TaskNo)</span>
+                                    </div>
+                                    <div class="separator separator-dashed mt-1 my-1"></div>
+                                    <div class="d-flex mb-2">
+                                        <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.FirstOrDefault().XDSLNo)</span>
+                                        <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(modelItem => item.XDSLNo)</span>
+                                    </div>
+                                    <div class="separator separator-dashed mt-1 my-1"></div>
+                                    <div class="d-flex mb-2">
+                                        <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.FirstOrDefault().TaskIssueDate)</span>
+                                        <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(modelItem => item.TaskIssueDate)</span>
+                                    </div>
+                                    <div class="separator separator-dashed mt-1 my-1"></div>
+                                    <div class="d-flex mb-2">
+                                        <span class="text-dark-50 flex-root font-weight-bold">müşteriyi ara</span>
+                                        <span class="text-dark flex-root font-weight-bold">@Html.ActionLink("ara", "CallCustomer", new { taskNo = item.TaskNo })</span>
+                                    </div>
+                                    <div class="separator separator-dashed mt-1 my-1"></div>
+                                    <div class="d-flex mb-2">
+                                        <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.FirstOrDefault().TaskType)</span>
+                                        <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(modelItem => item.TaskType)</span>
+                                    </div>
+                                    <div class="separator separator-dashed mt-1 my-1"></div>
+                                    <div class="d-flex mb-2">
+                                        <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.FirstOrDefault().ReservationDate)</span>
+                                        <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(modelItem => item.ReservationDate)</span>
+                                    </div>
+                                    <div class="separator separator-dashed mt-1 my-1"></div>
+                                    <div class="d-flex mb-2">
+                                        <span class="text-dark-50 flex-root font-weight-bold">
+                                            <a href="https://www.google.com/maps/search/?api=1&query=@item.AddressLatitudeandLongitude[0],@item.AddressLatitudeandLongitude[1]" target="_blank" class="btn btn-outline-info btn-sm">
+                                                <i class="fas fa-map-marker-alt button"></i>Kurulum Adresi
+                                            </a>
+                                        </span>
+                                        <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(modelItem => item.Address)</span>
+                                    </div>
+
+                                    <div class="separator separator-dashed mt-1 my-2"></div>
+                                    <div class="d-flex mb-2">
+                                        <span class="text-info flex-root font-weight-bold">@Html.DisplayNameFor(model => model.FirstOrDefault().SetupStaffEnteredMessage)</span>
+                                        <span class="text-dark-50 flex-root font-weight">@Html.DisplayFor(modelItem => item.SetupStaffEnteredMessage)</span>
+                                    </div>
+
+                                    <div class="separator separator-dashed mt-1 my-2"></div>
+                                    <div class="d-flex mb-2">
+                                        <span class="text-info flex-root font-weight-bold">@Html.DisplayNameFor(model => model.FirstOrDefault().FaultCodesDisplayText)</span>
+                                        <span class="text-dark-50 flex-root font-weight">@Html.DisplayFor(modelItem => item.FaultCodesDisplayText)</span>
+                                    </div>
+
+                                    <div class=" justify-content-center">
+
+                                        <hr class="my-4 bg-secondary">
+                                        <div class="d-flex mb-2">
+                                            <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.FirstOrDefault().RendezvousTeamStaffName)</span>
+                                            <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(modelItem => item.RendezvousTeamStaffName)</span>
+                                        </div>
+                                        <div class="separator separator-dashed mt-1 my-1"></div>
+                                        <div class="d-flex mb-2">
+                                            <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.FirstOrDefault().SetupTeamStaffName)</span>
+                                            <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(modelItem => item.SetupTeamStaffName)</span>
+                                        </div>
+
+                                        @if (User.IsInRole("Admin") || User.IsInRole("RendezvousTeam"))
+                                        {
+                                            if (!string.IsNullOrEmpty(item.SetupTeamStaffName) && item.IsCorfirmation == false)
+                                            {
+                                                <div class="separator separator-dashed mt-1 my-1"></div>
+                                                <div class="d-flex mb-2">
+                                                    <span class="navi-text">
+                                                        @Html.ActionLink("teyit ver", "GiveConfirmation", "Setup", new { taskNo = item.TaskNo }, new { @class = "btn-large my-2 btn btn-outline-success" })
+                                                        &nbsp &nbsp &nbsp
+                                                    </span>
+                                                </div>
+                                            }
+                                            if (string.IsNullOrEmpty(item.SetupTeamStaffName))
+                                            {
+                                                <span class="navi-text">
+                                                    @Html.ActionLink("kurulum ekibine ata", "ShareSetupStaff", "Setup", new { BBK = item.BBK, taskNo = item.TaskNo }, new { @class = "btn-sm my-2 btn btn-outline-primary" })
+                                                    &nbsp &nbsp &nbsp
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <span class="navi-text">
+                                                    @Html.ActionLink("başka bir ekibe ata ", "ShareSetupStaff", "Setup", new { taskNo = item.TaskNo, BBK = item.BBK }, new { @class = "btn-sm my-2 btn btn-outline-primary" })
+                                                    &nbsp &nbsp &nbsp
+                                                </span>
+                                            }
+                                        }
+                                        @if (User.IsInRole("Admin"))
+                                        {
+                                            if (!string.IsNullOrEmpty(item.RendezvousTeamStaffName) && !string.IsNullOrEmpty(item.SetupTeamStaffName))
+                                            {
+                                                <span class="navi-text">
+                                                    @Html.ActionLink("tekrar Havuza Aktar ", "SendTaskToScheduler", "Setup", new { taskNo = item.TaskNo }, new { @class = "btn-sm my-2 btn btn-outline-danger" })
+                                                    &nbsp &nbsp &nbsp
+                                                </span>
+                                            }
+                                            if (!string.IsNullOrEmpty(item.RendezvousTeamStaffName) && string.IsNullOrEmpty(item.SetupTeamStaffName))
+                                            {
+                                                <span class="navi-text">
+                                                    @Html.ActionLink("başka randevu ekibi ", "ListPartnerRendezvousTeam", "Setup", new { BBK = item.BBK, taskNo = item.TaskNo }, new { @class = "btn-sm my-2 btn btn-outline-danger" })
+                                                    &nbsp &nbsp &nbsp
+                                                </span>
+                                            }
+                                        }
+                                    </div> <!--end::Info--> <!--end::Card Body-->
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div> <!--end::Info--> <!--end::Card Body-->
+            }
+            @if (Model.TotalItemCount > 0)
+            {
+                <div class="card card-custom">
+                    <div class="card-body py-7">
+                        <!--begin::Pagination-->
+                        <div class="d-flex justify-content-between align-items-center flex-wrap">
+                            <div class="d-flex flex-wrap mr-3">
+                                @Html.PagedListPager(Model, page => Url.Action("Index", "Setup", new { page }))
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <span class="text-muted"> @View.Total @Model.TotalItemCount @View.RecordFound @View.OnThisPage @Model.FirstItemOnPage @View.To @Model.LastItemOnPage @View.Showing</span>
+                            </div>
+                        </div>
+                        <!--end:: Pagination-->
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div align="center">
+                    <div class="text-danger">
+                        <span>@ViewBag.Max30Days</span>
+                        <span>@ViewBag.ErrorMessage</span>
+                        <span>@ViewBag.StartTimeBiggerThanEndTime</span>
+                    </div>
+                </div>
+            }
+            <div class="text-danger">
+                @Html.Raw(TempData["SendTaskToSchedulerError"])
+                @Html.Raw(TempData["GeneralError"])
+            </div>
+
         </div>
     </div>
-}
+</div>
 
-@Html.Raw(TempData["SendTaskToSchedulerError"])
-@Html.Raw(TempData["GeneralError"])
+<div class="modal fade exampleModalCenter"  data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+        <div id="CustomerInfoContainer">
+        </div>
+</div>
 
 @section Javascript{
+    @*<script src="~/Scripts/js/custom-js/dropzonejs.js"></script>*@
+
+
+    @*<input class="btn-sm btn btn-block btn-outline-info" value="Kullanıcı Bilgileri" id="customer-info-button" dataValue="@item.TaskNo" />*@
+
     <script>
-        $(function () {
-            @*$("#send-scheduler").click(function () {
-                var array = [];
-                $('input[name="SelectedTask"]:checked').each(function () {
-                    var getValue = this.value;
-                    array.push(getValue);
-                });
 
-                var postData = { taskNos: array };
+        $("#customer-info-button").click(function () {
+            var dataValue = $(this).attr("dataValue");
                 $.ajax({
-                    url: '@Url.Action("SendTaskToScheduler", "Setup")',
-                    type: "POST",
-                    data: postData,
-                    dataType: "json",
-                    traditional:true,
-                    complete: function (data, status) {
-                        if (status == "success") {
-                            window.location.href = data.responseJSON.Url
-                        }
-                        else {
-                            console.log("Failed Send Scheduler");
-                        }
-                    }
+                    url: '@Url.Action("CustomerDetail", "Setup")',
+                    type: 'POST',
+                    data: {
+                        taskNo : dataValue
+                    },
+                    dataType: 'html',
+                    success: function (data) {
+                        $("#CustomerInfoContainer").html(data);
+                    },
                 });
+            });
 
-            });*@
 
+
+        $(function () {
+            $(".pagination-container").children().children().children().addClass("btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1");
+            $("li.active").children().addClass("btn btn-info");
             $("#search_TaskListStartDate").mask("99.99.9999 99:99");
             $("#search_TaskListEndDate").mask("99.99.9999 99:99");
             $("#search_SearchedTaskNo").mask("99999");
         });
-
     </script>
 }

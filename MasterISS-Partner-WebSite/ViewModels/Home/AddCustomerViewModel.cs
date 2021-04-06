@@ -26,10 +26,9 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         public int? SubscriptionRegistrationTypeId { get; set; }
 
         [Display(Name = "PSTNNo", ResourceType = typeof(Localization.Model))]
-        //[RegularExpression(@"^(((\d{3})) (\d{3})-(\d{2})(\d{2}))$", ErrorMessageResourceName = "ValidPhoneNumber", ErrorMessageResourceType = typeof(Localization.Validation))]
-
         public string PSTN { get; set; }
-
+        
+        [Display(Name = "HavePSTNId", ResourceType = typeof(Localization.Model))]
         public int? HavePSTNId { get; set; }
 
 

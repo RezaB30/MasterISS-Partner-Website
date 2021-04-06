@@ -11,6 +11,7 @@ namespace MasterISS_Partner_WebSite.ViewModels.Setup.Response
     {
         [Display(ResourceType = typeof(Localization.Model), Name = "CustomerNo")]
         public string CustomerNo { get; set; }
+        public string CustomerName { get; set; }
 
         [Display(ResourceType = typeof(Localization.Model), Name = "Province")]
         public string Province { get; set; }

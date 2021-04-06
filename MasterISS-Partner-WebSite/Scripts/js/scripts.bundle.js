@@ -41,6 +41,8 @@ var KTApp = function() {
         });
     }
 
+    $(".field-validation-error").css({ "color": "red"});
+
     var initPopovers = function() {
         // init bootstrap popover
         $('[data-toggle="popover"]').each(function() {

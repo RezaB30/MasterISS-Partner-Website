@@ -2053,7 +2053,7 @@
     <Content Include="Views\Shared\DisplayTemplates\DateTimeConverted.cshtml" />
     <Content Include="Views\Setup\Index.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\HasModemFormat.cshtml" />
-    <Content Include="Views\Setup\CustomerDetail.cshtml" />
+    <Content Include="Views\Setup\_CustomerDetail.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\IsBoolFormat.cshtml" />
     <Content Include="Views\Setup\_SessionInfo.cshtml" />
     <Content Include="Views\Setup\_CredentialsInfo.cshtml" />
@@ -2081,6 +2081,7 @@
     <Content Include="Views\QueryInfrastructure\Index.cshtml" />
     <Content Include="Views\QueryInfrastructure\ServiceAvailability.cshtml" />
     <Content Include="Views\Customer\asss.cshtml" />
+    <Content Include="Views\Setup\assIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

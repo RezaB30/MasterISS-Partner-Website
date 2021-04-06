@@ -39,14 +39,18 @@ namespace MasterISS_Partner_WebSite.ViewModels.Setup.Response
         [Display(ResourceType = typeof(Localization.Model), Name = "SetupAddress")]
         public string Address { get; set; }
 
+        [Display(ResourceType = typeof(Localization.Model), Name = "FaultCodes")]
         public string FaultCodesDisplayText { get; set; }
 
+        [Display(ResourceType = typeof(Localization.Model), Name = "RendezvousTeam")]
         public string RendezvousTeamStaffName { get; set; }
 
+        [Display(ResourceType = typeof(Localization.Model), Name = "Description")]
         public string SetupStaffEnteredMessage { get; set; }
 
         public int PartnerId { get; set; }
 
+        [Display(ResourceType = typeof(Localization.Model), Name = "SetupTeam")]
         public string SetupTeamStaffName { get; set; }
     }
 }

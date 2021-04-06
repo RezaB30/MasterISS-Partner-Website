@@ -709,6 +709,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ev Telefonunuz Var mı?.
+        /// </summary>
+        public static string HavePSTNId {
+            get {
+                return ResourceManager.GetString("HavePSTNId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to IP Adres.
         /// </summary>
         public static string IPAddress {
@@ -1051,6 +1060,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Randevu Ekibi.
+        /// </summary>
+        public static string RendezvousTeam {
+            get {
+                return ResourceManager.GetString("RendezvousTeam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rezervasyon Tarihi.
         /// </summary>
         public static string ReservationDate {
@@ -1132,7 +1150,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Görev Numarasına Göre Ara.
+        ///   Looks up a localized string similar to Görev Numarası.
         /// </summary>
         public static string SearchedTaskNo {
             get {
@@ -1209,6 +1227,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string SetupAddress {
             get {
                 return ResourceManager.GetString("SetupAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kurulum Ekibi.
+        /// </summary>
+        public static string SetupTeam {
+            get {
+                return ResourceManager.GetString("SetupTeam", resourceCulture);
             }
         }
         

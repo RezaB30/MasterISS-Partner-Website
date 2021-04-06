@@ -8,6 +8,7 @@
 
 <div style="background-color:red">
     @ViewBag.NewCustomerError
+    @Html.Raw(TempData["SMSConfirmationError"])
 </div>
 
 <div class="d-flex flex-column-fluid my-10">

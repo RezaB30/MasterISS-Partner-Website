@@ -36,7 +36,7 @@ namespace MasterISS_Partner_WebSite.Controllers
         private TimeSpan lastSessionTime;
 
         // GET: Setup
-        public ActionResult Index([Bind(Prefix = "search")] GetTaskListRequestViewModel taskListRequestModel, int page = 1, int pageSize = 20)
+        public ActionResult Index([Bind(Prefix = "search")] GetTaskListRequestViewModel taskListRequestModel, int page = 1, int pageSize = 3)
         {
             taskListRequestModel = taskListRequestModel ?? new GetTaskListRequestViewModel();
 
@@ -447,6 +447,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             }
         }
 
+        [HttpPost]
         public ActionResult CustomerDetail(long taskNo)
         {
             var setupWrapper = new SetupServiceWrapper();
@@ -457,6 +458,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                 var taskDetail = new TaskListDetailResponseViewModel
                 {
                     BBK = response.SetupTask.BBK,
+                    CustomerName = response.SetupTask.ContactName,
                     City = response.SetupTask.City,
                     CustomerNo = response.SetupTask.CustomerNo,
                     Details = response.SetupTask.Details,
@@ -477,16 +479,14 @@ namespace MasterISS_Partner_WebSite.Controllers
                     }),
                 };
 
-                ViewBag.TaskNo = taskNo;
-                return View(taskDetail);
+                //ViewBag.TaskNo = taskNo;
+                return PartialView("_CustomerDetail", taskDetail);
             }
             //LOG
             var wrapperGetUserSubMail = new WebServiceWrapper();
             LoggerError.Fatal($"An error occurred while GetTaskDetails , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapperGetUserSubMail.GetUserSubMail()}");
             //LOG
-
-            TempData["GetTaskDetailError"] = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
-            return RedirectToAction("Index", "Setup");
+            return Content($"<div>{  new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture)}</div>");
         }
 
         [HttpPost]
