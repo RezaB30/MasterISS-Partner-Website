@@ -2,58 +2,95 @@
 @using MasterISS_Partner_WebSite.Localization
 @model MasterISS_Partner_WebSite.ViewModels.Setup.Response.GetCustomerSessionInfoResponseViewModel
 
-<h4>@View.FirstSessionInfo</h4>
-<table>
-    <tr>
-        <th>@Html.DisplayNameFor(model => model.FirstSessionInfo.IPAddress)</th>
-        <th>@Html.DisplayFor(model => model.LastSessionInfo.IPAddress)</th>
-    </tr>
-    <tr>
-        <th>@Html.DisplayNameFor(model => model.FirstSessionInfo.IsOnline)</th>
-        <td>@Html.DisplayFor(model => model.FirstSessionInfo.IsOnline)</td>
-    </tr>
-    <tr>
-        <th>@Html.DisplayNameFor(model => model.FirstSessionInfo.NASIPAddress)</th>
-        <td>@Html.DisplayFor(model => model.FirstSessionInfo.NASIPAddress)</td>
-    </tr>
-    <tr>
-        <th>@Html.DisplayNameFor(model => model.FirstSessionInfo.SessionId)</th>
-        <td>@Html.DisplayFor(model => model.FirstSessionInfo.SessionId)</td>
-    </tr>
-    <tr>
-        <th>@Html.DisplayNameFor(model => model.FirstSessionInfo.SessionStart)</th>
-        <td>@Html.DisplayFor(model => model.FirstSessionInfo.SessionStart)</td>
-    </tr>
-    <tr>
-        <th>@Html.DisplayNameFor(model => model.FirstSessionInfo.SessionTime)</th>
-        <td>@Html.TimeCustomFormat(model => model.FirstSessionInfo.SessionTime)</td>
-    </tr>
-</table>
+<div class="modal-header">
+    <div class="py-2">
+        <span class="text-dark-75 font-weight-bolder d-block font-size-h5">@MasterISS_Partner_WebSite.Localization.View.CustomerSessionInfo</span>
+        <span class="text-muted font-size-lg">@Html.DisplayFor(m => m.CustomerName)</span>
+    </div>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
+    </button>
+</div>
+<div class="modal-body">
+    <!--begin::Info-->
+    <div class="label label-lg label-danger label-pill label-inline my-6 ">@View.FirstSessionInfo</div>
 
-<h4>@View.LastSessionInfo</h4>
-<table>
-    <tr>
-        <th>@Html.DisplayNameFor(model => model.LastSessionInfo.IPAddress)</th>
-        <th>@Html.DisplayFor(model => model.LastSessionInfo.IPAddress)</th>
-    </tr>
-    <tr>
-        <th>@Html.DisplayNameFor(model => model.LastSessionInfo.IsOnline)</th>
-        <td>@Html.DisplayFor(model => model.LastSessionInfo.IsOnline)</td>
-    </tr>
-    <tr>
-        <th>@Html.DisplayNameFor(model => model.LastSessionInfo.NASIPAddress)</th>
-        <td>@Html.DisplayFor(model => model.LastSessionInfo.NASIPAddress)</td>
-    </tr>
-    <tr>
-        <th>@Html.DisplayNameFor(model => model.LastSessionInfo.SessionId)</th>
-        <td>@Html.DisplayFor(model => model.LastSessionInfo.SessionId)</td>
-    </tr>
-    <tr>
-        <th>@Html.DisplayNameFor(model => model.LastSessionInfo.SessionStart)</th>
-        <td>@Html.DisplayFor(model => model.LastSessionInfo.SessionStart)</td>
-    </tr>
-    <tr>
-        <th>@Html.DisplayNameFor(model => model.LastSessionInfo.SessionTime)</th>
-        <td>@Html.TimeCustomFormat(model => model.LastSessionInfo.SessionTime)</td>
-    </tr>
-</table>
+    <div class="d-flex mb-3">
+        <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.FirstSessionInfo.IPAddress)</span>
+        <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.FirstSessionInfo.IPAddress)</span>
+    </div>
+    <div class="separator separator-dashed mt-1 my-2"></div>
+
+    <div class="d-flex mb-3">
+        <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.FirstSessionInfo.IsOnline)</span>
+        <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.FirstSessionInfo.IsOnline)</span>
+    </div>
+    <div class="separator separator-dashed mt-1 my-2"></div>
+
+    <div class="d-flex mb-3">
+        <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.FirstSessionInfo.NASIPAddress)</span>
+        <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.FirstSessionInfo.NASIPAddress)</span>
+    </div>
+    <div class="separator separator-dashed mt-1 my-2"></div>
+
+    <div class="d-flex mb-3">
+        <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.FirstSessionInfo.SessionId)</span>
+        <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.FirstSessionInfo.SessionId)</span>
+    </div>
+    <div class="separator separator-dashed mt-1 my-2"></div>
+
+    <div class="d-flex mb-3">
+        <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.FirstSessionInfo.SessionStart)</span>
+        <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.FirstSessionInfo.SessionStart)</span>
+    </div>
+    <div class="separator separator-dashed mt-1 my-2"></div>
+
+    <div class="d-flex mb-3">
+        <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.FirstSessionInfo.SessionTime)</span>
+        <span class="text-dark flex-root font-weight-bold">@Html.TimeCustomFormat(model => model.FirstSessionInfo.SessionTime)</span>
+    </div>
+    <div class="separator separator-dashed mt-1 my-2"></div>
+
+    <hr class="my-4 bg-secondary">
+
+    <div class="label label-lg label-info label-pill label-inline my-6 ">@View.LastSessionInfo</div>
+
+    <div class="d-flex mb-3">
+        <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.LastSessionInfo.IPAddress)</span>
+        <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.LastSessionInfo.IPAddress)</span>
+    </div>
+    <div class="separator separator-dashed mt-1 my-2"></div>
+
+    <div class="d-flex mb-3">
+        <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.LastSessionInfo.IsOnline)</span>
+        <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.LastSessionInfo.IsOnline)</span>
+    </div>
+    <div class="separator separator-dashed mt-1 my-2"></div>
+
+    <div class="d-flex mb-3">
+        <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.FirstSessionInfo.NASIPAddress)</span>
+        <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.LastSessionInfo.NASIPAddress)</span>
+    </div>
+    <div class="separator separator-dashed mt-1 my-2"></div>
+
+    <div class="d-flex mb-3">
+        <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.FirstSessionInfo.SessionId)</span>
+        <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.LastSessionInfo.SessionId)</span>
+    </div>
+    <div class="separator separator-dashed mt-1 my-2"></div>
+
+    <div class="d-flex mb-3">
+        <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.FirstSessionInfo.SessionStart)</span>
+        <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.LastSessionInfo.SessionStart)</span>
+    </div>
+    <div class="separator separator-dashed mt-1 my-2"></div>
+
+    <div class="d-flex mb-3">
+        <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.FirstSessionInfo.SessionTime)</span>
+        <span class="text-dark flex-root font-weight-bold">@Html.TimeCustomFormat(model => model.LastSessionInfo.SessionTime)</span>
+    </div>
+    <!--end::Info-->
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
+</div>

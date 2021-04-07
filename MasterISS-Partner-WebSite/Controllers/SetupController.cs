@@ -36,7 +36,7 @@ namespace MasterISS_Partner_WebSite.Controllers
         private TimeSpan lastSessionTime;
 
         // GET: Setup
-        public ActionResult Index([Bind(Prefix = "search")] GetTaskListRequestViewModel taskListRequestModel, int page = 1, int pageSize = 3)
+        public ActionResult Index([Bind(Prefix = "search")] GetTaskListRequestViewModel taskListRequestModel, int page = 1, int pageSize = 1)
         {
             taskListRequestModel = taskListRequestModel ?? new GetTaskListRequestViewModel();
 
@@ -448,39 +448,107 @@ namespace MasterISS_Partner_WebSite.Controllers
         }
 
         [HttpPost]
+        public ActionResult CustomerSessionInfo(long taskNo)
+        {
+            var setupWrapper = new SetupServiceWrapper();
+            var response = setupWrapper.GetCustomerSessionInfo(taskNo);
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var task = db.TaskList.Find(taskNo);
+                if (task != null)
+                {
+                    if (response.ResponseMessage.ErrorCode == 0)
+                    {
+                        var sessionInfo = new GetCustomerSessionInfoResponseViewModel()
+                        {
+                            FirstSessionInfo = new SessionInfo()
+                            {
+                                IPAddress = response.CustomerSessionBundle.FirstSession.IPAddress,
+                                IsOnline = response.CustomerSessionBundle.FirstSession.IsOnline,
+                                NASIPAddress = response.CustomerSessionBundle.FirstSession.NASIPAddress,
+                                SessionId = response.CustomerSessionBundle.FirstSession.SessionId,
+                                SessionStart = Convert.ToDateTime(response.CustomerSessionBundle.FirstSession.SessionStart),
+                                SessionTime = TimeSpan.TryParse(response.CustomerSessionBundle.FirstSession.SessionTime, out firtSessionTime) == true ? firtSessionTime : TimeSpan.Zero
+                            },
+                            LastSessionInfo = new SessionInfo()
+                            {
+                                IPAddress = response.CustomerSessionBundle.LastSession.IPAddress,
+                                IsOnline = response.CustomerSessionBundle.LastSession.IsOnline,
+                                NASIPAddress = response.CustomerSessionBundle.LastSession.NASIPAddress,
+                                SessionId = response.CustomerSessionBundle.LastSession.SessionId,
+                                SessionStart = Convert.ToDateTime(response.CustomerSessionBundle.LastSession.SessionStart),
+                                SessionTime = TimeSpan.TryParse(response.CustomerSessionBundle.LastSession.SessionTime, out lastSessionTime) == true ? lastSessionTime : TimeSpan.Zero
+                            },
+                            CustomerName = task.ContactName,
+                        };
+                        return PartialView("_SessionInfo", sessionInfo);
+                    }
+                    //LOG
+                    var wrapper = new WebServiceWrapper();
+                    LoggerError.Fatal($"An error occurred while GetCustomerSessionInfo , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapper.GetUserSubMail()}");
+                    //LOG
+
+                    return Content($"<div>{ new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture)}</div>");
+                }
+
+                //LOG
+                var wrapperByNotFoundTaskNo = new WebServiceWrapper();
+                LoggerError.Fatal($"An error occurred while GetCustomerSessionInfo Not found taskNo by: {wrapperByNotFoundTaskNo.GetUserSubMail()}");
+                //LOG
+
+                return Content($"<div>{ new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture)}</div>");
+            }
+        }
+
+        [HttpPost]
         public ActionResult CustomerDetail(long taskNo)
         {
             var setupWrapper = new SetupServiceWrapper();
             var response = setupWrapper.GetTaskDetails(taskNo);
 
+            setupWrapper = new SetupServiceWrapper();
+            var credentialsResponse = setupWrapper.GetCustomerCredentials(taskNo);
+
             if (response.ResponseMessage.ErrorCode == 0)
             {
-                var taskDetail = new TaskListDetailResponseViewModel
+                if (credentialsResponse.ResponseMessage.ErrorCode == 0)
                 {
-                    BBK = response.SetupTask.BBK,
-                    CustomerName = response.SetupTask.ContactName,
-                    City = response.SetupTask.City,
-                    CustomerNo = response.SetupTask.CustomerNo,
-                    Details = response.SetupTask.Details,
-                    ModemName = response.SetupTask.ModemName,
-                    HasModem = response.SetupTask.HasModem,
-                    Province = response.SetupTask.Province,
-                    SubscriberNo = response.SetupTask.SubscriberNo,
-                    PSTN = response.SetupTask.PSTN,
-                    XDSLType = (XDSLTypeEnum)response.SetupTask.XDSLType,
-                    CustomerType = CustomerTypeDescription(response.SetupTask.CustomerType),
-                    LastConnectionDate = Convert.ToDateTime(response.SetupTask.LastConnectionDate),
-                    TaskUpdatesDetailList = response.SetupTask.TaskUpdates == null ? Enumerable.Empty<TaskUpdatesDetailListViewModel>() : response.SetupTask.TaskUpdates.Select(tu => new TaskUpdatesDetailListViewModel
+                    var taskDetail = new TaskListDetailResponseViewModel
                     {
-                        FaultCodes = FaultCodesDescription(tu.FaultCode),
-                        Description = tu.Description,
-                        CreationDate = Convert.ToDateTime(tu.CreationDate),
-                        ReservationDate = Convert.ToDateTime(tu.ReservationDate)
-                    }),
-                };
+                        BBK = response.SetupTask.BBK,
+                        CustomerName = response.SetupTask.ContactName,
+                        City = response.SetupTask.City,
+                        CustomerNo = response.SetupTask.CustomerNo,
+                        Details = response.SetupTask.Details,
+                        ModemName = response.SetupTask.ModemName,
+                        HasModem = response.SetupTask.HasModem,//Modem talebi
+                        Province = response.SetupTask.Province,
+                        SubscriberNo = response.SetupTask.SubscriberNo,
+                        PSTN = response.SetupTask.PSTN,
+                        XDSLType = (XDSLTypeEnum)response.SetupTask.XDSLType,
+                        CustomerType = CustomerTypeDescription(response.SetupTask.CustomerType),
+                        LastConnectionDate = Convert.ToDateTime(response.SetupTask.LastConnectionDate),
+                        TaskUpdatesDetailList = response.SetupTask.TaskUpdates == null ? Enumerable.Empty<TaskUpdatesDetailListViewModel>() : response.SetupTask.TaskUpdates.Select(tu => new TaskUpdatesDetailListViewModel
+                        {
+                            FaultCodes = FaultCodesDescription(tu.FaultCode),
+                            Description = tu.Description,
+                            CreationDate = Convert.ToDateTime(tu.CreationDate),
+                            ReservationDate = Convert.ToDateTime(tu.ReservationDate)
+                        }),
+                        GetCustomerCredentialsResponseViewModel = new GetCustomerCredentialsResponseViewModel
+                        {
+                            Password = credentialsResponse.CustomerCredentials.Password,
+                            Username = credentialsResponse.CustomerCredentials.Username
+                        }
+                    };
+                    return PartialView("_CustomerDetail", taskDetail);
+                }
 
-                //ViewBag.TaskNo = taskNo;
-                return PartialView("_CustomerDetail", taskDetail);
+                var wrapperGetUserSubMailByCredentials = new WebServiceWrapper();
+                LoggerError.Fatal($"An error occurred while GetCustomerCredentials , ErrorCode: {credentialsResponse.ResponseMessage.ErrorCode}, ErrorMessage : {credentialsResponse.ResponseMessage.ErrorMessage} by: { wrapperGetUserSubMailByCredentials.GetUserSubMail()}");
+                //LOG
+                return Content($"<div>{  new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(credentialsResponse.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture)}</div>");
+
             }
             //LOG
             var wrapperGetUserSubMail = new WebServiceWrapper();
@@ -490,97 +558,46 @@ namespace MasterISS_Partner_WebSite.Controllers
         }
 
         [HttpPost]
-        public ActionResult CustomerSessionInfo(long taskNo)
-        {
-            var setupWrapper = new SetupServiceWrapper();
-            var response = setupWrapper.GetCustomerSessionInfo(taskNo);
-
-            if (response.ResponseMessage.ErrorCode == 0)
-            {
-                var sessionInfo = new GetCustomerSessionInfoResponseViewModel()
-                {
-                    FirstSessionInfo = new SessionInfo()
-                    {
-                        IPAddress = response.CustomerSessionBundle.FirstSession.IPAddress,
-                        IsOnline = response.CustomerSessionBundle.FirstSession.IsOnline,
-                        NASIPAddress = response.CustomerSessionBundle.FirstSession.NASIPAddress,
-                        SessionId = response.CustomerSessionBundle.FirstSession.SessionId,
-                        SessionStart = Convert.ToDateTime(response.CustomerSessionBundle.FirstSession.SessionStart),
-                        SessionTime = TimeSpan.TryParse(response.CustomerSessionBundle.FirstSession.SessionTime, out firtSessionTime) == true ? firtSessionTime : TimeSpan.Zero
-                    },
-                    LastSessionInfo = new SessionInfo()
-                    {
-                        IPAddress = response.CustomerSessionBundle.LastSession.IPAddress,
-                        IsOnline = response.CustomerSessionBundle.LastSession.IsOnline,
-                        NASIPAddress = response.CustomerSessionBundle.LastSession.NASIPAddress,
-                        SessionId = response.CustomerSessionBundle.LastSession.SessionId,
-                        SessionStart = Convert.ToDateTime(response.CustomerSessionBundle.LastSession.SessionStart),
-                        SessionTime = TimeSpan.TryParse(response.CustomerSessionBundle.LastSession.SessionTime, out lastSessionTime) == true ? lastSessionTime : TimeSpan.Zero
-                    }
-                };
-                return PartialView("_SessionInfo", sessionInfo);
-            }
-            //LOG
-            var wrapper = new WebServiceWrapper();
-            LoggerError.Fatal($"An error occurred while GetCustomerSessionInfo , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapper.GetUserSubMail()}");
-            //LOG
-
-            return Content($"<div>{ new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture)}</div>");
-        }
-
-        [HttpPost]
-        public ActionResult CustomerCredentialsInfo(long taskNo)
-        {
-            var setupWrapper = new SetupServiceWrapper();
-
-            var response = setupWrapper.GetCustomerCredentials(taskNo);
-
-            if (response.ResponseMessage.ErrorCode == 0)
-            {
-                var creadentialsInfo = new GetCustomerCredentialsResponseViewModel
-                {
-                    Password = response.CustomerCredentials.Password,
-                    Username = response.CustomerCredentials.Username
-                };
-
-                return PartialView("_CredentialsInfo", creadentialsInfo);
-            }
-            //LOG
-            var wrapperBySubUserMail = new WebServiceWrapper();
-            LoggerError.Fatal($"An error occurred while GetCustomerCredentials , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapperBySubUserMail.GetUserSubMail()}");
-            //LOG
-            return Content($"<div>{ new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture)}</div>");
-        }
-
-        [HttpPost]
         public ActionResult CustomerLineInfo(long taskNo)
         {
             var setupWrapper = new SetupServiceWrapper();
-
-            var response = setupWrapper.GetCustomerLineDetails(taskNo);
-
-            if (response.ResponseMessage.ErrorCode == 0)
+            using (var db = new PartnerWebSiteEntities())
             {
-                var lineInfo = new GetCustomerLineDetailsViewModel
+                var task = db.TaskList.Find(taskNo);
+                if (task != null)
                 {
-                    CurrentDowloadSpeed = response.CustomerLineDetails.CurrentDownloadSpeed,
-                    CurrentUploadSpeed = response.CustomerLineDetails.CurrentUploadSpeed,
-                    DowloadNoiseMargin = response.CustomerLineDetails.DownloadNoiseMargin,
-                    DowloadSpeedCapasity = response.CustomerLineDetails.DownloadNoiseMargin,
-                    IsActive = response.CustomerLineDetails.IsActive,
-                    ShelfCardPort = response.CustomerLineDetails.ShelfCardPort,
-                    UploadNoiseMargin = response.CustomerLineDetails.UploadNoiseMargin,
-                    UploadSpeedCapasity = response.CustomerLineDetails.UploadSpeedCapacity,
-                    XDSLNo = response.CustomerLineDetails.XDSLNo
-                };
+                    var response = setupWrapper.GetCustomerLineDetails(taskNo);
 
-                return PartialView("_LineInfo", lineInfo);
+                    if (response.ResponseMessage.ErrorCode == 0)
+                    {
+                        var lineInfo = new GetCustomerLineDetailsViewModel
+                        {
+                            CurrentDowloadSpeed = response.CustomerLineDetails.CurrentDownloadSpeed,
+                            CurrentUploadSpeed = response.CustomerLineDetails.CurrentUploadSpeed,
+                            DowloadNoiseMargin = response.CustomerLineDetails.DownloadNoiseMargin,
+                            DowloadSpeedCapasity = response.CustomerLineDetails.DownloadNoiseMargin,
+                            IsActive = response.CustomerLineDetails.IsActive,
+                            ShelfCardPort = response.CustomerLineDetails.ShelfCardPort,
+                            UploadNoiseMargin = response.CustomerLineDetails.UploadNoiseMargin,
+                            UploadSpeedCapasity = response.CustomerLineDetails.UploadSpeedCapacity,
+                            XDSLNo = response.CustomerLineDetails.XDSLNo,
+                            CustomerName = task.ContactName
+                        };
+
+                        return PartialView("_LineInfo", lineInfo);
+                    }
+                    //LOG
+                    var wrapper = new WebServiceWrapper();
+                    LoggerError.Fatal($"An error occurred while GetCustomerLineDetails , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapper.GetUserSubMail()}");
+                    //LOG
+                    return Content($"<div>{ new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture)}</div>");
+                }
+                var wrapperByNotFoundTask = new WebServiceWrapper();
+                LoggerError.Fatal($"An error occurred while GetCustomerLineDetails Not Found taskNo by: {wrapperByNotFoundTask.GetUserSubMail()}");
+                //LOG
+                return Content($"<div>{ new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture)}</div>");
+
             }
-            //LOG
-            var wrapper = new WebServiceWrapper();
-            LoggerError.Fatal($"An error occurred while GetCustomerLineDetails , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapper.GetUserSubMail()}");
-            //LOG
-            return Content($"<div>{ new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture)}</div>");
         }
 
         [HttpPost]
@@ -602,7 +619,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             //LOG
 
             TempData["CustomerContractResponse"] = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
-            return RedirectToAction("CustomerDetail", "Setup", new { taskNo = taskNo });
+            return RedirectToAction("Index", "Setup", new { taskNo = taskNo });
         }
 
         [HttpGet]
@@ -892,10 +909,29 @@ namespace MasterISS_Partner_WebSite.Controllers
         [HttpGet]
         public ActionResult UploadDocument(long taskNo)
         {
-            var request = new UploadFileRequestViewModel { TaskNo = taskNo };
-            ViewBag.AttachmentTypes = AttachmentTypes(null);
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var task = db.TaskList.Find(taskNo);
+                if (task != null)
+                {
+                    var request = new UploadFileRequestViewModel
+                    {
+                        TaskNo = taskNo,
+                        CustomerName = task.ContactName,
+                    };
 
-            return View(request);
+                    ViewBag.AttachmentTypes = AttachmentTypes(null);
+
+                    return PartialView("_UploadDocument", request);
+                }
+
+                var wrapperByNotFoundTask = new WebServiceWrapper();
+                LoggerError.Fatal($"An error occurred while UploadDocument(Get) Not Found taskNo by: {wrapperByNotFoundTask.GetUserSubMail()}");
+                //LOG
+                return Content($"<div>{ new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture)}</div>");
+
+            }
+
         }
 
         [ValidateAntiForgeryToken]
@@ -939,37 +975,30 @@ namespace MasterISS_Partner_WebSite.Controllers
                                         db.SaveChanges();
                                     }
 
-                                    return RedirectToAction("Successful", "Setup", new { taskNo = uploadFileRequestViewModel.TaskNo });
+                                    return Json(new { status = "Success" }, JsonRequestBehavior.AllowGet);
                                 }
                                 else
                                 {
-                                    ViewBag.UploadDocumentError = Localization.View.Generic200ErrorCodeMessage;
-                                    return View(uploadFileRequestViewModel);
+                                    return Json(new { status = "Failed", ErrorMessage = Localization.View.Generic200ErrorCodeMessage }, JsonRequestBehavior.AllowGet);
                                 }
                             }
-                            ViewBag.UploadDocumentError = Localization.View.FaultyFormat;
-                            return View(uploadFileRequestViewModel);
-
+                            return Json(new { status = "Failed", ErrorMessage = Localization.View.FaultyFormat }, JsonRequestBehavior.AllowGet);
                         }
-                        ViewBag.UploadDocumentError = Localization.View.MaxFileSizeError;
-                        return View(uploadFileRequestViewModel);
-
+                        return Json(new { status = "Failed", ErrorMessage = Localization.View.MaxFileSizeError }, JsonRequestBehavior.AllowGet);
                     }
-                    ViewBag.UploadDocumentError = Localization.View.SelectFile;
-                    return View(uploadFileRequestViewModel);
-
+                    return Json(new { status = "Failed", ErrorMessage = Localization.View.SelectFile }, JsonRequestBehavior.AllowGet);
                 }
-                return RedirectToAction("Index", "Setup");
-
+                return Json(new { status = "Failed", ErrorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture) }, JsonRequestBehavior.AllowGet);
             }
-            return View(uploadFileRequestViewModel);
+            var errorMessage = string.Join(" | ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
+            return Json(new { status = "Failed", ErrorMessage = errorMessage }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
         public ActionResult UpdateClientLocation(long taskNo)
         {
             var updateGPSViewModel = new UpdateClientGPSRequestViewModel { TaskNo = taskNo };
-            return View(updateGPSViewModel);
+            return PartialView("_UpdateClientLocation", updateGPSViewModel);
         }
 
         [ValidateAntiForgeryToken]

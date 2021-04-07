@@ -48,6 +48,8 @@ namespace MasterISS_Partner_WebSite.ViewModels.Setup.Response
         [Display(ResourceType = typeof(Localization.Model), Name = "Details")]
         public string Details { get; set; }
 
+        public GetCustomerCredentialsResponseViewModel GetCustomerCredentialsResponseViewModel { get; set; }
+
         public IEnumerable<TaskUpdatesDetailListViewModel> TaskUpdatesDetailList { get; set; }
     }
     public class TaskUpdatesDetailListViewModel

@@ -1,42 +1,73 @@
 ﻿@using MasterISS_Partner_WebSite.Localization
 @model  MasterISS_Partner_WebSite.ViewModels.Setup.Response.GetCustomerLineDetailsViewModel
 
-<table>
-    <tr>
-        <th>@Html.DisplayNameFor(model => model.CurrentDowloadSpeed)</th>
-        <td>@Html.DisplayFor(model => model.CurrentDowloadSpeed)</td>
-    </tr>
-    <tr>
-        <th>@Html.DisplayNameFor(model => model.CurrentUploadSpeed)</th>
-        <td>@Html.DisplayFor(model => model.CurrentUploadSpeed)</td>
-    </tr>
-    <tr>
-        <th>@Html.DisplayNameFor(model => model.DowloadNoiseMargin)</th>
-        <td>@Html.DisplayFor(model => model.DowloadNoiseMargin)</td>
-    </tr>
-    <tr>
-        <th>@Html.DisplayNameFor(model => model.UploadNoiseMargin)</th>
-        <td>@Html.DisplayFor(model => model.UploadNoiseMargin)</td>
-    </tr>
-    <tr>
-        <th>@Html.DisplayNameFor(model => model.DowloadSpeedCapasity)</th>
-        <td>@Html.DisplayFor(model => model.DowloadSpeedCapasity)</td>
-    </tr>
-    <tr>
-        <th>@Html.DisplayNameFor(model => model.UploadSpeedCapasity)</th>
-        <td>@Html.DisplayFor(model => model.UploadSpeedCapasity)</td>
-    </tr>
-    <tr>
-        <th>@Html.DisplayNameFor(model => model.IsActive)</th>
-        <td>@Html.DisplayFor(model => model.IsActive)</td>
-    </tr>
-    <tr>
-        <th>@Html.DisplayNameFor(model => model.XDSLNo)</th>
-        <td>@Html.DisplayFor(model => model.XDSLNo)</td>
-    </tr>
-    <tr>
-        <th>@Html.DisplayNameFor(model => model.ShelfCardPort)</th>
-        <td>@Html.DisplayFor(model => model.ShelfCardPort)</td>
-    </tr>
-</table>
+<div class="modal-header">
+    <div class="py-2">
+        <span class="text-dark-75 font-weight-bolder d-block font-size-h5">@View.CustomerLineDetails</span>
+        <span class="text-muted font-size-lg">@Html.DisplayFor(m => m.CustomerName)</span>
+    </div>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
+    </button>
+</div>
+<div class="modal-body">
+    <!--begin::Info-->
+    <div class="d-flex mb-3">
+        <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.CurrentDowloadSpeed)</span>
+        <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.CurrentDowloadSpeed)</span>
+    </div>
+    <div class="separator separator-dashed mt-1 my-2"></div>
+
+    <div class="d-flex mb-3">
+        <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.CurrentUploadSpeed)</span>
+        <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.CurrentUploadSpeed)</span>
+    </div>
+    <div class="separator separator-dashed mt-1 my-2"></div>
+
+    <div class="d-flex mb-3">
+        <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.DowloadNoiseMargin)</span>
+        <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.DowloadNoiseMargin)</span>
+    </div>
+    <div class="separator separator-dashed mt-1 my-2"></div>
+
+    <div class="d-flex mb-3">
+        <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.UploadNoiseMargin)</span>
+        <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.UploadNoiseMargin)</span>
+    </div>
+    <div class="separator separator-dashed mt-1 my-2"></div>
+
+    <div class="d-flex mb-3">
+        <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.DowloadSpeedCapasity)</span>
+        <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.DowloadSpeedCapasity)</span>
+    </div>
+    <div class="separator separator-dashed mt-1 my-2"></div>
+
+    <div class="d-flex mb-3">
+        <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.UploadSpeedCapasity)</span>
+        <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.UploadSpeedCapasity)</span>
+    </div>
+    <div class="separator separator-dashed mt-1 my-2"></div>
+
+    <div class="d-flex mb-3">
+        <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.IsActive)</span>
+        <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.IsActive)</span>
+    </div>
+    <div class="separator separator-dashed mt-1 my-2"></div>
+
+    <div class="d-flex mb-3">
+        <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.XDSLNo)</span>
+        <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.XDSLNo)</span>
+    </div>
+    <div class="separator separator-dashed mt-1 my-2"></div>
+
+    <div class="d-flex mb-3">
+        <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.ShelfCardPort)</span>
+        <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.ShelfCardPort)</span>
+    </div>
+    <div class="separator separator-dashed mt-1 my-2"></div>
+    <!--end::Info-->
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
+</div>
 

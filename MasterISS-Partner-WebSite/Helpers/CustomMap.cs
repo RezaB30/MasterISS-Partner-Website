@@ -75,7 +75,6 @@ namespace MasterISS_Partner_WebSite.Helpers
 
             TagBuilder container = new TagBuilder("div");
             container.AddCssClass(containerDiv);
-            container.Attributes.Add("style", "display:none");
             container.InnerHtml += content.ToString(TagRenderMode.Normal);
 
             return new MvcHtmlString(container.ToString());

@@ -1,5 +1,6 @@
 ﻿@using PagedList.Mvc
 @using MasterISS_Partner_WebSite.Localization
+@using MasterISS_Partner_WebSite.Helpers
 @using MasterISS_Partner_WebSite.ViewModels.Setup
 @using MasterISS_Partner_WebSite.ViewModels.Setup.Response
 @model  PagedList.StaticPagedList<GetTaskListResponseViewModel>
@@ -93,6 +94,7 @@
             }
 
             <span style="color:red">@Html.Raw(TempData["GetTaskDetailError"])</span>
+            <span style="color:red">@Html.Raw(TempData["CustomerContractResponse"])</span>
 
             @if (ViewBag.ValidationError == null && ViewBag.Max30Days == null && ViewBag.StartTimeBiggerThanEndTime == null && ViewBag.ErrorMessage == null)
             {
@@ -124,8 +126,8 @@
                                                     <li class="navi-separator mb-3 opacity-70"></li>
                                                     <li class="navi-item">
                                                         <div class="navi-link">
-                                                            <span class="navi-text" data-toggle="modal" data-target="#exampleModalCenter2">
-                                                                <span class="btn-sm btn btn-block btn-outline-info">Oturum Bilgileri</span>
+                                                            <span class="navi-text" data-toggle="modal" data-target="#exampleModalCenterSession">
+                                                                <input class="btn-sm btn btn-block btn-outline-info customer-session-info-button" value="@View.CustomerSessionInfo" dataValue="@item.TaskNo" />
                                                             </span>
                                                         </div>
                                                     </li>
@@ -133,40 +135,43 @@
 
                                                     <li class="navi-item">
                                                         <div class="navi-link">
-                                                            <span class="navi-text" data-toggle="modal" data-target=".exampleModalCenter">
-                                                                <input class="btn-sm btn btn-block btn-outline-info" value="Kullanıcı Bilgileri" id="customer-info-button" dataValue="@item.TaskNo" />
+                                                            <span class="navi-text" data-toggle="modal" data-target="#exampleModalCenterGeneralInfo">
+                                                                <input class="btn-sm btn btn-block btn-outline-info customer-info-button" value="@View.CustomerInfo" dataValue="@item.TaskNo" />
                                                             </span>
                                                         </div>
                                                     </li>
 
                                                     <li class="navi-item">
                                                         <div class="navi-link">
-                                                            <span class="navi-text" data-toggle="modal" data-target="#exampleModalCenter3">
-                                                                <span class="btn-sm btn btn-block btn-outline-info">Hat Bilgileri</span>
+                                                            <span class="navi-text" data-toggle="modal" data-target="#exampleModalCenterLine">
+                                                                <input class="btn-sm btn btn-block btn-outline-info customer-line-info-button" value="@View.CustomerLineDetails" dataValue="@item.TaskNo" />
+                                                            </span>
+                                                        </div>
+                                                    </li>
+
+                                                    <li class="navi-item">
+                                                        @using (Html.BeginForm("CustomerContractInfo", "Setup", new { taskNo = item.TaskNo }, FormMethod.Post))
+                                                        {
+                                                            <div class="navi-link">
+                                                                <span class="navi-text">
+                                                                    <input type="submit" class="btn-sm btn btn-block btn-outline-info" id="GetCustomerDetail" value="@View.DownloadTheContract" />
+                                                                </span>
+                                                            </div>
+                                                        }
+                                                    </li>
+
+                                                    <li class="navi-item">
+                                                        <div class="navi-link">
+                                                            <span class="navi-text" data-toggle="modal" data-target="#exampleModalUploadDocumentCenter">
+                                                                <input class="btn-sm btn btn-block btn-outline-info customer-upload-document" value="@View.UploadDocument" dataValue="@item.TaskNo" />
                                                             </span>
                                                         </div>
 
                                                     </li>
-
-                                                    <li class="navi-item">
-                                                        <a href="https://netspeed.com.tr/sozlesme/basvuruformuvesozlesme.pdf" target="_blank" class="navi-link">
-                                                            <span class="navi-text">
-                                                                <span class="btn-sm btn btn-block btn-outline-info">Sözleşme İndir</span>
-                                                            </span>
-                                                        </a>
-                                                    </li>
                                                     <li class="navi-item">
                                                         <div class="navi-link">
-                                                            <span class="navi-text" data-toggle="modal" data-target="#exampleModalCenter5">
-                                                                <span class="btn-sm btn btn-block btn-outline-info">Belge Yükle</span>
-                                                            </span>
-                                                        </div>
-
-                                                    </li>
-                                                    <li class="navi-item">
-                                                        <div class="navi-link">
-                                                            <span class="navi-text" data-toggle="modal" data-target="#exampleModalCenter6">
-                                                                <span class="btn-sm btn btn-block btn-outline-info">Konum Değiştir</span>
+                                                            <span class="navi-text" data-toggle="modal" data-target="#exampleModalUpdateLocation">
+                                                                <input class="btn-sm btn btn-block btn-outline-info customer-localition-info-button" value="@View.UpdateClientLocation" dataValue="@item.TaskNo" />
                                                             </span>
                                                         </div>
 
@@ -342,20 +347,122 @@
     </div>
 </div>
 
-<div class="modal fade exampleModalCenter"  data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
-        <div id="CustomerInfoContainer">
+<div class="modal fade" id="exampleModalCenterGeneralInfo" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div id="CustomerInfoContainer">
+            </div>
         </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModalCenterSession" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div id="CustomerSessionInfoContainer">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModalCenterLine" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div id="CustomerLineInfoContainer">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModalUploadDocumentCenter" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div id="CustomerUploaodDocumentContainer">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModalUpdateLocation" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div id="CustomerUpdateLocationContainer">
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Javascript{
-    @*<script src="~/Scripts/js/custom-js/dropzonejs.js"></script>*@
-
-
-    @*<input class="btn-sm btn btn-block btn-outline-info" value="Kullanıcı Bilgileri" id="customer-info-button" dataValue="@item.TaskNo" />*@
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
 
     <script>
+        function UploadDocumentResult(data, status) {
+            if (status = "success") {
+                var responseStatus = data.responseJSON.status;
+                if (responseStatus == "Success") {
+                    var url='@Url.Action("Successful", "Setup")';
+                    window.location.href = url;
+                }
+                else {
+                    $(".error-codes").html(data.responseJSON.ErrorMessage);
+                }
+            }
+            else {
+                console.log("Error");
+            }
 
-        $("#customer-info-button").click(function () {
+        }
+    </script>
+
+
+    <script>
+         $(".customer-line-info-button").click(function () {
+            var dataValue = $(this).attr("dataValue");
+                $.ajax({
+                    url: '@Url.Action("CustomerLineInfo", "Setup")',
+                    type: 'POST',
+                    data: {
+                        taskNo : dataValue
+                    },
+                    dataType: 'html',
+                    success: function (data) {
+                        $("#CustomerLineInfoContainer").html(data);
+                    },
+                });
+         });
+
+        $(".customer-localition-info-button").click(function () {
+            var dataValue = $(this).attr("dataValue");
+                $.ajax({
+                    url: '@Url.Action("UpdateClientLocation", "Setup")',
+                    type: 'GET',
+                    data: {
+                        taskNo : dataValue
+                    },
+                    dataType: 'html',
+                    success: function (data) {
+                        $("#CustomerUpdateLocationContainer").html(data);
+                    },
+                });
+         });
+
+        $(".customer-upload-document").click(function () {
+            var dataValue = $(this).attr("dataValue");
+                $.ajax({
+                    url: '@Url.Action("UploadDocument", "Setup")',
+                    type: 'GET',
+                    data: {
+                        taskNo : dataValue
+                    },
+                    dataType: 'html',
+                    success: function (data) {
+                        $("#CustomerUploaodDocumentContainer").html(data);
+                    },
+                });
+        });
+
+
+        $(".customer-info-button").click(function () {
             var dataValue = $(this).attr("dataValue");
                 $.ajax({
                     url: '@Url.Action("CustomerDetail", "Setup")',
@@ -368,7 +475,24 @@
                         $("#CustomerInfoContainer").html(data);
                     },
                 });
-            });
+        });
+
+
+        $(".customer-session-info-button").click(function () {
+            var dataValue = $(this).attr("dataValue");
+                $.ajax({
+                    url: '@Url.Action("CustomerSessionInfo", "Setup")',
+                    type: 'POST',
+                    data: {
+                        taskNo : dataValue
+                    },
+                    dataType: 'html',
+                    success: function (data) {
+                        $("#CustomerSessionInfoContainer").html(data);
+                    },
+                });
+        });
+
 
 
 

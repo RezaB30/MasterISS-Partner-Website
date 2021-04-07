@@ -1737,6 +1737,8 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\input-upparcase.js" />
     <Content Include="Scripts\jquery.mask.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\js2\components\app.js" />
     <Content Include="Scripts\js2\components\card.js" />
     <Content Include="Scripts\js2\components\cookie.js" />
@@ -2056,12 +2058,11 @@
     <Content Include="Views\Setup\_CustomerDetail.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\IsBoolFormat.cshtml" />
     <Content Include="Views\Setup\_SessionInfo.cshtml" />
-    <Content Include="Views\Setup\_CredentialsInfo.cshtml" />
     <Content Include="Views\Setup\_LineInfo.cshtml" />
     <Content Include="Views\Setup\UpdateTaskStatus.cshtml" />
     <Content Include="Views\Setup\Successful.cshtml" />
-    <Content Include="Views\Setup\UploadDocument.cshtml" />
-    <Content Include="Views\Setup\UpdateClientLocation.cshtml" />
+    <Content Include="Views\Setup\_UploadDocument.cshtml" />
+    <Content Include="Views\Setup\_UpdateClientLocation.cshtml" />
     <Content Include="Views\Revenues\Index.cshtml" />
     <Content Include="Views\UserOperations\UpdateUserRole.cshtml" />
     <Content Include="Views\UserOperations\RoleList.cshtml" />

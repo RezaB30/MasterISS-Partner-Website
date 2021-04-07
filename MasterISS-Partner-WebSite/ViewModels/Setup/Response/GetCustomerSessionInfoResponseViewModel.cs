@@ -10,6 +10,7 @@ namespace MasterISS_Partner_WebSite.ViewModels.Setup.Response
     {
         public SessionInfo FirstSessionInfo { get; set; }
         public SessionInfo LastSessionInfo { get; set; }
+        public string CustomerName { get; set; }
     }
 
     public class SessionInfo

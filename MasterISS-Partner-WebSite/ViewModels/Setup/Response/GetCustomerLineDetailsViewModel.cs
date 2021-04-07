@@ -11,6 +11,8 @@ namespace MasterISS_Partner_WebSite.ViewModels.Setup.Response
         [Display(ResourceType = typeof(Localization.Model), Name = "XDSLNo")]
         public string XDSLNo { get; set; }
 
+        public string CustomerName { get; set; }
+
         [Display(ResourceType = typeof(Localization.Model), Name = "IsActive")]
         [UIHint("IsBoolFormat")]
         public bool IsActive { get; set; }

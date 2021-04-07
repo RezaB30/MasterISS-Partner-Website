@@ -6,114 +6,121 @@
     //Layout = "~/Views/Shared/_Layout.cshtml";
     //var taskNo = ViewBag.TaskNo;
 }
-<div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-            <div class="py-2">
-                <span class="text-dark-75 font-weight-bolder d-block font-size-h5">Müşteri Kullanıcı Bilgileri</span>
-                <span class="text-muted font-size-lg">@Html.DisplayFor(m => m.CustomerName)</span>
-            </div>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
-            </button>
+    <div class="modal-header">
+        <div class="py-2">
+            <span class="text-dark-75 font-weight-bolder d-block font-size-h5">Müşteri Kullanıcı Bilgileri</span>
+            <span class="text-muted font-size-lg">@Html.DisplayFor(m => m.CustomerName)</span>
         </div>
-        <div class="modal-body">
-            <!--begin::Info-->
-            <div class="d-flex mb-3">
-                <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.Province)</span>
-                <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.Province)</span>
-            </div>
-            <div class="separator separator-dashed mt-1 my-2"></div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
+        </button>
+    </div>
+    <div class="modal-body">
+        <!--begin::Info-->
+        <div class="d-flex mb-3">
+            <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.Province)</span>
+            <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.Province)</span>
+        </div>
+        <div class="separator separator-dashed mt-1 my-2"></div>
 
-            <div class="d-flex mb-3">
-                <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.BBK)</span>
-                <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.BBK)</span>
-            </div>
-            <div class="separator separator-dashed mt-1 my-2"></div>
+        <div class="d-flex mb-3">
+            <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.BBK)</span>
+            <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.BBK)</span>
+        </div>
+        <div class="separator separator-dashed mt-1 my-2"></div>
 
-            <div class="d-flex mb-3">
-                <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.City)</span>
-                <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.City)</span>
-            </div>
-            <div class="separator separator-dashed mt-1 my-2"></div>
+        <div class="d-flex mb-3">
+            <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.City)</span>
+            <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.City)</span>
+        </div>
+        <div class="separator separator-dashed mt-1 my-2"></div>
 
-            <div class="d-flex mb-3">
-                <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.CustomerType)</span>
-                <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.CustomerType)</span>
-            </div>
-            <div class="separator separator-dashed mt-1 my-2"></div>
+        <div class="d-flex mb-3">
+            <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.CustomerType)</span>
+            <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.CustomerType)</span>
+        </div>
+        <div class="separator separator-dashed mt-1 my-2"></div>
 
-            <div class="d-flex mb-3">
-                <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.HasModem)</span>
-                <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.HasModem)</span>
-            </div>
-            <div class="separator separator-dashed mt-1 my-2"></div>
+        <div class="d-flex mb-3">
+            <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.HasModem)</span>
+            <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.HasModem)</span>
+        </div>
+        <div class="separator separator-dashed mt-1 my-2"></div>
 
-            <div class="d-flex mb-3">
-                <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.ModemName)</span>
-                <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.ModemName)</span>
-            </div>
-            <div class="separator separator-dashed mt-1 my-2"></div>
+        <div class="d-flex mb-3">
+            <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.ModemName)</span>
+            <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.ModemName)</span>
+        </div>
+        <div class="separator separator-dashed mt-1 my-2"></div>
 
-            <div class="d-flex mb-3">
-                <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.XDSLType)</span>
-                <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.XDSLType)</span>
-            </div>
-            <div class="separator separator-dashed mt-1 my-2"></div>
+        <div class="d-flex mb-3">
+            <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.XDSLType)</span>
+            <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.XDSLType)</span>
+        </div>
+        <div class="separator separator-dashed mt-1 my-2"></div>
 
-            <div class="d-flex mb-3">
-                <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.CustomerNo)</span>
-                <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.CustomerNo)</span>
-            </div>
-            <div class="separator separator-dashed mt-1 my-2"></div>
+        <div class="d-flex mb-3">
+            <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.CustomerNo)</span>
+            <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.CustomerNo)</span>
+        </div>
+        <div class="separator separator-dashed mt-1 my-2"></div>
 
-            <div class="d-flex mb-3">
-                <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.PSTN)</span>
-                <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.PSTN)</span>
-            </div>
-            <div class="separator separator-dashed mt-1 my-2"></div>
+        <div class="d-flex mb-3">
+            <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.PSTN)</span>
+            <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => model.PSTN)</span>
+        </div>
+        <div class="separator separator-dashed mt-1 my-2"></div>
 
-            <h2>Detaylar</h2>
-            <div class="separator separator-info mt-1 my-2"></div>
+        <div class="d-flex mb-3">
+            <span class="text-info flex-root font-weight-bold">@Html.DisplayNameFor(model => model.GetCustomerCredentialsResponseViewModel.Username)</span>
+            <span class="text-info flex-root font-weight-bold">@Html.DisplayFor(model => model.GetCustomerCredentialsResponseViewModel.Username)</span>
+        </div>
+        <div class="separator separator-dashed mt-1 my-2"></div>
 
-            <div>
-                @foreach (var item in Model.TaskUpdatesDetailList)
-                {
-                    <div>
-                        <div class="d-flex mb-3">
-                            <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => item.FaultCodes)</span>
-                            <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => item.FaultCodes)</span>
-                        </div>
-                        <div class="separator separator-dashed mt-1 my-2"></div>
+         <div class="d-flex mb-3">
+            <span class="text-info flex-root font-weight-bold">@Html.DisplayNameFor(model => model.GetCustomerCredentialsResponseViewModel.Password)</span>
+            <span class="text-info flex-root font-weight-bold">@Html.DisplayFor(model => model.GetCustomerCredentialsResponseViewModel.Password)</span>
+        </div>
+        <div class="separator separator-dashed mt-1 my-2"></div>
 
-                        <div class="d-flex mb-3">
-                            <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => item.CreationDate)</span>
-                            <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => item.CreationDate)</span>
-                        </div>
-                        <div class="separator separator-dashed mt-1 my-2"></div>
+        <h2>Detaylar</h2>
+        <div class="separator separator-info mt-1 my-2"></div>
 
-                        <div class="d-flex mb-3">
-                            <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => item.Description)</span>
-                            <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => item.Description)</span>
-                        </div>
-                        <div class="separator separator-dashed mt-1 my-2"></div>
-
-                        <div class="d-flex mb-3">
-                            <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => item.ReservationDate)</span>
-                            <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => item.ReservationDate)</span>
-                        </div>
-                        <div class="separator separator-dashed mt-1 my-2"></div>
+        <div>
+            @foreach (var item in Model.TaskUpdatesDetailList)
+            {
+                <div>
+                    <div class="d-flex mb-3">
+                        <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => item.FaultCodes)</span>
+                        <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => item.FaultCodes)</span>
                     </div>
-                }
-            </div>
-        </div>
+                    <div class="separator separator-dashed mt-1 my-2"></div>
 
-        <div class="modal-footer">
-            <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
+                    <div class="d-flex mb-3">
+                        <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => item.CreationDate)</span>
+                        <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => item.CreationDate)</span>
+                    </div>
+                    <div class="separator separator-dashed mt-1 my-2"></div>
+
+                    <div class="d-flex mb-3">
+                        <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => item.Description)</span>
+                        <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => item.Description)</span>
+                    </div>
+                    <div class="separator separator-dashed mt-1 my-2"></div>
+
+                    <div class="d-flex mb-3">
+                        <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => item.ReservationDate)</span>
+                        <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(model => item.ReservationDate)</span>
+                    </div>
+                    <div class="separator separator-dashed mt-1 my-2"></div>
+                </div>
+            }
         </div>
     </div>
-</div>
-
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
+    </div>
+@*</div>*@
 
 
 
