@@ -5,9 +5,69 @@
     ViewBag.Title = MasterISS_Partner_WebSite.Localization.View.UpdateTaskStatus;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="modal-header">
+    <div class="py-2">
+        <span class="text-dark-75 font-weight-bolder d-block font-size-h5">Kurulum Ekibi Değiştir</span>
+        <span class="text-muted font-size-lg">@Html.DisplayFor(m => m.ContactName)</span>
+    </div>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
+    </button>
+</div>
+<div class="modal-body">
+    <div data-scroll="true" data-height="300">
+        <!--begin::Info-->
+
+        @using (Ajax.BeginForm("UpdateTaskStatus", "Setup", new AjaxOptions { HttpMethod = "POST", OnComplete = "UpdateTaskStatusResult" }))
+        {
+            foreach (var item in Model.SetupTeamStaffsToMatchedTheTask)
+            {
+                <div class="mb-7">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-dark-75 font-weight-bolder mr-6">@Html.DisplayNameFor(modelItem => item.SetupTeamStaffName)</span>
+                        <a href="#" class="text-info text-hover-primary">@Html.DisplayFor(modelItem => item.SetupTeamStaffName)</a>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-cente my-1">
+                        <span class="text-dark-75 font-weight-bolder mr-2">@Html.DisplayNameFor(modelItem => item.SetupTeamStaffName)</span>
+                        @foreach (var workArea in item.SetupTeamStaffWorkAreas)
+                        {
+                            <a href="#" class="text-info text-hover-primary">@Html.DisplayFor(workAreaItem => workArea.ProvinceName) @Html.DisplayFor(workAreaItem => workArea.DistrictName) @Html.DisplayFor(workAreaItem => workArea.RuralName) @Html.DisplayFor(workAreaItem => workArea.NeigborhoodName) </a>
+                        }
+
+                    </div>
+
+                    <div class="col-lg-16 my-8">
+
+                        <span class="form-text text-info my-2">Randevu tarihi seçiniz</span>
+
+                        <div class="input-daterange input-group" id="kt_datepicker_5">
+                            @Html.DropDownListFor(modelItem => item.SelectedDate, item.SetupTeamStaffWorkDays, "gün Seç", new { @class = "form-control" })
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                    <i class="la la-ellipsis-h"></i>
+                                </span>
+                            </div>
+                            @Html.DropDownListFor(modelItem => item.SelectedTime, new SelectList(""), "saat Seç", new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center my-4">
+                        <span class="text-dark-75 font-weight-bolder mr-2"></span>
+                        <a href="#" class="btn btn-sm btn-outline-success font-weight-bold">Görevi Ata</a>
+                    </div>
+                </div>
+                <hr class="my-10 bg-secondary">
+            }
+        }
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
+</div>
 
 
-@using (Html.BeginForm("UpdateTaskStatus", "Setup", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@*@using (Html.BeginForm("UpdateTaskStatus", "Setup", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <h3>@View.UpdateTaskStatus</h3>
@@ -33,10 +93,10 @@
     if ((User.IsInRole("Admin") || User.IsInRole("RendezvousTeam")) && Model.StaffId != null)
     {
         foreach (var item in Model.StaffCalendar)
-        {
-            <div><input value="saatlerine bak" name="@item" type="button" class="staff-work-days" /></div>
-            <div>@Html.DisplayFor(modelItem => item)</div>
-        }
+            {
+                <div><input value="saatlerine bak" name="@item" type="button" class="staff-work-days" /></div>
+                <div>@Html.DisplayFor(modelItem => item)</div>
+            }
     }
     <div class="staff-work-hours-container"></div>
 
@@ -47,8 +107,6 @@
     @Html.HiddenFor(m => m.SelectedDate)
     @Html.HiddenFor(m => m.SelectedTime)
 }
-
-@ViewBag.UploadDocumentError
 
 @section JavaScript{
     <script>
@@ -108,4 +166,4 @@
 
 
     </script>
-}
+}*@

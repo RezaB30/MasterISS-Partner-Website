@@ -8,7 +8,7 @@ namespace MasterISS_Partner_WebSite.Helpers
 {
     public static class CustomMap
     {
-        public static MvcHtmlString Map(this HtmlHelper helper, string containerDiv, string mapName, string searchedPlaceInputPlaceholderName)
+        public static MvcHtmlString Map(this HtmlHelper helper, string containerDivClass, string mapName, string searchedPlaceInputPlaceholderName)
         {
             /*HEADER*/
             TagBuilder headerTitle = new TagBuilder("h3");
@@ -74,7 +74,7 @@ namespace MasterISS_Partner_WebSite.Helpers
             content.InnerHtml += contentModal.ToString(TagRenderMode.Normal);
 
             TagBuilder container = new TagBuilder("div");
-            container.AddCssClass(containerDiv);
+            container.AddCssClass(containerDivClass);
             container.InnerHtml += content.ToString(TagRenderMode.Normal);
 
             return new MvcHtmlString(container.ToString());

@@ -15,20 +15,18 @@ namespace MasterISS_Partner_WebSite.ViewModels.Setup
         [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
         public FaultCodeEnum FaultCodes { get; set; }
 
+        public List<SetupTeamStaffsToMatchedTheTask> SetupTeamStaffsToMatchedTheTask { get; set; }
+
+        public string ContactName { get; set; }
+
         [Display(ResourceType = typeof(Localization.Model), Name = "Description")]
         [DataType(DataType.MultilineText)]
         [MaxLength(450, ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "RequiredMaxDecription")]
         [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
         public string Description { get; set; }
-        public List<DateTime> StaffCalendar { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
         public long? StaffId { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
-        public DateTime? SelectedDate { get; set; }
-
-        [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
-        public TimeSpan? SelectedTime { get; set; }
     }
 }

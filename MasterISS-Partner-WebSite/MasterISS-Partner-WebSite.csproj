@@ -2059,7 +2059,7 @@
     <Content Include="Views\Shared\DisplayTemplates\IsBoolFormat.cshtml" />
     <Content Include="Views\Setup\_SessionInfo.cshtml" />
     <Content Include="Views\Setup\_LineInfo.cshtml" />
-    <Content Include="Views\Setup\UpdateTaskStatus.cshtml" />
+    <Content Include="Views\Setup\_UpdateTaskStatus.cshtml" />
     <Content Include="Views\Setup\Successful.cshtml" />
     <Content Include="Views\Setup\_UploadDocument.cshtml" />
     <Content Include="Views\Setup\_UpdateClientLocation.cshtml" />
@@ -2083,6 +2083,7 @@
     <Content Include="Views\QueryInfrastructure\ServiceAvailability.cshtml" />
     <Content Include="Views\Customer\asss.cshtml" />
     <Content Include="Views\Setup\assIndex.cshtml" />
+    <Content Include="Views\Setup\_UpdateTaskStatusNotRendezvous.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

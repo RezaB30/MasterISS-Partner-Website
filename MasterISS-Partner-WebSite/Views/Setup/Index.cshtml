@@ -178,8 +178,8 @@
                                                     </li>
                                                     <li class="navi-separator mt-3 opacity-70"></li>
                                                     <li class="navi-footer py-4">
-                                                        <a class="btn btn-light-warning btn-block text-info text-hover-white info font-weight-bold btn-sm" data-toggle="modal" data-target="#exampleModalCenter4">
-                                                            <i class="ki ki-plus text-info icon-sm"></i>Görev Değiştir Not Ekle
+                                                        <a class="btn btn-light-warning btn-block text-info text-hover-white info font-weight-bold btn-sm task-update-notRendezvous-button" dataValue="@item.TaskNo" data-toggle="modal" data-target="#exampleModalUpdateTaskNotRendezvous">
+                                                            <i class="ki ki-plus text-info icon-sm"></i> Görev Değiştir Not Ekle
                                                         </a>
                                                     </li>
                                                 </ul> <!--end::Navigation-->
@@ -275,14 +275,16 @@
                                             if (string.IsNullOrEmpty(item.SetupTeamStaffName))
                                             {
                                                 <span class="navi-text">
-                                                    @Html.ActionLink("kurulum ekibine ata", "ShareSetupStaff", "Setup", new { BBK = item.BBK, taskNo = item.TaskNo }, new { @class = "btn-sm my-2 btn btn-outline-primary" })
+                                                    <input type="button" class="btn-sm my-2 btn btn-outline-primary task-update-button" dataValue="@item.TaskNo" value="kurulum ekibine ata" />
                                                     &nbsp &nbsp &nbsp
                                                 </span>
                                             }
                                             else
                                             {
                                                 <span class="navi-text">
-                                                    @Html.ActionLink("başka bir ekibe ata ", "ShareSetupStaff", "Setup", new { taskNo = item.TaskNo, BBK = item.BBK }, new { @class = "btn-sm my-2 btn btn-outline-primary" })
+                                                    <input type="button" class="btn-sm my-2 btn btn-outline-primary task-update-button" dataValue="@item.TaskNo" value="kurulum ekibine ata" />
+
+                                                    @*@Html.ActionLink("başka bir ekibe ata ", "ShareSetupStaff", "Setup", new { taskNo = item.TaskNo, BBK = item.BBK }, new { @class = "btn-sm my-2 btn btn-outline-primary" })*@
                                                     &nbsp &nbsp &nbsp
                                                 </span>
                                             }
@@ -387,6 +389,27 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div id="CustomerUpdateLocationContainer">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModalUpdateTaskNotRendezvous" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div id="TaskUpdateNotRendezvousContainer">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModalUpdateTask" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div id="TaskUpdateContainer">
+
             </div>
         </div>
     </div>
@@ -410,12 +433,58 @@
             else {
                 console.log("Error");
             }
-
+        }
+        function UpdateTaskStatusNotRendezvousResult(data, status) {
+            if (status = "success") {
+                var responseStatus = data.responseJSON.status;
+                if (responseStatus == "Success") {
+                    var url='@Url.Action("Successful", "Setup")';
+                    window.location.href = url;
+                }
+                else {
+                    $(".error-codes-updateStatusNotRendezvous").html(data.responseJSON.ErrorMessage);
+                }
+            }
+            else {
+                console.log("Error");
+            }
         }
     </script>
 
 
     <script>
+
+
+        $(".task-update-notRendezvous-button").click(function () {
+            var dataValue = $(this).attr("dataValue");
+                $.ajax({
+                    url: '@Url.Action("UpdateTaskStatusNotRendezvous", "Setup")',
+                    type: 'GET',
+                    data: {
+                        taskNo : dataValue
+                    },
+                    dataType: 'html',
+                    success: function (data) {
+                        $("#TaskUpdateNotRendezvousContainer").html(data);
+                    },
+                });
+         });
+
+        $(".task-update-button").click(function () {
+            var dataValue = $(this).attr("dataValue");
+                $.ajax({
+                    url: '@Url.Action("UpdateTaskStatus", "Setup")',
+                    type: 'GET',
+                    data: {
+                        taskNo : dataValue
+                    },
+                    dataType: 'html',
+                    success: function (data) {
+                        $("#TaskUpdateContainer").html(data);
+                    },
+                });
+         });
+
          $(".customer-line-info-button").click(function () {
             var dataValue = $(this).attr("dataValue");
                 $.ajax({
@@ -442,6 +511,7 @@
                     dataType: 'html',
                     success: function (data) {
                         $("#CustomerUpdateLocationContainer").html(data);
+                        MapJS('.map-container', '#Latitude', '#Longitude');
                     },
                 });
          });
