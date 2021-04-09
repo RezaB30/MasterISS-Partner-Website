@@ -274,7 +274,7 @@
                                             }
                                             if (string.IsNullOrEmpty(item.SetupTeamStaffName))
                                             {
-                                                <span class="navi-text">
+                                                <span class="navi-text" data-toggle="modal" data-target="#exampleModalUpdateTask">
                                                     <input type="button" class="btn-sm my-2 btn btn-outline-primary task-update-button" dataValue="@item.TaskNo" value="kurulum ekibine ata" />
                                                     &nbsp &nbsp &nbsp
                                                 </span>
@@ -449,11 +449,125 @@
                 console.log("Error");
             }
         }
+
+        function UpdateTaskStatusResult(data, status) {
+            if (status = "success") {
+                var responseStatus = data.responseJSON.status;
+                if (responseStatus == "Success") {
+                    var url='@Url.Action("Successful", "Setup")';
+                    window.location.href = url;
+                }
+                else {
+                    $(".error-codes-updateTaskStatus").html(data.responseJSON.ErrorMessage);
+                }
+            }
+            else {
+                console.log("Error");
+            }
+        }
     </script>
 
 
     <script>
 
+        $("#TaskUpdateContainer").on('click', '.FaultCodesDrowndownByUpdateTaskStatus', function () {
+            var value = $(this).val();
+            if (value == '9') {//Rendezvous Made
+                $('.setupTeamWorkAreasContainer').show(100);
+                $('.assignTaskButton').hide()
+            } else {
+                $('.setupTeamWorkAreasContainer').hide(100);
+                $('.assignTaskButton').show()
+            }
+        });
+
+        $("#TaskUpdateContainer").on('change', '.setupTeamWorkDays', function () {
+            var hoursSelect = $(this).parent().children('.setupTeamWorkHours');
+
+            var selectedSelectDateValue = $(this).find(":selected").val();
+            var selectDataValue = $(this).attr("dataValue");
+            var postData = { staffId: selectDataValue, date:selectedSelectDateValue };
+
+               $.ajax({
+                      url: '@Url.Action("GetStaffAvailableHours", "Setup")',
+                      type: "POST",
+                      dataType: "json",
+                      data: postData,
+                      complete: function (data, status) {
+                          if (status == "success") {
+                              var result = data.responseJSON.list;
+                              $(hoursSelect).find("option").not(":first").remove();
+                              for (var i = 0; i < result.length; i++) {
+                                  hoursSelect.append($('<option>', {
+                                      value: result[i].Value,
+                                      text: result[i].Name,
+                                  }));
+                              }
+                          }
+                          else {
+                              console.log("Failed Get Staff Work Days");
+                          }
+                      }
+                  });
+        });
+
+        $("#TaskUpdateContainer").on('click', '.assignTaskSetupTeamButton', function () {
+            var dataValue = $(this).attr("dataValue");
+            var selectedDate = null;
+            var selectedTime = null;
+            var taskNo = null;
+            var description=null;
+            var faultCode = null;
+
+            taskNo = $(".genericContainer").children().children().children("#TaskNo").val();
+            description = $(".genericContainer").children().children().children("#Description").text();
+            description = $(".genericContainer").children().children().children("#FaultCodes").find(":selected").val();
+            $(".assignTaskButtonContainer").each(function () {
+                var date = $(this).find("#item_SelectedDate");
+                var time = $(this).find("#item_SelectedTime");
+                if (date.attr("dataValue")==dataValue.toString()) {
+                    selectedDate = date.find(":selected").val()
+                    selectedTime= time.find(":selected").val()
+                };
+            });
+
+            alert(selectedDate);
+            alert(selectedTime);
+
+            alert(taskNo);
+            alert(description);
+            alert(faultCode);
+
+        });
+
+        $("#TaskUpdateContainer").on('click', '.setupTeamWorkDays', function () {
+            var selectedSelect = $(this);
+
+            if ($(this).children().length<=1) {
+                var dataValue = selectedSelect.attr("dataValue");
+                var postData = { staffId: dataValue};
+                $.ajax({
+                            url: '@Url.Action("StaffWorkDays", "Setup")',
+                            type: "POST",
+                            dataType: "json",
+                            data: postData,
+                            complete: function (data, status) {
+                                if (status == "success") {
+                                    var result = data.responseJSON.list;
+                                    for (var i = 0; i < result.length; i++) {
+                                        selectedSelect.append($('<option>', {
+                                            value: result[i].Value,
+                                            text: result[i].Name,
+                                        }));
+                                    }
+                                }
+                                else {
+                                    console.log("Failed Get Staff Work Days");
+                                }
+                            }
+                        });
+            }
+        });
 
         $(".task-update-notRendezvous-button").click(function () {
             var dataValue = $(this).attr("dataValue");

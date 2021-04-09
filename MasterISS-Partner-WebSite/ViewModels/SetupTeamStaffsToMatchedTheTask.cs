@@ -15,11 +15,10 @@ namespace MasterISS_Partner_WebSite.ViewModels
 
 
         [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
-        public DateTime? SelectedDate { get; set; }
+        public string SelectedDate { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
-        public TimeSpan? SelectedTime { get; set; }
+        public string SelectedTime { get; set; }
 
-        public SelectList SetupTeamStaffWorkDays { get; set; }
     }
 }
