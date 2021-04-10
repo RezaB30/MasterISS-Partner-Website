@@ -34,31 +34,12 @@
                         @Html.EditorFor(m => search.SearchedName, new { htmlAttributes = new { @placeholder = Html.DisplayNameFor(m => search.SearchedName), @class = "form-control datatable-input", @data_col_index = "1" } })
                     </div>
                     <div class="col-lg-2 mb-lg-0 mb-6">
-                        <label>Görev Türü:</label>
-                        <select class="form-control datatable-input" data-col-index="2">
-                            <option value="">Seçim Yapınız</option>
-                            <option value="Kurulum">Kurulum</option>
-                            <option value="Arıza">Arıza</option>
-                            <option value="ortak Çalışma">Ortak çalışma</option>
-                        </select>
+                        @Html.LabelFor(m => search.TaskType)
+                        @Html.DropDownListFor(m => search.TaskType, (SelectList)ViewBag.TaskType, View.Select,new { @class = "form-control datatable-input", @data_col_index = "2" })
                     </div>
                     <div class="col-lg-2 mb-lg-0 mb-6">
-                        <label>Görev Durumu:</label>
-                        <select class="form-control datatable-input" data-col-index="2">
-                            <option value="">Seçim Yapınız</option>
-                            <option value="1">Arıza Yok</option>
-                            <option value="2">Geçersiz adres</option>
-                            <option value="3">Telekom Hat Arizası</option>
-                            <option value="4">İstek İptal Edildi</option>
-                            <option value="5">Modem Arızası</option>
-                            <option value="6">Telekom Genel Arızası</option>
-                            <option value="7">Bina Kurulum Hatası</option>
-                            <option value="8">Müşteriye Ulaşılamadı</option>
-                            <option value="9">Randevu Alındı</option>
-                            <option value="10">Kurulum Tamamlandı</option>
-                            <option value="11">Müşteri Kurulumu Yaptı</option>
-                            <option value="12">Yeni Rezervasyon Bekleniyor.</option>
-                        </select>
+                        @Html.LabelFor(m => search.FaultCode)
+                        @Html.DropDownListFor(m => search.FaultCode, (SelectList)ViewBag.FaultCodes, View.Select, new { @class = "form-control datatable-input", @data_col_index = "2" })
                     </div>
                     <div class="col-lg-2 mb-lg-0 mb-6">
                         @Html.LabelFor(m => search.SearchedTaskNo)
@@ -105,7 +86,18 @@
                             <!--begin::Card-->
                             <div class="card card-custom gutter-b card-stretch">
                                 <div class=" ribbon ribbon-left">
-                                    <div class="ribbon-target bg-info" style="top: 10px; left: -2px;">@Html.DisplayFor(modelItem => item.TaskStatus)</div>
+                                    @if (item.TaskStatusByControl == (int)MasterISS_Partner_WebSite_Enums.TaskStatusEnum.New)
+                                    {
+                                        <div class="ribbon-target bg-success" style="top: 10px; left: -2px;">@Html.DisplayFor(modelItem => item.TaskStatus)</div>
+                                    }
+                                    else if (item.TaskStatusByControl == (int)MasterISS_Partner_WebSite_Enums.TaskStatusEnum.Completed)
+                                    {
+                                        <div class="ribbon-target bg-danger" style="top: 10px; left: -2px;">@Html.DisplayFor(modelItem => item.TaskStatus)</div>
+                                    }
+                                    else
+                                    {
+                                        <div class="ribbon-target bg-warning" style="top: 10px; left: -2px;">@Html.DisplayFor(modelItem => item.TaskStatus)</div>
+                                    }
                                 </div>                                                    <!--begin::Body-->
                                 <div class="card-body pt-4 d-flex flex-column justify-content-between">
                                     <!--begin::Toolbar-->
@@ -175,6 +167,13 @@
                                                             </span>
                                                         </div>
 
+                                                    </li>
+                                                    <li class="navi-item">
+                                                        <div class="navi-link">
+                                                            <span class="navi-text" data-toggle="modal" data-target="#examplegetTaskFile">
+                                                                <input class="btn-sm btn btn-block btn-outline-info get-task-file-button" value="Yüklenen fotileri gör" dataValue="@item.TaskNo" />
+                                                            </span>
+                                                        </div>
                                                     </li>
                                                     <li class="navi-separator mt-3 opacity-70"></li>
                                                     <li class="navi-footer py-4">
@@ -262,7 +261,7 @@
 
                                         @if (User.IsInRole("Admin") || User.IsInRole("RendezvousTeam"))
                                         {
-                                            if (!string.IsNullOrEmpty(item.SetupTeamStaffName) && item.IsCorfirmation == false)
+                                            if (!string.IsNullOrEmpty(item.SetupTeamStaffName) && item.IsCorfirmation == false && item.TaskStatusByControl == (int)MasterISS_Partner_WebSite_Enums.TaskStatusEnum.Completed)
                                             {
                                                 <div class="separator separator-dashed mt-1 my-1"></div>
                                                 <div class="d-flex mb-2">
@@ -281,10 +280,8 @@
                                             }
                                             else
                                             {
-                                                <span class="navi-text">
-                                                    <input type="button" class="btn-sm my-2 btn btn-outline-primary task-update-button" dataValue="@item.TaskNo" value="kurulum ekibine ata" />
-
-                                                    @*@Html.ActionLink("başka bir ekibe ata ", "ShareSetupStaff", "Setup", new { taskNo = item.TaskNo, BBK = item.BBK }, new { @class = "btn-sm my-2 btn btn-outline-primary" })*@
+                                                <span class="navi-text" data-toggle="modal" data-target="#exampleModalUpdateTask">
+                                                    <input type="button" class="btn-sm my-2 btn btn-outline-primary task-update-button" dataValue="@item.TaskNo" value="başka ekibine ata" />
                                                     &nbsp &nbsp &nbsp
                                                 </span>
                                             }
@@ -293,15 +290,15 @@
                                         {
                                             if (!string.IsNullOrEmpty(item.RendezvousTeamStaffName) && !string.IsNullOrEmpty(item.SetupTeamStaffName))
                                             {
-                                                <span class="navi-text">
-                                                    @Html.ActionLink("tekrar Havuza Aktar ", "SendTaskToScheduler", "Setup", new { taskNo = item.TaskNo }, new { @class = "btn-sm my-2 btn btn-outline-danger" })
+                                                <span class="navi-text" data-toggle="modal" data-target="#exampleModalSendPool">
+                                                    <input type="button" class="btn-sm my-2 btn btn-outline-danger send-pool-button" dataValue="@item.TaskNo" value="tekrar Havuza Aktar" />
                                                     &nbsp &nbsp &nbsp
                                                 </span>
                                             }
                                             if (!string.IsNullOrEmpty(item.RendezvousTeamStaffName) && string.IsNullOrEmpty(item.SetupTeamStaffName))
                                             {
-                                                <span class="navi-text">
-                                                    @Html.ActionLink("başka randevu ekibi ", "ListPartnerRendezvousTeam", "Setup", new { BBK = item.BBK, taskNo = item.TaskNo }, new { @class = "btn-sm my-2 btn btn-outline-danger" })
+                                                <span class="navi-text" data-toggle="modal" data-target="#exampleModalOtherRendezvousTeam">
+                                                    <input type="button" class="btn-sm my-2 btn btn-outline-danger assign-rendezvous-team-button" dataValue="@item.TaskNo" value="başka randevu ekibi" />
                                                     &nbsp &nbsp &nbsp
                                                 </span>
                                             }
@@ -313,7 +310,17 @@
                     }
                 </div> <!--end::Info--> <!--end::Card Body-->
             }
-            @if (Model.TotalItemCount > 0)
+            else
+            {
+                <div align="center">
+                    <div class="text-danger">
+                        <span>@ViewBag.Max30Days</span>
+                        <span>@ViewBag.ErrorMessage</span>
+                        <span>@ViewBag.StartTimeBiggerThanEndTime</span>
+                    </div>
+                </div>
+            }
+            @if (Model!=null && Model.TotalItemCount > 0)
             {
                 <div class="card card-custom">
                     <div class="card-body py-7">
@@ -330,16 +337,7 @@
                     </div>
                 </div>
             }
-            else
-            {
-                <div align="center">
-                    <div class="text-danger">
-                        <span>@ViewBag.Max30Days</span>
-                        <span>@ViewBag.ErrorMessage</span>
-                        <span>@ViewBag.StartTimeBiggerThanEndTime</span>
-                    </div>
-                </div>
-            }
+
             <div class="text-danger">
                 @Html.Raw(TempData["SendTaskToSchedulerError"])
                 @Html.Raw(TempData["GeneralError"])
@@ -353,6 +351,39 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div id="CustomerInfoContainer">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="examplegetTaskFile" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="py-2">
+                    <span class="text-dark-75 font-weight-bolder d-block font-size-h5">Ass</span>
+                    <span class="text-muted font-size-lg">Ass</span>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex mb-3" id="GetFileContainer">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModalSendPool" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div id="SendPoolContainer">
             </div>
         </div>
     </div>
@@ -415,6 +446,17 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="exampleModalOtherRendezvousTeam" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div id="RendezvousTeamContainer">
+
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Javascript{
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
 
@@ -465,10 +507,66 @@
                 console.log("Error");
             }
         }
+        function SendTaskToSchedulerResult(data, status) {
+            if (status = "success") {
+                var responseStatus = data.responseJSON.status;
+                if (responseStatus == "Success") {
+                    var url='@Url.Action("Successful", "Setup")';
+                    window.location.href = url;
+                }
+                else {
+                    $(".error-codes-sendTaskScheduler").html(data.responseJSON.ErrorMessage);
+                }
+            }
+            else {
+                console.log("Error");
+            }
+        }
     </script>
 
 
     <script>
+
+        $(".assign-rendezvous-team-button").click(function () {
+            var dataValue = $(this).attr("dataValue");
+                $.ajax({
+                    url: '@Url.Action("ListPartnerRendezvousTeam", "Setup")',
+                    type: 'GET',
+                    data: {
+                        taskNo : dataValue
+                    },
+                    dataType: 'html',
+                    success: function (data) {
+                        $("#RendezvousTeamContainer").html(data);
+                    },
+                });
+        });
+            
+
+        $(".get-task-file-button").click(function () {
+            var dataValue = $(this).attr("dataValue");
+                $.ajax({
+                    url: '@Url.Action("GetFileList", "Setup")',
+                    type: 'POST',
+                    data: {
+                        taskNo : dataValue
+                    },
+                    dataType: 'json',
+                    complete: function (data, status) {
+                            if (status = "success") {
+                                var cultureInfo = '@System.Globalization.CultureInfo.CurrentCulture.Name';
+                                var area = $("#GetFileContainer");
+                                $.each(data.responseJSON.list, function (item, value) {
+                                    item = item + 1;
+                                    area.append('<a href="/' + cultureInfo + '/Setup/GetFileTask?fileName=' + value + '&taskNo=' + dataValue + '" class="' + "btn btn-sm btn-outline-success font-weight-bold" + '" target="_blank">"' + value +'" </a>');
+                                });
+                            }
+                            else {
+                                console.log("Failed Get Staff Hours");
+                            }
+                        }
+                });
+          });
 
         $("#TaskUpdateContainer").on('click', '.FaultCodesDrowndownByUpdateTaskStatus', function () {
             var value = $(this).val();
@@ -515,13 +613,10 @@
             var dataValue = $(this).attr("dataValue");
             var selectedDate = null;
             var selectedTime = null;
-            var taskNo = null;
-            var description=null;
-            var faultCode = null;
 
-            taskNo = $(".genericContainer").children().children().children("#TaskNo").val();
-            description = $(".genericContainer").children().children().children("#Description").text();
-            description = $(".genericContainer").children().children().children("#FaultCodes").find(":selected").val();
+            var taskNo = $(".genericContainer").children().children().children("#TaskNo").val();
+            var description = $('.genericContainer').children().children().children().children('textarea#description').val();
+            var faultCode = $(".genericContainer").children().children().children("#FaultCodes").find(":selected").val();
             $(".assignTaskButtonContainer").each(function () {
                 var date = $(this).find("#item_SelectedDate");
                 var time = $(this).find("#item_SelectedTime");
@@ -531,12 +626,23 @@
                 };
             });
 
-            alert(selectedDate);
-            alert(selectedTime);
-
-            alert(taskNo);
-            alert(description);
-            alert(faultCode);
+            var postData = { PostTimeValue: selectedTime, PostDateValue: selectedDate, TaskNo: taskNo, Description: description, staffId: dataValue, FaultCodes: faultCode, };
+             $.ajax({
+                            url: '@Url.Action("UpdateTaskStatus", "Setup")',
+                            type: "POST",
+                            dataType: "json",
+                            data: postData,
+                            complete: function (data, status) {
+                                 var responseStatus = data.responseJSON.status;
+                                    if (responseStatus == "Success") {
+                                        var url='@Url.Action("Successful", "Setup")';
+                                        window.location.href = url;
+                                        }
+                                    else {
+                                        $(".error-codes-updateTaskStatus").html(data.responseJSON.ErrorMessage);
+                                    }
+                            }
+                        });
 
         });
 
@@ -580,6 +686,21 @@
                     dataType: 'html',
                     success: function (data) {
                         $("#TaskUpdateNotRendezvousContainer").html(data);
+                    },
+                });
+        });
+
+        $(".send-pool-button").click(function () {
+            var dataValue = $(this).attr("dataValue");
+                $.ajax({
+                    url: '@Url.Action("SendTaskToScheduler", "Setup")',
+                    type: 'GET',
+                    data: {
+                        taskNo : dataValue
+                    },
+                    dataType: 'html',
+                    success: function (data) {
+                        $("#SendPoolContainer").html(data);
                     },
                 });
          });

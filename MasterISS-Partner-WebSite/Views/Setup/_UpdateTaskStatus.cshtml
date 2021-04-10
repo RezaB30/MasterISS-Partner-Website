@@ -25,10 +25,9 @@
             <div class="form-group my-8 mb-1">
 
                 @Html.LabelFor(m => m.Description, new { @class = "text-muted font-size-lg" })
-                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @rows = "3" })
+                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @rows = "3",id="description" })
             </div>
 
-            @Html.AntiForgeryToken()
             foreach (var item in Model.SetupTeamStaffsToMatchedTheTask)
             {
                 <div class="mb-7 assignTaskButtonContainer">

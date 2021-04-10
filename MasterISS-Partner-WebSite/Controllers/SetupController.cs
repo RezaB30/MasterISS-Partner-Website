@@ -40,18 +40,21 @@ namespace MasterISS_Partner_WebSite.Controllers
         {
             taskListRequestModel = taskListRequestModel ?? new GetTaskListRequestViewModel();
 
-            if (taskListRequestModel.TaskListStartDate == null && taskListRequestModel.TaskListEndDate == null)
-            {
-                taskListRequestModel.TaskListStartDate = DateTime.Now.AddDays(-29);
-                taskListRequestModel.TaskListEndDate = DateTime.Now;
-            }
-
-            else if (taskListRequestModel.TaskListStartDate != null && taskListRequestModel.TaskListEndDate == null)
+            if (taskListRequestModel.TaskListStartDate != null && taskListRequestModel.TaskListEndDate == null)
             {
                 var startDateConverted = taskListRequestModel.TaskListStartDate;
 
                 taskListRequestModel.TaskListEndDate = startDateConverted.Value.AddDays(29);
             }
+            else
+            {
+                taskListRequestModel.TaskListStartDate = DateTime.Now.AddDays(-29);
+                taskListRequestModel.TaskListEndDate = DateTime.Now;
+            }
+
+            ViewBag.TaskType = TaskTypeList(taskListRequestModel.TaskType ?? null);
+            ViewBag.FaultCodes = FaultTypeList(taskListRequestModel.FaultCode ?? null, true);
+            ViewBag.Search = taskListRequestModel;
 
             if (ModelState.IsValid)
             {
@@ -64,10 +67,10 @@ namespace MasterISS_Partner_WebSite.Controllers
                     {
                         if (startDate.Value.AddDays(Properties.Settings.Default.SearchLimit) >= endDate)
                         {
-                            var taskList = TaskList(User.IsInRole("Admin"));
+                            var taskList = TaskList(User.IsInRole("Admin"), taskListRequestModel);
 
                             var list = taskList.Where(tlresponse => tlresponse.TaskIssueDate >= startDate && tlresponse.TaskIssueDate <= endDate)
-                                .Where(tlresponse => tlresponse.IsConfirmation == false && taskListRequestModel.SearchedTaskNo.HasValue == true ? tlresponse.TaskNo == taskListRequestModel.SearchedTaskNo : tlresponse.ContactName.Contains(taskListRequestModel.SearchedName == null ? "" : taskListRequestModel.SearchedName.ToUpper())).Select(tl => new GetTaskListResponseViewModel
+                                .Select(tl => new GetTaskListResponseViewModel
                                 {
                                     AddressLatitudeandLongitude = GetAddressLatituteandLongitude(tl.Address),
                                     ContactName = tl.ContactName,
@@ -84,14 +87,13 @@ namespace MasterISS_Partner_WebSite.Controllers
                                     BBK = tl.BBK,
                                     IsCorfirmation = tl.IsConfirmation,
                                     FaultCodesDisplayText = tl.TaskStatus == (int)TaskStatusEnum.New ? null : GetFaultCodesOrDescription(tl.TaskNo, false),
-                                    SetupStaffEnteredMessage = tl.TaskStatus == (int)TaskStatusEnum.New ? null : GetFaultCodesOrDescription(tl.TaskNo, true)
+                                    SetupStaffEnteredMessage = tl.TaskStatus == (int)TaskStatusEnum.New ? null : GetFaultCodesOrDescription(tl.TaskNo, true),
+                                    TaskStatusByControl = tl.TaskStatus
                                 });
 
                             var totalCount = list.Count();
 
                             var pagedListByResponseList = new StaticPagedList<GetTaskListResponseViewModel>(list.Skip((page - 1) * pageSize).Take(pageSize), page, pageSize, totalCount);
-
-                            ViewBag.Search = taskListRequestModel;
 
                             return View(pagedListByResponseList);
                         }
@@ -163,13 +165,13 @@ namespace MasterISS_Partner_WebSite.Controllers
             //}
         }
 
-        private List<TaskList> TaskList(bool isAdmin)
+        private List<TaskList> TaskList(bool isAdmin, GetTaskListRequestViewModel taskListRequestModel)
         {
             using (var db = new PartnerWebSiteEntities())
             {
                 var claimInfo = new ClaimInfo();
                 var partnerId = claimInfo.PartnerId();
-
+                var taskList = new List<TaskList>();
                 if (isAdmin)
                 {
                     var adminId = claimInfo.UserId();
@@ -178,16 +180,33 @@ namespace MasterISS_Partner_WebSite.Controllers
                     {
                         LoggerError.Fatal("An error occurred while SetupController=>TaskList: Admin not found in User Table");
                     }
-                    var taskList = db.TaskList.Where(tl => tl.PartnerId == partnerId).ToList();
-                    return taskList;
+                    var searchedValueByContactName = taskListRequestModel.SearchedName ?? "";
+                    var list = db.TaskList.Where(tl => tl.PartnerId == partnerId && tl.IsConfirmation == false && tl.ContactName.Contains(searchedValueByContactName));
+                    taskList = list.ToList();
                 }
                 else
                 {
                     var userId = claimInfo.UserId();
+                    var searchedValueByContactName = taskListRequestModel.SearchedName ?? "";
 
-                    var taskList = db.TaskList.Where(tl => (tl.AssignToRendezvousStaff == userId || tl.AssignToSetupTeam == userId) && tl.PartnerId == partnerId && tl.IsConfirmation == false).ToList();
-                    return taskList;
+                    taskList = db.TaskList.Where(tl => (tl.AssignToRendezvousStaff == userId || tl.AssignToSetupTeam == userId) && tl.PartnerId == partnerId && tl.IsConfirmation == false && tl.ContactName.Contains(searchedValueByContactName)).ToList();
                 }
+
+                if (taskListRequestModel.SearchedTaskNo != null)
+                {
+                    taskList.Where(tl => tl.TaskNo == taskListRequestModel.SearchedTaskNo);
+                    return taskList.ToList();
+                }
+                if (taskListRequestModel.TaskType != null)
+                {
+                    taskList.Where(tl => tl.TaskType == taskListRequestModel.TaskType);
+                }
+                if (taskListRequestModel.FaultCode != null)
+                {
+                    var list = taskList.SelectMany(tl => tl.UpdatedSetupStatus.Where(uss => uss.FaultCodes == taskListRequestModel.FaultCode), (tl, uss) => new { taskList = tl }).Select(selectedList => selectedList.taskList).ToList();
+                    return list;
+                }
+                return taskList.ToList();
             }
         }
 
@@ -271,14 +290,19 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             using (var db = new PartnerWebSiteEntities())
             {
-                var partnerRendezvousTeam = db.User.Where(rt => rt.PartnerId == partnerId).Select(u => u.RendezvousTeam).Where(rt => rt.WorkingStatus == true && rt.IsAdmin == false).Select(rt => new ListRendezvousTeamViewModel
+                var task = db.TaskList.Find(taskNo);
+                if (task != null)
                 {
-                    Id = rt.UserId,
-                    NameSurname = rt.User.NameSurname,
-                }).ToArray();
+                    var partnerRendezvousTeam = db.User.Where(rt => rt.PartnerId == partnerId).Select(u => u.RendezvousTeam).Where(rt => rt.WorkingStatus == true && rt.IsAdmin == false).Select(rt => new ListRendezvousTeamViewModel
+                    {
+                        Id = rt.UserId,
+                        NameSurname = rt.User.NameSurname,
+                    }).ToArray();
 
-                ViewBag.TaskNo = taskNo;
-                return View(partnerRendezvousTeam);
+                    ViewBag.TaskNo = taskNo;
+                    return PartialView("_ListPartnerRendezvousTeam", partnerRendezvousTeam);
+                }
+                return Content($"<div>{ new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture)}</div>");
             }
         }
 
@@ -310,48 +334,68 @@ namespace MasterISS_Partner_WebSite.Controllers
             }
         }
 
+        [HttpGet]
         public ActionResult SendTaskToScheduler(long taskNo)
         {
-            var claimInfo = new ClaimInfo();
-            var wrapper = new WebServiceWrapper();
             using (var db = new PartnerWebSiteEntities())
             {
                 var task = db.TaskList.Find(taskNo);
                 if (task != null)
                 {
-                    task.AssignToRendezvousStaff = null;
-                    task.AssignToSetupTeam = null;
-                    task.ReservationDate = null;
-                    task.TaskType = (int)TaskTypesEnum.Setup;
-                    task.TaskStatus = (int)TaskStatusEnum.New;
-
-                    OperationHistory operationHistory = new OperationHistory
-                    {
-                        ChangeTime = DateTime.Now,
-                        Description = string.Format($"{new LocalizedList<OperationTypeEnum, Localization.OperationHistoryType>().GetDisplayText((short)OperationTypeEnum.SentPool, CultureInfo.CurrentCulture)}, {Localization.View.By}: {wrapper.GetUserSubMail()} "),
-                        OperationType = (short)OperationTypeEnum.SentPool,
-                        TaskNo = taskNo,
-                        UserId = claimInfo.UserId()
-                    };
-                    db.OperationHistory.Add(operationHistory);
-                    db.SaveChanges();
-
-                    //Log
-                    Logger.Info($"SendSchedulerTask TaskNo: {taskNo}, by : {claimInfo.UserId()}");
-                    //Log
-
-                    db.SaveChanges();
-                    return RedirectToAction("Successful");
+                    var model = new SendTaskToSchedulerViewModel { TaskNo = taskNo, ContactName = task.ContactName };
+                    return PartialView("_SendTaskToScheduler", model);
                 }
-                else
+                return Content($"<div>{ new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture)}</div>");
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SendTaskToScheduler(SendTaskToSchedulerViewModel sendTaskToSchedulerViewModel)
+        {
+            var claimInfo = new ClaimInfo();
+            var wrapper = new WebServiceWrapper();
+            if (ModelState.IsValid)
+            {
+                using (var db = new PartnerWebSiteEntities())
                 {
-                    LoggerError.Fatal("An error occurred while SetupController=>SendTaskToScheduler: Not Found TaskNo in Task Table ");
+                    var task = db.TaskList.Find(sendTaskToSchedulerViewModel.TaskNo);
+                    if (task != null)
+                    {
+                        task.AssignToRendezvousStaff = null;
+                        task.AssignToSetupTeam = null;
+                        task.ReservationDate = null;
+                        task.TaskType = (int)TaskTypesEnum.Setup;
+                        task.TaskStatus = (int)TaskStatusEnum.New;
 
-                    TempData["SendTaskToSchedulerError"] = Localization.View.Generic200ErrorCodeMessage;
+                        OperationHistory operationHistory = new OperationHistory
+                        {
+                            ChangeTime = DateTime.Now,
+                            Description = sendTaskToSchedulerViewModel.Description,
+                            OperationType = (short)OperationTypeEnum.SentPool,
+                            TaskNo = sendTaskToSchedulerViewModel.TaskNo,
+                            UserId = claimInfo.UserId()
+                        };
+                        db.OperationHistory.Add(operationHistory);
+                        db.SaveChanges();
 
-                    return RedirectToAction("Index", "Setup");
+                        //Log
+                        Logger.Info($"SendSchedulerTask TaskNo: {sendTaskToSchedulerViewModel.TaskNo}, by : {claimInfo.UserId()}");
+                        //Log
+
+                        db.SaveChanges();
+                        return Json(new { status = "Success" }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        LoggerError.Fatal("An error occurred while SetupController=>SendTaskToScheduler: Not Found TaskNo in Task Table ");
+
+                        return Json(new { status = "Failed", ErrorMessage = Localization.View.Generic200ErrorCodeMessage }, JsonRequestBehavior.AllowGet);
+                    }
                 }
             }
+            var errorMessage = string.Join(" | ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
+            return Json(new { status = "Failed", ErrorMessage = errorMessage }, JsonRequestBehavior.AllowGet);
         }
 
         private string FixedAddress(string address)
@@ -584,9 +628,8 @@ namespace MasterISS_Partner_WebSite.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult UpdateTaskStatusNotRendezvous(AddTaskStatusUpdateViewModel updateTaskStatusViewModel, HttpPostedFileBase File)
         {
-
-            ModelState.Remove("SelectedDate");
-            ModelState.Remove("SelectedTime");
+            ModelState.Remove("PostDateValue");
+            ModelState.Remove("PostTimeValue");
             ModelState.Remove("StaffId");
             if (ModelState.IsValid)
             {
@@ -807,19 +850,16 @@ namespace MasterISS_Partner_WebSite.Controllers
 
         }
 
-        [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult UpdateTaskStatus(AddTaskStatusUpdateViewModel updateTaskStatusViewModel)
         {
-            ViewBag.FaultTypes = FaultTypeList((int?)updateTaskStatusViewModel.FaultCodes ?? null, true);
-
             if (updateTaskStatusViewModel.FaultCodes != FaultCodeEnum.RendezvousMade)
             {
-                //updateTaskStatusViewModel.SelectedDate = null;
-                //updateTaskStatusViewModel.SelectedTime = null;
-                //updateTaskStatusViewModel.StaffId = null;
-                ModelState.Remove("SelectedDate");
-                ModelState.Remove("SelectedTime");
+                updateTaskStatusViewModel.PostDateValue = null;
+                updateTaskStatusViewModel.PostTimeValue = null;
+                updateTaskStatusViewModel.StaffId = null;
+                ModelState.Remove("PostDateValue");
+                ModelState.Remove("PostTimeValue");
                 ModelState.Remove("StaffId");
             }
 
@@ -829,85 +869,94 @@ namespace MasterISS_Partner_WebSite.Controllers
                 var isValidFaultCodes = Enum.IsDefined(typeof(FaultCodeEnum), updateTaskStatusViewModel.FaultCodes);
                 var claimInfo = new ClaimInfo();
                 var wrapper = new WebServiceWrapper();
-                //if (isValidFaultCodes)
-                //{
-                //    var reservationDate = updateTaskStatusViewModel.SelectedDate?.Add(updateTaskStatusViewModel.SelectedTime.GetValueOrDefault());//Bu tarih uygun mu bir daha kontrol et.Hiddenleri değiştirmiş olabilir.
+                if (isValidFaultCodes)
+                {
+                    DateTime? reservationDate = null;
+                    if (updateTaskStatusViewModel.FaultCodes == FaultCodeEnum.RendezvousMade)
+                    {
+                        var selectedDate = Convert.ToDateTime(updateTaskStatusViewModel.PostDateValue);
+                        var selectedTime = TimeSpan.Parse(updateTaskStatusViewModel.PostTimeValue);
+                        reservationDate = selectedDate.Add(selectedTime);
 
-                //    if (updateTaskStatusViewModel.FaultCodes == FaultCodeEnum.RendezvousMade)
-                //    {
-                //        var userCurrentWorkDays = StaffCurrentWorkDays(updateTaskStatusViewModel.StaffId.Value);
+                        var userCurrentWorkDays = StaffCurrentWorkDays(updateTaskStatusViewModel.StaffId.Value);
 
-                //        var selectedValueDateOfWeek = (int)updateTaskStatusViewModel.SelectedDate.Value.DayOfWeek == 0 ? 7 : (int)updateTaskStatusViewModel.SelectedDate.Value.DayOfWeek;
+                        var selectedValueDateOfWeek = (int)selectedDate.DayOfWeek == 0 ? 7 : (int)selectedDate.DayOfWeek;
 
-                //        if (!userCurrentWorkDays.Contains(selectedValueDateOfWeek))
-                //        {
-                //            return RedirectToAction("Index", "Home");
-                //        }
-                //        var staffWorkTime = StaffWorkTimeCalendar(updateTaskStatusViewModel.StaffId.Value, updateTaskStatusViewModel.SelectedDate.Value);
+                        if (!userCurrentWorkDays.Contains(selectedValueDateOfWeek))
+                        {
+                            return Json(new { status = "Failed", ErrorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture) }, JsonRequestBehavior.AllowGet);
+                        }
+                        var staffWorkTime = StaffWorkTimeCalendar(updateTaskStatusViewModel.StaffId.Value, selectedDate);
 
-                //        if (!staffWorkTime.Contains(reservationDate.Value))
-                //        {
-                //            return RedirectToAction("Index", "Home");
-                //        }
-                //        using (var db = new PartnerWebSiteEntities())
-                //        {
-                //            var validStaff = db.SetupTeam.Find(updateTaskStatusViewModel.StaffId);
-                //            if (validStaff != null)
-                //            {
-                //                var assignTaskDescription = new LocalizedList<OperationTypeEnum, Localization.OperationHistoryType>().GetDisplayText((short)OperationTypeEnum.AssignTask, CultureInfo.CurrentCulture);
+                        if (!staffWorkTime.Contains(reservationDate.Value))
+                        {
+                            return Json(new { status = "Failed", ErrorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture) }, JsonRequestBehavior.AllowGet);
+                        }
+                    }
+                    using (var db = new PartnerWebSiteEntities())
+                    {
+                        var validStaff = db.SetupTeam.Find(updateTaskStatusViewModel.StaffId);
+                        if (validStaff != null)
+                        {
+                            var assignTaskDescription = new LocalizedList<OperationTypeEnum, Localization.OperationHistoryType>().GetDisplayText((short)OperationTypeEnum.AssignTask, CultureInfo.CurrentCulture);
+                            string description = null;
+                            if (updateTaskStatusViewModel.StaffId != null)
+                            {
+                                description = string.Format($"{assignTaskDescription}, {Localization.View.By}: {wrapper.GetUserSubMail()}, {Localization.View.SetupTeam}: {validStaff.User.UserSubMail} ");
+                            }
+                            else
+                            {
+                                description = string.Format($"{assignTaskDescription}, {Localization.View.By}: {wrapper.GetUserSubMail()}");
+                            }
 
-                //                OperationHistory operationHistory = new OperationHistory
-                //                {
-                //                    ChangeTime = DateTime.Now,
-                //                    UserId = claimInfo.UserId(),
-                //                    OperationType = (short)OperationTypeEnum.AssignTask,
-                //                    Description = string.Format($"{assignTaskDescription}, {Localization.View.By}: {wrapper.GetUserSubMail()}, {Localization.View.SetupTeam}: {validStaff.User.UserSubMail} "),
-                //                    TaskNo = updateTaskStatusViewModel.TaskNo.Value,
-                //                };
-                //                db.OperationHistory.Add(operationHistory);
-                //                db.SaveChanges();
-                //            }
-                //            else
-                //            {
-                //                LoggerError.Fatal($" Setup=>UpdateTaskStatus, Staff Not Found SetupTeam, StaffId: {updateTaskStatusViewModel.StaffId}, Id: {claimInfo.UserId()}");
+                            OperationHistory operationHistory = new OperationHistory
+                            {
+                                ChangeTime = DateTime.Now,
+                                UserId = claimInfo.UserId(),
+                                OperationType = (short)OperationTypeEnum.AssignTask,
+                                Description = description,
+                                TaskNo = updateTaskStatusViewModel.TaskNo.Value,
+                            };
+                            db.OperationHistory.Add(operationHistory);
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            LoggerError.Fatal($" Setup=>UpdateTaskStatus, Staff Not Found SetupTeam, StaffId: {updateTaskStatusViewModel.StaffId}, Id: {claimInfo.UserId()}");
+                            return Json(new { status = "Failed", ErrorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture) }, JsonRequestBehavior.AllowGet);
+                        }
 
-                //                return RedirectToAction("Index", "Home");
-                //            }
+                        var task = db.TaskList.Find(updateTaskStatusViewModel.TaskNo);
 
-                //        }
-
-                //    }
-                //    using (var db = new PartnerWebSiteEntities())
-                //    {
-                //        var task = db.TaskList.Find(updateTaskStatusViewModel.TaskNo);
-
-                //        UpdatedSetupStatus updatedSetupStatus = new UpdatedSetupStatus
-                //        {
-                //            ChangeTime = datetimeNow,
-                //            Description = updateTaskStatusViewModel.Description,
-                //            FaultCodes = (short)updateTaskStatusViewModel.FaultCodes,
-                //            ReservationDate = reservationDate ?? null,
-                //            UserId = updateTaskStatusViewModel.StaffId == null ? claimInfo.UserId() : updateTaskStatusViewModel.StaffId,
-                //            TaskNo = (long)updateTaskStatusViewModel.TaskNo,
-                //        };
-                //        db.UpdatedSetupStatus.Add(updatedSetupStatus);
+                        UpdatedSetupStatus updatedSetupStatus = new UpdatedSetupStatus
+                        {
+                            ChangeTime = datetimeNow,
+                            Description = updateTaskStatusViewModel.Description,
+                            FaultCodes = (short)updateTaskStatusViewModel.FaultCodes,
+                            ReservationDate = reservationDate ?? null,
+                            UserId = updateTaskStatusViewModel.StaffId == null ? claimInfo.UserId() : updateTaskStatusViewModel.StaffId,
+                            TaskNo = (long)updateTaskStatusViewModel.TaskNo,
+                        };
+                        db.UpdatedSetupStatus.Add(updatedSetupStatus);
 
 
-                //        if (updateTaskStatusViewModel.FaultCodes == FaultCodeEnum.RendezvousMade)
-                //        {
-                //            task.AssignToSetupTeam = updateTaskStatusViewModel.StaffId;
-                //            task.ReservationDate = reservationDate;
-                //        }
-                //        task.TaskStatus = (short?)FaultCodeConverter.GetFaultCodeTaskStatus(updateTaskStatusViewModel.FaultCodes);
-                //        db.SaveChanges();
+                        if (updateTaskStatusViewModel.FaultCodes == FaultCodeEnum.RendezvousMade)
+                        {
+                            task.AssignToSetupTeam = updateTaskStatusViewModel.StaffId;
+                            task.AssignToRendezvousStaff = claimInfo.UserId();
+                            task.ReservationDate = reservationDate;
+                        }
+                        task.TaskStatus = (short?)FaultCodeConverter.GetFaultCodeTaskStatus(updateTaskStatusViewModel.FaultCodes);
+                        db.SaveChanges();
 
-                //        Logger.Info("Updated Task Status: " + updateTaskStatusViewModel.TaskNo + ", by: " + claimInfo.UserId());
-
-                //        return RedirectToAction("Successful", new { taskNo = updateTaskStatusViewModel.TaskNo });
-                //    }
-                //}
+                        Logger.Info("Updated Task Status: " + updateTaskStatusViewModel.TaskNo + ", by: " + claimInfo.UserId());
+                        return Json(new { status = "Success" }, JsonRequestBehavior.AllowGet);
+                    }
+                }
             }
-            return RedirectToAction("Index", "Setup");
+            var errorMessage = string.Join(" | ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
+
+            return Json(new { status = "Failed", ErrorMessage = errorMessage }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -1180,6 +1229,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             return attachmentTypesList;
         }
 
+
         private SelectList FaultTypeList(int? selectedValue, bool isRendezvous)
         {
             var list = new LocalizedList<FaultCodeEnum, Localization.FaultCodes>().GetList(CultureInfo.CurrentCulture);
@@ -1192,6 +1242,13 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             var faultCodesList = new SelectList(list.Select(m => new { Name = m.Value, Value = m.Key }).ToArray(), "Value", "Name", selectedValue);
 
+            return faultCodesList;
+        }
+
+        private SelectList TaskTypeList(int? selectedValue)
+        {
+            var list = new LocalizedList<TaskTypesEnum, Localization.TaskTypes>().GetList(CultureInfo.CurrentCulture);
+            var faultCodesList = new SelectList(list.Select(m => new { Name = m.Value, Value = m.Key }).ToArray(), "Value", "Name", selectedValue);
             return faultCodesList;
         }
 

@@ -13,11 +13,8 @@ namespace MasterISS_Partner_WebSite.ViewModels
         public string SetupTeamStaffName { get; set; }
         public List<SetupTeamUserAddressInfo> SetupTeamStaffWorkAreas { get; set; }
 
-
-        [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
         public string SelectedDate { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
         public string SelectedTime { get; set; }
 
     }

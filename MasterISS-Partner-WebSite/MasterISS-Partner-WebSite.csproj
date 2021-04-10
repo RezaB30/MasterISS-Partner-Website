@@ -373,6 +373,7 @@
     <Compile Include="ViewModels\Account\UserSignInViewModel.cs" />
     <Compile Include="ViewModels\AddPermissionViewModel.cs" />
     <Compile Include="ViewModels\ListRendezvousTeamViewModel.cs" />
+    <Compile Include="ViewModels\SendTaskToSchedulerViewModel.cs" />
     <Compile Include="ViewModels\SetupTeamStaffsToMatchedTheTask.cs" />
     <Compile Include="ViewModels\SetupTeamWorkingDaysAndHoursViewModel.cs" />
     <Compile Include="ViewModels\WorkAreaSetupTeamUserViewModel.cs" />
@@ -2073,8 +2074,7 @@
     <Content Include="Views\UserOperations\ListWorkAreaSetupTeamUser.cshtml" />
     <Content Include="Views\UserOperations\RendezvousTeamList.cshtml" />
     <Content Include="Views\Account\AdminSignIn.cshtml" />
-    <Content Include="Views\Setup\ShareSetupStaff.cshtml" />
-    <Content Include="Views\Setup\ListPartnerRendezvousTeam.cshtml" />
+    <Content Include="Views\Setup\_ListPartnerRendezvousTeam.cshtml" />
     <Content Include="Views\UserOperations\SetupTeamWorkingDaysAndHours.cshtml" />
     <Content Include="Scripts\js2\12882-green-check.json" />
     <Content Include="Views\Shared\_MenuBar.cshtml" />
@@ -2084,6 +2084,7 @@
     <Content Include="Views\Customer\asss.cshtml" />
     <Content Include="Views\Setup\assIndex.cshtml" />
     <Content Include="Views\Setup\_UpdateTaskStatusNotRendezvous.cshtml" />
+    <Content Include="Views\Setup\_SendTaskToScheduler.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

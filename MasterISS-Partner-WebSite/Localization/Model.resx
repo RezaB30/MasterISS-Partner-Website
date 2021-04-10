@@ -318,6 +318,9 @@
   <data name="FathersName" xml:space="preserve">
     <value>Baba Adı</value>
   </data>
+  <data name="FaultCode" xml:space="preserve">
+    <value>Görev Durumu</value>
+  </data>
   <data name="FaultCodes" xml:space="preserve">
     <value>Arıza Kodu</value>
   </data>

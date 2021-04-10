@@ -1,0 +1,28 @@
+﻿@using MasterISS_Partner_WebSite.ViewModels
+@using MasterISS_Partner_WebSite.Localization
+@model  IEnumerable<ListRendezvousTeamViewModel>
+<div class="modal-header">
+    <div class="py-2">
+        <span class="text-dark-75 font-weight-bolder d-block font-size-h5">Randevu Ekibini Değiştir</span>
+        <span class="text-muted font-size-lg">Görevi Atamak İstediğiniz Randevu Ekibini Seçiniz</span>
+    </div>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
+    </button>
+</div>
+
+<div class="modal-body">
+    @foreach (var item in Model)
+    {
+        <div class="d-flex mb-3">
+
+            <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayFor(modelItem => item.NameSurname)</span>
+            @Html.ActionLink("görevi buna ata", "ChangeRendezvousTeam", "Setup", new { @rendezvousStaffId = item.Id, @taskNo = (long)ViewBag.TaskNo }, new { @class = "btn btn-sm btn-outline-success font-weight-bold" })
+        </div>
+        <div class="separator separator-dashed mt-1 my-2"></div>
+
+    }
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
+</div>

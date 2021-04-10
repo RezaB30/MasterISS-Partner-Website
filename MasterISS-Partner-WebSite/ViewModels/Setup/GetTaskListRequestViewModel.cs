@@ -22,5 +22,11 @@ namespace MasterISS_Partner_WebSite.ViewModels.Setup
         [Display(ResourceType = typeof(Localization.Model), Name = "SearchedTaskNo")]
         public long? SearchedTaskNo { get; set; }
 
+        [Display(ResourceType = typeof(Localization.Model), Name = "TaskType")]
+        public int? TaskType { get; set; }
+
+        [Display(ResourceType = typeof(Localization.Model), Name = "FaultCode")]
+        public int? FaultCode { get; set; }
+
     }
 }

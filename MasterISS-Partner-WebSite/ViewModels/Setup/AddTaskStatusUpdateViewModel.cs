@@ -28,5 +28,11 @@ namespace MasterISS_Partner_WebSite.ViewModels.Setup
         [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
         public long? StaffId { get; set; }
 
+        [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
+        public string PostDateValue { get; set; }
+
+        [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
+        public string PostTimeValue { get; set; }
+
     }
 }

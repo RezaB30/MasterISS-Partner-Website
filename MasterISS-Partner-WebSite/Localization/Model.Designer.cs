@@ -664,6 +664,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Görev Durumu.
+        /// </summary>
+        public static string FaultCode {
+            get {
+                return ResourceManager.GetString("FaultCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Arıza Kodu.
         /// </summary>
         public static string FaultCodes {
