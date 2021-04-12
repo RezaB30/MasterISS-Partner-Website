@@ -270,10 +270,13 @@
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="form-group">
-                                        @Html.LabelFor(m => m.Individual.SameSetupAddressByIndividual)
-                                        @Html.EditorFor(m => m.Individual.SameSetupAddressByIndividual)
+                                <div class="row mt-5">
+                                    @Html.LabelFor(m => m.Individual.SameSetupAddressByIndividual, new { @class = "font-weight-bolder text-dark-100 font-size-h4" })
+                                    <div class="col-lg-6 col-md-6 mt-1">
+                                        <label class="checkbox">
+                                            @Html.EditorFor(m => m.Individual.SameSetupAddressByIndividual, new { htmlAttributes = new { @class = "checkbox" } })
+                                            <span></span>
+                                        </label>
                                     </div>
                                 </div>
 
@@ -488,10 +491,14 @@
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="form-group">
-                                        @Html.LabelFor(ci => ci.CorporateInfo.SameSetupAddressByCorporativeResidencyAddress)
-                                        @Html.EditorFor(ci => ci.CorporateInfo.SameSetupAddressByCorporativeResidencyAddress)
+
+                                <div class="row mt-5">
+                                    @Html.LabelFor(m => m.CorporateInfo.SameSetupAddressByCorporativeResidencyAddress, new { @class = "font-weight-bolder text-dark-100 font-size-h4" })
+                                    <div class="col-lg-6 col-md-6 mt-1">
+                                        <label class="checkbox">
+                                            @Html.EditorFor(m => m.CorporateInfo.SameSetupAddressByCorporativeResidencyAddress, new { htmlAttributes = new { @class = "checkbox" } })
+                                            <span></span>
+                                        </label>
                                     </div>
                                 </div>
 
@@ -614,12 +621,17 @@
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="form-group">
-                                        @Html.LabelFor(ci => ci.CorporateInfo.SameSetupAddressByCorporativeCompanyAddress)
-                                        @Html.EditorFor(ci => ci.CorporateInfo.SameSetupAddressByCorporativeCompanyAddress)
+
+                                <div class="row mt-5">
+                                    @Html.LabelFor(m => m.CorporateInfo.SameSetupAddressByCorporativeCompanyAddress, new { @class = "font-weight-bolder text-dark-100 font-size-h4" })
+                                    <div class="col-lg-6 col-md-6 mt-1">
+                                        <label class="checkbox">
+                                            @Html.EditorFor(m => m.CorporateInfo.SameSetupAddressByCorporativeCompanyAddress, new { htmlAttributes = new { @class = "checkbox" } })
+                                            <span></span>
+                                        </label>
                                     </div>
                                 </div>
+
                                 <div class="separator separator-dashed my-3"></div>
                                 <div id="CompanyContainer">
                                     <div class="lg-5">
@@ -727,7 +739,7 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-lg-6 col-md-6">
+                                        <div class="col-lg-12 col-md-12">
                                             <div class="form-group fv-plugins-icon-container">
                                                 @Html.LabelFor(gi => gi.CorporateInfo.CompanyAddress.PostalCode, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
                                                 @Html.EditorFor(gi => gi.CorporateInfo.CompanyAddress.PostalCode, new { htmlAttributes = new { @type = "text", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg", @autocomplete = "off" } })
@@ -742,12 +754,16 @@
 
                             </div>
 
-                            <div class="row">
-                                <div class="form-group">
-                                    @Html.LabelFor(gi => gi.GeneralInfo.SameSetupAddressByBilling)
-                                    @Html.EditorFor(gi => gi.GeneralInfo.SameSetupAddressByBilling)
+                            <div class="row mt-5">
+                                @Html.LabelFor(m => m.GeneralInfo.SameSetupAddressByBilling, new { @class = "font-weight-bolder text-dark-100 font-size-h4" })
+                                <div class="col-lg-6 col-md-6 mt-1">
+                                    <label class="checkbox">
+                                        @Html.EditorFor(m => m.GeneralInfo.SameSetupAddressByBilling, new { htmlAttributes = new { @class = "checkbox" } })
+                                        <span></span>
+                                    </label>
                                 </div>
                             </div>
+
                             <div class="separator separator-dashed my-3"></div>
                             <div id="BillingAddressContainer">
                                 <div class="lg-5">

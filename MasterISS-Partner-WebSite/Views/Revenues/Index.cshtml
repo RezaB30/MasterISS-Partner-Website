@@ -3,26 +3,106 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="container my-8">
+    <div class="col-lg-12 mb-lg-0 mb-6 ">
+        <div class="row mb-15 my-8 ">
+            @if (User.IsInRole("SetupRevenuesList") || User.IsInRole("Admin"))
+            {
+                <span class="navi-text">
+                    <input type="button" value="@MasterISS_Partner_WebSite.Localization.View.SetupAllowedDetails" class="btn btn-outline-info my-2 mr-4" id="SetupAllowedDetails" />
+                </span>
+                <span class="navi-text">
+                    <input type="button" value="@MasterISS_Partner_WebSite.Localization.View.SetupAllowanceList" class="btn btn-outline-info my-2 mr-4" id="SetupAllowanceList" />
+                </span>
+                <span class="nav-text">
+                    <input type="button" value="@MasterISS_Partner_WebSite.Localization.View.SetupGenericAllowanceList" class="btn btn-outline-info my-2 mr-4" id="SetupGenericAllowanceList" />
+                </span>
+            }
 
-@if (User.IsInRole("SetupRevenuesList") || User.IsInRole("Admin"))
-{
-    @Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.SetupAllowedDetails, "SetupAllowedDetails", "Revenues")
-    <br />
-    @Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.SetupAllowanceList, "SetupAllowanceList", "Revenues")
-    <br />
-    @Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.SetupGenericAllowanceList, "SetupGenericAllowanceList", "Revenues")
-}
+            @if (User.IsInRole("SaleRevenuesList") || User.IsInRole("Admin"))
+            {
+                <span class="nav-text">
+                    <input type="button" value="@MasterISS_Partner_WebSite.Localization.View.SaleGenericAllowanceList" class="btn btn-outline-primary my-2 mr-4" id="SaleGenericAllowanceList" />
+                </span>
+                <span class="nav-text">
+                    <input type="button" value="@MasterISS_Partner_WebSite.Localization.View.SaleAllowanceList" class="btn btn-outline-primary my-2 mr-4" id="SaleAllowanceList" />
+                </span>
+                <span class="nav-text">
+                    <input type="button" value="@MasterISS_Partner_WebSite.Localization.View.SaleAllowedDetails" class="btn btn-outline-primary my-2 mr-4" id="SaleAllowedDetails" />
+                </span>
+            }
+        </div>
+    </div>
 
-<br />
-<br />
-<br />
-<br />
-@if (User.IsInRole("SaleRevenuesList") || User.IsInRole("Admin"))
-{
-    @Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.SaleGenericAllowanceList, "SaleGenericAllowanceList", "Revenues")
-    <br />
-    @Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.SaleAllowanceList, "SaleAllowanceList", "Revenues")
-    <br />
-    @Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.SaleAllowedDetails, "SaleAllowedDetails", "Revenues")
+    <div class="card">
+        <div class="container generic-Container">
 
+        </div>
+    </div>
+</div>
+
+@section Javascript{
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+    <script>
+        $("#SetupAllowedDetails").click(function () {
+                $.ajax({
+                    url: '@Url.Action("SetupAllowedDetails", "Revenues")',
+                    type: 'POST',
+                    dataType: 'html',
+                    success: function (data) {
+                        $(".generic-Container").html(data);
+                    },
+                });
+        });
+        $("#SetupAllowanceList").click(function () {
+                $.ajax({
+                    url: '@Url.Action("SetupAllowanceList", "Revenues")',
+                    type: 'POST',
+                    dataType: 'html',
+                    success: function (data) {
+                        $(".generic-Container").html(data);
+                    },
+                });
+        });
+        $("#SetupGenericAllowanceList").click(function () {
+                $.ajax({
+                    url: '@Url.Action("SetupGenericAllowanceList", "Revenues")',
+                    type: 'POST',
+                    dataType: 'html',
+                    success: function (data) {
+                        $(".generic-Container").html(data);
+                    },
+                });
+        });
+        $("#SaleGenericAllowanceList").click(function () {
+                $.ajax({
+                    url: '@Url.Action("SaleGenericAllowanceList", "Revenues")',
+                    type: 'POST',
+                    dataType: 'html',
+                    success: function (data) {
+                        $(".generic-Container").html(data);
+                    },
+                });
+        });
+        $("#SaleAllowanceList").click(function () {
+                $.ajax({
+                    url: '@Url.Action("SaleAllowanceList", "Revenues")',
+                    type: 'POST',
+                    dataType: 'html',
+                    success: function (data) {
+                        $(".generic-Container").html(data);
+                    },
+                });
+         });
+        $("#SaleAllowedDetails").click(function () {
+                $.ajax({
+                    url: '@Url.Action("SaleAllowedDetails", "Revenues")',
+                    type: 'POST',
+                    dataType: 'html',
+                    success: function (data) {
+                        $(".generic-Container").html(data);
+                    },
+                });
+        });
+    </script>
 }

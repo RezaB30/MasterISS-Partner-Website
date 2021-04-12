@@ -142,6 +142,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kurulum Ekine Ata.
+        /// </summary>
+        public static string AssignToSetupTeam {
+            get {
+                return ResourceManager.GetString("AssignToSetupTeam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Giriş İşlemi Başarısız..
         /// </summary>
         public static string AuthenticateError {
@@ -439,6 +448,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Teyit Ver.
+        /// </summary>
+        public static string GiveConfirmation {
+            get {
+                return ResourceManager.GetString("GiveConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ana Sayfa.
         /// </summary>
         public static string HomePage {
@@ -682,6 +700,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Raporlar.
+        /// </summary>
+        public static string Reports {
+            get {
+                return ResourceManager.GetString("Reports", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lütfen en az 1 Yetki seçiniz..
         /// </summary>
         public static string RequiredPermission {
@@ -714,6 +741,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string Revenues {
             get {
                 return ResourceManager.GetString("Revenues", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hakediş Raporları.
+        /// </summary>
+        public static string RevenuesReports {
+            get {
+                return ResourceManager.GetString("RevenuesReports", resourceCulture);
             }
         }
         
@@ -889,7 +925,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kurulum Paneli.
+        ///   Looks up a localized string similar to Kurulum.
         /// </summary>
         public static string SetupPanel {
             get {
@@ -1096,7 +1132,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kullanıcı İşlemleri.
+        ///   Looks up a localized string similar to Kullanıcılar.
         /// </summary>
         public static string UserOperations {
             get {

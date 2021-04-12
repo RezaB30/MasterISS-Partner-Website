@@ -36,40 +36,40 @@ namespace MasterISS_Partner_WebSite.Controllers
         private TimeSpan lastSessionTime;
 
         // GET: Setup
-        public ActionResult Index([Bind(Prefix = "search")] GetTaskListRequestViewModel taskListRequestModel, int page = 1, int pageSize = 9)
+        public ActionResult Index([Bind(Prefix = "search")] GetTaskListRequestViewModel taskListRequestModel, int page = 1, int pageSize = 1)
         {
             taskListRequestModel = taskListRequestModel ?? new GetTaskListRequestViewModel();
-
-            if (taskListRequestModel.TaskListStartDate != null && taskListRequestModel.TaskListEndDate == null)
-            {
-                var startDateConverted = taskListRequestModel.TaskListStartDate;
-
-                taskListRequestModel.TaskListEndDate = startDateConverted.Value.AddDays(29);
-            }
-            else
-            {
-                taskListRequestModel.TaskListStartDate = DateTime.Now.AddDays(-29);
-                taskListRequestModel.TaskListEndDate = DateTime.Now;
-            }
-
             ViewBag.TaskType = TaskTypeList(taskListRequestModel.TaskType ?? null);
             ViewBag.FaultCodes = FaultTypeList(taskListRequestModel.FaultCode ?? null, true);
             ViewBag.Search = taskListRequestModel;
 
             if (ModelState.IsValid)
             {
-                var startDate = taskListRequestModel.TaskListStartDate;
-                var endDate = taskListRequestModel.TaskListEndDate;
+                var startDate = Convert.ToDateTime(taskListRequestModel.TaskListStartDate);
+                var endDate = Convert.ToDateTime(taskListRequestModel.TaskListEndDate);
+
+                if (taskListRequestModel.TaskListStartDate != null && taskListRequestModel.TaskListEndDate == null)
+                {
+                    endDate = startDate.AddDays(29);
+                }
+                else if ((taskListRequestModel.TaskListStartDate == null && taskListRequestModel.TaskListEndDate == null) || (taskListRequestModel.TaskListStartDate == null && taskListRequestModel.TaskListEndDate != null))
+                {
+                    startDate = DateTime.Now.AddDays(-29);
+                    endDate = DateTime.Now;
+                }
 
                 if (startDate <= endDate)
                 {
                     using (var db = new PartnerWebSiteEntities())
                     {
-                        if (startDate.Value.AddDays(Properties.Settings.Default.SearchLimit) >= endDate)
+                        if (startDate.AddDays(Properties.Settings.Default.SearchLimit) >= endDate)
                         {
+                            taskListRequestModel.TaskListStartDate = startDate.ToString();
+                            taskListRequestModel.TaskListEndDate = endDate.ToString();
+
                             var taskList = TaskList(User.IsInRole("Admin"), taskListRequestModel);
 
-                            var list = taskList.Where(tlresponse => tlresponse.TaskIssueDate >= startDate && tlresponse.TaskIssueDate <= endDate)
+                            var list = taskList
                                 .Select(tl => new GetTaskListResponseViewModel
                                 {
                                     AddressLatitudeandLongitude = GetAddressLatituteandLongitude(tl.Address),
@@ -171,7 +171,10 @@ namespace MasterISS_Partner_WebSite.Controllers
             {
                 var claimInfo = new ClaimInfo();
                 var partnerId = claimInfo.PartnerId();
-                var taskList = new List<TaskList>();
+                var taskList = Enumerable.Empty<TaskList>().AsQueryable();
+                var startDate = Convert.ToDateTime(taskListRequestModel.TaskListStartDate);
+                var endDate = Convert.ToDateTime(taskListRequestModel.TaskListEndDate);
+
                 if (isAdmin)
                 {
                     var adminId = claimInfo.UserId();
@@ -182,30 +185,36 @@ namespace MasterISS_Partner_WebSite.Controllers
                     }
                     var searchedValueByContactName = taskListRequestModel.SearchedName ?? "";
                     var list = db.TaskList.Where(tl => tl.PartnerId == partnerId && tl.IsConfirmation == false && tl.ContactName.Contains(searchedValueByContactName));
-                    taskList = list.ToList();
+                    taskList = list;
                 }
                 else
                 {
                     var userId = claimInfo.UserId();
                     var searchedValueByContactName = taskListRequestModel.SearchedName ?? "";
 
-                    taskList = db.TaskList.Where(tl => (tl.AssignToRendezvousStaff == userId || tl.AssignToSetupTeam == userId) && tl.PartnerId == partnerId && tl.IsConfirmation == false && tl.ContactName.Contains(searchedValueByContactName)).ToList();
+                    var list = db.TaskList.Where(tl => (tl.AssignToRendezvousStaff == userId || tl.AssignToSetupTeam == userId) && tl.PartnerId == partnerId && tl.IsConfirmation == false && tl.ContactName.Contains(searchedValueByContactName));
+                    taskList = list;
                 }
+
+                var listFilterDate = taskList.Where(tlresponse => tlresponse.TaskIssueDate >= startDate&& tlresponse.TaskIssueDate <= endDate);
+                taskList = listFilterDate;
 
                 if (taskListRequestModel.SearchedTaskNo != null)
                 {
-                    taskList.Where(tl => tl.TaskNo == taskListRequestModel.SearchedTaskNo);
-                    return taskList.ToList();
+                    var list = taskList.Where(tl => tl.TaskNo == taskListRequestModel.SearchedTaskNo);
+                    taskList = list;
                 }
                 if (taskListRequestModel.TaskType != null)
                 {
-                    taskList.Where(tl => tl.TaskType == taskListRequestModel.TaskType);
+                    var list = taskList.Where(tl => tl.TaskType == taskListRequestModel.TaskType);
+                    taskList = list;
                 }
                 if (taskListRequestModel.FaultCode != null)
                 {
-                    var list = taskList.SelectMany(tl => tl.UpdatedSetupStatus.Where(uss => uss.FaultCodes == taskListRequestModel.FaultCode), (tl, uss) => new { taskList = tl }).Select(selectedList => selectedList.taskList).ToList();
-                    return list;
+                    var list = taskList.SelectMany(tl => tl.UpdatedSetupStatus.Where(uss => uss.FaultCodes == taskListRequestModel.FaultCode), (tl, uss) => new { taskList = tl }).Select(selectedList => selectedList.taskList);
+                    taskList = list;
                 }
+
                 return taskList.ToList();
             }
         }

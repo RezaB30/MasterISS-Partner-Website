@@ -1,0 +1,38 @@
+﻿@using MasterISS_Partner_WebSite.ViewModels.Revenues
+@model IEnumerable<AllowenceListViewModel>
+@{
+}
+
+<h3 class="my-6 text-info font-size-h4">@MasterISS_Partner_WebSite.Localization.View.SaleAllowanceList</h3>
+<table class="table table-head-custom table-vertical-center table-hover mb-2">
+    <thead>
+        <tr class="bg-info text-left">
+            <th style="min-width: 130px">@Html.DisplayNameFor(m => m.Ispaid)</th>
+            <th style="min-width: 130px">@Html.DisplayNameFor(m => m.IssueDate)</th>
+            <th style="min-width: 130px">@Html.DisplayNameFor(m => m.PaymentDate)</th>
+            <th style="min-width: 130px">@Html.DisplayNameFor(m => m.Total)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td><span class="text-dark-75  d-block font-size-lg">@Html.DisplayFor(motelItem => item.Ispaid)</span> </td>
+                <td><span class="text-dark-75  d-block font-size-lg">@Html.DisplayFor(motelItem => item.IssueDate)</span> </td>
+                <td><span class="text-dark-75  d-block font-size-lg">@Html.DisplayFor(motelItem => item.PaymentDate)</span> </td>
+                <td><span class="text-dark-75  d-block font-size-lg">@Html.DisplayFor(motelItem => item.Total)</span> </td>
+                <td><span class="text-dark-75  d-block font-size-lg">@Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.Details, "SaleAllowanceDetails", new { Id = item.Id })</span></td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div>
+    <ul>
+        @for (int i = 0; i < (int)ViewBag.TotalCount; i++)
+        {
+            <li>
+                @Html.ActionLink((i + 1).ToString(), "SaleAllowanceList", new { page = i })
+            </li>
+        }
+    </ul>
+</div>

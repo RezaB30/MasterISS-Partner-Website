@@ -1,0 +1,40 @@
+﻿@using MasterISS_Partner_WebSite.ViewModels.Revenues
+@using MasterISS_Partner_WebSite.Localization
+@using PagedList.Mvc
+@model  PagedList.StaticPagedList<GetBasicAllowenceDetailsResponseList>
+
+<h3 class="my-6 text-info font-size-h4">@MasterISS_Partner_WebSite.Localization.View.SetupAllowedDetails</h3>
+<table class="table table-head-custom table-vertical-center table-hover mb-2">
+    <thead>
+        <tr class="bg-info text-left">
+            <th style="min-width: 130px">@Html.DisplayNameFor(m => m.First().AllowanceStateName)</th>
+            <th style="min-width: 130px">@Html.DisplayNameFor(m => m.First().Price)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td><span class="text-dark-75  d-block font-size-lg">@Html.DisplayFor(modelItem => item.AllowanceStateName)</span></td>
+                <td> <span class="text-dark-75  d-block font-size-lg">@Html.DisplayFor(modelItem => item.Price)</span></td>
+            </tr>
+        }
+    </tbody>
+</table>
+@if (Model != null && Model.TotalItemCount > 0)
+{
+    <div class="card card-custom">
+        <div class="card-body py-7">
+            <!--begin::Pagination-->
+            <div class="d-flex justify-content-between align-items-center flex-wrap">
+                <div class="d-flex flex-wrap mr-3">
+                    @Html.PagedListPager(Model, page => Url.Action("SetupAllowedDetails", "Revenues", new { page }),new PagedListRenderOptions { })
+                </div>
+                <div class="d-flex align-items-center">
+                    <span class="text-muted"> @View.Total @Model.TotalItemCount @View.RecordFound @View.OnThisPage @Model.FirstItemOnPage @View.To @Model.LastItemOnPage @View.Showing</span>
+                </div>
+            </div>
+            <!--end:: Pagination-->
+        </div>
+    </div>
+}

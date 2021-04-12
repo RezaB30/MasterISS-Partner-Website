@@ -144,6 +144,9 @@
   <data name="ApplicationInformation" xml:space="preserve">
     <value>Application Information</value>
   </data>
+  <data name="AssignToSetupTeam" xml:space="preserve">
+    <value>Assign To Setup Team</value>
+  </data>
   <data name="AuthenticateError" xml:space="preserve">
     <value>Login Failed.</value>
   </data>
@@ -243,6 +246,9 @@
   <data name="Generic200ErrorCodeMessage" xml:space="preserve">
     <value>An Error Has Occurred. Try again later.</value>
   </data>
+  <data name="GiveConfirmation" xml:space="preserve">
+    <value>Give Confirmation</value>
+  </data>
   <data name="HomePage" xml:space="preserve">
     <value>Home Page</value>
   </data>
@@ -324,6 +330,9 @@
   <data name="Remove" xml:space="preserve">
     <value>Remove</value>
   </data>
+  <data name="Reports" xml:space="preserve">
+    <value>Reports</value>
+  </data>
   <data name="RequiredPermission" xml:space="preserve">
     <value>Please select at least 1 Permission.</value>
   </data>
@@ -335,6 +344,9 @@
   </data>
   <data name="Revenues" xml:space="preserve">
     <value>Revenues</value>
+  </data>
+  <data name="RevenuesReports" xml:space="preserve">
+    <value>Revenues Reports</value>
   </data>
   <data name="RoleList" xml:space="preserve">
     <value>Role List</value>
@@ -394,7 +406,7 @@
     <value>Setup Generic Allowance List</value>
   </data>
   <data name="SetupPanel" xml:space="preserve">
-    <value>Setup Panel</value>
+    <value>Setup</value>
   </data>
   <data name="SetupResponseErrorMessage" xml:space="preserve">
     <value>We are currently unable to process your transaction. Please try again.</value>
@@ -463,7 +475,7 @@
     <value>Upload Document</value>
   </data>
   <data name="UserOperations" xml:space="preserve">
-    <value>User Operations</value>
+    <value>User</value>
   </data>
   <data name="ValidWorkArea" xml:space="preserve">
     <value>This address already exists.</value>

@@ -153,6 +153,9 @@
   <data name="BillingAddress" xml:space="preserve">
     <value>Billing Address</value>
   </data>
+  <data name="BillingAddressSameSetupAddress" xml:space="preserve">
+    <value>Billing Address is the same as the Setup Address</value>
+  </data>
   <data name="BillingPeriodId" xml:space="preserve">
     <value>Billing Period</value>
   </data>
@@ -192,6 +195,12 @@
   <data name="ContactPhoneNo" xml:space="preserve">
     <value>Enter Your Customer GSM Number</value>
   </data>
+  <data name="CorporativeCompanyAddressSameSetupAddress" xml:space="preserve">
+    <value>The Corporative Address is the same as the Setup Address</value>
+  </data>
+  <data name="CorporativeResidencyAddressSameSetupAddress" xml:space="preserve">
+    <value>The Executive Residence Address is the same as the Setup Address</value>
+  </data>
   <data name="CreationDate" xml:space="preserve">
     <value>Creation Date</value>
   </data>
@@ -212,6 +221,9 @@
   </data>
   <data name="CustomerPhoneNo" xml:space="preserve">
     <value>Customer Phone No</value>
+  </data>
+  <data name="CustomerResidanceAddressSameSetupAddress" xml:space="preserve">
+    <value>The Customer Residence Address is the same as the Setup Address</value>
   </data>
   <data name="CustomerTCK" xml:space="preserve">
     <value>Turkish Identity Number</value>
@@ -512,6 +524,12 @@
   </data>
   <data name="SetupTeam" xml:space="preserve">
     <value>Setup Team</value>
+  </data>
+  <data name="SetupTeamStaffName" xml:space="preserve">
+    <value>Setup Team Personnel</value>
+  </data>
+  <data name="SetupTeamStaffWorkAreas" xml:space="preserve">
+    <value>Area of Responsibility</value>
   </data>
   <data name="SexId" xml:space="preserve">
     <value>Gender</value>

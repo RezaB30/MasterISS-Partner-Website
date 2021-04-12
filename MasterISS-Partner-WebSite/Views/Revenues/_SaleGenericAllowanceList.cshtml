@@ -1,0 +1,39 @@
+﻿@using MasterISS_Partner_WebSite.ViewModels.Revenues
+@model  IEnumerable<SaleGenericAllowancesViewModel>
+@{
+}
+
+<h3 class="my-6 text-info font-size-h4">@MasterISS_Partner_WebSite.Localization.View.SaleGenericAllowanceList</h3>
+<table class="table table-head-custom table-vertical-center table-hover mb-2">
+    <thead>
+        <tr class="bg-info text-left">
+            <th style="min-width: 130px">@Html.DisplayNameFor(m => m.Allowance)</th>
+            <th style="min-width: 130px">@Html.DisplayNameFor(m => m.AllowanceState.Name)</th>
+            <th style="min-width: 130px">@Html.DisplayNameFor(m => m.MembershipDate)</th>
+            <th style="min-width: 130px">@Html.DisplayNameFor(m => m.SubscriptionNo)</th>
+            <th style="min-width: 130px">@Html.DisplayNameFor(m => m.SaleState.Name)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td><span class="text-dark-75  d-block font-size-lg "> @Html.DisplayFor(modelItem => item.Allowance)</span></td>
+                <td><span class="text-dark-75  d-block font-size-lg ">@Html.DisplayFor(modelItem => item.AllowanceState.Name)</span></td>
+                <td><span class="text-dark-75  d-block font-size-lg ">@Html.DisplayFor(modelItem => item.MembershipDate)</span></td>
+                <td><span class="text-dark-75  d-block font-size-lg ">@Html.DisplayFor(modelItem => item.SubscriptionNo)</span></td>
+                <td><span class="text-dark-75  d-block font-size-lg ">@Html.DisplayFor(modelItem => item.SaleState.Name)</span></td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div>
+    <ul>
+        @for (int i = 0; i < (int)ViewBag.TotalCount; i++)
+        {
+            <li>
+                @Html.ActionLink((i + 1).ToString(), "SaleGenericAllowanceList", new { page = i })
+            </li>
+        }
+    </ul>
+</div>

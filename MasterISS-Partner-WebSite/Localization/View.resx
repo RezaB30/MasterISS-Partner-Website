@@ -144,6 +144,9 @@
   <data name="ApplicationInformation" xml:space="preserve">
     <value>Başvuru Bilgileri</value>
   </data>
+  <data name="AssignToSetupTeam" xml:space="preserve">
+    <value>Kurulum Ekine Ata</value>
+  </data>
   <data name="AuthenticateError" xml:space="preserve">
     <value>Giriş İşlemi Başarısız.</value>
   </data>
@@ -243,6 +246,9 @@
   <data name="Generic200ErrorCodeMessage" xml:space="preserve">
     <value>Bir Hata Oluştu. Daha sonra tekrar deneyiniz.</value>
   </data>
+  <data name="GiveConfirmation" xml:space="preserve">
+    <value>Teyit Ver</value>
+  </data>
   <data name="HomePage" xml:space="preserve">
     <value>Ana Sayfa</value>
   </data>
@@ -324,6 +330,9 @@
   <data name="Remove" xml:space="preserve">
     <value>Kaldır</value>
   </data>
+  <data name="Reports" xml:space="preserve">
+    <value>Raporlar</value>
+  </data>
   <data name="RequiredPermission" xml:space="preserve">
     <value>Lütfen en az 1 Yetki seçiniz.</value>
   </data>
@@ -335,6 +344,9 @@
   </data>
   <data name="Revenues" xml:space="preserve">
     <value>Hakedişler</value>
+  </data>
+  <data name="RevenuesReports" xml:space="preserve">
+    <value>Hakediş Raporları</value>
   </data>
   <data name="RoleList" xml:space="preserve">
     <value>Rol Listesi</value>
@@ -394,7 +406,7 @@
     <value>Kurulum Genel Hakediş Listesi</value>
   </data>
   <data name="SetupPanel" xml:space="preserve">
-    <value>Kurulum Paneli</value>
+    <value>Kurulum</value>
   </data>
   <data name="SetupResponseErrorMessage" xml:space="preserve">
     <value>Şuan İşleminizi gerçekleştiremiyoruz. Lütfen bir daha deneyiniz</value>
@@ -463,7 +475,7 @@
     <value>Belge Yükle</value>
   </data>
   <data name="UserOperations" xml:space="preserve">
-    <value>Kullanıcı İşlemleri</value>
+    <value>Kullanıcılar</value>
   </data>
   <data name="ValidWorkArea" xml:space="preserve">
     <value>Bu adres zaten mevcut.</value>

@@ -169,6 +169,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fatura Adresi, Kurulum Adresi ile Aynı.
+        /// </summary>
+        public static string BillingAddressSameSetupAddress {
+            get {
+                return ResourceManager.GetString("BillingAddressSameSetupAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fatura Dönemi.
         /// </summary>
         public static string BillingPeriodId {
@@ -286,6 +295,24 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Şirket Adresi, Kurulum Adresi ile Aynı.
+        /// </summary>
+        public static string CorporativeCompanyAddressSameSetupAddress {
+            get {
+                return ResourceManager.GetString("CorporativeCompanyAddressSameSetupAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yetkili İkamet Adresi, Kurulum Adresi ile Aynı.
+        /// </summary>
+        public static string CorporativeResidencyAddressSameSetupAddress {
+            get {
+                return ResourceManager.GetString("CorporativeResidencyAddressSameSetupAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Oluşturulma Tarihi.
         /// </summary>
         public static string CreationDate {
@@ -345,6 +372,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string CustomerPhoneNo {
             get {
                 return ResourceManager.GetString("CustomerPhoneNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Müşteri İkamet Adresi, Kurulum Adresi ile Aynı.
+        /// </summary>
+        public static string CustomerResidanceAddressSameSetupAddress {
+            get {
+                return ResourceManager.GetString("CustomerResidanceAddressSameSetupAddress", resourceCulture);
             }
         }
         
@@ -1245,6 +1281,24 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string SetupTeam {
             get {
                 return ResourceManager.GetString("SetupTeam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kurulum Ekibi Personeli.
+        /// </summary>
+        public static string SetupTeamStaffName {
+            get {
+                return ResourceManager.GetString("SetupTeamStaffName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sorumluluk Bölgesi.
+        /// </summary>
+        public static string SetupTeamStaffWorkAreas {
+            get {
+                return ResourceManager.GetString("SetupTeamStaffWorkAreas", resourceCulture);
             }
         }
         

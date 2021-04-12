@@ -35,7 +35,7 @@
                     </div>
                     <div class="col-lg-2 mb-lg-0 mb-6">
                         @Html.LabelFor(m => search.TaskType)
-                        @Html.DropDownListFor(m => search.TaskType, (SelectList)ViewBag.TaskType, View.Select,new { @class = "form-control datatable-input", @data_col_index = "2" })
+                        @Html.DropDownListFor(m => search.TaskType, (SelectList)ViewBag.TaskType, View.Select, new { @class = "form-control datatable-input", @data_col_index = "2" })
                     </div>
                     <div class="col-lg-2 mb-lg-0 mb-6">
                         @Html.LabelFor(m => search.FaultCode)
@@ -64,12 +64,12 @@
                                 <span>@View.Filter</span>
                             </span>
                         </button>&nbsp;&nbsp;
-                        <button type="button" class="btn btn-secondary btn-secondary--icon" id="kt_reset">
+                        <a href="@Url.Action("Index","Setup")" class="btn btn-secondary btn-secondary--icon" id="kt_reset">
                             <span>
                                 <i class="la la-close"></i>
                                 <span>Sıfırla</span>
                             </span>
-                        </button>
+                        </a>
                     </div>
                 </div>
             }
@@ -266,7 +266,7 @@
                                                 <div class="separator separator-dashed mt-1 my-1"></div>
                                                 <div class="d-flex mb-2">
                                                     <span class="navi-text">
-                                                        @Html.ActionLink("teyit ver", "GiveConfirmation", "Setup", new { taskNo = item.TaskNo }, new { @class = "btn-large my-2 btn btn-outline-success" })
+                                                        @Html.ActionLink(View.GiveConfirmation, "GiveConfirmation", "Setup", new { taskNo = item.TaskNo }, new { @class = "btn-large my-2 btn btn-outline-success" })
                                                         &nbsp &nbsp &nbsp
                                                     </span>
                                                 </div>
@@ -274,7 +274,7 @@
                                             if (string.IsNullOrEmpty(item.SetupTeamStaffName))
                                             {
                                                 <span class="navi-text" data-toggle="modal" data-target="#exampleModalUpdateTask">
-                                                    <input type="button" class="btn-sm my-2 btn btn-outline-primary task-update-button" dataValue="@item.TaskNo" value="kurulum ekibine ata" />
+                                                    <input type="button" class="btn-sm my-2 btn btn-outline-primary task-update-button" dataValue="@item.TaskNo" value="@View.AssignToSetupTeam" />
                                                     &nbsp &nbsp &nbsp
                                                 </span>
                                             }
@@ -320,7 +320,7 @@
                     </div>
                 </div>
             }
-            @if (Model!=null && Model.TotalItemCount > 0)
+            @if (Model != null && Model.TotalItemCount > 0)
             {
                 <div class="card card-custom">
                     <div class="card-body py-7">
@@ -541,7 +541,7 @@
                     },
                 });
         });
-            
+
 
         $(".get-task-file-button").click(function () {
             var dataValue = $(this).attr("dataValue");

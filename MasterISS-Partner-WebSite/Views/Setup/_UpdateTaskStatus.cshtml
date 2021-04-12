@@ -25,7 +25,7 @@
             <div class="form-group my-8 mb-1">
 
                 @Html.LabelFor(m => m.Description, new { @class = "text-muted font-size-lg" })
-                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @rows = "3",id="description" })
+                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @rows = "3", id = "description" })
             </div>
 
             foreach (var item in Model.SetupTeamStaffsToMatchedTheTask)
@@ -37,16 +37,29 @@
                             <span class="text-dark-75 font-weight-bolder mr-6">@Html.DisplayNameFor(modelItem => item.SetupTeamStaffName)</span>
                             <a href="#" class="text-info text-hover-primary">@Html.DisplayFor(modelItem => item.SetupTeamStaffName)</a>
                         </div>
-                        <div class="d-flex justify-content-between align-items-center my-1">
+                        <div class="d-flex justify-content-between align-items-center my-1 mt-5">
                             <span class="text-dark-75 font-weight-bolder mr-2">@Html.DisplayNameFor(modelItem => item.SetupTeamStaffWorkAreas)</span>
-                            <div class="row">
+                            <span class="text-info text-hover-primary mt-1" style="text-align:right">
                                 @foreach (var workArea in item.SetupTeamStaffWorkAreas)
                                 {
-                                    <div class="col-md-12 col-lg-12 col-sm-12">
-                                        <span class="text-info text-hover-primary">@Html.DisplayFor(workAreaItem => workArea.ProvinceName) @Html.DisplayFor(workAreaItem => workArea.DistrictName) @Html.DisplayFor(workAreaItem => workArea.RuralName) @Html.DisplayFor(workAreaItem => workArea.NeigborhoodName) </span>
-                                    </div>
+                                    @Html.DisplayFor(workAreaItem => workArea.ProvinceName)
+                                    if (!string.IsNullOrEmpty(workArea.DistrictName))
+                                    {
+                                        <span>></span>
+                                    }
+                                    @Html.DisplayFor(workAreaItem => workArea.DistrictName)
+                                    if (!string.IsNullOrEmpty(workArea.RuralName))
+                                    {
+                                        <span>></span>
+                                    }
+                                    @Html.DisplayFor(workAreaItem => workArea.RuralName)
+                                    if (!string.IsNullOrEmpty(workArea.NeigborhoodName))
+                                    {
+                                        <span>></span>
+                                    }
+                                    @Html.DisplayFor(workAreaItem => workArea.NeigborhoodName)<br />
                                 }
-                            </div>
+                            </span>
                         </div>
 
                         <div class="col-lg-12 my-8">

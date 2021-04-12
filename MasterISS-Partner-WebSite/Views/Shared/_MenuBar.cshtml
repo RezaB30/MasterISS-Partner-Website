@@ -207,17 +207,12 @@
                                 </li>
                             }
 
-                            <li class="menu-item menu-item-submenu menu-item-rel" aria-haspopup="true">
-                                <a href="sontahsilat" class="menu-link ">
-                                    <span class="menu-text">Son Tahsilatlar</span>
-                                </a>
-                            </li>
 
-                            @if (User.IsInRole("Payment") && (User.IsInRole("PaymentManager") || User.IsInRole("Admin")))
+                            @if (User.IsInRole("Sale") && (User.IsInRole("SaleManager") || User.IsInRole("Admin")))
                             {
                                 <li class="menu-item menu-item-submenu menu-item-rel" aria-haspopup="true">
-                                    <a href="@Url.Action("Index","Bill")" class="menu-link">
-                                        <span class="menu-text">@MasterISS_Partner_WebSite.Localization.View.BillSettings</span>
+                                    <a href="sontahsilat" class="menu-link ">
+                                        <span class="menu-text">Son Tahsilatlar</span>
                                     </a>
                                 </li>
                             }
@@ -229,7 +224,6 @@
                                         <span class="menu-text">@MasterISS_Partner_WebSite.Localization.View.AddCustomer</span>
                                     </a>
                                 </li>
-
                             }
 
                             @if (User.IsInRole("Setup") && (User.IsInRole("SetupManager") || User.IsInRole("Admin")))
@@ -250,11 +244,20 @@
                                 </li>
                             }
 
-                            @if (User.IsInRole("Setup") || (User.IsInRole("Sale")))
+                            @if (User.Identity.IsAuthenticated)
                             {
                                 <li class="menu-item menu-item-submenu menu-item-rel" aria-haspopup="true">
-                                    <a href="@Url.Action("Index","Revenues")" class="menu-link ">
-                                        <span class="menu-text">@MasterISS_Partner_WebSite.Localization.View.Revenues</span>
+                                    <a href="@Url.Action("Index","Revenues")" class="menu-link">
+                                        <span class="menu-text">@MasterISS_Partner_WebSite.Localization.View.RevenuesReports</span>
+                                    </a>
+                                </li>
+                            }
+
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li class="menu-item menu-item-submenu menu-item-rel" aria-haspopup="true">
+                                    <a href="#" class="menu-link">
+                                        <span class="menu-text">@MasterISS_Partner_WebSite.Localization.View.Reports</span>
                                     </a>
                                 </li>
                             }

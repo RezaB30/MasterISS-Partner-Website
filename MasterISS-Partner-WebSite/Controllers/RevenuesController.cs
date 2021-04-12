@@ -22,7 +22,8 @@ namespace MasterISS_Partner_WebSite.Controllers
         }
 
         [Authorize(Roles = "SaleRevenuesList,Admin")]
-        public ActionResult SaleAllowedDetails()
+        [HttpPost]
+        public ActionResult SaleAllowedDetails(int page=1,int pageSize=1)
         {
             var wrapper = new WebServiceWrapper();
 
@@ -52,12 +53,16 @@ namespace MasterISS_Partner_WebSite.Controllers
                 AllowanceStateName = adr.AllowanceStateName,
                 Price = adr.Price
             });
+           
+            var totalCount = list.Count();
+            var pagedListByResponseList = new StaticPagedList<GetBasicAllowenceDetailsResponseList>(list.Skip((page - 1) * pageSize).Take(pageSize), page, pageSize, totalCount);
 
-            return View(list);
+            return PartialView("_SaleAllowedDetails", pagedListByResponseList);
         }
 
         [Authorize(Roles = "SetupRevenuesList,Admin")]
-        public ActionResult SetupAllowedDetails()
+        [HttpPost]
+        public ActionResult SetupAllowedDetails(int page=1, int pageSize=1)
         {
             var wrapper = new WebServiceWrapper();
 
@@ -87,9 +92,19 @@ namespace MasterISS_Partner_WebSite.Controllers
                 Price = adr.Price
             });
 
-            return View(list);
+            var listAss = new List<GetBasicAllowenceDetailsResponseList>();
+            listAss.AddRange(list);
+            listAss.Add(new GetBasicAllowenceDetailsResponseList { AllowanceStateID = 11, AllowanceStateName = "aa", Price = 11 });
+            listAss.Add(new GetBasicAllowenceDetailsResponseList { AllowanceStateID = 11, AllowanceStateName = "aa", Price = 11 });
+            listAss.Add(new GetBasicAllowenceDetailsResponseList { AllowanceStateID = 11, AllowanceStateName = "aa", Price = 11 });
+
+            var totalCount = listAss.Count();
+            var pagedListByResponseList = new StaticPagedList<GetBasicAllowenceDetailsResponseList>(listAss.Skip((page - 1) * pageSize).Take(pageSize), page, pageSize, totalCount);
+
+            return PartialView("_SetupAllowedDetails", pagedListByResponseList);
         }
 
+        [HttpPost]
         [Authorize(Roles = "SaleRevenuesList,Admin")]
         public ActionResult SaleGenericAllowanceList(int page = 0, int pageSize = 10)
         {
@@ -130,9 +145,10 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             ViewBag.TotalCount = response.SaleGenericAllowanceList.TotalPageCount;
 
-            return View(list ?? Enumerable.Empty<SaleGenericAllowancesViewModel>());
+            return PartialView("_SaleGenericAllowanceList",list ?? Enumerable.Empty<SaleGenericAllowancesViewModel>());
         }
 
+        [HttpPost]
         [Authorize(Roles = "SaleRevenuesList,Admin")]
         public ActionResult SaleAllowanceList(int page = 0, int pageSize = 10)
         {
@@ -165,9 +181,10 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             ViewBag.TotalCount = response.SaleAllowanceList.TotalPageCount;
 
-            return View(list ?? Enumerable.Empty<AllowenceListViewModel>());
+            return PartialView("_SaleAllowanceList", list ?? Enumerable.Empty<AllowenceListViewModel>());
         }
 
+        [HttpPost]
         [Authorize(Roles = "SaleRevenuesList,Admin")]
         public ActionResult SaleAllowanceDetails(int Id, int page = 0, int pageSize = 10)
         {
@@ -213,11 +230,12 @@ namespace MasterISS_Partner_WebSite.Controllers
             ViewBag.TotalCount = response.SaleGenericAllowanceList.TotalPageCount;
             ViewBag.Id = Id;
 
-            return View(list ?? Enumerable.Empty<SaleGenericAllowancesViewModel>());
+            return PartialView("_SaleAllowanceDetails", list ?? Enumerable.Empty<SaleGenericAllowancesViewModel>());
         }
 
+        [HttpPost]
         [Authorize(Roles = "SetupRevenuesList,Admin")]
-        public ActionResult SetupGenericAllowanceList(int page = 0, int pageSize = 10)
+        public ActionResult SetupGenericAllowanceList(int page = 0, int pageSize = 2)
         {
             var wrapper = new WebServiceWrapper();
 
@@ -258,9 +276,10 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             ViewBag.TotalCount = response.SetupGenericAllowanceList.TotalPageCount;
 
-            return View(list ?? Enumerable.Empty<SetupGenericAllowancesViewModel>());
+            return PartialView("_SetupGenericAllowanceList", list ?? Enumerable.Empty<SetupGenericAllowancesViewModel>());
         }
 
+        [HttpPost]
         [Authorize(Roles = "SetupRevenuesList,Admin")]
         public ActionResult SetupAllowanceList(int page = 0, int pageSize = 10)
         {
@@ -273,7 +292,6 @@ namespace MasterISS_Partner_WebSite.Controllers
             };
 
             var response = wrapper.SetupAllowanceList(request);
-
 
             if (response.ResponseMessage.ErrorCode != 0)
             {
@@ -294,9 +312,10 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             ViewBag.TotalCount = response.SetupAllowanceList.TotalPageCount;
 
-            return View(list ?? Enumerable.Empty<AllowenceListViewModel>());
+            return PartialView("_SetupAllowanceList", list ?? Enumerable.Empty<AllowenceListViewModel>());
         }
 
+        [HttpPost]
         [Authorize(Roles = "SetupRevenuesList,Admin")]
         public ActionResult SetupAllowenceDetails(int Id, int page = 0, int pageSize = 10)
         {
@@ -342,7 +361,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             ViewBag.TotalCount = response.SetupGenericAllowanceList.TotalPageCount;
             ViewBag.Id = Id;
 
-            return View(list ?? Enumerable.Empty<SetupGenericAllowancesViewModel>());
+            return View("_SetupAllowenceDetails", list ?? Enumerable.Empty<SetupGenericAllowancesViewModel>());
         }
     }
 }

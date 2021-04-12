@@ -85,7 +85,7 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
         public int? SexId { get; set; }
 
-        [Display(Name = "SameSetupAddress", ResourceType = typeof(Localization.Model))]
+        [Display(Name = "CustomerResidanceAddressSameSetupAddress", ResourceType = typeof(Localization.Model))]
         public bool SameSetupAddressByIndividual { get; set; }
     }
 
@@ -152,10 +152,10 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         [RegularExpression("^[0-9]*$", ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "OnlyNumeric")]
         public string TradeRegistrationNo { get; set; }
 
-        [Display(Name = "SameSetupAddress", ResourceType = typeof(Localization.Model))]
+        [Display(Name = "CorporativeCompanyAddressSameSetupAddress", ResourceType = typeof(Localization.Model))]
         public bool SameSetupAddressByCorporativeCompanyAddress { get; set; }
 
-        [Display(Name = "SameSetupAddress", ResourceType = typeof(Localization.Model))]
+        [Display(Name = "CorporativeResidencyAddressSameSetupAddress", ResourceType = typeof(Localization.Model))]
         public bool SameSetupAddressByCorporativeResidencyAddress { get; set; }
     }
 
@@ -308,7 +308,7 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
         public string Culture { get; set; }
 
-        [Display(Name = "SameSetupAddress", ResourceType = typeof(Localization.Model))]
+        [Display(Name = "BillingAddressSameSetupAddress", ResourceType = typeof(Localization.Model))]
         public bool SameSetupAddressByBilling { get; set; }
 
     }
