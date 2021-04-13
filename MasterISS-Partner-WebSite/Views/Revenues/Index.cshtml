@@ -1,4 +1,5 @@
-﻿
+﻿@using MasterISS_Partner_WebSite.ViewModels.Revenues
+@using PagedList.Mvc
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -35,72 +36,109 @@
     </div>
 
     <div class="card">
-        <div class="container generic-Container">
-
+        <div class="container">
+            <div id="generic-Container">
+            </div>
         </div>
     </div>
 </div>
 
 @section Javascript{
     <link href="~/Content/PagedList.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
     <script>
+        $("#generic-Container").on('click', '.setupAllowenceListByDetailsButton', function () {
+            var dataValue = $(this).attr("dataValue");
+            var postData = { Id: dataValue};
+            $.ajax({
+                    url: '@Url.Action("SetupAllowenceDetails", "Revenues")',
+                    type: 'GET',
+                    dataType: 'html',
+                    data: postData,
+                    success: function (data) {
+                        $("#generic-Container").html(data);
+                    },
+                });
+        });
+
+        $("#generic-Container").on('click', '.saleAllowenceListByDetailsButton', function () {
+            var dataValue = $(this).attr("dataValue");
+            var postData = { Id: dataValue};
+            $.ajax({
+                    url: '@Url.Action("SaleAllowenceDetails", "Revenues")',
+                    type: 'GET',
+                    dataType: 'html',
+                    data: postData,
+                    success: function (data) {
+                        $("#generic-Container").html(data);
+                    },
+                });
+        });
+
+
         $("#SetupAllowedDetails").click(function () {
                 $.ajax({
                     url: '@Url.Action("SetupAllowedDetails", "Revenues")',
-                    type: 'POST',
+                    type: 'GET',
                     dataType: 'html',
                     success: function (data) {
-                        $(".generic-Container").html(data);
+                        $("#generic-Container").html(data);
                     },
                 });
         });
         $("#SetupAllowanceList").click(function () {
                 $.ajax({
                     url: '@Url.Action("SetupAllowanceList", "Revenues")',
-                    type: 'POST',
+                    type: 'GET',
                     dataType: 'html',
                     success: function (data) {
-                        $(".generic-Container").html(data);
+                        $("#generic-Container").html(data);
                     },
                 });
         });
         $("#SetupGenericAllowanceList").click(function () {
                 $.ajax({
                     url: '@Url.Action("SetupGenericAllowanceList", "Revenues")',
-                    type: 'POST',
+                    type: 'GET',
                     dataType: 'html',
                     success: function (data) {
-                        $(".generic-Container").html(data);
+                        $("#generic-Container").html(data);
                     },
                 });
         });
         $("#SaleGenericAllowanceList").click(function () {
                 $.ajax({
                     url: '@Url.Action("SaleGenericAllowanceList", "Revenues")',
-                    type: 'POST',
+                    type: 'GET',
                     dataType: 'html',
                     success: function (data) {
-                        $(".generic-Container").html(data);
+                        $("#generic-Container").html(data);
                     },
                 });
         });
         $("#SaleAllowanceList").click(function () {
                 $.ajax({
                     url: '@Url.Action("SaleAllowanceList", "Revenues")',
-                    type: 'POST',
+                    type: 'GET',
                     dataType: 'html',
                     success: function (data) {
-                        $(".generic-Container").html(data);
+                        $("#generic-Container").html(data);
                     },
                 });
          });
         $("#SaleAllowedDetails").click(function () {
                 $.ajax({
                     url: '@Url.Action("SaleAllowedDetails", "Revenues")',
-                    type: 'POST',
+                    type: 'GET',
                     dataType: 'html',
                     success: function (data) {
-                        $(".generic-Container").html(data);
+                        if (data.responseJson.status!="Failed") {
+                            $("#generic-Container").html(data);
+                        }
+                        else {
+                            GetAlert(data.responseJson.ErrorMessage, "false");
+                        }
                     },
                 });
         });

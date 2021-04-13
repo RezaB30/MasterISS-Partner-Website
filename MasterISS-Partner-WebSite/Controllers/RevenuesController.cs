@@ -3,8 +3,10 @@ using MasterISS_Partner_WebSite.ViewModels.Revenues;
 using MasterISS_Partner_WebSite_Enums;
 using NLog;
 using PagedList;
+using RezaB.Data.Localization;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -22,8 +24,8 @@ namespace MasterISS_Partner_WebSite.Controllers
         }
 
         [Authorize(Roles = "SaleRevenuesList,Admin")]
-        [HttpPost]
-        public ActionResult SaleAllowedDetails(int page=1,int pageSize=1)
+        [HttpGet]
+        public ActionResult SaleAllowedDetails(int page = 1, int pageSize = 1)
         {
             var wrapper = new WebServiceWrapper();
 
@@ -39,13 +41,14 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             var basicAllowanceDetail = wrapper.GetBasicAllowanceDetails(requestByBasicAllowenceDetail);
 
-
             if (basicAllowanceDetail.ResponseMessage.ErrorCode != 0)
             {
                 //LOG
                 wrapper = new WebServiceWrapper();
                 LoggerError.Fatal($"An error occurred while GetBasicAllowanceDetails , ErrorCode: {basicAllowanceDetail.ResponseMessage.ErrorCode}, ErrorMessage : {basicAllowanceDetail.ResponseMessage.ErrorMessage} by: {wrapper.GetUserSubMail()}");
                 //LOG
+                var contect = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false');</script>", new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(basicAllowanceDetail.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture));
+                return Content(contect);
             }
 
             var list = basicAllowanceDetail.AllowanceDetailsResponse == null ? Enumerable.Empty<GetBasicAllowenceDetailsResponseList>() : basicAllowanceDetail.AllowanceDetailsResponse.Select(adr => new GetBasicAllowenceDetailsResponseList()
@@ -53,7 +56,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                 AllowanceStateName = adr.AllowanceStateName,
                 Price = adr.Price
             });
-           
+
             var totalCount = list.Count();
             var pagedListByResponseList = new StaticPagedList<GetBasicAllowenceDetailsResponseList>(list.Skip((page - 1) * pageSize).Take(pageSize), page, pageSize, totalCount);
 
@@ -61,8 +64,8 @@ namespace MasterISS_Partner_WebSite.Controllers
         }
 
         [Authorize(Roles = "SetupRevenuesList,Admin")]
-        [HttpPost]
-        public ActionResult SetupAllowedDetails(int page=1, int pageSize=1)
+        [HttpGet]
+        public ActionResult SetupAllowedDetails(int page = 1, int pageSize = 1)
         {
             var wrapper = new WebServiceWrapper();
 
@@ -84,6 +87,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                 wrapper = new WebServiceWrapper();
                 LoggerError.Fatal($"An error occurred while GetBasicAllowanceDetails , ErrorCode: {basicAllowanceDetail.ResponseMessage.ErrorCode}, ErrorMessage : {basicAllowanceDetail.ResponseMessage.ErrorMessage}  by: {wrapper.GetUserSubMail()}");
                 //LOG
+                var contect = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false');</script>", new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(basicAllowanceDetail.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture));
+                return Content(contect);
             }
 
             var list = basicAllowanceDetail.AllowanceDetailsResponse == null ? Enumerable.Empty<GetBasicAllowenceDetailsResponseList>() : basicAllowanceDetail.AllowanceDetailsResponse.Select(adr => new GetBasicAllowenceDetailsResponseList()
@@ -92,65 +97,16 @@ namespace MasterISS_Partner_WebSite.Controllers
                 Price = adr.Price
             });
 
-            var listAss = new List<GetBasicAllowenceDetailsResponseList>();
-            listAss.AddRange(list);
-            listAss.Add(new GetBasicAllowenceDetailsResponseList { AllowanceStateID = 11, AllowanceStateName = "aa", Price = 11 });
-            listAss.Add(new GetBasicAllowenceDetailsResponseList { AllowanceStateID = 11, AllowanceStateName = "aa", Price = 11 });
-            listAss.Add(new GetBasicAllowenceDetailsResponseList { AllowanceStateID = 11, AllowanceStateName = "aa", Price = 11 });
-
-            var totalCount = listAss.Count();
-            var pagedListByResponseList = new StaticPagedList<GetBasicAllowenceDetailsResponseList>(listAss.Skip((page - 1) * pageSize).Take(pageSize), page, pageSize, totalCount);
+            var totalCount = list.Count();
+            var pagedListByResponseList = new StaticPagedList<GetBasicAllowenceDetailsResponseList>(list.Skip((page - 1) * pageSize).Take(pageSize), page, pageSize, totalCount);
 
             return PartialView("_SetupAllowedDetails", pagedListByResponseList);
         }
 
-        [HttpPost]
+
+        [HttpGet]
         [Authorize(Roles = "SaleRevenuesList,Admin")]
-        public ActionResult SaleGenericAllowanceList(int page = 0, int pageSize = 10)
-        {
-            var wrapper = new WebServiceWrapper();
-
-            var request = new PageSettingsByWebService()
-            {
-                PageNo = page,
-                ItemPerPage = pageSize
-            };
-
-            var response = wrapper.SaleGenericAllowanceList(request);
-
-            if (response.ResponseMessage.ErrorCode != 0)
-            {
-                //LOG
-                wrapper = new WebServiceWrapper();
-                LoggerError.Fatal($"An error occurred while SaleGenericAllowanceList , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage}  by: {wrapper.GetUserSubMail()}");
-                //LOG
-            }
-
-            var list = response.SaleGenericAllowanceList.SaleGenericAllowances?.Select(salega => new SaleGenericAllowancesViewModel
-            {
-                Allowance = salega.Allowance,
-                SubscriptionNo = salega.SubscriptionNo,
-                MembershipDate = Convert.ToDateTime(salega.MembershipDate),
-                AllowanceState = new AllowanceState
-                {
-                    Name = salega.AllowanceState.Name,
-                    Value = salega.AllowanceState.Value
-                },
-                SaleState = new State
-                {
-                    Name = salega.SaleState.Name,
-                    Value = salega.SaleState.Value
-                }
-            });
-
-            ViewBag.TotalCount = response.SaleGenericAllowanceList.TotalPageCount;
-
-            return PartialView("_SaleGenericAllowanceList",list ?? Enumerable.Empty<SaleGenericAllowancesViewModel>());
-        }
-
-        [HttpPost]
-        [Authorize(Roles = "SaleRevenuesList,Admin")]
-        public ActionResult SaleAllowanceList(int page = 0, int pageSize = 10)
+        public ActionResult SaleAllowanceList(int page = 1, int pageSize = 10)
         {
             var wrapper = new WebServiceWrapper();
 
@@ -168,6 +124,9 @@ namespace MasterISS_Partner_WebSite.Controllers
                 wrapper = new WebServiceWrapper();
                 LoggerError.Fatal($"An error occurred while SaleAllowanceList , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage}  by: {wrapper.GetUserSubMail()}");
                 //LOG
+                var contect = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false');</script>", new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture));
+                return Content(contect);
+
             }
 
             var list = response.SaleAllowanceList.SaleAllowances?.Select(sa => new AllowenceListViewModel
@@ -179,14 +138,17 @@ namespace MasterISS_Partner_WebSite.Controllers
                 Total = sa.Total
             });
 
-            ViewBag.TotalCount = response.SaleAllowanceList.TotalPageCount;
+            var totalPageCount = response.SaleAllowanceList.TotalPageCount;
+            var totalItemCount = totalPageCount == 1 ? list.Count() : totalPageCount * pageSize;
 
-            return PartialView("_SaleAllowanceList", list ?? Enumerable.Empty<AllowenceListViewModel>());
+            var pagedListByResponseList = new StaticPagedList<AllowenceListViewModel>(list, page, pageSize, totalItemCount);
+
+            return PartialView("_SaleAllowanceList", pagedListByResponseList);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Authorize(Roles = "SaleRevenuesList,Admin")]
-        public ActionResult SaleAllowanceDetails(int Id, int page = 0, int pageSize = 10)
+        public ActionResult SaleAllowanceDetails(int Id, int page = 1, int pageSize = 10)
         {
             var wrapper = new WebServiceWrapper();
 
@@ -208,6 +170,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                 wrapper = new WebServiceWrapper();
                 LoggerError.Fatal($"An error occurred while SaleAllowanceDetails , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage}  by: {wrapper.GetUserSubMail()}");
                 //LOG
+                var contect = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false');</script>", new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture));
+                return Content(contect);
             }
 
             var list = response.SaleGenericAllowanceList.SaleGenericAllowances?.Select(salega => new SaleGenericAllowancesViewModel
@@ -227,21 +191,77 @@ namespace MasterISS_Partner_WebSite.Controllers
                 },
             });
 
-            ViewBag.TotalCount = response.SaleGenericAllowanceList.TotalPageCount;
+            var totalPageCount = response.SaleGenericAllowanceList.TotalPageCount;
             ViewBag.Id = Id;
 
-            return PartialView("_SaleAllowanceDetails", list ?? Enumerable.Empty<SaleGenericAllowancesViewModel>());
+            var totalItemCount = totalPageCount == 1 ? list.Count() : totalPageCount * pageSize;
+
+            var pagedListByResponseList = new StaticPagedList<SaleGenericAllowancesViewModel>(list, page, pageSize, totalItemCount);
+
+            return PartialView("_SaleAllowanceDetails", pagedListByResponseList);
         }
 
-        [HttpPost]
-        [Authorize(Roles = "SetupRevenuesList,Admin")]
-        public ActionResult SetupGenericAllowanceList(int page = 0, int pageSize = 2)
+
+        [HttpGet]
+        [Authorize(Roles = "SaleRevenuesList,Admin")]
+        public ActionResult SaleGenericAllowanceList(int page = 1, int pageSize = 1)
         {
             var wrapper = new WebServiceWrapper();
 
             var request = new PageSettingsByWebService()
             {
                 PageNo = page,
+                ItemPerPage = pageSize
+            };
+
+            var response = wrapper.SaleGenericAllowanceList(request);
+
+            if (response.ResponseMessage.ErrorCode != 0)
+            {
+                //LOG
+                wrapper = new WebServiceWrapper();
+                LoggerError.Fatal($"An error occurred while SaleGenericAllowanceList , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage}  by: {wrapper.GetUserSubMail()}");
+                //LOG
+                var contect = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false');</script>", new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture));
+                return Content(contect);
+            }
+
+            var list = response.SaleGenericAllowanceList.SaleGenericAllowances?.Select(salega => new SaleGenericAllowancesViewModel
+            {
+                Allowance = salega.Allowance,
+                SubscriptionNo = salega.SubscriptionNo,
+                MembershipDate = Convert.ToDateTime(salega.MembershipDate),
+                AllowanceState = new AllowanceState
+                {
+                    Name = salega.AllowanceState.Name,
+                    Value = salega.AllowanceState.Value
+                },
+                SaleState = new State
+                {
+                    Name = salega.SaleState.Name,
+                    Value = salega.SaleState.Value
+                }
+            });
+
+            var totalPageCount = response.SaleGenericAllowanceList.TotalPageCount;
+
+            var totalItemCount = totalPageCount == 1 ? list.Count() : totalPageCount * pageSize;
+
+            var pagedListByResponseList = new StaticPagedList<SaleGenericAllowancesViewModel>(list, page, pageSize, totalItemCount);
+
+
+            return PartialView("_SaleGenericAllowanceList", pagedListByResponseList);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "SetupRevenuesList,Admin")]
+        public ActionResult SetupGenericAllowanceList(int page = 1, int pageSize = 4)
+        {
+            var wrapper = new WebServiceWrapper();
+
+            var request = new PageSettingsByWebService()
+            {
+                PageNo = page - 1,
                 ItemPerPage = pageSize
             };
 
@@ -254,6 +274,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                 wrapper = new WebServiceWrapper();
                 LoggerError.Fatal($"An error occurred while SetupGenericAllowanceList , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage}  by: {wrapper.GetUserSubMail()}");
                 //LOG
+                var contect = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false');</script>", new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture));
+                return Content(contect);
             }
 
             var list = response.SetupGenericAllowanceList.SetupGenericAllowances?.Select(setupga => new SetupGenericAllowancesViewModel
@@ -274,14 +296,17 @@ namespace MasterISS_Partner_WebSite.Controllers
                 }
             });
 
-            ViewBag.TotalCount = response.SetupGenericAllowanceList.TotalPageCount;
+            var totalPageCount = response.SetupGenericAllowanceList.TotalPageCount;
+            var totalItemCount = totalPageCount == 1 ? list.Count() : totalPageCount * pageSize;
 
-            return PartialView("_SetupGenericAllowanceList", list ?? Enumerable.Empty<SetupGenericAllowancesViewModel>());
+            var pagedListByResponseList = new StaticPagedList<SetupGenericAllowancesViewModel>(list, page, pageSize, totalItemCount);
+
+            return PartialView("_SetupGenericAllowanceList", pagedListByResponseList);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Authorize(Roles = "SetupRevenuesList,Admin")]
-        public ActionResult SetupAllowanceList(int page = 0, int pageSize = 10)
+        public ActionResult SetupAllowanceList(int page = 1, int pageSize = 10)
         {
             var wrapper = new WebServiceWrapper();
 
@@ -299,6 +324,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                 wrapper = new WebServiceWrapper();
                 LoggerError.Fatal($"An error occurred while SetupAllowanceList , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage}  by: {wrapper.GetUserSubMail()}");
                 //LOG
+                var contect = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false');</script>", new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture));
+                return Content(contect);
             }
 
             var list = response.SetupAllowanceList.SetupAllowances?.Select(sa => new AllowenceListViewModel
@@ -310,14 +337,17 @@ namespace MasterISS_Partner_WebSite.Controllers
                 Total = sa.Total
             });
 
-            ViewBag.TotalCount = response.SetupAllowanceList.TotalPageCount;
+            var totalPageCount = response.SetupAllowanceList.TotalPageCount;
+            var totalItemCount = totalPageCount == 1 ? list.Count() : totalPageCount * pageSize;
 
-            return PartialView("_SetupAllowanceList", list ?? Enumerable.Empty<AllowenceListViewModel>());
+            var pagedListByResponseList = new StaticPagedList<AllowenceListViewModel>(list, page, pageSize, totalItemCount);
+
+            return PartialView("_SetupAllowanceList", pagedListByResponseList);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Authorize(Roles = "SetupRevenuesList,Admin")]
-        public ActionResult SetupAllowenceDetails(int Id, int page = 0, int pageSize = 10)
+        public ActionResult SetupAllowenceDetails(int Id, int page = 1, int pageSize = 10)
         {
             var wrapper = new WebServiceWrapper();
 
@@ -339,6 +369,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                 wrapper = new WebServiceWrapper();
                 LoggerError.Fatal($"An error occurred while SetupAllowanceDetails , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage}  by: {wrapper.GetUserSubMail()}");
                 //LOG
+                var contect = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false');</script>", new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture));
+                return Content(contect);
             }
             var list = response.SetupGenericAllowanceList.SetupGenericAllowances?.Select(setupga => new SetupGenericAllowancesViewModel
             {
@@ -358,10 +390,14 @@ namespace MasterISS_Partner_WebSite.Controllers
                 SubscriptionNo = setupga.SubscriptionNo,
             });
 
-            ViewBag.TotalCount = response.SetupGenericAllowanceList.TotalPageCount;
+            var totalPageCount = response.SetupGenericAllowanceList.TotalPageCount;
             ViewBag.Id = Id;
 
-            return View("_SetupAllowenceDetails", list ?? Enumerable.Empty<SetupGenericAllowancesViewModel>());
+            var totalItemCount = totalPageCount == 1 ? list.Count() : totalPageCount * pageSize;
+
+            var pagedListByResponseList = new StaticPagedList<SetupGenericAllowancesViewModel>(list, page, pageSize, totalItemCount);
+
+            return View("_SetupAllowenceDetails", pagedListByResponseList);
         }
     }
 }

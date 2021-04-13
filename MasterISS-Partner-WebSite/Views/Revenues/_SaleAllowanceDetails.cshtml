@@ -1,7 +1,8 @@
 ﻿@using MasterISS_Partner_WebSite.ViewModels.Revenues
-@model IEnumerable<SaleGenericAllowancesViewModel>
-@{
-}
+@using MasterISS_Partner_WebSite.Localization
+@using PagedList.Mvc
+@model PagedList.StaticPagedList<SaleGenericAllowancesViewModel>
+
 <h3 class="my-6 text-info font-size-h4">@MasterISS_Partner_WebSite.Localization.View.SaleAllowanceDetails</h3>
 <table class="table table-head-custom table-vertical-center table-hover mb-2">
     <thead>
@@ -26,15 +27,23 @@
         }
     </tbody>
 </table>
-<div>
-    <ul>
-        @for (int i = 0; i < (int)ViewBag.TotalCount; i++)
-        {
-            <li>
-                @Html.ActionLink((i + 1).ToString(), "SaleGenericAllowanceList", new { page = i, Id = (int)ViewBag.Id })
-            </li>
-        }
-    </ul>
-</div>
-
-
+@if (Model != null && Model.TotalItemCount > 0)
+{
+    <div class="card card-custom">
+        <div class="card-body py-7">
+            <div class="d-flex justify-content-between align-items-center flex-wrap">
+                <div class="d-flex flex-wrap mr-3">
+                    @Html.PagedListPager(Model, page => Url.Action("SaleGenericAllowanceList", new { page = page, Id = (int)ViewBag.Id }),
+                   PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions()
+                   {
+                       HttpMethod = "GET",
+                       UpdateTargetId = "generic-Container",
+                   }))
+                </div>
+                <div class="d-flex align-items-center">
+                    @* <span class="text-muted"> @View.Total @Model.TotalItemCount @View.RecordFound @View.OnThisPage @Model.FirstItemOnPage @View.To @Model.LastItemOnPage @View.Showing</span>*@
+                </div>
+            </div>
+        </div>
+    </div>
+}

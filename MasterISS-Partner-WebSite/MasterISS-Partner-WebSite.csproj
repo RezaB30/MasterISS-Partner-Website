@@ -1736,6 +1736,7 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\Alert\sweet-alert.js" />
     <Content Include="Scripts\input-upparcase.js" />
     <Content Include="Scripts\jquery.mask.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
