@@ -376,6 +376,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kullanıcı Adı ve Şifrenizi Giriniz.
+        /// </summary>
+        public static string EnterYourUsernameAndPassword {
+            get {
+                return ResourceManager.GetString("EnterYourUsernameAndPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hata.
         /// </summary>
         public static string Error {
@@ -538,6 +547,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Giriş.
+        /// </summary>
+        public static string Login {
+            get {
+                return ResourceManager.GetString("Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bu mail zaten mevcut..
         /// </summary>
         public static string MailValidError {
@@ -606,6 +624,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string Minute {
             get {
                 return ResourceManager.GetString("Minute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Netspeed Bayi Sistemi.
+        /// </summary>
+        public static string NetspeedPartnerSystem {
+            get {
+                return ResourceManager.GetString("NetspeedPartnerSystem", resourceCulture);
             }
         }
         
@@ -1141,11 +1168,29 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kullanıcı Paneli.
+        /// </summary>
+        public static string UserPanel {
+            get {
+                return ResourceManager.GetString("UserPanel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bu adres zaten mevcut..
         /// </summary>
         public static string ValidWorkArea {
             get {
                 return ResourceManager.GetString("ValidWorkArea", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hoşgeldiniz!.
+        /// </summary>
+        public static string Welcome {
+            get {
+                return ResourceManager.GetString("Welcome", resourceCulture);
             }
         }
         

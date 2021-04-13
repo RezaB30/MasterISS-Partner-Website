@@ -2,33 +2,73 @@
 @model  MasterISS_Partner_WebSite.ViewModels.Account.AdminSignInViewModel
 @{
     ViewBag.Title = "AdminSignIn";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
 }
+<html lang="tr">
+<head>
+    <base href="">
+    <meta charset="utf-8" />
+    <title>Bayi Sistemi | Netspeed</title>
+    <meta name="description" content="Login page example" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+    <link href="~/Content/css/custom-css/login-1.css" rel="stylesheet" />
+    <link href="~/Content/css/plugins.bundle.css" rel="stylesheet" />
+    <link href="~/Content/css/prismjs.bundle.css" rel="stylesheet" />
+    <link href="~/Content/css/style.bundle.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="~/Content/media/logos/favicon.ico" />
+</head>
+<body id="kt_body" class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading">
+    <div class="d-flex flex-column flex-root">
+        <div class="login login-1 login-signin-on d-flex flex-column flex-lg-row flex-column-fluid bg-white">
+            <div class="login-aside d-flex flex-row-auto bgi-size-cover bgi-no-repeat p-10 p-lg-10" style="background-image: url(../../Content/media/bg/bg-4.jpg);">
+                <div class="d-flex flex-row-fluid flex-column justify-content-between">
+                    <a href="#" class="flex-column-auto mt-5 pb-lg-0 pb-10">
+                        <img src="~/Content/media/svg/logos/bejjpluslogonew.svg" class="max-h-25px" alt="" />
+                    </a>
+                    <div class="flex-column-fluid d-flex flex-column justify-content-center">
+                        <h3 class="font-size-h2 mb-5 text-white">@MasterISS_Partner_WebSite.Localization.View.NetspeedPartnerSystem</h3>
+                        <p class="font-weight-lighter font-size-h1 text-white opacity-80">@MasterISS_Partner_WebSite.Localization.View.Welcome</p>
+                    </div>
+                    <div class="d-none flex-column-auto d-lg-flex justify-content-between mt-10">
+                        <div class="opacity-70 font-weight-bold text-white">© @DateTime.Now.Year Netspeed</div>
+                        <div class="d-flex">
 
-@using (Html.BeginForm("AdminSignIn", "Account", FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
-    <div>
-        <div>
-            @Html.LabelFor(m => m.Username)
-            @Html.EditorFor(m => m.Username)
-            @Html.ValidationMessageFor(m => m.Username)
-        </div>
-
-        <div>
-            @Html.LabelFor(m => m.Password)
-            @Html.EditorFor(m => m.Password)
-            @Html.ValidationMessageFor(m => m.Password)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex flex-column flex-row-fluid position-relative p-7 overflow-hidden">
+                <div class="d-flex flex-column-fluid flex-center mt-30 mt-lg-0">
+                    <div class="login-form login-signin">
+                        <div class="text-center mb-10 mb-lg-20">
+                            <h3 class="font-size-h1">@MasterISS_Partner_WebSite.Localization.View.Login</h3>
+                            <p class="text-muted font-weight-bold">@MasterISS_Partner_WebSite.Localization.View.EnterYourUsernameAndPassword</p>
+                        </div>
+                        @using (Html.BeginForm("AdminSignIn", "Account", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="form-group">
+                                @Html.EditorFor(m => m.Username, new { htmlAttributes = new { @class = "form-control form-control-solid h-auto py-5 px-6", @placeholder = Html.DisplayNameFor(m => m.Username), @autocomplete = "off" } })
+                                <span class="text-danger">@Html.ValidationMessageFor(m => m.Username)</span>
+                            </div>
+                            <div class="form-group">
+                                @Html.EditorFor(m => m.Password, new { htmlAttributes = new { @class = "form-control form-control-solid h-auto py-5 px-6", @placeholder = Html.DisplayNameFor(m => m.Password), @autocomplete = "off" } })
+                                <span class="text-danger">@Html.ValidationMessageFor(m => m.Password)</span>
+                            </div>
+                            <div class="form-group d-flex flex-wrap justify-content-between align-items-center">
+                                @Html.ActionLink(View.UserPanel, "SignIn", "Account", new { @class = "text-dark-50 text-hover-primary my-3 mr-2" })
+                                <input value="@View.SignIn" type="submit" class="btn btn-primary font-weight-bold px-9 py-4 my-3" />
+                            </div>
+                        }
+                        <span class="text-danger">@ViewBag.AuthenticateError</span>
+                    </div>
+                </div>
+                <div class="d-flex d-lg-none flex-column-auto flex-column flex-sm-row justify-content-between align-items-center mt-5 p-5">
+                    <div class="text-dark-50 font-weight-bold order-2 order-sm-1 my-2">© @DateTime.Now Netspeed</div>
+                </div>
+            </div>
         </div>
     </div>
-    <input value="@View.SignIn" type="submit" />
-}
-@ViewBag.AuthenticateError
-
-@section JavaScript{
-    <script>
-        $("input[type=text]").on("input", function (event) {
-            $(this).off("on");
-        })
-    </script>
-}
+</body>
+</html>

@@ -222,6 +222,9 @@
   <data name="DownloadTheContract" xml:space="preserve">
     <value>Sözleşmeyi İndir</value>
   </data>
+  <data name="EnterYourUsernameAndPassword" xml:space="preserve">
+    <value>Kullanıcı Adı ve Şifrenizi Giriniz</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>
@@ -276,6 +279,9 @@
   <data name="Load" xml:space="preserve">
     <value>Yükle</value>
   </data>
+  <data name="Login" xml:space="preserve">
+    <value>Giriş</value>
+  </data>
   <data name="MailValidError" xml:space="preserve">
     <value>Bu mail zaten mevcut.</value>
   </data>
@@ -299,6 +305,9 @@
   </data>
   <data name="Minute" xml:space="preserve">
     <value> Dakika </value>
+  </data>
+  <data name="NetspeedPartnerSystem" xml:space="preserve">
+    <value>Netspeed Bayi Sistemi</value>
   </data>
   <data name="NewCustomerError" xml:space="preserve">
     <value>İşleminiz yapılırken bir hata oluştu.Tekrar deneyiniz.</value>
@@ -477,8 +486,14 @@
   <data name="UserOperations" xml:space="preserve">
     <value>Kullanıcılar</value>
   </data>
+  <data name="UserPanel" xml:space="preserve">
+    <value>Kullanıcı Paneli</value>
+  </data>
   <data name="ValidWorkArea" xml:space="preserve">
     <value>Bu adres zaten mevcut.</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Hoşgeldiniz!</value>
   </data>
   <data name="WrongPassword" xml:space="preserve">
     <value>Yanlış SMS Şifresi</value>

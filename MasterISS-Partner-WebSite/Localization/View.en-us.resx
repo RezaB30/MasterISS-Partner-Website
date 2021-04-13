@@ -222,6 +222,9 @@
   <data name="DownloadTheContract" xml:space="preserve">
     <value>Download The Contract</value>
   </data>
+  <data name="EnterYourUsernameAndPassword" xml:space="preserve">
+    <value>Enter Your Username and Password</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
@@ -276,6 +279,9 @@
   <data name="Load" xml:space="preserve">
     <value>Load</value>
   </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
   <data name="MailValidError" xml:space="preserve">
     <value>This mail already exists.</value>
   </data>
@@ -299,6 +305,9 @@
   </data>
   <data name="Minute" xml:space="preserve">
     <value> Minute </value>
+  </data>
+  <data name="NetspeedPartnerSystem" xml:space="preserve">
+    <value>Netspeed Partner System</value>
   </data>
   <data name="NewCustomerError" xml:space="preserve">
     <value>An error occurred while processing your transaction. Try again.</value>
@@ -477,8 +486,14 @@
   <data name="UserOperations" xml:space="preserve">
     <value>User</value>
   </data>
+  <data name="UserPanel" xml:space="preserve">
+    <value>User Panel</value>
+  </data>
   <data name="ValidWorkArea" xml:space="preserve">
     <value>This address already exists.</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Welcome!</value>
   </data>
   <data name="WrongPassword" xml:space="preserve">
     <value>Wrong SMS Password</value>

@@ -411,6 +411,7 @@
   <ItemGroup>
     <Content Include="Content\css\custom-css\animate.min.css" />
     <Content Include="Content\css\custom-css\datatables.bundle.css" />
+    <Content Include="Content\css\custom-css\login-1.css" />
     <Content Include="Content\css\fonts\%40fortawesome\fa-brands-400.svg" />
     <Content Include="Content\css\fonts\%40fortawesome\fa-regular-400.svg" />
     <Content Include="Content\css\fonts\%40fortawesome\fa-solid-900.svg" />
