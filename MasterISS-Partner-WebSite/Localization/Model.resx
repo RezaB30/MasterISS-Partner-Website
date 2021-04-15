@@ -139,7 +139,7 @@
     <value>Eklenti Tipi</value>
   </data>
   <data name="AvailablePermission" xml:space="preserve">
-    <value>Mevcut İzinler</value>
+    <value>Yetkiler</value>
   </data>
   <data name="BalanceAmount" xml:space="preserve">
     <value>Bakiye Tutarı</value>

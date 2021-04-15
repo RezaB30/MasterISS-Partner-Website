@@ -46,6 +46,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                     })
                 }).ToList();
 
+                ViewBag.RoleList = new SelectList(db.Role.Where(r => r.PartnerId == partnerId && r.IsEnabled).Select(r => new { Value = r.Id, Name = r.RoleName }).ToArray(), "Value", "Name");
+
                 return View(userList);
             }
         }
@@ -220,15 +222,13 @@ namespace MasterISS_Partner_WebSite.Controllers
         public ActionResult AddPermission()
         {
             ViewBag.PermissionList = PermissionList();
-            return View();
+            return PartialView("_AddPermission");
         }
 
         [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult AddPermission(AddPermissionViewModel addPermissionViewModel)
         {
-            ViewBag.PermissionList = PermissionList();
-
             if (ModelState.IsValid)
             {
                 using (var db = new PartnerWebSiteEntities())
@@ -252,7 +252,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                                 var role = new Role()
                                 {
                                     RoleName = addPermissionViewModel.RoleName,
-                                    PartnerId = partnerId
+                                    PartnerId = partnerId,
+                                    IsEnabled = true,
                                 };
                                 db.Role.Add(role);
 
@@ -269,19 +270,21 @@ namespace MasterISS_Partner_WebSite.Controllers
                                 var wrapper = new WebServiceWrapper();
                                 Logger.Info("Added role: " + role.RoleName + ", by: " + wrapper.GetUserSubMail());
                                 //LOG
-
-                                return RedirectToAction("Index");
+                                var message = Localization.View.Successful;
+                                return Json(new { status = "Success", ErrorMessage = message }, JsonRequestBehavior.AllowGet);
                             }
-                            return RedirectToAction("Index", "Home");
+                            var errorMessage = Localization.View.Generic200ErrorCodeMessage;
+                            return Json(new { status = "FailedAndRedirect", ErrorMessage = errorMessage }, JsonRequestBehavior.AllowGet);
                         }
-                        ViewBag.RoleValid = Localization.View.RoleValidPermission;
-                        return View(addPermissionViewModel);
+                        var roleValidPermission = Localization.View.RoleValidPermission;
+                        return Json(new { status = "Failed", ErrorMessage = roleValidPermission }, JsonRequestBehavior.AllowGet);
                     }
-                    ViewBag.RoleValid = Localization.View.AvaibleRole;
-                    return View(addPermissionViewModel);
+                    var avaibleRole = Localization.View.AvaibleRole;
+                    return Json(new { status = "Failed", ErrorMessage = avaibleRole }, JsonRequestBehavior.AllowGet);
                 }
             }
-            return View(addPermissionViewModel);
+            var errorMessageModelState = string.Join("<br/>", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
+            return Json(new { status = "Failed", ErrorMessage = errorMessageModelState }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult AddUser()
@@ -622,14 +625,22 @@ namespace MasterISS_Partner_WebSite.Controllers
         }
 
 
-        public ActionResult UpdateRolePermission(int roleId)
+        public ActionResult UpdateRolePermission()
         {
             using (var db = new PartnerWebSiteEntities())
             {
+                return PartialView("_UpdateRolePermission");
+            }
+        }
+
+        public ActionResult RolePermissionList(int roleId)
+        {
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var claimInfo = new ClaimInfo();
                 var rolePermissionList = db.RolePermission.Where(rp => rp.RoleId == roleId).Select(p => p.PermissionId);
                 if (rolePermissionList != null)
                 {
-                    var claimInfo = new ClaimInfo();
                     var adminRoleIdList = claimInfo.PartnerRoleId().ToArray();
                     var localizedList = new LocalizedList<PermissionListEnum, Localization.PermissionList>();
 
@@ -637,20 +648,17 @@ namespace MasterISS_Partner_WebSite.Controllers
                     {
                         PermissionId = p.Id,
                         PermissionName = p.PermissionName,
-                        IsSelected = rolePermissionList.Contains(p.Id) == true,
+                        IsSelected = rolePermissionList.Contains(p.Id) == true ? "checked" : null,
                     }).ToArray();
 
                     foreach (var item in permissionList)
                     {
                         item.PermissionName = localizedList.GetDisplayText(item.PermissionId, CultureInfo.CurrentCulture);
                     }
-
-                    ViewBag.RoleId = roleId;
-                    ViewBag.RoleName = db.Role.Find(roleId).RoleName;
-
-                    return View(permissionList);
+                    return Json(new { status = "Success", list = permissionList }, JsonRequestBehavior.AllowGet);
                 }
-                return RedirectToAction("Index", "Home");
+                var notDefined = Localization.View.Generic200ErrorCodeMessage;
+                return Json(new { status = "FailedAndRedirect", ErrorMessage = notDefined }, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -768,6 +776,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             TempData["Error"] = Localization.View.RequiredPermission;
             return RedirectToAction("UpdateRolePermission", new { roleId = roleId });
         }
+
 
         [Authorize(Roles = "Setup")]
         public ActionResult AddAndUpdateWorkAreaSetupTeamUser(int userId)

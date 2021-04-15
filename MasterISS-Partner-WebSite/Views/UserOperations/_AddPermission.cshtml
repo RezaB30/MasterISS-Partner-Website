@@ -1,0 +1,82 @@
+﻿@using MasterISS_Partner_WebSite.Localization
+@using MasterISS_Partner_WebSite.ViewModels
+@model  AddPermissionViewModel
+
+<div class="modal-content">
+    <div class="modal-header">
+        <div class="py-2">
+            <span class="text-dark-75 font-weight-bolder d-block font-size-h5">Rol Ekle</span>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
+        </button>
+    </div>
+    @using (Ajax.BeginForm("AddPermission", "UserOperations", new AjaxOptions { HttpMethod = "POST", OnComplete = "GenericResult" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-group my-0">
+                @Html.LabelFor(m => m.RoleName, new { @class = "text-info col-12 col-form-label" })
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="la la-user-check"></i>
+                        </span>
+                    </div>
+                    @Html.EditorFor(m => m.RoleName, new { htmlAttributes = new { placeholder = Html.DisplayNameFor(m => m.RoleName), @class = "form-control", @autocomplete = "off" } })
+                </div>
+
+                <div class="separator separator-dashed mt-2 my-4"></div>
+                <div class="text-danger error-codes" align="center"></div>
+                <div class="separator separator-dashed mt-2 my-4"></div>
+
+                <label class="text-info col-12 col-form-label my-4">Yetkiler</label>
+                <div class="checkbox-list">
+                    @if (ViewBag.PermissionList != null)
+                    {
+                        foreach (var item in (SelectList)ViewBag.PermissionList)
+                        {
+                            <label class="checkbox">
+                                <input class="checkbox" type="checkbox" value="@item.Value" name="AvailableRoles" />
+                                <span></span>@Html.DisplayFor(m => item.Text)
+                            </label>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
+            <button type="submit" class="btn btn-info font-weight-bold">Rol Oluştur</button>
+        </div>
+    }
+</div>
+<!--end::Info-->
+@*@using (Html.BeginForm("AddPermission", "UserOperations", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.LabelFor(m => m.RoleName)
+        @Html.EditorFor(m => m.RoleName)
+        @Html.ValidationMessageFor(m => m.RoleName)
+
+        if (ViewBag.PermissionList != null)
+        {
+            foreach (var item in (SelectList)ViewBag.PermissionList)
+            {
+                <div>
+                    <label>
+                        @Html.DisplayFor(m => item.Text)
+                        <input class="checkbox" type="checkbox" value="@item.Value" name="AvailableRoles" />
+                    </label>
+                </div>
+            }
+            <input type="submit" value="@View.Create" />
+            @Html.ValidationMessageFor(m => m.AvailableRoles)
+        }
+        else
+        {
+            <span>@View.GeneralErrorDescription</span>
+        }
+    }*@

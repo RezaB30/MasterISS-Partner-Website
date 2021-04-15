@@ -139,7 +139,7 @@
     <value>Attachment Type</value>
   </data>
   <data name="AvailablePermission" xml:space="preserve">
-    <value>Available Permission</value>
+    <value>Permissions</value>
   </data>
   <data name="BalanceAmount" xml:space="preserve">
     <value>Balance Amount</value>

@@ -9,13 +9,13 @@
     <div class="col-lg-12 mb-lg-0 mb-6 ">
         <div class="row mb-15 my-8 ">
             <span class="navi-text" data-toggle="modal" data-target="#exampleModalAddUser">
-                <input class="btn btn-outline-info my-2 mr-4 add-user-button" value="Kullanıcı Ekle"/>
+                <input class="btn btn-outline-info my-2 mr-4 add-user-button" value="Kullanıcı Ekle" />
             </span>
-            <span class="navi-text" data-toggle="modal" data-target="#exampleModalCenter7">
-                <span class="btn btn-outline-info my-2 mr-4">Rol Ekle</span>
+            <span class="navi-text" data-toggle="modal" data-target="#exampleModalAddRole">
+                <input class="btn btn-outline-info my-2 mr-4 add-role-button" value="Rol Ekle" />
             </span>
-            <span class="navi-text" data-toggle="modal" data-target="#exampleModalCenter8">
-                <span class="btn btn-outline-info my-2 mr-4">Rol Yetkisi Değiştir</span>
+            <span class="navi-text" data-toggle="modal" data-target="#exampleModalRolePermission">
+                <input class="btn btn-outline-info my-2 mr-4 update-rolePermission-button" value="Rol Yetkisi Değiştir" />
             </span>
             <div class="col-lg-2 mb-lg-0 my-2">
                 <input type="text" class="form-control datatable-input" placeholder="Kullanıcı Adı" data-col-index="1">
@@ -171,6 +171,66 @@
 </div>
 @*user Info End *@
 
+@*Update Role Permission Start *@
+<div class="modal fade" id="exampleModalRolePermission" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div id="update-role-permission-container">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="py-2">
+                            <span class="text-dark-75 font-weight-bolder d-block font-size-h5">Rol Değiştir</span>
+                        </div>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+
+                        <div class="form-group my-0">
+
+                            <label class="text-info col-form-label">Rol Seçiniz</label>
+                            @Html.DropDownList("RoleId", (SelectList)ViewBag.RoleList, MasterISS_Partner_WebSite.Localization.View.SelectRole, new { @class = "form-control" })
+                            <!--begin::Info-->
+                            @using (Html.BeginForm("UpdateRolePermission", "UserOperations", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                <label class="text-info col-12 col-form-label my-4">Yetkiler</label>
+                                <div class="checkbox-list permissionCheckboxList">
+                                    @*<label class="checkbox">
+                                            <input class="checkbox" type="checkbox" value="@item.PermissionId" name="SelectedPermissions" checked="@item.IsSelected" />
+                                            <span></span>@Html.DisplayFor(m => item.PermissionName)
+                                        </label>*@
+                                </div>
+                                <input value="aa" type="submit" />
+                            }
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
+                        <button type="button" class="btn btn-info font-weight-bold">Değiştir ve Kaydet</button>
+                    </div>                                                     <!--end::Info-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*Update Role Permission End *@
+
+@*Add Role Start *@
+<div class="modal fade" id="exampleModalAddRole" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div id="add-role-container">
+                @*user-Info-button*@
+            </div>
+        </div>
+    </div>
+</div>
+@*Add Role End *@
+
 @*Add User Start *@
 <div class="modal fade" id="exampleModalAddUser" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -220,6 +280,40 @@
                     $(triggeredHiddenInputId).val("");
                 }
         }
+
+
+    $("#update-role-permission-container").on('change', '#RoleId', function () {
+        var id = $(this).find(":selected").val();
+        if (id != "") {
+            $.ajax({
+                url: '@Url.Action("RolePermissionList", "UserOperations")',
+                type: 'GET',
+                dataType: 'JSON ',
+                data: {
+                    roleId: id,
+                },
+                complete: function (data, status) {
+                    if (status == "success") {
+                        var area = $(".permissionCheckboxList")
+                        area.empty();
+                        var data = data.responseJSON.list;
+                        $.each(data, function (i, item) {
+                            area.append('<label class="checkbox"><input class="checkbox" type="checkbox" value=' + data[i].PermissionId + ' name="SelectedPermissions" checked="' + data[i].IsSelected + '" /><span></span>' + data[i].PermissionName+' </label>');
+                        });
+                        //$("#permissionListContainerByUpdateRolePermission").html(data.responseText);
+                    }
+                    else if (status =="FailedAndRedirect") {
+                        var url='@Url.Action("Index", "Home")'
+                        var errormessage = data.responseJSON.ErrorMessage;
+                        GetAlert(errormessage,"false",url)
+                    }
+                    else {
+                        console.log("error");
+                    }
+                }
+            });
+        }
+    });
 
     $("#user-work-area-container").on('change', '#ProvinceId', function () {
             QueryAddressbyPartialView("#ProvinceId","#DistrictId", '@Url.Action("DistrictList", "QueryInfrastructure")');
@@ -362,6 +456,19 @@
                     dataType: 'html',
                     success: function (data) {
                         $("#user-work-area-container").html(data);
+                    },
+                });
+        });
+
+        $(".add-role-button").click(function () {
+                $.ajax({
+                    url: '@Url.Action("AddPermission", "UserOperations")',
+                    type: 'GET',
+                    data: {
+                    },
+                    dataType: 'html',
+                    success: function (data) {
+                        $("#add-role-container").html(data);
                     },
                 });
         });

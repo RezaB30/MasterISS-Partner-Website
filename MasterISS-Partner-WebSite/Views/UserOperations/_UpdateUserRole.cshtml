@@ -39,7 +39,7 @@
                         <i class="la la-phone"></i>
                     </span>
                 </div>
-                @Html.EditorFor(m => m.PhoneNumber, new { htmlAttributes = new { @class = "form-control form-control-solid phone-number", @placeholder = Html.DisplayNameFor(m => m.PhoneNumber) } })
+                @Html.EditorFor(m => m.PhoneNumber, new { htmlAttributes = new { @class = "form-control form-control-solid phone-number", @placeholder = Html.DisplayNameFor(m => m.PhoneNumber), @autocomplete = "off" } })
             </div>
 
 

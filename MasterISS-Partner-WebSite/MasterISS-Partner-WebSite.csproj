@@ -2042,7 +2042,7 @@
     <Content Include="Views\UserOperations\Index.cshtml" />
     <Content Include="Views\UserOperations\Successful.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\DatetimeFormat.cshtml" />
-    <Content Include="Views\UserOperations\AddPermission.cshtml" />
+    <Content Include="Views\UserOperations\_AddPermission.cshtml" />
     <Content Include="Views\Bill\CreditReportDetail.cshtml" />
     <Content Include="Views\Customer\NewCustomer.cshtml" />
     <Content Include="Views\Customer\Successful.cshtml" />
@@ -2068,8 +2068,8 @@
     <Content Include="Views\Setup\_UpdateClientLocation.cshtml" />
     <Content Include="Views\Revenues\Index.cshtml" />
     <Content Include="Views\UserOperations\_UpdateUserRole.cshtml" />
-    <Content Include="Views\UserOperations\RoleList.cshtml" />
-    <Content Include="Views\UserOperations\UpdateRolePermission.cshtml" />
+    <Content Include="Views\UserOperations\_RolePermissionList.cshtml" />
+    <Content Include="Views\UserOperations\_UpdateRolePermission.cshtml" />
     <Content Include="Views\UserOperations\SetupTeamList.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\WorkingTypeFormat.cshtml" />
     <Content Include="Views\UserOperations\_AddAndUpdateWorkAreaSetupTeamUser.cshtml" />

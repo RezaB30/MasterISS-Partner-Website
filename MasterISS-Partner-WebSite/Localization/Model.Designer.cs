@@ -124,7 +124,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mevcut İzinler.
+        ///   Looks up a localized string similar to Yetkiler.
         /// </summary>
         public static string AvailablePermission {
             get {

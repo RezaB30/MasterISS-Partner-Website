@@ -21,7 +21,7 @@ namespace MasterISS_Partner_WebSite.ViewModels
     {
         public string PermissionName { get; set; }
         public int PermissionId { get; set; }
-        public bool IsSelected { get; set; }
+        public string IsSelected { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
         [Display(Name = "AvailablePermission", ResourceType = typeof(Localization.Model))]

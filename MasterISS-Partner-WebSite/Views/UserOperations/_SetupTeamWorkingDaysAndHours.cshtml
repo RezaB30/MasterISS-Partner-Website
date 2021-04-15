@@ -9,7 +9,7 @@
         <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
     </button>
 </div>
-@using (Ajax.BeginForm("SetupTeamWorkingDaysAndHours", "UserOperations", new AjaxOptions { HttpMethod = "POST", OnComplete = "GenericResult" }))
+@using (Ajax.BeginForm("SetupTeamWorkingDaysAndHours", "UserOperations", new AjaxOptions { HttpMethod = "POST", OnComplete = "  " }))
 {
     @Html.AntiForgeryToken()
     <div class="modal-body">
@@ -19,14 +19,14 @@
             <div class="col-lg-12 mb-lg-0 mb-12">
                 <label class="text-info col-form-label">Çalışma Saatleri</label>
                 <div class="input-daterange input-group">
-                    @Html.EditorFor(m => m.WorkingStartTime, new { htmlAttributes = new { placeholder = DateTime.Now.ToString("HH:mm"), @class = "form-control" } })
+                    @Html.EditorFor(m => m.WorkingStartTime, new { htmlAttributes = new { placeholder = DateTime.Now.ToString("HH:mm"), @class = "form-control", @autocomplete = "off" } })
                     @Html.ValidationMessageFor(m => m.WorkingStartTime)
                     <div class="input-group-append">
                         <span class="input-group-text">
                             <i class="la la-ellipsis-h"></i>
                         </span>
                     </div>
-                    @Html.EditorFor(m => m.WorkingEndTime, new { htmlAttributes = new { placeholder = DateTime.Now.ToString("HH:mm"), @class = "form-control" } })
+                    @Html.EditorFor(m => m.WorkingEndTime, new { htmlAttributes = new { placeholder = DateTime.Now.ToString("HH:mm"), @class = "form-control", @autocomplete = "off" } })
                     @Html.ValidationMessageFor(m => m.WorkingEndTime)
                 </div><span class="form-text text-muted">Başlangıç ve Bitiş çalışma saatlerini giriniz</span>
             </div>
