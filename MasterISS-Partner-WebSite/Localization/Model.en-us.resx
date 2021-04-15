@@ -432,6 +432,9 @@
   <data name="PhoneNo" xml:space="preserve">
     <value>Phone Number</value>
   </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>Phone Number</value>
+  </data>
   <data name="PlaceOfIssue" xml:space="preserve">
     <value>Place Of Issue</value>
   </data>
@@ -607,7 +610,7 @@
     <value>Username</value>
   </data>
   <data name="UserNameSurname" xml:space="preserve">
-    <value>User Name and Surname</value>
+    <value>Username</value>
   </data>
   <data name="VolumeNo" xml:space="preserve">
     <value>Volume Number</value>

@@ -1,0 +1,62 @@
+﻿@model MasterISS_Partner_WebSite.ViewModels.UpdateUserRoleViewModel
+<div class="modal-header">
+    <div class="py-2">
+        <span class="text-dark-75 font-weight-bolder d-block font-size-h5">Kullanıcı Bilgileri</span>
+        <span class="text-muted font-size-lg">@Html.DisplayFor(m => m.UserNameSurname)</span>
+    </div>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
+    </button>
+</div>
+<div class="modal-body">
+    @using (Ajax.BeginForm("UpdateUserRole", "UserOperations", new AjaxOptions { HttpMethod = "POST", OnComplete = "UpdateUserRoleAndPhoneNumber" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.LabelFor(m => m.RoleId, new { @class = "text-info col-form-label" })
+        @Html.DropDownListFor(m => m.RoleId, (SelectList)ViewBag.RoleList, new { @class = "form-control" })
+
+        <div class="separator separator-dashed mt-2 my-4"></div>
+        <div class="text-danger error-codes" align="center"></div>
+        <div class="separator separator-dashed mt-2 my-4"></div>
+
+        @Html.HiddenFor(m => m.UserId)
+
+        <div class="form-group my-4">
+            @Html.LabelFor(m => m.UserNameSurname, new { @class = "text-info col-form-label" })
+            <div class="input-group input-group-solid">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <i class="fas fa-user"></i>
+                    </span>
+                </div>
+                @Html.EditorFor(m => m.UserNameSurname, new { htmlAttributes = new { @class = "form-control form-control-solid", @readonly = "readonly" } })
+            </div>
+
+            @Html.LabelFor(m => m.PhoneNumber, new { @class = "text-info col-form-label" })
+            <div class="input-group input-group-solid">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <i class="la la-phone"></i>
+                    </span>
+                </div>
+                @Html.EditorFor(m => m.PhoneNumber, new { htmlAttributes = new { @class = "form-control form-control-solid phone-number", @placeholder = Html.DisplayNameFor(m => m.PhoneNumber) } })
+            </div>
+
+
+            @Html.LabelFor(m => m.UserEmail, new { @class = "text-info col-form-label" })
+            <div class="input-group input-group-solid">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <i class="la la-at"></i>
+                    </span>
+                </div>
+                @Html.EditorFor(m => m.UserEmail, new { htmlAttributes = new { @class = "form-control form-control-solid", @readonly = "readonly", @placeholder = Html.DisplayNameFor(m => m.UserEmail) } })
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
+                <button type="submit" class="btn btn-info font-weight-bold">Değiştir ve Kaydet</button>
+            </div>
+        </div>
+    }
+</div>

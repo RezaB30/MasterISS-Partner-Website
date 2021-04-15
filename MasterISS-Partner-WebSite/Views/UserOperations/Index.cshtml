@@ -5,52 +5,463 @@
     ViewBag.Title = View.CurrentUsers;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="container my-8">
+    <div class="col-lg-12 mb-lg-0 mb-6 ">
+        <div class="row mb-15 my-8 ">
+            <span class="navi-text" data-toggle="modal" data-target="#exampleModalAddUser">
+                <input class="btn btn-outline-info my-2 mr-4 add-user-button" value="Kullanıcı Ekle"/>
+            </span>
+            <span class="navi-text" data-toggle="modal" data-target="#exampleModalCenter7">
+                <span class="btn btn-outline-info my-2 mr-4">Rol Ekle</span>
+            </span>
+            <span class="navi-text" data-toggle="modal" data-target="#exampleModalCenter8">
+                <span class="btn btn-outline-info my-2 mr-4">Rol Yetkisi Değiştir</span>
+            </span>
+            <div class="col-lg-2 mb-lg-0 my-2">
+                <input type="text" class="form-control datatable-input" placeholder="Kullanıcı Adı" data-col-index="1">
+            </div>
+            <div class="col-lg-2 mb-lg-0 my-2 ">
+                <select class="form-control datatable-input" data-col-index="2">
+                    <option value="">Seçim Yapınız</option>
+                    <option value="Kurulum">Satış Temsilcisi</option>
+                    <option value="Arıza">Kurulum Temsilcisi</option>
+                    <option value="Arıza">Randevu Temsilcisi</option>
+                    <option value="ortak Çalışma">Ödeme Temsilcisi</option>
+                </select>
+            </div>
+            <div class="row ">
+                <div class="col-lg-12 my-2">
+                    <button class="btn btn-primary btn-primary--icon" id="kt_search">
+                        <span>
+                            <i class="la la-search"></i>
+                            <span>Filtrele</span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>@Html.DisplayNameFor(m => m.NameSurname)</th>
-            <th>@Html.DisplayNameFor(m => m.UserSubMail)</th>
-            <th>@Html.DisplayNameFor(m => m.RoleName)</th>
-            <th>@Html.DisplayNameFor(m => m.IsEnabled)</th>
-        </tr>
-    </thead>
-    <tbody>
+<div class="container">
+    <div class="row">
         @foreach (var item in Model)
         {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => item.NameSurname)</td>
-                <td>@Html.DisplayFor(modelItem => item.UserSubMail)</td>
-                <td>@Html.DisplayFor(modelItem => item.RoleName)</td>
-                <td>@Html.DisplayFor(modelItem => item.IsEnabled)</td>
-                <td>@Html.ActionLink("Kullanıcının Rolünü Güncelle", "UpdateUserRole", new { userId = item.UserId })</td>
-                @if (item.IsEnabled == true)
-                {
-                    <td>@Html.ActionLink(View.MakePassive, "DisableUser", "UserOperations", new { userMail = item.UserSubMail }, null)</td>
-                }
-                else
-                {
-                    <td>@Html.ActionLink(View.MakeActive, "EnableUser", "UserOperations", new { userMail = item.UserSubMail }, null)</td>
-                }
-            </tr>
-        }
-    </tbody>
-</table>
+            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6">
+                <div class="card card-custom gutter-b card-stretch">
+                    <div class="card-body pt-4">
+                        <div class="mb-7">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="col-0">
+                                    <span class="switch switch-outline switch-icon switch-info">
+                                        <label>
+                                            @*@Html.CheckBox("item_IsEnabled", item.IsEnabled,new { @dataValue = item.UserSubMail, @class = "user-status-check" })*@
+                                            @Html.CheckBoxFor(modelItem => item.IsEnabled, new { @dataValue = item.UserSubMail, @class = "user-status-check" })
+                                            <span></span>
+                                        </label>
+                                    </span>
+                                </div>
+                                <div class="dropdown dropdown-inline" title="" data-placement="left">
+                                    <a href="javascript:void(0)" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="ki ki-bold-more-hor"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-md dropdown-menu-right" style="">
+                                        <ul class="navi navi-hover">
+                                            <li class="navi-header font-weight-bold py-4">
+                                                <span class="font-size-lg">Kullanıcı Ayarları:</span>
+                                                <i class="flaticon2-settings icon-md text-muted"></i>
+                                            </li>
+                                            <li class="navi-separator mb-3 opacity-70"></li>
+                                            <li class="navi-item">
+                                                <div class="navi-link">
+                                                    <span class="navi-text" data-toggle="modal" data-target="#exampleModalUserInfo">
+                                                        <input class="btn-sm btn btn-block btn-outline-info user-Info-button " value="Kullanıcı Bilgileri" dataValue="@item.UserId" />
+                                                    </span>
 
-<br />
-@Html.ActionLink(View.AddUser, "AddUser", "UserOperations")
-<br />
-@Html.ActionLink(View.AddRole, "AddPermission", "UserOperations")
-<br />
-@Html.ActionLink(View.RoleList, "RoleList", "UserOperations")
-<br />
-@if (User.IsInRole("Setup"))
-{
-    @Html.ActionLink(View.ListSetupTeam, "SetupTeamList", "UserOperations")
-    <br />
-    @Html.ActionLink(View.ListRendezvousTeam, "RendezvousTeamList", "UserOperations")
+                                                </div>
+                                            </li>
+                                            @if (item.ısSetupTeam)
+                                            {
+                                                <li class="navi-item">
+                                                    <div class="navi-link">
+                                                        <span class="navi-text" data-toggle="modal" data-target="#exampleModalUserWorkHours">
+                                                            <input class="btn-sm btn btn-block btn-outline-info user-workingHours-button" value="Çalışma Saatleri" dataValue="@item.UserId" />
+                                                        </span>
+
+                                                    </div>
+                                                </li>
+                                                <li class="navi-item">
+                                                    <div class="navi-link">
+                                                        <span class="navi-text" data-toggle="modal" data-target="#exampleModalUserWorkAreas">
+                                                            <input class="btn-sm btn btn-block btn-outline-info user-workingAreas-button" value="Çalışma Bölgesi" dataValue="@item.UserId" />
+                                                        </span>
+                                                    </div>
+                                                </li>
+                                            }
+                                            <li class="navi-separator btn-info mt-10 opacity-100"></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="my-4 bg-secondary">
+                            <!--end::Toolbar-->
+                            <div class="mb-0">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="text-dark-50 font-weight-bold text-hover-primary font-size-h5 my-1 mb-0">@Html.DisplayFor(modelItem => item.NameSurname)</span>
+
+                                </div>
+                                <div class="mb-0">
+                                    <div class="d-flex justify-content-between align-items-center my-1">
+                                        <span class="text-dark-75 font-weight-bolder mr-2">@Html.DisplayNameFor(m => m.FirstOrDefault().RoleName)</span>
+                                        <a href="javascript:void(0)" class="text-muted text-hover-primary">@Html.DisplayFor(modelItem => item.RoleName)</a>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center my-1">
+                                        <span class="text-dark-75 font-weight-bolder mr-2">@Html.DisplayNameFor(m => m.FirstOrDefault().NameSurname)</span>
+                                        <a href="javascript:void(0)" class="text-muted text-hover-primary">@Html.DisplayFor(modelItem => item.UserSubMail)</a>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-cente my-1">
+                                        <span class="text-dark-75 font-weight-bolder mr-2">@Html.DisplayNameFor(m => m.FirstOrDefault().PhoneNumber)</span>
+                                        <a href="javascript:void(0)" class="text-muted text-hover-primary">@Html.DisplayFor(modelItem => item.PhoneNumber)</a>
+                                    </div>
+                                    @if (User.IsInRole("Setup"))
+                                    {
+                                        <hr class="my-4 bg-secondary">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="text-dark-75 font-weight-bolder my-2 mr-2">Yetki Bölgesi:</span>
+                                        </div>
+                                        if (item.ısSetupTeam && item.SetupTeamUserAddressInfo.Count() != 0)
+                                        {
+                                            <div class="d-flex flex-column">
+                                                @foreach (var workArea in item.SetupTeamUserAddressInfo)
+                                                {
+                                                    <span class="btn btn-sm font-size-xs btn-outline-secondary my-1">@Html.DisplayFor(workAreaItem => workArea.ProvinceName) @Html.DisplayFor(workAreaItem => workArea.DistrictName) @Html.DisplayFor(workAreaItem => workArea.RuralName) @Html.DisplayFor(workAreaItem => workArea.NeigborhoodName)</span>
+                                                }
+                                            </div>
+                                        }
+                                        else if (item.ısSetupTeam && item.SetupTeamUserAddressInfo.Count() == 0)
+                                        {
+                                            <div class="d-flex flex-column"><span class="btn btn-sm font-size-sm btn-outline-danger my-1">Bu kullanıcı Kurulum yetkilisi ama yetki alanı eklenmemiş</span></div>
+
+                                        }
+                                        else
+                                        {
+                                            <div class="d-flex flex-column"><span class="btn btn-sm font-size-sm btn-outline-warning my-1">Bu kullanıcı Kurulum yetkilisi Değil</span></div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+
+@*user Info Start *@
+<div class="modal fade" id="exampleModalUserInfo" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div id="user-update-info-container">
+                @*user-Info-button*@
+            </div>
+        </div>
+    </div>
+</div>
+@*user Info End *@
+
+@*Add User Start *@
+<div class="modal fade" id="exampleModalAddUser" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div id="user-add-user-container">
+                @*user-Info-button*@
+            </div>
+        </div>
+    </div>
+</div>
+@*Add User End *@
+
+@* Setup Team Work Hours Start*@
+<div class="modal fade" id="exampleModalUserWorkHours" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div id="user-work-hours-container">
+                @*user-Info-button*@
+            </div>
+        </div>
+    </div>
+</div>
+@* Setup Team Work Hours End*@
+
+
+@* Setup Team Work Area Start*@
+<div class="modal fade" id="exampleModalUserWorkAreas" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div id="user-work-area-container">
+            </div>
+        </div>
+    </div>
+</div>
+@* Setup Team Work Area End*@
+
+
+@section Javascript{
+    <script>
+        function GetSelectTextandSetHiddenInput(triggerselectId, triggeredHiddenInputId) {
+            var selectValue = $(triggerselectId).find(":selected").val();
+                if (selectValue != "") {
+                    var selectText = $(triggerselectId).find(":selected").text();
+                    $(triggeredHiddenInputId).val(selectText);
+                }
+                else {
+                    $(triggeredHiddenInputId).val("");
+                }
+        }
+
+    $("#user-work-area-container").on('change', '#ProvinceId', function () {
+            QueryAddressbyPartialView("#ProvinceId","#DistrictId", '@Url.Action("DistrictList", "QueryInfrastructure")');
+            GetSelectTextandSetHiddenInput("#ProvinceId", "#ProvinceName");
+    });
+
+    $("#user-work-area-container").on('change', '#DistrictId', function () {
+        QueryAddressbyPartialView("#DistrictId","#RuralId", '@Url.Action("RuralRegionsList", "QueryInfrastructure")');
+        GetSelectTextandSetHiddenInput("#DistrictId", "#DistrictName");
+    });
+
+    $("#user-work-area-container").on('change', '#RuralId', function () {
+        QueryAddressbyPartialView("#RuralId","#NeigborhoodId", '@Url.Action("NeighborhoodList", "QueryInfrastructure")');
+        GetSelectTextandSetHiddenInput("#RuralId", "#RuralName");
+    });
+
+    $("#user-work-area-container").on('change', '#NeigborhoodId', function () {
+        GetSelectTextandSetHiddenInput("#NeigborhoodId", "#NeigborhoodName");
+    });
+
+    $("#user-work-area-container").on('click', '.delete-button', function () {
+        var dataValue = $(this).attr("dataValue");
+        Swal.fire({
+            title: 'Silmek İstediğinize eminmisiniz?',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: `Save`,
+            denyButtonText: `Don't save`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '@Url.Action("DeleteStaffWorkArea", "UserOperations")',
+                    type: 'GET',
+                    data: {
+                        workAreaId: dataValue,
+                    },
+                    dataType: 'JSON',
+                    success: function (data) {
+                        var result = data.status;
+                        if (result =="Success") {
+                            var message = data.message;
+                            var url = '@Url.Action("Index", "UserOperations")';
+                            GetAlert(message, "true", url);
+                        }
+                        else {
+                            var errorMessage = data.ErrorMessage;
+                            var url = '@Url.Action("Index", "Home")';
+                            GetAlert(errorMessage, "false", url);
+                        }
+                    },
+                });
+            } else if (result.isDenied) {
+                Swal.fire('Changes are not saved', '', 'info')
+            }
+        })
+    });
+    </script>
+
+    <script>
+        function UpdateUserRoleAndPhoneNumber(data, status) {
+            if (status = "success") {
+                var responseStatus = data.responseJSON.status;
+                if (responseStatus == "Success") {
+                    var message = data.responseJSON.message
+                     var url='@Url.Action("Index", "UserOperations")';
+                    GetAlert(message, "true",url);
+                }
+                else {
+                    $(".error-codes").html(data.responseJSON.ErrorMessage);
+                }
+            }
+            else {
+                console.log("Error");
+            }
+        }
+
+        function GenericResult(data, status) {
+            if (status = "success") {
+                var responseStatus = data.responseJSON.status;
+                if (responseStatus == "Success") {
+                    var message = data.responseJSON.message;
+                    var url='@Url.Action("Index", "UserOperations")';
+                    GetAlert(message, "true",url);
+                }
+                else if (responseStatus =="FailedAndRedirect") {
+                    var redirectMessage = data.responseJSON.ErrorMessage;
+                    var urlHome='@Url.Action("Index", "Home")';
+                    GetAlert(redirectMessage, "false", urlHome);
+                }
+                else {
+                    $(".error-codes").html(data.responseJSON.ErrorMessage);
+                }
+            }
+            else {
+                console.log("Error");
+            }
+        }
+
+    </script>
+
+    <script>
+        $(".user-Info-button").click(function () {
+            var dataValue = $(this).attr("dataValue");
+                $.ajax({
+                    url: '@Url.Action("UpdateUserRole", "UserOperations")',
+                    type: 'GET',
+                    data: {
+                        userId: dataValue,
+                    },
+                    dataType: 'html',
+                    success: function (data) {
+                        $("#user-update-info-container").html(data);
+                    },
+                });
+        });
+
+        $(".user-workingHours-button").click(function () {
+            var dataValue = $(this).attr("dataValue");
+                $.ajax({
+                    url: '@Url.Action("SetupTeamWorkingDaysAndHours", "UserOperations")',
+                    type: 'GET',
+                    data: {
+                        userId: dataValue,
+                    },
+                    dataType: 'html',
+                    success: function (data) {
+                        $("#user-work-hours-container").html(data);
+                    },
+                });
+        });
+
+        $(".user-workingAreas-button").click(function () {
+            var dataValue = $(this).attr("dataValue");
+                $.ajax({
+                    url: '@Url.Action("AddAndUpdateWorkAreaSetupTeamUser", "UserOperations")',
+                    type: 'GET',
+                    data: {
+                        userId: dataValue,
+                    },
+                    dataType: 'html',
+                    success: function (data) {
+                        $("#user-work-area-container").html(data);
+                    },
+                });
+        });
+
+        $(".add-user-button").click(function () {
+                $.ajax({
+                    url: '@Url.Action("AddUser", "UserOperations")',
+                    type: 'GET',
+                    data: {
+                    },
+                    dataType: 'html',
+                    success: function (data) {
+                        $("#user-add-user-container").html(data);
+                    },
+                });
+        });
+
+        $(".user-status-check").change(function () {
+            var dataValue = $(this).attr("dataValue");
+            var status = $(this).attr("checked");
+            if (status == "" || status == null) {//aktif yapmaua çalışıyor
+                Swal.fire({
+                    title: 'Kullanıcıyı aktif etmek istediğinden eminmisin?',
+                    showDenyButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: `Evet`,
+                    denyButtonText: `Iptal`,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire('Saved!', '', 'success')
+                    } else if (result.isDenied) {
+                        Swal.fire('Changes are not saved', '', 'info')
+                        $(this).attr("checked", "checked");
+                    }
+                    else {
+                        $(this).attr("checked", "checked");
+                    }
+                })
+            }
+            else {// pasif yapmaya çalışıyor
+
+            }
+        });
+
+
+
+    </script>
 }
 
-<div style="background-color:red">
-    @Html.Raw(TempData["Error"])
-</div>
+
+
+
+
+
+
+@*<table class="table table-striped">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(m => m.NameSurname)</th>
+                <th>@Html.DisplayNameFor(m => m.UserSubMail)</th>
+                <th>@Html.DisplayNameFor(m => m.RoleName)</th>
+                <th>@Html.DisplayNameFor(m => m.IsEnabled)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.NameSurname)</td>
+                    <td>@Html.DisplayFor(modelItem => item.UserSubMail)</td>
+                    <td>@Html.DisplayFor(modelItem => item.RoleName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.IsEnabled)</td>
+                    <td>@Html.ActionLink("Kullanıcının Rolünü Güncelle", "UpdateUserRole", new { userId = item.UserId })</td>
+                    @if (item.IsEnabled == true)
+                    {
+                        <td>@Html.ActionLink(View.MakePassive, "DisableUser", "UserOperations", new { userMail = item.UserSubMail }, null)</td>
+                    }
+                    else
+                    {
+                        <td>@Html.ActionLink(View.MakeActive, "EnableUser", "UserOperations", new { userMail = item.UserSubMail }, null)</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <br />
+    @Html.ActionLink(View.AddUser, "AddUser", "UserOperations")
+    <br />
+    @Html.ActionLink(View.AddRole, "AddPermission", "UserOperations")
+    <br />
+    @Html.ActionLink(View.RoleList, "RoleList", "UserOperations")
+    <br />
+    @if (User.IsInRole("Setup"))
+    {
+        @Html.ActionLink(View.ListSetupTeam, "SetupTeamList", "UserOperations")
+        <br />
+        @Html.ActionLink(View.ListRendezvousTeam, "RendezvousTeamList", "UserOperations")
+    }*@
+
+@*<div style="background-color:red">
+        @Html.Raw(TempData["Error"])
+    </div>*@

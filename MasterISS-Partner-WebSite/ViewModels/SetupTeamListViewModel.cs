@@ -22,7 +22,7 @@ namespace MasterISS_Partner_WebSite.ViewModels
 
     public class SetupTeamUserAddressInfo
     {
-        //public long Id { get; set; }
+        public long Id { get; set; }
         public string ProvinceName { get; set; }
         public string DistrictName { get; set; }
         public string RuralName { get; set; }

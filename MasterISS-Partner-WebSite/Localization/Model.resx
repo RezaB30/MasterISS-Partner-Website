@@ -432,6 +432,9 @@
   <data name="PhoneNo" xml:space="preserve">
     <value>Telefon Numarası</value>
   </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>Telefon</value>
+  </data>
   <data name="PlaceOfIssue" xml:space="preserve">
     <value>Verildiği Yer</value>
   </data>
@@ -607,7 +610,7 @@
     <value>Kullanıcı Adı</value>
   </data>
   <data name="UserNameSurname" xml:space="preserve">
-    <value>Kullanıcı Adı ve Soyadı</value>
+    <value>Kullanıcı Adı</value>
   </data>
   <data name="VolumeNo" xml:space="preserve">
     <value>Cilt Numarası</value>

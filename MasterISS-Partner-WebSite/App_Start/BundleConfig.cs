@@ -24,7 +24,10 @@ namespace MasterISS_Partner_WebSite
                "~/Scripts/Map/map.js"));
             
             bundles.Add(new ScriptBundle("~/Alert").Include(
-               "~/Scripts/Alert/sweet-alert.js"));
+               "~/Scripts/Alert/sweet-alert.js")); 
+
+            bundles.Add(new ScriptBundle("~/UnobtrusiveAjax").Include(
+               "~/Scripts/jquery.unobtrusive-ajax.js"));
 
             bundles.Add(new ScriptBundle("~/Scripts/all-page-js").IncludeDirectory("~/Scripts/js/", "*.js"));
 

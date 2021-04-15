@@ -33,6 +33,9 @@ namespace MasterISS_Partner_WebSite.ViewModels
         public long? NeigborhoodId { get; set; }
 
         public string NeigborhoodName { get; set; }
+        public string ContactName { get; set; }
+        public IEnumerable<SetupTeamUserAddressInfo> SetupTeamUserAddressInfo { get; set; }
+
     }
 
 }

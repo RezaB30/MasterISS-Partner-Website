@@ -17,6 +17,7 @@ namespace MasterISS_Partner_WebSite.ViewModels
         [RegularExpression(@"^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$", ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "TimeFormat")]
         public string WorkingEndTime { get; set; }
 
+        public string ContectName { get; set; }
         public List<AvailableWorkingDays> AvailableWorkingDays { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]

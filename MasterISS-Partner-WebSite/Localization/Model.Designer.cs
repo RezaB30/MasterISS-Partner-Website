@@ -1006,6 +1006,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Telefon.
+        /// </summary>
+        public static string PhoneNumber {
+            get {
+                return ResourceManager.GetString("PhoneNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Verildiği Yer.
         /// </summary>
         public static string PlaceOfIssue {
@@ -1528,7 +1537,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kullanıcı Adı ve Soyadı.
+        ///   Looks up a localized string similar to Kullanıcı Adı.
         /// </summary>
         public static string UserNameSurname {
             get {

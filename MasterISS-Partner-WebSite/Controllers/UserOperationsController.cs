@@ -35,6 +35,15 @@ namespace MasterISS_Partner_WebSite.Controllers
                     UserSubMail = u.UserSubMail,
                     RoleName = u.Role.RoleName,
                     UserId = u.Id,
+                    PhoneNumber = u.PhoneNumber,
+                    ısSetupTeam = db.SetupTeam.Where(st => st.UserId == u.Id && st.WorkingStatus == true).FirstOrDefault() != null,
+                    SetupTeamUserAddressInfo = u.WorkArea.Select(wa => new SetupTeamUserAddressInfo
+                    {
+                        ProvinceName = wa.ProvinceName,
+                        DistrictName = wa.Districtname,
+                        RuralName = wa.RuralName,
+                        NeigborhoodName = wa.NeighbourhoodName,
+                    })
                 }).ToList();
 
                 return View(userList);
@@ -82,17 +91,14 @@ namespace MasterISS_Partner_WebSite.Controllers
                     //LOG
                     Logger.Info("Deleted Work Area Id: " + workAreaId + ", by: " + wrapper.GetUserSubMail());
                     //LOG
-
-                    return RedirectToAction("Successful");
+                    return Json(new { status = "Success", message = Localization.View.Successful }, JsonRequestBehavior.AllowGet); ;
                 }
                 else
                 {
                     //LOG
                     LoggerError.Error("Not Found Work AreaID in WorkAreaTable: " + workAreaId + ", by: " + wrapper.GetUserSubMail());
                     //LOG
-
-                    ViewBag.Error = Localization.View.Generic200ErrorCodeMessage;
-                    return View("SetupTeamList");
+                    return Json(new { status = "Failed", ErrorMessage = Localization.View.Generic200ErrorCodeMessage }, JsonRequestBehavior.AllowGet); ;
                 }
             }
         }
@@ -286,7 +292,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             var partnerId = claimInfo.PartnerId();
             ViewBag.RoleList = new SelectList(db.Role.Where(r => r.PartnerId == partnerId && r.IsEnabled).Select(r => new { Value = r.Id, Name = r.RoleName }).ToArray(), "Value", "Name");
 
-            return View();
+            return PartialView("_AddUser");
         }
 
         [ValidateAntiForgeryToken]
@@ -294,11 +300,6 @@ namespace MasterISS_Partner_WebSite.Controllers
         public ActionResult AddUser(NewUserViewModel newUserViewModel)
         {
             var claimInfo = new ClaimInfo();
-            var partnerId = claimInfo.PartnerId();
-
-            var dbRole = new PartnerWebSiteEntities();
-            ViewBag.RoleList = new SelectList(dbRole.Role.Where(r => r.PartnerId == partnerId && r.IsEnabled).Select(r => new { Value = r.Id, Name = r.RoleName }).ToArray(), "Value", "Name", newUserViewModel.RoleId);
-
             if (ModelState.IsValid)
             {
                 var wrapper = new WebServiceWrapper();
@@ -355,24 +356,25 @@ namespace MasterISS_Partner_WebSite.Controllers
                                 Logger.Info("Added User: " + newUser.UserSubMail + ", by: " + wrapper.GetUserSubMail());
                                 //LOG
 
-                                return RedirectToAction("Successful");
+                                return Json(new { status = "Success", message = Localization.View.Successful }, JsonRequestBehavior.AllowGet);
                             }
                             //LOG
                             var wrapperGetUserSubMail = new WebServiceWrapper();
                             LoggerError.Fatal($"An error occurred while AddUser , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage: {response.ResponseMessage.ErrorMessage}, by: {wrapperGetUserSubMail.GetUserSubMail()}");
                             //LOG
 
-                            ViewBag.AddUserError = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
-                            return View(newUserViewModel);
+                            var webServiceResponse = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
+                            return Json(new { status = "FailedAndRedirect", ErrorMessage = webServiceResponse }, JsonRequestBehavior.AllowGet);
                         }
-                        return RedirectToAction("Index", "UserOperations");
+                        var notDefinedRole = Localization.View.Generic200ErrorCodeMessage;
+                        return Json(new { status = "FailedAndRedirect", ErrorMessage = notDefinedRole }, JsonRequestBehavior.AllowGet);
                     }
                 }
-                ViewBag.AddUserError = Localization.View.MailValidError;
-                return View(newUserViewModel);
+                var avaibleMailError = Localization.View.MailValidError;
+                return Json(new { status = "Failed", ErrorMessage = avaibleMailError }, JsonRequestBehavior.AllowGet);
             }
-            return View(newUserViewModel);
-
+            var errorMessage = string.Join("<br/>", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
+            return Json(new { status = "Failed", ErrorMessage = errorMessage }, JsonRequestBehavior.AllowGet); ;
         }
 
         public ActionResult UpdateUserRole(int userId)
@@ -396,9 +398,10 @@ namespace MasterISS_Partner_WebSite.Controllers
                         PhoneNumber = user.PhoneNumber
                     };
 
-                    return View(userViewModel);
+                    return PartialView("_UpdateUserRole", userViewModel);
                 }
-                return RedirectToAction("Index", "Home");
+                var contect = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false');</script>", new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture));
+                return Content(contect);
             }
         }
 
@@ -495,20 +498,17 @@ namespace MasterISS_Partner_WebSite.Controllers
                             Logger.Info("Updated User Role: " + user.UserSubMail + ", by: " + wrapper.GetUserSubMail());
                             //LOG
 
-                            return RedirectToAction("Successful");
+                            return Json(new { status = "Success", Message = Localization.View.Successful }, JsonRequestBehavior.AllowGet);
                         }
-                        RedirectToAction("Index", "Home");
+                        var contectNotFoundUser = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false');</script>", new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture));
+                        return Content(contectNotFoundUser);
                     }
-                    RedirectToAction("Index", "Home");
+                    var contectNotFoundRole = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false');</script>", new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture));
+                    return Content(contectNotFoundRole);
                 }
             }
-            using (var db = new PartnerWebSiteEntities())
-            {
-                var claimInfo = new ClaimInfo();
-                var partnerId = claimInfo.PartnerId();
-                ViewBag.RoleList = new SelectList(db.Role.Where(r => r.PartnerId == partnerId && r.IsEnabled).Select(r => new { Value = r.Id, Name = r.RoleName }).ToArray(), "Value", "Name",updateUserRoleViewModel.RoleId);
-            }
-            return View(updateUserRoleViewModel);
+            var errorMessage = string.Join("<br/>", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
+            return Json(new { status = "Failed", ErrorMessage = errorMessage }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult RoleList()
@@ -527,6 +527,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                 return View(currentRoleList);
             }
         }
+
         public ActionResult SetupTeamWorkingDaysAndHours(long userId)
         {
             using (var db = new PartnerWebSiteEntities())
@@ -539,17 +540,54 @@ namespace MasterISS_Partner_WebSite.Controllers
                         AvailableWorkingDays = UserWorkingDays(user.UserId),
                         WorkingEndTime = $"{user.WorkEndTime:hh\\:mm}",
                         WorkingStartTime = $"{user.WorkStartTime:hh\\:mm}",
-                        UserId = userId
+                        UserId = userId,
+                        ContectName = user.User.NameSurname
                     };
 
-                    return View(setupTeamStaffsToMatchedTheTask);
+                    return PartialView("_SetupTeamWorkingDaysAndHours", setupTeamStaffsToMatchedTheTask);
                 }
                 else
                 {
-                    TempData["GenericError"] = Localization.View.Generic200ErrorCodeMessage;
-                    return RedirectToAction("SetupTeamList", "UserOperations");
+                    var contect = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false');</script>", new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture));
+                    return Content(contect);
                 }
             }
+        }
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult SetupTeamWorkingDaysAndHours(SetupTeamWorkingDaysAndHoursViewModel setupTeamWorkingDaysAndHoursView)
+        {
+            if (ModelState.IsValid)
+            {
+                foreach (var item in setupTeamWorkingDaysAndHoursView.SelectedDays)
+                {
+                    if (!Enum.IsDefined(typeof(MasterISS_Partner_WebSite_Enums.Enums.DayOfWeekEnum), item))
+                    {
+                        var notDefined = Localization.View.Generic200ErrorCodeMessage;
+                        return Json(new { status = "FailedAndRedirect", ErrorMessage = notDefined }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+
+                using (var db = new PartnerWebSiteEntities())
+                {
+                    var user = db.SetupTeam.Find(setupTeamWorkingDaysAndHoursView.UserId);
+                    if (user != null)
+                    {
+                        user.WorkStartTime = ParseTimeSpan(setupTeamWorkingDaysAndHoursView.WorkingStartTime);
+                        user.WorkEndTime = ParseTimeSpan(setupTeamWorkingDaysAndHoursView.WorkingEndTime);
+                        user.WorkDays = string.Join(",", setupTeamWorkingDaysAndHoursView.SelectedDays);
+                        db.SaveChanges();
+                        return Json(new { status = "Success" }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        var notDefined = Localization.View.Generic200ErrorCodeMessage;
+                        return Json(new { status = "FailedAndRedirect", ErrorMessage = notDefined }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+            var errorMessage = string.Join("<br/>", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
+            return Json(new { status = "Failed", ErrorMessage = errorMessage }, JsonRequestBehavior.AllowGet);
         }
 
         private List<AvailableWorkingDays> UserWorkingDays(long userId)
@@ -583,43 +621,6 @@ namespace MasterISS_Partner_WebSite.Controllers
             return timeSpanValue;
         }
 
-        [ValidateAntiForgeryToken]
-        [HttpPost]
-        public ActionResult SetupTeamWorkingDaysAndHours(SetupTeamWorkingDaysAndHoursViewModel setupTeamWorkingDaysAndHoursView)
-        {
-            if (ModelState.IsValid)
-            {
-
-                foreach (var item in setupTeamWorkingDaysAndHoursView.SelectedDays)
-                {
-                    if (!Enum.IsDefined(typeof(MasterISS_Partner_WebSite_Enums.Enums.DayOfWeekEnum), item))
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
-                }
-
-                using (var db = new PartnerWebSiteEntities())
-                {
-                    var user = db.SetupTeam.Find(setupTeamWorkingDaysAndHoursView.UserId);
-                    if (user != null)
-                    {
-                        user.WorkStartTime = ParseTimeSpan(setupTeamWorkingDaysAndHoursView.WorkingStartTime);
-                        user.WorkEndTime = ParseTimeSpan(setupTeamWorkingDaysAndHoursView.WorkingEndTime);
-                        user.WorkDays = string.Join(",", setupTeamWorkingDaysAndHoursView.SelectedDays);
-                        db.SaveChanges();
-                        return RedirectToAction("Successful");
-                    }
-                    else
-                    {
-                        TempData["GenericError"] = Localization.View.Generic200ErrorCodeMessage;
-                        return RedirectToAction("SetupTeamList", "UserOperations");
-                    }
-                }
-            }
-            setupTeamWorkingDaysAndHoursView.AvailableWorkingDays = UserWorkingDays(setupTeamWorkingDaysAndHoursView.UserId);
-            return View(setupTeamWorkingDaysAndHoursView);
-
-        }
 
         public ActionResult UpdateRolePermission(int roleId)
         {
@@ -776,20 +777,84 @@ namespace MasterISS_Partner_WebSite.Controllers
                 var user = db.SetupTeam.Find(userId);
                 if (user != null && user.WorkingStatus == true)
                 {
-                    ViewBag.UserId = userId;
                     var wrapper = new WebServiceWrapper();
                     var provinceList = wrapper.GetProvince();
-
+                    if (!string.IsNullOrEmpty(provinceList.ErrorMessage))
+                    {
+                        var contectErrorByWebService = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false');</script>", new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture));
+                        return Content(contectErrorByWebService);
+                    }
                     ViewBag.Provinces = new SelectList(provinceList.Data.ValueNamePairList.Select(nvpl => new { Name = nvpl.Name, Value = nvpl.Value }), "Value", "Name");
                     ViewBag.District = new SelectList("");
                     ViewBag.Rurals = new SelectList("");
                     ViewBag.Neigborhoods = new SelectList("");
-                    //ViewBag.WorkAreaId = null;
-                    return View();
+
+                    var workAreaSetupTeamModel = new WorkAreaSetupTeamUserViewModel
+                    {
+                        ContactName = user.User.NameSurname,
+                        SetupTeamUserAddressInfo = user.User.WorkArea.Select(wa => new SetupTeamUserAddressInfo
+                        {
+                            ProvinceName = wa.ProvinceName,
+                            DistrictName = wa.Districtname,
+                            RuralName = wa.RuralName,
+                            NeigborhoodName = wa.NeighbourhoodName,
+                            Id = wa.Id
+                        }),
+                        UserId = userId,
+                    };
+                    return PartialView("_AddAndUpdateWorkAreaSetupTeamUser", workAreaSetupTeamModel);
                 }
-                return RedirectToAction("Index", "Home");
+                var contect = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false');</script>", new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture));
+                return Content(contect);
             }
 
+        }
+
+        [Authorize(Roles = "Setup")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddAndUpdateWorkAreaSetupTeamUser(WorkAreaSetupTeamUserViewModel workAreaSetupTeamUserViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var db = new PartnerWebSiteEntities())
+                {
+                    var user = db.SetupTeam.Find(workAreaSetupTeamUserViewModel.UserId);
+                    if (user != null && user.WorkingStatus == true)
+                    {
+                        if (ValidWorkArea(workAreaSetupTeamUserViewModel))
+                        {
+                            WorkArea workArea = new WorkArea
+                            {
+                                UserId = workAreaSetupTeamUserViewModel.UserId,
+                                ProvinceId = workAreaSetupTeamUserViewModel.ProvinceId,
+                                ProvinceName = workAreaSetupTeamUserViewModel.ProvinceName,
+                                DistrictId = workAreaSetupTeamUserViewModel.DistrictId ?? null,
+                                Districtname = workAreaSetupTeamUserViewModel.DistrictName,
+                                NeighbourhoodId = workAreaSetupTeamUserViewModel.NeigborhoodId ?? null,
+                                NeighbourhoodName = workAreaSetupTeamUserViewModel.NeigborhoodName,
+                                RuralId = workAreaSetupTeamUserViewModel.RuralId ?? null,
+                                RuralName = workAreaSetupTeamUserViewModel.RuralName
+                            };
+                            db.WorkArea.Add(workArea);
+                            db.SaveChanges();
+
+                            //LOG
+                            var wrapper = new WebServiceWrapper();
+                            Logger.Info($"Added New WorkArea User: {user.User.UserSubMail}, by: {wrapper.GetUserSubMail()}");
+                            //LOG
+
+                            return Json(new { status = "Success" }, JsonRequestBehavior.AllowGet); ;
+                        }
+                        var validWorkArea = Localization.View.ValidWorkArea;
+                        return Json(new { status = "Failed", ErrorMessage = validWorkArea }, JsonRequestBehavior.AllowGet); ;
+                    }
+                    var notDefinedUserOrWorkingArea = Localization.View.Generic200ErrorCodeMessage;
+                    return Json(new { status = "FailedAndRedirect", ErrorMessage = notDefinedUserOrWorkingArea }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            var errorMessage = string.Join("<br/>", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
+            return Json(new { status = "Failed", ErrorMessage = errorMessage }, JsonRequestBehavior.AllowGet); ;
         }
 
         private bool ValidWorkArea(WorkAreaSetupTeamUserViewModel workAreaSetupTeamUserViewModel)
@@ -852,111 +917,6 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                 return true;
             }
-        }
-
-        [Authorize(Roles = "Setup")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult AddAndUpdateWorkAreaSetupTeamUser(WorkAreaSetupTeamUserViewModel workAreaSetupTeamUserViewModel)
-        {
-            var addressInfo = new AddressInfo();
-            var provinceList = addressInfo.ProvincesList((long?)workAreaSetupTeamUserViewModel.ProvinceId ?? null);
-            ViewBag.Provinces = provinceList;
-
-            var districtList = addressInfo.DistrictList(workAreaSetupTeamUserViewModel.ProvinceId, workAreaSetupTeamUserViewModel.DistrictId ?? null);
-            ViewBag.District = districtList;
-
-            var ruralList = addressInfo.RuralRegionsList(workAreaSetupTeamUserViewModel.DistrictId ?? null, workAreaSetupTeamUserViewModel.RuralId ?? null);
-            ViewBag.Rurals = ruralList;
-
-            var neigborhoodList = addressInfo.NeighborhoodList(workAreaSetupTeamUserViewModel.RuralId ?? null, workAreaSetupTeamUserViewModel.NeigborhoodId ?? null);
-            ViewBag.Neigborhoods = neigborhoodList;
-
-            ViewBag.UserId = workAreaSetupTeamUserViewModel.UserId;
-            ViewBag.WorkAreaId = null;
-
-            if (ModelState.IsValid)
-            {
-                using (var db = new PartnerWebSiteEntities())
-                {
-                    //if (workAreaSetupTeamUserViewModel.WorkAreaId == null)//Add Operations
-                    //{
-                    var user = db.SetupTeam.Find(workAreaSetupTeamUserViewModel.UserId);
-                    if (user != null && user.WorkingStatus == true)
-                    {
-                        if (ValidWorkArea(workAreaSetupTeamUserViewModel))
-                        {
-                            WorkArea workArea = new WorkArea
-                            {
-                                UserId = workAreaSetupTeamUserViewModel.UserId,
-                                ProvinceId = workAreaSetupTeamUserViewModel.ProvinceId,
-                                ProvinceName = workAreaSetupTeamUserViewModel.ProvinceName,
-                                DistrictId = workAreaSetupTeamUserViewModel.DistrictId ?? null,
-                                Districtname = workAreaSetupTeamUserViewModel.DistrictName,
-                                NeighbourhoodId = workAreaSetupTeamUserViewModel.NeigborhoodId ?? null,
-                                NeighbourhoodName = workAreaSetupTeamUserViewModel.NeigborhoodName,
-                                RuralId = workAreaSetupTeamUserViewModel.RuralId ?? null,
-                                RuralName = workAreaSetupTeamUserViewModel.RuralName
-                            };
-                            db.WorkArea.Add(workArea);
-                            db.SaveChanges();
-
-                            //LOG
-                            var wrapper = new WebServiceWrapper();
-                            Logger.Info($"Added New WorkArea User: {user.User.UserSubMail}, by: {wrapper.GetUserSubMail()}");
-                            //LOG
-
-                            return RedirectToAction("Successful");
-                        }
-                        ViewBag.ValidWWorkArea = Localization.View.ValidWorkArea;
-                        return View(workAreaSetupTeamUserViewModel);
-                    }
-                    return RedirectToAction("Index", "Home");
-                    //}
-                    //else//Update Operations
-                    //{
-                    //    var validWorkArea = db.WorkArea.Where(wa => wa.UserId == workAreaSetupTeamUserViewModel.UserId && wa.Id == workAreaSetupTeamUserViewModel.WorkAreaId).FirstOrDefault();
-                    //    if (validWorkArea != null)
-                    //    {
-                    //        if (validWorkArea.ProvinceId == workAreaSetupTeamUserViewModel.ProvinceId && validWorkArea.DistrictId == workAreaSetupTeamUserViewModel.DistrictId && validWorkArea.RuralId == workAreaSetupTeamUserViewModel.RuralId && validWorkArea.NeighbourhoodId == workAreaSetupTeamUserViewModel.NeigborhoodId)
-                    //        {
-                    //            return RedirectToAction("Successful");
-                    //        }
-
-                    //        var userOtherWorkAreas = db.WorkArea.Where(wa => wa.UserId == workAreaSetupTeamUserViewModel.UserId && wa.Id != workAreaSetupTeamUserViewModel.WorkAreaId).Select(wa => new { provinceId = wa.ProvinceId, districtId = wa.DistrictId, ruralId = wa.RuralId, neigborhoodId = wa.NeighbourhoodId });
-                    //        var validUserWorkArea = userOtherWorkAreas.Where(uwa => uwa.provinceId == workAreaSetupTeamUserViewModel.ProvinceId && uwa.districtId == workAreaSetupTeamUserViewModel.DistrictId && uwa.ruralId == workAreaSetupTeamUserViewModel.RuralId && uwa.neigborhoodId == workAreaSetupTeamUserViewModel.NeigborhoodId).FirstOrDefault();
-                    //        if (validUserWorkArea == null)
-                    //        {
-                    //            validWorkArea.ProvinceId = workAreaSetupTeamUserViewModel.ProvinceId;
-                    //            validWorkArea.ProvinceName = workAreaSetupTeamUserViewModel.ProvinceName;
-                    //            validWorkArea.DistrictId = workAreaSetupTeamUserViewModel.DistrictId ?? null;
-                    //            validWorkArea.Districtname = workAreaSetupTeamUserViewModel.DistrictName;
-                    //            validWorkArea.RuralId = workAreaSetupTeamUserViewModel.RuralId ?? null;
-                    //            validWorkArea.RuralName = workAreaSetupTeamUserViewModel.RuralName;
-                    //            validWorkArea.NeighbourhoodId = workAreaSetupTeamUserViewModel.NeigborhoodId ?? null;
-                    //            validWorkArea.NeighbourhoodName = workAreaSetupTeamUserViewModel.NeigborhoodName;
-
-                    //            db.SaveChanges();
-
-                    //            //LOG
-                    //            var wrapper = new WebServiceWrapper();
-                    //            Logger.Info($"Updated WorkArea WorkAreaId: {validWorkArea.Id}, by: {wrapper.GetUserSubMail()}");
-                    //            //LOG
-                    //        }
-                    //        else
-                    //        {
-                    //            ViewBag.ValidWWorkArea = Localization.View.ValidWorkArea;
-                    //            return View(workAreaSetupTeamUserViewModel);
-                    //        }
-                    //        return RedirectToAction("Successful");
-                    //    }
-                    //    return RedirectToAction("Index", "Home");
-                    //}
-
-                }
-            }
-
-            return View(workAreaSetupTeamUserViewModel);
         }
 
 

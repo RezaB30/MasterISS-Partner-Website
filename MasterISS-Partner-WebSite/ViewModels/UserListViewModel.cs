@@ -21,5 +21,11 @@ namespace MasterISS_Partner_WebSite.ViewModels
 
         [Display(ResourceType = typeof(Localization.Model), Name = "RoleName")]
         public string RoleName { get; set; }
+
+        [Display(ResourceType = typeof(Localization.Model), Name = "PhoneNumber")]
+        public string PhoneNumber { get; set; }
+        public bool ısSetupTeam { get; set; }
+        public IEnumerable<SetupTeamUserAddressInfo> SetupTeamUserAddressInfo { get; set; }
+
     }
 }

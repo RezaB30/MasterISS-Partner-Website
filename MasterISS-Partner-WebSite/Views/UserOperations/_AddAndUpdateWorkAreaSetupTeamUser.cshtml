@@ -1,0 +1,74 @@
+﻿@using MasterISS_Partner_WebSite.ViewModels
+@using MasterISS_Partner_WebSite.Localization
+@model WorkAreaSetupTeamUserViewModel
+
+<div class="modal-content">
+    <div class="modal-header">
+        <div class="py-2">
+            <span class="text-dark-75 font-weight-bolder d-block font-size-h5">Çalışma Bölgesi</span>
+            <span class="text-muted font-size-lg">@Html.DisplayFor(m => m.ContactName)</span>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
+        </button>
+    </div>
+    <div class="modal-body">
+        @using (Ajax.BeginForm("AddAndUpdateWorkAreaSetupTeamUser", "UserOperations", new AjaxOptions { HttpMethod = "POST", OnComplete = "GenericResult" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="d-flex flex-column my-0">
+                <div class="d-flex mb-2">
+                    <span class="text-info font-size-lg flex-root font-weight-bold">Çalışma Bölgeleri</span>
+                </div>
+                @foreach (var item in Model.SetupTeamUserAddressInfo)
+                {
+                    <div class="alert alert-custom alert-outline-info fade show mb-5" role="alert">
+                        <div class="alert-text">@Html.DisplayFor(modelItem => item.ProvinceName) @Html.DisplayFor(modelItem => item.DistrictName) @Html.DisplayFor(modelItem => item.RuralName) @Html.DisplayFor(modelItem => item.NeigborhoodName)</div>
+                        <div class="card-toolbar">
+                            <a href="#" class="btn btn-icon btn-sm btn-hover-light-danger delete-button" dataValue="@item.Id" data-toggle="tooltip" data-theme="dark" title="Silmek İçin Tıkla">
+                                <i class="ki ki-close icon-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+                }
+                <div class="separator separator-dashed mt-2 my-4"></div>
+                <div class="text-danger error-codes" align="center"></div>
+                <div class="separator separator-dashed mt-2 my-4"></div>
+
+                <div class="d-flex mb-2">
+                    <span class="text-info font-size-lg flex-root font-weight-bold">Yeni Bölge Ekle</span>
+                </div>
+                <div class="form-group">
+                    <!--begin::Info-->
+                    @Html.DropDownListFor(m => m.ProvinceId, (SelectList)ViewBag.Provinces, View.Select, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ProvinceId)
+                    @Html.HiddenFor(m => m.ProvinceName)
+                </div>
+                <div class="form-group">
+                    @Html.DropDownListFor(m => m.DistrictId, (SelectList)ViewBag.District, View.Select, new { @class = "form-control" })
+                    @Html.HiddenFor(m => m.DistrictName)
+                </div>
+                <div class="form-group">
+                    @Html.DropDownListFor(m => m.RuralId, (SelectList)ViewBag.Rurals, View.Select, new { @class = "form-control" })
+                    @Html.HiddenFor(m => m.RuralName)
+                </div>
+                <div class="form-group">
+                    @Html.DropDownListFor(m => m.NeigborhoodId, (SelectList)ViewBag.Neigborhoods, View.Select, new { @class = "form-control" })
+                    @Html.HiddenFor(m => m.NeigborhoodName)
+                </div>
+                @Html.HiddenFor(m => m.UserId)
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
+                <button type="submit" class="btn btn-info font-weight-bold">Ekle ve Kaydet</button>
+            </div>
+        }
+    </div>
+</div>
+
+
+
+
+
+
+
