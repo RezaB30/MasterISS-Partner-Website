@@ -196,7 +196,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                     taskList = list;
                 }
 
-                var listFilterDate = taskList.Where(tlresponse => tlresponse.TaskIssueDate >= startDate&& tlresponse.TaskIssueDate <= endDate);
+                var listFilterDate = taskList.Where(tlresponse => tlresponse.TaskIssueDate >= startDate && tlresponse.TaskIssueDate <= endDate);
                 taskList = listFilterDate;
 
                 if (taskListRequestModel.SearchedTaskNo != null)
@@ -354,7 +354,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                     var model = new SendTaskToSchedulerViewModel { TaskNo = taskNo, ContactName = task.ContactName };
                     return PartialView("_SendTaskToScheduler", model);
                 }
-                return Content($"<div>{ new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture)}</div>");
+                var contect = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false','{1}');</script>", new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture), Url.Action("Index", "Home"));
+                return Content(contect);
             }
         }
 
@@ -393,17 +394,17 @@ namespace MasterISS_Partner_WebSite.Controllers
                         //Log
 
                         db.SaveChanges();
-                        return Json(new { status = "Success" }, JsonRequestBehavior.AllowGet);
+                        var message = Localization.View.Successful;
+                        return Json(new { status = "Success", message = message }, JsonRequestBehavior.AllowGet);
                     }
                     else
                     {
-                        LoggerError.Fatal("An error occurred while SetupController=>SendTaskToScheduler: Not Found TaskNo in Task Table ");
-
-                        return Json(new { status = "Failed", ErrorMessage = Localization.View.Generic200ErrorCodeMessage }, JsonRequestBehavior.AllowGet);
+                        var notDefined = Localization.View.Generic200ErrorCodeMessage;
+                        return Json(new { status = "FailedAndRedirect", ErrorMessage = notDefined }, JsonRequestBehavior.AllowGet);
                     }
                 }
             }
-            var errorMessage = string.Join(" | ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
+            var errorMessage = string.Join("<br/>", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
             return Json(new { status = "Failed", ErrorMessage = errorMessage }, JsonRequestBehavior.AllowGet);
         }
 
@@ -627,8 +628,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                 {
                     var wrapper = new WebServiceWrapper();
                     LoggerError.Fatal($"An error occurred while UpdateTaskStatusNotRendezvous => Get, Task not found, by: {wrapper.GetUserSubMail()}");
-                    return Content($"<div>{ new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture)}</div>");
-
+                    var contect = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false','{1}');</script>", new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture), Url.Action("Index", "Home"));
+                    return Content(contect);
                 }
             }
         }
@@ -697,7 +698,9 @@ namespace MasterISS_Partner_WebSite.Controllers
                     {
                         wrapper = new WebServiceWrapper();
                         LoggerError.Fatal($"An error occurred while UpdateTaskStatusNotRendezvous => Post, Task not found, by: {wrapper.GetUserSubMail()}");
-                        return Content($"<div>{ new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture)}</div>");
+
+                        var notDefined = Localization.View.Generic200ErrorCodeMessage;
+                        return Json(new { status = "FailedAndRedirect", ErrorMessage = notDefined }, JsonRequestBehavior.AllowGet);
                     }
                     task.TaskStatus = (short?)FaultCodeConverter.GetFaultCodeTaskStatus(updateTaskStatusViewModel.FaultCodes);
 
@@ -714,11 +717,12 @@ namespace MasterISS_Partner_WebSite.Controllers
                     db.UpdatedSetupStatus.Add(updatedSetupStatus);
 
                     db.SaveChanges();
-                    return Json(new { status = "Success" }, JsonRequestBehavior.AllowGet);
+                    var message = Localization.View.Successful;
+                    return Json(new { status = "Success", message = message }, JsonRequestBehavior.AllowGet);
 
                 }
             }
-            var errorMessage = string.Join(" | ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
+            var errorMessage = string.Join("<br/>", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
             return Json(new { status = "Failed", ErrorMessage = errorMessage }, JsonRequestBehavior.AllowGet);
         }
 
@@ -853,7 +857,9 @@ namespace MasterISS_Partner_WebSite.Controllers
                 {
                     var wrapper = new WebServiceWrapper();
                     LoggerError.Fatal($"An error occurred while UpdateTaskStatus => Get, Task not found, by: {wrapper.GetUserSubMail()}");
-                    return Content($"<div>{ new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture)}</div>");
+
+                    var contect = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false','{1}');</script>", new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture), Url.Action("Index", "Home"));
+                    return Content(contect);
                 }
             }
 
@@ -885,6 +891,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                     {
                         var selectedDate = Convert.ToDateTime(updateTaskStatusViewModel.PostDateValue);
                         var selectedTime = TimeSpan.Parse(updateTaskStatusViewModel.PostTimeValue);
+                        var notDefined = Localization.View.Generic200ErrorCodeMessage;
+
                         reservationDate = selectedDate.Add(selectedTime);
 
                         var userCurrentWorkDays = StaffCurrentWorkDays(updateTaskStatusViewModel.StaffId.Value);
@@ -893,13 +901,13 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                         if (!userCurrentWorkDays.Contains(selectedValueDateOfWeek))
                         {
-                            return Json(new { status = "Failed", ErrorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture) }, JsonRequestBehavior.AllowGet);
+                            return Json(new { status = "FailedAndRedirect", ErrorMessage = notDefined }, JsonRequestBehavior.AllowGet);
                         }
                         var staffWorkTime = StaffWorkTimeCalendar(updateTaskStatusViewModel.StaffId.Value, selectedDate);
 
                         if (!staffWorkTime.Contains(reservationDate.Value))
                         {
-                            return Json(new { status = "Failed", ErrorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture) }, JsonRequestBehavior.AllowGet);
+                            return Json(new { status = "FailedAndRedirect", ErrorMessage = notDefined }, JsonRequestBehavior.AllowGet);
                         }
                     }
                     using (var db = new PartnerWebSiteEntities())
@@ -931,8 +939,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                         }
                         else
                         {
-                            LoggerError.Fatal($" Setup=>UpdateTaskStatus, Staff Not Found SetupTeam, StaffId: {updateTaskStatusViewModel.StaffId}, Id: {claimInfo.UserId()}");
-                            return Json(new { status = "Failed", ErrorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture) }, JsonRequestBehavior.AllowGet);
+                            var notDefined = Localization.View.Generic200ErrorCodeMessage;
+                            return Json(new { status = "FailedAndRedirect", ErrorMessage = notDefined }, JsonRequestBehavior.AllowGet);
                         }
 
                         var task = db.TaskList.Find(updateTaskStatusViewModel.TaskNo);
@@ -959,11 +967,13 @@ namespace MasterISS_Partner_WebSite.Controllers
                         db.SaveChanges();
 
                         Logger.Info("Updated Task Status: " + updateTaskStatusViewModel.TaskNo + ", by: " + claimInfo.UserId());
-                        return Json(new { status = "Success" }, JsonRequestBehavior.AllowGet);
+
+                        var message = Localization.View.Successful;
+                        return Json(new { status = "Success", message = message }, JsonRequestBehavior.AllowGet);
                     }
                 }
             }
-            var errorMessage = string.Join(" | ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
+            var errorMessage = string.Join("<br/>", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
 
             return Json(new { status = "Failed", ErrorMessage = errorMessage }, JsonRequestBehavior.AllowGet);
         }
@@ -1086,8 +1096,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                 var wrapperByNotFoundTask = new WebServiceWrapper();
                 LoggerError.Fatal($"An error occurred while UploadDocument(Get) Not Found taskNo by: {wrapperByNotFoundTask.GetUserSubMail()}");
                 //LOG
-                return Content($"<div>{ new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture)}</div>");
-
+                var contect = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false','{1}');</script>", new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture), Url.Action("Index", "Home"));
+                return Content(contect);
             }
 
         }
@@ -1133,7 +1143,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                                         db.SaveChanges();
                                     }
 
-                                    return Json(new { status = "Success" }, JsonRequestBehavior.AllowGet);
+                                    var message = Localization.View.Successful;
+                                    return Json(new { status = "Success", message = message }, JsonRequestBehavior.AllowGet);
                                 }
                                 else
                                 {
@@ -1148,7 +1159,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                 }
                 return Json(new { status = "Failed", ErrorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture) }, JsonRequestBehavior.AllowGet);
             }
-            var errorMessage = string.Join(" | ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
+            var errorMessage = string.Join("<br/>", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
             return Json(new { status = "Failed", ErrorMessage = errorMessage }, JsonRequestBehavior.AllowGet);
         }
 

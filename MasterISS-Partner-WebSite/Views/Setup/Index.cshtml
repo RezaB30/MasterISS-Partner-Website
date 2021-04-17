@@ -327,7 +327,12 @@
                         <!--begin::Pagination-->
                         <div class="d-flex justify-content-between align-items-center flex-wrap">
                             <div class="d-flex flex-wrap mr-3">
-                                @Html.PagedListPager(Model, page => Url.Action("Index", "Setup", new { page }))
+                                @Html.PagedListPager(Model, page => Url.Action("Index", "Setup", new
+                                {
+                                   page = page,
+                                   taskListRequestModel_TaskListStartDate = search.TaskListStartDate,
+                                   taskListRequestModel_TaskListEndDate = search.TaskListEndDate,
+                                }))
                             </div>
                             <div class="d-flex align-items-center">
                                 <span class="text-muted"> @View.Total @Model.TotalItemCount @View.RecordFound @View.OnThisPage @Model.FirstItemOnPage @View.To @Model.LastItemOnPage @View.Showing</span>
@@ -446,7 +451,6 @@
     </div>
 </div>
 
-
 <div class="modal fade" id="exampleModalOtherRendezvousTeam" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -460,61 +464,22 @@
 @section Javascript{
 
     <script>
-        function UploadDocumentResult(data, status) {
+          function GenericResult(data, status) {
             if (status = "success") {
                 var responseStatus = data.responseJSON.status;
                 if (responseStatus == "Success") {
-                    var url='@Url.Action("Successful", "Setup")';
-                    window.location.href = url;
+                    var message = data.responseJSON.message;
+                    var url='@Url.Action("Index", "Setup")';
+                    GetAlert(message, "true",url);
+                }
+                else if (responseStatus =="FailedAndRedirect") {
+                    var redirectMessage = data.responseJSON.ErrorMessage;
+                    var urlHome='@Url.Action("Index", "Home")';
+                    GetAlert(redirectMessage, "false", urlHome);
                 }
                 else {
+                    $(".error-codes-container").show();
                     $(".error-codes").html(data.responseJSON.ErrorMessage);
-                }
-            }
-            else {
-                console.log("Error");
-            }
-        }
-        function UpdateTaskStatusNotRendezvousResult(data, status) {
-            if (status = "success") {
-                var responseStatus = data.responseJSON.status;
-                if (responseStatus == "Success") {
-                    var url='@Url.Action("Successful", "Setup")';
-                    window.location.href = url;
-                }
-                else {
-                    $(".error-codes-updateStatusNotRendezvous").html(data.responseJSON.ErrorMessage);
-                }
-            }
-            else {
-                console.log("Error");
-            }
-        }
-
-        function UpdateTaskStatusResult(data, status) {
-            if (status = "success") {
-                var responseStatus = data.responseJSON.status;
-                if (responseStatus == "Success") {
-                    var url='@Url.Action("Successful", "Setup")';
-                    window.location.href = url;
-                }
-                else {
-                    $(".error-codes-updateTaskStatus").html(data.responseJSON.ErrorMessage);
-                }
-            }
-            else {
-                console.log("Error");
-            }
-        }
-        function SendTaskToSchedulerResult(data, status) {
-            if (status = "success") {
-                var responseStatus = data.responseJSON.status;
-                if (responseStatus == "Success") {
-                    var url='@Url.Action("Successful", "Setup")';
-                    window.location.href = url;
-                }
-                else {
-                    $(".error-codes-sendTaskScheduler").html(data.responseJSON.ErrorMessage);
                 }
             }
             else {
@@ -567,7 +532,7 @@
                 });
           });
 
-        $("#TaskUpdateContainer").on('click', '.FaultCodesDrowndownByUpdateTaskStatus', function () {
+        $("#TaskUpdateContainer").on('change', '.FaultCodesDrowndownByUpdateTaskStatus', function () {
             var value = $(this).val();
             if (value == '9') {//Rendezvous Made
                 $('.setupTeamWorkAreasContainer').show(100);
@@ -632,14 +597,26 @@
                             dataType: "json",
                             data: postData,
                             complete: function (data, status) {
-                                 var responseStatus = data.responseJSON.status;
-                                    if (responseStatus == "Success") {
-                                        var url='@Url.Action("Successful", "Setup")';
-                                        window.location.href = url;
-                                        }
-                                    else {
-                                        $(".error-codes-updateTaskStatus").html(data.responseJSON.ErrorMessage);
-                                    }
+                                        if (status = "success") {
+                                var responseStatus = data.responseJSON.status;
+                                if (responseStatus == "Success") {
+                                    var message = data.responseJSON.message;
+                                    var url='@Url.Action("Index", "Setup")';
+                                    GetAlert(message, "true",url);
+                                }
+                                else if (responseStatus =="FailedAndRedirect") {
+                                    var redirectMessage = data.responseJSON.ErrorMessage;
+                                    var urlHome='@Url.Action("Index", "Home")';
+                                    GetAlert(redirectMessage, "false", urlHome);
+                                }
+                                else {
+                                    $(".error-codes-container").show();
+                                    $(".error-codes").html(data.responseJSON.ErrorMessage);
+                                }
+                            }
+                            else {
+                                console.log("Error");
+                            }
                             }
                         });
 

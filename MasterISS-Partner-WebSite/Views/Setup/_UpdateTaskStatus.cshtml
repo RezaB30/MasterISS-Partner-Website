@@ -12,14 +12,21 @@
         <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
     </button>
 </div>
+
+
+
 <div class="modal-body genericContainer">
     <div data-scroll="true" data-height="300">
         <!--begin::Info-->
-        @using (Ajax.BeginForm("UpdateTaskStatus", "Setup", new AjaxOptions { HttpMethod = "POST", OnComplete = "UpdateTaskStatusResult" }))
+        @using (Ajax.BeginForm("UpdateTaskStatus", "Setup", new AjaxOptions { HttpMethod = "POST", OnComplete = "GenericResult" }))
         {
             @Html.DropDownListFor(m => m.FaultCodes, (SelectList)ViewBag.FaultTypes, View.SelectFaultType, new { @class = "form-control FaultCodesDrowndownByUpdateTaskStatus" })
 
-            <span class="text-danger error-codes-updateTaskStatus"></span>
+            <div class="error-codes-container" style="display:none">
+                <div class="separator separator-dashed mt-2 my-4"></div>
+                <div class="text-danger error-codes" align="center"></div>
+                <div class="separator separator-dashed mt-2 my-4"></div>
+            </div>
 
             @Html.HiddenFor(m => m.TaskNo)
             <div class="form-group my-8 mb-1">
@@ -28,11 +35,18 @@
                 @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @rows = "3", id = "description" })
             </div>
 
+            if (Model.SetupTeamStaffsToMatchedTheTask.Count == 0)
+            {
+                <div class="separator separator-dashed mt-2 my-4"></div>
+                <div class="text-danger" align="center">Bu Göreve Uygun Randevu Ekibi Mevcut Değil</div>
+                <div class="separator separator-dashed mt-2 my-4"></div>
+            }
             foreach (var item in Model.SetupTeamStaffsToMatchedTheTask)
             {
                 <div class="mb-7 assignTaskButtonContainer">
 
                     <div class="setupTeamWorkAreasContainer" style="display:none">
+
                         <div class="d-flex justify-content-between align-items-center">
                             <span class="text-dark-75 font-weight-bolder mr-6">@Html.DisplayNameFor(modelItem => item.SetupTeamStaffName)</span>
                             <a href="#" class="text-info text-hover-primary">@Html.DisplayFor(modelItem => item.SetupTeamStaffName)</a>
@@ -45,17 +59,17 @@
                                     @Html.DisplayFor(workAreaItem => workArea.ProvinceName)
                                     if (!string.IsNullOrEmpty(workArea.DistrictName))
                                     {
-                                        <span>></span>
+                                        <span></span>
                                     }
                                     @Html.DisplayFor(workAreaItem => workArea.DistrictName)
                                     if (!string.IsNullOrEmpty(workArea.RuralName))
                                     {
-                                        <span>></span>
+                                        <span></span>
                                     }
                                     @Html.DisplayFor(workAreaItem => workArea.RuralName)
                                     if (!string.IsNullOrEmpty(workArea.NeigborhoodName))
                                     {
-                                        <span>></span>
+                                        <span></span>
                                     }
                                     @Html.DisplayFor(workAreaItem => workArea.NeigborhoodName)<br />
                                 }
@@ -83,6 +97,7 @@
                     </div>
                 </div>
             }
+
 
             <input type="submit" class="btn btn-sm btn-outline-success font-weight-bold assignTaskButton" value="Görevi Ata" />
         }

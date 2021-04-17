@@ -15,9 +15,11 @@
         @Html.LabelFor(m => m.RoleId, new { @class = "text-info col-form-label" })
         @Html.DropDownListFor(m => m.RoleId, (SelectList)ViewBag.RoleList, new { @class = "form-control" })
 
-        <div class="separator separator-dashed mt-2 my-4"></div>
-        <div class="text-danger error-codes" align="center"></div>
-        <div class="separator separator-dashed mt-2 my-4"></div>
+        <div class="error-codes-container" style="display:none">
+            <div class="separator separator-dashed mt-2 my-4"></div>
+            <div class="text-danger error-codes" align="center"></div>
+            <div class="separator separator-dashed mt-2 my-4"></div>
+        </div>
 
         @Html.HiddenFor(m => m.UserId)
 

@@ -185,33 +185,31 @@
                             <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
                         </button>
                     </div>
-                    <div class="modal-body">
+                    @using (Ajax.BeginForm("UpdateRolePermission", "UserOperations", new AjaxOptions { HttpMethod = "POST", OnComplete = "GenericResult" }))
+                    {
+                        <div class="modal-body">
+                            <div class="form-group my-0">
+                                <label class="text-info col-form-label">@View.SelectRole</label>
 
+                                @Html.DropDownList("RoleId", (SelectList)ViewBag.RoleList, MasterISS_Partner_WebSite.Localization.View.SelectRole, new { @class = "form-control" })
 
-                        <div class="form-group my-0">
+                                <div class="error-codes-container" style="display:none">
+                                    <div class="separator separator-dashed mt-2 my-4"></div>
+                                    <div class="text-danger error-codes" align="center"></div>
+                                    <div class="separator separator-dashed mt-2 my-4"></div>
+                                </div>
 
-                            <label class="text-info col-form-label">Rol Seçiniz</label>
-                            @Html.DropDownList("RoleId", (SelectList)ViewBag.RoleList, MasterISS_Partner_WebSite.Localization.View.SelectRole, new { @class = "form-control" })
-                            <!--begin::Info-->
-                            @using (Html.BeginForm("UpdateRolePermission", "UserOperations", FormMethod.Post))
-                            {
                                 @Html.AntiForgeryToken()
                                 <label class="text-info col-12 col-form-label my-4">Yetkiler</label>
                                 <div class="checkbox-list permissionCheckboxList">
-                                    @*<label class="checkbox">
-                                            <input class="checkbox" type="checkbox" value="@item.PermissionId" name="SelectedPermissions" checked="@item.IsSelected" />
-                                            <span></span>@Html.DisplayFor(m => item.PermissionName)
-                                        </label>*@
                                 </div>
-                                <input value="aa" type="submit" />
-                            }
-
+                            </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
-                        <button type="button" class="btn btn-info font-weight-bold">Değiştir ve Kaydet</button>
-                    </div>                                                     <!--end::Info-->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
+                            <button type="submit" class="btn btn-info font-weight-bold">Değiştir ve Kaydet</button>
+                        </div> <!--end::Info-->
+                    }
                 </div>
             </div>
         </div>
@@ -298,7 +296,12 @@
                         area.empty();
                         var data = data.responseJSON.list;
                         $.each(data, function (i, item) {
-                            area.append('<label class="checkbox"><input class="checkbox" type="checkbox" value=' + data[i].PermissionId + ' name="SelectedPermissions" checked="' + data[i].IsSelected + '" /><span></span>' + data[i].PermissionName+' </label>');
+                            if (data[i].IsSelected==null) {
+                                area.append('<label class="checkbox"><input class="checkbox" type="checkbox" value=' + data[i].PermissionId + ' name="SelectedPermissions"/><span></span>' + data[i].PermissionName + ' </label>');
+                            }
+                            else {
+                                area.append('<label class="checkbox"><input class="checkbox" type="checkbox" value=' + data[i].PermissionId + ' name="SelectedPermissions" checked="' + data[i].IsSelected + '" /><span></span>' + data[i].PermissionName + ' </label>');
+                            }
                         });
                         //$("#permissionListContainerByUpdateRolePermission").html(data.responseText);
                     }
@@ -312,6 +315,10 @@
                     }
                 }
             });
+        }
+        else {
+            var area = $(".permissionCheckboxList")
+            area.empty();
         }
     });
 
@@ -404,6 +411,7 @@
                     GetAlert(redirectMessage, "false", urlHome);
                 }
                 else {
+                    $(".error-codes-container").show();
                     $(".error-codes").html(data.responseJSON.ErrorMessage);
                 }
             }

@@ -403,7 +403,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                     return PartialView("_UpdateUserRole", userViewModel);
                 }
-                var contect = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false');</script>", new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture));
+                var contect = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false','{1}');</script>", new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture), Url.Action("Index", "Home"));
                 return Content(contect);
             }
         }
@@ -503,10 +503,10 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                             return Json(new { status = "Success", Message = Localization.View.Successful }, JsonRequestBehavior.AllowGet);
                         }
-                        var contectNotFoundUser = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false');</script>", new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture));
+                        var contectNotFoundUser = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false','{1}');</script>", new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture), Url.Action("Index", "Home"));
                         return Content(contectNotFoundUser);
                     }
-                    var contectNotFoundRole = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false');</script>", new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture));
+                    var contectNotFoundRole = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false','{1}');</script>", new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture), Url.Action("Index", "Home"));
                     return Content(contectNotFoundRole);
                 }
             }
@@ -551,7 +551,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                 }
                 else
                 {
-                    var contect = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false');</script>", new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture));
+                    var contect = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false','{1}');</script>", new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture), Url.Action("Index", "Home"));
                     return Content(contect);
                 }
             }
@@ -580,7 +580,9 @@ namespace MasterISS_Partner_WebSite.Controllers
                         user.WorkEndTime = ParseTimeSpan(setupTeamWorkingDaysAndHoursView.WorkingEndTime);
                         user.WorkDays = string.Join(",", setupTeamWorkingDaysAndHoursView.SelectedDays);
                         db.SaveChanges();
-                        return Json(new { status = "Success" }, JsonRequestBehavior.AllowGet);
+
+                        var message = Localization.View.Successful;
+                        return Json(new { status = "Success", message = message }, JsonRequestBehavior.AllowGet);
                     }
                     else
                     {
@@ -766,15 +768,16 @@ namespace MasterISS_Partner_WebSite.Controllers
                                 }
                                 db.SaveChanges();
                             }
+                            return Json(new { status = "Success" }, JsonRequestBehavior.AllowGet);
                         }
 
-                        return RedirectToAction("Successful");
                     }
-                    return RedirectToAction("Index", "Home");
+                    var notDefined = Localization.View.Generic200ErrorCodeMessage;
+                    return Json(new { status = "FailedAndRedirect", ErrorMessage = notDefined }, JsonRequestBehavior.AllowGet);
                 }
             }
-            TempData["Error"] = Localization.View.RequiredPermission;
-            return RedirectToAction("UpdateRolePermission", new { roleId = roleId });
+            var errorMessage = string.Join("<br/>", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
+            return Json(new { status = "Failed", ErrorMessage = errorMessage }, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -790,7 +793,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                     var provinceList = wrapper.GetProvince();
                     if (!string.IsNullOrEmpty(provinceList.ErrorMessage))
                     {
-                        var contectErrorByWebService = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false');</script>", new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture));
+                        var contectErrorByWebService = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false','{1}');</script>", new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture), Url.Action("Index", "Home"));
                         return Content(contectErrorByWebService);
                     }
                     ViewBag.Provinces = new SelectList(provinceList.Data.ValueNamePairList.Select(nvpl => new { Name = nvpl.Name, Value = nvpl.Value }), "Value", "Name");
@@ -813,7 +816,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                     };
                     return PartialView("_AddAndUpdateWorkAreaSetupTeamUser", workAreaSetupTeamModel);
                 }
-                var contect = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false');</script>", new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture));
+                var contect = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false','{1}');</script>", new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture), Url.Action("Index", "Home"));
                 return Content(contect);
             }
 

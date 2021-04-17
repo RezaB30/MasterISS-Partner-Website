@@ -1,7 +1,7 @@
 ﻿@using MasterISS_Partner_WebSite.Localization
 @model MasterISS_Partner_WebSite.ViewModels.Setup.AddTaskStatusUpdateViewModel
 
-@using (Ajax.BeginForm("UpdateTaskStatusNotRendezvous", "Setup", new AjaxOptions { HttpMethod = "POST", OnComplete = "UpdateTaskStatusNotRendezvousResult" }, new { enctype = "multipart/form-data" }))
+@using (Ajax.BeginForm("UpdateTaskStatusNotRendezvous", "Setup", new AjaxOptions { HttpMethod = "POST", OnComplete = "GenericResult" }, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <div class="modal-header">
@@ -17,7 +17,11 @@
         <!--begin::Info-->
         @Html.DropDownListFor(m => m.FaultCodes, (SelectList)ViewBag.FaultTypes, View.SelectFaultType, new { @class = "form-control", id = "FaultCodesDrowndown" })
 
-        <span class="text-danger error-codes-updateStatusNotRendezvous"></span>
+        <div class="error-codes-container" style="display:none">
+            <div class="separator separator-dashed mt-2 my-4"></div>
+            <div class="text-danger error-codes" align="center"></div>
+            <div class="separator separator-dashed mt-2 my-4"></div>
+        </div>
 
         @Html.HiddenFor(m => m.TaskNo)
         <div class="form-group my-8 mb-1">

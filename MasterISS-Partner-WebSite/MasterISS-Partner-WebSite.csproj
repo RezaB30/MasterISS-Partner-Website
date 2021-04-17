@@ -2068,8 +2068,6 @@
     <Content Include="Views\Setup\_UpdateClientLocation.cshtml" />
     <Content Include="Views\Revenues\Index.cshtml" />
     <Content Include="Views\UserOperations\_UpdateUserRole.cshtml" />
-    <Content Include="Views\UserOperations\_RolePermissionList.cshtml" />
-    <Content Include="Views\UserOperations\_UpdateRolePermission.cshtml" />
     <Content Include="Views\UserOperations\SetupTeamList.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\WorkingTypeFormat.cshtml" />
     <Content Include="Views\UserOperations\_AddAndUpdateWorkAreaSetupTeamUser.cshtml" />

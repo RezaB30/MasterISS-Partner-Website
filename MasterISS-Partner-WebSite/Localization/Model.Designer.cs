@@ -1042,6 +1042,24 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rezervasyon Tarihi.
+        /// </summary>
+        public static string PostDateValue {
+            get {
+                return ResourceManager.GetString("PostDateValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rezervasyon Saati.
+        /// </summary>
+        public static string PostTimeValue {
+            get {
+                return ResourceManager.GetString("PostTimeValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tutar.
         /// </summary>
         public static string Price {
