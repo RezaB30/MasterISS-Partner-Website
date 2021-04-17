@@ -372,6 +372,7 @@
     <Compile Include="ViewModels\Account\RegisterViewModel.cs" />
     <Compile Include="ViewModels\Account\UserSignInViewModel.cs" />
     <Compile Include="ViewModels\AddPermissionViewModel.cs" />
+    <Compile Include="ViewModels\FilterUserViewModel.cs" />
     <Compile Include="ViewModels\ListRendezvousTeamViewModel.cs" />
     <Compile Include="ViewModels\SendTaskToSchedulerViewModel.cs" />
     <Compile Include="ViewModels\SetupTeamStaffsToMatchedTheTask.cs" />

@@ -2,6 +2,7 @@
 using MasterISS_Partner_WebSite_Database.Models;
 using MasterISS_Partner_WebSite_Enums;
 using NLog;
+using PagedList;
 using RezaB.Data.Localization;
 using System;
 using System.Collections.Generic;
@@ -20,37 +21,73 @@ namespace MasterISS_Partner_WebSite.Controllers
         private static Logger LoggerError = LogManager.GetLogger("AppLoggerError");
 
         // GET: UserOperations
-        public ActionResult Index()
+        public ActionResult Index(FilterUserViewModel filterUserViewModel, int page = 1, int pageSize = 4)
         {
             var claimInfo = new ClaimInfo();
             var partnerId = Convert.ToInt32(claimInfo.PartnerId());
             var adminId = claimInfo.UserId();
-
+            filterUserViewModel = filterUserViewModel ?? new FilterUserViewModel();
+            ViewBag.Search = filterUserViewModel;
             using (var db = new PartnerWebSiteEntities())
             {
-                var userList = db.User.Where(u => u.PartnerId == partnerId && u.Id != adminId).Select(u => new UserListViewModel
+                var userList = FilteredUserList(filterUserViewModel);
+
+                var list = userList.Select(u => new UserListViewModel
                 {
                     IsEnabled = u.IsEnabled,
                     NameSurname = u.NameSurname,
                     UserSubMail = u.UserSubMail,
-                    RoleName = u.Role.RoleName,
+                    RoleName = db.Role.Find(u.RoleId)?.RoleName,
                     UserId = u.Id,
                     PhoneNumber = u.PhoneNumber,
                     ısSetupTeam = db.SetupTeam.Where(st => st.UserId == u.Id && st.WorkingStatus == true).FirstOrDefault() != null,
-                    SetupTeamUserAddressInfo = u.WorkArea.Select(wa => new SetupTeamUserAddressInfo
+                    SetupTeamUserAddressInfo = db.WorkArea.Where(wa => wa.UserId == u.Id).FirstOrDefault() == null ? Enumerable.Empty<SetupTeamUserAddressInfo>() : db.WorkArea.Where(wa => wa.UserId == u.Id).Select(wa => new SetupTeamUserAddressInfo
                     {
                         ProvinceName = wa.ProvinceName,
                         DistrictName = wa.Districtname,
                         RuralName = wa.RuralName,
                         NeigborhoodName = wa.NeighbourhoodName,
-                    })
+                    }).ToList()
                 }).ToList();
 
                 ViewBag.RoleList = new SelectList(db.Role.Where(r => r.PartnerId == partnerId && r.IsEnabled).Select(r => new { Value = r.Id, Name = r.RoleName }).ToArray(), "Value", "Name");
+                ViewBag.FilterList = PermissionListByFilter(filterUserViewModel.SelectedPermission ?? null);
 
-                return View(userList);
+                var totalCount = list.Count();
+
+                var pagedListByResponseList = new StaticPagedList<UserListViewModel>(list.Skip((page - 1) * pageSize).Take(pageSize), page, pageSize, totalCount);
+
+
+                return View(pagedListByResponseList);
             }
         }
+
+        private List<User> FilteredUserList(FilterUserViewModel filter)
+        {
+            var userList = Enumerable.Empty<User>().AsQueryable();
+
+            var claimInfo = new ClaimInfo();
+            var partnerId = Convert.ToInt32(claimInfo.PartnerId());
+            var adminId = claimInfo.UserId();
+            using (var db = new PartnerWebSiteEntities())
+            {
+                userList = db.User.Where(u => u.PartnerId == partnerId && u.Id != adminId);
+
+                if (!string.IsNullOrEmpty(filter.SelectedUsername))
+                {
+                    var list = userList.Where(ul => ul.NameSurname.Contains(filter.SelectedUsername));
+                    userList = list;
+                }
+
+                if (filter.SelectedPermission != null)
+                {
+                    var list = userList.SelectMany(ul => ul.Role.RolePermission.Where(rp => rp.PermissionId == filter.SelectedPermission), (ul, rp) => new { UserList = ul }).Select(filteredUserList => filteredUserList.UserList);
+                    userList = list;
+                }
+                return userList.ToList();
+            }
+        }
+
 
         [Authorize(Roles = "Setup")]
         public ActionResult SetupTeamList()
@@ -958,106 +995,109 @@ namespace MasterISS_Partner_WebSite.Controllers
             }
         }
 
-        //public ActionResult UpdateWorkAreaSetupTeamUser(long workAreaId)
-        //{
-        //    using (var db = new PartnerWebSiteEntities())
-        //    {
-        //        var workArea = db.WorkArea.Find(workAreaId);
-        //        if (workArea != null)
-        //        {
-        //            var addressInfo = new AddressInfo();
-        //            var provinceList = addressInfo.ProvincesList(workArea.ProvinceId);
-        //            ViewBag.Provinces = provinceList;
-
-        //            var districtList = addressInfo.DistrictList(workArea.ProvinceId, workArea.DistrictId ?? null);
-        //            ViewBag.District = districtList;
-
-        //            var ruralList = addressInfo.RuralRegionsList(workArea.DistrictId ?? null, workArea.RuralId ?? null);
-        //            ViewBag.Rurals = ruralList;
-
-        //            var neigborhoodList = addressInfo.NeighborhoodList(workArea.RuralId, workArea.NeighbourhoodId ?? null);
-        //            ViewBag.Neigborhoods = neigborhoodList;
-
-        //            ViewBag.UserId = workArea.UserId;
-
-        //            ViewBag.WorkAreaId = workAreaId;
-
-        //            return View("AddAndUpdateWorkAreaSetupTeamUser");
-        //        }
-        //        return RedirectToAction("Index", "Home");
-        //    }
-        //}
-
-        public ActionResult EnableUser(string userMail)
+        public ActionResult EnableUser(long userId)
         {
             var wrapper = new WebServiceWrapper();
-
-            var response = wrapper.EnableUser(userMail);
-
-            if (response.ResponseMessage.ErrorCode == 0)
+            using (var db = new PartnerWebSiteEntities())
             {
-                using (var db = new PartnerWebSiteEntities())
+                var user = db.User.Find(userId);
+                if (user != null)
                 {
-                    var enabledUser = db.User.Where(m => m.UserSubMail == userMail).FirstOrDefault();
+                    var response = wrapper.EnableUser(user.UserSubMail);
 
-                    if (enabledUser != null)
+                    if (response.ResponseMessage.ErrorCode == 0)
                     {
-                        enabledUser.IsEnabled = true;
-                        db.SaveChanges();
+                        user.IsEnabled = true;
 
+                        var userIsSetupTeam = db.SetupTeam.Find(userId);
+                        if (userIsSetupTeam != null)
+                        {
+                            userIsSetupTeam.WorkingStatus = true;
+                        }
+
+                        var userIsRandezvousTeam = db.RendezvousTeam.Find(userId);
+                        if (userIsRandezvousTeam != null)
+                        {
+                            userIsRandezvousTeam.WorkingStatus = true;
+                        }
                         //LOG
                         wrapper = new WebServiceWrapper();
-                        Logger.Info("Enabled User: " + userMail + ", by: " + wrapper.GetUserSubMail());
+                        Logger.Info("Enabled User: " + user.UserSubMail + ", by: " + wrapper.GetUserSubMail());
                         //LOG
 
-                        return RedirectToAction("Successful");
+                        db.SaveChanges();
+                        var message = Localization.View.Successful;
+                        return Json(new { status = "Success", message = message }, JsonRequestBehavior.AllowGet);
                     }
-                    TempData["Error"] = Localization.View.PassiveError;
-                    return RedirectToAction("Index");
+                    else
+                    {
+                        //LOG
+                        wrapper = new WebServiceWrapper();
+                        LoggerError.Fatal($"An error occurred while EnableUser , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapper.GetUserSubMail()}");
+                        //LOG
+                        var notDefined = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
+                        return Json(new { status = "FailedAndRedirect", ErrorMessage = notDefined }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+                else
+                {
+                    var notDefined = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture);
+                    return Json(new { status = "FailedAndRedirect", ErrorMessage = notDefined }, JsonRequestBehavior.AllowGet);
                 }
             }
-            //LOG
-            wrapper = new WebServiceWrapper();
-            LoggerError.Fatal($"An error occurred while EnableUser , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapper.GetUserSubMail()}");
-            //LOG
-            TempData["Error"] = new LocalizedList<PermissionListEnum, Localization.PermissionList>().GetDisplayText(response.ResponseMessage.ErrorCode);
-            return RedirectToAction("Index");
         }
 
-        public ActionResult DisableUser(string userMail)
+        public ActionResult DisableUser(long userId)
         {
             var wrapper = new WebServiceWrapper();
-
-            var response = wrapper.DisableUser(userMail);
-
-            if (response.ResponseMessage.ErrorCode == 0)
+            using (var db = new PartnerWebSiteEntities())
             {
-                using (var db = new PartnerWebSiteEntities())
+                var user = db.User.Find(userId);
+                if (user != null)
                 {
-                    var disabledUser = db.User.Where(m => m.UserSubMail == userMail).FirstOrDefault();
+                    var response = wrapper.DisableUser(user.UserSubMail);
 
-                    if (disabledUser != null)
+                    if (response.ResponseMessage.ErrorCode == 0)
                     {
-                        disabledUser.IsEnabled = false;
-                        db.SaveChanges();
+                        user.IsEnabled = false;
 
+                        var userIsSetupTeam = db.SetupTeam.Find(userId);
+                        if (userIsSetupTeam != null)
+                        {
+                            userIsSetupTeam.WorkingStatus = false;
+                        }
+
+                        var userIsRandezvousTeam = db.RendezvousTeam.Find(userId);
+                        if (userIsRandezvousTeam != null)
+                        {
+                            userIsRandezvousTeam.WorkingStatus = false;
+                        }
                         //LOG
                         wrapper = new WebServiceWrapper();
-                        Logger.Info("Disabled User: " + userMail + ", by: " + wrapper.GetUserSubMail());
+                        Logger.Info("Disabled User: " + user.UserSubMail + ", by: " + wrapper.GetUserSubMail());
                         //LOG
+                        db.SaveChanges();
 
                         return RedirectToAction("Successful");
+
                     }
-                    TempData["Error"] = Localization.View.ActiveError;
-                    return RedirectToAction("Index");
+                    else
+                    {
+                        var wrapperGetUserSubMail = new WebServiceWrapper();
+                        LoggerError.Fatal($"An error occurred while DisableUser , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapperGetUserSubMail.GetUserSubMail()}");
+                        //LOG
+                        TempData["Error"] = new LocalizedList<PermissionListEnum, Localization.PermissionList>().GetDisplayText(response.ResponseMessage.ErrorCode);
+
+                        //return Json();Redirect
+                    }
+                }
+                else
+                {
+                    //return Json();Redirect
                 }
             }
             //LOG
-            var wrapperGetUserSubMail = new WebServiceWrapper();
-            LoggerError.Fatal($"An error occurred while DisableUser , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapperGetUserSubMail.GetUserSubMail()}");
-            //LOG
 
-            TempData["Error"] = new LocalizedList<PermissionListEnum, Localization.PermissionList>().GetDisplayText(response.ResponseMessage.ErrorCode);
             return RedirectToAction("Index");
         }
 
@@ -1068,6 +1108,13 @@ namespace MasterISS_Partner_WebSite.Controllers
 
 
         private SelectList PermissionList()
+        {
+            var permissionList = LocalizedPermissionList();
+            var selectListsPermission = new SelectList(permissionList.Select(pl => new { Value = pl.PermissionId, Text = pl.PermissionName }), "Value", "Text");
+            return selectListsPermission;
+        }
+
+        private AvailablePermissionList[] LocalizedPermissionList()
         {
             var claimInfo = new ClaimInfo();
             var adminRoleIdList = claimInfo.PartnerRoleId().ToArray();
@@ -1084,8 +1131,22 @@ namespace MasterISS_Partner_WebSite.Controllers
             {
                 item.PermissionName = localizedList.GetDisplayText(item.PermissionId, null);
             }
-            var selectListsPermission = new SelectList(permissionList.Select(pl => new { Value = pl.PermissionId, Text = pl.PermissionName }), "Value", "Text");
+            return permissionList;
+        }
 
+        private SelectList PermissionListByFilter(int? selectedValue)
+        {
+            var permissionList = LocalizedPermissionList();
+
+            int[] filterList = new int[]
+            {
+                (int)PermissionListEnum.SetupManager,
+                (int)PermissionListEnum.RendezvousTeam,
+                (int)PermissionListEnum.SaleManager,
+                (int)PermissionListEnum.PaymentManager
+            };
+
+            var selectListsPermission = new SelectList(permissionList.Where(pl => filterList.Contains(pl.PermissionId)).Select(pl => new { Value = pl.PermissionId, Text = pl.PermissionName }), "Value", "Text", selectedValue);
             return selectListsPermission;
         }
 

@@ -20,30 +20,30 @@
                     <div class="col-lg-4 mb-lg-0 mb-12">
                         <label>Tarih Aralığı:</label>
                         <div class="input-daterange input-group" id="kt_datepicker">
-                            @Html.EditorFor(m => search.TaskListStartDate, new { htmlAttributes = new { @placeholder = DateTime.Now.ToString("dd.MM.yyyy HH:mm"), @class = "form-control" } })
+                            @Html.TextBox("TaskListStartDate", search.TaskListStartDate, new { @placeholder = DateTime.Now.ToString("dd.MM.yyyy HH:mm"), @class = "form-control" })
                             <div class="input-group-append">
                                 <span class="input-group-text">
                                     <i class="la la-ellipsis-h"></i>
                                 </span>
                             </div>
-                            @Html.EditorFor(m => search.TaskListEndDate, new { htmlAttributes = new { @placeholder = DateTime.Now.ToString("dd.MM.yyyy HH:mm"), @class = "form-control" } })
+                            @Html.TextBox("TaskListEndDate", search.TaskListEndDate, new { @placeholder = DateTime.Now.ToString("dd.MM.yyyy HH:mm"), @class = "form-control" })
                         </div>
                     </div>
                     <div class="col-lg-2 mb-lg-0 mb-6">
                         @Html.LabelFor(m => search.SearchedName)
-                        @Html.EditorFor(m => search.SearchedName, new { htmlAttributes = new { @placeholder = Html.DisplayNameFor(m => search.SearchedName), @class = "form-control datatable-input", @data_col_index = "1" } })
+                        @Html.TextBox("SearchedName", search.SearchedName, new { @placeholder = Html.DisplayNameFor(m => search.SearchedName), @class = "form-control datatable-input", @data_col_index = "1" })
                     </div>
                     <div class="col-lg-2 mb-lg-0 mb-6">
                         @Html.LabelFor(m => search.TaskType)
-                        @Html.DropDownListFor(m => search.TaskType, (SelectList)ViewBag.TaskType, View.Select, new { @class = "form-control datatable-input", @data_col_index = "2" })
+                        @Html.DropDownList("TaskType", (SelectList)ViewBag.TaskType, View.Select, new { @class = "form-control datatable-input", @data_col_index = "2" })
                     </div>
                     <div class="col-lg-2 mb-lg-0 mb-6">
                         @Html.LabelFor(m => search.FaultCode)
-                        @Html.DropDownListFor(m => search.FaultCode, (SelectList)ViewBag.FaultCodes, View.Select, new { @class = "form-control datatable-input", @data_col_index = "2" })
+                        @Html.DropDownList("FaultCode", (SelectList)ViewBag.FaultCodes, View.Select, new { @class = "form-control datatable-input", @data_col_index = "2" })
                     </div>
                     <div class="col-lg-2 mb-lg-0 mb-6">
                         @Html.LabelFor(m => search.SearchedTaskNo)
-                        @Html.EditorFor(m => search.SearchedTaskNo, new { htmlAttributes = new { @class = "form-control datatable-input", @data_col_index = "4", @type = "text" } })
+                        @Html.Editor("SearchedTaskNo", new { htmlAttributes = new { @class = "form-control datatable-input", @data_col_index = "4", @type = "text" } })
                     </div>
                 </div>
 
@@ -328,11 +328,14 @@
                         <div class="d-flex justify-content-between align-items-center flex-wrap">
                             <div class="d-flex flex-wrap mr-3">
                                 @Html.PagedListPager(Model, page => Url.Action("Index", "Setup", new
-                                {
-                                   page = page,
-                                   taskListRequestModel_TaskListStartDate = search.TaskListStartDate,
-                                   taskListRequestModel_TaskListEndDate = search.TaskListEndDate,
-                                }))
+                           {
+                               page = page,
+                               search.TaskListStartDate,
+                               search.TaskListEndDate,
+                               search.FaultCode,
+                               search.SearchedName,
+                               search.TaskType
+                           }))
                             </div>
                             <div class="d-flex align-items-center">
                                 <span class="text-muted"> @View.Total @Model.TotalItemCount @View.RecordFound @View.OnThisPage @Model.FirstItemOnPage @View.To @Model.LastItemOnPage @View.Showing</span>

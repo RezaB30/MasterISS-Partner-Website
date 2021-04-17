@@ -36,9 +36,10 @@ namespace MasterISS_Partner_WebSite.Controllers
         private TimeSpan lastSessionTime;
 
         // GET: Setup
-        public ActionResult Index([Bind(Prefix = "search")] GetTaskListRequestViewModel taskListRequestModel, int page = 1, int pageSize = 1)
+        public ActionResult Index(GetTaskListRequestViewModel taskListRequestModel, int page = 1, int pageSize = 1)
         {
             taskListRequestModel = taskListRequestModel ?? new GetTaskListRequestViewModel();
+
             ViewBag.TaskType = TaskTypeList(taskListRequestModel.TaskType ?? null);
             ViewBag.FaultCodes = FaultTypeList(taskListRequestModel.FaultCode ?? null, true);
             ViewBag.Search = taskListRequestModel;
