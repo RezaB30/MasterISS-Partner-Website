@@ -170,6 +170,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                                 new Claim(ClaimTypes.MobilePhone,adminValid.PhoneNumber),
                             };
 
+                            TempData["ass"] = adminValid.PhoneNumber;
                             ValidResponseHaveSetupPermissionAndAddClaims(authenticateResponse, claims);
 
                             var isSignIn = Authenticator.SignIn(Request.GetOwinContext(), claims);
@@ -196,6 +197,41 @@ namespace MasterISS_Partner_WebSite.Controllers
             }
 
             return View(adminSignInModel);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UserSettings(UserSettingsViewModel userSettingsViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var claimInfo = new ClaimInfo();
+                var userId = claimInfo.UserId();
+                using (var db = new PartnerWebSiteEntities())
+                {
+                    var user = db.User.Find(userId);
+                    if (user!=null)
+                    {
+                        user.PhoneNumber = userSettingsViewModel.NumberPhone;
+                        db.SaveChanges();
+
+
+                        var message = Localization.View.Successful;
+                        return Json(new { status = "Success", message = message }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        var notDefined = Localization.View.Generic200ErrorCodeMessage;
+                        return Json(new { status = "FailedAndRedirect", ErrorMessage = notDefined }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+            else
+            {
+                var errorMessage = string.Join("<br/>", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
+                return Json(new { status = "Failed", ErrorMessage = errorMessage }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         public ActionResult SignOut()

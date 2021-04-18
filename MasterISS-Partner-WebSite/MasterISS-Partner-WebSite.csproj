@@ -380,6 +380,7 @@
     <Compile Include="ViewModels\SendTaskToSchedulerViewModel.cs" />
     <Compile Include="ViewModels\SetupTeamStaffsToMatchedTheTask.cs" />
     <Compile Include="ViewModels\SetupTeamWorkingDaysAndHoursViewModel.cs" />
+    <Compile Include="ViewModels\UserSettingsViewModel.cs" />
     <Compile Include="ViewModels\WorkAreaSetupTeamUserViewModel.cs" />
     <Compile Include="ViewModels\BillCollectionViewModel.cs" />
     <Compile Include="ViewModels\CreditReportViewModel.cs" />

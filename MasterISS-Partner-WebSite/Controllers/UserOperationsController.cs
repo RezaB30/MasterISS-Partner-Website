@@ -721,7 +721,6 @@ namespace MasterISS_Partner_WebSite.Controllers
             return Json(new { status = "Failed", ErrorMessage = errorMessage }, JsonRequestBehavior.AllowGet);
         }
 
-
         [Authorize(Roles = "Setup")]
         public ActionResult AddAndUpdateWorkAreaSetupTeamUser(int userId)
         {
@@ -871,7 +870,6 @@ namespace MasterISS_Partner_WebSite.Controllers
                 return true;
             }
         }
-
 
         [Authorize(Roles = "Setup")]
         public ActionResult ListWorkAreaSetupTeamUser(int userId)

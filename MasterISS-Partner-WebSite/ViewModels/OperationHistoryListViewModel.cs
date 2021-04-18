@@ -17,6 +17,7 @@ namespace MasterISS_Partner_WebSite.ViewModels
         [Display(Name = "OperationType", ResourceType = typeof(Localization.Model))]
         public string OperationType { get; set; }
 
+        [UIHint("DateTimeConverted")]
         [Display(Name = "ChangeTime", ResourceType = typeof(Localization.Model))]
         public DateTime ChangeTime { get; set; }
 
