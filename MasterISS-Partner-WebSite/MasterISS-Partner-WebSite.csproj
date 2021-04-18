@@ -196,6 +196,7 @@
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\QueryInfrastructureController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\RevenuesController.cs" />
     <Compile Include="Controllers\SetupController.cs" />
     <Compile Include="Controllers\UserOperationsController.cs" />
@@ -374,6 +375,8 @@
     <Compile Include="ViewModels\AddPermissionViewModel.cs" />
     <Compile Include="ViewModels\FilterUserViewModel.cs" />
     <Compile Include="ViewModels\ListRendezvousTeamViewModel.cs" />
+    <Compile Include="ViewModels\OperationHistoryListViewModel.cs" />
+    <Compile Include="ViewModels\OperationTypeHistoryFilterViewModel.cs" />
     <Compile Include="ViewModels\SendTaskToSchedulerViewModel.cs" />
     <Compile Include="ViewModels\SetupTeamStaffsToMatchedTheTask.cs" />
     <Compile Include="ViewModels\SetupTeamWorkingDaysAndHoursViewModel.cs" />
@@ -2086,6 +2089,7 @@
     <Content Include="Views\Setup\assIndex.cshtml" />
     <Content Include="Views\Setup\_UpdateTaskStatusNotRendezvous.cshtml" />
     <Content Include="Views\Setup\_SendTaskToScheduler.cshtml" />
+    <Content Include="Views\Reports\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

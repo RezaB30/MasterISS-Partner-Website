@@ -427,8 +427,40 @@
 <div class="modal fade" id="exampleModalUpdateLocation" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div id="CustomerUpdateLocationContainer">
+            <div class="modal-header">
+                <div class="py-2">
+                    <span class="text-dark-75 font-weight-bolder d-block font-size-h5">Konum Güncelle</span>
+                    <span class="text-muted font-size-lg">AVNİ ALKAN</span>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
+                </button>
+            </div>
 
+            <div class="modal-body">
+                <!--begin::Info-->
+                <div class="input-daterange input-group" id="kt_datepicker">
+                 @*   @Html.EditorFor(m => m.Latitude, new { htmlAttributes = new { placeholder = Html.DisplayNameFor(m => m.Latitude), @class = "form-control datatable-input" } })*@
+                    <div class="input-group-append">
+                        <span class="input-group-text">
+                            <i class="la la-ellipsis-h"></i>
+                        </span>
+                    </div>
+                 @*   @Html.EditorFor(m => m.Longitude, new { htmlAttributes = new { placeholder = Html.DisplayNameFor(m => m.Longitude), @class = "form-control datatable-input" } })*@
+                </div>
+
+                <div class="form-group my-8 mb-1">
+                </div>
+            </div>
+            <div style="width:488px;height:400px">
+                @Html.Map("map-container", View.Map, View.SearchedPlace)
+            </div>
+
+            @Html.MapTriggerButton("map-trigger-button", View.Select)
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
+                <button type="button" class="btn btn-info font-weight-bold">Değiştir ve Kaydet</button>
             </div>
         </div>
     </div>
@@ -493,6 +525,7 @@
 
 
     <script>
+        MapJS('.map-container', '#Latitude', '#Longitude');
 
         $(".assign-rendezvous-team-button").click(function () {
             var dataValue = $(this).attr("dataValue");
@@ -523,6 +556,7 @@
                             if (status = "success") {
                                 var cultureInfo = '@System.Globalization.CultureInfo.CurrentCulture.Name';
                                 var area = $("#GetFileContainer");
+                                area.empty();
                                 $.each(data.responseJSON.list, function (item, value) {
                                     item = item + 1;
                                     area.append('<a href="/' + cultureInfo + '/Setup/GetFileTask?fileName=' + value + '&taskNo=' + dataValue + '" class="' + "btn btn-sm btn-outline-success font-weight-bold" + '" target="_blank">"' + value +'" </a>');
@@ -714,7 +748,7 @@
                 });
          });
 
-        $(".customer-localition-info-button").click(function () {
+        @*$(".customer-localition-info-button").click(function () {
             var dataValue = $(this).attr("dataValue");
                 $.ajax({
                     url: '@Url.Action("UpdateClientLocation", "Setup")',
@@ -725,10 +759,9 @@
                     dataType: 'html',
                     success: function (data) {
                         $("#CustomerUpdateLocationContainer").html(data);
-                        MapJS('.map-container', '#Latitude', '#Longitude');
                     },
                 });
-         });
+         });*@
 
         $(".customer-upload-document").click(function () {
             var dataValue = $(this).attr("dataValue");

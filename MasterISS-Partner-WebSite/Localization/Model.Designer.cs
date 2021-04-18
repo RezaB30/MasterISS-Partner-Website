@@ -241,6 +241,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to İşlem Zamanı.
+        /// </summary>
+        public static string ChangeTime {
+            get {
+                return ResourceManager.GetString("ChangeTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Şehir.
         /// </summary>
         public static string City {
@@ -943,6 +952,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to İşlem Tipi.
+        /// </summary>
+        public static string OperationType {
+            get {
+                return ResourceManager.GetString("OperationType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Diğer Telefon Numaraları.
         /// </summary>
         public static string OtherPhoneNos {
@@ -1560,6 +1578,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string UserNameSurname {
             get {
                 return ResourceManager.GetString("UserNameSurname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kullanıcı.
+        /// </summary>
+        public static string UserSubMail {
+            get {
+                return ResourceManager.GetString("UserSubMail", resourceCulture);
             }
         }
         

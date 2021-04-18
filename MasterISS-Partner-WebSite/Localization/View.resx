@@ -282,6 +282,9 @@
   <data name="Login" xml:space="preserve">
     <value>Giriş</value>
   </data>
+  <data name="LogOut" xml:space="preserve">
+    <value>Çıkış Yap</value>
+  </data>
   <data name="MailValidError" xml:space="preserve">
     <value>Bu mail zaten mevcut.</value>
   </data>
@@ -398,6 +401,9 @@
   </data>
   <data name="SelectFile" xml:space="preserve">
     <value>Lütfen Dosya Seçiniz</value>
+  </data>
+  <data name="SelectLanguage" xml:space="preserve">
+    <value>Dil Seçiniz</value>
   </data>
   <data name="SelectRole" xml:space="preserve">
     <value>Rol Seçiniz</value>

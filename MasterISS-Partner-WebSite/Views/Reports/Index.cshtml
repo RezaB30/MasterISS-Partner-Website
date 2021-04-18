@@ -1,0 +1,118 @@
+﻿@using MasterISS_Partner_WebSite.Localization
+@using MasterISS_Partner_WebSite.ViewModels
+@using PagedList.Mvc
+@model  PagedList.StaticPagedList<OperationHistoryListViewModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var search = ViewBag.Seach as OperationTypeHistoryFilterViewModel ?? new OperationTypeHistoryFilterViewModel();
+}
+
+<div class="container my-8">
+
+    <div class="col-lg-12 mb-lg-0 mb-6 ">
+        @using (Html.BeginForm("Index", "Reports", FormMethod.Get, new { @class = "mb-15 my-8" }))
+        {
+            <div class="row mb-7 my-4 ">
+                <div class="col-lg-6 mb-lg-0 mb-12">
+                    <label>Tarih Aralığı:</label>
+                    <div class="input-daterange input-group" id="kt_datepicker">
+                        @Html.TextBox("StartDate", search.StartDate, new { @placeholder = DateTime.Now.ToString("dd.MM.yyyy HH:mm"), @class = "form-control" })
+                        <div class="input-group-append">
+                            <span class="input-group-text">
+                                <i class="la la-ellipsis-h"></i>
+                            </span>
+                        </div>
+                        @Html.TextBox("EndDate", search.EndDate, new { @placeholder = DateTime.Now.ToString("dd.MM.yyyy HH:mm"), @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-lg-0 mb-6">
+                    @Html.LabelFor(m => search.OperationType)
+                    @Html.DropDownList("OperationType", (SelectList)ViewBag.OperationType, View.Select, new { @class = "form-control datatable-input", @data_col_index = "2" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <button type="submit" class="btn btn-primary btn-primary--icon" id="kt_search">
+                        <span>
+                            <i class="la la-search"></i>
+                            <span>@View.Filter</span>
+                        </span>
+                    </button>&nbsp;&nbsp;
+                    <a href="@Url.Action("Index","Reports")" class="btn btn-secondary btn-secondary--icon" id="kt_reset">
+                        <span>
+                            <i class="la la-close"></i>
+                            <span>Sıfırla</span>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="card">
+        <div class="container">
+            <h3 class="my-6 text-info font-size-h4">asasa</h3>
+            @if (ViewBag.ValidationError == null && ViewBag.Max30Days == null && ViewBag.StartTimeBiggerThanEndTime == null && ViewBag.ErrorMessage == null)
+            {
+                <table class="table table-head-custom table-vertical-center table-hover mb-2">
+                    <thead>
+                        <tr class="bg-info text-left">
+                            <th style="min-width: 130px">@Html.DisplayNameFor(m => m.FirstOrDefault().OperationType)</th>
+                            <th style="min-width: 130px">@Html.DisplayNameFor(m => m.FirstOrDefault().TaskNo)</th>
+                            <th style="min-width: 130px">@Html.DisplayNameFor(m => m.FirstOrDefault().UserSubMail)</th>
+                            <th style="min-width: 130px">@Html.DisplayNameFor(m => m.FirstOrDefault().ChangeTime)</th>
+                            <th style="min-width: 130px">@Html.DisplayNameFor(m => m.FirstOrDefault().Description)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td><span class="text-dark-75  d-block font-size-lg " style="min-width: 130px">@Html.DisplayFor(motelItem => item.OperationType)</span></td>
+                                <td><span class="text-dark-75  d-block font-size-lg " style="min-width: 130px">@Html.DisplayFor(motelItem => item.TaskNo)</span></td>
+                                <td><span class="text-dark-75  d-block font-size-lg " style="min-width: 130px">@Html.DisplayFor(motelItem => item.UserSubMail)</span></td>
+                                <td><span class="text-dark-75  d-block font-size-lg " style="min-width: 130px">@Html.DisplayFor(motelItem => item.ChangeTime)</span></td>
+                                <td><span class="text-dark-75  d-block font-size-lg " style="min-width: 130px">@Html.DisplayFor(motelItem => item.Description)</span></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div align="center">
+                    <div class="text-danger">
+                        <span>@ViewBag.Max30Days</span>
+                        <span>@ViewBag.ErrorMessage</span>
+                        <span>@ViewBag.StartTimeBiggerThanEndTime</span>
+                    </div>
+                </div>
+            }
+            @if (Model != null && Model.TotalItemCount > 0)
+            {
+                <div class="card card-custom">
+                    <div class="card-body py-7">
+                        <!--begin::Pagination-->
+                        <div class="d-flex justify-content-between align-items-center flex-wrap">
+                            <div class="d-flex flex-wrap mr-3">
+                                @Html.PagedListPager(Model, page => Url.Action("Index", "Reports", new
+                           {
+                               page = page,
+                               search.StartDate,
+                               search.EndDate,
+                               search.OperationType,
+                           }))
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <span class="text-muted"> @View.Total @Model.TotalItemCount @View.RecordFound @View.OnThisPage @Model.FirstItemOnPage @View.To @Model.LastItemOnPage @View.Showing</span>
+                            </div>
+                        </div>
+                        <!--end:: Pagination-->
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

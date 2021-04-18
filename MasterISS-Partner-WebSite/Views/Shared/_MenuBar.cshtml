@@ -51,7 +51,7 @@
     <!--begin::Header-->
     <div class="offcanvas-header d-flex align-items-center justify-content-between pb-10" kt-hidden-height="56" style="">
         <!--begin::Logo-->
-        <a href="/" class="mr-7">
+        <a href="@Url.Action("Index","Home")" class="mr-7">
             <img alt="Logo" src="~/Content/media/svg/logos/bejjpluslogonew.svg" class="max-h-20px" />
         </a>
         <!--end::Logo-->
@@ -64,89 +64,107 @@
     <div class="offcanvas-content pr-5 mr-n5 scroll ps" style="height: 815px; overflow: hidden;">
         <div class="row gutter-b">
             <!--begin::Item-->
-
-            <div class="col-6">
-                <a href="kampanyalar" class="btn btn-block btn-hover-primary text-warning text-center py-5 px-5" style="background-color: #43257d">
-                    <span class="fas fa-star font-size-h1 menu-icon">
-                    </span>
-                    <span class="d-block font-weight-bold text-white font-size-h8 mt-2">Kampanyalar</span>
-                </a>
-            </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="col-6">
+                    <a href="@Url.Action("Index","QueryInfrastructure")" class="btn btn-block btn-hover-primary text-warning text-center py-5 px-5" style="background-color: #43257d">
+                        <span class="flaticon-placeholder-3 font-size-h2 menu-icon">
+                        </span>
+                        <span class="d-block font-weight-bold text-white font-size-h8 mt-1">@MasterISS_Partner_WebSite.Localization.View.CheckInfrastructure</span>
+                    </a>
+                </div>
+            }
             <!--end::Item-->
             <!--begin::Item-->
+
             <div class="col-6">
                 <a href="basvur" class="btn btn-block btn-hover-primary text-warning text-center py-5 px-5" style="background-color: #43257d">
-                    <span class="fab fa-wpforms font-size-h1 menu-icon">
+                    <span class="fas fa-credit-card font-size-h2 menu-icon">
                     </span>
-                    @*</span>*@
-                    <span class="d-block font-weight-bold text-white font-size-h8 mt-2">Şimdi Başvur</span>
+                    <span class="d-block font-weight-bold text-white font-size-h8 mt-3">Son Tahsilatlar</span>
                 </a>
             </div>
+
             <!--end::Item-->
         </div>
         <div class="row gutter-b">
-            <!--begin::Item-->
-            <div class="col-6">
-                <a href="altyapi-sorgula" class="btn btn-block btn-hover-primary text-center py-5 px-5" style="background-color: #43257d">
-                    <i class="flaticon-placeholder-3 font-size-h1 text-warning"></i>
-                    @*</span>*@
-                    <span class="d-block font-weight-bold text-white font-size-h8 mt-2">Altyapı Sorgula</span>
-                </a>
-            </div>
-            <!--end::Item-->
-            <!--begin::Item-->
-            <div class="col-6">
-                <a href="destek" class="btn btn-block btn-hover-primary text-warning text-center py-5 px-5" style="background-color: #43257d">
-                    <span class="fas fas fa-question-circle font-size-h1 menu-icon">
-                    </span>
-
-                    <span class="d-block font-weight-bold text-white font-size-h8 mt-2">Yardım & Destek</span>
-                </a>
-            </div>
-            <!--end::Item-->
+            @if (User.IsInRole("Sale") && (User.IsInRole("SaleManager") || User.IsInRole("Admin")))
+            {
+                <div class="col-6">
+                    <a href="@Url.Action("NewCustomer","Customer")" class="btn btn-block btn-hover-primary text-center py-5 px-5" style="background-color: #43257d">
+                        <i class="fab fa-wpforms font-size-h1 text-warning"></i>
+                        <span class="d-block font-weight-bold text-white font-size-h8 mt-2">@MasterISS_Partner_WebSite.Localization.View.AddCustomer</span>
+                    </a>
+                </div>
+            }
+            @if (User.IsInRole("Setup") && (User.IsInRole("SetupManager") || User.IsInRole("Admin")))
+            {
+                <div class="col-6">
+                    <a href="@Url.Action("Index","Setup")" class="btn btn-block btn-hover-primary text-warning text-center py-5 px-5" style="background-color: #43257d">
+                        <span class="fas fa-star font-size-h2 menu-icon">
+                        </span>
+                        <span class="d-block font-weight-bold text-white font-size-h8 mt-2">@MasterISS_Partner_WebSite.Localization.View.SetupPanel</span>
+                    </a>
+                </div>
+            }
         </div>
         <div class="row gutter-b">
-            <!--begin::Item-->
-            <div class="col-6">
-                <a href="hiz-testi" class="btn btn-block btn-hover-primary text-warning text-center py-5 px-5" style="background-color: #43257d">
-                    <span class="fas fa-tachometer-alt font-size-h2 menu-icon"></span>
-                    <span class="d-block font-weight-bold text-white font-size-h8 mt-2">Hız Testi</span>
-                </a>
-            </div>
-            <!--end::Item-->
-            <!--begin::Item-->
-            <div class="col-6">
-                <a href="sozlesme-ve-form" class="btn btn-block btn-hover-primary text-warning text-center py-5 px-5" style="background-color: #43257d">
-
-                    <!--begin::Svg Icon-->
-                    <span class="fas fa-file-signature font-size-h1 menu-icon">
-                    </span>
-                    <span class="d-block font-weight-bold text-white font-size-h8 mt-2">Sözleşme / Formlar</span>
-                </a>
-            </div>
+            @if (User.IsInRole("Admin"))
+            {
+                <div class="col-6">
+                    <a href="@Url.Action("Index","UserOperations")" class="btn btn-block btn-hover-primary text-warning text-center py-5 px-5" style="background-color: #43257d">
+                        <span class="fas fa-user-alt font-size-h2 menu-icon"></span>
+                        <span class="d-block font-weight-bold text-white font-size-h8 mt-2">@MasterISS_Partner_WebSite.Localization.View.UserOperations</span>
+                    </a>
+                </div>
+            }
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="col-6">
+                    <a href="@Url.Action("Index","Revenues")" class="btn btn-block btn-hover-primary text-warning text-center py-5 px-5" style="background-color: #43257d">
+                        <span class="fas fa-file-signature font-size-h2 menu-icon">
+                        </span>
+                        <span class="d-block font-weight-bold text-white font-size-h8 mt-2">@MasterISS_Partner_WebSite.Localization.View.RevenuesReports</span>
+                    </a>
+                </div>
+            }
             <!--end::Item-->
         </div>
-        <div class="row">
-            <!--begin::Item-->
-            <div class="col-6">
-                <a href="destek/fatura-odeme" class="btn btn-block btn-hover-primary text-warning text-center py-5 px-5" style="background-color: #43257d">
-                    <span class="fas fa-credit-card font-size-h1 menu-icon ">
-                    </span>
-
-                    <span class="d-block font-weight-bold text-white font-size-h8 mt-2">Fatura Ödeme</span>
-                </a>
+        @if (User.IsInRole("Admin"))
+        {
+            <div class="row gutter-b">
+                <div class="col-12">
+                    <a href="@Url.Action("Index","Reports")" class="btn btn-block btn-hover-primary text-warning text-center py-5 px-5" style="background-color: #43257d">
+                        <span class="fas fa-file-signature font-size-h2 menu-icon">
+                        </span>
+                        <span class="d-block font-weight-bold text-white font-size-h8 mt-2">@MasterISS_Partner_WebSite.Localization.View.Reports</span>
+                    </a>
+                </div>
             </div>
-            <!--end::Item-->
+        }
+        <hr class="my-8">
+        <div class="row ">
             <!--begin::Item-->
-            <div class="col-6">
-                <a href="giris" class="btn btn-block btn-hover-primary btn-info text-warning text-center py-5 px-5" style="background-color: #43257d">
-                    <span class="fas fa-user-alt font-size-h1 menu-icon">
-                    </span>
-
-                    <span class="d-block font-weight-bold text-white font-size-h8 mt-2">Online İşlemler</span>
-                </a>
-            </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="col-6">
+                    @Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.LogOut, "SignOut", "Account", null, new { @class = "btn btn-block btn-sm btn-outline-info text-white font-weight-bolder font-size-h8" })
+                </div>
+            }
             <!--end::Item-->
+
+            <div class="col-6">
+
+                <div class="dropdown">
+                    <button class="btn btn-outline-info btn-block text-white btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dil Seçiniz
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <div class="dropdown-item">@Html.LanguageLink("Türkçe", "tr-tr")</div>
+                        <div class="dropdown-item">@Html.LanguageLink("English", "en-us")</div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div></div>
     </div>
@@ -253,16 +271,15 @@
                                 </li>
                             }
 
-                            @if (User.Identity.IsAuthenticated)
+                            @if (User.IsInRole("Admin"))
                             {
                                 <li class="menu-item menu-item-submenu menu-item-rel" aria-haspopup="true">
-                                    <a href="#" class="menu-link">
+                                    <a href="@Url.Action("Index","Reports")" class="menu-link">
                                         <span class="menu-text">@MasterISS_Partner_WebSite.Localization.View.Reports</span>
                                     </a>
                                 </li>
                             }
-                            <li>@Html.LanguageLink("Türkçe", "tr-tr")</li>
-                            <li>@Html.LanguageLink("English", "en-us")</li>
+
                         </ul>
                     </div>
                 </div>
@@ -275,8 +292,9 @@
                 <div class="topbar-item">
                     <div class="btn btn-icon w-auto d-flex align-items-center btn-lg px-2" id="kt_quick_user_toggle">
                         <div class="d-flex text-right pr-3">
-                            <span class="text-white opacity-75 font-weight-bold font-size-lg d-none d-md-inline mr-1">@User.Identity.Name</span>
-
+                            <span class="navi-text" data-toggle="modal" data-target="#exampleModalCenter5">
+                                <span class="btn-sm btn btn-block text-white btn-outline-info">@User.Identity.Name</span>
+                            </span>
                         </div>
                         <span class="symbol symbol-35">
                             <span class="symbol-label font-size-h5 font-weight-bold text-white bg-white-o-15">
@@ -314,6 +332,67 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="exampleModalCenter5" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="py-2">
+                    <span class="text-dark-75 font-weight-bolder d-block font-size-h5">@User.Identity.Name</span>
+                    @Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.LogOut, "SignOut", "Account", null, new { @class = "btn btn-sm font-size-xs btn-outline-danger my-1" })
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label class="text-info col-form-label">@MasterISS_Partner_WebSite.Localization.View.SelectLanguage</label>                                 <!--begin::Info-->
+                <select class="form-control" data-val="true" data-val-required="Eklenti Tipi alanı boş bırakılamaz." id="AttachmentTypesEnum" name="AttachmentTypesEnum">
+                    <option value="">Türkçe</option>
+                    <option value="1">English</option>
+                </select>
+
+
+                <div class="form-group my-4">
+                    <label class="text-info col-form-label">İletişim Telefonu</label>
+                    <div class="input-group input-group-solid">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="la la-phone"></i>
+                            </span>
+                        </div>
+                        <input type="text" class="form-control form-control-solid" value="536 399 41 16" placeholder="Telefon" readonly="readonly">
+                    </div>
+
+
+                    <label class="text-info col-form-label">Kullanıcı E-Posta</label>
+                    <div class="input-group input-group-solid">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="la la-at"></i>
+                            </span>
+                        </div>
+                        <input type="text" class="form-control form-control-solid" value="kullanıcı@gmail.com" placeholder="E-Posta">
+                    </div>
+
+                    <label class="text-info col-form-label">Şifre</label>
+                    <div class="input-group input-group-solid">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="la la-lock"></i>
+                            </span>
+                        </div>
+                        <input class="form-control form-control-solid" type="text" value="548545" placeholder="Şifre">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
+                        <button type="button" class="btn btn-info font-weight-bold">Değiştir ve Kaydet</button>
+                    </div>                                                     <!--end::Info-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @*</div>*@
 <!--</div>-->
 <!--end::Header-->

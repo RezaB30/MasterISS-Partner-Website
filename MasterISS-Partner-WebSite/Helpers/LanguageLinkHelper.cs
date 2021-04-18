@@ -17,7 +17,6 @@ namespace MasterISS_Partner_WebSite.Helpers
             currentRouteData.TryGetValue("action", out action);
             currentRouteData["sender"] = action;
             currentRouteData["culture"] = culture;
-
             return helper.ActionLink(linkText, "Language", currentRouteData);
         }
     }

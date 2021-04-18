@@ -282,6 +282,9 @@
   <data name="Login" xml:space="preserve">
     <value>Login</value>
   </data>
+  <data name="LogOut" xml:space="preserve">
+    <value>Log Out</value>
+  </data>
   <data name="MailValidError" xml:space="preserve">
     <value>This mail already exists.</value>
   </data>
@@ -398,6 +401,9 @@
   </data>
   <data name="SelectFile" xml:space="preserve">
     <value>Please Select File</value>
+  </data>
+  <data name="SelectLanguage" xml:space="preserve">
+    <value>Select Language</value>
   </data>
   <data name="SelectRole" xml:space="preserve">
     <value>Select Role</value>

@@ -549,29 +549,65 @@
                                         var url='@Url.Action("Index", "UserOperations")';
                                         GetAlert(message, "true",url);
                                     }
-                                    else if (responseStatus =="FailedAndRedirect") {
-                                        var redirectMessage = data.ErrorMessage;
-                                        var urlHome='@Url.Action("Index", "Home")';
-                                        GetAlert(redirectMessage, "false", urlHome);
-                                    }
                                     else {
-                                        $(".error-codes-container").show();
-                                        $(".error-codes").html(data.ErrorMessage);
+                                      var redirectMessage = data.ErrorMessage;
+                                      var urlHome='@Url.Action("Index", "Home")';
+                                      GetAlert(redirectMessage, "false", urlHome);
                                     }
                                 }
                                 else {
                                     console.log("Error");
-                                         }
+                                }
                             },
                         });
                     }
                     else {
                         var url = '@Url.Action("Index", "UserOperations")';
-                        window.location.href = Url;
+                        window.location.href = url;
                     }
                 })
             }
             else {// pasif yapmaya çalışıyor
+                Swal.fire({
+                    title: 'Kullanıcıyı pasif etmek istediğinden eminmisin?',
+                    showDenyButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: `Evet`,
+                    denyButtonText: `Iptal`,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                         $.ajax({
+                            url: '@Url.Action("DisableUser", "UserOperations")',
+                            type: 'GET',
+                            data: {
+                                userId: dataValue,
+                            },
+                            dataType: 'JSON',
+                            success: function (data) {
+                            if (status = "success") {
+                                    var responseStatus = data.status;
+                                    if (responseStatus == "Success") {
+                                        var message = data.message;
+                                        var url='@Url.Action("Index", "UserOperations")';
+                                        GetAlert(message, "true",url);
+                                    }
+                                    else {
+                                       var redirectMessage = data.ErrorMessage;
+                                        var urlHome='@Url.Action("Index", "Home")';
+                                        GetAlert(redirectMessage, "false", urlHome);
+                                    }
+                                }
+                                else {
+                                    console.log("Error");
+                                      }
+                            },
+                        });
+                    }
+                    else {
+                        var url = '@Url.Action("Index", "UserOperations")';
+                        window.location.href = url;
+                    }
+                })
 
             }
         });

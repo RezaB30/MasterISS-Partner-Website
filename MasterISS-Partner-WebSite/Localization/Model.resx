@@ -177,6 +177,9 @@
   <data name="CentralSystemNo" xml:space="preserve">
     <value>Merkezi Sistem Numarası</value>
   </data>
+  <data name="ChangeTime" xml:space="preserve">
+    <value>İşlem Zamanı</value>
+  </data>
   <data name="City" xml:space="preserve">
     <value>Şehir</value>
   </data>
@@ -411,6 +414,9 @@
   <data name="Neighbourhood" xml:space="preserve">
     <value>Semt</value>
   </data>
+  <data name="OperationType" xml:space="preserve">
+    <value>İşlem Tipi</value>
+  </data>
   <data name="OtherPhoneNos" xml:space="preserve">
     <value>Diğer Telefon Numaraları</value>
   </data>
@@ -617,6 +623,9 @@
   </data>
   <data name="UserNameSurname" xml:space="preserve">
     <value>Kullanıcı Adı</value>
+  </data>
+  <data name="UserSubMail" xml:space="preserve">
+    <value>Kullanıcı</value>
   </data>
   <data name="VolumeNo" xml:space="preserve">
     <value>Cilt Numarası</value>

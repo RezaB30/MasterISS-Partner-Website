@@ -143,54 +143,6 @@ namespace MasterISS_Partner_WebSite.Controllers
         }
 
         [Authorize(Roles = "Setup")]
-        public ActionResult EnabledUserInRendezvousTeam(long userId)
-        {
-            using (var db = new PartnerWebSiteEntities())
-            {
-                var rendezvousTeam = db.RendezvousTeam.Find(userId);
-
-                if (rendezvousTeam != null)
-                {
-                    rendezvousTeam.WorkingStatus = true;
-
-                    db.SaveChanges();
-
-                    //LOG
-                    var wrapper = new WebServiceWrapper();
-                    Logger.Info("Enabled User In RendezvousTeam: " + userId + ", by: " + wrapper.GetUserSubMail());
-                    //LOG
-
-                    return RedirectToAction("Successful");
-                }
-                return RedirectToAction("Index", "Home");
-            }
-        }
-
-        [Authorize(Roles = "Setup")]
-        public ActionResult DisabledUserInSetupTeam(long userId)
-        {
-            using (var db = new PartnerWebSiteEntities())
-            {
-                var setupTeam = db.SetupTeam.Find(userId);
-
-                if (setupTeam != null)
-                {
-                    setupTeam.WorkingStatus = false;
-
-                    db.SaveChanges();
-
-                    //LOG
-                    var wrapper = new WebServiceWrapper();
-                    Logger.Info("Disabled User In SetupTeam: " + userId + ", by: " + wrapper.GetUserSubMail());
-                    //LOG
-
-                    return RedirectToAction("Successful");
-                }
-                return RedirectToAction("Index", "Home");
-            }
-        }
-
-        [Authorize(Roles = "Setup")]
         public ActionResult RendezvousTeamList()
         {
             var claimList = new ClaimInfo();
@@ -205,54 +157,6 @@ namespace MasterISS_Partner_WebSite.Controllers
                 }).ToList();
 
                 return View(partnerTeam);
-            }
-        }
-
-        [Authorize(Roles = "Setup")]
-        public ActionResult DisabledUserInRendezvousTeam(long userId)
-        {
-            using (var db = new PartnerWebSiteEntities())
-            {
-                var rendezvousTeam = db.RendezvousTeam.Find(userId);
-
-                if (rendezvousTeam != null)
-                {
-                    rendezvousTeam.WorkingStatus = false;
-
-                    db.SaveChanges();
-
-                    //LOG
-                    var wrapper = new WebServiceWrapper();
-                    Logger.Info("Disabled User In RendezvousTeam: " + userId + ", by: " + wrapper.GetUserSubMail());
-                    //LOG
-
-                    return RedirectToAction("Successful");
-                }
-                return RedirectToAction("Index", "Home");
-            }
-        }
-
-        [Authorize(Roles = "Setup")]
-        public ActionResult EnabledUserInSetupTeam(long userId)
-        {
-            using (var db = new PartnerWebSiteEntities())
-            {
-                var setupTeam = db.SetupTeam.Find(userId);
-
-                if (setupTeam != null)
-                {
-                    setupTeam.WorkingStatus = true;
-
-                    db.SaveChanges();
-
-                    //LOG
-                    var wrapper = new WebServiceWrapper();
-                    Logger.Info("Enabled User In SetupTeam: " + userId + ", by: " + wrapper.GetUserSubMail());
-                    //LOG
-
-                    return RedirectToAction("Successful");
-                }
-                return RedirectToAction("Index", "Home");
             }
         }
 
@@ -1078,27 +982,24 @@ namespace MasterISS_Partner_WebSite.Controllers
                         //LOG
                         db.SaveChanges();
 
-                        return RedirectToAction("Successful");
-
+                        var message = Localization.View.Successful;
+                        return Json(new { status = "Success", message = message }, JsonRequestBehavior.AllowGet);
                     }
                     else
                     {
                         var wrapperGetUserSubMail = new WebServiceWrapper();
                         LoggerError.Fatal($"An error occurred while DisableUser , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapperGetUserSubMail.GetUserSubMail()}");
                         //LOG
-                        TempData["Error"] = new LocalizedList<PermissionListEnum, Localization.PermissionList>().GetDisplayText(response.ResponseMessage.ErrorCode);
-
-                        //return Json();Redirect
+                        var notDefined = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
+                        return Json(new { status = "FailedAndRedirect", ErrorMessage = notDefined }, JsonRequestBehavior.AllowGet);
                     }
                 }
                 else
                 {
-                    //return Json();Redirect
+                    var notDefined = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture);
+                    return Json(new { status = "FailedAndRedirect", ErrorMessage = notDefined }, JsonRequestBehavior.AllowGet);
                 }
             }
-            //LOG
-
-            return RedirectToAction("Index");
         }
 
         public ActionResult Successful()
