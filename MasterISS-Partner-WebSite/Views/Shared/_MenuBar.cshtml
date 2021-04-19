@@ -1,6 +1,6 @@
 ﻿@using MasterISS_Partner_WebSite.Helpers
 @using System.Security.Claims
-@model MasterISS_Partner_WebSite.ViewModels.UserSettingsViewModel
+@using MasterISS_Partner_WebSite.ViewModels
 @{
     var identity = (ClaimsIdentity)User.Identity;
 }
@@ -78,14 +78,16 @@
             }
             <!--end::Item-->
             <!--begin::Item-->
-
-            <div class="col-6">
-                <a href="basvur" class="btn btn-block btn-hover-primary text-warning text-center py-5 px-5" style="background-color: #43257d">
-                    <span class="fas fa-credit-card font-size-h2 menu-icon">
-                    </span>
-                    <span class="d-block font-weight-bold text-white font-size-h8 mt-3">Son Tahsilatlar</span>
-                </a>
-            </div>
+            @if (User.IsInRole("LastPayments") || User.IsInRole("Admin"))
+            {
+                <div class="col-6">
+                    <a href="@Url.Action("LastPayments","Home")" class="btn btn-block btn-hover-primary text-warning text-center py-5 px-5" style="background-color: #43257d">
+                        <span class="fas fa-credit-card font-size-h2 menu-icon">
+                        </span>
+                        <span class="d-block font-weight-bold text-white font-size-h8 mt-3">@MasterISS_Partner_WebSite.Localization.View.LastPayments</span>
+                    </a>
+                </div>
+            }
 
             <!--end::Item-->
         </div>
@@ -228,11 +230,11 @@
                             }
 
 
-                            @if (User.IsInRole("Sale") && (User.IsInRole("SaleManager") || User.IsInRole("Admin")))
+                            @if (User.IsInRole("LastPayments") || User.IsInRole("Admin"))
                             {
                                 <li class="menu-item menu-item-submenu menu-item-rel" aria-haspopup="true">
-                                    <a href="sontahsilat" class="menu-link ">
-                                        <span class="menu-text">Son Tahsilatlar</span>
+                                    <a href="@Url.Action("LastPayments","Home")" class="menu-link ">
+                                        <span class="menu-text">@MasterISS_Partner_WebSite.Localization.View.LastPayments</span>
                                     </a>
                                 </li>
                             }
@@ -349,42 +351,48 @@
             </div>
             <div class="modal-body">
                 <label class="text-info col-form-label">@MasterISS_Partner_WebSite.Localization.View.SelectLanguage</label>                                 <!--begin::Info-->
-                <select class="form-control" data-val="true" data-val-required="Eklenti Tipi alanı boş bırakılamaz." id="AttachmentTypesEnum" name="AttachmentTypesEnum">
+                <select class="form-control language-select" data-val="true" data-val-required="Eklenti Tipi alanı boş bırakılamaz." id="AttachmentTypesEnum" name="AttachmentTypesEnum">
+                    <option value="tr-tr">@MasterISS_Partner_WebSite.Localization.View.Select</option>
                     <option value="tr-tr">Türkçe</option>
                     <option value="en-us">English</option>
                 </select>
-
-
-                <div class="form-group my-4">
-                    <label class="text-info col-form-label">İletişim Telefonu</label>
-                    <div class="input-group input-group-solid">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i class="la la-phone"></i>
-                            </span>
+                @using (Ajax.BeginForm("UserSettings", "Account", new AjaxOptions { HttpMethod = "POST", OnComplete = "GenericResult" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-group my-4">
+                        <label class="text-info col-form-label">İletişim Telefonu</label>
+                        <div class="input-group input-group-solid">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="la la-phone"></i>
+                                </span>
+                            </div>
+                            @Html.TextBox("NumberPhone", "", new { @class = "form-control form-control-solid", @autocomplete = "off", @placeholder = @identity.FindFirst(ClaimTypes.MobilePhone).Value })
                         </div>
-                        @Html.TextBoxFor(m => m.NumberPhone, new { @class = "form-control form-control-solid", @placeholder = @identity.FindFirst(ClaimTypes.MobilePhone).Value })
-                    </div>
 
-                    <label class="text-info col-form-label">Kullanıcı E-Posta</label>
-                    <div class="input-group input-group-solid">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i class="la la-at"></i>
-                            </span>
+                        <div class="error-codes-container" style="display:none">
+                            <div class="separator separator-dashed mt-2 my-4"></div>
+                            <div class="text-danger error-codes" align="center"></div>
+                            <div class="separator separator-dashed mt-2 my-4"></div>
                         </div>
-                        <input type="text" class="form-control form-control-solid" value="@identity.FindFirst(ClaimTypes.Email).Value" placeholder="E-Posta" readonly="readonly">
+
+                        <label class="text-info col-form-label">Kullanıcı E-Posta</label>
+                        <div class="input-group input-group-solid">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="la la-at"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control form-control-solid" placeholder="@identity.FindFirst(ClaimTypes.Email).Value" readonly="readonly">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
+                            <button type="submit" class="btn btn-info font-weight-bold">Değiştir ve Kaydet</button>
+                        </div>                                                     <!--end::Info-->
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
-                        <button type="button" class="btn btn-info font-weight-bold">Değiştir ve Kaydet</button>
-                    </div>                                                     <!--end::Info-->
-                </div>
+                }
             </div>
         </div>
     </div>
 </div>
 
-<script>
-
-</script>

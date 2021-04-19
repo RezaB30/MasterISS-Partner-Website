@@ -199,7 +199,6 @@ namespace MasterISS_Partner_WebSite.Controllers
             return View(adminSignInModel);
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult UserSettings(UserSettingsViewModel userSettingsViewModel)
@@ -215,7 +214,6 @@ namespace MasterISS_Partner_WebSite.Controllers
                     {
                         user.PhoneNumber = userSettingsViewModel.NumberPhone;
                         db.SaveChanges();
-
 
                         var message = Localization.View.Successful;
                         return Json(new { status = "Success", message = message }, JsonRequestBehavior.AllowGet);

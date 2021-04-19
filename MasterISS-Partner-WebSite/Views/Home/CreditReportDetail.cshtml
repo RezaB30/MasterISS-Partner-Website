@@ -1,0 +1,32 @@
+﻿@using MasterISS_Partner_WebSite.Localization
+@using MasterISS_Partner_WebSite.ViewModels
+@model IEnumerable<CreditReportDetailsViewModel>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="card">
+        <div class="container">
+            <h3 class="my-6 text-info font-size-h4">@View.LoadedBalances</h3>
+            <table class="table table-head-custom table-vertical-center table-hover mb-2">
+                <thead>
+                    <tr class="bg-info text-left">
+                        <th style="min-width: 130px">@Html.DisplayNameFor(m => m.FirstOrDefault().Amount)</th>
+                        <th style="min-width: 130px">@Html.DisplayNameFor(m => m.FirstOrDefault().Date)</th>
+                        <th style="min-width: 130px">@Html.DisplayNameFor(m => m.FirstOrDefault().Details)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td><span class="text-dark-75  d-block font-size-lg " style="min-width: 130px">@Html.DisplayFor(motelItem => item.Amount)</span></td>
+                            <td><span class="text-dark-75  d-block font-size-lg " style="min-width: 130px">@Html.DisplayFor(motelItem => item.Date)</span></td>
+                            <td><span class="text-dark-75  d-block font-size-lg " style="min-width: 130px">@Html.DisplayFor(motelItem => item.Details)</span></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

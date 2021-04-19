@@ -16,5 +16,6 @@ namespace MasterISS_Partner_WebSite_Enums
         SetupRevenuesList = 16,
         SaleRevenuesList = 17,
         RendezvousTeam = 18,
+        LastPayments = 19,
     }
 }

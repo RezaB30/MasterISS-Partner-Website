@@ -16,6 +16,19 @@
           <Property Name="ChangeTime" Type="datetime" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="450" Nullable="false" />
         </EntityType>
+        <EntityType Name="PaidBillList">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BillId" Type="bigint" Nullable="false" />
+          <Property Name="BillCost" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="PartnerId" Type="int" Nullable="false" />
+          <Property Name="ChangeTime" Type="datetime" Nullable="false" />
+          <Property Name="UserId" Type="bigint" Nullable="false" />
+          <Property Name="SubscriberNo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SubscriberName" Type="nvarchar" MaxLength="400" Nullable="false" />
+        </EntityType>
         <EntityType Name="PartnerSetupInfo">
           <Key>
             <PropertyRef Name="PartnerId" />
@@ -175,6 +188,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PaidBillList_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="PaidBillList" Type="Self.PaidBillList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PaidBillList">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_RendezvousTeam_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="RendezvousTeam" Type="Self.RendezvousTeam" Multiplicity="0..1" />
@@ -309,6 +334,7 @@
         </Association>
         <EntityContainer Name="MasterISSPartnerWebSiteModelStoreContainer">
           <EntitySet Name="OperationHistory" EntityType="Self.OperationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PaidBillList" EntityType="Self.PaidBillList" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PartnerSetupInfo" EntityType="Self.PartnerSetupInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Permission" EntityType="Self.Permission" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RendezvousTeam" EntityType="Self.RendezvousTeam" Schema="dbo" store:Type="Tables" />
@@ -325,6 +351,10 @@
           <AssociationSet Name="FK_OperationHistory_TaskList" Association="Self.FK_OperationHistory_TaskList">
             <End Role="TaskList" EntitySet="TaskList" />
             <End Role="OperationHistory" EntitySet="OperationHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PaidBillList_User" Association="Self.FK_PaidBillList_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="PaidBillList" EntitySet="PaidBillList" />
           </AssociationSet>
           <AssociationSet Name="FK_RendezvousTeam_User" Association="Self.FK_RendezvousTeam_User">
             <End Role="User" EntitySet="User" />
@@ -437,6 +467,11 @@
           <AssociationSet Name="FK_WorkArea_User" Association="MasterISSPartnerWebSiteModel.FK_WorkArea_User">
             <End Role="User" EntitySet="User" />
             <End Role="WorkArea" EntitySet="WorkArea" />
+          </AssociationSet>
+          <EntitySet Name="PaidBillList" EntityType="MasterISSPartnerWebSiteModel.PaidBillList" />
+          <AssociationSet Name="FK_PaidBillList_User" Association="MasterISSPartnerWebSiteModel.FK_PaidBillList_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="PaidBillList" EntitySet="PaidBillList" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="OperationHistory">
@@ -604,6 +639,7 @@
           <NavigationProperty Name="Role" Relationship="MasterISSPartnerWebSiteModel.FK_User_Role" FromRole="User" ToRole="Role" />
           <NavigationProperty Name="SetupTeam" Relationship="MasterISSPartnerWebSiteModel.FK_SetupTeam_User" FromRole="User" ToRole="SetupTeam" />
           <NavigationProperty Name="WorkArea" Relationship="MasterISSPartnerWebSiteModel.FK_WorkArea_User" FromRole="User" ToRole="WorkArea" />
+          <NavigationProperty Name="PaidBillList" Relationship="MasterISSPartnerWebSiteModel.FK_PaidBillList_User" FromRole="User" ToRole="PaidBillList" />
         </EntityType>
         <EntityType Name="WorkArea">
           <Key>
@@ -761,6 +797,32 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="WorkArea">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PaidBillList">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BillId" Type="Int64" Nullable="false" />
+          <Property Name="BillCost" Type="Decimal" Nullable="false" Precision="6" Scale="2" />
+          <Property Name="PartnerId" Type="Int32" Nullable="false" />
+          <Property Name="ChangeTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="SubscriberNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SubscriberName" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="MasterISSPartnerWebSiteModel.FK_PaidBillList_User" FromRole="PaidBillList" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_PaidBillList_User">
+          <End Type="MasterISSPartnerWebSiteModel.User" Role="User" Multiplicity="1" />
+          <End Type="MasterISSPartnerWebSiteModel.PaidBillList" Role="PaidBillList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PaidBillList">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
@@ -939,6 +1001,20 @@
                 <ScalarProperty Name="ProvinceName" ColumnName="ProvinceName" />
                 <ScalarProperty Name="ProvinceId" ColumnName="ProvinceId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaidBillList">
+            <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.PaidBillList">
+              <MappingFragment StoreEntitySet="PaidBillList">
+                <ScalarProperty Name="SubscriberName" ColumnName="SubscriberName" />
+                <ScalarProperty Name="SubscriberNo" ColumnName="SubscriberNo" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ChangeTime" ColumnName="ChangeTime" />
+                <ScalarProperty Name="PartnerId" ColumnName="PartnerId" />
+                <ScalarProperty Name="BillCost" ColumnName="BillCost" />
+                <ScalarProperty Name="BillId" ColumnName="BillId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

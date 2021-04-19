@@ -18,6 +18,7 @@ namespace MasterISS_Partner_WebSite_Database.Models
         public User()
         {
             this.WorkArea = new HashSet<WorkArea>();
+            this.PaidBillList = new HashSet<PaidBillList>();
         }
     
         public long Id { get; set; }
@@ -34,5 +35,7 @@ namespace MasterISS_Partner_WebSite_Database.Models
         public virtual SetupTeam SetupTeam { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<WorkArea> WorkArea { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PaidBillList> PaidBillList { get; set; }
     }
 }

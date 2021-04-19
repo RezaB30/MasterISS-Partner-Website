@@ -53,6 +53,9 @@
     <Compile Include="Models\OperationHistory.cs">
       <DependentUpon>PartnerEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PaidBillList.cs">
+      <DependentUpon>PartnerEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\PartnerEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

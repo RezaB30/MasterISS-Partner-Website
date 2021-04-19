@@ -61,6 +61,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Son Tahsilatları Görüntüleme.
+        /// </summary>
+        public static string LastPayments {
+            get {
+                return ResourceManager.GetString("LastPayments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Detaylı Kredi Raporu Görüntüleme.
         /// </summary>
         public static string PaymentCreditReportDetail {

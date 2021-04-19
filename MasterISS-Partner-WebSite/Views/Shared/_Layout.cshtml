@@ -46,3 +46,42 @@
     @RenderSection("Javascript", required: false)
 </body>
 </html>
+<script>
+          function GenericResult(data, status) {
+            if (status = "success") {
+                var responseStatus = data.responseJSON.status;
+                if (responseStatus == "Success") {
+                    var message = data.responseJSON.message;
+                    var url='@Url.Action("Index", "Home")';
+                    GetAlert(message, "true",url);
+                }
+                else if (responseStatus =="FailedAndRedirect") {
+                    var redirectMessage = data.responseJSON.ErrorMessage;
+                    var urlHome='@Url.Action("Index", "Home")';
+                    GetAlert(redirectMessage, "false", urlHome);
+                }
+                else {
+                    $(".error-codes-container").show();
+                    $(".error-codes").html(data.responseJSON.ErrorMessage);
+                }
+            }
+            else {
+                console.log("Error");
+            }
+        }
+</script>
+<script>
+    $(".language-select").change(function () {
+        var id = $(this).find(":selected").val();
+        if (id == "tr-tr") {
+            var languageTag = '@Html.LanguageLink("Türkçe", "tr-tr")';
+            var url = $(languageTag).attr("href");
+            window.location.href = url;
+        }
+        else {
+            var languageTag = '@Html.LanguageLink("English", "en-us")';
+            var url = $(languageTag).attr("href");
+            window.location.href = url;
+        }
+    });
+</script>

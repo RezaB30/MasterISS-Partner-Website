@@ -103,5 +103,14 @@ namespace MasterISS_Partner_WebSite.Properties {
                 return ((string)(this["VerimorKey"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public int LastPaymentsTakeValue {
+            get {
+                return ((int)(this["LastPaymentsTakeValue"]));
+            }
+        }
     }
 }

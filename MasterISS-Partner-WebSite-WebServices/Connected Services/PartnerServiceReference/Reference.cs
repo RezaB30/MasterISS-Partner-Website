@@ -5224,6 +5224,9 @@ namespace MasterISS_Partner_WebSite_WebServices.PartnerServiceReference {
         private decimal AmountField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private short CreditTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string DateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -5248,6 +5251,19 @@ namespace MasterISS_Partner_WebSite_WebServices.PartnerServiceReference {
                 if ((this.AmountField.Equals(value) != true)) {
                     this.AmountField = value;
                     this.RaisePropertyChanged("Amount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public short CreditType {
+            get {
+                return this.CreditTypeField;
+            }
+            set {
+                if ((this.CreditTypeField.Equals(value) != true)) {
+                    this.CreditTypeField = value;
+                    this.RaisePropertyChanged("CreditType");
                 }
             }
         }

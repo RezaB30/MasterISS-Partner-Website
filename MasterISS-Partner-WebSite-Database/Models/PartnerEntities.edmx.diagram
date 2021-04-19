@@ -31,6 +31,8 @@
         <AssociationConnector Association="MasterISSPartnerWebSiteModel.FK_TaskFormList_TaskList" />
         <AssociationConnector Association="MasterISSPartnerWebSiteModel.FK_UpdatedSetupStatus_TaskList" />
         <AssociationConnector Association="MasterISSPartnerWebSiteModel.FK_WorkArea_User" />
+        <EntityTypeShape EntityType="MasterISSPartnerWebSiteModel.PaidBillList" Width="1.5" PointX="5.25" PointY="5.5" />
+        <AssociationConnector Association="MasterISSPartnerWebSiteModel.FK_PaidBillList_User" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

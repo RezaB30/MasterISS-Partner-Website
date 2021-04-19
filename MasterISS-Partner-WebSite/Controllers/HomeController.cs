@@ -1,6 +1,7 @@
 ﻿using MasterISS_Partner_WebSite.ViewModels;
 using MasterISS_Partner_WebSite_Database.Models;
 using MasterISS_Partner_WebSite_Enums;
+using MasterISS_Partner_WebSite_Enums.Enums;
 using MasterISS_Partner_WebSite_WebServices.PartnerServiceReference;
 using NLog;
 using RezaB.Data.Localization;
@@ -20,70 +21,6 @@ namespace MasterISS_Partner_WebSite.Controllers
     {
         private static Logger Logger = LogManager.GetLogger("AppLogger");
         private static Logger LoggerError = LogManager.GetLogger("AppLoggerError");
-
-        private string GetPartnerTotalNewSetupTask()
-        {
-            var claimInfo = new ClaimInfo();
-            var partnerId = claimInfo.PartnerId();
-
-            using (var db = new PartnerWebSiteEntities())
-            {
-                var totalNewSetup = db.TaskList.Where(tl => tl.PartnerId == partnerId && tl.TaskStatus == (short)TaskStatusEnum.New).Count();
-                return totalNewSetup.ToString();
-            }
-        }
-
-        private string GetPartnerTotalCompletedSetupTask()
-        {
-            var claimInfo = new ClaimInfo();
-            var partnerId = claimInfo.PartnerId();
-
-            using (var db = new PartnerWebSiteEntities())
-            {
-                var totalCompletedSetup = db.TaskList.Where(tl => tl.PartnerId == partnerId && tl.TaskStatus == (short)TaskStatusEnum.Completed).Count();
-                return totalCompletedSetup.ToString();
-            }
-        }
-
-        private string GetPartnerTotalInProgressSetupTask()
-        {
-            var claimInfo = new ClaimInfo();
-            var partnerId = claimInfo.PartnerId();
-
-            using (var db = new PartnerWebSiteEntities())
-            {
-                var totalInProgressSetup = db.TaskList.Where(tl => tl.PartnerId == partnerId && tl.TaskStatus == (short)TaskStatusEnum.InProgress).Count();
-                return totalInProgressSetup.ToString();
-            }
-        }
-
-        private string CreditReportNotDetail()
-        {
-            var wrapper = new WebServiceWrapper();
-            var response = wrapper.GetCreditReportNotDetail();
-
-            if (response.ResponseMessage.ErrorCode == 0)
-            {
-                var totalCredit = response.CreditReportResponse.Total;
-                return totalCredit.ToString();
-            }
-            else
-            {
-                //LOG
-                wrapper = new WebServiceWrapper();
-                LoggerError.Fatal($"An error occurred while GetCreditReport , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage: {response.ResponseMessage.ErrorMessage} by: {wrapper.GetUserSubMail()}");
-                //LOG
-                return new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
-            }
-        }
-
-        private void PartnerInfos()
-        {
-            ViewBag.TotalInProgressSetup = GetPartnerTotalInProgressSetupTask();
-            ViewBag.TotalCompletedSetup = GetPartnerTotalCompletedSetupTask();
-            ViewBag.TotalNewSetup = GetPartnerTotalNewSetupTask();
-            ViewBag.TotalCredit = CreditReportNotDetail();
-        }
 
         public ActionResult Index()
         {
@@ -134,23 +71,14 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             if (response.ResponseMessage.ErrorCode == 0)
             {
-
-                var detail = new CreditReportViewModel
-                {
-                    Total = response.CreditReportResponse.Total,
-                };
-
-                detail.CreditReportDetailsViewModel = new List<CreditReportDetailsViewModel>();
-
-                var details = response.CreditReportResponse.Details.Select(crr => new CreditReportDetailsViewModel
+                var details = response.CreditReportResponse.Details.Where(creditDetail => creditDetail.CreditType == (int)PaymentReportTypeEnum.Balance).Select(crr => new CreditReportDetailsViewModel
                 {
                     Details = crr.Details,
                     Amount = crr.Amount,
                     Date = crr.Date
                 });
-                detail.CreditReportDetailsViewModel.AddRange(details);
 
-                return View(detail);
+                return View(details);
             }
             //LOG
             wrapper = new WebServiceWrapper();
@@ -167,6 +95,8 @@ namespace MasterISS_Partner_WebSite.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "PaymentManager,Admin")]
+        [Authorize(Roles = "Payment")]
         public ActionResult BillOperations(long[] selectedBills, string SubscriberNo)
         {
             PartnerInfos();
@@ -178,44 +108,117 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                 if (response.ResponseMessage.ErrorCode == 0)
                 {
-                    var userBillList = response.BillListResponse.Bills.OrderBy(blr => blr.IssueDate).Take(selectedBills.Length).Select(blr => blr.ID);
+                    var userBillList = response.BillListResponse.Bills.OrderBy(blr => blr.IssueDate).Take(selectedBills.Length).Select(blr => new { blr.ID, blr.Total });
 
-                    var isMatchedBills = userBillList.SequenceEqual(selectedBills);
+                    var isMatchedBills = userBillList.Select(ubl => ubl.ID).SequenceEqual(selectedBills);
 
                     if (isMatchedBills == false)
                     {
                         ViewBag.PayOldBillError = Localization.BillView.PayOldBillError;
 
-                        return View(viewName: "Index", model: BillList(response));
+                        return View("Index", BillList(response));
                     }
-                    else
-                    {
-                        wrapper = new WebServiceWrapper();
-                        var responsePayBill = wrapper.PayBill(selectedBills);
-                        if (!string.IsNullOrEmpty(responsePayBill.ErrorMessage))
-                        {
-                            //LOG
-                            wrapper = new WebServiceWrapper();
-                            LoggerError.Fatal($"An error occurred while PayBill , PayBillErrorMessage: {responsePayBill}, by: {wrapper.GetUserSubMail()}");
-                            //LOG
 
-                            ViewBag.PayBillError = Localization.BillView.PayBillError;
-                        }
-                        else
-                        {
-                            //LOG
-                            wrapper = new WebServiceWrapper();
-                            Logger.Info($"Customer's bill paid : {SubscriberNo}, BillId: {string.Join(",", selectedBills)} by: {wrapper.GetUserSubMail()}");
-                            //LOG
+                    var billTotalCount = userBillList.Select(ubl => ubl.Total).Sum();
+                    var billList = userBillList.Select(ubl => new UserBillIdAndCost { BillId = ubl.ID, Cost = ubl.Total }).ToArray();
+                    Session["BillsSumCount"] = billTotalCount;
+                    Session["BillList"] = billList;
+                    Session["SubsNo"] = SubscriberNo;
+                    Session["SubsName"] = response.BillListResponse.SubscriberName;
 
-                            return RedirectToAction("Succesfull");
-                        }
-                    }
+                    ViewBag.SumCount = billTotalCount;
+                    return View("ConfirmBills");
                 }
-                return View(viewName: "Index", model: BillList(response));
+                return View("Index", BillList(response));
             }
             return RedirectToAction("Index");
         }
+
+        private void RemoveSessionsByBillOperations()
+        {
+            Session.Remove("BillsSumCount");
+            Session.Remove("BillList");
+            Session.Remove("SubsNo");
+            Session.Remove("SubsName");
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "PaymentManager,Admin")]
+        [Authorize(Roles = "Payment")]
+        public ActionResult ConfirmBills()
+        {
+            var wrapper = new WebServiceWrapper();
+            var claimInfo = new ClaimInfo();
+            var selectedBills = Session["BillList"] as UserBillIdAndCost[];
+            var billSubscriberName = Session["SubsName"].ToString();
+            var billSubscriberNo = Session["SubsNo"].ToString();
+            if (selectedBills != null && selectedBills.Count() > 0)
+            {
+                var billsId = selectedBills.Select(sb => sb.BillId).ToArray();
+                var responsePayBill = wrapper.PayBill(billsId);
+
+
+                if (!string.IsNullOrEmpty(responsePayBill.ErrorMessage))
+                {
+                    //LOG
+                    wrapper = new WebServiceWrapper();
+                    LoggerError.Fatal($"An error occurred while PayBill , PayBillErrorMessage: {responsePayBill.ErrorMessage}, by: {wrapper.GetUserSubMail()}");
+                    //LOG
+                    RemoveSessionsByBillOperations();
+
+                    var errorMessage = responsePayBill.ErrorMessage;
+                    return Json(new { status = "FailedAndRedirect", ErrorMessage = errorMessage }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    using (var db = new PartnerWebSiteEntities())
+                    {
+                        var paidBillList = selectedBills.Select(sb => new PaidBillList
+                        {
+                            BillCost = sb.Cost,
+                            BillId = sb.BillId,
+                            ChangeTime = DateTime.Now,
+                            PartnerId = claimInfo.PartnerId(),
+                            UserId = claimInfo.UserId(),
+                            SubscriberName = billSubscriberName,
+                            SubscriberNo = billSubscriberNo
+                        });
+
+                        db.PaidBillList.AddRange(paidBillList);
+                        db.SaveChanges();
+
+                        RemoveSessionsByBillOperations();
+
+                        var message = Localization.View.Successful;
+                        return Json(new { status = "Success", message = message }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+            else
+            {
+                RemoveSessionsByBillOperations();
+                var notDefined = Localization.BillView.PayBillError;
+                return Json(new { status = "FailedAndRedirect", ErrorMessage = notDefined }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [Authorize(Roles = "LastPayments,Admin")]
+        public ActionResult LastPayments()
+        {
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var lastPaymentList = db.PaidBillList.OrderByDescending(pbl => pbl.ChangeTime).Take(Properties.Settings.Default.LastPaymentsTakeValue).Select(pbl => new LastPaymentListViewModel
+                {
+                    Amount = pbl.BillCost,
+                    PaymentDate = pbl.ChangeTime,
+                    SubcriberName = pbl.SubscriberName,
+                    SubcriberNo = pbl.SubscriberNo
+                }).ToList();
+
+                return View(lastPaymentList);
+            }
+        }
+
         private BillCollectionViewModel BillList(PartnerServiceBillListResponse response)
         {
             var billList = new BillCollectionViewModel()
@@ -231,6 +234,119 @@ namespace MasterISS_Partner_WebSite.Controllers
                 })
             };
             return billList;
+        }
+
+        private string GetPartnerTotalNewSetupTask()
+        {
+            if (User.IsInRole("Setup") && (User.IsInRole("Admin") || User.IsInRole("SetupManager") || User.IsInRole("RendezvousTeam")))
+            {
+                var claimInfo = new ClaimInfo();
+                var partnerId = claimInfo.PartnerId();
+
+                using (var db = new PartnerWebSiteEntities())
+                {
+                    var totalNewSetup = db.TaskList.Where(tl => tl.PartnerId == partnerId && tl.TaskStatus == (short)TaskStatusEnum.New).Count();
+                    return totalNewSetup.ToString();
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private string GetPartnerTotalCompletedSetupTask()
+        {
+            if (User.IsInRole("Setup") && (User.IsInRole("Admin") || User.IsInRole("SetupManager") || User.IsInRole("RendezvousTeam")))
+            {
+                var claimInfo = new ClaimInfo();
+                var partnerId = claimInfo.PartnerId();
+
+                using (var db = new PartnerWebSiteEntities())
+                {
+                    var totalCompletedSetup = db.TaskList.Where(tl => tl.PartnerId == partnerId && tl.TaskStatus == (short)TaskStatusEnum.Completed).Count();
+                    return totalCompletedSetup.ToString();
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private string GetPartnerTotalInProgressSetupTask()
+        {
+            if (User.IsInRole("Setup") && (User.IsInRole("Admin") || User.IsInRole("SetupManager") || User.IsInRole("RendezvousTeam")))
+            {
+                var claimInfo = new ClaimInfo();
+                var partnerId = claimInfo.PartnerId();
+
+                using (var db = new PartnerWebSiteEntities())
+                {
+                    var totalInProgressSetup = db.TaskList.Where(tl => tl.PartnerId == partnerId && tl.TaskStatus == (short)TaskStatusEnum.InProgress).Count();
+                    return totalInProgressSetup.ToString();
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private string CreditReportNotDetail()
+        {
+            if (User.IsInRole("Admin") || User.IsInRole("PaymentCreditReportNotDetail"))
+            {
+                var wrapper = new WebServiceWrapper();
+                var response = wrapper.GetCreditReportNotDetail();
+
+                if (response.ResponseMessage.ErrorCode == 0)
+                {
+                    var totalCredit = response.CreditReportResponse.Total;
+                    return totalCredit.ToString();
+                }
+                else
+                {
+                    //LOG
+                    wrapper = new WebServiceWrapper();
+                    LoggerError.Fatal($"An error occurred while GetCreditReport , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage: {response.ResponseMessage.ErrorMessage} by: {wrapper.GetUserSubMail()}");
+                    //LOG
+                    return new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
+                }
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+
+        private string PartnerTodayPaidBillsSum()
+        {
+            if (User.IsInRole("Payment") && (User.IsInRole("Admin") || User.IsInRole("PaymentManager")))
+            {
+                var claimInfo = new ClaimInfo();
+                var partnerId = claimInfo.PartnerId();
+                using (var db = new PartnerWebSiteEntities())
+                {
+                    var total = db.PaidBillList.Where(pbl => pbl.PartnerId == partnerId).Select(pbl => pbl.BillCost).Sum();
+                    return total.ToString();
+                }
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+
+        private void PartnerInfos()
+        {
+            ViewBag.TotalInProgressSetup = GetPartnerTotalInProgressSetupTask();
+            ViewBag.TotalCompletedSetup = GetPartnerTotalCompletedSetupTask();
+            ViewBag.TotalNewSetup = GetPartnerTotalNewSetupTask();
+            ViewBag.TotalCredit = CreditReportNotDetail();
+            ViewBag.SumPaidBills = PartnerTodayPaidBillsSum();
         }
 
     }

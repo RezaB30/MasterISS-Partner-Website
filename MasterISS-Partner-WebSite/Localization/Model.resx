@@ -561,6 +561,12 @@
   <data name="StreetId" xml:space="preserve">
     <value>Sokak</value>
   </data>
+  <data name="SubcriberName" xml:space="preserve">
+    <value>Abone</value>
+  </data>
+  <data name="SubcriberNo" xml:space="preserve">
+    <value>Abone No</value>
+  </data>
   <data name="SubscriberName" xml:space="preserve">
     <value>Abone Adı</value>
   </data>

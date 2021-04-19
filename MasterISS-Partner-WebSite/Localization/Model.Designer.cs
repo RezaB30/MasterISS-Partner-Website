@@ -1393,6 +1393,24 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Abone.
+        /// </summary>
+        public static string SubcriberName {
+            get {
+                return ResourceManager.GetString("SubcriberName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Abone No.
+        /// </summary>
+        public static string SubcriberNo {
+            get {
+                return ResourceManager.GetString("SubcriberNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Abone Adı.
         /// </summary>
         public static string SubscriberName {

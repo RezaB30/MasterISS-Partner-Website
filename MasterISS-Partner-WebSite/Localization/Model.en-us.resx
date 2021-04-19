@@ -561,6 +561,12 @@
   <data name="StreetId" xml:space="preserve">
     <value>Street</value>
   </data>
+  <data name="SubcriberName" xml:space="preserve">
+    <value>Subcriber</value>
+  </data>
+  <data name="SubcriberNo" xml:space="preserve">
+    <value>Subcriber No</value>
+  </data>
   <data name="SubscriberName" xml:space="preserve">
     <value>Subscriber Name</value>
   </data>

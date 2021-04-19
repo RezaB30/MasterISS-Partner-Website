@@ -1,0 +1,54 @@
+﻿@using MasterISS_Partner_WebSite.ViewModels
+@using MasterISS_Partner_WebSite.Localization
+@model  IEnumerable<LastPaymentListViewModel>
+@{
+    ViewBag.Title = "LastPayments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="container pb-5">
+        <div class="card ">
+            <div class="container">
+                <h3 class="my-6 text-info font-size-h4">Son Tahsilatlar</h3>
+                <div class="table-responsive">
+                    <span class="text-dark-75 mt-3 font-size-lg">Son 10 kayıt listelenmektedir</span>
+                    <table class="table table-head-custom table-vertical-center table-hover mb-2">
+                        <thead>
+                            <tr class="bg-info text-left">
+                                <th style="min-width: 130px">@Html.DisplayNameFor(m => m.FirstOrDefault().SubcriberName)</th>
+                                <th style="min-width: 130px">@Html.DisplayNameFor(m => m.FirstOrDefault().SubcriberNo)</th>
+                                <th style="min-width: 130px">@Html.DisplayNameFor(m => m.FirstOrDefault().PaymentDate)</th>
+                                <th style="min-width: 130px">@Html.DisplayNameFor(m => m.FirstOrDefault().Amount)</th>
+                                <th style="min-width: 130px">Durum</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <span class="text-dark-75  d-block font-size-lg " style="min-width: 130px">@Html.DisplayFor(modelItem=>item.SubcriberName)</span>
+                                    </td>
+                                    <td>
+                                        <span class="text-dark-75  d-block font-size-lg " style="min-width: 130px">@Html.DisplayFor(modelItem => item.SubcriberNo)</span>
+                                    </td>
+                                    <td>
+                                        <span class="text-dark-75  d-block font-size-lg " style="min-width: 130px">@Html.DisplayFor(modelItem => item.PaymentDate)</span>
+                                    </td>
+                                    <td>
+                                        <span class="text-dark-75  d-block font-size-lg">@Html.DisplayFor(modelItem => item.Amount)</span>
+                                    </td>
+
+                                    <td>
+                                        <span class="label label-lg label-light-primary label-inline">Ödendi</span>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!--end::Table-->
+            </div>
+
+        </div>
+    </div>

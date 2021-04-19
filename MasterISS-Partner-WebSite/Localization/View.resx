@@ -264,6 +264,9 @@
   <data name="IDInfo" xml:space="preserve">
     <value>Kimlik Bilgileriniz</value>
   </data>
+  <data name="LastPayments" xml:space="preserve">
+    <value>Son Tahsilatlar</value>
+  </data>
   <data name="LastSessionInfo" xml:space="preserve">
     <value>Son Oturum Bilgileri</value>
   </data>
@@ -278,6 +281,9 @@
   </data>
   <data name="Load" xml:space="preserve">
     <value>Yükle</value>
+  </data>
+  <data name="LoadedBalances" xml:space="preserve">
+    <value>Yüklenen Bakiyeler</value>
   </data>
   <data name="Login" xml:space="preserve">
     <value>Giriş</value>
@@ -497,6 +503,9 @@
   </data>
   <data name="ValidWorkArea" xml:space="preserve">
     <value>Bu adres zaten mevcut.</value>
+  </data>
+  <data name="ViewingLoadedBalances" xml:space="preserve">
+    <value>Yüklenen Bakiyeleri Görüntüle</value>
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>Hoşgeldiniz!</value>

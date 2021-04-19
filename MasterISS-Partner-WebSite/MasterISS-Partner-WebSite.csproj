@@ -374,12 +374,14 @@
     <Compile Include="ViewModels\Account\UserSignInViewModel.cs" />
     <Compile Include="ViewModels\AddPermissionViewModel.cs" />
     <Compile Include="ViewModels\FilterUserViewModel.cs" />
+    <Compile Include="ViewModels\LastPaymentListViewModel.cs" />
     <Compile Include="ViewModels\ListRendezvousTeamViewModel.cs" />
     <Compile Include="ViewModels\OperationHistoryListViewModel.cs" />
     <Compile Include="ViewModels\OperationTypeHistoryFilterViewModel.cs" />
     <Compile Include="ViewModels\SendTaskToSchedulerViewModel.cs" />
     <Compile Include="ViewModels\SetupTeamStaffsToMatchedTheTask.cs" />
     <Compile Include="ViewModels\SetupTeamWorkingDaysAndHoursViewModel.cs" />
+    <Compile Include="ViewModels\UserBillIdAndCost.cs" />
     <Compile Include="ViewModels\UserSettingsViewModel.cs" />
     <Compile Include="ViewModels\WorkAreaSetupTeamUserViewModel.cs" />
     <Compile Include="ViewModels\BillCollectionViewModel.cs" />
@@ -2091,6 +2093,9 @@
     <Content Include="Views\Setup\_UpdateTaskStatusNotRendezvous.cshtml" />
     <Content Include="Views\Setup\_SendTaskToScheduler.cshtml" />
     <Content Include="Views\Reports\Index.cshtml" />
+    <Content Include="Views\Home\ConfirmBills.cshtml" />
+    <Content Include="Views\Home\LastPayments.cshtml" />
+    <Content Include="Views\Home\CreditReportDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

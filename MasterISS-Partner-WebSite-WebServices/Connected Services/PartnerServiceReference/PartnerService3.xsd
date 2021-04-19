@@ -184,6 +184,7 @@
   <xs:complexType name="CreditChangeItem">
     <xs:sequence>
       <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="CreditType" type="xs:short" />
       <xs:element minOccurs="0" name="Date" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Details" nillable="true" type="xs:string" />
     </xs:sequence>

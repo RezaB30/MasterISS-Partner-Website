@@ -264,6 +264,9 @@
   <data name="IDInfo" xml:space="preserve">
     <value>Your Identity Information</value>
   </data>
+  <data name="LastPayments" xml:space="preserve">
+    <value>Last Payments</value>
+  </data>
   <data name="LastSessionInfo" xml:space="preserve">
     <value>Last Session Info</value>
   </data>
@@ -278,6 +281,9 @@
   </data>
   <data name="Load" xml:space="preserve">
     <value>Load</value>
+  </data>
+  <data name="LoadedBalances" xml:space="preserve">
+    <value>Loaded Balances</value>
   </data>
   <data name="Login" xml:space="preserve">
     <value>Login</value>
@@ -497,6 +503,9 @@
   </data>
   <data name="ValidWorkArea" xml:space="preserve">
     <value>This address already exists.</value>
+  </data>
+  <data name="ViewingLoadedBalances" xml:space="preserve">
+    <value>Viewing Loaded Balances</value>
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>Welcome!</value>

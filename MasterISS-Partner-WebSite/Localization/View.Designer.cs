@@ -502,6 +502,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Son Tahsilatlar.
+        /// </summary>
+        public static string LastPayments {
+            get {
+                return ResourceManager.GetString("LastPayments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Son Oturum Bilgileri.
         /// </summary>
         public static string LastSessionInfo {
@@ -543,6 +552,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string Load {
             get {
                 return ResourceManager.GetString("Load", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yüklenen Bakiyeler.
+        /// </summary>
+        public static string LoadedBalances {
+            get {
+                return ResourceManager.GetString("LoadedBalances", resourceCulture);
             }
         }
         
@@ -1200,6 +1218,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string ValidWorkArea {
             get {
                 return ResourceManager.GetString("ValidWorkArea", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yüklenen Bakiyeleri Görüntüle.
+        /// </summary>
+        public static string ViewingLoadedBalances {
+            get {
+                return ResourceManager.GetString("ViewingLoadedBalances", resourceCulture);
             }
         }
         

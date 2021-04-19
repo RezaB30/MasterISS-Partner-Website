@@ -29,5 +29,8 @@
     <Setting Name="VerimorKey" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Kf1056629-c65a-47c7-9bff-c42471d167cb</Value>
     </Setting>
+    <Setting Name="LastPaymentsTakeValue" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
