@@ -348,6 +348,9 @@
   <data name="Remove" xml:space="preserve">
     <value>Kaldır</value>
   </data>
+  <data name="ReplacedByNetspeed" xml:space="preserve">
+    <value>Netspeed Tarafından Değiştirildi</value>
+  </data>
   <data name="Reports" xml:space="preserve">
     <value>Raporlar</value>
   </data>

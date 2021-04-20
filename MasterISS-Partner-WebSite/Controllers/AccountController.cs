@@ -200,6 +200,7 @@ namespace MasterISS_Partner_WebSite.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult UserSettings(UserSettingsViewModel userSettingsViewModel)
         {

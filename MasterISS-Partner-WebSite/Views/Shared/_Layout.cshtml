@@ -68,7 +68,18 @@
             else {
                 console.log("Error");
             }
-        }
+    }
+
+    $(function () {
+        $('.menu-item a').filter(function () {
+            return this.href == location.href
+        }).parent().addClass('menu-item-active').siblings().removeClass('menu-item-active');
+
+        $('.menu-item a').click(function () {
+            $(this).parent().addClass('menu-item-active').siblings().removeClass('menu-item-active')
+        });
+    });
+
 </script>
 <script>
     $(".language-select").change(function () {

@@ -212,7 +212,7 @@
                                     <div class="separator separator-dashed mt-1 my-1"></div>
                                     <div class="d-flex mb-2">
                                         <span class="text-dark-50 flex-root font-weight-bold">müşteriyi ara</span>
-                                        <span class="text-dark flex-root font-weight-bold">@Html.ActionLink("ara", "CallCustomer", new { taskNo = item.TaskNo })</span>
+                                        <span class="text-dark flex-root font-weight-bold"><input type="button" class="btn-sm btn btn-danger call-customer-button" value="ara" dataValue="@item.TaskNo" /></span>
                                     </div>
                                     <div class="separator separator-dashed mt-1 my-1"></div>
                                     <div class="d-flex mb-2">
@@ -261,7 +261,7 @@
 
                                         @if (User.IsInRole("Admin") || User.IsInRole("RendezvousTeam"))
                                         {
-                                            if (!string.IsNullOrEmpty(item.SetupTeamStaffName) && item.IsCorfirmation == false && item.TaskStatusByControl == (int)MasterISS_Partner_WebSite_Enums.TaskStatusEnum.Completed)
+                                            if (item.IsCorfirmation == false && item.TaskStatusByControl == (int)MasterISS_Partner_WebSite_Enums.TaskStatusEnum.Completed)
                                             {
                                                 <div class="separator separator-dashed mt-1 my-1"></div>
                                                 <div class="d-flex mb-2">
@@ -440,13 +440,13 @@
             <div class="modal-body">
                 <!--begin::Info-->
                 <div class="input-daterange input-group" id="kt_datepicker">
-                 @*   @Html.EditorFor(m => m.Latitude, new { htmlAttributes = new { placeholder = Html.DisplayNameFor(m => m.Latitude), @class = "form-control datatable-input" } })*@
+                    @*   @Html.EditorFor(m => m.Latitude, new { htmlAttributes = new { placeholder = Html.DisplayNameFor(m => m.Latitude), @class = "form-control datatable-input" } })*@
                     <div class="input-group-append">
                         <span class="input-group-text">
                             <i class="la la-ellipsis-h"></i>
                         </span>
                     </div>
-                 @*   @Html.EditorFor(m => m.Longitude, new { htmlAttributes = new { placeholder = Html.DisplayNameFor(m => m.Longitude), @class = "form-control datatable-input" } })*@
+                    @*   @Html.EditorFor(m => m.Longitude, new { htmlAttributes = new { placeholder = Html.DisplayNameFor(m => m.Longitude), @class = "form-control datatable-input" } })*@
                 </div>
 
                 <div class="form-group my-8 mb-1">
@@ -809,6 +809,44 @@
                     },
                 });
         });
+
+
+        $(".call-customer-button").click(function () {
+         var dataValue = $(this).attr("dataValue");
+         Swal.fire({
+            title: 'Müşteriyi Aramak İstediğinize Emin misiniz?',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: `Save`,
+            denyButtonText: `Don't save`,
+         }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '@Url.Action("CallCustomer", "Setup")',
+                    type: 'GET',
+                    data: {
+                        taskNo: dataValue,
+                    },
+                    dataType: 'JSON',
+                    success: function (data) {
+                        var result = data.status;
+                        if (result =="Success") {
+                            var message = data.message;
+                            var url = '@Url.Action("Index", "Setup")';
+                            GetAlert(message, "true", url);
+                        }
+                        else {
+                            var errorMessage = data.ErrorMessage;
+                            var url = '@Url.Action("Index", "Home")';
+                            GetAlert(errorMessage, "false", url);
+                        }
+                    },
+                });
+            } else if (result.isDenied) {
+                Swal.fire('Changes are not saved', '', 'info')
+            }
+        })
+    });
 
 
 

@@ -123,7 +123,7 @@
           <Property Name="ModemName" Type="nvarchar(max)" />
           <Property Name="XDSLType" Type="smallint" />
           <Property Name="CustomerPhoneNo" Type="nvarchar" MaxLength="50" />
-          <Property Name="ContactName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ContactName" Type="nvarchar" MaxLength="450" />
           <Property Name="CustomerType" Type="smallint" />
           <Property Name="ReservationDate" Type="datetime" />
           <Property Name="TaskIssueDate" Type="datetime" />
@@ -143,7 +143,7 @@
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TaskNo" Type="bigint" Nullable="false" />
           <Property Name="UserId" Type="bigint" />
-          <Property Name="FaultCodes" Type="smallint" Nullable="false" />
+          <Property Name="FaultCodes" Type="smallint" />
           <Property Name="Description" Type="nvarchar" MaxLength="450" Nullable="false" />
           <Property Name="ReservationDate" Type="datetime" />
           <Property Name="ChangeTime" Type="datetime" Nullable="false" />
@@ -407,6 +407,7 @@
       <Schema Namespace="MasterISSPartnerWebSiteModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="PartnerWebSiteEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="OperationHistory" EntityType="MasterISSPartnerWebSiteModel.OperationHistory" />
+          <EntitySet Name="PaidBillList" EntityType="MasterISSPartnerWebSiteModel.PaidBillList" />
           <EntitySet Name="PartnerSetupInfo" EntityType="MasterISSPartnerWebSiteModel.PartnerSetupInfo" />
           <EntitySet Name="Permission" EntityType="MasterISSPartnerWebSiteModel.Permission" />
           <EntitySet Name="RendezvousTeam" EntityType="MasterISSPartnerWebSiteModel.RendezvousTeam" />
@@ -423,6 +424,10 @@
           <AssociationSet Name="FK_OperationHistory_TaskList" Association="MasterISSPartnerWebSiteModel.FK_OperationHistory_TaskList">
             <End Role="TaskList" EntitySet="TaskList" />
             <End Role="OperationHistory" EntitySet="OperationHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PaidBillList_User" Association="MasterISSPartnerWebSiteModel.FK_PaidBillList_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="PaidBillList" EntitySet="PaidBillList" />
           </AssociationSet>
           <AssociationSet Name="FK_TaskList_PartnerSetupInfo" Association="MasterISSPartnerWebSiteModel.FK_TaskList_PartnerSetupInfo">
             <End Role="PartnerSetupInfo" EntitySet="PartnerSetupInfo" />
@@ -468,11 +473,6 @@
             <End Role="User" EntitySet="User" />
             <End Role="WorkArea" EntitySet="WorkArea" />
           </AssociationSet>
-          <EntitySet Name="PaidBillList" EntityType="MasterISSPartnerWebSiteModel.PaidBillList" />
-          <AssociationSet Name="FK_PaidBillList_User" Association="MasterISSPartnerWebSiteModel.FK_PaidBillList_User">
-            <End Role="User" EntitySet="User" />
-            <End Role="PaidBillList" EntitySet="PaidBillList" />
-          </AssociationSet>
         </EntityContainer>
         <EntityType Name="OperationHistory">
           <Key>
@@ -485,6 +485,20 @@
           <Property Name="ChangeTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="TaskList" Relationship="MasterISSPartnerWebSiteModel.FK_OperationHistory_TaskList" FromRole="OperationHistory" ToRole="TaskList" />
+        </EntityType>
+        <EntityType Name="PaidBillList">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BillId" Type="Int64" Nullable="false" />
+          <Property Name="BillCost" Type="Decimal" Nullable="false" Precision="6" Scale="2" />
+          <Property Name="PartnerId" Type="Int32" Nullable="false" />
+          <Property Name="ChangeTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="SubscriberNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SubscriberName" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="MasterISSPartnerWebSiteModel.FK_PaidBillList_User" FromRole="PaidBillList" ToRole="User" />
         </EntityType>
         <EntityType Name="PartnerSetupInfo">
           <Key>
@@ -591,7 +605,7 @@
           <Property Name="ModemName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="XDSLType" Type="Int16" />
           <Property Name="CustomerPhoneNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ContactName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ContactName" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
           <Property Name="CustomerType" Type="Int16" />
           <Property Name="ReservationDate" Type="DateTime" Precision="3" />
           <Property Name="TaskIssueDate" Type="DateTime" Precision="3" />
@@ -617,7 +631,7 @@
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TaskNo" Type="Int64" Nullable="false" />
           <Property Name="UserId" Type="Int64" />
-          <Property Name="FaultCodes" Type="Int16" Nullable="false" />
+          <Property Name="FaultCodes" Type="Int16" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
           <Property Name="ReservationDate" Type="DateTime" Precision="3" />
           <Property Name="ChangeTime" Type="DateTime" Nullable="false" Precision="3" />
@@ -635,11 +649,11 @@
           <Property Name="Password" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="IsEnabled" Type="Boolean" Nullable="false" />
           <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PaidBillList" Relationship="MasterISSPartnerWebSiteModel.FK_PaidBillList_User" FromRole="User" ToRole="PaidBillList" />
           <NavigationProperty Name="RendezvousTeam" Relationship="MasterISSPartnerWebSiteModel.FK_RendezvousTeam_User" FromRole="User" ToRole="RendezvousTeam" />
           <NavigationProperty Name="Role" Relationship="MasterISSPartnerWebSiteModel.FK_User_Role" FromRole="User" ToRole="Role" />
           <NavigationProperty Name="SetupTeam" Relationship="MasterISSPartnerWebSiteModel.FK_SetupTeam_User" FromRole="User" ToRole="SetupTeam" />
           <NavigationProperty Name="WorkArea" Relationship="MasterISSPartnerWebSiteModel.FK_WorkArea_User" FromRole="User" ToRole="WorkArea" />
-          <NavigationProperty Name="PaidBillList" Relationship="MasterISSPartnerWebSiteModel.FK_PaidBillList_User" FromRole="User" ToRole="PaidBillList" />
         </EntityType>
         <EntityType Name="WorkArea">
           <Key>
@@ -666,6 +680,18 @@
             </Principal>
             <Dependent Role="OperationHistory">
               <PropertyRef Name="TaskNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PaidBillList_User">
+          <End Type="MasterISSPartnerWebSiteModel.User" Role="User" Multiplicity="1" />
+          <End Type="MasterISSPartnerWebSiteModel.PaidBillList" Role="PaidBillList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PaidBillList">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -801,32 +827,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="PaidBillList">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="BillId" Type="Int64" Nullable="false" />
-          <Property Name="BillCost" Type="Decimal" Nullable="false" Precision="6" Scale="2" />
-          <Property Name="PartnerId" Type="Int32" Nullable="false" />
-          <Property Name="ChangeTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UserId" Type="Int64" Nullable="false" />
-          <Property Name="SubscriberNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="SubscriberName" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="User" Relationship="MasterISSPartnerWebSiteModel.FK_PaidBillList_User" FromRole="PaidBillList" ToRole="User" />
-        </EntityType>
-        <Association Name="FK_PaidBillList_User">
-          <End Type="MasterISSPartnerWebSiteModel.User" Role="User" Multiplicity="1" />
-          <End Type="MasterISSPartnerWebSiteModel.PaidBillList" Role="PaidBillList" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PaidBillList">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -841,6 +841,20 @@
                 <ScalarProperty Name="OperationType" ColumnName="OperationType" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="TaskNo" ColumnName="TaskNo" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaidBillList">
+            <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.PaidBillList">
+              <MappingFragment StoreEntitySet="PaidBillList">
+                <ScalarProperty Name="SubscriberName" ColumnName="SubscriberName" />
+                <ScalarProperty Name="SubscriberNo" ColumnName="SubscriberNo" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ChangeTime" ColumnName="ChangeTime" />
+                <ScalarProperty Name="PartnerId" ColumnName="PartnerId" />
+                <ScalarProperty Name="BillCost" ColumnName="BillCost" />
+                <ScalarProperty Name="BillId" ColumnName="BillId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1001,20 +1015,6 @@
                 <ScalarProperty Name="ProvinceName" ColumnName="ProvinceName" />
                 <ScalarProperty Name="ProvinceId" ColumnName="ProvinceId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PaidBillList">
-            <EntityTypeMapping TypeName="MasterISSPartnerWebSiteModel.PaidBillList">
-              <MappingFragment StoreEntitySet="PaidBillList">
-                <ScalarProperty Name="SubscriberName" ColumnName="SubscriberName" />
-                <ScalarProperty Name="SubscriberNo" ColumnName="SubscriberNo" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="ChangeTime" ColumnName="ChangeTime" />
-                <ScalarProperty Name="PartnerId" ColumnName="PartnerId" />
-                <ScalarProperty Name="BillCost" ColumnName="BillCost" />
-                <ScalarProperty Name="BillId" ColumnName="BillId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

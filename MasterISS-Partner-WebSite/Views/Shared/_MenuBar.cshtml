@@ -134,7 +134,7 @@
             }
             <!--end::Item-->
         </div>
-        @if (User.IsInRole("Admin"))
+        @if (User.IsInRole("Admin") || User.IsInRole("PaymentCreditReportDetail"))
         {
             <div class="row gutter-b">
                 <div class="col-12">
@@ -214,15 +214,15 @@
                     <div id="kt_header_menu" class="header-menu header-menu-left header-menu-mobile header-menu-layout-default">
                         <!--begin::Header Nav-->
                         <ul class="menu-nav">
-                            <li class="menu-item menu-item-active" aria-haspopup="true">
+                            <li class="menu-item" aria-haspopup="true">
                                 <a href="@Url.Action("Index","Home")" class="menu-link">
                                     <span class="menu-text">@MasterISS_Partner_WebSite.Localization.View.HomePage</span>
                                 </a>
                             </li>
-
+                            @*btn-hover-info*@
                             @if (User.Identity.IsAuthenticated)
                             {
-                                <li class="menu-item menu-item-submenu menu-item-rel" aria-haspopup="true">
+                                <li class="menu-item menu-item-submenu" aria-haspopup="true">
                                     <a href="@Url.Action("Index","QueryInfrastructure")" class="menu-link">
                                         <span class="menu-text">@MasterISS_Partner_WebSite.Localization.View.CheckInfrastructure</span>
                                     </a>
@@ -233,7 +233,7 @@
                             @if (User.IsInRole("LastPayments") || User.IsInRole("Admin"))
                             {
                                 <li class="menu-item menu-item-submenu menu-item-rel" aria-haspopup="true">
-                                    <a href="@Url.Action("LastPayments","Home")" class="menu-link ">
+                                    <a href="@Url.Action("LastPayments","Home")" class="menu-link ass">
                                         <span class="menu-text">@MasterISS_Partner_WebSite.Localization.View.LastPayments</span>
                                     </a>
                                 </li>
@@ -275,7 +275,7 @@
                                 </li>
                             }
 
-                            @if (User.IsInRole("Admin"))
+                            @if (User.IsInRole("Admin") || User.IsInRole("PaymentCreditReportDetail"))
                             {
                                 <li class="menu-item menu-item-submenu menu-item-rel" aria-haspopup="true">
                                     <a href="@Url.Action("Index","Reports")" class="menu-link">

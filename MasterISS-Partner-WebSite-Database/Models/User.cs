@@ -17,8 +17,8 @@ namespace MasterISS_Partner_WebSite_Database.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
-            this.WorkArea = new HashSet<WorkArea>();
             this.PaidBillList = new HashSet<PaidBillList>();
+            this.WorkArea = new HashSet<WorkArea>();
         }
     
         public long Id { get; set; }
@@ -30,12 +30,12 @@ namespace MasterISS_Partner_WebSite_Database.Models
         public bool IsEnabled { get; set; }
         public string PhoneNumber { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PaidBillList> PaidBillList { get; set; }
         public virtual RendezvousTeam RendezvousTeam { get; set; }
         public virtual Role Role { get; set; }
         public virtual SetupTeam SetupTeam { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<WorkArea> WorkArea { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PaidBillList> PaidBillList { get; set; }
     }
 }

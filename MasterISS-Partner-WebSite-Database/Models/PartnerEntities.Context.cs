@@ -26,6 +26,7 @@ namespace MasterISS_Partner_WebSite_Database.Models
         }
     
         public virtual DbSet<OperationHistory> OperationHistory { get; set; }
+        public virtual DbSet<PaidBillList> PaidBillList { get; set; }
         public virtual DbSet<PartnerSetupInfo> PartnerSetupInfo { get; set; }
         public virtual DbSet<Permission> Permission { get; set; }
         public virtual DbSet<RendezvousTeam> RendezvousTeam { get; set; }
@@ -39,6 +40,5 @@ namespace MasterISS_Partner_WebSite_Database.Models
         public virtual DbSet<UpdatedSetupStatus> UpdatedSetupStatus { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<WorkArea> WorkArea { get; set; }
-        public virtual DbSet<PaidBillList> PaidBillList { get; set; }
     }
 }

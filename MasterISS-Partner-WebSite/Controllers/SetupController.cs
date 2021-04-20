@@ -121,7 +121,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                 if (getDescription == false)
                 {
-                    return FaultCodesDescription(faultCode.FaultCodes);
+                    return FaultCodesDescription((short)faultCode.FaultCodes);
                 }
                 else
                 {
@@ -162,7 +162,8 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             //        }
             //    }
-            return RedirectToAction("Index", "Home");
+            var message = Localization.View.Successful;
+            return Json(new { status = "Success", message = message }, JsonRequestBehavior.AllowGet);
             //}
         }
 

@@ -32,21 +32,5 @@ namespace MasterISS_Partner_WebSite
                     return TaskStatusEnum.New;
             }
         }
-
-        //public static DateTime? GetCompletionDate(TaskStatuses status)
-        //{
-        //    switch (status)
-        //    {
-        //        case TaskStatuses.Completed:
-        //        case TaskStatuses.Cancelled:
-        //            return DateTime.Now;
-        //        case TaskStatuses.New:
-        //        case TaskStatuses.InProgress:
-        //        case TaskStatuses.Halted:
-        //        default:
-        //            return null;
-        //    }
-        //}
-
     }
 }

@@ -11,5 +11,6 @@ namespace MasterISS_Partner_WebSite_Enums
         GetTaskList = 1,
         UpdatedStatusDatabaseToWebService = 2,
         SharedUnAssignedTask = 3,
+        ValidTaskStatus = 4
     }
 }

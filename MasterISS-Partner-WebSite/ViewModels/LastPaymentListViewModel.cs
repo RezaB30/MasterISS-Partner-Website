@@ -15,6 +15,7 @@ namespace MasterISS_Partner_WebSite.ViewModels
         public string SubcriberNo { get; set; }
 
         [Display(ResourceType = typeof(Localization.Model), Name = "PaymentDate")]
+        [UIHint("DateTimeConverted")]
         public DateTime PaymentDate { get; set; }
 
         [Display(ResourceType = typeof(Localization.Model), Name = "Amount")]

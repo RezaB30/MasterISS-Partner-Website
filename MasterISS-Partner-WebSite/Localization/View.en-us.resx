@@ -348,6 +348,9 @@
   <data name="Remove" xml:space="preserve">
     <value>Remove</value>
   </data>
+  <data name="ReplacedByNetspeed" xml:space="preserve">
+    <value>Replaced By Netspeed</value>
+  </data>
   <data name="Reports" xml:space="preserve">
     <value>Reports</value>
   </data>

@@ -5,6 +5,7 @@ using NLog;
 using RezaB.Scheduling;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -56,6 +57,120 @@ namespace MasterISS_Partner_WebSite_Scheduler
             return calculatedHash;
         }
     }
+
+    public class ValidTaskStatus : AbortableTask
+    {
+        private SetupServiceWrapper SetupServiceWrapper = new SetupServiceWrapper();
+
+        public void Get()
+        {
+            try
+            {
+                SetupServiceWrapper.LoggerError.Fatal($"ASSS1");
+                var datetimeNow = DateTime.Now;
+                var endDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                var startDate = DateTime.Now.AddDays(-29).ToString("yyyy-MM-dd HH:mm:ss"); ;
+                using (var db = new PartnerWebSiteEntities())
+                {
+                    foreach (var item in SetupServiceWrapper.WrapperParameters)
+                    {
+                        var Rand = Guid.NewGuid().ToString("N");
+                        var request = new GetTaskListRequest
+                        {
+                            Culture = SetupServiceWrapper.Culture,
+                            Hash = SetupServiceWrapper.CalculateHash<SHA256>(item.Username + Rand + item.Password + SetupServiceWrapper.Client.GetKeyFragment(item.Username)),
+                            Rand = Rand,
+                            Username = item.Username,
+                            DateSpan = new DateSpan
+                            {
+                                EndDate = endDate,
+                                StartDate = startDate,
+                            }
+                        };
+                        var response = SetupServiceWrapper.Client.GetTaskList(request);
+
+                        if (response.ResponseMessage.ErrorCode != 0)
+                        {
+                            //LOG
+                            SetupServiceWrapper.LoggerError.Fatal($"An error occurred while ValidTaskStatus, ErrorCode:  {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage}, PartnerId:{item.PartnerId}");
+                            //LOG
+                        }
+                        else
+                        {
+                            if (response.SetupTasks.Count() > 0)
+                            {
+                                foreach (var task in response.SetupTasks)
+                                {
+                                    var dbTask = db.TaskList.Find(task.TaskNo);
+                                    if (dbTask != null)
+                                    {
+                                        if (dbTask.TaskStatus != task.TaskStatus)
+                                        {
+                                            dbTask.TaskStatus = task.TaskStatus;
+                                            var updatedTaskStatus = new UpdatedSetupStatus
+                                            {
+                                                ChangeTime = datetimeNow,
+                                                TaskNo = dbTask.TaskNo,
+                                                Description = "Netspeed tarafından değiştirildi",
+                                                UserId = null,
+                                                ReservationDate = null,
+                                                FaultCodes = null,
+                                            };
+                                            db.UpdatedSetupStatus.Add(updatedTaskStatus);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    SchedulerOperationsTime scheduler = new SchedulerOperationsTime
+                    {
+                        Type = (short)SchedulerOperationsType.ValidTaskStatus,
+                        Date = datetimeNow,
+                    };
+                    db.SchedulerOperationsTime.Add(scheduler);
+                    db.SaveChanges();
+                }
+            }
+            catch (DbEntityValidationException dbValEx)
+            {
+                var outputLines = new StringBuilder();
+                foreach (var eve in dbValEx.EntityValidationErrors)
+                {
+                    SetupServiceWrapper.LoggerError.Fatal($"An error occurred while GetTaskList, ErrorMessage:  {eve.Entry.Entity.GetType().Name}{ eve.Entry}");
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        SetupServiceWrapper.LoggerError.Fatal($"An error occurred while GetTaskList, ErrorMessage:  {ve.PropertyName}{ve.ErrorMessage}");
+                    }
+                }
+                SetupServiceWrapper.LoggerError.Fatal($"An error occurred while GetTaskList, ErrorMessage:  {outputLines}");
+            }
+        }
+
+        public override bool Run()
+        {
+            try
+            {
+                if (_isAborted)
+                {
+                    SetupServiceWrapper.LoggerError.Fatal($"ValidTask Aborted");
+                    return false;
+                }
+                SetupServiceWrapper.LoggerError.Fatal($"ass66");
+
+                Get();
+                SetupServiceWrapper.LoggerError.Fatal($"ass67");
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                SetupServiceWrapper.LoggerError.Fatal($"An error occurred while GetTaskList ValidTaskStatus : {ex.Message}");
+                return false;
+            }
+        }
+    }
+
     public class GetTaskListWebServiceToDatabase : AbortableTask
     {
         private SetupServiceWrapper SetupServiceWrapper = new SetupServiceWrapper();
@@ -65,7 +180,7 @@ namespace MasterISS_Partner_WebSite_Scheduler
             try
             {
                 SetupServiceWrapper.LoggerError.Fatal($"ASSS1");
-
+                var datetimeNow = DateTime.Now;
                 var endDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 var startDate = DateTime.Now.AddDays(-30);
                 using (var db = new PartnerWebSiteEntities())
@@ -75,6 +190,7 @@ namespace MasterISS_Partner_WebSite_Scheduler
                     {
                         startDate = lastGetTaskListLoopTime.Date;
                     }
+                    SetupServiceWrapper.LoggerError.Fatal($"ASSS11");
 
                     foreach (var item in SetupServiceWrapper.WrapperParameters)
                     {
@@ -91,8 +207,10 @@ namespace MasterISS_Partner_WebSite_Scheduler
                                 StartDate = startDate.ToString("yyyy-MM-dd HH:mm:ss"),
                             }
                         };
+                        SetupServiceWrapper.LoggerError.Fatal($"ASSS111");
 
                         var response = SetupServiceWrapper.Client.GetTaskList(request);
+                        SetupServiceWrapper.LoggerError.Fatal($"ASSS1111");
 
                         if (response.ResponseMessage.ErrorCode != 0)
                         {
@@ -106,7 +224,7 @@ namespace MasterISS_Partner_WebSite_Scheduler
                             {
                                 foreach (var taskList in response.SetupTasks)
                                 {
-                                    var taskInfo = db.TaskList.Add(new TaskList
+                                    var taskInfo = new TaskList
                                     {
                                         Address = taskList.Address,
                                         PartnerId = item.PartnerId,
@@ -133,25 +251,39 @@ namespace MasterISS_Partner_WebSite_Scheduler
                                         XDSLNo = taskList.XDSLNo,
                                         XDSLType = taskList.XDSLType,
                                         IsConfirmation = false,
-                                    });
+                                    };
                                     db.TaskList.Add(taskInfo);
                                 }
-                                SchedulerOperationsTime scheduler = new SchedulerOperationsTime
-                                {
-                                    Type = (int)SchedulerOperationsType.GetTaskList,
-                                    Date = DateTime.Now
-                                };
-                                db.SchedulerOperationsTime.Add(scheduler);
-                                db.SaveChanges();
+                                SetupServiceWrapper.LoggerError.Fatal($"ASSS11111");
                             }
                         }
                     }
+                    SchedulerOperationsTime scheduler = new SchedulerOperationsTime
+                    {
+                        Type = (short)SchedulerOperationsType.GetTaskList,
+                        Date = datetimeNow,
+                    };
+                    db.SchedulerOperationsTime.Add(scheduler);
+                    db.SaveChanges();
                 }
             }
-            catch (Exception ex)
+            catch (DbEntityValidationException dbValEx)
             {
-                SetupServiceWrapper.LoggerError.Fatal($"An error occurred while GetTaskList, ErrorMessage:  {ex.Message}");
+                var outputLines = new StringBuilder();
+                foreach (var eve in dbValEx.EntityValidationErrors)
+                {
+                    SetupServiceWrapper.LoggerError.Fatal($"An error occurred while GetTaskList, ErrorMessage:  {eve.Entry.Entity.GetType().Name}{ eve.Entry}");
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        SetupServiceWrapper.LoggerError.Fatal($"An error occurred while GetTaskList, ErrorMessage:  {ve.PropertyName}{ve.ErrorMessage}");
+                    }
+                }
+                SetupServiceWrapper.LoggerError.Fatal($"An error occurred while GetTaskList, ErrorMessage:  {outputLines}");
             }
+            //catch (Exception ex)
+            //{
+            //    SetupServiceWrapper.LoggerError.Fatal($"An error occurred while GetTaskList, ErrorMessage:  {ex.Message}");
+            //}
 
         }
         private DateTime? ParseDatetime(string date)
@@ -210,7 +342,7 @@ namespace MasterISS_Partner_WebSite_Scheduler
                         lastChangeTime = lastLoopTime.Date;
                     }
 
-                    var updatedStatus = db.UpdatedSetupStatus.Where(uss => uss.ChangeTime > lastChangeTime && uss.ChangeTime < dateTimeNow && uss.TaskList.IsConfirmation == true).ToList();
+                    var updatedStatus = db.UpdatedSetupStatus.Where(uss => uss.ChangeTime > lastChangeTime && uss.ChangeTime < dateTimeNow && uss.TaskList.IsConfirmation == true && uss.FaultCodes != null).ToList();
 
                     foreach (var item in updatedStatus)
                     {
@@ -225,7 +357,7 @@ namespace MasterISS_Partner_WebSite_Scheduler
                             {
                                 TaskNo = item.TaskNo,
                                 Description = item.Description,
-                                FaultCode = item.FaultCodes,
+                                FaultCode = (short)item.FaultCodes,
                                 ReservationDate = item.ReservationDate == null ? null : item.ReservationDate.Value.ToString("yyyy-MM-dd HH:mm:ss")
                             },
                         };
@@ -290,11 +422,6 @@ namespace MasterISS_Partner_WebSite_Scheduler
                     foreach (var item in SetupServiceWrapper.WrapperParameters)
                     {
                         var partnerRendezvousTeam = db.RendezvousTeam.Where(rt => rt.IsAdmin == false && rt.WorkingStatus == true && rt.User.PartnerId == item.PartnerId && rt.User.IsEnabled).ToList();
-
-                        //if (partnerRendezvousTeam.Count() == 0)///////??????
-                        //{
-                        //    partnerRendezvousTeam = db.RendezvousTeam.Where(rt => rt.IsAdmin == true && rt.User.PartnerId == item.PartnerId).ToList();
-                        //}
 
                         SetupServiceWrapper.LoggerError.Fatal($"ass12 : {string.Join(" , ", partnerRendezvousTeam.Select(p => p.UserId))}");
 
@@ -430,4 +557,5 @@ namespace MasterISS_Partner_WebSite_Scheduler
             }
         }
     }
+
 }

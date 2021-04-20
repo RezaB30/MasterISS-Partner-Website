@@ -64,6 +64,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
 
         [Authorize(Roles = "PaymentCreditReportDetail,Admin")]
+        [Authorize(Roles = "Payment")]
         public ActionResult CreditReportDetail()
         {
             var wrapper = new WebServiceWrapper();
@@ -203,6 +204,7 @@ namespace MasterISS_Partner_WebSite.Controllers
         }
 
         [Authorize(Roles = "LastPayments,Admin")]
+        [Authorize(Roles = "Payment")]
         public ActionResult LastPayments()
         {
             using (var db = new PartnerWebSiteEntities())

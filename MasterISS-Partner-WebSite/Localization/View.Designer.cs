@@ -754,6 +754,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Netspeed Tarafından Değiştirildi.
+        /// </summary>
+        public static string ReplacedByNetspeed {
+            get {
+                return ResourceManager.GetString("ReplacedByNetspeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Raporlar.
         /// </summary>
         public static string Reports {
