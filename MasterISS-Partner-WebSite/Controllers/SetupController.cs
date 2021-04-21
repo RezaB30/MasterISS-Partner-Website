@@ -638,43 +638,32 @@ namespace MasterISS_Partner_WebSite.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult UpdateTaskStatusNotRendezvous(AddTaskStatusUpdateViewModel updateTaskStatusViewModel, HttpPostedFileBase File)
+        public ActionResult UpdateTaskStatusNotRendezvous(AddTaskStatusUpdateViewModel updateTaskStatusViewModel, IEnumerable<HttpPostedFileBase> files)
         {
             ModelState.Remove("PostDateValue");
             ModelState.Remove("PostTimeValue");
             ModelState.Remove("StaffId");
             if (ModelState.IsValid)
             {
-                if (File != null && File.ContentLength > 0)
+                var fileOperations = new FileOperations();
+
+                if (files.Count() > 0 && files != null)
                 {
-                    var fileSize = Convert.ToDecimal(File.ContentLength) / 1024 / 1024;
-
-                    if (Properties.Settings.Default.FileSizeLimit > fileSize)
+                    var validFiles = ValidFiles(files, false);
+                    if (validFiles.Key)
                     {
-                        var extension = Path.GetExtension(File.FileName);
-                        string[] acceptedExtension = { ".jpg", ".png", ".jpeg" };
-
-                        if (acceptedExtension.Contains(extension))
+                        foreach (var file in files)
                         {
-                            var fileOperations = new FileOperations();
-                            var saveForm = fileOperations.SaveSetupFile(File.InputStream, File.FileName, updateTaskStatusViewModel.TaskNo.Value);
+                            var saveForm = fileOperations.SaveSetupFile(file.InputStream, file.FileName, updateTaskStatusViewModel.TaskNo.Value);
                             if (saveForm == false)
                             {
-                                var claimInfo = new ClaimInfo();
-
-                                LoggerError.Fatal($"An error occurred while UpdateTaskStatusNotRendezvous => Post, Save Form return false, by: {claimInfo.UserId()}");
-
                                 return Json(new { status = "Failed", ErrorMessage = Localization.View.Generic200ErrorCodeMessage }, JsonRequestBehavior.AllowGet);
                             }
-                        }
-                        else
-                        {
-                            return Json(new { status = "Failed", ErrorMessage = Localization.View.FaultyFormatUpdateTaskStatus }, JsonRequestBehavior.AllowGet);
                         }
                     }
                     else
                     {
-                        return Json(new { status = "Failed", ErrorMessage = Localization.View.MaxFileSizeError }, JsonRequestBehavior.AllowGet);
+                        return Json(new { status = "Failed", ErrorMessage = validFiles.Value }, JsonRequestBehavior.AllowGet);
                     }
                 }
 
@@ -726,6 +715,43 @@ namespace MasterISS_Partner_WebSite.Controllers
             }
             var errorMessage = string.Join("<br/>", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
             return Json(new { status = "Failed", ErrorMessage = errorMessage }, JsonRequestBehavior.AllowGet);
+        }
+        private KeyValuePair<bool, string> ValidFiles(IEnumerable<HttpPostedFileBase> files, bool couldBePdf)
+        {
+            if (files != null)
+            {
+                foreach (var file in files)
+                {
+                    var fileSize = Convert.ToDecimal(file.ContentLength) / 1024 / 1024;
+                    if (Properties.Settings.Default.FileSizeLimit > fileSize)
+                    {
+                        var extension = Path.GetExtension(file.FileName);
+                        var acceptedExtensionList = new List<string>();
+
+                        if (couldBePdf)
+                        {
+                            string[] acceptedExtensions = { ".jpg", ".pdf", ".png", ".jpeg" };
+
+                            acceptedExtensionList.AddRange(acceptedExtensions);
+                        }
+                        else
+                        {
+                            string[] acceptedExtensions = { ".jpg", ".png", ".jpeg" };
+
+                            acceptedExtensionList.AddRange(acceptedExtensions);
+                        }
+
+                        if (acceptedExtensionList.Contains(extension))
+                        {
+                            return new KeyValuePair<bool, string>(true, null);
+                        }
+
+                        return new KeyValuePair<bool, string>(false, Localization.View.FaultyFormat);
+                    }
+                    return new KeyValuePair<bool, string>(false, Localization.View.MaxFileSizeError);
+                }
+            }
+            return new KeyValuePair<bool, string>(false, Localization.View.SelectFile);
         }
 
 
@@ -1104,60 +1130,50 @@ namespace MasterISS_Partner_WebSite.Controllers
 
         }
 
+
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult UploadDocument(UploadFileRequestViewModel uploadFileRequestViewModel, HttpPostedFileBase File)
+        public ActionResult UploadDocument(UploadFileRequestViewModel uploadFileRequestViewModel, IEnumerable<HttpPostedFileBase> files)
         {
-            ViewBag.AttachmentTypes = AttachmentTypes((int?)uploadFileRequestViewModel.AttachmentTypesEnum ?? null);
-
             if (ModelState.IsValid)
             {
                 var isValidAttachmentType = Enum.IsDefined(typeof(AttachmentTypeEnum), uploadFileRequestViewModel.AttachmentTypesEnum);
 
+                var ass = Request.IsAjaxRequest();
                 if (isValidAttachmentType)
                 {
-                    if (File != null && File.ContentLength > 0)
+                    var validFiles = ValidFiles(files, true);
+                    if (validFiles.Key)
                     {
-                        var fileSize = Convert.ToDecimal(File.ContentLength) / 1024 / 1024;
-
-                        if (Properties.Settings.Default.FileSizeLimit > fileSize)
+                        using (var db = new PartnerWebSiteEntities())
                         {
-                            var extension = Path.GetExtension(File.FileName);
-                            string[] acceptedExtension = { ".jpg", ".pdf", ".png", ".jpeg" };
-
-                            if (acceptedExtension.Contains(extension))
+                            foreach (var file in files)
                             {
                                 var fileOperations = new FileOperations();
 
-                                var saveForm = fileOperations.SaveCustomerForm(File.InputStream, (int)uploadFileRequestViewModel.AttachmentTypesEnum, File.FileName, uploadFileRequestViewModel.TaskNo);
+                                var saveForm = fileOperations.SaveCustomerForm(file.InputStream, (int)uploadFileRequestViewModel.AttachmentTypesEnum, file.FileName, uploadFileRequestViewModel.TaskNo);
                                 if (saveForm == true)
                                 {
-                                    using (var db = new PartnerWebSiteEntities())
+                                    TaskFormList taskFormList = new TaskFormList
                                     {
-                                        TaskFormList taskFormList = new TaskFormList
-                                        {
-                                            AttachmentType = (short)uploadFileRequestViewModel.AttachmentTypesEnum,
-                                            FileName = File.FileName,
-                                            Status = false,
-                                            TaskNo = uploadFileRequestViewModel.TaskNo,
-                                        };
-                                        db.TaskFormList.Add(taskFormList);
-                                        db.SaveChanges();
-                                    }
-
-                                    var message = Localization.View.Successful;
-                                    return Json(new { status = "Success", message = message }, JsonRequestBehavior.AllowGet);
+                                        AttachmentType = (short)uploadFileRequestViewModel.AttachmentTypesEnum,
+                                        FileName = file.FileName,
+                                        Status = false,
+                                        TaskNo = uploadFileRequestViewModel.TaskNo,
+                                    };
+                                    db.TaskFormList.Add(taskFormList);
+                                    db.SaveChanges();
                                 }
                                 else
                                 {
                                     return Json(new { status = "Failed", ErrorMessage = Localization.View.Generic200ErrorCodeMessage }, JsonRequestBehavior.AllowGet);
                                 }
                             }
-                            return Json(new { status = "Failed", ErrorMessage = Localization.View.FaultyFormat }, JsonRequestBehavior.AllowGet);
+                            var message = Localization.View.Successful;
+                            return Json(new { status = "Success", message = message }, JsonRequestBehavior.AllowGet);
                         }
-                        return Json(new { status = "Failed", ErrorMessage = Localization.View.MaxFileSizeError }, JsonRequestBehavior.AllowGet);
                     }
-                    return Json(new { status = "Failed", ErrorMessage = Localization.View.SelectFile }, JsonRequestBehavior.AllowGet);
+                    return Json(new { status = "Failed", ErrorMessage = validFiles.Value }, JsonRequestBehavior.AllowGet);
                 }
                 return Json(new { status = "Failed", ErrorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture) }, JsonRequestBehavior.AllowGet);
             }

@@ -12,7 +12,7 @@
         <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
     </button>
 </div>
-@using (Ajax.BeginForm("UploadDocument", "Setup", new AjaxOptions { HttpMethod = "POST", OnComplete = "GenericResult" }, new { enctype = "multipart/form-data" }))
+@using (Ajax.BeginForm("UploadDocument", "Setup", new AjaxOptions { HttpMethod = "POST", OnComplete = "GenericResult" }, new { @enctype = "multipart/form-data", @name = "myDropzone", @id = "myDropzone" }))
 {
     @Html.AntiForgeryToken();
     <div class="modal-body">
@@ -26,26 +26,22 @@
             <div class="separator separator-dashed mt-2 my-4"></div>
         </div>
 
-
-        <div class="form-group my-8 mb-1">
-            <div class="col-lg-12 col-md-9 col-sm-12">
-                <div class="dropzone dropzone-default dropzone-primary dz-clickable" id="kt_dropzone_1">
-                    <div class="dropzone-msg dz-message needsclick">
-                        <span class="dropzone-msg-desc">Yüklenebilecek maksimum dosya boyutu 10 MB geçmemelidir.</span>
-                        <h3 class="dropzone-msg-title">Dosyaları buraya bırakın veya yüklemek için tıklayın.</h3>
-                        <br />
-                        <input type="file" class="btn btn-light-warning font-weight-bold" name="file" id="file-button" />
-                    </div>
-                </div>
+        <br />
+        <div id="previews" class="dz-default dz-message box__input dropzone dropzone-default dropzone-primary dz-clickable" style="display:none">
+            <div style="text-align:center">
+                <span class="dropzone-msg-desc">Yüklenebilecek maksimum dosya boyutu 10 MB geçmemelidir.</span>
+                <br />
+                <h3 class="dropzone-msg-title">Dosyaları buraya bırakın veya yüklemek için tıklayın.</h3>
             </div>
         </div>
+        <div id="previewFiles"></div>
+        <br />
     </div>
 
     <div class="modal-footer">
         <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
-        <input type="submit" id="form-button" value="@View.Upload" class="btn btn-info font-weight-bold" />
+        <input type="submit" id="Submit" name="Submit" class="btn btn-success m-t-5" value="Submit" />
+
+        @*<input type="submit" id="form-button" value="@View.Upload" class="btn btn-info font-weight-bold" />*@
     </div>
-
 }
-
-

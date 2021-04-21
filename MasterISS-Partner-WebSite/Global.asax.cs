@@ -23,6 +23,8 @@ namespace MasterISS_Partner_WebSite
 
             ModelBinders.Binders[typeof(DateTime?)] = new DateBinder();
             ModelBinders.Binders[typeof(DateTime)] = new DateBinder();
+
+            //ValueProviderFactories.Factories.Add(new JsonValueProviderFactory());
         }
     }
 }

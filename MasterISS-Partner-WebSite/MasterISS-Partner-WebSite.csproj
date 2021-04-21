@@ -1968,6 +1968,7 @@
     <Content Include="Scripts\js\custom-js\leaflet.js" />
     <Content Include="Scripts\js\custom-js\lottie-player.js" />
     <Content Include="Scripts\js\custom-js\maps.js" />
+    <Content Include="Scripts\js\dropzone.js" />
     <Content Include="Scripts\js\plugins.bundle.js" />
     <Content Include="Scripts\js\prismjs.bundle.js" />
     <Content Include="Scripts\js\scripts.bundle.js" />
