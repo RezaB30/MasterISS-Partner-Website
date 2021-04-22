@@ -144,6 +144,12 @@
   <data name="ApplicationInformation" xml:space="preserve">
     <value>Başvuru Bilgileri</value>
   </data>
+  <data name="AreYouSureYouWantToCallTheCustomer" xml:space="preserve">
+    <value>Müşteriyi Aramak İstediğinize Emin Misiniz?</value>
+  </data>
+  <data name="AreYouSureYouWantToConfirm" xml:space="preserve">
+    <value>Teyit Vermek İstediğinize Emin Misiniz?</value>
+  </data>
   <data name="AssignToSetupTeam" xml:space="preserve">
     <value>Kurulum Ekine Ata</value>
   </data>
@@ -416,6 +422,9 @@
   </data>
   <data name="SelectRole" xml:space="preserve">
     <value>Rol Seçiniz</value>
+  </data>
+  <data name="SendTheApplication" xml:space="preserve">
+    <value>Başvuruyu Gönder</value>
   </data>
   <data name="SetupAllowanceList" xml:space="preserve">
     <value>Kurulum Hasılat Listesi</value>

@@ -142,6 +142,24 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Müşteriyi Aramak İstediğinize Emin Misiniz?.
+        /// </summary>
+        public static string AreYouSureYouWantToCallTheCustomer {
+            get {
+                return ResourceManager.GetString("AreYouSureYouWantToCallTheCustomer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teyit Vermek İstediğinize Emin Misiniz?.
+        /// </summary>
+        public static string AreYouSureYouWantToConfirm {
+            get {
+                return ResourceManager.GetString("AreYouSureYouWantToConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kurulum Ekine Ata.
         /// </summary>
         public static string AssignToSetupTeam {
@@ -957,6 +975,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string SelectRole {
             get {
                 return ResourceManager.GetString("SelectRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Başvuruyu Gönder.
+        /// </summary>
+        public static string SendTheApplication {
+            get {
+                return ResourceManager.GetString("SendTheApplication", resourceCulture);
             }
         }
         

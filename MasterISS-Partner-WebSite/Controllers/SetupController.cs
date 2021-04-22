@@ -242,57 +242,19 @@ namespace MasterISS_Partner_WebSite.Controllers
                     db.OperationHistory.Add(operationHistory);
                     db.SaveChanges();
 
-                    return RedirectToAction("Successful");
+                    var message = Localization.View.Successful;
+                    return Json(new { status = "Success", message = message }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
                     //LOG
                     LoggerError.Fatal("An error occurred while SetupController=>GiveConfirmation: Not Found TaskNo in Task Table ");
                     //LOG
-
-                    TempData["GeneralError"] = Localization.View.Generic200ErrorCodeMessage;
-                    return RedirectToAction("Index", "Setup");
+                    var errorMessage = Localization.View.Generic200ErrorCodeMessage;
+                    return Json(new { status = "FailedAndRedirect", ErrorMessage = errorMessage }, JsonRequestBehavior.AllowGet);
                 }
             }
         }
-
-        //public ActionResult AssignTask(long taskNo, long staffId)
-        //{
-        //    using (var db = new PartnerWebSiteEntities())
-        //    {
-        //        var claimInfo = new ClaimInfo();
-        //        var wrapper = new WebServiceWrapper();
-        //        var task = db.TaskList.Where(tl => tl.TaskNo == taskNo).FirstOrDefault();
-        //        if (task != null)
-        //        {
-        //            var validStaff = db.SetupTeam.Find(staffId);
-        //            if (validStaff != null)
-        //            {
-        //                if (task.AssignToRendezvousStaff == null)
-        //                {
-        //                    task.AssignToRendezvousStaff = claimInfo.UserId();
-        //                }
-        //                task.AssignToSetupTeam = staffId;
-
-        //                Logger.Info($"AssignTask TaskNo: {taskNo}, AssignedStaff: {staffId},  by : {claimInfo.UserId()}");
-
-        //                return RedirectToAction("Successful");
-        //            }
-        //            else
-        //            {
-        //                LoggerError.Fatal("An error occurred while SetupController=>AssignTask: Not Found Staff in SetupTeam Table ");
-        //                TempData["GeneralError"] = Localization.View.Generic200ErrorCodeMessage;
-        //                return RedirectToAction("Index", "Setup");
-        //            }
-        //        }
-        //        else
-        //        {
-        //            LoggerError.Fatal("An error occurred while SetupController=>AssignTask: Not Found TaskNo in Task Table ");
-        //            TempData["GeneralError"] = Localization.View.Generic200ErrorCodeMessage;
-        //            return RedirectToAction("Index", "Setup");
-        //        }
-        //    }
-        //}
 
         public ActionResult ListPartnerRendezvousTeam(long taskNo)
         {
@@ -716,6 +678,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             var errorMessage = string.Join("<br/>", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
             return Json(new { status = "Failed", ErrorMessage = errorMessage }, JsonRequestBehavior.AllowGet);
         }
+
         private KeyValuePair<bool, string> ValidFiles(IEnumerable<HttpPostedFileBase> files, bool couldBePdf)
         {
             if (files != null)
@@ -753,7 +716,6 @@ namespace MasterISS_Partner_WebSite.Controllers
             }
             return new KeyValuePair<bool, string>(false, Localization.View.SelectFile);
         }
-
 
         public List<SetupTeamStaffsToMatchedTheTask> ShareSetupStaff(long taskNo)
         {
@@ -828,6 +790,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             }
         }
+
         [HttpPost]
         public ActionResult StaffWorkDays(long staffId)
         {
@@ -1185,38 +1148,44 @@ namespace MasterISS_Partner_WebSite.Controllers
         public ActionResult UpdateClientLocation(long taskNo)
         {
             var updateGPSViewModel = new UpdateClientGPSRequestViewModel { TaskNo = taskNo };
-            return PartialView("_UpdateClientLocation", updateGPSViewModel);
+            return View("_UpdateClientLocation", updateGPSViewModel);
         }
 
-        [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult UpdateClientLocation(UpdateClientGPSRequestViewModel updateClientViewModel)
         {
             if (ModelState.IsValid)
             {
-                var setupWrapper = new SetupServiceWrapper();
-
-                var response = setupWrapper.UpdateClientLocation(updateClientViewModel);
-
-                if (response.ResponseMessage.ErrorCode == 0)
+                if (updateClientViewModel.TaskNo != null)
                 {
+                    var setupWrapper = new SetupServiceWrapper();
+
+                    var response = setupWrapper.UpdateClientLocation(updateClientViewModel);
+
+                    if (response.ResponseMessage.ErrorCode == 0)
+                    {
+                        //LOG
+                        var wrapper = new WebServiceWrapper();
+                        Logger.Info("Updated Client User: " + updateClientViewModel.TaskNo + ", by: " + wrapper.GetUserSubMail());
+                        //LOG
+
+                        var message =Localization.View.Successful;
+                        return Json(new { status = "Success", message = message }, JsonRequestBehavior.AllowGet);
+                    }
+
                     //LOG
-                    var wrapper = new WebServiceWrapper();
-                    Logger.Info("Updated Client User: " + updateClientViewModel.TaskNo + ", by: " + wrapper.GetUserSubMail());
+                    var wrapperByGetUserSubmail = new WebServiceWrapper();
+                    LoggerError.Fatal($"An error occurred while UpdateClientLocation , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapperByGetUserSubmail.GetUserSubMail()}");
                     //LOG
 
-                    return RedirectToAction("Successful", "Setup", new { taskNo = updateClientViewModel.TaskNo });
+                    var responseError = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
+                    return Json(new { status = "FailedAndRedirect", ErrorMessage = responseError }, JsonRequestBehavior.AllowGet);
                 }
-
-                //LOG
-                var wrapperByGetUserSubmail = new WebServiceWrapper();
-                LoggerError.Fatal($"An error occurred while UpdateClientLocation , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapperByGetUserSubmail.GetUserSubMail()}");
-                //LOG
-
-                TempData["UpdateGPSResponse"] = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
-                return RedirectToAction("CustomerDetail", new { taskNo = updateClientViewModel.TaskNo });
+                var notDefined = Localization.View.Generic200ErrorCodeMessage;
+                return Json(new { status = "FailedAndRedirect", ErrorMessage = notDefined }, JsonRequestBehavior.AllowGet);
             }
-            return View(updateClientViewModel);
+            var errorMessage = string.Join("<br/>", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
+            return Json(new { status = "Failed", ErrorMessage = errorMessage }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

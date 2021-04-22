@@ -164,7 +164,7 @@ namespace MasterISS_Partner_WebSite
                 {
                     Latitude = latitude,
                     Longitude = longitude,
-                    TaskNo = updateClientGPSRequestViewModel.TaskNo
+                    TaskNo = updateClientGPSRequestViewModel.TaskNo.Value
                 }
             };
             var response = Client.UpdateClientLocation(request);

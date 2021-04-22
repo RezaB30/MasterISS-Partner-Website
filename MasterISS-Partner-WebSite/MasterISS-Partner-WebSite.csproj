@@ -2090,7 +2090,6 @@
     <Content Include="Views\QueryInfrastructure\Index.cshtml" />
     <Content Include="Views\QueryInfrastructure\ServiceAvailability.cshtml" />
     <Content Include="Views\Customer\asss.cshtml" />
-    <Content Include="Views\Setup\assIndex.cshtml" />
     <Content Include="Views\Setup\_UpdateTaskStatusNotRendezvous.cshtml" />
     <Content Include="Views\Setup\_SendTaskToScheduler.cshtml" />
     <Content Include="Views\Reports\Index.cshtml" />

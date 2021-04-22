@@ -10,34 +10,34 @@ namespace MasterISS_Partner_WebSite.Helpers
     {
         public static MvcHtmlString Map(this HtmlHelper helper, string containerDivClass, string mapName, string searchedPlaceInputPlaceholderName)
         {
-            /*HEADER*/
-            TagBuilder headerTitle = new TagBuilder("h3");
-            headerTitle.SetInnerText(mapName);
+            ///*HEADER*/
+            //TagBuilder headerTitle = new TagBuilder("h3");
+            //headerTitle.SetInnerText(mapName);
 
-            TagBuilder titleTD = new TagBuilder("td");
-            titleTD.InnerHtml += headerTitle.ToString(TagRenderMode.Normal);
+            //TagBuilder titleTD = new TagBuilder("td");
+            //titleTD.InnerHtml += headerTitle.ToString(TagRenderMode.Normal);
 
-            TagBuilder closeButton = new TagBuilder("button");
-            closeButton.Attributes.Add("type", "button");
-            closeButton.Attributes.Add("style", "float:right");
-            closeButton.AddCssClass("close-button");
-            closeButton.SetInnerText("X");
+            //TagBuilder closeButton = new TagBuilder("button");
+            //closeButton.Attributes.Add("type", "button");
+            //closeButton.Attributes.Add("style", "float:right");
+            //closeButton.AddCssClass("close-button");
+            //closeButton.SetInnerText("X");
 
-            TagBuilder buttonTD = new TagBuilder("td");
-            buttonTD.InnerHtml += closeButton.ToString(TagRenderMode.Normal);
+            //TagBuilder buttonTD = new TagBuilder("td");
+            //buttonTD.InnerHtml += closeButton.ToString(TagRenderMode.Normal);
 
-            TagBuilder headerTR = new TagBuilder("tr");
-            headerTR.InnerHtml += titleTD.ToString(TagRenderMode.Normal);
-            headerTR.InnerHtml += buttonTD.ToString(TagRenderMode.Normal);
+            //TagBuilder headerTR = new TagBuilder("tr");
+            //headerTR.InnerHtml += titleTD.ToString(TagRenderMode.Normal);
+            //headerTR.InnerHtml += buttonTD.ToString(TagRenderMode.Normal);
 
-            TagBuilder headerTable = new TagBuilder("table");
-            headerTable.Attributes.Add("style", "width:100%");
-            headerTable.InnerHtml += headerTR.ToString(TagRenderMode.Normal);
+            //TagBuilder headerTable = new TagBuilder("table");
+            //headerTable.Attributes.Add("style", "width:100%");
+            //headerTable.InnerHtml += headerTR.ToString(TagRenderMode.Normal);
 
-            TagBuilder headerModal = new TagBuilder("div");
-            headerModal.AddCssClass("m-header");
-            headerModal.InnerHtml += headerTable.ToString(TagRenderMode.Normal);
-            /*HEADER*/
+            //TagBuilder headerModal = new TagBuilder("div");
+            //headerModal.AddCssClass("m-header");
+            //headerModal.InnerHtml += headerTable.ToString(TagRenderMode.Normal);
+            ///*HEADER*/
 
             /*BODY*/
             TagBuilder searchedPlace = new TagBuilder("input");
@@ -66,7 +66,7 @@ namespace MasterISS_Partner_WebSite.Helpers
 
             TagBuilder contentModal = new TagBuilder("div");
             contentModal.AddCssClass("m-content");
-            contentModal.InnerHtml += headerModal.ToString(TagRenderMode.Normal);
+            //contentModal.InnerHtml += headerModal.ToString(TagRenderMode.Normal);
             contentModal.InnerHtml += bodyModal.ToString(TagRenderMode.Normal);
 
             TagBuilder content = new TagBuilder("div");

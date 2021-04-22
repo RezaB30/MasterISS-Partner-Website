@@ -1,7 +1,5 @@
 ﻿function MapJS(containerId, latitudeInput, longitudeInput) {
-    var container = $(containerId);
-    var closeButton = container.find(".close-button");
-    var selectButton = $(".select-button");
+    var selectButton = $(".customer-localition-info-button");
     function getAddress(latLng) {
         geocoder.geocode({ 'latLng': latLng },
             function (results, status) {
@@ -21,8 +19,8 @@
     }
     var geocoder;
     selectButton.click(
-        function () {
-            container.toggle("fast");
+        function a () {
+            //container.toggle("fast");
             var map = new google.maps.Map(document.getElementById('map_locations'), {
                 center: { lat: 38.70962332680603, lng: 35.484885897812916 },
                 zoom: 6,
@@ -92,11 +90,12 @@
                 });
                 map.fitBounds(bounds);
             });
-        });
+        }
+    );
 
-    closeButton.click(function () {
-        container.hide();
-    })
+    //closeButton.click(function () {
+    //    container.hide();
+    //})
 
     var map = document.createElement('script');
     map.type = 'text/javascript';

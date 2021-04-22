@@ -14,27 +14,23 @@
 </div>
 
 <div class="modal-body">
-    <!--begin::Info-->
+    @*begin::Info*@
     <div class="input-daterange input-group" id="kt_datepicker">
-        @Html.EditorFor(m => m.Latitude, new { htmlAttributes = new { placeholder = Html.DisplayNameFor(m => m.Latitude), @class = "form-control datatable-input" } })
+        @Html.EditorFor(m => m.Latitude, new { htmlAttributes = new { placeholder = Html.DisplayNameFor(m => m.Latitude), @class = "form-control datatable-input", @data_col_index = "5" } })
         <div class="input-group-append">
             <span class="input-group-text">
                 <i class="la la-ellipsis-h"></i>
             </span>
         </div>
-        @Html.EditorFor(m => m.Longitude, new { htmlAttributes = new { placeholder = Html.DisplayNameFor(m => m.Longitude), @class = "form-control datatable-input" } })
+        @Html.EditorFor(m => m.Longitude, new { htmlAttributes = new { placeholder = Html.DisplayNameFor(m => m.Longitude), @class = "form-control datatable-input", @data_col_index = "5" } })
     </div>
 
     <div class="form-group my-8 mb-1">
 
-
     </div>
 </div>
-<div style="background-color:red">
-    @Html.Map("map-container", View.Map, View.SearchedPlace)
-</div>
+@Html.Map("map-container", View.Map, View.SearchedPlace)
 @Html.MapTriggerButton("map-trigger-button", View.Select)
-
 <div class="modal-footer">
     <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
     <button type="button" class="btn btn-info font-weight-bold">Değiştir ve Kaydet</button>
@@ -48,27 +44,23 @@
         @Html.HiddenFor(m => m.TaskNo)
 
         <div>
-                @Html.EditorFor(m => m.Latitude, new { htmlAttributes = new { placeholder = Html.DisplayNameFor(m => m.Latitude) } })
-                @Html.ValidationMessageFor(m => m.Latitude, "", new { @class = "text-danger" })
-            </div>
+            @Html.EditorFor(m => m.Latitude, new { htmlAttributes = new { placeholder = Html.DisplayNameFor(m => m.Latitude) } })
+            @Html.ValidationMessageFor(m => m.Latitude, "", new { @class = "text-danger" })
+        </div>
 
         <div>
-                @Html.EditorFor(m => m.Longitude, new { htmlAttributes = new { placeholder = Html.DisplayNameFor(m => m.Longitude) } })
-                @Html.ValidationMessageFor(m => m.Longitude, "", new { @class = "text-danger" })
-            </div>
+            @Html.EditorFor(m => m.Longitude, new { htmlAttributes = new { placeholder = Html.DisplayNameFor(m => m.Longitude) } })
+            @Html.ValidationMessageFor(m => m.Longitude, "", new { @class = "text-danger" })
+        </div>
+        @Html.Map("map-container", View.Map, View.SearchedPlace)
 
         @Html.MapTriggerButton("map-trigger-button", View.Select)
 
         <input type="submit" value="@View.Update" />
 
     }*@
-
-@*<div>
-        @Html.Map("map-container", View.Map, View.SearchedPlace)
-    </div>*@
-
 @*@section JavaScript{
-    <script>
-        MapJS('.map-container', '#Latitude', '#Longitude')
-    </script>
-}*@
+        <script>
+            MapJS('.map-container', '#Latitude', '#Longitude')
+        </script>
+    }*@

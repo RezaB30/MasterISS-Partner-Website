@@ -15,6 +15,6 @@ namespace MasterISS_Partner_WebSite.ViewModels.Setup
         [Display(ResourceType = typeof(Localization.Model), Name = "Longitude")]
         [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
         public string Longitude { get; set; }
-        public long TaskNo { get; set; }
+        public long? TaskNo { get; set; }
     }
 }

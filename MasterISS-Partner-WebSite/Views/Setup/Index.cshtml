@@ -5,9 +5,12 @@
 @using MasterISS_Partner_WebSite.ViewModels.Setup.Response
 @model  PagedList.StaticPagedList<GetTaskListResponseViewModel>
 @{
+    <link href="~/Content/css/custom-css/map.css" rel="stylesheet" />
+
     ViewBag.Title = View.SetupPanel;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var search = ViewBag.Search as GetTaskListRequestViewModel ?? new GetTaskListRequestViewModel();
+    var map = new UpdateClientGPSRequestViewModel();
 }
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
     <!--begin::Subheader-->
@@ -163,6 +166,7 @@
                                                     <li class="navi-item">
                                                         <div class="navi-link">
                                                             <span class="navi-text" data-toggle="modal" data-target="#exampleModalUpdateLocation">
+                                                                @*@Html.ActionLink(View.UpdateClientLocation, "UpdateClientLocation","Setup",new { taskNo= item.TaskNo },new { @class= "btn-sm btn btn-block btn-outline-info" })*@
                                                                 <input class="btn-sm btn btn-block btn-outline-info customer-localition-info-button" value="@View.UpdateClientLocation" dataValue="@item.TaskNo" />
                                                             </span>
                                                         </div>
@@ -266,7 +270,7 @@
                                                 <div class="separator separator-dashed mt-1 my-1"></div>
                                                 <div class="d-flex mb-2">
                                                     <span class="navi-text">
-                                                        @Html.ActionLink(View.GiveConfirmation, "GiveConfirmation", "Setup", new { taskNo = item.TaskNo }, new { @class = "btn-large my-2 btn btn-outline-success" })
+                                                        <input type="button" class="btn-sm my-2 btn btn-outline-success give-confirmation-button" value="@View.GiveConfirmation" dataValue="@item.TaskNo" />
                                                         &nbsp &nbsp &nbsp
                                                     </span>
                                                 </div>
@@ -426,7 +430,7 @@
 </div>
 
 <div class="modal fade" id="exampleModalUpdateLocation" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <div class="py-2">
@@ -439,34 +443,39 @@
             </div>
 
             <div class="modal-body">
-                <!--begin::Info-->
                 <div class="input-daterange input-group" id="kt_datepicker">
-                    @*   @Html.EditorFor(m => m.Latitude, new { htmlAttributes = new { placeholder = Html.DisplayNameFor(m => m.Latitude), @class = "form-control datatable-input" } })*@
+                    @Html.TextBox("Latitude", null, new { @placeholder = Html.DisplayNameFor(m => map.Latitude), @class = "form-control datatable-input Latitude", @data_col_index = "5" })
                     <div class="input-group-append">
                         <span class="input-group-text">
                             <i class="la la-ellipsis-h"></i>
                         </span>
                     </div>
-                    @*   @Html.EditorFor(m => m.Longitude, new { htmlAttributes = new { placeholder = Html.DisplayNameFor(m => m.Longitude), @class = "form-control datatable-input" } })*@
-                </div>
+                    @Html.TextBox("Longitude", null, new { @class = "form-control datatable-input Longitude", placeholder = Html.DisplayNameFor(m => map.Longitude), @data_col_index = "5" })
 
+                </div>
                 <div class="form-group my-8 mb-1">
                 </div>
             </div>
-            <div style="width:488px;height:400px">
-                @Html.Map("map-container", View.Map, View.SearchedPlace)
+
+            <div class="error-codes-container" style="display:none">
+                <div class="separator separator-dashed mt-2 my-4"></div>
+                <div class="text-danger error-codes" align="center"></div>
+                <div class="separator separator-dashed mt-2 my-4"></div>
             </div>
 
-            @Html.MapTriggerButton("map-trigger-button", View.Select)
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
-                <button type="button" class="btn btn-info font-weight-bold">Değiştir ve Kaydet</button>
-            </div>
+            @Html.Map("map-container", View.Map, View.SearchedPlace)
+            @using (Ajax.BeginForm("UpdateClientLocation", "Setup", new AjaxOptions { HttpMethod = "POST", OnComplete = "GenericResult" }))
+            {
+                @Html.Hidden("Latitude", null, new { @class = "Latitude" })
+                @Html.Hidden("Longitude", null, new { @class = "Longitude" })
+                @Html.Hidden("TaskNo", null, new { @class = "taskNoToUpdateClientLocation" })
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
+                    <input type="submit" class="btn btn-info font-weight-bold" value="ass" />
+                </div>
+            }
         </div>
     </div>
-
-
 </div>
 
 <div class="modal fade" id="exampleModalUpdateTaskNotRendezvous" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
@@ -629,7 +638,7 @@
 
 
     <script>
-        MapJS('.map-container', '#Latitude', '#Longitude');
+        MapJS('.map-container', '.Latitude', '.Longitude');
 
         $(".assign-rendezvous-team-button").click(function () {
             var dataValue = $(this).attr("dataValue");
@@ -852,20 +861,10 @@
                 });
          });
 
-        @*$(".customer-localition-info-button").click(function () {
+        $(".customer-localition-info-button").click(function () {
             var dataValue = $(this).attr("dataValue");
-                $.ajax({
-                    url: '@Url.Action("UpdateClientLocation", "Setup")',
-                    type: 'GET',
-                    data: {
-                        taskNo : dataValue
-                    },
-                    dataType: 'html',
-                    success: function (data) {
-                        $("#CustomerUpdateLocationContainer").html(data);
-                    },
-                });
-         });*@
+            $(".taskNoToUpdateClientLocation").val(dataValue);
+         });
 
         $(".customer-upload-document").click(function () {
             var dataValue = $(this).attr("dataValue");
@@ -917,40 +916,53 @@
 
         $(".call-customer-button").click(function () {
          var dataValue = $(this).attr("dataValue");
-         Swal.fire({
-            title: 'Müşteriyi Aramak İstediğinize Emin misiniz?',
-            showDenyButton: true,
-            showCancelButton: true,
-            confirmButtonText: `Save`,
-            denyButtonText: `Don't save`,
-         }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: '@Url.Action("CallCustomer", "Setup")',
-                    type: 'GET',
-                    data: {
-                        taskNo: dataValue,
-                    },
-                    dataType: 'JSON',
-                    success: function (data) {
-                        var result = data.status;
-                        if (result =="Success") {
-                            var message = data.message;
-                            var url = '@Url.Action("Index", "Setup")';
-                            GetAlert(message, "true", url);
-                        }
-                        else {
-                            var errorMessage = data.ErrorMessage;
-                            var url = '@Url.Action("Index", "Home")';
-                            GetAlert(errorMessage, "false", url);
-                        }
-                    },
-                });
-            } else if (result.isDenied) {
-                Swal.fire('Changes are not saved', '', 'info')
-            }
-        })
-    });
+         var url = '@Url.Action("CallCustomer", "Setup")';
+            var title = '@View.AreYouSureYouWantToCallTheCustomer';
+         GetSwalFireForConfirmation(dataValue,url,title);
+        });
+
+        function GetSwalFireForConfirmation(dataValue,ajaxUrl,title) {
+             Swal.fire({
+                title: title,
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: `Save`,
+                denyButtonText: `Don't save`,
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: ajaxUrl,
+                        type: 'GET',
+                        data: {
+                            taskNo: dataValue,
+                        },
+                        dataType: 'JSON',
+                        success: function (data) {
+                            var result = data.status;
+                            if (result =="Success") {
+                                var message = data.message;
+                                var url = '@Url.Action("Index", "Setup")';
+                                GetAlert(message, "true", url);
+                            }
+                            else {
+                                var errorMessage = data.ErrorMessage;
+                                var url = '@Url.Action("Index", "Home")';
+                                GetAlert(errorMessage, "false", url);
+                            }
+                        },
+                    });
+                } else if (result.isDenied) {
+                    Swal.fire('Changes are not saved', '', 'info')
+                }
+            })
+        }
+
+        $(".give-confirmation-button").click(function () {
+            var dataValue = $(this).attr("dataValue");
+            var url = '@Url.Action("GiveConfirmation","Setup")';
+            var title= '@View.AreYouSureYouWantToConfirm';
+            GetSwalFireForConfirmation(dataValue,url,title);
+        });
 
         $(function () {
             $(".pagination-container").children().children().children().addClass("btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1");

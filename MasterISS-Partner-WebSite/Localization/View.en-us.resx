@@ -144,6 +144,12 @@
   <data name="ApplicationInformation" xml:space="preserve">
     <value>Application Information</value>
   </data>
+  <data name="AreYouSureYouWantToCallTheCustomer" xml:space="preserve">
+    <value>Are You Sure You Want To Call The Customer?</value>
+  </data>
+  <data name="AreYouSureYouWantToConfirm" xml:space="preserve">
+    <value>Are You Sure You Want To Confirm?</value>
+  </data>
   <data name="AssignToSetupTeam" xml:space="preserve">
     <value>Assign To Setup Team</value>
   </data>
@@ -416,6 +422,9 @@
   </data>
   <data name="SelectRole" xml:space="preserve">
     <value>Select Role</value>
+  </data>
+  <data name="SendTheApplication" xml:space="preserve">
+    <value>Send The Application</value>
   </data>
   <data name="SetupAllowanceList" xml:space="preserve">
     <value>Setup Allowance List</value>
