@@ -17,6 +17,7 @@ namespace MasterISS_Partner_WebSite_Enums
         PartnerNotFound = 8,
         SubscriberNotFound = 9,
         InvalidPhoneNo = 10,
+        DefinedTaskCannotBeChanged=12,
         SpecialOfferError = 17,
         TariffNotFound = 18,
         InternalServerError = 199,

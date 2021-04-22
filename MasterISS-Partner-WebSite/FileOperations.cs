@@ -338,7 +338,7 @@ namespace MasterISS_Partner_WebSite
 
         private IFileManager GetLocalFileManager()
         {
-            var rootFolder = Environment.GetEnvironmentVariable("partner_client_root");
+            var rootFolder = Environment.GetEnvironmentVariable(Properties.Settings.Default.EnvironmentVariableRoot);
 
             IFileManager fileManager = new RezaB.Files.Local.LocalFileManager(rootFolder);
 

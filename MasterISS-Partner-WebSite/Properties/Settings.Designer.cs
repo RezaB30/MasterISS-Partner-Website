@@ -112,5 +112,14 @@ namespace MasterISS_Partner_WebSite.Properties {
                 return ((int)(this["LastPaymentsTakeValue"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("RadiusR_Repo")]
+        public string EnvironmentVariableRoot {
+            get {
+                return ((string)(this["EnvironmentVariableRoot"]));
+            }
+        }
     }
 }

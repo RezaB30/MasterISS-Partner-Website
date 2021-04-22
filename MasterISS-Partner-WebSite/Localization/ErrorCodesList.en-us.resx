@@ -120,6 +120,9 @@
   <data name="AuthenticationFailed" xml:space="preserve">
     <value>Authentication Failed</value>
   </data>
+  <data name="DefinedTaskCannotBeChanged" xml:space="preserve">
+    <value>Defined Task Cannot Be Changed</value>
+  </data>
   <data name="Failed" xml:space="preserve">
     <value>An Error Has Occurred. Try again later.</value>
   </data>

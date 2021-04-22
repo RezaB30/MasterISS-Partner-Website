@@ -70,6 +70,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tanımlanan Görev Değiştirilemez.
+        /// </summary>
+        public static string DefinedTaskCannotBeChanged {
+            get {
+                return ResourceManager.GetString("DefinedTaskCannotBeChanged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bir Hata Oluştu. Daha sonra tekrar deneyiniz..
         /// </summary>
         public static string Failed {

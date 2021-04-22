@@ -120,6 +120,9 @@
   <data name="AuthenticationFailed" xml:space="preserve">
     <value>Kimlik doğrulama başarısız</value>
   </data>
+  <data name="DefinedTaskCannotBeChanged" xml:space="preserve">
+    <value>Tanımlanan Görev Değiştirilemez</value>
+  </data>
   <data name="Failed" xml:space="preserve">
     <value>Bir Hata Oluştu. Daha sonra tekrar deneyiniz.</value>
   </data>

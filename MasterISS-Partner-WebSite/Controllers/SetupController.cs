@@ -436,16 +436,16 @@ namespace MasterISS_Partner_WebSite.Controllers
                     var wrapper = new WebServiceWrapper();
                     LoggerError.Fatal($"An error occurred while GetCustomerSessionInfo , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapper.GetUserSubMail()}");
                     //LOG
-
-                    return Content($"<div>{ new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture)}</div>");
+                    var responseMessage = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false','{1}');</script>", new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture), Url.Action("Index", "Setup"));
+                    return Content(responseMessage);
                 }
 
                 //LOG
                 var wrapperByNotFoundTaskNo = new WebServiceWrapper();
                 LoggerError.Fatal($"An error occurred while GetCustomerSessionInfo Not found taskNo by: {wrapperByNotFoundTaskNo.GetUserSubMail()}");
                 //LOG
-
-                return Content($"<div>{ new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture)}</div>");
+                var contect = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false','{1}');</script>", new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture), Url.Action("Index", "Home"));
+                return Content(contect);
             }
         }
 
@@ -496,14 +496,16 @@ namespace MasterISS_Partner_WebSite.Controllers
                 var wrapperGetUserSubMailByCredentials = new WebServiceWrapper();
                 LoggerError.Fatal($"An error occurred while GetCustomerCredentials , ErrorCode: {credentialsResponse.ResponseMessage.ErrorCode}, ErrorMessage : {credentialsResponse.ResponseMessage.ErrorMessage} by: { wrapperGetUserSubMailByCredentials.GetUserSubMail()}");
                 //LOG
-                return Content($"<div>{  new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(credentialsResponse.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture)}</div>");
+                var responseMessageCredentials = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false','{1}');</script>", credentialsResponse.ResponseMessage.ErrorMessage, Url.Action("Index", "Setup"));
+                return Content(responseMessageCredentials);
 
             }
             //LOG
             var wrapperGetUserSubMail = new WebServiceWrapper();
             LoggerError.Fatal($"An error occurred while GetTaskDetails , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapperGetUserSubMail.GetUserSubMail()}");
             //LOG
-            return Content($"<div>{  new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture)}</div>");
+            var responseMessageGetTaskDetail= string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false','{1}');</script>", response.ResponseMessage.ErrorMessage, Url.Action("Index", "Setup"));
+            return Content(responseMessageGetTaskDetail);
         }
 
         [HttpPost]
@@ -539,13 +541,14 @@ namespace MasterISS_Partner_WebSite.Controllers
                     var wrapper = new WebServiceWrapper();
                     LoggerError.Fatal($"An error occurred while GetCustomerLineDetails , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapper.GetUserSubMail()}");
                     //LOG
-                    return Content($"<div>{ new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture)}</div>");
+                    var responseMessage= string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false','{1}');</script>", response.ResponseMessage.ErrorMessage, Url.Action("Index", "Setup"));
+                    return Content(responseMessage);
                 }
                 var wrapperByNotFoundTask = new WebServiceWrapper();
                 LoggerError.Fatal($"An error occurred while GetCustomerLineDetails Not Found taskNo by: {wrapperByNotFoundTask.GetUserSubMail()}");
                 //LOG
-                return Content($"<div>{ new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture)}</div>");
-
+                var notDefined = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false','{1}');</script>", Localization.View.Generic200ErrorCodeMessage, Url.Action("Index", "Setup"));
+                return Content(notDefined);
             }
         }
 
@@ -1169,7 +1172,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                         Logger.Info("Updated Client User: " + updateClientViewModel.TaskNo + ", by: " + wrapper.GetUserSubMail());
                         //LOG
 
-                        var message =Localization.View.Successful;
+                        var message = Localization.View.Successful;
                         return Json(new { status = "Success", message = message }, JsonRequestBehavior.AllowGet);
                     }
 
