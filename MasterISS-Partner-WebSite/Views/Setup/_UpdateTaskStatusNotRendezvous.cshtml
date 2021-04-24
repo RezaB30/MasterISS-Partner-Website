@@ -6,7 +6,7 @@
     @Html.AntiForgeryToken()
     <div class="modal-header">
         <div class="py-2">
-            <span class="text-dark-75 font-weight-bolder d-block font-size-h5">Görev Durumunu Değiştir</span>
+            <span class="text-dark-75 font-weight-bolder d-block font-size-h5">@View.ChangeTaskStatus</span>
             <span class="text-muted font-size-lg">@Html.DisplayFor(m => m.ContactName)</span>
         </div>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -33,9 +33,9 @@
         <br />
         <div id="previews" class="dz-default dz-message box__input dropzone dropzone-default dropzone-primary dz-clickable" style="display:none">
             <div style="text-align:center">
-                <span class="dropzone-msg-desc">Yüklenebilecek maksimum dosya boyutu 10 MB geçmemelidir.</span>
+                <span class="dropzone-msg-desc">@View.Max10MB</span>
                 <br />
-                <h3 class="dropzone-msg-title">Dosyaları buraya bırakın veya yüklemek için tıklayın.</h3>
+                <h3 class="dropzone-msg-title">@View.FileDropOrClick</h3>
             </div>
         </div>
         <div id="previewFiles"></div>
@@ -44,7 +44,7 @@
     </div>
 
     <div class="modal-footer">
-        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
-        <input type="submit" id="Submit" name="Submit" class="btn btn-success m-t-5" value="Submit" />
+        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">@View.Close</button>
+        <input type="submit" id="Submit" name="Submit" class="btn btn-success m-t-5" value="@View.Submit" />
     </div> <!--end::Info-->
 }

@@ -129,6 +129,9 @@
   <data name="AddCustomer" xml:space="preserve">
     <value>New Customer</value>
   </data>
+  <data name="AddressInformationAndApplicationTypeForNewCustomer" xml:space="preserve">
+    <value>Address Information and Application Type from which you want to get service</value>
+  </data>
   <data name="AddRole" xml:space="preserve">
     <value>Add Role</value>
   </data>
@@ -141,6 +144,12 @@
   <data name="AdminPanel" xml:space="preserve">
     <value>Admin Panel</value>
   </data>
+  <data name="AllTaxesIncluded" xml:space="preserve">
+    <value>All Taxes Included</value>
+  </data>
+  <data name="AmountToBePaid" xml:space="preserve">
+    <value>Amount To Be Paid</value>
+  </data>
   <data name="ApplicationInformation" xml:space="preserve">
     <value>Application Information</value>
   </data>
@@ -149,6 +158,9 @@
   </data>
   <data name="AreYouSureYouWantToConfirm" xml:space="preserve">
     <value>Are You Sure You Want To Confirm?</value>
+  </data>
+  <data name="AssignTheTask" xml:space="preserve">
+    <value>Assign The Task</value>
   </data>
   <data name="AssignToSetupTeam" xml:space="preserve">
     <value>Assign To Setup Team</value>
@@ -177,8 +189,44 @@
   <data name="By" xml:space="preserve">
     <value>by</value>
   </data>
+  <data name="Call" xml:space="preserve">
+    <value>Call</value>
+  </data>
+  <data name="CallCustomer" xml:space="preserve">
+    <value>Call Customer</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ChangeAndSave" xml:space="preserve">
+    <value>Change And Save</value>
+  </data>
+  <data name="ChangeRendezvousTeam" xml:space="preserve">
+    <value>Change Rendezvous Team</value>
+  </data>
+  <data name="ChangeSetupTeam" xml:space="preserve">
+    <value>Change Setup Team</value>
+  </data>
+  <data name="ChangeTaskAddNote" xml:space="preserve">
+    <value>Change Task Add Note</value>
+  </data>
+  <data name="ChangeTaskStatus" xml:space="preserve">
+    <value>Change Task Status</value>
+  </data>
   <data name="CheckInfrastructure" xml:space="preserve">
     <value>Check Infrastructure</value>
+  </data>
+  <data name="ChooseAnAppointmentDate" xml:space="preserve">
+    <value>Choose An Appointment Date</value>
+  </data>
+  <data name="ChooseSubscriberBillSelect" xml:space="preserve">
+    <value>subscriber's bills. To pay the bill choose from the list below.</value>
+  </data>
+  <data name="ClickButton" xml:space="preserve">
+    <value>button.</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
   </data>
   <data name="Confirm" xml:space="preserve">
     <value>Confirm</value>
@@ -191,6 +239,9 @@
   </data>
   <data name="CreditReportDetail" xml:space="preserve">
     <value>Credit Report Detail</value>
+  </data>
+  <data name="CurrentOperatorName" xml:space="preserve">
+    <value>Current Operator Name</value>
   </data>
   <data name="CurrentUsers" xml:space="preserve">
     <value>Current Users</value>
@@ -219,6 +270,9 @@
   <data name="DateFormatIsNotCorrect" xml:space="preserve">
     <value>Date Format Is Not Correct</value>
   </data>
+  <data name="DateRange" xml:space="preserve">
+    <value>Date Range</value>
+  </data>
   <data name="Day" xml:space="preserve">
     <value> Day </value>
   </data>
@@ -243,6 +297,9 @@
   <data name="FaultyFormatUpdateTaskStatus" xml:space="preserve">
     <value>Send a file in '.jpg','.png','.jpeg' format.</value>
   </data>
+  <data name="FileDropOrClick" xml:space="preserve">
+    <value>Drop files here or click to upload.</value>
+  </data>
   <data name="Filter" xml:space="preserve">
     <value>Filter</value>
   </data>
@@ -254,6 +311,9 @@
   </data>
   <data name="Generic200ErrorCodeMessage" xml:space="preserve">
     <value>An Error Has Occurred. Try again later.</value>
+  </data>
+  <data name="GenericReport" xml:space="preserve">
+    <value>Generic Report</value>
   </data>
   <data name="GiveConfirmation" xml:space="preserve">
     <value>Give Confirmation</value>
@@ -269,6 +329,12 @@
   </data>
   <data name="IDInfo" xml:space="preserve">
     <value>Your Identity Information</value>
+  </data>
+  <data name="InfrastructureQueryResult" xml:space="preserve">
+    <value>Infrastructure Query Result</value>
+  </data>
+  <data name="InOrderToInquirePortAndSpeed" xml:space="preserve">
+    <value>In order to inquire about the infrastructure port and the speed you can get, carefully select your address information and click the</value>
   </data>
   <data name="LastPayments" xml:space="preserve">
     <value>Last Payments</value>
@@ -309,6 +375,9 @@
   <data name="Map" xml:space="preserve">
     <value>Map</value>
   </data>
+  <data name="Max10MB" xml:space="preserve">
+    <value>The maximum file size that can be uploaded should not exceed 10 MB.</value>
+  </data>
   <data name="Max30Days" xml:space="preserve">
     <value>You can do it for a maximum of 30 days.</value>
   </data>
@@ -321,11 +390,17 @@
   <data name="Minute" xml:space="preserve">
     <value> Minute </value>
   </data>
+  <data name="NetspeedInfrastructureQuery" xml:space="preserve">
+    <value>Netspeed Infrastructure Query</value>
+  </data>
   <data name="NetspeedPartnerSystem" xml:space="preserve">
     <value>Netspeed Partner System</value>
   </data>
   <data name="NewCustomerError" xml:space="preserve">
     <value>An error occurred while processing your transaction. Try again.</value>
+  </data>
+  <data name="NewSubscriptionApplication" xml:space="preserve">
+    <value>New Subscription Application</value>
   </data>
   <data name="No" xml:space="preserve">
     <value>No</value>
@@ -333,11 +408,20 @@
   <data name="NotAvailable" xml:space="preserve">
     <value>Not Available</value>
   </data>
+  <data name="NotFoundSetupTeamForThisTask" xml:space="preserve">
+    <value>Not found Setup Team for this task.</value>
+  </data>
   <data name="NotFoundTaskNo" xml:space="preserve">
     <value>Please Select.</value>
   </data>
   <data name="OnThisPage" xml:space="preserve">
     <value>On This Page</value>
+  </data>
+  <data name="OperationMenu" xml:space="preserve">
+    <value>Operation Menu</value>
+  </data>
+  <data name="Paid" xml:space="preserve">
+    <value>Paid</value>
   </data>
   <data name="Passive" xml:space="preserve">
     <value>Passive</value>
@@ -347,6 +431,9 @@
   </data>
   <data name="QueryAgain" xml:space="preserve">
     <value>Query Again</value>
+  </data>
+  <data name="QueryInfrastructure" xml:space="preserve">
+    <value>Query Infrastructure</value>
   </data>
   <data name="RecordFound" xml:space="preserve">
     <value>record found.</value>
@@ -362,6 +449,9 @@
   </data>
   <data name="RequiredPermission" xml:space="preserve">
     <value>Please select at least 1 Permission.</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Reset</value>
   </data>
   <data name="ReturnBill" xml:space="preserve">
     <value>Back</value>
@@ -399,6 +489,9 @@
   <data name="SaleGenericAllowanceList" xml:space="preserve">
     <value>Sale Generic Allowance List</value>
   </data>
+  <data name="SaveAndSendToPool" xml:space="preserve">
+    <value>Save And Send To Pool</value>
+  </data>
   <data name="SearchedPlace" xml:space="preserve">
     <value>Searched Place</value>
   </data>
@@ -423,8 +516,23 @@
   <data name="SelectRole" xml:space="preserve">
     <value>Select Role</value>
   </data>
+  <data name="SelectTheRendezvousTeamYouWantToAssignTheTask" xml:space="preserve">
+    <value>Select the Rendezvous Team You Want to Assign the Task</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="SendBackToThePool" xml:space="preserve">
+    <value>Send Back To The Pool</value>
+  </data>
   <data name="SendTheApplication" xml:space="preserve">
     <value>Send The Application</value>
+  </data>
+  <data name="ServiceNumber10DigitForNewCustomer" xml:space="preserve">
+    <value>The 10 Digit Service Number can be found on the bill of the current operator or by logging into the online transaction center.</value>
+  </data>
+  <data name="SetupAddress" xml:space="preserve">
+    <value>Setup Address</value>
   </data>
   <data name="SetupAllowanceList" xml:space="preserve">
     <value>Setup Allowance List</value>
@@ -468,6 +576,9 @@
   <data name="StartDateValid" xml:space="preserve">
     <value>Enter the Start Date in the correct format</value>
   </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
   <data name="Submit" xml:space="preserve">
     <value>Submit</value>
   </data>
@@ -476,6 +587,9 @@
   </data>
   <data name="SuccessfulPayment" xml:space="preserve">
     <value>Payment Successful</value>
+  </data>
+  <data name="TheLast10RecordsAreListed" xml:space="preserve">
+    <value>The last 10 records are listed.</value>
   </data>
   <data name="To" xml:space="preserve">
     <value>to</value>
@@ -527,6 +641,9 @@
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>
+  </data>
+  <data name="YourAddressInformation" xml:space="preserve">
+    <value>Your Address Information</value>
   </data>
   <data name="YourEmail" xml:space="preserve">
     <value>Your E-Mail</value>

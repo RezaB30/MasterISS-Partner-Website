@@ -233,7 +233,7 @@
                             @if (User.IsInRole("LastPayments") || User.IsInRole("Admin"))
                             {
                                 <li class="menu-item menu-item-submenu menu-item-rel" aria-haspopup="true">
-                                    <a href="@Url.Action("LastPayments","Home")" class="menu-link ass">
+                                    <a href="@Url.Action("LastPayments","Home")" class="menu-link">
                                         <span class="menu-text">@MasterISS_Partner_WebSite.Localization.View.LastPayments</span>
                                     </a>
                                 </li>
@@ -291,8 +291,6 @@
             <!--end::Header Nav-->
             <!--begin::Topbar-->
             <div class="topbar">
-
-                <!--begin::User-->
                 <div class="topbar-item">
                     <div class="btn btn-icon w-auto d-flex align-items-center btn-lg px-2" id="kt_quick_user_toggle">
                         <div class="d-flex text-right pr-3">

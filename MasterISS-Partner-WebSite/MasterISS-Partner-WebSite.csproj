@@ -168,6 +168,9 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -185,6 +188,7 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\FontAwesomeBundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="Authentication\Authenticator.cs" />
@@ -439,6 +443,9 @@
     <Content Include="Content\css\prismjs.bundle.css" />
     <Content Include="Content\css\style.bundle.css" />
     <Content Include="Content\css\wizard5-basvuru.css" />
+    <Content Include="Content\fontawesome\font-awesome.css" />
+    <Content Include="Content\fontawesome\font-awesome.min.css" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\media\bg\300.jpg" />
     <Content Include="Content\media\bg\350.jpg" />
     <Content Include="Content\media\bg\400.jpg" />
@@ -2022,6 +2029,10 @@
     <Content Include="Content\css\fonts\summernote\summernote.woff" />
     <Content Include="Content\css\fonts\summernote\summernote.woff2" />
     <Content Include="Content\media\error\11116-404-planet-animation.json" />
+    <Content Include="Content\fonts\FontAwesome.otf" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -2043,15 +2054,12 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Bill\Index.cshtml" />
     <Content Include="Views\Account\SignIn.cshtml" />
-    <Content Include="Views\Bill\Succesfull.cshtml" />
     <Content Include="Views\UserOperations\_AddUser.cshtml" />
     <Content Include="Views\UserOperations\Index.cshtml" />
     <Content Include="Views\UserOperations\Successful.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\DatetimeFormat.cshtml" />
     <Content Include="Views\UserOperations\_AddPermission.cshtml" />
-    <Content Include="Views\Bill\CreditReportDetail.cshtml" />
     <Content Include="Views\Customer\NewCustomer.cshtml" />
     <Content Include="Views\Customer\Successful.cshtml" />
     <Content Include="Views\Customer\SmsConfirmation.cshtml" />
@@ -2073,7 +2081,6 @@
     <Content Include="Views\Setup\_UpdateTaskStatus.cshtml" />
     <Content Include="Views\Setup\Successful.cshtml" />
     <Content Include="Views\Setup\_UploadDocument.cshtml" />
-    <Content Include="Views\Setup\_UpdateClientLocation.cshtml" />
     <Content Include="Views\Revenues\Index.cshtml" />
     <Content Include="Views\UserOperations\_UpdateUserRole.cshtml" />
     <Content Include="Views\UserOperations\SetupTeamList.cshtml" />
@@ -2089,7 +2096,6 @@
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\QueryInfrastructure\Index.cshtml" />
     <Content Include="Views\QueryInfrastructure\ServiceAvailability.cshtml" />
-    <Content Include="Views\Customer\asss.cshtml" />
     <Content Include="Views\Setup\_UpdateTaskStatusNotRendezvous.cshtml" />
     <Content Include="Views\Setup\_SendTaskToScheduler.cshtml" />
     <Content Include="Views\Reports\Index.cshtml" />

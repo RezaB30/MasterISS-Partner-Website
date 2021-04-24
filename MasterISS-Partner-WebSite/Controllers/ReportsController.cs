@@ -18,7 +18,7 @@ namespace MasterISS_Partner_WebSite.Controllers
         private static Logger LoggerError = LogManager.GetLogger("AppLoggerError");
 
         // GET: Reports
-        public ActionResult Index(OperationTypeHistoryFilterViewModel filterViewModel, int page = 1, int pageSize = 2)
+        public ActionResult Index(OperationTypeHistoryFilterViewModel filterViewModel, int page = 1, int pageSize = 10)
         {
             filterViewModel = filterViewModel ?? new OperationTypeHistoryFilterViewModel();
             ViewBag.OperationType = OperationTypeList(filterViewModel.OperationType ?? null);
@@ -47,7 +47,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                             filterViewModel.StartDate = startDate.ToString();
                             filterViewModel.EndDate = endDate.ToString();
                             var operationHistoriesList = OperationHistories(filterViewModel);
-                            var list = operationHistoriesList.Select(oh => new OperationHistoryListViewModel
+                            var list = operationHistoriesList.OrderByDescending(oh => oh.ChangeTime).Select(oh => new OperationHistoryListViewModel
                             {
                                 ChangeTime = oh.ChangeTime,
                                 Description = oh.Description,

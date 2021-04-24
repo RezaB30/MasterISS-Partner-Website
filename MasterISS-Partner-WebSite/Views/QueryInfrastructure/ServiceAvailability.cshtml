@@ -1,34 +1,22 @@
-﻿@model MasterISS_Partner_WebSite.ViewModels.ServiceAvaibilityResponseViewModel
+﻿@using MasterISS_Partner_WebSite.Localization
+@model MasterISS_Partner_WebSite.ViewModels.ServiceAvaibilityResponseViewModel
 @{
     ViewBag.Title = "ServiceAvailability";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="container">
     <div class="bg-secondary d-flex flex-column flex-row-fluid ">
-
-
-        <!--begin::Title-->
         <div class="text-right mb-lg-4 mb-15 mr-xxl-10">
 
         </div>
-        <!--end::Title-->
-        <!--begin::Form-->
         <div class="d-flex justify-content-center flex-row-fluid ">
             <form class="pb-5 w-100 w-md-450px w-lg-500px" id="kt_form2">
-                <!--begin: Wizard Step 1-->
-                <!--begin::Title-->
                 <div class="pb-12 pb-lg-15">
 
-                    <h3 class="text-dark text-center my-8 font-size-h4">Altyapı Sorgulama Sonucu</h3>
+                    <h3 class="text-dark text-center my-8 font-size-h4">@View.InfrastructureQueryResult</h3>
 
                     <hr class="my-4 bg-info">
-
-
                     <div class=" w-autoustify-content-center text text-center ml-auto">
-                        <!--begin::Card Body-->
-
-
-
                         <h3 class="font-weight-bolder font-size-h4 mb-1">
                             <a href="#" class="text-info">Fiber</a>
                         </h3>
@@ -141,16 +129,11 @@
                         <div class=" justify-content-center">
 
                             <span>
-                                @Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.QueryAgain, "Index", "QueryInfrastructure", null, new {@class= "btn btn-outline-info font-weight-bolder px-12 m-2" })
-                                @*<a href="altyapi" class="btn btn-outline-info font-weight-bolder px-12 m-2 ">
-                                    Tekrar Sorgula
-                                </a>*@
+                                @Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.QueryAgain, "Index", "QueryInfrastructure", null, new { @class = "btn btn-outline-info font-weight-bolder px-12 m-2" })
                             </span>
-
-
-
                         </div>
                     </div>
+                </div>
             </form>
         </div>
     </div>

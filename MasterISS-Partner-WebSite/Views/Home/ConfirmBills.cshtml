@@ -1,4 +1,5 @@
-﻿@{
+﻿@using MasterISS_Partner_WebSite.Localization
+@{
     ViewBag.Title = "ConfirmBills";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -29,10 +30,10 @@
                             </span>
                         </div>
                         <!--end::Shape-->
-                        <div class="font-weight-boldest text-dark-75 font-size-h5 text-uppercase">Ödenecek Tutar</div>
+                        <div class="font-weight-boldest text-dark-75 font-size-h5 text-uppercase">@View.AmountToBePaid</div>
                         <div class="text-right d-flex flex-column">
                             <span class="font-weight-boldest text-danger font-size-h3 line-height-sm">@ViewBag.SumCount</span>
-                            <span class="font-size-sm text-dark-75">Tüm Vergiler Dahil</span>
+                            <span class="font-size-sm text-dark-75">@View.AllTaxesIncluded</span>
                         </div>
                     </div>
                 </div>
@@ -48,10 +49,10 @@
                         <div class="d-flex justify-content-between border-top mt-5 pt-3">
                             <div class="mr-1"></div>
                             <div>
-                                @Html.ActionLink("İptal", "Index", "Home", null, new { @class = "btn btn-light-primary font-weight-bold" })
+                                @Html.ActionLink(View.Cancel, "Index", "Home", null, new { @class = "btn btn-light-primary font-weight-bold" })
                                 @using (Ajax.BeginForm("ConfirmBills", "Home", new AjaxOptions { HttpMethod = "POST", OnComplete = "GenericResult" }))
                                 {
-                                    <button type="submit" class="btn btn-info font-weight-bolder font-size-h8 px-8 py-3 my-3 mr-3 pay-button">Gönder</button>
+                                    <button type="submit" class="btn btn-info font-weight-bolder font-size-h8 px-8 py-3 my-3 mr-3 pay-button">@View.Send</button>
                                 }
                             </div>
                         </div>

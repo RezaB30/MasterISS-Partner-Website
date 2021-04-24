@@ -21,7 +21,7 @@
             {
                 <div class="row mb-8">
                     <div class="col-lg-4 mb-lg-0 mb-12">
-                        <label>Tarih Aralığı:</label>
+                        <label>@View.DateRange:</label>
                         <div class="input-daterange input-group" id="kt_datepicker">
                             @Html.TextBox("TaskListStartDate", search.TaskListStartDate, new { @placeholder = DateTime.Now.ToString("dd.MM.yyyy HH:mm"), @class = "form-control" })
                             <div class="input-group-append">
@@ -70,7 +70,7 @@
                         <a href="@Url.Action("Index","Setup")" class="btn btn-secondary btn-secondary--icon" id="kt_reset">
                             <span>
                                 <i class="la la-close"></i>
-                                <span>Sıfırla</span>
+                                <span>@View.Reset</span>
                             </span>
                         </a>
                     </div>
@@ -113,7 +113,7 @@
                                                 <!--begin::Navigation-->
                                                 <ul class="navi navi-hover">
                                                     <li class="navi-header font-weight-bold py-4">
-                                                        <span class="font-size-lg">İşlem Menüsü</span>
+                                                        <span class="font-size-lg">@View.OperationMenu</span>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
                                                         </button>
@@ -166,7 +166,6 @@
                                                     <li class="navi-item">
                                                         <div class="navi-link">
                                                             <span class="navi-text" data-toggle="modal" data-target="#exampleModalUpdateLocation">
-                                                                @*@Html.ActionLink(View.UpdateClientLocation, "UpdateClientLocation","Setup",new { taskNo= item.TaskNo },new { @class= "btn-sm btn btn-block btn-outline-info" })*@
                                                                 <input class="btn-sm btn btn-block btn-outline-info customer-localition-info-button" value="@View.UpdateClientLocation" dataValue="@item.TaskNo" />
                                                             </span>
                                                         </div>
@@ -182,7 +181,7 @@
                                                     <li class="navi-separator mt-3 opacity-70"></li>
                                                     <li class="navi-footer py-4">
                                                         <a class="btn btn-light-warning btn-block text-info text-hover-white info font-weight-bold btn-sm task-update-notRendezvous-button" dataValue="@item.TaskNo" data-toggle="modal" data-target="#exampleModalUpdateTaskNotRendezvous">
-                                                            <i class="ki ki-plus text-info icon-sm"></i> Görev Değiştir Not Ekle
+                                                            <i class="ki ki-plus text-info icon-sm"></i> @View.ChangeTaskAddNote
                                                         </a>
                                                     </li>
                                                 </ul> <!--end::Navigation-->
@@ -215,8 +214,8 @@
                                     </div>
                                     <div class="separator separator-dashed mt-1 my-1"></div>
                                     <div class="d-flex mb-2">
-                                        <span class="text-dark-50 flex-root font-weight-bold">müşteriyi ara</span>
-                                        <span class="text-dark flex-root font-weight-bold"><input type="button" class="btn-sm btn btn-secondary call-customer-button" value="ara" dataValue="@item.TaskNo" /></span>
+                                        <span class="text-dark-50 flex-root font-weight-bold">@View.CallCustomer</span>
+                                        <span class="text-dark flex-root font-weight-bold"><button type="button" class="btn btn-outline-success btn-sm call-customer-button" dataValue="@item.TaskNo"><i class="fas fa-phone-alt button"></i>@View.Call</button></span>
                                     </div>
                                     <div class="separator separator-dashed mt-1 my-1"></div>
                                     <div class="d-flex mb-2">
@@ -232,7 +231,7 @@
                                     <div class="d-flex mb-2">
                                         <span class="text-dark-50 flex-root font-weight-bold">
                                             <a href="https://www.google.com/maps/search/?api=1&query=@item.AddressLatitudeandLongitude[0],@item.AddressLatitudeandLongitude[1]" target="_blank" class="btn btn-outline-info btn-sm">
-                                                <i class="fas fa-map-marker-alt button"></i>Kurulum Adresi
+                                                <i class="fas fa-map-marker-alt button"></i> @View.SetupAddress
                                             </a>
                                         </span>
                                         <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(modelItem => item.Address)</span>
@@ -285,7 +284,7 @@
                                             else
                                             {
                                                 <span class="navi-text" data-toggle="modal" data-target="#exampleModalUpdateTask">
-                                                    <input type="button" class="btn-sm my-2 btn btn-outline-primary task-update-button" dataValue="@item.TaskNo" value="başka ekibine ata" />
+                                                    <input type="button" class="btn-sm my-2 btn btn-outline-primary task-update-button" dataValue="@item.TaskNo" value="@View.ChangeSetupTeam" />
                                                     &nbsp &nbsp &nbsp
                                                 </span>
                                             }
@@ -295,14 +294,14 @@
                                             if (!string.IsNullOrEmpty(item.RendezvousTeamStaffName) && !string.IsNullOrEmpty(item.SetupTeamStaffName))
                                             {
                                                 <span class="navi-text" data-toggle="modal" data-target="#exampleModalSendPool">
-                                                    <input type="button" class="btn-sm my-2 btn btn-outline-danger send-pool-button" dataValue="@item.TaskNo" value="tekrar Havuza Aktar" />
+                                                    <input type="button" class="btn-sm my-2 btn btn-outline-danger send-pool-button" dataValue="@item.TaskNo" value="@View.SendBackToThePool" />
                                                     &nbsp &nbsp &nbsp
                                                 </span>
                                             }
                                             if (!string.IsNullOrEmpty(item.RendezvousTeamStaffName) && string.IsNullOrEmpty(item.SetupTeamStaffName))
                                             {
                                                 <span class="navi-text" data-toggle="modal" data-target="#exampleModalOtherRendezvousTeam">
-                                                    <input type="button" class="btn-sm my-2 btn btn-outline-danger assign-rendezvous-team-button" dataValue="@item.TaskNo" value="başka randevu ekibi" />
+                                                    <input type="button" class="btn-sm my-2 btn btn-outline-danger assign-rendezvous-team-button" dataValue="@item.TaskNo" value="@View.ChangeRendezvousTeam" />
                                                     &nbsp &nbsp &nbsp
                                                 </span>
                                             }
@@ -342,8 +341,6 @@
                            }),
                            new PagedListRenderOptions
                            {
-                               //LiElementClasses=new string[] { "btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1" },
-                               //UlElementClasses=new string[] {"}
                            })
                             </div>
                             <div class="d-flex align-items-center">
@@ -439,8 +436,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <div class="py-2">
-                    <span class="text-dark-75 font-weight-bolder d-block font-size-h5">Konum Güncelle</span>
-                    <span class="text-muted font-size-lg">AVNİ ALKAN</span>
+                    <span class="text-dark-75 font-weight-bolder d-block font-size-h5">@View.UpdateClientLocation</span>
                 </div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
@@ -475,8 +471,8 @@
                 @Html.Hidden("LongitudeHidden", null, new { @class = "Longitude" })
                 @Html.Hidden("TaskNo", null, new { @class = "taskNoToUpdateClientLocation" })
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
-                    <input type="submit" class="btn btn-info font-weight-bold" value="ass" />
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">@View.Close</button>
+                    <input type="submit" class="btn btn-info font-weight-bold" value="@View.ChangeAndSave" />
                 </div>
             }
         </div>
@@ -851,7 +847,7 @@
                 });
          });
 
-         $(".customer-line-info-button").click(function () {
+        $(".customer-line-info-button").click(function () {
             var dataValue = $(this).attr("dataValue");
                 $.ajax({
                     url: '@Url.Action("CustomerLineInfo", "Setup")',
@@ -970,8 +966,7 @@
         });
 
         $(function () {
-            $(".pagination-container").children().children().children().addClass("btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1");
-            $("li.active").children().addClass("active");
+          
             $("#search_TaskListStartDate").mask("99.99.9999 99:99");
             $("#search_TaskListEndDate").mask("99.99.9999 99:99");
             $("#search_SearchedTaskNo").mask("99999");

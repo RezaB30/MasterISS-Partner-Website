@@ -9,9 +9,9 @@
     <div class="container pb-5">
         <div class="card ">
             <div class="container">
-                <h3 class="my-6 text-info font-size-h4">Son Tahsilatlar</h3>
+                <h3 class="my-6 text-info font-size-h4">@View.LastPayments</h3>
                 <div class="table-responsive">
-                    <span class="text-dark-75 mt-3 font-size-lg">Son 10 kayıt listelenmektedir</span>
+                    <span class="text-dark-75 mt-3 font-size-lg">@View.TheLast10RecordsAreListed</span>
                     <table class="table table-head-custom table-vertical-center table-hover mb-2">
                         <thead>
                             <tr class="bg-info text-left">
@@ -19,7 +19,7 @@
                                 <th style="min-width: 130px">@Html.DisplayNameFor(m => m.FirstOrDefault().SubcriberNo)</th>
                                 <th style="min-width: 130px">@Html.DisplayNameFor(m => m.FirstOrDefault().PaymentDate)</th>
                                 <th style="min-width: 130px">@Html.DisplayNameFor(m => m.FirstOrDefault().Amount)</th>
-                                <th style="min-width: 130px">Durum</th>
+                                <th style="min-width: 130px">@View.Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -40,7 +40,7 @@
                                     </td>
 
                                     <td>
-                                        <span class="label label-lg label-light-primary label-inline">Ödendi</span>
+                                        <span class="label label-lg label-light-primary label-inline">@View.Paid</span>
                                     </td>
                                 </tr>
                             }

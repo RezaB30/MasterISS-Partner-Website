@@ -35,7 +35,6 @@ namespace MasterISS_Partner_WebSite.Controllers
         private TimeSpan firtSessionTime;
         private TimeSpan lastSessionTime;
 
-        // GET: Setup
         public ActionResult Index(GetTaskListRequestViewModel taskListRequestModel, int page = 1, int pageSize = 1)
         {
             taskListRequestModel = taskListRequestModel ?? new GetTaskListRequestViewModel();

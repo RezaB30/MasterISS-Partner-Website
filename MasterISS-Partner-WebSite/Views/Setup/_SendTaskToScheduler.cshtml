@@ -1,7 +1,8 @@
-﻿@model MasterISS_Partner_WebSite.ViewModels.SendTaskToSchedulerViewModel
+﻿@using MasterISS_Partner_WebSite.Localization
+@model MasterISS_Partner_WebSite.ViewModels.SendTaskToSchedulerViewModel
 <div class="modal-header">
     <div class="py-2">
-        <span class="text-dark-75 font-weight-bolder d-block font-size-h5">Tekrar Havuza Aktar</span>
+        <span class="text-dark-75 font-weight-bolder d-block font-size-h5">@View.SendBackToThePool</span>
         <span class="text-muted font-size-lg">@Html.DisplayFor(m => m.ContactName)</span>
     </div>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -28,7 +29,7 @@
 </div>
     @Html.HiddenFor(m=>m.TaskNo)
     <div class="modal-footer">
-        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">İptal</button>
-        <button type="submit" class="btn btn-info font-weight-bold">Kaydet ve Havuza Aktar</button>
+        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">@View.Cancel</button>
+        <button type="submit" class="btn btn-info font-weight-bold">@View.SaveAndSendToPool</button>
     </div>  
 }

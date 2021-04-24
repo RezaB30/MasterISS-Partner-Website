@@ -129,6 +129,9 @@
   <data name="AddCustomer" xml:space="preserve">
     <value>Yeni Müşteri</value>
   </data>
+  <data name="AddressInformationAndApplicationTypeForNewCustomer" xml:space="preserve">
+    <value>Hizmet almak istediğiniz adres bilgileri ve Başvuru türü</value>
+  </data>
   <data name="AddRole" xml:space="preserve">
     <value>Rol Ekle</value>
   </data>
@@ -141,6 +144,12 @@
   <data name="AdminPanel" xml:space="preserve">
     <value>Admin Paneli</value>
   </data>
+  <data name="AllTaxesIncluded" xml:space="preserve">
+    <value>Tüm Vergiler Dahil</value>
+  </data>
+  <data name="AmountToBePaid" xml:space="preserve">
+    <value>Ödenecek Tutar</value>
+  </data>
   <data name="ApplicationInformation" xml:space="preserve">
     <value>Başvuru Bilgileri</value>
   </data>
@@ -149,6 +158,9 @@
   </data>
   <data name="AreYouSureYouWantToConfirm" xml:space="preserve">
     <value>Teyit Vermek İstediğinize Emin Misiniz?</value>
+  </data>
+  <data name="AssignTheTask" xml:space="preserve">
+    <value>Görevi Ata</value>
   </data>
   <data name="AssignToSetupTeam" xml:space="preserve">
     <value>Kurulum Ekine Ata</value>
@@ -177,8 +189,44 @@
   <data name="By" xml:space="preserve">
     <value>tarafından</value>
   </data>
+  <data name="Call" xml:space="preserve">
+    <value>Ara</value>
+  </data>
+  <data name="CallCustomer" xml:space="preserve">
+    <value>Müşteri Ara</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>İptal</value>
+  </data>
+  <data name="ChangeAndSave" xml:space="preserve">
+    <value>Değiştir ve Kaydet</value>
+  </data>
+  <data name="ChangeRendezvousTeam" xml:space="preserve">
+    <value>Randevu Ekibini Değiştir</value>
+  </data>
+  <data name="ChangeSetupTeam" xml:space="preserve">
+    <value>Kurulum Ekibini Değiştir</value>
+  </data>
+  <data name="ChangeTaskAddNote" xml:space="preserve">
+    <value>Görev Değiştir Not Ekle</value>
+  </data>
+  <data name="ChangeTaskStatus" xml:space="preserve">
+    <value>Görev Durumunu Değiştir</value>
+  </data>
   <data name="CheckInfrastructure" xml:space="preserve">
     <value>Altyapı Sorgula</value>
+  </data>
+  <data name="ChooseAnAppointmentDate" xml:space="preserve">
+    <value>Randevu Tarihi Seçiniz</value>
+  </data>
+  <data name="ChooseSubscriberBillSelect" xml:space="preserve">
+    <value>abonesine ait faturaları ödemek için aşağıdaki listeden seçim yapınız.</value>
+  </data>
+  <data name="ClickButton" xml:space="preserve">
+    <value>butonuna basınız.</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Kapat</value>
   </data>
   <data name="Confirm" xml:space="preserve">
     <value>Onayla</value>
@@ -191,6 +239,9 @@
   </data>
   <data name="CreditReportDetail" xml:space="preserve">
     <value>Kredi Rapor Detayları</value>
+  </data>
+  <data name="CurrentOperatorName" xml:space="preserve">
+    <value>Mevcut Operatör Adı</value>
   </data>
   <data name="CurrentUsers" xml:space="preserve">
     <value>Mevcut Kullanıcılar</value>
@@ -219,6 +270,9 @@
   <data name="DateFormatIsNotCorrect" xml:space="preserve">
     <value>Tarih Biçimi Doğru Değil</value>
   </data>
+  <data name="DateRange" xml:space="preserve">
+    <value>Tarih Aralığı</value>
+  </data>
   <data name="Day" xml:space="preserve">
     <value> Gün </value>
   </data>
@@ -243,6 +297,9 @@
   <data name="FaultyFormatUpdateTaskStatus" xml:space="preserve">
     <value>Lütfen '.jpg','.png','.jpeg' formatında dosya gönderiniz</value>
   </data>
+  <data name="FileDropOrClick" xml:space="preserve">
+    <value>Dosyaları buraya bırakın veya yüklemek için tıklayın.</value>
+  </data>
   <data name="Filter" xml:space="preserve">
     <value>Filtrele</value>
   </data>
@@ -254,6 +311,9 @@
   </data>
   <data name="Generic200ErrorCodeMessage" xml:space="preserve">
     <value>Bir Hata Oluştu. Daha sonra tekrar deneyiniz.</value>
+  </data>
+  <data name="GenericReport" xml:space="preserve">
+    <value>Genel Rapor</value>
   </data>
   <data name="GiveConfirmation" xml:space="preserve">
     <value>Teyit Ver</value>
@@ -269,6 +329,12 @@
   </data>
   <data name="IDInfo" xml:space="preserve">
     <value>Kimlik Bilgileriniz</value>
+  </data>
+  <data name="InfrastructureQueryResult" xml:space="preserve">
+    <value>Altyapı Sorgulama Sonucu</value>
+  </data>
+  <data name="InOrderToInquirePortAndSpeed" xml:space="preserve">
+    <value>Altyapı port ve alabileceğiniz hız durumunu sorgulayabilmek için adres bilgilerinizi dikkatli bir şekilde seçerek</value>
   </data>
   <data name="LastPayments" xml:space="preserve">
     <value>Son Tahsilatlar</value>
@@ -309,6 +375,9 @@
   <data name="Map" xml:space="preserve">
     <value>Harita</value>
   </data>
+  <data name="Max10MB" xml:space="preserve">
+    <value>Yüklenebilecek maksimum dosya boyutu 10 MB geçmemelidir.</value>
+  </data>
   <data name="Max30Days" xml:space="preserve">
     <value>Maksimum 30 gün raporlama yapabilirsiniz.</value>
   </data>
@@ -321,11 +390,17 @@
   <data name="Minute" xml:space="preserve">
     <value> Dakika </value>
   </data>
+  <data name="NetspeedInfrastructureQuery" xml:space="preserve">
+    <value>Netspeed Altyapı Sorgulama</value>
+  </data>
   <data name="NetspeedPartnerSystem" xml:space="preserve">
     <value>Netspeed Bayi Sistemi</value>
   </data>
   <data name="NewCustomerError" xml:space="preserve">
     <value>İşleminiz yapılırken bir hata oluştu.Tekrar deneyiniz.</value>
+  </data>
+  <data name="NewSubscriptionApplication" xml:space="preserve">
+    <value>Yeni Abonelik Başvurusu</value>
   </data>
   <data name="No" xml:space="preserve">
     <value>Hayır</value>
@@ -333,11 +408,20 @@
   <data name="NotAvailable" xml:space="preserve">
     <value>Mevcut Değil</value>
   </data>
+  <data name="NotFoundSetupTeamForThisTask" xml:space="preserve">
+    <value>Bu görev için uygun Kurulum Ekibi bulunamadı.</value>
+  </data>
   <data name="NotFoundTaskNo" xml:space="preserve">
     <value>Lütfen Seçim Yapınız.</value>
   </data>
   <data name="OnThisPage" xml:space="preserve">
     <value>Bu sayfada</value>
+  </data>
+  <data name="OperationMenu" xml:space="preserve">
+    <value>İşlem Menüsü</value>
+  </data>
+  <data name="Paid" xml:space="preserve">
+    <value>Ödendi</value>
   </data>
   <data name="Passive" xml:space="preserve">
     <value>Pasif</value>
@@ -347,6 +431,9 @@
   </data>
   <data name="QueryAgain" xml:space="preserve">
     <value>Yeniden Sorgula</value>
+  </data>
+  <data name="QueryInfrastructure" xml:space="preserve">
+    <value>Altyapı Sorgula</value>
   </data>
   <data name="RecordFound" xml:space="preserve">
     <value>adet kayıt bulundu.</value>
@@ -362,6 +449,9 @@
   </data>
   <data name="RequiredPermission" xml:space="preserve">
     <value>Lütfen en az 1 Yetki seçiniz.</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Sıfırla</value>
   </data>
   <data name="ReturnBill" xml:space="preserve">
     <value>Geri</value>
@@ -399,6 +489,9 @@
   <data name="SaleGenericAllowanceList" xml:space="preserve">
     <value>Satış Genel Hakediş Listesi</value>
   </data>
+  <data name="SaveAndSendToPool" xml:space="preserve">
+    <value>Kaydet Ve Havuza Gönder</value>
+  </data>
   <data name="SearchedPlace" xml:space="preserve">
     <value>Aranan Yer</value>
   </data>
@@ -423,8 +516,24 @@
   <data name="SelectRole" xml:space="preserve">
     <value>Rol Seçiniz</value>
   </data>
+  <data name="SelectTheRendezvousTeamYouWantToAssignTheTask" xml:space="preserve">
+    <value>Görevi Atamak İstediğiniz Randevu Ekibini Seçiniz</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Gönder</value>
+  </data>
+  <data name="SendBackToThePool" xml:space="preserve">
+    <value>Tekrar Havuza At</value>
+  </data>
   <data name="SendTheApplication" xml:space="preserve">
     <value>Başvuruyu Gönder</value>
+  </data>
+  <data name="ServiceNumber10DigitForNewCustomer" xml:space="preserve">
+    <value>10 Haneli Hizmet Numarası mevcut operatörün faturasından veya online işlem merkezine giriş yaparak öğrenilebilir.
+</value>
+  </data>
+  <data name="SetupAddress" xml:space="preserve">
+    <value>Kurulum Adresi</value>
   </data>
   <data name="SetupAllowanceList" xml:space="preserve">
     <value>Kurulum Hasılat Listesi</value>
@@ -468,6 +577,9 @@
   <data name="StartDateValid" xml:space="preserve">
     <value>Başlangıç Tarihini Doğru formatta giriniz</value>
   </data>
+  <data name="Status" xml:space="preserve">
+    <value>Durum</value>
+  </data>
   <data name="Submit" xml:space="preserve">
     <value>Kaydet</value>
   </data>
@@ -476,6 +588,9 @@
   </data>
   <data name="SuccessfulPayment" xml:space="preserve">
     <value>Ödeme Başarılı</value>
+  </data>
+  <data name="TheLast10RecordsAreListed" xml:space="preserve">
+    <value>Son 10 kayıt listelenmektedir.</value>
   </data>
   <data name="To" xml:space="preserve">
     <value>ile</value>
@@ -487,7 +602,7 @@
     <value>Güncelle</value>
   </data>
   <data name="UpdateClientLocation" xml:space="preserve">
-    <value>Konum Güncelleme</value>
+    <value>Konum Güncelle</value>
   </data>
   <data name="UpdateGPS" xml:space="preserve">
     <value>Müşterinin Konumunu Güncelle</value>
@@ -527,6 +642,9 @@
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Evet</value>
+  </data>
+  <data name="YourAddressInformation" xml:space="preserve">
+    <value>Adres Bilgileriniz</value>
   </data>
   <data name="YourEmail" xml:space="preserve">
     <value>E-Posta Adresiniz</value>

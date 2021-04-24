@@ -16,7 +16,6 @@ namespace MasterISS_Partner_WebSite
 
             bundles.Add(new StyleBundle("~/Content/all-page-css").IncludeDirectory("~/Content/css/", "*.css"));
 
-
             bundles.Add(new ScriptBundle("~/QueryAdress").Include(
                 "~/Scripts/QueryAddress/address-query.js"));
 
