@@ -338,8 +338,13 @@
                                search.TaskListEndDate,
                                search.FaultCode,
                                search.SearchedName,
-                               search.TaskType
-                           }))
+                               search.TaskType,
+                           }),
+                           new PagedListRenderOptions
+                           {
+                               //LiElementClasses=new string[] { "btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1" },
+                               //UlElementClasses=new string[] {"}
+                           })
                             </div>
                             <div class="d-flex align-items-center">
                                 <span class="text-muted"> @View.Total @Model.TotalItemCount @View.RecordFound @View.OnThisPage @Model.FirstItemOnPage @View.To @Model.LastItemOnPage @View.Showing</span>
@@ -466,8 +471,8 @@
             @Html.Map("map-container", View.Map, View.SearchedPlace)
             @using (Ajax.BeginForm("UpdateClientLocation", "Setup", new AjaxOptions { HttpMethod = "POST", OnComplete = "GenericResult" }))
             {
-                @Html.Hidden("Latitude", null, new { @class = "Latitude" })
-                @Html.Hidden("Longitude", null, new { @class = "Longitude" })
+                @Html.Hidden("LatitudeHidden", null, new { @class = "Latitude" })
+                @Html.Hidden("LongitudeHidden", null, new { @class = "Longitude" })
                 @Html.Hidden("TaskNo", null, new { @class = "taskNoToUpdateClientLocation" })
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
@@ -966,7 +971,7 @@
 
         $(function () {
             $(".pagination-container").children().children().children().addClass("btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1");
-            $("li.active").children().addClass("btn btn-info");
+            $("li.active").children().addClass("active");
             $("#search_TaskListStartDate").mask("99.99.9999 99:99");
             $("#search_TaskListEndDate").mask("99.99.9999 99:99");
             $("#search_SearchedTaskNo").mask("99999");
