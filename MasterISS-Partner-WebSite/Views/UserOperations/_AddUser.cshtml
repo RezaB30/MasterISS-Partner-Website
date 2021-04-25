@@ -12,7 +12,7 @@
         </button>
     </div>
     <div class="modal-body">
-        @using (Ajax.BeginForm("AddUser", "UserOperations", new AjaxOptions { HttpMethod = "POST", OnComplete = "GenericResult" }))
+        @using (Ajax.BeginForm("AddUser", "UserOperations", new AjaxOptions { HttpMethod = "POST", OnComplete = "GenericResultUserOperations" }))
         {
             @Html.AntiForgeryToken()
 

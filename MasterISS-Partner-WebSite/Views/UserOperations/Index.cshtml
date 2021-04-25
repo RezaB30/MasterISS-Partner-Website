@@ -214,7 +214,7 @@
                             <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
                         </button>
                     </div>
-                    @using (Ajax.BeginForm("UpdateRolePermission", "UserOperations", new AjaxOptions { HttpMethod = "POST", OnComplete = "GenericResult" }))
+                    @using (Ajax.BeginForm("UpdateRolePermission", "UserOperations", new AjaxOptions { HttpMethod = "POST", OnComplete = "GenericResultUserOperations" }))
                     {
                         <div class="modal-body">
                             <div class="form-group my-0">
@@ -332,7 +332,6 @@
                                 area.append('<label class="checkbox"><input class="checkbox" type="checkbox" value=' + data[i].PermissionId + ' name="SelectedPermissions" checked="' + data[i].IsSelected + '" /><span></span>' + data[i].PermissionName + ' </label>');
                             }
                         });
-                        //$("#permissionListContainerByUpdateRolePermission").html(data.responseText);
                     }
                     else if (status =="FailedAndRedirect") {
                         var url='@Url.Action("Index", "Home")'
@@ -425,8 +424,7 @@
                 console.log("Error");
             }
         }
-
-        function GenericResult(data, status) {
+        function GenericResultUserOperations(data, status) {
             if (status = "success") {
                 var responseStatus = data.responseJSON.status;
                 if (responseStatus == "Success") {
@@ -617,58 +615,3 @@
 
     </script>
 }
-
-
-
-
-
-
-
-@*<table class="table table-striped">
-        <thead>
-            <tr>
-                <th>@Html.DisplayNameFor(m => m.NameSurname)</th>
-                <th>@Html.DisplayNameFor(m => m.UserSubMail)</th>
-                <th>@Html.DisplayNameFor(m => m.RoleName)</th>
-                <th>@Html.DisplayNameFor(m => m.IsEnabled)</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@Html.DisplayFor(modelItem => item.NameSurname)</td>
-                    <td>@Html.DisplayFor(modelItem => item.UserSubMail)</td>
-                    <td>@Html.DisplayFor(modelItem => item.RoleName)</td>
-                    <td>@Html.DisplayFor(modelItem => item.IsEnabled)</td>
-                    <td>@Html.ActionLink("Kullanıcının Rolünü Güncelle", "UpdateUserRole", new { userId = item.UserId })</td>
-                    @if (item.IsEnabled == true)
-                    {
-                        <td>@Html.ActionLink(View.MakePassive, "DisableUser", "UserOperations", new { userMail = item.UserSubMail }, null)</td>
-                    }
-                    else
-                    {
-                        <td>@Html.ActionLink(View.MakeActive, "EnableUser", "UserOperations", new { userMail = item.UserSubMail }, null)</td>
-                    }
-                </tr>
-            }
-        </tbody>
-    </table>
-
-    <br />
-    @Html.ActionLink(View.AddUser, "AddUser", "UserOperations")
-    <br />
-    @Html.ActionLink(View.AddRole, "AddPermission", "UserOperations")
-    <br />
-    @Html.ActionLink(View.RoleList, "RoleList", "UserOperations")
-    <br />
-    @if (User.IsInRole("Setup"))
-    {
-        @Html.ActionLink(View.ListSetupTeam, "SetupTeamList", "UserOperations")
-        <br />
-        @Html.ActionLink(View.ListRendezvousTeam, "RendezvousTeamList", "UserOperations")
-    }*@
-
-@*<div style="background-color:red">
-        @Html.Raw(TempData["Error"])
-    </div>*@

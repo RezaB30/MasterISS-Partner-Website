@@ -212,7 +212,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                                 Logger.Info("Added role: " + role.RoleName + ", by: " + wrapper.GetUserSubMail());
                                 //LOG
                                 var message = Localization.View.Successful;
-                                return Json(new { status = "Success", ErrorMessage = message }, JsonRequestBehavior.AllowGet);
+                                return Json(new { status = "Success", message = message }, JsonRequestBehavior.AllowGet);
                             }
                             var errorMessage = Localization.View.Generic200ErrorCodeMessage;
                             return Json(new { status = "FailedAndRedirect", ErrorMessage = errorMessage }, JsonRequestBehavior.AllowGet);
@@ -442,7 +442,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                             Logger.Info("Updated User Role: " + user.UserSubMail + ", by: " + wrapper.GetUserSubMail());
                             //LOG
 
-                            return Json(new { status = "Success", Message = Localization.View.Successful }, JsonRequestBehavior.AllowGet);
+                            return Json(new { status = "Success", message = Localization.View.Successful }, JsonRequestBehavior.AllowGet);
                         }
                         var contectNotFoundUser = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false','{1}');</script>", new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture), Url.Action("Index", "Home"));
                         return Content(contectNotFoundUser);
@@ -709,7 +709,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                                 }
                                 db.SaveChanges();
                             }
-                            return Json(new { status = "Success" }, JsonRequestBehavior.AllowGet);
+                            return Json(new { status = "Success", message = Localization.View.Successful }, JsonRequestBehavior.AllowGet);
                         }
 
                     }
