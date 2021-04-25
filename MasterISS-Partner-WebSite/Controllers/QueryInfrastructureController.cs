@@ -9,7 +9,7 @@ using System.Web.Mvc;
 namespace MasterISS_Partner_WebSite.Controllers
 {
     [Authorize]
-    public class QueryInfrastructureController : Controller
+    public class QueryInfrastructureController : BaseController
     {
         private static Logger LoggerError = LogManager.GetLogger("AppLoggerError");
 
