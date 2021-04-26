@@ -565,6 +565,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Çalışma Bitiş Saati.
+        /// </summary>
+        public static string EndTimeOfWork {
+            get {
+                return ResourceManager.GetString("EndTimeOfWork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Yetkili Doğum Yeri.
         /// </summary>
         public static string ExecutiveBirthPlace {
@@ -1375,6 +1384,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Çalışma Başlangıç Saati.
+        /// </summary>
+        public static string StartingTimeOfWork {
+            get {
+                return ResourceManager.GetString("StartingTimeOfWork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Durum.
         /// </summary>
         public static string State {
@@ -1623,6 +1641,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string VUID {
             get {
                 return ResourceManager.GetString("VUID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Çalışma Günleri.
+        /// </summary>
+        public static string WorkingDays {
+            get {
+                return ResourceManager.GetString("WorkingDays", resourceCulture);
             }
         }
         

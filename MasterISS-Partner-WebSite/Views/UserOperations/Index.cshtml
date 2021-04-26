@@ -40,7 +40,7 @@
                             <button type="submit" class="btn btn-primary btn-primary--icon" id="kt_search">
                                 <span>
                                     <i class="la la-search"></i>
-                                    <span>Filtrele</span>
+                                    <span>@View.Filter</span>
                                 </span>
                             </button>
                         </div>
@@ -372,11 +372,11 @@
     $("#user-work-area-container").on('click', '.delete-button', function () {
         var dataValue = $(this).attr("dataValue");
         Swal.fire({
-            title: 'Silmek İstediğinize eminmisiniz?',
+            title: '@View.AreYouSureYouWantToDeleteTheWorkspace',
             showDenyButton: true,
             showCancelButton: true,
-            confirmButtonText: `Save`,
-            denyButtonText: `Don't save`,
+            confirmButtonText: `@View.Yes`,
+            cancelButtonText: `@View.Cancel`,
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
@@ -400,9 +400,7 @@
                         }
                     },
                 });
-            } else if (result.isDenied) {
-                Swal.fire('Changes are not saved', '', 'info')
-            }
+            } 
         })
     });
     </script>
@@ -524,13 +522,13 @@
         $(".user-status-check").change(function () {
             var dataValue = $(this).attr("dataValue");
             var status = $(this).attr("checked");
-            if (status == "" || status == null) {//aktif yapmaua çalışıyor
+            if (status == "" || status == null) {
                 Swal.fire({
-                    title: 'Kullanıcıyı aktif etmek istediğinden eminmisin?',
+                    title: '@View.AreYouSureYouWantToActivateTheUser',
                     showDenyButton: true,
                     showCancelButton: true,
-                    confirmButtonText: `Evet`,
-                    denyButtonText: `Iptal`,
+                    confirmButtonText: `@View.Yes`,
+                    cancelButtonText: `@View.Cancel`,
                 }).then((result) => {
                     if (result.isConfirmed) {
                          $.ajax({
@@ -566,13 +564,13 @@
                     }
                 })
             }
-            else {// pasif yapmaya çalışıyor
+            else {
                 Swal.fire({
-                    title: 'Kullanıcıyı pasif etmek istediğinden eminmisin?',
+                    title: '@View.AreYouSureYouWantToInactivateTheUser',
                     showDenyButton: true,
                     showCancelButton: true,
-                    confirmButtonText: `Evet`,
-                    denyButtonText: `Iptal`,
+                    confirmButtonText: `@View.Yes`,
+                    cancelButtonText: `@View.Cancel`,
                 }).then((result) => {
                     if (result.isConfirmed) {
                          $.ajax({

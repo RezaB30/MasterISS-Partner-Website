@@ -285,6 +285,9 @@
   <data name="Email" xml:space="preserve">
     <value>E-Mail</value>
   </data>
+  <data name="EndTimeOfWork" xml:space="preserve">
+    <value>End Time Of Work</value>
+  </data>
   <data name="ExecutiveBirthPlace" xml:space="preserve">
     <value>Executive Birth Place</value>
   </data>
@@ -555,6 +558,9 @@
   <data name="Speed" xml:space="preserve">
     <value>Speed</value>
   </data>
+  <data name="StartingTimeOfWork" xml:space="preserve">
+    <value>Starting Time Of Work</value>
+  </data>
   <data name="State" xml:space="preserve">
     <value>State</value>
   </data>
@@ -638,6 +644,9 @@
   </data>
   <data name="VUID" xml:space="preserve">
     <value>VUID</value>
+  </data>
+  <data name="WorkingDays" xml:space="preserve">
+    <value>Working Days</value>
   </data>
   <data name="WorkingStatus" xml:space="preserve">
     <value>Working Status</value>

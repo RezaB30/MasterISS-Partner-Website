@@ -35,7 +35,7 @@ namespace MasterISS_Partner_WebSite.Controllers
         private TimeSpan firtSessionTime;
         private TimeSpan lastSessionTime;
 
-        public ActionResult Index(GetTaskListRequestViewModel taskListRequestModel, int page = 1, int pageSize = 1)
+        public ActionResult Index(GetTaskListRequestViewModel taskListRequestModel, int page = 1, int pageSize = 9)
         {
             taskListRequestModel = taskListRequestModel ?? new GetTaskListRequestViewModel();
 
@@ -503,7 +503,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             var wrapperGetUserSubMail = new WebServiceWrapper();
             LoggerError.Fatal($"An error occurred while GetTaskDetails , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapperGetUserSubMail.GetUserSubMail()}");
             //LOG
-            var responseMessageGetTaskDetail= string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false','{1}');</script>", response.ResponseMessage.ErrorMessage, Url.Action("Index", "Setup"));
+            var responseMessageGetTaskDetail = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false','{1}');</script>", response.ResponseMessage.ErrorMessage, Url.Action("Index", "Setup"));
             return Content(responseMessageGetTaskDetail);
         }
 
@@ -540,7 +540,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                     var wrapper = new WebServiceWrapper();
                     LoggerError.Fatal($"An error occurred while GetCustomerLineDetails , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapper.GetUserSubMail()}");
                     //LOG
-                    var responseMessage= string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false','{1}');</script>", response.ResponseMessage.ErrorMessage, Url.Action("Index", "Setup"));
+                    var responseMessage = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false','{1}');</script>", response.ResponseMessage.ErrorMessage, Url.Action("Index", "Setup"));
                     return Content(responseMessage);
                 }
                 var wrapperByNotFoundTask = new WebServiceWrapper();
@@ -611,7 +611,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             {
                 var fileOperations = new FileOperations();
 
-                if (files.Count() > 0 && files != null)
+                if (files != null)
                 {
                     var validFiles = ValidFiles(files, false);
                     if (validFiles.Key)
@@ -902,40 +902,45 @@ namespace MasterISS_Partner_WebSite.Controllers
                         {
                             return Json(new { status = "FailedAndRedirect", ErrorMessage = notDefined }, JsonRequestBehavior.AllowGet);
                         }
-                    }
-                    using (var db = new PartnerWebSiteEntities())
-                    {
-                        var validStaff = db.SetupTeam.Find(updateTaskStatusViewModel.StaffId);
-                        if (validStaff != null)
+                        using (var db = new PartnerWebSiteEntities())
                         {
-                            var assignTaskDescription = new LocalizedList<OperationTypeEnum, Localization.OperationHistoryType>().GetDisplayText((short)OperationTypeEnum.AssignTask, CultureInfo.CurrentCulture);
-                            string description = null;
-                            if (updateTaskStatusViewModel.StaffId != null)
+                            var validStaff = db.SetupTeam.Find(updateTaskStatusViewModel.StaffId);
+                            if (validStaff != null)
                             {
-                                description = string.Format($"{assignTaskDescription}, {Localization.View.By}: {wrapper.GetUserSubMail()}, {Localization.View.SetupTeam}: {validStaff.User.UserSubMail} ");
+                                var assignTaskDescription = new LocalizedList<OperationTypeEnum, Localization.OperationHistoryType>().GetDisplayText((short)OperationTypeEnum.AssignTask, CultureInfo.CurrentCulture);
+                                string description = null;
+                                if (updateTaskStatusViewModel.StaffId != null)
+                                {
+                                    description = string.Format($"{assignTaskDescription}, {Localization.View.By}: {wrapper.GetUserSubMail()}, {Localization.View.SetupTeam}: {validStaff.User.UserSubMail} ");
+                                }
+                                else
+                                {
+                                    description = string.Format($"{assignTaskDescription}, {Localization.View.By}: {wrapper.GetUserSubMail()}");
+                                }
+
+                                OperationHistory operationHistory = new OperationHistory
+                                {
+                                    ChangeTime = DateTime.Now,
+                                    UserId = claimInfo.UserId(),
+                                    OperationType = (short)OperationTypeEnum.AssignTask,
+                                    Description = description,
+                                    TaskNo = updateTaskStatusViewModel.TaskNo.Value,
+                                };
+                                db.OperationHistory.Add(operationHistory);
+                                db.SaveChanges();
                             }
                             else
                             {
-                                description = string.Format($"{assignTaskDescription}, {Localization.View.By}: {wrapper.GetUserSubMail()}");
+                                Logger.Info("Not Found Staff ; Setup UpdateTaskStatus Post by: " + claimInfo.UserId());
+
+                                var notfoundStaff = Localization.View.Generic200ErrorCodeMessage;
+                                return Json(new { status = "FailedAndRedirect", ErrorMessage = notDefined }, JsonRequestBehavior.AllowGet);
                             }
-
-                            OperationHistory operationHistory = new OperationHistory
-                            {
-                                ChangeTime = DateTime.Now,
-                                UserId = claimInfo.UserId(),
-                                OperationType = (short)OperationTypeEnum.AssignTask,
-                                Description = description,
-                                TaskNo = updateTaskStatusViewModel.TaskNo.Value,
-                            };
-                            db.OperationHistory.Add(operationHistory);
-                            db.SaveChanges();
-                        }
-                        else
-                        {
-                            var notDefined = Localization.View.Generic200ErrorCodeMessage;
-                            return Json(new { status = "FailedAndRedirect", ErrorMessage = notDefined }, JsonRequestBehavior.AllowGet);
                         }
 
+                    }
+                    using (var db = new PartnerWebSiteEntities())
+                    {
                         var task = db.TaskList.Find(updateTaskStatusViewModel.TaskNo);
 
                         UpdatedSetupStatus updatedSetupStatus = new UpdatedSetupStatus
@@ -1215,7 +1220,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             foreach (var item in taskFileList)
             {
-                var getFile = fileOperations.GetFile(taskNo,item);
+                var getFile = fileOperations.GetFile(taskNo, item);
             }
             return "";
         }

@@ -153,11 +153,20 @@
   <data name="ApplicationInformation" xml:space="preserve">
     <value>Application Information</value>
   </data>
+  <data name="AreYouSureYouWantToActivateTheUser" xml:space="preserve">
+    <value>Are you sure you want to activate the user?</value>
+  </data>
   <data name="AreYouSureYouWantToCallTheCustomer" xml:space="preserve">
     <value>Are You Sure You Want To Call The Customer?</value>
   </data>
   <data name="AreYouSureYouWantToConfirm" xml:space="preserve">
     <value>Are You Sure You Want To Confirm?</value>
+  </data>
+  <data name="AreYouSureYouWantToDeleteTheWorkspace" xml:space="preserve">
+    <value>Are you sure you want to delete the work area?</value>
+  </data>
+  <data name="AreYouSureYouWantToInactivateTheUser" xml:space="preserve">
+    <value>Are you sure you want to inactivate the user?</value>
   </data>
   <data name="AssignTheTask" xml:space="preserve">
     <value>Assign The Task</value>

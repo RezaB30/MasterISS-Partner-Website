@@ -153,11 +153,20 @@
   <data name="ApplicationInformation" xml:space="preserve">
     <value>Başvuru Bilgileri</value>
   </data>
+  <data name="AreYouSureYouWantToActivateTheUser" xml:space="preserve">
+    <value>Kullanıcıyı aktif etmek istediğinden emin misin?</value>
+  </data>
   <data name="AreYouSureYouWantToCallTheCustomer" xml:space="preserve">
     <value>Müşteriyi Aramak İstediğinize Emin Misiniz?</value>
   </data>
   <data name="AreYouSureYouWantToConfirm" xml:space="preserve">
     <value>Teyit Vermek İstediğinize Emin Misiniz?</value>
+  </data>
+  <data name="AreYouSureYouWantToDeleteTheWorkspace" xml:space="preserve">
+    <value>Çalışma alanını silmek istediğinize emin misiniz?</value>
+  </data>
+  <data name="AreYouSureYouWantToInactivateTheUser" xml:space="preserve">
+    <value>Kullanıcıyı pasif etmek istediğinden emin misin?</value>
   </data>
   <data name="AssignTheTask" xml:space="preserve">
     <value>Görevi Ata</value>

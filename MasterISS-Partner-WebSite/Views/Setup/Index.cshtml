@@ -533,7 +533,7 @@
             maxFilesize: 100,//max file size in MB,
             addRemoveLinks: true,
             dictResponseError: 'Server not Configured',
-            acceptedFiles: ".png,.jpg,.gif,.bmp,.jpeg,.pdf",// use this to restrict file type
+            acceptedFiles: ".png,.jpg,.jpeg,.pdf",// use this to restrict file type
             init: function () {
                 var self = this;
                 // config
@@ -927,8 +927,8 @@
                 title: title,
                 showDenyButton: true,
                 showCancelButton: true,
-                confirmButtonText: `Save`,
-                denyButtonText: `Don't save`,
+                confirmButtonText: `@View.Yes`,
+                cancelButtonText: `@View.Cancel`,
                 }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
@@ -952,9 +952,7 @@
                             }
                         },
                     });
-                } else if (result.isDenied) {
-                    Swal.fire('Changes are not saved', '', 'info')
-                }
+                } 
             })
         }
 

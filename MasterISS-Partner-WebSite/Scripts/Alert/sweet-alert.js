@@ -3,6 +3,7 @@
         Swal.fire({
             icon: 'success',
             title: 'Başarılı!',
+            confirmButtonText: `Tamam`,
             text: message,
         }).then(function () {
             window.location.href = Url;
@@ -12,6 +13,7 @@
         Swal.fire({
             icon: 'error',
             title: 'Hata Oluştu',
+            cancelButtonText:'Tamam',
             text: message,
         }).then(function () {
             window.location.href = Url;

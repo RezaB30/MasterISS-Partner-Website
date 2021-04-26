@@ -25,7 +25,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
         [Authorize(Roles = "SaleRevenuesList,Admin")]
         [HttpGet]
-        public ActionResult SaleAllowedDetails(int page = 1, int pageSize = 1)
+        public ActionResult SaleAllowedDetails(int page = 1, int pageSize = 10)
         {
             var wrapper = new WebServiceWrapper();
 
@@ -65,7 +65,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
         [Authorize(Roles = "SetupRevenuesList,Admin")]
         [HttpGet]
-        public ActionResult SetupAllowedDetails(int page = 1, int pageSize = 1)
+        public ActionResult SetupAllowedDetails(int page = 1, int pageSize = 10)
         {
             var wrapper = new WebServiceWrapper();
 
@@ -204,7 +204,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
         [HttpGet]
         [Authorize(Roles = "SaleRevenuesList,Admin")]
-        public ActionResult SaleGenericAllowanceList(int page = 1, int pageSize = 1)
+        public ActionResult SaleGenericAllowanceList(int page = 1, int pageSize = 10)
         {
             var wrapper = new WebServiceWrapper();
 
@@ -255,7 +255,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
         [HttpGet]
         [Authorize(Roles = "SetupRevenuesList,Admin")]
-        public ActionResult SetupGenericAllowanceList(int page = 1, int pageSize = 4)
+        public ActionResult SetupGenericAllowanceList(int page = 1, int pageSize = 10)
         {
             var wrapper = new WebServiceWrapper();
 
@@ -313,7 +313,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             var request = new PageSettingsByWebService()
             {
                 ItemPerPage = pageSize,
-                PageNo = page,
+                PageNo = page - 1,
             };
 
             var response = wrapper.SetupAllowanceList(request);
@@ -356,7 +356,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                 PageInfo = new PageSettingsByWebService()
                 {
                     ItemPerPage = pageSize,
-                    PageNo = page
+                    PageNo = page - 1
                 },
                 AllowanceCollectionID = Id
             };

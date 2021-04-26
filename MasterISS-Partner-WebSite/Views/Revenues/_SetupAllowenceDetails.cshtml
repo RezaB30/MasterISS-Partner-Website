@@ -11,6 +11,7 @@
             <th style="min-width: 130px">@Html.DisplayNameFor(m => m.FirstOrDefault().AllowanceState.Name)</th>
             <th style="min-width: 130px">@Html.DisplayNameFor(m => m.FirstOrDefault().CompletionDate)</th>
             <th style="min-width: 130px">@Html.DisplayNameFor(m => m.FirstOrDefault().IssueDate)</th>
+            <th style="min-width: 130px">@Html.DisplayNameFor(m => m.FirstOrDefault().SubscriptionNo)</th>
             <th style="min-width: 130px">@Html.DisplayNameFor(m => m.FirstOrDefault().SetupState.Name)</th>
         </tr>
     </thead>
@@ -35,7 +36,7 @@
             <!--begin::Pagination-->
             <div class="d-flex justify-content-between align-items-center flex-wrap">
                 <div class="d-flex flex-wrap mr-3">
-                    @Html.PagedListPager(Model, page => Url.Action("SetupAllowenceDetails", new { page = page,Id = (int)ViewBag.Id }),
+                    @Html.PagedListPager(Model, page => Url.Action("SetupAllowenceDetails", new { page = page, Id = (int)ViewBag.Id }),
                    PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions()
                    {
                        HttpMethod = "GET",
@@ -43,10 +44,11 @@
                    }))
                 </div>
                 <div class="d-flex align-items-center">
-               @*     <span class="text-muted"> @View.Total @Model.TotalItemCount @View.RecordFound @View.OnThisPage @Model.FirstItemOnPage @View.To @Model.LastItemOnPage @View.Showing</span>*@
+                    @*     <span class="text-muted"> @View.Total @Model.TotalItemCount @View.RecordFound @View.OnThisPage @Model.FirstItemOnPage @View.To @Model.LastItemOnPage @View.Showing</span>*@
                 </div>
             </div>
             <!--end:: Pagination-->
         </div>
     </div>
 }
+

@@ -285,6 +285,9 @@
   <data name="Email" xml:space="preserve">
     <value>E-Posta</value>
   </data>
+  <data name="EndTimeOfWork" xml:space="preserve">
+    <value>Çalışma Bitiş Saati</value>
+  </data>
   <data name="ExecutiveBirthPlace" xml:space="preserve">
     <value>Yetkili Doğum Yeri</value>
   </data>
@@ -555,6 +558,9 @@
   <data name="Speed" xml:space="preserve">
     <value>Hız</value>
   </data>
+  <data name="StartingTimeOfWork" xml:space="preserve">
+    <value>Çalışma Başlangıç Saati</value>
+  </data>
   <data name="State" xml:space="preserve">
     <value>Durum</value>
   </data>
@@ -638,6 +644,9 @@
   </data>
   <data name="VUID" xml:space="preserve">
     <value>VUID</value>
+  </data>
+  <data name="WorkingDays" xml:space="preserve">
+    <value>Çalışma Günleri</value>
   </data>
   <data name="WorkingStatus" xml:space="preserve">
     <value>Çalışma Durumu</value>

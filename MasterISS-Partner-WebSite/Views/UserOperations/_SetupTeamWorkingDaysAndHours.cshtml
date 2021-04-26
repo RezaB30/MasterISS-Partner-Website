@@ -9,7 +9,7 @@
         <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
     </button>
 </div>
-@using (Ajax.BeginForm("SetupTeamWorkingDaysAndHours", "UserOperations", new AjaxOptions { HttpMethod = "POST", OnComplete = "  " }))
+@using (Ajax.BeginForm("SetupTeamWorkingDaysAndHours", "UserOperations", new AjaxOptions { HttpMethod = "POST", OnComplete = "GenericResultUserOperations" }))
 {
     @Html.AntiForgeryToken()
     <div class="modal-body">

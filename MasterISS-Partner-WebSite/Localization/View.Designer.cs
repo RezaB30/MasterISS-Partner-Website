@@ -169,6 +169,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kullanıcıyı aktif etmek istediğinden emin misin?.
+        /// </summary>
+        public static string AreYouSureYouWantToActivateTheUser {
+            get {
+                return ResourceManager.GetString("AreYouSureYouWantToActivateTheUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Müşteriyi Aramak İstediğinize Emin Misiniz?.
         /// </summary>
         public static string AreYouSureYouWantToCallTheCustomer {
@@ -183,6 +192,24 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string AreYouSureYouWantToConfirm {
             get {
                 return ResourceManager.GetString("AreYouSureYouWantToConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Çalışma alanını silmek istediğinize emin misiniz?.
+        /// </summary>
+        public static string AreYouSureYouWantToDeleteTheWorkspace {
+            get {
+                return ResourceManager.GetString("AreYouSureYouWantToDeleteTheWorkspace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kullanıcıyı pasif etmek istediğinden emin misin?.
+        /// </summary>
+        public static string AreYouSureYouWantToInactivateTheUser {
+            get {
+                return ResourceManager.GetString("AreYouSureYouWantToInactivateTheUser", resourceCulture);
             }
         }
         
