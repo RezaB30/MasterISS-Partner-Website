@@ -64,8 +64,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                     {
                         if (startDate.AddDays(Properties.Settings.Default.SearchLimit) >= endDate)
                         {
-                            taskListRequestModel.TaskListStartDate = startDate.ToString();
-                            taskListRequestModel.TaskListEndDate = endDate.ToString();
+                            taskListRequestModel.TaskListStartDate = startDate.ToString("dd.MM.yyyy HH:mm");
+                            taskListRequestModel.TaskListEndDate = endDate.ToString("dd.MM.yyyy HH:mm");
 
                             var taskList = TaskList(User.IsInRole("Admin"), taskListRequestModel);
 
@@ -1205,6 +1205,19 @@ namespace MasterISS_Partner_WebSite.Controllers
             {
                 return Json(new { list = taskFileList }, JsonRequestBehavior.AllowGet);
             }
+        }
+
+
+        private string Ass(long taskNo)
+        {
+            var fileOperations = new FileOperations();
+            var taskFileList = fileOperations.GetSetupFileList(taskNo);
+
+            foreach (var item in taskFileList)
+            {
+                var getFile = fileOperations.GetFile(taskNo,item);
+            }
+            return "";
         }
 
         public ActionResult GetFileTask(string fileName, long taskNo)

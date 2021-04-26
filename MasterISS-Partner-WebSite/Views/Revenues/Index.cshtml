@@ -133,12 +133,7 @@
                     type: 'GET',
                     dataType: 'html',
                     success: function (data) {
-                        if (data.responseJson.status!="Failed") {
-                            $("#generic-Container").html(data);
-                        }
-                        else {
-                            GetAlert(data.responseJson.ErrorMessage, "false");
-                        }
+                        $("#generic-Container").html(data);
                     },
                 });
         });

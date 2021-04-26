@@ -354,7 +354,7 @@
                     <option value="tr-tr">Türkçe</option>
                     <option value="en-us">English</option>
                 </select>
-                @using (Ajax.BeginForm("UserSettings", "Account", new AjaxOptions { HttpMethod = "POST", OnComplete = "GenericResult" }))
+                @using (Ajax.BeginForm("UserSettings", "Account", new AjaxOptions { HttpMethod = "POST", OnComplete = "GenericResultMenubar" }))
                 {
                     @Html.AntiForgeryToken()
                     <div class="form-group my-4">

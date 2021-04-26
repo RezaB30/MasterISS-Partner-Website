@@ -135,7 +135,7 @@ namespace MasterISS_Partner_WebSite_Scheduler
 
         private static IFileManager GetLocalFileManager()
         {
-            var rootFolder = Environment.GetEnvironmentVariable("partner_client_root");
+            var rootFolder = Environment.GetEnvironmentVariable("RadiusR_Repo");
 
             IFileManager fileManager = new RezaB.Files.Local.LocalFileManager(rootFolder);
 
