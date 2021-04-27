@@ -285,6 +285,9 @@
   <data name="Day" xml:space="preserve">
     <value> Gün </value>
   </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
   <data name="Details" xml:space="preserve">
     <value>Detaylar</value>
   </data>
@@ -630,6 +633,9 @@
   </data>
   <data name="UploadDocumentPage" xml:space="preserve">
     <value>Belge Yükle</value>
+  </data>
+  <data name="UploadedPhotosOfTheTask" xml:space="preserve">
+    <value>Göreve ait Yüklenen Fotoğraflar</value>
   </data>
   <data name="UserOperations" xml:space="preserve">
     <value>Kullanıcılar</value>

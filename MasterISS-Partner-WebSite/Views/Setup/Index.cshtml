@@ -374,21 +374,7 @@
 <div class="modal fade" id="examplegetTaskFile" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <div class="py-2">
-                    <span class="text-dark-75 font-weight-bolder d-block font-size-h5">Ass</span>
-                    <span class="text-muted font-size-lg">Ass</span>
-                </div>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="d-flex mb-3" id="GetFileContainer">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
+            <div id="GetFileContainer">
             </div>
         </div>
 
@@ -511,7 +497,6 @@
 
 
 
-
 @section Javascript{
 
     <script>
@@ -538,7 +523,7 @@
                 var self = this;
                 // config
                 self.options.addRemoveLinks = true;
-                self.options.dictRemoveFile = "Delete";
+                self.options.dictRemoveFile = "@View.Delete";
                 //New file added
                 self.on("addedfile", function (file) {
                     console.log('new file added ', file);
@@ -601,8 +586,9 @@
         }
 
     $("#CustomerUploaodDocumentContainer").on('change', '#AttachmentTypesEnum', function () {
-        $("#previews").show()
+        $("#previews").show();
         GetDropzone();
+
     });
 
     $("#TaskUpdateNotRendezvousContainer").on('change', '#FaultCodesDrowndown', function () {
@@ -656,30 +642,18 @@
                 });
         });
 
-
-        $(".get-task-file-button").click(function () {
+         $(".get-task-file-button").click(function () {
             var dataValue = $(this).attr("dataValue");
                 $.ajax({
-                    url: '@Url.Action("GetFileList", "Setup")',
+                    url: '@Url.Action("GetTasksFileBase64", "Setup")',
                     type: 'POST',
                     data: {
                         taskNo : dataValue
                     },
-                    dataType: 'json',
-                    complete: function (data, status) {
-                            if (status = "success") {
-                                var cultureInfo = '@System.Globalization.CultureInfo.CurrentCulture.Name';
-                                var area = $("#GetFileContainer");
-                                area.empty();
-                                $.each(data.responseJSON.list, function (item, value) {
-                                    item = item + 1;
-                                    area.append('<a href="/' + cultureInfo + '/Setup/GetFileTask?fileName=' + value + '&taskNo=' + dataValue + '" class="' + "btn btn-sm btn-outline-success font-weight-bold" + '" target="_blank">"' + value +'" </a>');
-                                });
-                            }
-                            else {
-                                console.log("Failed Get Staff Hours");
-                            }
-                        }
+                    dataType: 'html',
+                    success: function (data) {
+                        $("#GetFileContainer").html(data);
+                    },
                 });
           });
 
@@ -952,9 +926,10 @@
                             }
                         },
                     });
-                } 
+                }
             })
         }
+
 
         $(".give-confirmation-button").click(function () {
             var dataValue = $(this).attr("dataValue");
@@ -964,7 +939,7 @@
         });
 
         $(function () {
-          
+
             $("#search_TaskListStartDate").mask("99.99.9999 99:99");
             $("#search_TaskListEndDate").mask("99.99.9999 99:99");
             $("#search_SearchedTaskNo").mask("99999");

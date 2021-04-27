@@ -377,6 +377,7 @@
     <Compile Include="ViewModels\Account\UserSignInViewModel.cs" />
     <Compile Include="ViewModels\AddPermissionViewModel.cs" />
     <Compile Include="ViewModels\FilterUserViewModel.cs" />
+    <Compile Include="ViewModels\GetTasksFileViewModel.cs" />
     <Compile Include="ViewModels\LastPaymentListViewModel.cs" />
     <Compile Include="ViewModels\ListRendezvousTeamViewModel.cs" />
     <Compile Include="ViewModels\OperationHistoryListViewModel.cs" />
@@ -2093,6 +2094,7 @@
     <Content Include="Views\Home\ConfirmBills.cshtml" />
     <Content Include="Views\Home\LastPayments.cshtml" />
     <Content Include="Views\Home\CreditReportDetail.cshtml" />
+    <Content Include="Views\Setup\_GetFileTasks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

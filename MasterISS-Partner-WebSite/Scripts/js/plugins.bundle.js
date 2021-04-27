@@ -50362,6 +50362,7 @@ var Dropzone = /*#__PURE__*/function (_Emitter) {
             }
 
             if (this.options.addRemoveLinks) {
+              //file._removeLink = Dropzone.createElement("<a class=\"dz-remove\" href=\"javascript:undefined;\" data-dz-remove>Sil</a>");
               file._removeLink = Dropzone.createElement("<a class=\"dz-remove\" href=\"javascript:undefined;\" data-dz-remove>".concat(this.options.dictRemoveFile, "</a>"));
               file.previewElement.appendChild(file._removeLink);
             }

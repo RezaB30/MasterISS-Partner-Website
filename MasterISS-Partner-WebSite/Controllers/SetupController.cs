@@ -1201,7 +1201,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             var fileOperations = new FileOperations();
 
             var taskFileList = fileOperations.GetSetupFileList(taskNo);
-
+            GetTasksFileBase64(taskNo);
             if (taskFileList == null)
             {
                 return Json(new { list = Localization.View.Generic200ErrorCodeMessage }, JsonRequestBehavior.AllowGet);
@@ -1213,16 +1213,34 @@ namespace MasterISS_Partner_WebSite.Controllers
         }
 
 
-        private string Ass(long taskNo)
+        [HttpPost]
+        public ActionResult GetTasksFileBase64(long taskNo)
         {
             var fileOperations = new FileOperations();
             var taskFileList = fileOperations.GetSetupFileList(taskNo);
+            var fileListViewModel = new GetTasksFileViewModel();
+            fileListViewModel.GenericFileList = new List<GenericFileList>();
 
-            foreach (var item in taskFileList)
+            foreach (var fileName in taskFileList)
             {
-                var getFile = fileOperations.GetFile(taskNo, item);
+                var getFile = fileOperations.GetFile(taskNo, fileName);
+
+                using (var memoryStream = new MemoryStream())
+                {
+                    getFile.CopyTo(memoryStream);
+                    var bytes = memoryStream.ToArray();
+                    var base64 = Convert.ToBase64String(bytes);
+                    var src = string.Format("data:image/{0};base64,{1}", new FileInfo(fileName).Extension.Replace(".", ""), base64);
+                    var link = Url.Action("GetFileTask", "Setup", new { fileName = fileName, taskNo = taskNo });
+                    var genericItem = new GenericFileList
+                    {
+                        ImgLink = link,
+                        ImgSrc = src
+                    };
+                    fileListViewModel.GenericFileList.Add(genericItem);
+                }
             }
-            return "";
+            return PartialView("_GetFileTasks", fileListViewModel);
         }
 
         public ActionResult GetFileTask(string fileName, long taskNo)

@@ -21,7 +21,7 @@ namespace MasterISS_Partner_WebSite.Controllers
         private static Logger LoggerError = LogManager.GetLogger("AppLoggerError");
 
         // GET: UserOperations
-        public ActionResult Index(FilterUserViewModel filterUserViewModel, int page = 1, int pageSize = 4)
+        public ActionResult Index(FilterUserViewModel filterUserViewModel, int page = 1, int pageSize = 12)
         {
             var claimInfo = new ClaimInfo();
             var partnerId = Convert.ToInt32(claimInfo.PartnerId());

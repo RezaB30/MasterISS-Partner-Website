@@ -285,6 +285,9 @@
   <data name="Day" xml:space="preserve">
     <value> Day </value>
   </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="Details" xml:space="preserve">
     <value>Details</value>
   </data>
@@ -629,6 +632,9 @@
   </data>
   <data name="UploadDocumentPage" xml:space="preserve">
     <value>Upload Document</value>
+  </data>
+  <data name="UploadedPhotosOfTheTask" xml:space="preserve">
+    <value>Uploaded photos of the Task</value>
   </data>
   <data name="UserOperations" xml:space="preserve">
     <value>User</value>

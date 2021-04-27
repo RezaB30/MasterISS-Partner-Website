@@ -565,6 +565,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Detaylar.
         /// </summary>
         public static string Details {
@@ -1597,6 +1606,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string UploadDocumentPage {
             get {
                 return ResourceManager.GetString("UploadDocumentPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Göreve ait Yüklenen Fotoğraflar.
+        /// </summary>
+        public static string UploadedPhotosOfTheTask {
+            get {
+                return ResourceManager.GetString("UploadedPhotosOfTheTask", resourceCulture);
             }
         }
         

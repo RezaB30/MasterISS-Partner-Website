@@ -25,7 +25,6 @@ namespace MasterISS_Partner_WebSite_Scheduler
             string base64 = Convert.ToBase64String(bytes);
 
             return base64;
-            //return new MemoryStream(Encoding.UTF8.GetBytes(base64));
         }
 
 
