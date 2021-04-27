@@ -340,7 +340,7 @@ namespace MasterISS_Partner_WebSite
         {
             var rootFolder = Environment.GetEnvironmentVariable(Properties.Settings.Default.EnvironmentVariableRoot);
 
-            IFileManager fileManager = new RezaB.Files.Local.LocalFileManager(/*rootFolder*/"partner_client_root");
+            IFileManager fileManager = new RezaB.Files.Local.LocalFileManager("partner_client_root"); //rootFolder
 
             return fileManager;
         }

@@ -970,6 +970,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bu göreve ait fotoğraf bulunamadı..
+        /// </summary>
+        public static string NotFoundPhotoOfThisTask {
+            get {
+                return ResourceManager.GetString("NotFoundPhotoOfThisTask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bu görev için uygun Kurulum Ekibi bulunamadı..
         /// </summary>
         public static string NotFoundSetupTeamForThisTask {
@@ -1565,11 +1574,11 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rolün Yetkilerini Güncelle.
+        ///   Looks up a localized string similar to Rol Yetkisi Değiştir.
         /// </summary>
-        public static string UpdateRoleAuthorizations {
+        public static string UpdateRolePermissions {
             get {
-                return ResourceManager.GetString("UpdateRoleAuthorizations", resourceCulture);
+                return ResourceManager.GetString("UpdateRolePermissions", resourceCulture);
             }
         }
         
@@ -1619,6 +1628,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kullanıcı Bilgileri.
+        /// </summary>
+        public static string UserInfo {
+            get {
+                return ResourceManager.GetString("UserInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kullanıcılar.
         /// </summary>
         public static string UserOperations {
@@ -1633,6 +1651,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string UserPanel {
             get {
                 return ResourceManager.GetString("UserPanel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kullanıcı Ayarları.
+        /// </summary>
+        public static string UserSettings {
+            get {
+                return ResourceManager.GetString("UserSettings", resourceCulture);
             }
         }
         
@@ -1655,11 +1682,38 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Yüklenen Fotoğrafları Görüntüle.
+        /// </summary>
+        public static string ViewUploadedPhotos {
+            get {
+                return ResourceManager.GetString("ViewUploadedPhotos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hoşgeldiniz!.
         /// </summary>
         public static string Welcome {
             get {
                 return ResourceManager.GetString("Welcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Çalışma Bölgesi.
+        /// </summary>
+        public static string WorkArea {
+            get {
+                return ResourceManager.GetString("WorkArea", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Çalışma Saatleri.
+        /// </summary>
+        public static string WorkHours {
+            get {
+                return ResourceManager.GetString("WorkHours", resourceCulture);
             }
         }
         

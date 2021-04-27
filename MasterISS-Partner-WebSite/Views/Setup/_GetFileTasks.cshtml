@@ -10,15 +10,23 @@
 </div>
 <div class="modal-body">
     <div class="d-flex mb-3">
-        <div class="row" align="center">
-            @foreach (var item in Model.GenericFileList)
+        <div class="row m-2" align="center">
+            @if (Model.GenericFileList.Count != 0)
             {
-                <div class="col-lg-6 col-md-6 col-sm-12">
-                    <a href="@item.ImgLink" target="_blank">
-                        <img src="@item.ImgSrc" alt="Red dot" height="225" width="225" />
-                    </a>
-                </div>
+                foreach (var item in Model.GenericFileList)
+                {
+                    <div class="col-lg-6 col-md-6 col-sm-12 mb-2">
+                        <a href="@item.ImgLink" target="_blank">
+                            <img src="@item.ImgSrc" alt="Red dot" height="200" width="200" />
+                        </a>
+                    </div>
+                }
             }
+            else
+            {
+                <span class="text-danger">@View.NotFoundPhotoOfThisTask</span>
+            }
+
         </div>
     </div>
 </div>

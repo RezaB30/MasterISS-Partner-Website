@@ -1224,7 +1224,6 @@ namespace MasterISS_Partner_WebSite.Controllers
             foreach (var fileName in taskFileList)
             {
                 var getFile = fileOperations.GetFile(taskNo, fileName);
-
                 using (var memoryStream = new MemoryStream())
                 {
                     getFile.CopyTo(memoryStream);

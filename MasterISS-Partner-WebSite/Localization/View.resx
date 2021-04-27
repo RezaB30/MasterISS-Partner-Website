@@ -420,6 +420,9 @@
   <data name="NotAvailable" xml:space="preserve">
     <value>Mevcut Değil</value>
   </data>
+  <data name="NotFoundPhotoOfThisTask" xml:space="preserve">
+    <value>Bu göreve ait fotoğraf bulunamadı.</value>
+  </data>
   <data name="NotFoundSetupTeamForThisTask" xml:space="preserve">
     <value>Bu görev için uygun Kurulum Ekibi bulunamadı.</value>
   </data>
@@ -619,8 +622,8 @@
   <data name="UpdateGPS" xml:space="preserve">
     <value>Müşterinin Konumunu Güncelle</value>
   </data>
-  <data name="UpdateRoleAuthorizations" xml:space="preserve">
-    <value>Rolün Yetkilerini Güncelle</value>
+  <data name="UpdateRolePermissions" xml:space="preserve">
+    <value>Rol Yetkisi Değiştir</value>
   </data>
   <data name="UpdateTaskStatus" xml:space="preserve">
     <value>Görev Tanımını Güncelle</value>
@@ -637,11 +640,17 @@
   <data name="UploadedPhotosOfTheTask" xml:space="preserve">
     <value>Göreve ait Yüklenen Fotoğraflar</value>
   </data>
+  <data name="UserInfo" xml:space="preserve">
+    <value>Kullanıcı Bilgileri</value>
+  </data>
   <data name="UserOperations" xml:space="preserve">
     <value>Kullanıcılar</value>
   </data>
   <data name="UserPanel" xml:space="preserve">
     <value>Kullanıcı Paneli</value>
+  </data>
+  <data name="UserSettings" xml:space="preserve">
+    <value>Kullanıcı Ayarları</value>
   </data>
   <data name="ValidWorkArea" xml:space="preserve">
     <value>Bu adres zaten mevcut.</value>
@@ -649,8 +658,17 @@
   <data name="ViewingLoadedBalances" xml:space="preserve">
     <value>Yüklenen Bakiyeleri Görüntüle</value>
   </data>
+  <data name="ViewUploadedPhotos" xml:space="preserve">
+    <value>Yüklenen Fotoğrafları Görüntüle</value>
+  </data>
   <data name="Welcome" xml:space="preserve">
     <value>Hoşgeldiniz!</value>
+  </data>
+  <data name="WorkArea" xml:space="preserve">
+    <value>Çalışma Bölgesi</value>
+  </data>
+  <data name="WorkHours" xml:space="preserve">
+    <value>Çalışma Saatleri</value>
   </data>
   <data name="WrongPassword" xml:space="preserve">
     <value>Yanlış SMS Şifresi</value>

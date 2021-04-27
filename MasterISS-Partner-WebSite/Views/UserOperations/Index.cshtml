@@ -12,13 +12,13 @@
         <div class="col-lg-6 mb-lg-0 mb-6 ">
             <div class="row mb-15 my-8 ">
                 <span class="navi-text" data-toggle="modal" data-target="#exampleModalAddUser">
-                    <input class="btn btn-outline-info my-2 mr-4 add-user-button" value="Kullanıcı Ekle" />
+                    <input class="btn btn-outline-info my-2 mr-4 add-user-button" value="@View.AddUser" />
                 </span>
                 <span class="navi-text" data-toggle="modal" data-target="#exampleModalAddRole">
-                    <input class="btn btn-outline-info my-2 mr-4 add-role-button" value="Rol Ekle" />
+                    <input class="btn btn-outline-info my-2 mr-4 add-role-button" value="@View.AddRole" />
                 </span>
                 <span class="navi-text" data-toggle="modal" data-target="#exampleModalRolePermission">
-                    <input class="btn btn-outline-info my-2 mr-4 update-rolePermission-button" value="Rol Yetkisi Değiştir" />
+                    <input class="btn btn-outline-info my-2 mr-4 update-rolePermission-button" value="@View.UpdateRolePermissions" />
                 </span>
 
             </div>
@@ -72,14 +72,14 @@
                                     <div class="dropdown-menu dropdown-menu-md dropdown-menu-right" style="">
                                         <ul class="navi navi-hover">
                                             <li class="navi-header font-weight-bold py-4">
-                                                <span class="font-size-lg">Kullanıcı Ayarları:</span>
+                                                <span class="font-size-lg">@View.UserSettings:</span>
                                                 <i class="flaticon2-settings icon-md text-muted"></i>
                                             </li>
                                             <li class="navi-separator mb-3 opacity-70"></li>
                                             <li class="navi-item">
                                                 <div class="navi-link">
                                                     <span class="navi-text" data-toggle="modal" data-target="#exampleModalUserInfo">
-                                                        <input class="btn-sm btn btn-block btn-outline-info user-Info-button " value="Kullanıcı Bilgileri" dataValue="@item.UserId" />
+                                                        <input class="btn-sm btn btn-block btn-outline-info user-Info-button " value="@View.UserInfo" dataValue="@item.UserId" />
                                                     </span>
 
                                                 </div>
@@ -89,7 +89,7 @@
                                                 <li class="navi-item">
                                                     <div class="navi-link">
                                                         <span class="navi-text" data-toggle="modal" data-target="#exampleModalUserWorkHours">
-                                                            <input class="btn-sm btn btn-block btn-outline-info user-workingHours-button" value="Çalışma Saatleri" dataValue="@item.UserId" />
+                                                            <input class="btn-sm btn btn-block btn-outline-info user-workingHours-button" value="@View.WorkHours" dataValue="@item.UserId" />
                                                         </span>
 
                                                     </div>
@@ -97,7 +97,7 @@
                                                 <li class="navi-item">
                                                     <div class="navi-link">
                                                         <span class="navi-text" data-toggle="modal" data-target="#exampleModalUserWorkAreas">
-                                                            <input class="btn-sm btn btn-block btn-outline-info user-workingAreas-button" value="Çalışma Bölgesi" dataValue="@item.UserId" />
+                                                            <input class="btn-sm btn btn-block btn-outline-info user-workingAreas-button" value="@View.WorkArea" dataValue="@item.UserId" />
                                                         </span>
                                                     </div>
                                                 </li>
