@@ -131,15 +131,15 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             ViewBag.DayList = DayList(null);
             ViewBag.MonthList = Monthlist(null);
-            ViewBag.YearList = YearList(null);
+            ViewBag.YearList = YearList(null, false);
 
             ViewBag.DayListByExpiryDate = DayList(null);
             ViewBag.MonthListByExpiryDate = Monthlist(null);
-            ViewBag.YearListByExpiryDate = YearList(null);
+            ViewBag.YearListByExpiryDate = YearList(null, true);
 
             ViewBag.DayListByIssueDate = DayList(null);
             ViewBag.MonthListByIssueDate = Monthlist(null);
-            ViewBag.YearListByIssueDate = YearList(null);
+            ViewBag.YearListByIssueDate = YearList(null, false);
 
             ViewBag.HavePSTN = HavePSTN(null);
 
@@ -415,29 +415,27 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             ViewBag.DayList = DayList(addCustomerViewModel.IDCard.SelectedBirthDay ?? null);
             ViewBag.MonthList = Monthlist(addCustomerViewModel.IDCard.SelectedBirthMonth ?? null);
-            ViewBag.YearList = YearList(addCustomerViewModel.IDCard.SelectedBirthYear ?? null);
+            ViewBag.YearList = YearList(addCustomerViewModel.IDCard.SelectedBirthYear ?? null, false);
 
             ViewBag.HavePSTN = HavePSTN(addCustomerViewModel.ExtraInfo.HavePSTNId);
 
 
             ViewBag.DayListByIssueDate = DayList(addCustomerViewModel.IDCard.TCBirthCertificate.DateOfIssueDay ?? null);
             ViewBag.MonthListByIssueDate = Monthlist(addCustomerViewModel.IDCard.TCBirthCertificate.DateOfIssueMonth ?? null);
-            ViewBag.YearListByIssueDate = YearList(addCustomerViewModel.IDCard.TCBirthCertificate.DateOfIssueYear ?? null);
+            ViewBag.YearListByIssueDate = YearList(addCustomerViewModel.IDCard.TCBirthCertificate.DateOfIssueYear ?? null, false);
 
-            ViewBag.DayListByExpiryDate = DayList(addCustomerViewModel.IDCard.TCIDCardWithChip.ExpiryDay?? null);
+            ViewBag.DayListByExpiryDate = DayList(addCustomerViewModel.IDCard.TCIDCardWithChip.ExpiryDay ?? null);
             ViewBag.MonthListByExpiryDate = Monthlist(addCustomerViewModel.IDCard.TCIDCardWithChip.ExpiryMonth ?? null);
-            ViewBag.YearListByExpiryDate = YearList(addCustomerViewModel.IDCard.TCIDCardWithChip.ExpiryYear ?? null);
+            ViewBag.YearListByExpiryDate = YearList(addCustomerViewModel.IDCard.TCIDCardWithChip.ExpiryYear ?? null, true);
 
             return View(addCustomerViewModel);
 
         }
 
-
         public ActionResult Successful()
         {
             return View();
         }
-
 
         [HttpPost]
         public ActionResult PaymentDayList(long? id)
@@ -455,6 +453,23 @@ namespace MasterISS_Partner_WebSite.Controllers
             return Json(new { errorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(paymentDayListResponse.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture) }, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult DateValidation(int? year, int? month, int? day)
+        {
+            if (year != null && month != null && day != null)
+            {
+                var validation = DateTimeValidation.TryParseDate(year.Value, month.Value, day.Value, null);
+                if (validation == null)
+                {
+                    return Json(new { status = "Failed", ErrorMessage = Localization.View.DateFormatIsNotCorrect }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            return Json(new { status = "Success" }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult SmsConfirmation()
+        {
+            return View();
+        }
 
         [ValidateAntiForgeryToken]
         [HttpPost]
@@ -502,7 +517,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                     }
                     else
                     {
-                        ViewBag.Error = Localization.View.WrongPassword;
+                        ViewBag.Error = serviceCode /*Localization.View.WrongPassword*/;
                         Session["Counter"] = Convert.ToInt32(Session["Counter"]) + 1;
 
                         return View();
@@ -572,21 +587,21 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                 ViewBag.DayListByIssueDate = DayList(IDCard.TCBirthCertificate.DateOfIssueDay ?? null);
                 ViewBag.MonthListByIssueDate = Monthlist(IDCard.TCBirthCertificate.DateOfIssueMonth ?? null);
-                ViewBag.YearListByIssueDate = YearList(IDCard.TCBirthCertificate.DateOfIssueYear ?? null);
+                ViewBag.YearListByIssueDate = YearList(IDCard.TCBirthCertificate.DateOfIssueYear ?? null, false);
 
                 ViewBag.DayListByExpiryDate = DayList(null);
                 ViewBag.MonthListByExpiryDate = Monthlist(null);
-                ViewBag.YearListByExpiryDate = YearList(null);
+                ViewBag.YearListByExpiryDate = YearList(null, true);
             }
             else
             {
                 ViewBag.DayListByExpiryDate = DayList(IDCard.TCIDCardWithChip.ExpiryDay ?? null);
                 ViewBag.MonthListByExpiryDate = Monthlist(IDCard.TCIDCardWithChip.ExpiryMonth ?? null);
-                ViewBag.YearListByExpiryDate = YearList(IDCard.TCIDCardWithChip.ExpiryYear ?? null);
+                ViewBag.YearListByExpiryDate = YearList(IDCard.TCIDCardWithChip.ExpiryYear ?? null, true);
 
                 ViewBag.DayListByIssueDate = DayList(null);
                 ViewBag.MonthListByIssueDate = Monthlist(null);
-                ViewBag.YearListByIssueDate = YearList(null);
+                ViewBag.YearListByIssueDate = YearList(null, false);
 
                 IDCard.TCBirthCertificate = null;
                 RemoveModel("IDCard.TCBirthCertificate");
@@ -685,14 +700,24 @@ namespace MasterISS_Partner_WebSite.Controllers
             return selectList;
         }
 
-        private SelectList YearList(int? selectedValue)
+        private SelectList YearList(int? selectedValue, bool isExpiryDate)
         {
             var startDate = 1940;
             var yearList = new List<int>();
 
-            for (int i = startDate; i < DateTime.Now.Year; i++)
+            if (isExpiryDate)
             {
-                yearList.Add(i);
+                for (int i = startDate; i <= DateTime.Now.Year + 10; i++)
+                {
+                    yearList.Add(i);
+                }
+            }
+            else
+            {
+                for (int i = startDate; i <= DateTime.Now.Year; i++)
+                {
+                    yearList.Add(i);
+                }
             }
 
             var list = new SelectList(yearList.Select(yl => new { Name = yl.ToString(), Value = yl }), "Value", "Name", selectedValue ?? null);

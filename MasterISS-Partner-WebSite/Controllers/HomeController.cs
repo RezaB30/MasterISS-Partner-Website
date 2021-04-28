@@ -209,7 +209,9 @@ namespace MasterISS_Partner_WebSite.Controllers
         {
             using (var db = new PartnerWebSiteEntities())
             {
-                var lastPaymentList = db.PaidBillList.OrderByDescending(pbl => pbl.ChangeTime).Take(Properties.Settings.Default.LastPaymentsTakeValue).Select(pbl => new LastPaymentListViewModel
+                var claimInfo = new ClaimInfo();
+                var partnerId = claimInfo.PartnerId();
+                var lastPaymentList = db.PaidBillList.Where(pbl => pbl.PartnerId == partnerId).OrderByDescending(pbl => pbl.ChangeTime).Take(Properties.Settings.Default.LastPaymentsTakeValue).Select(pbl => new LastPaymentListViewModel
                 {
                     Amount = pbl.BillCost,
                     PaymentDate = pbl.ChangeTime,
@@ -331,7 +333,12 @@ namespace MasterISS_Partner_WebSite.Controllers
                 var partnerId = claimInfo.PartnerId();
                 using (var db = new PartnerWebSiteEntities())
                 {
-                    var total = db.PaidBillList.Where(pbl => pbl.PartnerId == partnerId).Select(pbl => pbl.BillCost).Sum();
+                    decimal total = 0;
+                    var costList = db.PaidBillList.Where(pbl => pbl.PartnerId == partnerId)?.Select(pbl => pbl.BillCost).ToList();
+                    if (costList.Count > 0)
+                    {
+                        total = costList.Sum();
+                    }
                     return total.ToString();
                 }
             }

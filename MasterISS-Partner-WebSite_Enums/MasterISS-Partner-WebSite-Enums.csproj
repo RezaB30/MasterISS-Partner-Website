@@ -45,6 +45,7 @@
     <Compile Include="Enums\BalanceRequestTypesEnum.cs" />
     <Compile Include="Enums\CardTypeEnum.cs" />
     <Compile Include="Enums\CustomerTypeEnum.cs" />
+    <Compile Include="Enums\DateType.cs" />
     <Compile Include="Enums\DayOfWeekEnum.cs" />
     <Compile Include="Enums\ErrorCodesEnum.cs" />
     <Compile Include="Enums\FaultCodeEnum.cs" />

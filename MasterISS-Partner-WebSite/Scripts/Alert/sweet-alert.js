@@ -13,10 +13,12 @@
         Swal.fire({
             icon: 'error',
             title: 'Hata Oluştu',
-            cancelButtonText:'Tamam',
+            cancelButtonText: 'Tamam',
             text: message,
         }).then(function () {
-            window.location.href = Url;
+            if (Url != null) {
+                window.location.href = Url;
+            }
         })
     }
 

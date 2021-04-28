@@ -538,7 +538,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tarih Biçimi Doğru Değil.
+        ///   Looks up a localized string similar to Geçersiz Tarih Biçimi.
         /// </summary>
         public static string DateFormatIsNotCorrect {
             get {

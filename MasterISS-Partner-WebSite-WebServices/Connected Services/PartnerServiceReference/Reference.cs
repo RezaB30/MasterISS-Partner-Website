@@ -4553,6 +4553,9 @@ namespace MasterISS_Partner_WebSite_WebServices.PartnerServiceReference {
         private MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.AuthenticationResponse.PermissionResult[] PermissionsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PhoneNoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string SetupServiceHashField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -4606,6 +4609,19 @@ namespace MasterISS_Partner_WebSite_WebServices.PartnerServiceReference {
                 if ((object.ReferenceEquals(this.PermissionsField, value) != true)) {
                     this.PermissionsField = value;
                     this.RaisePropertyChanged("Permissions");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PhoneNo {
+            get {
+                return this.PhoneNoField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PhoneNoField, value) != true)) {
+                    this.PhoneNoField = value;
+                    this.RaisePropertyChanged("PhoneNo");
                 }
             }
         }

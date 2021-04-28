@@ -277,7 +277,7 @@
     <value>Customer Session Info</value>
   </data>
   <data name="DateFormatIsNotCorrect" xml:space="preserve">
-    <value>Date Format Is Not Correct</value>
+    <value>Invalid Date Format</value>
   </data>
   <data name="DateRange" xml:space="preserve">
     <value>Date Range</value>

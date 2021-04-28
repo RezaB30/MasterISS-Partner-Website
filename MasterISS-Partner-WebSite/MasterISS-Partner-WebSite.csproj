@@ -204,6 +204,7 @@
     <Compile Include="Controllers\SetupController.cs" />
     <Compile Include="Controllers\UserOperationsController.cs" />
     <Compile Include="DatetimeParse.cs" />
+    <Compile Include="DateTimeValidation.cs" />
     <Compile Include="FaultCodeConverter.cs" />
     <Compile Include="FileOperations.cs" />
     <Compile Include="Helpers\CustomButtonByMap.cs" />

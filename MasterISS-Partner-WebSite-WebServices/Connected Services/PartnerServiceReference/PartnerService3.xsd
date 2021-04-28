@@ -27,6 +27,7 @@
       <xs:element minOccurs="0" name="DisplayName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IsAuthenticated" type="xs:boolean" />
       <xs:element minOccurs="0" name="Permissions" nillable="true" type="tns:ArrayOfAuthenticationResponse.PermissionResult" />
+      <xs:element minOccurs="0" name="PhoneNo" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SetupServiceHash" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SetupServiceUser" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="UserID" type="xs:int" />

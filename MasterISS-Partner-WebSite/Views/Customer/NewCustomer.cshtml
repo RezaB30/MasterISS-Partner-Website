@@ -6,13 +6,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div style="background-color:red">
-    @ViewBag.NewCustomerError
-    @Html.Raw(TempData["SMSConfirmationError"])
-</div>
+
 
 <div class="d-flex flex-column-fluid my-10">
     <div class="container">
+        <div align="center" style="font-size:2em">
+            <span class="text-danger">@ViewBag.NewCustomerError</span>
+            <span class="text-danger">@Html.Raw(TempData["SMSConfirmationError"])</span>
+        </div>
         <!--begin::Card-->
         <!--begin::Card Body-->
         <!--begin::Wizard 5-->
@@ -1287,6 +1288,110 @@
     <script src="~/Scripts/js/custom-js/input-mask.js"></script>
     <script src="~/Scripts/js/custom-js/wizard5-basvur.js"></script>
     <script>
+        $("#IDCard_SelectedBirthDay").change(function () {
+            ValidDate("@MasterISS_Partner_WebSite_Enums.Enums.DateType.BirthDate.ToString()");
+        });
+        $("#IDCard_SelectedBirthMonth").change(function () {
+            ValidDate("@MasterISS_Partner_WebSite_Enums.Enums.DateType.BirthDate.ToString()");
+        });
+        $("#IDCard_SelectedBirthYear").change(function () {
+            ValidDate("@MasterISS_Partner_WebSite_Enums.Enums.DateType.BirthDate.ToString()");
+        });
+        $("#IDCard_TCIDCardWithChip_ExpiryDay").change(function () {
+            ValidDate("@MasterISS_Partner_WebSite_Enums.Enums.DateType.ExpiryDate.ToString()");
+        });
+        $("#IDCard_TCIDCardWithChip_ExpiryMonth").change(function () {
+            ValidDate("@MasterISS_Partner_WebSite_Enums.Enums.DateType.ExpiryDate.ToString()");
+        });
+        $("#IDCard_TCIDCardWithChip_ExpiryYear").change(function () {
+            ValidDate("@MasterISS_Partner_WebSite_Enums.Enums.DateType.ExpiryDate.ToString()");
+        });
+        $("#IDCard_TCBirthCertificate_DateOfIssueDay").change(function () {
+            ValidDate("@MasterISS_Partner_WebSite_Enums.Enums.DateType.DateOfIssue.ToString()");
+        });
+        $("#IDCard_TCBirthCertificate_DateOfIssueMonth").change(function () {
+            ValidDate("@MasterISS_Partner_WebSite_Enums.Enums.DateType.DateOfIssue.ToString()");
+        });
+        $("#IDCard_TCBirthCertificate_DateOfIssueYear").change(function () {
+            ValidDate("@MasterISS_Partner_WebSite_Enums.Enums.DateType.DateOfIssue.ToString()");
+        });
+
+        function ValidDate(type) {
+            if (type="@MasterISS_Partner_WebSite_Enums.Enums.DateType.BirthDate.ToString()") {
+                var birthDay = $("#IDCard_SelectedBirthDay").find(":selected").val();
+                var birthMonth = $("#IDCard_SelectedBirthMonth").find(":selected").val();
+                var birthYear = $("#IDCard_SelectedBirthYear").find(":selected").val();
+                if (birthDay != "" && birthMonth != "" && birthYear !="") {
+                    SendRequestValidDate(birthYear, birthMonth, birthDay,type);
+                }
+            }
+
+            if (type="@MasterISS_Partner_WebSite_Enums.Enums.DateType.ExpiryDate.ToString()") {
+                var expiryDay = $("#IDCard_TCIDCardWithChip_ExpiryDay").find(":selected").val();
+                var expiryMonth = $("#IDCard_TCIDCardWithChip_ExpiryMonth").find(":selected").val();
+                var expiryYear = $("#IDCard_TCIDCardWithChip_ExpiryYear").find(":selected").val();
+                if (expiryDay != "" && expiryMonth != "" && expiryYear != "") {
+                    SendRequestValidDate(expiryYear, expiryMonth, expiryDay,type);
+                }
+            }
+
+            if (type="@MasterISS_Partner_WebSite_Enums.Enums.DateType.DateOfIssue.ToString()") {
+                var issueDay = $("#IDCard_TCBirthCertificate_DateOfIssueDay").find(":selected").val();
+                var issueMonth = $("#IDCard_TCBirthCertificate_DateOfIssueMonth").find(":selected").val();
+                var issueYear = $("#IDCard_TCBirthCertificate_DateOfIssueYear").find(":selected").val();
+                if (issueDay != "" && issueMonth != "" && issueYear != "") {
+                    SendRequestValidDate(issueYear, issueMonth, issueDay,type);
+                }
+            }
+
+        }
+
+        function ChangeSelectSelectedValue(type) {
+            if (type="@MasterISS_Partner_WebSite_Enums.Enums.DateType.BirthDate.ToString()") {
+                $("#IDCard_SelectedBirthDay").val('')
+                $("#IDCard_SelectedBirthMonth").val('')
+                $("#IDCard_SelectedBirthYear").val('')
+            }
+            if (type="@MasterISS_Partner_WebSite_Enums.Enums.DateType.ExpiryDate.ToString()") {
+                $("#IDCard_TCIDCardWithChip_ExpiryDay").val('')
+                $("#IDCard_TCIDCardWithChip_ExpiryMonth").val('')
+                $("#IDCard_TCIDCardWithChip_ExpiryYear").val('')
+            }
+            if (type="@MasterISS_Partner_WebSite_Enums.Enums.DateType.DateOfIssue.ToString()") {
+                $("#IDCard_TCBirthCertificate_DateOfIssueDay").val('')
+                $("#IDCard_TCBirthCertificate_DateOfIssueMonth").val('')
+                $("#IDCard_TCBirthCertificate_DateOfIssueYear").val('')
+            }
+        }
+
+        function SendRequestValidDate(year,month,day,type) {
+
+             $.ajax({
+                            url: '@Url.Action("DateValidation", "Customer")',
+                            type: 'GET',
+                            dataType: 'JSON',
+                            contentType: 'application/json; charset=utf-8',
+                             data: {
+                                 year: year,
+                                 month: month,
+                                 day,day
+                             },
+                            complete: function (data, status) {
+                                if (status == "success") {
+                                    var statusData = data.responseJSON.status;
+                                    if (statusData == "Failed") {
+                                        var errorMessage = data.responseJSON.ErrorMessage;
+                                        ChangeSelectSelectedValue(type);
+                                        GetAlert(errorMessage,"false",null)
+                                    }
+                                }
+                                else {
+                                    console.log("An error occurred");
+                                }
+                            }
+                        });
+        }
+
 
         function CheckValidAndHideContainer(checkId,containerId) {
             if ($(checkId).is(':checked')) {
@@ -1296,7 +1401,6 @@
                 $(containerId).show();
             }
         }
-
 
         $(document).ready(function () {
 

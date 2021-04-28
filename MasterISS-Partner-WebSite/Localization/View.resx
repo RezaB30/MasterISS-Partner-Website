@@ -277,7 +277,7 @@
     <value>Müşteri Oturum Bilgileri</value>
   </data>
   <data name="DateFormatIsNotCorrect" xml:space="preserve">
-    <value>Tarih Biçimi Doğru Değil</value>
+    <value>Geçersiz Tarih Biçimi</value>
   </data>
   <data name="DateRange" xml:space="preserve">
     <value>Tarih Aralığı</value>

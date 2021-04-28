@@ -48,7 +48,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                         RuralName = wa.RuralName,
                         NeigborhoodName = wa.NeighbourhoodName,
                     }).ToList()
-                }).ToList();
+                }).OrderBy(u => u.IsEnabled == true).ThenBy(u=>u.UserId).Reverse().ToList();
 
                 ViewBag.RoleList = new SelectList(db.Role.Where(r => r.PartnerId == partnerId && r.IsEnabled).Select(r => new { Value = r.Id, Name = r.RoleName }).ToArray(), "Value", "Name");
                 ViewBag.FilterList = PermissionListByFilter(filterUserViewModel.SelectedPermission ?? null);

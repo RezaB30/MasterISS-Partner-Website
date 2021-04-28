@@ -122,7 +122,7 @@
                     </a>
                 </div>
             }
-            @if (User.Identity.IsAuthenticated)
+            @if (User.IsInRole("SaleRevenuesList") || User.IsInRole("Admin") || User.IsInRole("SetupRevenuesList"))
             {
                 <div class="col-6">
                     <a href="@Url.Action("Index","Revenues")" class="btn btn-block btn-hover-primary text-warning text-center py-5 px-5" style="background-color: #43257d">
@@ -266,7 +266,7 @@
                                 </li>
                             }
 
-                            @if (User.Identity.IsAuthenticated)
+                            @if (User.IsInRole("SaleRevenuesList") || User.IsInRole("Admin") || User.IsInRole("SetupRevenuesList"))
                             {
                                 <li class="menu-item menu-item-submenu menu-item-rel" aria-haspopup="true">
                                     <a href="@Url.Action("Index","Revenues")" class="menu-link">

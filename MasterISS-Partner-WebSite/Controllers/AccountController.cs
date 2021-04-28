@@ -120,6 +120,13 @@ namespace MasterISS_Partner_WebSite.Controllers
                             var adminValid = db.User.Where(u => u.Password == adminPasswordHash && u.UserSubMail == adminSignInModel.Username && u.RoleId == null && u.PartnerId == null).FirstOrDefault();
                             if (adminValid == null)
                             {
+                                if (string.IsNullOrEmpty(authenticateResponse.AuthenticationResponse.PhoneNo))
+                                {
+                                    LoggerError.Fatal($"An error occurred while Admin Authenticate , ErrorMessage : PhoneNo is null. by: {adminSignInModel.Username}");
+                                    ViewBag.AuthenticateError = Localization.View.Generic200ErrorCodeMessage;
+                                    return View(adminSignInModel);
+                                }
+
                                 User user = new User
                                 {
                                     IsEnabled = true,
@@ -128,6 +135,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                                     UserSubMail = adminSignInModel.Username,
                                     Password = adminPasswordHash,
                                     NameSurname = authenticateResponse.AuthenticationResponse.DisplayName,
+                                    PhoneNumber = authenticateResponse.AuthenticationResponse.PhoneNo
                                 };
                                 db.User.Add(user);
                                 db.SaveChanges();
@@ -211,7 +219,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                 using (var db = new PartnerWebSiteEntities())
                 {
                     var user = db.User.Find(userId);
-                    if (user!=null)
+                    if (user != null)
                     {
                         user.PhoneNumber = userSettingsViewModel.NumberPhone;
                         db.SaveChanges();
