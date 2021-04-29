@@ -1,0 +1,10 @@
+﻿@model bool
+
+@if (Model == true)
+{
+    <span class="label label-lg label-light-success label-inline">@MasterISS_Partner_WebSite.Localization.View.Paid</span>
+}
+else
+{
+    <span class="label label-lg label-light-danger label-inline">@MasterISS_Partner_WebSite.Localization.View.Unpaid</span>
+}

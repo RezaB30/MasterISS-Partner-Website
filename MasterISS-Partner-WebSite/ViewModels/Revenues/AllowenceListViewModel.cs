@@ -11,6 +11,7 @@ namespace MasterISS_Partner_WebSite.ViewModels.Revenues
         public long Id { get; set; }
 
         [Display(Name = "Ispaid", ResourceType = typeof(Localization.Model))]
+        [UIHint("PaidBillBoolFormat")]
         public bool Ispaid { get; set; }
 
         [Display(Name = "IssueDate", ResourceType = typeof(Localization.Model))]

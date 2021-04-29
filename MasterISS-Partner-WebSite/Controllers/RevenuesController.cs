@@ -113,7 +113,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             var request = new PageSettingsByWebService()
             {
                 ItemPerPage = pageSize,
-                PageNo = page,
+                PageNo = page-1,
             };
 
             var response = wrapper.SaleAllowanceList(request);
@@ -157,7 +157,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                 PageInfo = new PageSettingsByWebService()
                 {
                     ItemPerPage = pageSize,
-                    PageNo = page
+                    PageNo = page-1
                 },
                 AllowanceCollectionID = Id
             };
@@ -210,7 +210,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             var request = new PageSettingsByWebService()
             {
-                PageNo = page,
+                PageNo = page-1,
                 ItemPerPage = pageSize
             };
 

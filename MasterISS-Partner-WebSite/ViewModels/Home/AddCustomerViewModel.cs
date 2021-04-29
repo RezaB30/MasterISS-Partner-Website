@@ -164,9 +164,6 @@ namespace MasterISS_Partner_WebSite.ViewModels.Home
         public TCIDCardWithChip TCIDCardWithChip { get; set; }
         public TCBirthCertificate TCBirthCertificate { get; set; }
 
-        //[Display(Name = "BirthDate", ResourceType = typeof(Localization.Model))]
-        //[Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Localization.Validation))]
-        //[RegularExpression(@"(((0|1)[0-9]|2[0-9]|3[0-1])\.(0[1-9]|1[0-2])\.((19|20)\d\d))$", ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "DateValid")]
         public string BirthDate { get; set; }
 
         [Display(Name = "CardTypeId", ResourceType = typeof(Localization.Model))]

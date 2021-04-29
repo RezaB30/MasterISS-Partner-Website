@@ -618,6 +618,9 @@
   <data name="Total" xml:space="preserve">
     <value>Total</value>
   </data>
+  <data name="Unpaid" xml:space="preserve">
+    <value>Unpaid</value>
+  </data>
   <data name="Update" xml:space="preserve">
     <value>Update</value>
   </data>

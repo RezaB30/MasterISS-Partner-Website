@@ -619,6 +619,9 @@
   <data name="Total" xml:space="preserve">
     <value>Toplam</value>
   </data>
+  <data name="Unpaid" xml:space="preserve">
+    <value>Ödenmedi</value>
+  </data>
   <data name="Update" xml:space="preserve">
     <value>Güncelle</value>
   </data>

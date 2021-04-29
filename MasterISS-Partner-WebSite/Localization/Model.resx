@@ -415,7 +415,7 @@
     <value>Mahalle</value>
   </data>
   <data name="Neighbourhood" xml:space="preserve">
-    <value>Semt</value>
+    <value>Köy/Mahalle</value>
   </data>
   <data name="OperationType" xml:space="preserve">
     <value>İşlem Tipi</value>

@@ -26,47 +26,53 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             if (ModelState.IsValid)
             {
-                var startDate = Convert.ToDateTime(filterViewModel.StartDate);
-                var endDate = Convert.ToDateTime(filterViewModel.EndDate);
+                var dateValid = new DatetimeParse();
+                if (dateValid.DateIsCorrrect(filterViewModel.StartDate, filterViewModel.EndDate))
+                {
+                    var startDate = dateValid.ConvertDate(filterViewModel.StartDate);
+                    var endDate = dateValid.ConvertDate(filterViewModel.EndDate);
 
-                if (filterViewModel.StartDate != null && filterViewModel.EndDate == null)
-                {
-                    endDate = startDate.AddDays(29);
-                }
-                else if ((filterViewModel.StartDate == null && filterViewModel.EndDate == null) || (filterViewModel.StartDate == null && filterViewModel.EndDate != null))
-                {
-                    startDate = DateTime.Now.AddDays(-29);
-                    endDate = DateTime.Now;
-                }
-                if (startDate <= endDate)
-                {
-                    if (startDate.AddDays(Properties.Settings.Default.SearchLimit) >= endDate)
+                    if (filterViewModel.StartDate != null && filterViewModel.EndDate == null)
                     {
-                        using (var db = new PartnerWebSiteEntities())
-                        {
-                            filterViewModel.StartDate = startDate.ToString();
-                            filterViewModel.EndDate = endDate.ToString();
-                            var operationHistoriesList = OperationHistories(filterViewModel);
-                            var list = operationHistoriesList.OrderByDescending(oh => oh.ChangeTime).Select(oh => new OperationHistoryListViewModel
-                            {
-                                ChangeTime = oh.ChangeTime,
-                                Description = oh.Description,
-                                OperationType = GetOperationTypeDisplayText(oh.OperationType),
-                                TaskNo = oh.TaskNo,
-                                UserSubMail = GetUserSubMail(oh.UserId),
-                            }).ToList();
-
-                            var totalCount = list.Count();
-
-                            var pagedListByResponseList = new StaticPagedList<OperationHistoryListViewModel>(list.Skip((page - 1) * pageSize).Take(pageSize), page, pageSize, totalCount);
-
-                            return View(pagedListByResponseList);
-                        }
+                        endDate = startDate.Value.AddDays(29);
                     }
-                    ViewBag.Max30Days = Localization.View.Max30Days;
+                    else if ((filterViewModel.StartDate == null && filterViewModel.EndDate == null) || (filterViewModel.StartDate == null && filterViewModel.EndDate != null))
+                    {
+                        startDate = DateTime.Now.AddDays(-29);
+                        endDate = DateTime.Now;
+                    }
+                    if (startDate <= endDate)
+                    {
+                        if (startDate.Value.AddDays(Properties.Settings.Default.SearchLimit) >= endDate)
+                        {
+                            using (var db = new PartnerWebSiteEntities())
+                            {
+                                filterViewModel.StartDate = startDate.ToString();
+                                filterViewModel.EndDate = endDate.ToString();
+                                var operationHistoriesList = OperationHistories(filterViewModel);
+                                var list = operationHistoriesList.OrderByDescending(oh => oh.ChangeTime).Select(oh => new OperationHistoryListViewModel
+                                {
+                                    ChangeTime = oh.ChangeTime,
+                                    Description = oh.Description,
+                                    OperationType = GetOperationTypeDisplayText(oh.OperationType),
+                                    TaskNo = oh.TaskNo,
+                                    UserSubMail = GetUserSubMail(oh.UserId),
+                                }).ToList();
+
+                                var totalCount = list.Count();
+
+                                var pagedListByResponseList = new StaticPagedList<OperationHistoryListViewModel>(list.Skip((page - 1) * pageSize).Take(pageSize), page, pageSize, totalCount);
+
+                                return View(pagedListByResponseList);
+                            }
+                        }
+                        ViewBag.Max30Days = Localization.View.Max30Days;
+                        return View();
+                    }
+                    ViewBag.StartTimeBiggerThanEndTime = Localization.View.StartDateBiggerThanEndDateError;
                     return View();
                 }
-                ViewBag.StartTimeBiggerThanEndTime = Localization.View.StartDateBiggerThanEndDateError;
+                ViewBag.DateFormatIsNotCorrect = Localization.View.DateFormatIsNotCorrect;
                 return View();
             }
             ViewBag.ValidationError = "Error";

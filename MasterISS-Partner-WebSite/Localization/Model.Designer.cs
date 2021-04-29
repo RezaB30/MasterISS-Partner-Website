@@ -952,7 +952,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Semt.
+        ///   Looks up a localized string similar to Köy/Mahalle.
         /// </summary>
         public static string Neighbourhood {
             get {

@@ -57,9 +57,9 @@
 
         <div class="card">
             <div class="container">
-                <h3 class="my-6 text-info font-size-h4">@View.GenericReport</h3>
-                @if (ViewBag.ValidationError == null && ViewBag.Max30Days == null && ViewBag.StartTimeBiggerThanEndTime == null && ViewBag.ErrorMessage == null)
+                @if (ViewBag.ValidationError == null && ViewBag.Max30Days == null && ViewBag.StartTimeBiggerThanEndTime == null && ViewBag.ErrorMessage == null && ViewBag.DateFormatIsNotCorrect == null)
                 {
+                    <h3 class="my-6 text-info font-size-h4">@View.GenericReport</h3>
                     <table class="table table-head-custom table-vertical-center table-hover mb-2">
                         <thead>
                             <tr class="bg-info text-left">
@@ -87,10 +87,11 @@
                 else
                 {
                     <div align="center">
-                        <div class="text-danger">
+                        <div class="text-danger" style="font-size:1.5em">
                             <span>@ViewBag.Max30Days</span>
                             <span>@ViewBag.ErrorMessage</span>
                             <span>@ViewBag.StartTimeBiggerThanEndTime</span>
+                            <span>@ViewBag.DateFormatIsNotCorrect</span>
                         </div>
                     </div>
                 }

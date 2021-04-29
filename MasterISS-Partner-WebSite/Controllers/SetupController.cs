@@ -46,14 +46,15 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             if (ModelState.IsValid)
             {
-                if (DateIsCorrrect(taskListRequestModel.TaskListEndDate, taskListRequestModel.TaskListStartDate))
+                var dateValid = new DatetimeParse();
+                if (dateValid.DateIsCorrrect(taskListRequestModel.TaskListEndDate, taskListRequestModel.TaskListStartDate))
                 {
-                    var startDate = Convert.ToDateTime(taskListRequestModel.TaskListStartDate);
-                    var endDate = Convert.ToDateTime(taskListRequestModel.TaskListEndDate);
+                    var startDate = dateValid.ConvertDate(taskListRequestModel.TaskListStartDate);
+                    var endDate = dateValid.ConvertDate(taskListRequestModel.TaskListEndDate);
 
                     if (taskListRequestModel.TaskListStartDate != null && taskListRequestModel.TaskListEndDate == null)
                     {
-                        endDate = startDate.AddDays(29);
+                        endDate = startDate.Value. AddDays(29);
                     }
                     else if ((taskListRequestModel.TaskListStartDate == null && taskListRequestModel.TaskListEndDate == null) || (taskListRequestModel.TaskListStartDate == null && taskListRequestModel.TaskListEndDate != null))
                     {
@@ -65,10 +66,10 @@ namespace MasterISS_Partner_WebSite.Controllers
                     {
                         using (var db = new PartnerWebSiteEntities())
                         {
-                            if (startDate.AddDays(Properties.Settings.Default.SearchLimit) >= endDate)
+                            if (startDate.Value. AddDays(Properties.Settings.Default.SearchLimit) >= endDate)
                             {
-                                taskListRequestModel.TaskListStartDate = startDate.ToString("dd.MM.yyyy HH:mm");
-                                taskListRequestModel.TaskListEndDate = endDate.ToString("dd.MM.yyyy HH:mm");
+                                taskListRequestModel.TaskListStartDate = startDate.Value.ToString("dd.MM.yyyy HH:mm");
+                                taskListRequestModel.TaskListEndDate = endDate.Value.ToString("dd.MM.yyyy HH:mm");
 
                                 var taskList = TaskList(User.IsInRole("Admin"), taskListRequestModel);
 
@@ -139,21 +140,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
         }
 
-        public bool DateIsCorrrect(params string[] dateTimes)
-        {
-            DateTime convertedDate;
-            foreach (var date in dateTimes)
-            {
-                if (!string.IsNullOrEmpty(date))
-                {
-                    if (!DateTime.TryParseExact(date, "dd.MM.yyyy HH:mm", null, DateTimeStyles.AdjustToUniversal, out convertedDate))
-                    {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
+
 
 
         public ActionResult CallCustomer(long taskNo)

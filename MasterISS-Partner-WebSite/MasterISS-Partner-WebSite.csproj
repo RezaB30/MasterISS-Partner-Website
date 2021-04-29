@@ -2096,6 +2096,7 @@
     <Content Include="Views\Home\LastPayments.cshtml" />
     <Content Include="Views\Home\CreditReportDetail.cshtml" />
     <Content Include="Views\Setup\_GetFileTasks.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\PaidBillBoolFormat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
