@@ -294,6 +294,9 @@
   <data name="DownloadTheContract" xml:space="preserve">
     <value>Download The Contract</value>
   </data>
+  <data name="EnterTheSMSPasswordSentToYourPhone" xml:space="preserve">
+    <value>Enter the SMS password sent to your phone.</value>
+  </data>
   <data name="EnterYourUsernameAndPassword" xml:space="preserve">
     <value>Enter Your Username and Password</value>
   </data>
@@ -347,6 +350,9 @@
   </data>
   <data name="InOrderToInquirePortAndSpeed" xml:space="preserve">
     <value>In order to inquire about the infrastructure port and the speed you can get, carefully select your address information and click the</value>
+  </data>
+  <data name="InvalidCredentials" xml:space="preserve">
+    <value>Invalid ID Information</value>
   </data>
   <data name="LastPayments" xml:space="preserve">
     <value>Last Payments</value>

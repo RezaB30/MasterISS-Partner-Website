@@ -69,7 +69,7 @@
                 var responseStatus = data.responseJSON.status;
                 if (responseStatus == "Success") {
                     var message = data.responseJSON.message;
-                    var url='@Url.Action("Index", "UserOperations")';
+                    var url='@Url.Action("Index", "Home")';
                     GetAlert(message, "true",url);
                 }
                 else  {

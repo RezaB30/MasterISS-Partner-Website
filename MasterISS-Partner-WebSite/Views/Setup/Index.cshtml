@@ -80,7 +80,7 @@
             <span style="color:red">@Html.Raw(TempData["GetTaskDetailError"])</span>
             <span style="color:red">@Html.Raw(TempData["CustomerContractResponse"])</span>
 
-            @if (ViewBag.ValidationError == null && ViewBag.Max30Days == null && ViewBag.StartTimeBiggerThanEndTime == null && ViewBag.ErrorMessage == null)
+            @if (ViewBag.ValidationError == null && ViewBag.Max30Days == null && ViewBag.StartTimeBiggerThanEndTime == null && ViewBag.ErrorMessage == null && ViewBag.DateFormatIsNotCorrect == null)
             {
                 <div class="row">
                     @foreach (var item in Model)
@@ -320,6 +320,7 @@
                         <span>@ViewBag.Max30Days</span>
                         <span>@ViewBag.ErrorMessage</span>
                         <span>@ViewBag.StartTimeBiggerThanEndTime</span>
+                        <span>@ViewBag.DateFormatIsNotCorrect</span>
                     </div>
                 </div>
             }

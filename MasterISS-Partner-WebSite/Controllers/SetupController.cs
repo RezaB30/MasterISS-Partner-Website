@@ -35,6 +35,7 @@ namespace MasterISS_Partner_WebSite.Controllers
         private TimeSpan firtSessionTime;
         private TimeSpan lastSessionTime;
 
+
         public ActionResult Index(GetTaskListRequestViewModel taskListRequestModel, int page = 1, int pageSize = 9)
         {
             taskListRequestModel = taskListRequestModel ?? new GetTaskListRequestViewModel();
@@ -45,63 +46,70 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             if (ModelState.IsValid)
             {
-                var startDate = Convert.ToDateTime(taskListRequestModel.TaskListStartDate);
-                var endDate = Convert.ToDateTime(taskListRequestModel.TaskListEndDate);
+                if (DateIsCorrrect(taskListRequestModel.TaskListEndDate, taskListRequestModel.TaskListStartDate))
+                {
+                    var startDate = Convert.ToDateTime(taskListRequestModel.TaskListStartDate);
+                    var endDate = Convert.ToDateTime(taskListRequestModel.TaskListEndDate);
 
-                if (taskListRequestModel.TaskListStartDate != null && taskListRequestModel.TaskListEndDate == null)
-                {
-                    endDate = startDate.AddDays(29);
-                }
-                else if ((taskListRequestModel.TaskListStartDate == null && taskListRequestModel.TaskListEndDate == null) || (taskListRequestModel.TaskListStartDate == null && taskListRequestModel.TaskListEndDate != null))
-                {
-                    startDate = DateTime.Now.AddDays(-29);
-                    endDate = DateTime.Now;
-                }
-
-                if (startDate <= endDate)
-                {
-                    using (var db = new PartnerWebSiteEntities())
+                    if (taskListRequestModel.TaskListStartDate != null && taskListRequestModel.TaskListEndDate == null)
                     {
-                        if (startDate.AddDays(Properties.Settings.Default.SearchLimit) >= endDate)
-                        {
-                            taskListRequestModel.TaskListStartDate = startDate.ToString("dd.MM.yyyy HH:mm");
-                            taskListRequestModel.TaskListEndDate = endDate.ToString("dd.MM.yyyy HH:mm");
-
-                            var taskList = TaskList(User.IsInRole("Admin"), taskListRequestModel);
-
-                            var list = taskList
-                                .Select(tl => new GetTaskListResponseViewModel
-                                {
-                                    AddressLatitudeandLongitude = GetAddressLatituteandLongitude(tl.Address),
-                                    ContactName = tl.ContactName,
-                                    TaskIssueDate = Convert.ToDateTime(tl.TaskIssueDate),
-                                    TaskNo = tl.TaskNo,
-                                    XDSLNo = tl.XDSLNo,
-                                    TaskStatus = TaskStatusDescription((short)tl.TaskStatus),
-                                    TaskType = TaskTypeDescription((short)tl.TaskType),
-                                    ReservationDate = Convert.ToDateTime(tl.ReservationDate),
-                                    Address = tl.Address,
-                                    PartnerId = tl.PartnerId,
-                                    RendezvousTeamStaffName = tl.AssignToRendezvousStaff == null ? null : db.RendezvousTeam.Find(tl.AssignToRendezvousStaff).User.NameSurname,
-                                    SetupTeamStaffName = tl.AssignToSetupTeam == null ? null : db.SetupTeam.Find(tl.AssignToSetupTeam).User.NameSurname,
-                                    BBK = tl.BBK,
-                                    IsCorfirmation = tl.IsConfirmation,
-                                    FaultCodesDisplayText = tl.TaskStatus == (int)TaskStatusEnum.New ? null : GetFaultCodesOrDescription(tl.TaskNo, false),
-                                    SetupStaffEnteredMessage = tl.TaskStatus == (int)TaskStatusEnum.New ? null : GetFaultCodesOrDescription(tl.TaskNo, true),
-                                    TaskStatusByControl = tl.TaskStatus
-                                });
-
-                            var totalCount = list.Count();
-
-                            var pagedListByResponseList = new StaticPagedList<GetTaskListResponseViewModel>(list.Skip((page - 1) * pageSize).Take(pageSize), page, pageSize, totalCount);
-
-                            return View(pagedListByResponseList);
-                        }
+                        endDate = startDate.AddDays(29);
                     }
-                    ViewBag.Max30Days = Localization.View.Max30Days;
+                    else if ((taskListRequestModel.TaskListStartDate == null && taskListRequestModel.TaskListEndDate == null) || (taskListRequestModel.TaskListStartDate == null && taskListRequestModel.TaskListEndDate != null))
+                    {
+                        startDate = DateTime.Now.AddDays(-29);
+                        endDate = DateTime.Now;
+                    }
+
+                    if (startDate <= endDate)
+                    {
+                        using (var db = new PartnerWebSiteEntities())
+                        {
+                            if (startDate.AddDays(Properties.Settings.Default.SearchLimit) >= endDate)
+                            {
+                                taskListRequestModel.TaskListStartDate = startDate.ToString("dd.MM.yyyy HH:mm");
+                                taskListRequestModel.TaskListEndDate = endDate.ToString("dd.MM.yyyy HH:mm");
+
+                                var taskList = TaskList(User.IsInRole("Admin"), taskListRequestModel);
+
+                                var list = taskList
+                                    .Select(tl => new GetTaskListResponseViewModel
+                                    {
+                                        AddressLatitudeandLongitude = GetAddressLatituteandLongitude(tl.Address),
+                                        ContactName = tl.ContactName,
+                                        TaskIssueDate = Convert.ToDateTime(tl.TaskIssueDate),
+                                        TaskNo = tl.TaskNo,
+                                        XDSLNo = tl.XDSLNo,
+                                        TaskStatus = TaskStatusDescription((short)tl.TaskStatus),
+                                        TaskType = TaskTypeDescription((short)tl.TaskType),
+                                        ReservationDate = Convert.ToDateTime(tl.ReservationDate),
+                                        Address = tl.Address,
+                                        PartnerId = tl.PartnerId,
+                                        RendezvousTeamStaffName = tl.AssignToRendezvousStaff == null ? null : db.RendezvousTeam.Find(tl.AssignToRendezvousStaff).User.NameSurname,
+                                        SetupTeamStaffName = tl.AssignToSetupTeam == null ? null : db.SetupTeam.Find(tl.AssignToSetupTeam).User.NameSurname,
+                                        BBK = tl.BBK,
+                                        IsCorfirmation = tl.IsConfirmation,
+                                        FaultCodesDisplayText = tl.TaskStatus == (int)TaskStatusEnum.New ? null : GetFaultCodesOrDescription(tl.TaskNo, false),
+                                        SetupStaffEnteredMessage = tl.TaskStatus == (int)TaskStatusEnum.New ? null : GetFaultCodesOrDescription(tl.TaskNo, true),
+                                        TaskStatusByControl = tl.TaskStatus
+                                    });
+
+                                var totalCount = list.Count();
+
+                                var pagedListByResponseList = new StaticPagedList<GetTaskListResponseViewModel>(list.Skip((page - 1) * pageSize).Take(pageSize), page, pageSize, totalCount);
+
+                                return View(pagedListByResponseList);
+
+                            }
+                            ViewBag.Max30Days = Localization.View.Max30Days;
+                            return View();
+                        }
+
+                    }
+                    ViewBag.StartTimeBiggerThanEndTime = Localization.View.StartDateBiggerThanEndDateError;
                     return View();
                 }
-                ViewBag.StartTimeBiggerThanEndTime = Localization.View.StartDateBiggerThanEndDateError;
+                ViewBag.DateFormatIsNotCorrect = Localization.View.DateFormatIsNotCorrect;
                 return View();
             }
             ViewBag.ValidationError = "Error";
@@ -130,6 +138,23 @@ namespace MasterISS_Partner_WebSite.Controllers
             }
 
         }
+
+        public bool DateIsCorrrect(params string[] dateTimes)
+        {
+            DateTime convertedDate;
+            foreach (var date in dateTimes)
+            {
+                if (!string.IsNullOrEmpty(date))
+                {
+                    if (!DateTime.TryParseExact(date, "dd.MM.yyyy HH:mm", null, DateTimeStyles.AdjustToUniversal, out convertedDate))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
 
         public ActionResult CallCustomer(long taskNo)
         {
@@ -166,6 +191,12 @@ namespace MasterISS_Partner_WebSite.Controllers
             //}
         }
 
+        private DateTime ConvertDateTime(string date)
+        {
+            var convertedDate = DateTime.ParseExact(date, "dd.MM.yyyy HH:mm", CultureInfo.CurrentCulture);
+            return convertedDate;
+        }
+
         private List<TaskList> TaskList(bool isAdmin, GetTaskListRequestViewModel taskListRequestModel)
         {
             using (var db = new PartnerWebSiteEntities())
@@ -173,8 +204,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                 var claimInfo = new ClaimInfo();
                 var partnerId = claimInfo.PartnerId();
                 var taskList = Enumerable.Empty<TaskList>().AsQueryable();
-                var startDate = Convert.ToDateTime(taskListRequestModel.TaskListStartDate);
-                var endDate = Convert.ToDateTime(taskListRequestModel.TaskListEndDate);
+                var startDate = ConvertDateTime(taskListRequestModel.TaskListStartDate);
+                var endDate = ConvertDateTime(taskListRequestModel.TaskListEndDate);
 
                 if (isAdmin)
                 {

@@ -148,9 +148,13 @@ namespace MasterISS_Partner_WebSite.Controllers
 
         private string ReplacePhoneNo(string phoneNo)
         {
-            var replacedNumber = phoneNo.Replace("(", "").Replace(")", "").Replace("-", "").Replace(" ", "");
+            if (!string.IsNullOrEmpty(phoneNo))
+            {
+                var replacedNumber = phoneNo.Replace("(", "").Replace(")", "").Replace("-", "").Replace(" ", "");
 
-            return replacedNumber;
+                return replacedNumber;
+            }
+            return phoneNo;
         }
 
         [HttpPost]
@@ -191,7 +195,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                 IdCardValidationAndRemoveModelState((int)addCustomerViewModel.IDCard.CardTypeId, addCustomerViewModel.IDCard);
 
-                if (Enum.IsDefined(typeof(RadiusR.DB.Enums.SubscriptionRegistrationType), addCustomerViewModel.ExtraInfo.SubscriptionRegistrationTypeId))
+                if (Enum.IsDefined(typeof(SubscriptionRegistrationType), addCustomerViewModel.ExtraInfo.SubscriptionRegistrationTypeId))
                 {
                     if (addCustomerViewModel.ExtraInfo.SubscriptionRegistrationTypeId != (int)RadiusR.DB.Enums.SubscriptionRegistrationType.Transition)
                     {
@@ -205,102 +209,119 @@ namespace MasterISS_Partner_WebSite.Controllers
                 }
                 if (ModelState.IsValid)
                 {
+
                     addCustomerViewModel.GeneralInfo.ContactPhoneNo = ReplacePhoneNo(addCustomerViewModel.GeneralInfo.ContactPhoneNo);
                     addCustomerViewModel.ExtraInfo.PSTN = ReplacePhoneNo(addCustomerViewModel.ExtraInfo.PSTN);
 
                     DateTime birthDay = new DateTime(addCustomerViewModel.IDCard.SelectedBirthYear.Value, addCustomerViewModel.IDCard.SelectedBirthMonth.Value, addCustomerViewModel.IDCard.SelectedBirthDay.Value);
                     addCustomerViewModel.IDCard.BirthDate = birthDay.ToString("dd.MM.yyyy");
 
-                    if (IsCustomerTypeIndividual((int)addCustomerViewModel.GeneralInfo.CustomerTypeId))
+                    var wrapperForIdCardValidation = new WebServiceWrapper();
+                    var parsedateForWebService = new DatetimeParse();
+                    var validationIdCard = wrapperForIdCardValidation.IDCardValidation(new IDCardValidationViewModel
                     {
-                        var individualResidencyBBK = addCustomerViewModel.Individual.ResidencyAddress.ApartmentId;
+                        BirtDate = parsedateForWebService.ConvertDatetimeByWebService(addCustomerViewModel.IDCard.BirthDate),
+                        FirstName = addCustomerViewModel.IDCard.FirstName,
+                        IdCardType = addCustomerViewModel.IDCard.CardTypeId.Value,
+                        LastName = addCustomerViewModel.IDCard.LastName,
+                        TCKNo = addCustomerViewModel.IDCard.TCKNo,
+                        RegistirationNo = addCustomerViewModel.IDCard.SerialNo
+                    });
 
-                        var serviceWrapper = new WebServiceWrapper();
-                        var individualAddress = serviceWrapper.GetApartmentAddress((long)individualResidencyBBK);
-
-                        if (individualAddress.ResponseMessage.ErrorCode == 0)
-                        {
-                            addCustomerViewModel.Individual.ResidencyAddress.NewCustomerAddressInfoRequest = NewCustomerAddressInfoRequest(individualAddress.AddressDetailsResponse);
-                        }
-                        else
-                        {
-                            serviceWrapper = new WebServiceWrapper();
-                            LoggerError.Fatal($"An error occurred while GetApartmentAddress , individualAddress: {individualAddress.ResponseMessage.ErrorCode} , by: {serviceWrapper.GetUserSubMail()}");
-
-                        }
-                    }
-                    else//This Is Corporative
+                    if (validationIdCard.IDCardValidationResponse)
                     {
-                        var companyBBK = addCustomerViewModel.CorporateInfo.CompanyAddress.ApartmentId;
-                        var executiveResidencyBBK = addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.ApartmentId;
-
-                        var webServiceWrapper = new WebServiceWrapper();
-                        var companyApartmentAddress = webServiceWrapper.GetApartmentAddress((long)companyBBK);
-
-                        webServiceWrapper = new WebServiceWrapper();
-                        var executiveResidencyAddress = webServiceWrapper.GetApartmentAddress((long)executiveResidencyBBK);
-
-                        if (companyApartmentAddress.ResponseMessage.ErrorCode == 0 && executiveResidencyAddress.ResponseMessage.ErrorCode == 0)
+                        if (IsCustomerTypeIndividual((int)addCustomerViewModel.GeneralInfo.CustomerTypeId))
                         {
-                            addCustomerViewModel.CorporateInfo.CompanyAddress.NewCustomerAddressInfoRequest = NewCustomerAddressInfoRequest(companyApartmentAddress.AddressDetailsResponse);
+                            var individualResidencyBBK = addCustomerViewModel.Individual.ResidencyAddress.ApartmentId;
 
-                            addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.NewCustomerAddressInfoRequest = NewCustomerAddressInfoRequest(executiveResidencyAddress.AddressDetailsResponse);
+                            var serviceWrapper = new WebServiceWrapper();
+                            var individualAddress = serviceWrapper.GetApartmentAddress((long)individualResidencyBBK);
+
+                            if (individualAddress.ResponseMessage.ErrorCode == 0)
+                            {
+                                addCustomerViewModel.Individual.ResidencyAddress.NewCustomerAddressInfoRequest = NewCustomerAddressInfoRequest(individualAddress.AddressDetailsResponse);
+                            }
+                            else
+                            {
+                                serviceWrapper = new WebServiceWrapper();
+                                LoggerError.Fatal($"An error occurred while GetApartmentAddress , individualAddress: {individualAddress.ResponseMessage.ErrorCode} , by: {serviceWrapper.GetUserSubMail()}");
+
+                            }
                         }
-                        else
+                        else//This Is Corporative
                         {
+                            var companyBBK = addCustomerViewModel.CorporateInfo.CompanyAddress.ApartmentId;
+                            var executiveResidencyBBK = addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.ApartmentId;
+
+                            var webServiceWrapper = new WebServiceWrapper();
+                            var companyApartmentAddress = webServiceWrapper.GetApartmentAddress((long)companyBBK);
+
                             webServiceWrapper = new WebServiceWrapper();
-                            LoggerError.Fatal($"An error occurred while GetApartmentAddress , CompanyApartmentAddressResponse: {companyApartmentAddress.ResponseMessage.ErrorCode} ExecutiveResidencyBBKResponseCode: {executiveResidencyAddress.ResponseMessage.ErrorCode}, by: {webServiceWrapper.GetUserSubMail()}");
+                            var executiveResidencyAddress = webServiceWrapper.GetApartmentAddress((long)executiveResidencyBBK);
+
+                            if (companyApartmentAddress.ResponseMessage.ErrorCode == 0 && executiveResidencyAddress.ResponseMessage.ErrorCode == 0)
+                            {
+                                addCustomerViewModel.CorporateInfo.CompanyAddress.NewCustomerAddressInfoRequest = NewCustomerAddressInfoRequest(companyApartmentAddress.AddressDetailsResponse);
+
+                                addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.NewCustomerAddressInfoRequest = NewCustomerAddressInfoRequest(executiveResidencyAddress.AddressDetailsResponse);
+                            }
+                            else
+                            {
+                                webServiceWrapper = new WebServiceWrapper();
+                                LoggerError.Fatal($"An error occurred while GetApartmentAddress , CompanyApartmentAddressResponse: {companyApartmentAddress.ResponseMessage.ErrorCode} ExecutiveResidencyBBKResponseCode: {executiveResidencyAddress.ResponseMessage.ErrorCode}, by: {webServiceWrapper.GetUserSubMail()}");
+                            }
                         }
-                    }
 
 
-                    var billingAddressBBK = addCustomerViewModel.GeneralInfo.BillingAddress.ApartmentId;
-                    var setupAddressBBK = addCustomerViewModel.SubscriptionInfo.SetupAddress.ApartmentId;
+                        var billingAddressBBK = addCustomerViewModel.GeneralInfo.BillingAddress.ApartmentId;
+                        var setupAddressBBK = addCustomerViewModel.SubscriptionInfo.SetupAddress.ApartmentId;
 
-                    var wrapperByQueryApartmentAddress = new WebServiceWrapper();
-                    var billingAddress = wrapperByQueryApartmentAddress.GetApartmentAddress((long)billingAddressBBK);
+                        var wrapperByQueryApartmentAddress = new WebServiceWrapper();
+                        var billingAddress = wrapperByQueryApartmentAddress.GetApartmentAddress((long)billingAddressBBK);
 
-                    wrapperByQueryApartmentAddress = new WebServiceWrapper();
-                    var setupAddress = wrapperByQueryApartmentAddress.GetApartmentAddress((long)setupAddressBBK);
-
-
-                    if (setupAddress.ResponseMessage.ErrorCode == 0 && billingAddress.ResponseMessage.ErrorCode == 0 && (addCustomerViewModel.Individual.ResidencyAddress.ApartmentId != null || addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.ApartmentId != null))
-                    {
-                        addCustomerViewModel.GeneralInfo.BillingAddress.NewCustomerAddressInfoRequest = NewCustomerAddressInfoRequest(billingAddress.AddressDetailsResponse);
-
-                        addCustomerViewModel.SubscriptionInfo.SetupAddress.NewCustomerAddressInfoRequest = NewCustomerAddressInfoRequest(setupAddress.AddressDetailsResponse);
+                        wrapperByQueryApartmentAddress = new WebServiceWrapper();
+                        var setupAddress = wrapperByQueryApartmentAddress.GetApartmentAddress((long)setupAddressBBK);
 
 
-                        var wrapperBySMSConfirmation = new WebServiceWrapper();
-
-                        var smsConfirmation = wrapperBySMSConfirmation.SendConfirmationSMS(addCustomerViewModel.GeneralInfo.ContactPhoneNo);
-
-                        if (smsConfirmation.ResponseMessage.ErrorCode == 0)
+                        if (setupAddress.ResponseMessage.ErrorCode == 0 && billingAddress.ResponseMessage.ErrorCode == 0 && (addCustomerViewModel.Individual.ResidencyAddress.ApartmentId != null || addCustomerViewModel.CorporateInfo.ExecutiveResidencyAddress.ApartmentId != null))
                         {
-                            Session["CustomerApplicationInfo"] = addCustomerViewModel;
-                            Session["SMSCode"] = smsConfirmation.SMSCodeResponse.Code;
-                            return View("SmsConfirmation");
+                            addCustomerViewModel.GeneralInfo.BillingAddress.NewCustomerAddressInfoRequest = NewCustomerAddressInfoRequest(billingAddress.AddressDetailsResponse);
+
+                            addCustomerViewModel.SubscriptionInfo.SetupAddress.NewCustomerAddressInfoRequest = NewCustomerAddressInfoRequest(setupAddress.AddressDetailsResponse);
+
+
+                            var wrapperBySMSConfirmation = new WebServiceWrapper();
+
+                            var smsConfirmation = wrapperBySMSConfirmation.SendConfirmationSMS(addCustomerViewModel.GeneralInfo.ContactPhoneNo);
+
+                            if (smsConfirmation.ResponseMessage.ErrorCode == 0)
+                            {
+                                Session["CustomerApplicationInfo"] = addCustomerViewModel;
+                                Session["SMSCode"] = smsConfirmation.SMSCodeResponse.Code;
+                                return View("SmsConfirmation");
+                            }
+                            else
+                            {
+                                //LOG
+                                wrapperBySMSConfirmation = new WebServiceWrapper();
+                                LoggerError.Fatal("An error occurred while SMSConfirmation , ErrorCode: " + smsConfirmation.ResponseMessage.ErrorCode + ", by: " + wrapperBySMSConfirmation.GetUserSubMail());
+                                //LOG
+
+                                ViewBag.NewCustomerError = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(smsConfirmation.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
+
+                            }
                         }
                         else
                         {
                             //LOG
-                            wrapperBySMSConfirmation = new WebServiceWrapper();
-                            LoggerError.Fatal("An error occurred while SMSConfirmation , ErrorCode: " + smsConfirmation.ResponseMessage.ErrorCode + ", by: " + wrapperBySMSConfirmation.GetUserSubMail());
+                            wrapperByQueryApartmentAddress = new WebServiceWrapper();
+                            LoggerError.Fatal($"An error occurred while GetApartmentAddress , ErrorCode: BillingAddressResponse : {billingAddress.ResponseMessage.ErrorCode} SetupAddressResponse : {setupAddress.ResponseMessage.ErrorCode}, by: {wrapperByQueryApartmentAddress.GetUserSubMail()}");
                             //LOG
 
-                            ViewBag.NewCustomerError = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(smsConfirmation.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
-
+                            ViewBag.NewCustomerError = Localization.View.NewCustomerError;
                         }
                     }
-                    else
-                    {
-                        //LOG
-                        wrapperByQueryApartmentAddress = new WebServiceWrapper();
-                        LoggerError.Fatal($"An error occurred while GetApartmentAddress , ErrorCode: BillingAddressResponse : {billingAddress.ResponseMessage.ErrorCode} SetupAddressResponse : {setupAddress.ResponseMessage.ErrorCode}, by: {wrapperByQueryApartmentAddress.GetUserSubMail()}");
-                        //LOG
-
-                        ViewBag.NewCustomerError = Localization.View.NewCustomerError;
-                    }
+                    ViewBag.InvalidCredentials = Localization.View.InvalidCredentials;
                 }
             }
 
@@ -420,13 +441,13 @@ namespace MasterISS_Partner_WebSite.Controllers
             ViewBag.HavePSTN = HavePSTN(addCustomerViewModel.ExtraInfo.HavePSTNId);
 
 
-            ViewBag.DayListByIssueDate = DayList(addCustomerViewModel.IDCard.TCBirthCertificate.DateOfIssueDay ?? null);
-            ViewBag.MonthListByIssueDate = Monthlist(addCustomerViewModel.IDCard.TCBirthCertificate.DateOfIssueMonth ?? null);
-            ViewBag.YearListByIssueDate = YearList(addCustomerViewModel.IDCard.TCBirthCertificate.DateOfIssueYear ?? null, false);
+            ViewBag.DayListByIssueDate = DayList(addCustomerViewModel.IDCard.TCBirthCertificate?.DateOfIssueDay ?? null);
+            ViewBag.MonthListByIssueDate = Monthlist(addCustomerViewModel.IDCard.TCBirthCertificate?.DateOfIssueMonth ?? null);
+            ViewBag.YearListByIssueDate = YearList(addCustomerViewModel.IDCard.TCBirthCertificate?.DateOfIssueYear ?? null, false);
 
-            ViewBag.DayListByExpiryDate = DayList(addCustomerViewModel.IDCard.TCIDCardWithChip.ExpiryDay ?? null);
-            ViewBag.MonthListByExpiryDate = Monthlist(addCustomerViewModel.IDCard.TCIDCardWithChip.ExpiryMonth ?? null);
-            ViewBag.YearListByExpiryDate = YearList(addCustomerViewModel.IDCard.TCIDCardWithChip.ExpiryYear ?? null, true);
+            ViewBag.DayListByExpiryDate = DayList(addCustomerViewModel.IDCard.TCIDCardWithChip?.ExpiryDay ?? null);
+            ViewBag.MonthListByExpiryDate = Monthlist(addCustomerViewModel.IDCard.TCIDCardWithChip?.ExpiryMonth ?? null);
+            ViewBag.YearListByExpiryDate = YearList(addCustomerViewModel.IDCard.TCIDCardWithChip?.ExpiryYear ?? null, true);
 
             return View(addCustomerViewModel);
 
@@ -498,8 +519,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                             wrapper = new WebServiceWrapper();
                             Logger.Info("Added Customer: " + customerApplicationInfo.IDCard.FirstName + customerApplicationInfo.IDCard.LastName + ", by: " + wrapper.GetUserSubMail());
                             //LOG
-
-                            return RedirectToAction("Successful");
+                            return Json(new { status = "Success", message = Localization.View.Successful }, JsonRequestBehavior.AllowGet);
                         }
                         else
                         {
@@ -510,31 +530,28 @@ namespace MasterISS_Partner_WebSite.Controllers
                             wrapper = new WebServiceWrapper();
                             LoggerError.Fatal($"An error occurred while NewCustomerRegister, ErrorCode:  {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage}, NameValuePair :{string.Join(",", response.NewCustomerRegisterResponse)}  by: {wrapper.GetUserSubMail()}");
                             //LOG
-
-                            TempData["SMSConfirmationError"] = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
-                            return RedirectToAction("NewCustomer");
+                            return Json(new { status = "Failed", ErrorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture) }, JsonRequestBehavior.AllowGet);
                         }
                     }
                     else
                     {
-                        ViewBag.Error = serviceCode /*Localization.View.WrongPassword*/;
                         Session["Counter"] = Convert.ToInt32(Session["Counter"]) + 1;
 
-                        return View();
+                        return Json(new { status = "Failed", ErrorMessage = serviceCode /*Localization.View.WrongPassword*/}, JsonRequestBehavior.AllowGet);
                     }
                 }
                 else
                 {
-                    TempData["SMSConfirmationError"] = Localization.View.SMSCode3TimesIncorrectlyError;
                     Session.Remove("Counter");
                     Session.Remove("CustomerApplicationInfo");
                     Session.Remove("SMSCode");
-                    return RedirectToAction("NewCustomer");
+
+                    return Json(new { status = "FailedAndRedirect", ErrorMessage = Localization.View.SMSCode3TimesIncorrectlyError }, JsonRequestBehavior.AllowGet);
+
                 }
             }
             Session.Remove("CustomerApplicationInfo");
-            TempData["SMSConfirmationError"] = Localization.View.GeneralErrorDescription;
-            return RedirectToAction("NewCustomer");
+            return Json(new { status = "FailedAndRedirect", ErrorMessage = Localization.View.GeneralErrorDescription }, JsonRequestBehavior.AllowGet);
         }
 
 

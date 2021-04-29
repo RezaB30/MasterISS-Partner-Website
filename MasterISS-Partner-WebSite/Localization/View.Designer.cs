@@ -592,6 +592,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Telefonunuza gelen SMS şifresini Giriniz..
+        /// </summary>
+        public static string EnterTheSMSPasswordSentToYourPhone {
+            get {
+                return ResourceManager.GetString("EnterTheSMSPasswordSentToYourPhone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kullanıcı Adı ve Şifrenizi Giriniz.
         /// </summary>
         public static string EnterYourUsernameAndPassword {
@@ -750,6 +759,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string InOrderToInquirePortAndSpeed {
             get {
                 return ResourceManager.GetString("InOrderToInquirePortAndSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Geçersiz Kimlik Bilgileri.
+        /// </summary>
+        public static string InvalidCredentials {
+            get {
+                return ResourceManager.GetString("InvalidCredentials", resourceCulture);
             }
         }
         
@@ -1457,7 +1475,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sms Onayı.
+        ///   Looks up a localized string similar to Sms Onaylama.
         /// </summary>
         public static string SmsConfirmation {
             get {

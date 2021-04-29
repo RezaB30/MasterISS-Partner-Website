@@ -28,28 +28,26 @@
                             </span>
                         </div>
                         <!--end::Shape-->
-                        <div class="font-weight-boldest text-dark-75 font-size-h5 text-uppercase">SMS Onaylama</div>
+                        <div class="font-weight-boldest text-dark-75 font-size-h5 text-uppercase">@View.SmsConfirmation</div>
                         <div class="text-right d-flex flex-column">
                         </div>
                     </div>
                 </div>
                 <div align="center">
-                    <span class="text-center" style="font-size:2em">Telefonunuza gelen SMS şifresini Giriniz</span>
+                    <span class="text-center" style="font-size:2em">@View.EnterTheSMSPasswordSentToYourPhone</span>
                 </div>
                 <!--end: Wizard Step 3-->
                 <div class="d-flex flex-center border-top mt-5 pt-7">
 
-                    <span class="text-danger">@ViewBag.Error</span>
-
                     <div>
-                        @using (Html.BeginForm("SmsConfirmation", "Customer", FormMethod.Post))
+                        @using (Ajax.BeginForm("SmsConfirmation", "Customer", new AjaxOptions { HttpMethod = "POST", OnComplete = "SMSConfirmationResult" }))
                         {
                             @Html.AntiForgeryToken()
 
-                        <div class="form-group">
-                            @Html.TextBox("inputCode", null, new { @class = "form-control h-auto p-3  rounded-lg font-weight-bolder text-info font-size-lg", @placeholder = "SMS Şİfresi", @autocomplete = "off" })
-                            <input type="submit" class="btn btn-block font-weight-bolder btn-danger btn-hover-warning mt-12" value="@MasterISS_Partner_WebSite.Localization.View.Confirm" />
-                        </div>
+                            <div class="form-group">
+                                @Html.TextBox("inputCode", null, new { @class = "form-control h-auto p-3  rounded-lg font-weight-bolder text-info font-size-lg", @placeholder = "SMS Şİfresi", @autocomplete = "off" })
+                                <input type="submit" class="btn btn-block font-weight-bolder btn-danger btn-hover-warning mt-12" value="@MasterISS_Partner_WebSite.Localization.View.Confirm" />
+                            </div>
                         }
                     </div>
                 </div>
@@ -58,3 +56,29 @@
     </div>
 </div>
 
+@section Javascript{
+    <script>
+        function SMSConfirmationResult(data, status) {
+            if (status = "success") {
+                var responseStatus = data.responseJSON.status;
+                if (responseStatus == "Success") {
+                    var message = data.responseJSON.message;
+                    var url='@Url.Action("NewCustomer", "Customer")';
+                    GetAlert(message, "true",url);
+                }
+                else if (responseStatus =="FailedAndRedirect") {
+                    var redirectMessage = data.responseJSON.ErrorMessage;
+                    var urlHome='@Url.Action("NewCustomer", "Customer")';
+                    GetAlert(redirectMessage, "false", urlHome);
+                }
+                else {
+                    var errorMessage = data.responseJSON.ErrorMessage;
+                    GetAlert(errorMessage, "false", null);
+                }
+            }
+            else {
+                console.log("Error");
+            }
+        }
+    </script>
+}

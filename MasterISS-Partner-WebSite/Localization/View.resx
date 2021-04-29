@@ -294,6 +294,9 @@
   <data name="DownloadTheContract" xml:space="preserve">
     <value>Sözleşmeyi İndir</value>
   </data>
+  <data name="EnterTheSMSPasswordSentToYourPhone" xml:space="preserve">
+    <value>Telefonunuza gelen SMS şifresini Giriniz.</value>
+  </data>
   <data name="EnterYourUsernameAndPassword" xml:space="preserve">
     <value>Kullanıcı Adı ve Şifrenizi Giriniz</value>
   </data>
@@ -347,6 +350,9 @@
   </data>
   <data name="InOrderToInquirePortAndSpeed" xml:space="preserve">
     <value>Altyapı port ve alabileceğiniz hız durumunu sorgulayabilmek için adres bilgilerinizi dikkatli bir şekilde seçerek</value>
+  </data>
+  <data name="InvalidCredentials" xml:space="preserve">
+    <value>Geçersiz Kimlik Bilgileri</value>
   </data>
   <data name="LastPayments" xml:space="preserve">
     <value>Son Tahsilatlar</value>
@@ -584,7 +590,7 @@
     <value>3 kere hatalı giriş yaptınız. Lütfen tekrar deneyiniz.</value>
   </data>
   <data name="SmsConfirmation" xml:space="preserve">
-    <value>Sms Onayı</value>
+    <value>Sms Onaylama</value>
   </data>
   <data name="StartDateBiggerThanEndDateError" xml:space="preserve">
     <value>Başlangıç Tarihi, Bitiş Tarihinden Büyük Olamaz.</value>
