@@ -11,6 +11,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MasterISS_Partner_WebSite_Enums;
+using PagedList;
 
 namespace MasterISS_Partner_WebSite.Controllers
 {
@@ -553,6 +554,34 @@ namespace MasterISS_Partner_WebSite.Controllers
             Session.Remove("CustomerApplicationInfo");
             return Json(new { status = "FailedAndRedirect", ErrorMessage = Localization.View.GeneralErrorDescription }, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult GetPartnerSubscription(int page = 1, int pageSize = 9)
+        {
+            var wrapper = new WebServiceWrapper();
+            var partnerSubscriptionList = wrapper.GetPartnerSubscriptions();
+            if (partnerSubscriptionList.ResponseMessage.ErrorCode == 0)
+            {
+                var list = partnerSubscriptionList.PartnerSubscriptionList.Select(psl => new GetPartnerSubscriptionListViewModel
+                {
+                    DisplayName = psl.DisplayName,
+                    MembershipDate = Convert.ToDateTime(psl.MembershipDate),
+                    SubscriberNo = psl.SubscriberNo,
+                    SubscriptionId = psl.ID,
+                    StateName = psl.CustomerState.Name
+                });
+
+                var totalCount = list.Count();
+
+                var pagedListByResponseList = new StaticPagedList<GetPartnerSubscriptionListViewModel>(list.Skip((page - 1) * pageSize).Take(pageSize), page, pageSize, totalCount);
+
+                return View(pagedListByResponseList);
+
+            }
+
+            ViewBag.ErrorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(partnerSubscriptionList.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
+            return View();
+        }
+
 
 
         private SelectList PaymentDayListByViewBag(long? tariffId, long? selectedValue)

@@ -100,6 +100,15 @@
                         <span class="d-block font-weight-bold text-white font-size-h8 mt-2">@MasterISS_Partner_WebSite.Localization.View.AddCustomer</span>
                     </a>
                 </div>
+            }   
+            @if (User.IsInRole("Sale") && (User.IsInRole("SaleManager") || User.IsInRole("Admin")))
+            {
+                <div class="col-6">
+                    <a href="@Url.Action("GetPartnerSubscription","Customer")" class="btn btn-block btn-hover-primary text-center py-5 px-5" style="background-color: #43257d">
+                        <i class="fab fa-wpforms font-size-h1 text-warning"></i>
+                        <span class="d-block font-weight-bold text-white font-size-h8 mt-2">@MasterISS_Partner_WebSite.Localization.View.Customers</span>
+                    </a>
+                </div>
             }
             @if (User.IsInRole("Setup") && (User.IsInRole("SetupManager") || User.IsInRole("Admin")))
             {
@@ -244,6 +253,15 @@
                                 <li class="menu-item menu-item-submenu menu-item-rel" aria-haspopup="true">
                                     <a href="@Url.Action("NewCustomer","Customer")" class="menu-link">
                                         <span class="menu-text">@MasterISS_Partner_WebSite.Localization.View.AddCustomer</span>
+                                    </a>
+                                </li>
+                            }
+
+                            @if (User.IsInRole("Sale") && (User.IsInRole("SaleManager") || User.IsInRole("Admin")))
+                            {
+                                <li class="menu-item menu-item-submenu menu-item-rel" aria-haspopup="true">
+                                    <a href="@Url.Action("GetPartnerSubscription","Customer")" class="menu-link">
+                                        <span class="menu-text">@MasterISS_Partner_WebSite.Localization.View.Customers</span>
                                     </a>
                                 </li>
                             }

@@ -264,7 +264,7 @@
 
                                         @if (User.IsInRole("Admin") || User.IsInRole("RendezvousTeam"))
                                         {
-                                            if (item.IsCorfirmation == false && item.TaskStatusByControl == (int)MasterISS_Partner_WebSite_Enums.TaskStatusEnum.Completed)
+                                            if (item.IsCorfirmation == false && (item.TaskStatusByControl == (int)MasterISS_Partner_WebSite_Enums.TaskStatusEnum.Completed || item.TaskStatusByControl == (int)MasterISS_Partner_WebSite_Enums.TaskStatusEnum.Cancelled))
                                             {
                                                 <div class="separator separator-dashed mt-1 my-1"></div>
                                                 <div class="d-flex mb-2">

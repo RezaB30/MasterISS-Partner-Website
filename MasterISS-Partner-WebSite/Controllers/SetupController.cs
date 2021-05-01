@@ -54,7 +54,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                     if (taskListRequestModel.TaskListStartDate != null && taskListRequestModel.TaskListEndDate == null)
                     {
-                        endDate = startDate.Value. AddDays(29);
+                        endDate = startDate.Value.AddDays(29);
                     }
                     else if ((taskListRequestModel.TaskListStartDate == null && taskListRequestModel.TaskListEndDate == null) || (taskListRequestModel.TaskListStartDate == null && taskListRequestModel.TaskListEndDate != null))
                     {
@@ -66,7 +66,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                     {
                         using (var db = new PartnerWebSiteEntities())
                         {
-                            if (startDate.Value. AddDays(Properties.Settings.Default.SearchLimit) >= endDate)
+                            if (startDate.Value.AddDays(Properties.Settings.Default.SearchLimit) >= endDate)
                             {
                                 taskListRequestModel.TaskListStartDate = startDate.Value.ToString("dd.MM.yyyy HH:mm");
                                 taskListRequestModel.TaskListEndDate = endDate.Value.ToString("dd.MM.yyyy HH:mm");
@@ -129,7 +129,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                 if (getDescription == false)
                 {
-                    return FaultCodesDescription((short)faultCode.FaultCodes);
+                    return FaultCodesDescription(faultCode.FaultCodes ?? null);
                 }
                 else
                 {
@@ -1044,7 +1044,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                 {
                     return Enumerable.Empty<DateTime>();
                 }
-                var staffReservationDateList = db.TaskList.Where(tl => tl.AssignToSetupTeam == staffId && tl.TaskStatus != (int)TaskStatusEnum.Completed && tl.ReservationDate.HasValue).Select(rd => rd.ReservationDate).ToList();
+                var staffReservationDateList = db.TaskList.Where(tl => tl.AssignToSetupTeam == staffId && tl.TaskStatus != (int)TaskStatusEnum.Completed && tl.ReservationDate.HasValue && tl.IsConfirmation == false).Select(rd => rd.ReservationDate).ToList();
 
                 for (TimeSpan tm = staffStartTime.Value; tm < staffEndTime.Value; tm = tm.Add(Properties.Settings.Default.WokingHoursLong))
                 {
@@ -1341,7 +1341,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             return displayText;
         }
 
-        private string FaultCodesDescription(short value)
+        private string FaultCodesDescription(short? value)
         {
             var localizedList = new LocalizedList<FaultCodeEnum, Localization.FaultCodes>();
             var displayText = localizedList.GetDisplayText(value, CultureInfo.CurrentCulture);

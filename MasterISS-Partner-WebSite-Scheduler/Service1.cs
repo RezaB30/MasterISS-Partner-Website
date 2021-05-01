@@ -53,10 +53,15 @@ namespace MasterISS_Partner_WebSite_Scheduler
         }
         private static List<SchedulerOperation> PrepareOperations(TimeSpan minute)
         {
+
+            SchedulerTask validTaskStatus = new SchedulerTask("ValidTaskStatus", new ValidTaskStatus());
+
             SchedulerTask shareUnAssignedTaskToActiveRendezvousTeam = new SchedulerTask("ShareUnAssignedTaskToActiveRendezvousTeam", new ShareUnAssignedTaskToActiveRendezvousTeam());
+
             var shareList = new List<SchedulerTask>
             {
-                shareUnAssignedTaskToActiveRendezvousTeam
+                shareUnAssignedTaskToActiveRendezvousTeam,
+                validTaskStatus
             };
 
             SchedulerTask getTaskListWebServiceToDatabase = new SchedulerTask("GetTaskListWebServiceToDatabase", new GetTaskListWebServiceToDatabase(), 0, shareList);
@@ -65,12 +70,10 @@ namespace MasterISS_Partner_WebSite_Scheduler
                 getTaskListWebServiceToDatabase
             };
 
-
             return new List<SchedulerOperation>()
             {
                 new SchedulerOperation("UpdatedTaskStatusDatabaseToWebService",new UpdatedTaskStatusDatabaseToWebService(),new SchedulerTimingOptions(new SchedulerIntervalTimeSpan(minute)),0,getTaskList),
                 new SchedulerOperation("TaskUploadedDocumentSendWebService",new TaskUploadedDocumentSendWebService() ,new SchedulerTimingOptions(new SchedulerIntervalTimeSpan(minute)),0),
-                new SchedulerOperation("ValidTaskStatus",new ValidTaskStatus() ,new SchedulerTimingOptions(new SchedulerIntervalTimeSpan(minute)),0)
             };
         }
     }

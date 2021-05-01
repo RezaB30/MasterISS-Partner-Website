@@ -1,0 +1,114 @@
+﻿@using PagedList.Mvc
+@using MasterISS_Partner_WebSite.Localization
+@using MasterISS_Partner_WebSite.Helpers
+@using MasterISS_Partner_WebSite.ViewModels
+@model  PagedList.StaticPagedList<GetPartnerSubscriptionListViewModel>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <!--begin::Subheader-->
+    <div class="subheader py-2 py-lg-6 subheader-transparent" id="kt_subheader">
+        <div class="container">
+
+
+            @if (ViewBag.ErrorMessage == null)
+            {
+                <div class="row">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-xl-4">
+                            <!--begin::Card-->
+                            <div class="card card-custom gutter-b card-stretch">
+                                <div class=" ribbon ribbon-left">
+                                    <div class="ribbon-target bg-info" style="top: 10px; left: -2px;">@Html.DisplayFor(modelItem => item.StateName)</div>
+                                </div>                                                    <!--begin::Body-->
+                                <div class="card-body pt-4 d-flex flex-column justify-content-between">
+                                    <!--begin::Toolbar-->
+                                    <div class="d-flex justify-content-end">
+                                        <div class="dropdown dropdown-inline" data-toggle="tooltip" title="" data-placement="left" data-original-title="Quick actions">
+                                            <a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="ki ki-bold-more-hor"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
+                                                <!--begin::Navigation-->
+                                                <ul class="navi navi-hover">
+                                                    <li class="navi-header font-weight-bold py-4">
+                                                        <span class="font-size-lg">@View.OperationMenu</span>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
+                                                        </button>
+                                                    </li>
+                                                    <li class="navi-separator mb-3 opacity-70"></li>
+                                                    <li class="navi-item">
+                                                        <div class="navi-link">
+                                                            <span class="navi-text" data-toggle="modal" data-target="#exampleModalCenterSession">
+                                                                <input class="btn-sm btn btn-block btn-outline-info customer-session-info-button" value="@View.CustomerSessionInfo" />
+                                                            </span>
+                                                        </div>
+                                                    </li>
+                                                </ul> <!--end::Navigation-->
+                                            </div>
+                                        </div>
+                                    </div> <!--end::Toolbar--> <!--begin::User-->
+                                    <div class="d-flex align-items-center my-4 mb-2">
+
+                                        <!--begin::Title-->
+                                        <div class="d-flex flex-column">
+
+                                            <span class=" font-weight-bold text-hover-primary font-size-h5 mb-0">@Html.DisplayFor(modelItem => item.DisplayName)</span>
+                                        </div>
+                                        <!--end::Title-->
+                                    </div>
+                                    <div class="separator separator-dashed mt-2 my-2"></div> <!--end::User--> <!--begin::Info-->
+                                    <div class="d-flex mb-2">
+                                        <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.FirstOrDefault().SubscriberNo)</span>
+                                        <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(modelItem => item.SubscriberNo)</span>
+                                    </div>
+                                    <div class="d-flex mb-2">
+                                        <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.FirstOrDefault().MembershipDate)</span>
+                                        <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(modelItem => item.MembershipDate)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div> <!--end::Info--> <!--end::Card Body-->
+            }
+            else
+            {
+                <div align="center">
+                    <div class="text-danger">
+                        <span>@ViewBag.ErrorMessage</span>
+                    </div>
+                </div>
+            }
+            @if (Model != null && Model.TotalItemCount > 0)
+            {
+                <div class="card card-custom">
+                    <div class="card-body py-7">
+                        <!--begin::Pagination-->
+                        <div class="d-flex justify-content-between align-items-center flex-wrap">
+                            <div class="d-flex flex-wrap mr-3">
+                                @Html.PagedListPager(Model, page => Url.Action("GetPartnerSubscription", "Customer", new
+                           {
+                               page = page,
+                           }),
+                           new PagedListRenderOptions
+                           {
+                           })
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <span class="text-muted"> @View.Total @Model.TotalItemCount @View.RecordFound @View.OnThisPage @Model.FirstItemOnPage @View.To @Model.LastItemOnPage @View.Showing</span>
+                            </div>
+                        </div>
+                        <!--end:: Pagination-->
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>

@@ -273,6 +273,9 @@
   <data name="CustomerLineDetails" xml:space="preserve">
     <value>Müşteri Hat Bilgileri</value>
   </data>
+  <data name="Customers" xml:space="preserve">
+    <value>Müşteriler</value>
+  </data>
   <data name="CustomerSessionInfo" xml:space="preserve">
     <value>Müşteri Oturum Bilgileri</value>
   </data>

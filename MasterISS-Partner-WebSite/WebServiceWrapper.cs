@@ -370,7 +370,6 @@ namespace MasterISS_Partner_WebSite
         public PartnerServiceKeyValueListResponse GetCustomerType()
         {
             var response = Client.GetCustomerTypes(PartnerServiceParameterlessRequest());
-
             return response;
         }
 
@@ -615,7 +614,65 @@ namespace MasterISS_Partner_WebSite
             return response;
         }
 
+        public PartnerServiceSubscriptionsResponse GetPartnerSubscriptions()
+        {
+            var request = new PartnerServiceSubscriptionsRequest
+            {
+                Culture = Culture,
+                Hash = Hash<SHA256>(),
+                Rand = Rand,
+                Username = Username,
+                SubscriptionsRequestParameters = new RequestBase
+                {
+                    SubUserEmail = GetUserSubMail(),
+                    UserEmail = GetUserMail(),
+                }
+            };
 
+            var response = Client.GetPartnerSubscriptions(request);
+
+            return response;
+        }
+
+        public PartnerServiceClientAttachmentsResponse GetPartnerClientAttachments(long subscriptionId)
+        {
+            var request = new PartnerServiceClientAttachmentsRequest
+            {
+                Culture = Culture,
+                Hash = Hash<SHA256>(),
+                Rand = Rand,
+                Username = Username,
+                ClientAttachmentsParameters = new PartnerClientAttachmentsRequest
+                {
+                    SubUserEmail = GetUserSubMail(),
+                    UserEmail = GetUserMail(),
+                    SubscriptionId = subscriptionId,
+                }
+            };
+
+            var response = Client.GetPartnerClientAttachments(request);
+            return response;
+        }
+
+        public PartnerServiceClientFormsResponse GetPartnerClientForms(GetPartnerClientFormsViewModel getPartnerClientFormsViewModel)
+        {
+            var request = new PartnerServiceClientFormsRequest
+            {
+                Culture = Culture,
+                Hash = Hash<SHA256>(),
+                Rand = Rand,
+                Username = Username,
+                ClientFormsParameters = new PartnerClientFormsRequest
+                {
+                    SubUserEmail = GetUserSubMail(),
+                    UserEmail = GetUserMail(),
+                    FormType = getPartnerClientFormsViewModel.FormType,
+                    SubscriptionId = getPartnerClientFormsViewModel.SubscriptionId
+                }
+            };
+            var response = Client.GetPartnerClientForms(request);
+            return response;
+        }
 
         private PartnerServiceAllowanceDetailRequest PartnerServiceAllowanceDetailRequest(SetupAllowanceDetailsRequest setupAllowanceDetailsRequest)
         {

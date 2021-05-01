@@ -130,6 +130,12 @@
     <None Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceBillListResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceClientAttachmentsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceClientFormsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceCreditReportResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -158,6 +164,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceSMSCodeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceSubscriptionsResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceSubUserResponse.datasource">

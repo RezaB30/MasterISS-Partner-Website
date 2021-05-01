@@ -91,7 +91,20 @@ namespace MasterISS_Partner_WebSite_Scheduler
                         {
                             if (response.SetupTasks.Count() > 0)
                             {
-                                foreach (var task in response.SetupTasks)
+                                var databaseSetupTaskNoList = db.TaskList.Where(tl => tl.PartnerId == item.PartnerId).Select(tl => tl.TaskNo);
+                                var webServiceSetupTaskNoList = response.SetupTasks.Select(st => st.TaskNo);
+
+                                var findRemovedTaskList = databaseSetupTaskNoList.Except(webServiceSetupTaskNoList);
+                                foreach (var removedTask in findRemovedTaskList)
+                                {
+                                    var task = db.TaskList.Find(removedTask);
+                                    if (task.IsConfirmation == false)
+                                    {
+                                        task.IsConfirmation = true;
+                                    }
+                                }
+
+                                foreach (var task in response.SetupTasks.Where(st => st.TaskStatus == (int)TaskStatusEnum.Completed || st.TaskStatus == (int)TaskStatusEnum.Cancelled))
                                 {
                                     var dbTask = db.TaskList.Find(task.TaskNo);
                                     if (dbTask != null)
@@ -399,7 +412,7 @@ namespace MasterISS_Partner_WebSite_Scheduler
                     {
                         var partnerRendezvousTeam = db.RendezvousTeam.Where(rt => rt.IsAdmin == false && rt.WorkingStatus == true && rt.User.PartnerId == item.PartnerId && rt.User.IsEnabled).ToList();
 
-                        if (partnerRendezvousTeam != null)
+                        if (partnerRendezvousTeam != null && partnerRendezvousTeam.Count > 0)
                         {
                             var unAssignedTaskList = db.TaskList.Where(tl => tl.PartnerId == item.PartnerId && tl.AssignToRendezvousStaff == null).ToList();
 

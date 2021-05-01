@@ -409,4 +409,74 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="SaleGenericAllowanceListResponse.SaleGenericAllowanceList" nillable="true" type="tns:SaleGenericAllowanceListResponse.SaleGenericAllowanceList" />
+  <xs:complexType name="PartnerServiceSubscriptionsResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q18="http://schemas.datacontract.org/2004/07/RezaB.API.WebService" base="q18:BaseResponseOfArrayOfPartnerSubscriptionsResponseSHA256_SnLIBD70">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="PartnerSubscriptionList" nillable="true" type="tns:ArrayOfPartnerSubscriptionsResponse" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="PartnerServiceSubscriptionsResponse" nillable="true" type="tns:PartnerServiceSubscriptionsResponse" />
+  <xs:complexType name="ArrayOfPartnerSubscriptionsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PartnerSubscriptionsResponse" nillable="true" type="tns:PartnerSubscriptionsResponse" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPartnerSubscriptionsResponse" nillable="true" type="tns:ArrayOfPartnerSubscriptionsResponse" />
+  <xs:complexType name="PartnerSubscriptionsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CustomerState" nillable="true" type="tns:NameValuePair" />
+      <xs:element minOccurs="0" name="DisplayName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ID" type="xs:long" />
+      <xs:element minOccurs="0" name="MembershipDate" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SubscriberNo" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PartnerSubscriptionsResponse" nillable="true" type="tns:PartnerSubscriptionsResponse" />
+  <xs:complexType name="PartnerServiceClientAttachmentsResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q19="http://schemas.datacontract.org/2004/07/RezaB.API.WebService" base="q19:BaseResponseOfArrayOfPartnerClientAttachmentsResponseSHA256_SnLIBD70">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ClientAttachmentList" nillable="true" type="tns:ArrayOfPartnerClientAttachmentsResponse" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="PartnerServiceClientAttachmentsResponse" nillable="true" type="tns:PartnerServiceClientAttachmentsResponse" />
+  <xs:complexType name="ArrayOfPartnerClientAttachmentsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PartnerClientAttachmentsResponse" nillable="true" type="tns:PartnerClientAttachmentsResponse" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPartnerClientAttachmentsResponse" nillable="true" type="tns:ArrayOfPartnerClientAttachmentsResponse" />
+  <xs:complexType name="PartnerClientAttachmentsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AttachmentType" type="xs:int" />
+      <xs:element minOccurs="0" name="FileContent" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MIMEType" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PartnerClientAttachmentsResponse" nillable="true" type="tns:PartnerClientAttachmentsResponse" />
+  <xs:complexType name="PartnerServiceClientFormsResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q20="http://schemas.datacontract.org/2004/07/RezaB.API.WebService" base="q20:BaseResponseOfPartnerClientFormsResponseSHA256_SnLIBD70">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="PartnerClientForms" nillable="true" type="tns:PartnerClientFormsResponse" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="PartnerServiceClientFormsResponse" nillable="true" type="tns:PartnerServiceClientFormsResponse" />
+  <xs:complexType name="PartnerClientFormsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FileContent" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FormType" type="xs:int" />
+      <xs:element minOccurs="0" name="MIMEType" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PartnerClientFormsResponse" nillable="true" type="tns:PartnerClientFormsResponse" />
 </xs:schema>
