@@ -100,23 +100,13 @@
                         <span class="d-block font-weight-bold text-white font-size-h8 mt-2">@MasterISS_Partner_WebSite.Localization.View.AddCustomer</span>
                     </a>
                 </div>
-            }   
+            }
             @if (User.IsInRole("Sale") && (User.IsInRole("SaleManager") || User.IsInRole("Admin")))
             {
                 <div class="col-6">
                     <a href="@Url.Action("GetPartnerSubscription","Customer")" class="btn btn-block btn-hover-primary text-center py-5 px-5" style="background-color: #43257d">
                         <i class="fab fa-wpforms font-size-h1 text-warning"></i>
                         <span class="d-block font-weight-bold text-white font-size-h8 mt-2">@MasterISS_Partner_WebSite.Localization.View.Customers</span>
-                    </a>
-                </div>
-            }
-            @if (User.IsInRole("Setup") && (User.IsInRole("SetupManager") || User.IsInRole("Admin")))
-            {
-                <div class="col-6">
-                    <a href="@Url.Action("Index","Setup")" class="btn btn-block btn-hover-primary text-warning text-center py-5 px-5" style="background-color: #43257d">
-                        <span class="fas fa-star font-size-h2 menu-icon">
-                        </span>
-                        <span class="d-block font-weight-bold text-white font-size-h8 mt-2">@MasterISS_Partner_WebSite.Localization.View.SetupPanel</span>
                     </a>
                 </div>
             }
@@ -143,18 +133,30 @@
             }
             <!--end::Item-->
         </div>
-        @if (User.IsInRole("Admin") || User.IsInRole("PaymentCreditReportDetail"))
-        {
-            <div class="row gutter-b">
-                <div class="col-12">
+        <div class="row gutter-b">
+
+            @if (User.IsInRole("Admin") || User.IsInRole("PaymentCreditReportDetail"))
+            {
+                <div class="col-6">
                     <a href="@Url.Action("Index","Reports")" class="btn btn-block btn-hover-primary text-warning text-center py-5 px-5" style="background-color: #43257d">
                         <span class="fas fa-file-signature font-size-h2 menu-icon">
                         </span>
                         <span class="d-block font-weight-bold text-white font-size-h8 mt-2">@MasterISS_Partner_WebSite.Localization.View.Reports</span>
                     </a>
                 </div>
-            </div>
-        }
+            }
+            @if (User.IsInRole("Setup") && (User.IsInRole("SetupManager") || User.IsInRole("RendezvousTeam") || User.IsInRole("Admin")))
+            {
+                <div class="col-6">
+                    <a href="@Url.Action("Index","Setup")" class="btn btn-block btn-hover-primary text-warning text-center py-5 px-5" style="background-color: #43257d">
+                        <span class="fas fa-star font-size-h2 menu-icon">
+                        </span>
+                        <span class="d-block font-weight-bold text-white font-size-h8 mt-2">@MasterISS_Partner_WebSite.Localization.View.SetupPanel</span>
+                    </a>
+                </div>
+            }
+        </div>
+
         <hr class="my-8">
         <div class="row ">
             <!--begin::Item-->
@@ -266,7 +268,7 @@
                                 </li>
                             }
 
-                            @if (User.IsInRole("Setup") && (User.IsInRole("SetupManager") || User.IsInRole("Admin")))
+                            @if (User.IsInRole("Setup") && (User.IsInRole("SetupManager") || User.IsInRole("RendezvousTeam") || User.IsInRole("Admin")))
                             {
                                 <li class="menu-item menu-item-submenu menu-item-rel" aria-haspopup="true">
                                     <a href="@Url.Action("Index","Setup")" class="menu-link ">

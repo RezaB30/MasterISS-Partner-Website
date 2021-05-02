@@ -1366,6 +1366,8 @@ namespace MasterISS_Partner_WebSite_WebServices.PartnerServiceReference {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceClientAttachmentsRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.BaseRequestOfPartnerClientFormsRequestSHA256XdPrP3EA))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceClientFormsRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.BaseRequestOfSavePartnerClientAttachmentRequestSHA256XdPrP3EA))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceSaveClientAttachmentRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.BaseRequestOfPaymentRequestSHA256XdPrP3EA))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServicePaymentRequest))]
     public partial class BaseRequestOfSHA256o_Pr6u_PMh : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -1964,6 +1966,38 @@ namespace MasterISS_Partner_WebSite_WebServices.PartnerServiceReference {
                 if ((object.ReferenceEquals(this.ClientFormsParametersField, value) != true)) {
                     this.ClientFormsParametersField = value;
                     this.RaisePropertyChanged("ClientFormsParameters");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="BaseRequestOfSavePartnerClientAttachmentRequestSHA256XdPrP3EA", Namespace="http://schemas.datacontract.org/2004/07/RezaB.API.WebService")]
+    [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceSaveClientAttachmentRequest))]
+    public partial class BaseRequestOfSavePartnerClientAttachmentRequestSHA256XdPrP3EA : MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.BaseRequestOfSHA256o_Pr6u_PMh {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PartnerServiceSaveClientAttachmentRequest", Namespace="http://schemas.datacontract.org/2004/07/RadiusR.API.CustomerWebService.Requests.P" +
+        "artnerRequests")]
+    [System.SerializableAttribute()]
+    public partial class PartnerServiceSaveClientAttachmentRequest : MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.BaseRequestOfSavePartnerClientAttachmentRequestSHA256XdPrP3EA {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.SavePartnerClientAttachmentRequest SaveClientAttachmentParametersField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.SavePartnerClientAttachmentRequest SaveClientAttachmentParameters {
+            get {
+                return this.SaveClientAttachmentParametersField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SaveClientAttachmentParametersField, value) != true)) {
+                    this.SaveClientAttachmentParametersField = value;
+                    this.RaisePropertyChanged("SaveClientAttachmentParameters");
                 }
             }
         }
@@ -4084,6 +4118,100 @@ namespace MasterISS_Partner_WebSite_WebServices.PartnerServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="SavePartnerClientAttachmentRequest", Namespace="http://schemas.datacontract.org/2004/07/RadiusR.API.CustomerWebService.Requests.P" +
+        "artnerRequests")]
+    [System.SerializableAttribute()]
+    public partial class SavePartnerClientAttachmentRequest : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> AttachmentTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private byte[] FileContentField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FileExtentionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<long> SubscriptionIdField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> AttachmentType {
+            get {
+                return this.AttachmentTypeField;
+            }
+            set {
+                if ((this.AttachmentTypeField.Equals(value) != true)) {
+                    this.AttachmentTypeField = value;
+                    this.RaisePropertyChanged("AttachmentType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public byte[] FileContent {
+            get {
+                return this.FileContentField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FileContentField, value) != true)) {
+                    this.FileContentField = value;
+                    this.RaisePropertyChanged("FileContent");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FileExtention {
+            get {
+                return this.FileExtentionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FileExtentionField, value) != true)) {
+                    this.FileExtentionField = value;
+                    this.RaisePropertyChanged("FileExtention");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<long> SubscriptionId {
+            get {
+                return this.SubscriptionIdField;
+            }
+            set {
+                if ((this.SubscriptionIdField.Equals(value) != true)) {
+                    this.SubscriptionIdField = value;
+                    this.RaisePropertyChanged("SubscriptionId");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="BaseResponseOfSHA256o_Pr6u_PMh", Namespace="http://schemas.datacontract.org/2004/07/RezaB.API.WebService")]
     [System.SerializableAttribute()]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.BaseResponseOfAuthenticationResponseSHA256_SnLIBD70))]
@@ -4120,6 +4248,8 @@ namespace MasterISS_Partner_WebSite_WebServices.PartnerServiceReference {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceClientAttachmentsResponse))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.BaseResponseOfPartnerClientFormsResponseSHA256_SnLIBD70))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceClientFormsResponse))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.BaseResponseOfNullableOfbooleanSHA256qBRhzOKh))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceSaveClientAttachmentResponse))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.BaseResponseOfArrayOflongSHA256PGu3YCeQ))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServicePaymentResponse))]
     public partial class BaseResponseOfSHA256o_Pr6u_PMh : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -4773,6 +4903,38 @@ namespace MasterISS_Partner_WebSite_WebServices.PartnerServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="BaseResponseOfNullableOfbooleanSHA256qBRhzOKh", Namespace="http://schemas.datacontract.org/2004/07/RezaB.API.WebService")]
+    [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceSaveClientAttachmentResponse))]
+    public partial class BaseResponseOfNullableOfbooleanSHA256qBRhzOKh : MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.BaseResponseOfSHA256o_Pr6u_PMh {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PartnerServiceSaveClientAttachmentResponse", Namespace="http://schemas.datacontract.org/2004/07/RadiusR.API.CustomerWebService.Responses." +
+        "PartnerResponses")]
+    [System.SerializableAttribute()]
+    public partial class PartnerServiceSaveClientAttachmentResponse : MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.BaseResponseOfNullableOfbooleanSHA256qBRhzOKh {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<bool> SaveClientAttachmentResultField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<bool> SaveClientAttachmentResult {
+            get {
+                return this.SaveClientAttachmentResultField;
+            }
+            set {
+                if ((this.SaveClientAttachmentResultField.Equals(value) != true)) {
+                    this.SaveClientAttachmentResultField = value;
+                    this.RaisePropertyChanged("SaveClientAttachmentResult");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="BaseResponseOfArrayOflongSHA256PGu3YCeQ", Namespace="http://schemas.datacontract.org/2004/07/RezaB.API.WebService")]
     [System.SerializableAttribute()]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServicePaymentResponse))]
@@ -4833,6 +4995,9 @@ namespace MasterISS_Partner_WebSite_WebServices.PartnerServiceReference {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int UserIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.AuthenticationResponse.WorkAreaResult[] WorkAreasField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -4935,6 +5100,19 @@ namespace MasterISS_Partner_WebSite_WebServices.PartnerServiceReference {
             }
         }
         
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.AuthenticationResponse.WorkAreaResult[] WorkAreas {
+            get {
+                return this.WorkAreasField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.WorkAreasField, value) != true)) {
+                    this.WorkAreasField = value;
+                    this.RaisePropertyChanged("WorkAreas");
+                }
+            }
+        }
+        
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         
         protected void RaisePropertyChanged(string propertyName) {
@@ -4992,6 +5170,35 @@ namespace MasterISS_Partner_WebSite_WebServices.PartnerServiceReference {
                         this.NameField = value;
                         this.RaisePropertyChanged("Name");
                     }
+                }
+            }
+            
+            public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+            
+            protected void RaisePropertyChanged(string propertyName) {
+                System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+                if ((propertyChanged != null)) {
+                    propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+                }
+            }
+        }
+        
+        [System.Diagnostics.DebuggerStepThroughAttribute()]
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+        [System.Runtime.Serialization.DataContractAttribute(Name="AuthenticationResponse.WorkAreaResult", Namespace="http://schemas.datacontract.org/2004/07/RadiusR.API.CustomerWebService.Responses." +
+            "PartnerResponses")]
+        [System.SerializableAttribute()]
+        public partial class WorkAreaResult : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+            
+            [System.NonSerializedAttribute()]
+            private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+            
+            public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+                get {
+                    return this.extensionDataField;
+                }
+                set {
+                    this.extensionDataField = value;
                 }
             }
             
@@ -6905,6 +7112,12 @@ namespace MasterISS_Partner_WebSite_WebServices.PartnerServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartnerService/GetPartnerClientForms", ReplyAction="http://tempuri.org/IPartnerService/GetPartnerClientFormsResponse")]
         System.Threading.Tasks.Task<MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceClientFormsResponse> GetPartnerClientFormsAsync(MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceClientFormsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartnerService/SaveClientAttachment", ReplyAction="http://tempuri.org/IPartnerService/SaveClientAttachmentResponse")]
+        MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceSaveClientAttachmentResponse SaveClientAttachment(MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceSaveClientAttachmentRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartnerService/SaveClientAttachment", ReplyAction="http://tempuri.org/IPartnerService/SaveClientAttachmentResponse")]
+        System.Threading.Tasks.Task<MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceSaveClientAttachmentResponse> SaveClientAttachmentAsync(MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceSaveClientAttachmentRequest request);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -7236,6 +7449,14 @@ namespace MasterISS_Partner_WebSite_WebServices.PartnerServiceReference {
         
         public System.Threading.Tasks.Task<MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceClientFormsResponse> GetPartnerClientFormsAsync(MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceClientFormsRequest request) {
             return base.Channel.GetPartnerClientFormsAsync(request);
+        }
+        
+        public MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceSaveClientAttachmentResponse SaveClientAttachment(MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceSaveClientAttachmentRequest request) {
+            return base.Channel.SaveClientAttachment(request);
+        }
+        
+        public System.Threading.Tasks.Task<MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceSaveClientAttachmentResponse> SaveClientAttachmentAsync(MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceSaveClientAttachmentRequest request) {
+            return base.Channel.SaveClientAttachmentAsync(request);
         }
     }
 }

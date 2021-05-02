@@ -93,13 +93,13 @@
                                     {
                                         <div class="ribbon-target bg-success" style="top: 10px; left: -2px;">@Html.DisplayFor(modelItem => item.TaskStatus)</div>
                                     }
-                                    else if (item.TaskStatusByControl == (int)MasterISS_Partner_WebSite_Enums.TaskStatusEnum.Completed)
+                                    else if (item.TaskStatusByControl == (int)MasterISS_Partner_WebSite_Enums.TaskStatusEnum.InProgress)
                                     {
-                                        <div class="ribbon-target bg-danger" style="top: 10px; left: -2px;">@Html.DisplayFor(modelItem => item.TaskStatus)</div>
+                                        <div class="ribbon-target bg-warning" style="top: 10px; left: -2px;">@Html.DisplayFor(modelItem => item.TaskStatus)</div>
                                     }
                                     else
                                     {
-                                        <div class="ribbon-target bg-warning" style="top: 10px; left: -2px;">@Html.DisplayFor(modelItem => item.TaskStatus)</div>
+                                        <div class="ribbon-target bg-danger" style="top: 10px; left: -2px;">@Html.DisplayFor(modelItem => item.TaskStatus)</div>
                                     }
                                 </div>                                                    <!--begin::Body-->
                                 <div class="card-body pt-4 d-flex flex-column justify-content-between">

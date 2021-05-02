@@ -73,7 +73,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                                 var taskList = TaskList(User.IsInRole("Admin"), taskListRequestModel);
 
-                                var list = taskList
+                                var list = taskList.OrderByDescending(tl => tl.TaskStatus == (int)TaskStatusEnum.New).ThenBy(tl => tl.TaskStatus == (int)TaskStatusEnum.Completed).ThenBy(tl => tl.TaskStatus == (int)TaskStatusEnum.InProgress)
                                     .Select(tl => new GetTaskListResponseViewModel
                                     {
                                         AddressLatitudeandLongitude = GetAddressLatituteandLongitude(tl.Address),
@@ -140,9 +140,6 @@ namespace MasterISS_Partner_WebSite.Controllers
 
         }
 
-
-
-
         public ActionResult CallCustomer(long taskNo)
         {
             //using (var db = new PartnerWebSiteEntities())
@@ -204,6 +201,13 @@ namespace MasterISS_Partner_WebSite.Controllers
                     }
                     var searchedValueByContactName = taskListRequestModel.SearchedName ?? "";
                     var list = db.TaskList.Where(tl => tl.PartnerId == partnerId && tl.IsConfirmation == false && tl.ContactName.Contains(searchedValueByContactName));
+                    taskList = list;
+                }
+                else if (User.IsInRole("SetupManager") && !User.IsInRole("RendezvousTeam"))
+                {
+                    var userId = claimInfo.UserId();
+                    var searchedValueByContactName = taskListRequestModel.SearchedName ?? "";
+                    var list = db.TaskList.Where(tl => tl.AssignToSetupTeam == userId && tl.PartnerId == partnerId && tl.TaskStatus == (int)TaskStatusEnum.InProgress && tl.IsConfirmation == false && tl.ContactName.Contains(searchedValueByContactName));
                     taskList = list;
                 }
                 else
@@ -1239,25 +1243,31 @@ namespace MasterISS_Partner_WebSite.Controllers
             var fileListViewModel = new GetTasksFileViewModel();
             fileListViewModel.GenericFileList = new List<GenericFileList>();
 
-            foreach (var fileName in taskFileList)
+            if (taskFileList != null)
             {
-                var getFile = fileOperations.GetFile(taskNo, fileName);
-                using (var memoryStream = new MemoryStream())
+                foreach (var fileName in taskFileList)
                 {
-                    getFile.CopyTo(memoryStream);
-                    var bytes = memoryStream.ToArray();
-                    var base64 = Convert.ToBase64String(bytes);
-                    var src = string.Format("data:image/{0};base64,{1}", new FileInfo(fileName).Extension.Replace(".", ""), base64);
-                    var link = Url.Action("GetFileTask", "Setup", new { fileName = fileName, taskNo = taskNo });
-                    var genericItem = new GenericFileList
+                    var getFile = fileOperations.GetFile(taskNo, fileName);
+                    using (var memoryStream = new MemoryStream())
                     {
-                        ImgLink = link,
-                        ImgSrc = src
-                    };
-                    fileListViewModel.GenericFileList.Add(genericItem);
+                        getFile.CopyTo(memoryStream);
+                        var bytes = memoryStream.ToArray();
+                        var base64 = Convert.ToBase64String(bytes);
+                        var src = string.Format("data:image/{0};base64,{1}", new FileInfo(fileName).Extension.Replace(".", ""), base64);
+                        var link = Url.Action("GetFileTask", "Setup", new { fileName = fileName, taskNo = taskNo });
+                        var genericItem = new GenericFileList
+                        {
+                            ImgLink = link,
+                            ImgSrc = src
+                        };
+                        fileListViewModel.GenericFileList.Add(genericItem);
+                    }
                 }
+                return PartialView("_GetFileTasks", fileListViewModel);
             }
+
             return PartialView("_GetFileTasks", fileListViewModel);
+
         }
 
         public ActionResult GetFileTask(string fileName, long taskNo)

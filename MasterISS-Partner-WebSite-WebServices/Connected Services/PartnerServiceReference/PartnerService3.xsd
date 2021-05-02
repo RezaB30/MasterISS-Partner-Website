@@ -31,6 +31,7 @@
       <xs:element minOccurs="0" name="SetupServiceHash" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SetupServiceUser" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="UserID" type="xs:int" />
+      <xs:element minOccurs="0" name="WorkAreas" nillable="true" type="tns:ArrayOfAuthenticationResponse.WorkAreaResult" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="AuthenticationResponse" nillable="true" type="tns:AuthenticationResponse" />
@@ -47,6 +48,16 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="AuthenticationResponse.PermissionResult" nillable="true" type="tns:AuthenticationResponse.PermissionResult" />
+  <xs:complexType name="ArrayOfAuthenticationResponse.WorkAreaResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AuthenticationResponse.WorkAreaResult" nillable="true" type="tns:AuthenticationResponse.WorkAreaResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAuthenticationResponse.WorkAreaResult" nillable="true" type="tns:ArrayOfAuthenticationResponse.WorkAreaResult" />
+  <xs:complexType name="AuthenticationResponse.WorkAreaResult">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:element name="AuthenticationResponse.WorkAreaResult" nillable="true" type="tns:AuthenticationResponse.WorkAreaResult" />
   <xs:complexType name="PartnerServiceAddSubUserResponse">
     <xs:complexContent mixed="false">
       <xs:extension xmlns:q4="http://schemas.datacontract.org/2004/07/RezaB.API.WebService" base="q4:BaseResponseOfAddSubUserResponseSHA256_SnLIBD70">
@@ -479,4 +490,14 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="PartnerClientFormsResponse" nillable="true" type="tns:PartnerClientFormsResponse" />
+  <xs:complexType name="PartnerServiceSaveClientAttachmentResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q21="http://schemas.datacontract.org/2004/07/RezaB.API.WebService" base="q21:BaseResponseOfNullableOfbooleanSHA256qBRhzOKh">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="SaveClientAttachmentResult" nillable="true" type="xs:boolean" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="PartnerServiceSaveClientAttachmentResponse" nillable="true" type="tns:PartnerServiceSaveClientAttachmentResponse" />
 </xs:schema>

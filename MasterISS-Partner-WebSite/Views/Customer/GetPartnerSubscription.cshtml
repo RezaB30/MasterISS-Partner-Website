@@ -13,7 +13,6 @@
     <div class="subheader py-2 py-lg-6 subheader-transparent" id="kt_subheader">
         <div class="container">
 
-
             @if (ViewBag.ErrorMessage == null)
             {
                 <div class="row">
@@ -44,8 +43,8 @@
                                                     <li class="navi-separator mb-3 opacity-70"></li>
                                                     <li class="navi-item">
                                                         <div class="navi-link">
-                                                            <span class="navi-text" data-toggle="modal" data-target="#exampleModalCenterSession">
-                                                                <input class="btn-sm btn btn-block btn-outline-info customer-session-info-button" value="@View.CustomerSessionInfo" />
+                                                            <span class="navi-text" data-toggle="modal" data-target="#examplegetCustomerAttachment">
+                                                                <input class="btn-sm btn btn-block btn-outline-info customer-attachment-info-button" dataValue="@item.SubscriptionId" value="attachemnt" />
                                                             </span>
                                                         </div>
                                                     </li>
@@ -85,6 +84,7 @@
                     </div>
                 </div>
             }
+
             @if (Model != null && Model.TotalItemCount > 0)
             {
                 <div class="card card-custom">
@@ -112,3 +112,31 @@
     </div>
 
 </div>
+<div class="modal fade" id="examplegetCustomerAttachment" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div id="GetCustomerAttachmentContainer">
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Javascript{
+    <script>
+        $(".customer-attachment-info-button").click(function () {
+            var dataValue = $(this).attr("dataValue");
+                $.ajax({
+                    url: '@Url.Action("GetPartnerClientAttachments", "Customer")',
+                    type: 'GET',
+                    data: {
+                        subscriptionId : dataValue
+                    },
+                    dataType: 'html',
+                    success: function (data) {
+                        $("#GetCustomerAttachmentContainer").html(data);
+                    },
+                });
+        });
+    </script>
+}

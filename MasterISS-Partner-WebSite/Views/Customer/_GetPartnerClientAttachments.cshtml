@@ -1,0 +1,36 @@
+﻿@using MasterISS_Partner_WebSite.Localization
+@model MasterISS_Partner_WebSite.ViewModels.GetTasksFileViewModel
+<div class="modal-header">
+    <div class="py-2">
+        <span class="text-dark-75 font-weight-bolder d-block font-size-h5">Ass</span>
+    </div>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="d-flex mb-3">
+        <div class="row m-2" align="center">
+            @if (Model.GenericFileList.Count != 0)
+            {
+                foreach (var item in Model.GenericFileList)
+                {
+                    <div class="col-lg-12 col-md-12 col-sm-12 mb-2">
+                        <a href="@item.ImgLink" target="_blank">
+                            <embed src="@item.ImgSrc" width="420" height="400" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
+                        </a>
+                    </div>
+                }
+            }
+            else
+            {
+                <span class="text-danger">@View.NotFoundPhotoOfThisTask</span>
+            }
+
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">@View.Close</button>
+</div>
+

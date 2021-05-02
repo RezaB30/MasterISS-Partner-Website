@@ -12,6 +12,7 @@ using System.Web;
 using System.Web.Mvc;
 using MasterISS_Partner_WebSite_Enums;
 using PagedList;
+using System.IO;
 
 namespace MasterISS_Partner_WebSite.Controllers
 {
@@ -50,7 +51,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             var cultureListResponse = wrapper.GetCultures();
             if (cultureListResponse.ResponseMessage.ErrorCode == 0)
             {
-                ViewBag.CultureList = CultureList(cultureListResponse, null);
+                ViewBag.CultureList = CultureList(cultureListResponse, "tr-tr");
             }
 
             wrapper = new WebServiceWrapper();
@@ -58,8 +59,8 @@ namespace MasterISS_Partner_WebSite.Controllers
             var professionsListResponse = wrapper.GetProfessions();
             if (professionsListResponse.ResponseMessage.ErrorCode == 0)
             {
-                ViewBag.ProfessionListByCorporative = ProfessionList(professionsListResponse, null);
-                ViewBag.ProfessionListByIndividual = ProfessionList(professionsListResponse, null);
+                ViewBag.ProfessionListByCorporative = ProfessionList(professionsListResponse, (int)MasterISS_Partner_WebSite_Enums.Enums.ProfessionTypeEnum.DefaultJob);
+                ViewBag.ProfessionListByIndividual = ProfessionList(professionsListResponse, (int)MasterISS_Partner_WebSite_Enums.Enums.ProfessionTypeEnum.DefaultJob);
             }
 
             wrapper = new WebServiceWrapper();
@@ -568,7 +569,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                     SubscriberNo = psl.SubscriberNo,
                     SubscriptionId = psl.ID,
                     StateName = psl.CustomerState.Name
-                });
+                }).OrderByDescending(psl => psl.MembershipDate);
 
                 var totalCount = list.Count();
 
@@ -579,6 +580,71 @@ namespace MasterISS_Partner_WebSite.Controllers
             }
 
             ViewBag.ErrorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(partnerSubscriptionList.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
+            return View();
+        }
+
+        public ActionResult GetPartnerClientAttachments(long subscriptionId)
+        {
+            var wrapper = new WebServiceWrapper();
+            var partnerClientAttachments = wrapper.GetPartnerClientAttachments(subscriptionId);
+
+            if (partnerClientAttachments.ResponseMessage.ErrorCode == 0)
+            {
+                var fileListViewModel = new GetTasksFileViewModel();
+
+                fileListViewModel.GenericFileList = new List<GenericFileList>();
+
+                foreach (var fileName in partnerClientAttachments.ClientAttachmentList)
+                {
+                    var base64 = Convert.ToBase64String(fileName.FileContent);
+                    var src = string.Format("data:{0};base64,{1}", fileName.MIMEType, base64);
+                    var link = Url.Action("GetPartnerClientSelectedAttachment", "Customer", new { fileName = fileName.FileName, attachmentType = fileName.AttachmentType, subscriptionId = subscriptionId });
+                    var genericItem = new GenericFileList
+                    {
+                        ImgLink = link,
+                        ImgSrc = src
+                    };
+                    fileListViewModel.GenericFileList.Add(genericItem);
+                }
+
+                return PartialView("_GetPartnerClientAttachments", fileListViewModel);
+            }
+
+            var errorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(partnerClientAttachments.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
+            var contect = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false','{1}');</script>", errorMessage, Url.Action("GetPartnerSubscription", "Customer"));
+            return Content(contect);
+        }
+
+        public ActionResult GetPartnerClientSelectedAttachment(string fileName, int attachmentType, int subscriptionId)
+        {
+            var wrapper = new WebServiceWrapper();
+            var partnerClientAttachments = wrapper.GetPartnerClientAttachments(subscriptionId);
+            if (partnerClientAttachments.ResponseMessage.ErrorCode == 0)
+            {
+                var file = partnerClientAttachments.ClientAttachmentList.Where(cal => cal.AttachmentType == attachmentType && cal.FileName == fileName).FirstOrDefault();
+                if (file != null)
+                {
+                    return File(file.FileContent, file.FileName);
+                }
+            }
+            var errorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(partnerClientAttachments.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
+            var contect = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false','{1}');</script>", errorMessage, Url.Action("GetPartnerSubscription", "Customer"));
+            return Content(contect);
+        }
+
+        public ActionResult GetPartnerClientForms(GetPartnerClientFormsViewModel getPartnerClientFormsViewModel)
+        {
+            var wrapper = new WebServiceWrapper();
+
+            var getPartnerClientFormsResponse = wrapper.GetPartnerClientForms(getPartnerClientFormsViewModel);
+
+            if (getPartnerClientFormsResponse.ResponseMessage.ErrorCode == 0)
+            {
+                //getPartnerClientFormsResponse.PartnerClientForms.
+            }
+
+
+
             return View();
         }
 
@@ -753,7 +819,8 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             if (isExpiryDate)
             {
-                for (int i = startDate; i <= DateTime.Now.Year + 10; i++)
+                var expiryStartDate = 2021;
+                for (int i = expiryStartDate; i <= DateTime.Now.Year + 10; i++)
                 {
                     yearList.Add(i);
                 }

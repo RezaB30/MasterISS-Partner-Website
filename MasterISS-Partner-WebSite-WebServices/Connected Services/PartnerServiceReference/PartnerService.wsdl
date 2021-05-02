@@ -246,6 +246,12 @@
   <wsdl:message name="IPartnerService_GetPartnerClientForms_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetPartnerClientFormsResponse" />
   </wsdl:message>
+  <wsdl:message name="IPartnerService_SaveClientAttachment_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveClientAttachment" />
+  </wsdl:message>
+  <wsdl:message name="IPartnerService_SaveClientAttachment_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveClientAttachmentResponse" />
+  </wsdl:message>
   <wsdl:portType name="IPartnerService">
     <wsdl:operation name="GetProvinces">
       <wsdl:input wsaw:Action="http://tempuri.org/ITelekomInfrastructureService/GetProvinces" message="tns:IPartnerService_GetProvinces_InputMessage" />
@@ -398,6 +404,10 @@
     <wsdl:operation name="GetPartnerClientForms">
       <wsdl:input wsaw:Action="http://tempuri.org/IPartnerService/GetPartnerClientForms" message="tns:IPartnerService_GetPartnerClientForms_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPartnerService/GetPartnerClientFormsResponse" message="tns:IPartnerService_GetPartnerClientForms_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveClientAttachment">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartnerService/SaveClientAttachment" message="tns:IPartnerService_SaveClientAttachment_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPartnerService/SaveClientAttachmentResponse" message="tns:IPartnerService_SaveClientAttachment_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="WSHttpBinding_IPartnerService" type="tns:IPartnerService">
@@ -738,6 +748,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetPartnerClientForms">
       <soap12:operation soapAction="http://tempuri.org/IPartnerService/GetPartnerClientForms" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveClientAttachment">
+      <soap12:operation soapAction="http://tempuri.org/IPartnerService/SaveClientAttachment" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

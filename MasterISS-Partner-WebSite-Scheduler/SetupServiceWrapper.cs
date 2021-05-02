@@ -332,7 +332,7 @@ namespace MasterISS_Partner_WebSite_Scheduler
                         lastChangeTime = lastLoopTime.Date;
                     }
 
-                    var updatedStatus = db.UpdatedSetupStatus.Where(uss => uss.ChangeTime > lastChangeTime && uss.ChangeTime < dateTimeNow && uss.TaskList.IsConfirmation == true && uss.FaultCodes != null).ToList();
+                    var updatedStatus = db.UpdatedSetupStatus.Where(uss => uss.ChangeTime > lastChangeTime && uss.ChangeTime < dateTimeNow && uss.FaultCodes != null).ToList();
 
                     foreach (var item in updatedStatus)
                     {
@@ -472,44 +472,42 @@ namespace MasterISS_Partner_WebSite_Scheduler
                 using (var db = new PartnerWebSiteEntities())
                 {
                     var notSendedTaskForms = db.TaskFormList.Where(tfl => tfl.Status == false).ToList();
-                    foreach (var item in notSendedTaskForms)
+                    if (notSendedTaskForms.Count > 0)
                     {
-                        var Rand = Guid.NewGuid().ToString("N");
-
-                        var convertedBase64Form = StreamExtensions.GetFileBase64StringValue(item.TaskNo, item.AttachmentType, item.FileName);
-                        if (!string.IsNullOrEmpty(convertedBase64Form))
+                        foreach (var item in notSendedTaskForms)
                         {
-                            var request = new AddCustomerAttachmentRequest
+                            var Rand = Guid.NewGuid().ToString("N");
+
+                            var convertedBase64Form = StreamExtensions.GetFileBase64StringValue(item.TaskNo, item.AttachmentType, item.FileName);
+                            if (!string.IsNullOrEmpty(convertedBase64Form))
                             {
-                                Culture = SetupServiceWrapper.Culture,
-                                Hash = SetupServiceWrapper.CalculateHash<SHA256>(item.TaskList.PartnerSetupInfo.SetupServiceUser + Rand + item.TaskList.PartnerSetupInfo.SetupServiceHash + SetupServiceWrapper.Client.GetKeyFragment(item.TaskList.PartnerSetupInfo.SetupServiceUser)),
-                                Rand = Rand,
-                                Username = item.TaskList.PartnerSetupInfo.SetupServiceUser,
-                                CustomerAttachment = new CustomerAttachment
+                                var request = new AddCustomerAttachmentRequest
                                 {
-                                    FileData = convertedBase64Form,
-                                    FileType = new FileInfo(item.FileName).Extension.Replace(".", ""),
-                                    TaskNo = item.TaskNo,
-                                    AttachmentType = item.AttachmentType
+                                    Culture = SetupServiceWrapper.Culture,
+                                    Hash = SetupServiceWrapper.CalculateHash<SHA256>(item.TaskList.PartnerSetupInfo.SetupServiceUser + Rand + item.TaskList.PartnerSetupInfo.SetupServiceHash + SetupServiceWrapper.Client.GetKeyFragment(item.TaskList.PartnerSetupInfo.SetupServiceUser)),
+                                    Rand = Rand,
+                                    Username = item.TaskList.PartnerSetupInfo.SetupServiceUser,
+                                    CustomerAttachment = new CustomerAttachment
+                                    {
+                                        FileData = convertedBase64Form,
+                                        FileType = new FileInfo(item.FileName).Extension.Replace(".", ""),
+                                        TaskNo = item.TaskNo,
+                                        AttachmentType = item.AttachmentType
+                                    }
+                                };
+
+                                var response = SetupServiceWrapper.Client.AddCustomerAttachment(request);
+
+                                if (response.ResponseMessage.ErrorCode == 0)
+                                {
+                                    item.Status = true;
+                                    db.SaveChanges();
                                 }
-                            };
-
-                            var response = SetupServiceWrapper.Client.AddCustomerAttachment(request);
-
-                            if (response.ResponseMessage.ErrorCode == 0)
-                            {
-                                SetupServiceWrapper.LoggerError.Fatal("Success formmmmm");
-                                item.Status = true;
-                                db.SaveChanges();
+                                else
+                                {
+                                    SetupServiceWrapper.LoggerError.Fatal($"An error occurred while TaskUploadedDocumentSendWebService, ErrorCode:  {response.ResponseMessage.ErrorCode} , ErrorMessage: {response.ResponseMessage.ErrorMessage}");
+                                }
                             }
-                            else
-                            {
-                                SetupServiceWrapper.LoggerError.Fatal($"An error occurred while TaskUploadedDocumentSendWebService, ErrorCode:  {response.ResponseMessage.ErrorCode} , ErrorMessage: {response.ResponseMessage.ErrorMessage}");
-                            }
-                        }
-                        else
-                        {
-                            SetupServiceWrapper.LoggerError.Fatal($"Base64 value is null");
                         }
                     }
                 }

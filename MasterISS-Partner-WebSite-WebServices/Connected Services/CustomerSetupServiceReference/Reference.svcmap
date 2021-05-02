@@ -27,9 +27,9 @@
     <MetadataFile FileName="CustomerSetupService1.xsd" MetadataType="Schema" ID="5831be27-d1f1-40c4-b5c4-ec2a95cf1ee7" SourceId="1" SourceUrl="http://10.184.3.63:9902/CustomerSetupService.svc?xsd=xsd3" />
     <MetadataFile FileName="CustomerSetupService2.xsd" MetadataType="Schema" ID="3acd20e6-04cf-4259-8a65-510aec1405e5" SourceId="1" SourceUrl="http://10.184.3.63:9902/CustomerSetupService.svc?xsd=xsd0" />
     <MetadataFile FileName="CustomerSetupService3.xsd" MetadataType="Schema" ID="39a07bac-7188-444d-b84e-accf2a99cca9" SourceId="1" SourceUrl="http://10.184.3.63:9902/CustomerSetupService.svc?xsd=xsd1" />
-    <MetadataFile FileName="CustomerSetupService4.xsd" MetadataType="Schema" ID="bdebbd4d-9e6e-4254-bde4-3af5c1072e1d" SourceId="1" SourceUrl="http://10.184.3.63:9902/CustomerSetupService.svc?xsd=xsd6" />
+    <MetadataFile FileName="CustomerSetupService4.xsd" MetadataType="Schema" ID="1b90bb13-d437-48ef-a8d9-b846c4f7eae4" SourceId="1" SourceUrl="http://10.184.3.63:9902/CustomerSetupService.svc?xsd=xsd6" />
     <MetadataFile FileName="CustomerSetupService5.xsd" MetadataType="Schema" ID="92b692fb-2980-4d7d-b142-dcb93fd8a88a" SourceId="1" SourceUrl="http://10.184.3.63:9902/CustomerSetupService.svc?xsd=xsd4" />
-    <MetadataFile FileName="CustomerSetupService6.xsd" MetadataType="Schema" ID="4298d52b-5a86-4981-878f-eae61d5533a4" SourceId="1" SourceUrl="http://10.184.3.63:9902/CustomerSetupService.svc?xsd=xsd5" />
+    <MetadataFile FileName="CustomerSetupService41.xsd" MetadataType="Schema" ID="820d2b30-ca6e-4a71-b87f-f79399876d4c" SourceId="1" SourceUrl="http://10.184.3.63:9902/CustomerSetupService.svc?xsd=xsd5" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
