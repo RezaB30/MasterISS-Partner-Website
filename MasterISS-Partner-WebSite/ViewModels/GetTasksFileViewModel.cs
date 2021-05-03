@@ -14,5 +14,6 @@ namespace MasterISS_Partner_WebSite.ViewModels
     {
         public string ImgLink{ get; set; }
         public string ImgSrc{ get; set; }
+        public string AttachmentType { get; set; }
     }
 }

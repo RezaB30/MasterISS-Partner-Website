@@ -666,11 +666,31 @@ namespace MasterISS_Partner_WebSite
                 {
                     SubUserEmail = GetUserSubMail(),
                     UserEmail = GetUserMail(),
-                    FormType = getPartnerClientFormsViewModel.FormType,
+                    FormType = getPartnerClientFormsViewModel.FormTypeId,
                     SubscriptionId = getPartnerClientFormsViewModel.SubscriptionId
                 }
             };
             var response = Client.GetPartnerClientForms(request);
+            return response;
+        }
+
+        public PartnerServiceSaveClientAttachmentResponse SaveCustomerAttachment(SaveCustomerAttachmentViewModel saveCustomerAttachmentViewModel)
+        {
+            var request = new PartnerServiceSaveClientAttachmentRequest
+            {
+                Culture = Culture,
+                Hash = Hash<SHA256>(),
+                Rand = Rand,
+                Username = Username,
+                SaveClientAttachmentParameters = new SavePartnerClientAttachmentRequest
+                {
+                    AttachmentType = saveCustomerAttachmentViewModel.AttachmentType,
+                    FileExtention = saveCustomerAttachmentViewModel.FileExtention,
+                    FileContent = saveCustomerAttachmentViewModel.FileContect,
+                    SubscriptionId = saveCustomerAttachmentViewModel.SubscriptionId
+                }
+            };
+            var response = Client.SaveClientAttachment(request);
             return response;
         }
 

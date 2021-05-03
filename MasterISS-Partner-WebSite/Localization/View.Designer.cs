@@ -502,6 +502,24 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Müşteriye ait Belgeler.
+        /// </summary>
+        public static string CustomerDocuments {
+            get {
+                return ResourceManager.GetString("CustomerDocuments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Müşteriye ait Formlar.
+        /// </summary>
+        public static string CustomerForms {
+            get {
+                return ResourceManager.GetString("CustomerForms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Genel Bilgiler.
         /// </summary>
         public static string CustomerGeneralInfo {

@@ -556,6 +556,69 @@ namespace MasterISS_Partner_WebSite.Controllers
             return Json(new { status = "FailedAndRedirect", ErrorMessage = Localization.View.GeneralErrorDescription }, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult UploadDocumentCustomer(long subscriptionId)
+        {
+            var saveCustomerAttachmentViewModel = new SaveCustomerAttachmentViewModel
+            {
+                SubscriptionId = subscriptionId,
+            };
+            var list = new LocalizedList<AttachmentTypeEnum, Localization.AttachmentTypes>().GetList(CultureInfo.CurrentCulture);
+            var attachmentTypesList = new SelectList(list.Select(m => new { Name = m.Value, Value = m.Key }).ToArray(), "Value", "Name");
+            ViewBag.AttachmentTypes = attachmentTypesList;
+            return PartialView("_UploadDocumentCustomer");
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult UploadDocumentCustomer(SaveCustomerAttachmentViewModel saveCustomerAttachmentViewModel, IEnumerable<HttpPostedFileBase> files)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var isValidAttachmentType = Enum.IsDefined(typeof(AttachmentTypeEnum), saveCustomerAttachmentViewModel.AttachmentType);
+                if (isValidAttachmentType)
+                {
+                    var fileOperations = new FileOperations();
+                    var validFiles = fileOperations.ValidFiles(files, true);
+                    if (validFiles.Key)
+                    {
+                        var wrapper = new WebServiceWrapper();
+                        foreach (var item in files)
+                        {
+                            using (Stream inputStream = item.InputStream)
+                            {
+                                MemoryStream memoryStream = inputStream as MemoryStream;
+                                if (memoryStream == null)
+                                {
+                                    memoryStream = new MemoryStream();
+                                    inputStream.CopyTo(memoryStream);
+                                }
+                                var fileContect = memoryStream.ToArray();
+                                saveCustomerAttachmentViewModel.FileContect = fileContect;
+                                saveCustomerAttachmentViewModel.FileExtention = new FileInfo(item.FileName).Extension;
+                                wrapper = new WebServiceWrapper();
+                                var response = wrapper.SaveCustomerAttachment(saveCustomerAttachmentViewModel);
+                                if (response.ResponseMessage.ErrorCode != 0)
+                                {
+                                    return Json(new { status = "Failed", ErrorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture) }, JsonRequestBehavior.AllowGet);
+                                }
+                                if (response.SaveClientAttachmentResult == false)
+                                {
+                                    return Json(new { status = "Failed", ErrorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture) }, JsonRequestBehavior.AllowGet);
+                                }
+                            }
+                        }
+                        return Json(new { status = "Success", message = Localization.View.Successful }, JsonRequestBehavior.AllowGet);
+                    }
+                    return Json(new { status = "Failed", ErrorMessage = validFiles.Value }, JsonRequestBehavior.AllowGet);
+                }
+                var notFoundEnumValue = Localization.View.Generic200ErrorCodeMessage;
+                return Json(new { status = "FailedAndRedirect", ErrorMessage = notFoundEnumValue }, JsonRequestBehavior.AllowGet);
+            }
+            var errorMessage = string.Join("<br/>", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
+            return Json(new { status = "Failed", ErrorMessage = errorMessage }, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult GetPartnerSubscription(int page = 1, int pageSize = 9)
         {
             var wrapper = new WebServiceWrapper();
@@ -568,7 +631,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                     MembershipDate = Convert.ToDateTime(psl.MembershipDate),
                     SubscriberNo = psl.SubscriberNo,
                     SubscriptionId = psl.ID,
-                    StateName = psl.CustomerState.Name
+                    StateName = psl.CustomerState.Name,
+                    StateValue = psl.CustomerState.Value
                 }).OrderByDescending(psl => psl.MembershipDate);
 
                 var totalCount = list.Count();
@@ -602,7 +666,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                     var genericItem = new GenericFileList
                     {
                         ImgLink = link,
-                        ImgSrc = src
+                        ImgSrc = src,
+                        AttachmentType = new LocalizedList<AttachmentTypeEnum, Localization.AttachmentTypes>().GetDisplayText(fileName.AttachmentType, CultureInfo.CurrentCulture)
                     };
                     fileListViewModel.GenericFileList.Add(genericItem);
                 }
@@ -627,25 +692,42 @@ namespace MasterISS_Partner_WebSite.Controllers
                     return File(file.FileContent, file.FileName);
                 }
             }
-            var errorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(partnerClientAttachments.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
-            var contect = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false','{1}');</script>", errorMessage, Url.Action("GetPartnerSubscription", "Customer"));
-            return Content(contect);
+            TempData["GetSelectedAttachmentErrorMessage"] = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(partnerClientAttachments.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
+            return RedirectToAction("GetPartnerSubscription", "Customer");
         }
 
-        public ActionResult GetPartnerClientForms(GetPartnerClientFormsViewModel getPartnerClientFormsViewModel)
+        public ActionResult GetPartnerClientForms(long subscriptionId)
+        {
+            var getPartnerClientFormsViewModel = new GetPartnerClientFormsViewModel
+            {
+                SubscriptionId = subscriptionId,
+                FormTypes = GetFormTypes(null)
+            };
+            return PartialView("_GetPartnerClientForms", getPartnerClientFormsViewModel);
+        }
+
+        public ActionResult GetSelectedPartnerClientForms(int FormTypeId, long SubscriptionId)
         {
             var wrapper = new WebServiceWrapper();
 
-            var getPartnerClientFormsResponse = wrapper.GetPartnerClientForms(getPartnerClientFormsViewModel);
-
-            if (getPartnerClientFormsResponse.ResponseMessage.ErrorCode == 0)
+            if (ModelState.IsValid)
             {
-                //getPartnerClientFormsResponse.PartnerClientForms.
+                GetPartnerClientFormsViewModel getPartnerClientFormsViewModel = new GetPartnerClientFormsViewModel
+                {
+                    FormTypeId = FormTypeId,
+                    SubscriptionId = SubscriptionId
+                };
+                var getPartnerClientFormsResponse = wrapper.GetPartnerClientForms(getPartnerClientFormsViewModel);
+
+                if (getPartnerClientFormsResponse.ResponseMessage.ErrorCode == 0)
+                {
+                    return File(getPartnerClientFormsResponse.PartnerClientForms.FileContent, getPartnerClientFormsResponse.PartnerClientForms.FileName, getPartnerClientFormsResponse.PartnerClientForms.FileName);
+                }
+                TempData["GetSelectedAttachmentErrorMessage"] = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(getPartnerClientFormsResponse.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
+                return RedirectToAction("GetPartnerSubscription", "Customer");
             }
-
-
-
-            return View();
+            TempData["GetSelectedAttachmentErrorMessage"] = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture);
+            return RedirectToAction("GetPartnerSubscription", "Customer");
         }
 
 
@@ -771,6 +853,12 @@ namespace MasterISS_Partner_WebSite.Controllers
             var registrationTypeLocalized = new LocalizedList<RadiusR.DB.Enums.SubscriptionRegistrationType, RadiusR.Localization.Lists.SubscriptionRegistrationType>().GetList(CultureInfo.CurrentCulture).Where(s => s.Key != (int)RadiusR.DB.Enums.SubscriptionRegistrationType.Transfer);
             var list = new SelectList(registrationTypeLocalized.Select(r => new { Value = r.Key, Name = r.Value }), "Value", "Name", selectedValue);
             return list;
+        }
+
+        private List<KeyValuePair<int, string>> GetFormTypes(int? selectedValue)
+        {
+            var formTypesLocalized = new LocalizedList<GeneralPDFFormTypes, RadiusR.Localization.Lists.GeneralPDFFormTypes>().GetList(CultureInfo.CurrentCulture).Where(fl => fl.Key != (int)GeneralPDFFormTypes.TransferForm && fl.Key != (int)GeneralPDFFormTypes.TransportForm).ToList();
+            return formTypesLocalized;
         }
 
         private SelectList NationalityList(PartnerServiceKeyValueListResponse nationalityType, int? selectedValue)

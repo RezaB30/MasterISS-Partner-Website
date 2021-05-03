@@ -219,6 +219,12 @@
   <data name="CustomerCode" xml:space="preserve">
     <value>Customer Code</value>
   </data>
+  <data name="CustomerMembershipEndDate" xml:space="preserve">
+    <value>End Date</value>
+  </data>
+  <data name="CustomerMembershipStartDate" xml:space="preserve">
+    <value>Start Date</value>
+  </data>
   <data name="CustomerNo" xml:space="preserve">
     <value>Customer No</value>
   </data>
@@ -512,6 +518,9 @@
   </data>
   <data name="SearchedName" xml:space="preserve">
     <value>Searched Person</value>
+  </data>
+  <data name="SearchedSubsNo" xml:space="preserve">
+    <value>Subscriber Number</value>
   </data>
   <data name="SearchedTaskNo" xml:space="preserve">
     <value>Task No</value>

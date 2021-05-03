@@ -385,6 +385,8 @@
     <Compile Include="ViewModels\ListRendezvousTeamViewModel.cs" />
     <Compile Include="ViewModels\OperationHistoryListViewModel.cs" />
     <Compile Include="ViewModels\OperationTypeHistoryFilterViewModel.cs" />
+    <Compile Include="ViewModels\PartnerSubscriptionFilterViewModel.cs" />
+    <Compile Include="ViewModels\SaveCustomerAttachmentViewModel.cs" />
     <Compile Include="ViewModels\SendTaskToSchedulerViewModel.cs" />
     <Compile Include="ViewModels\SetupTeamStaffsToMatchedTheTask.cs" />
     <Compile Include="ViewModels\SetupTeamWorkingDaysAndHoursViewModel.cs" />
@@ -2102,6 +2104,8 @@
     <Content Include="Views\Customer\GetPartnerSubscription.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\ShortDateTimeConverted.cshtml" />
     <Content Include="Views\Customer\_GetPartnerClientAttachments.cshtml" />
+    <Content Include="Views\Customer\_GetPartnerClientForms.cshtml" />
+    <Content Include="Views\Customer\_UploadDocumentCustomer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

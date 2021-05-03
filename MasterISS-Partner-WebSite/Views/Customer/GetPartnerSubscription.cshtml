@@ -2,27 +2,99 @@
 @using MasterISS_Partner_WebSite.Localization
 @using MasterISS_Partner_WebSite.Helpers
 @using MasterISS_Partner_WebSite.ViewModels
+@using RadiusR.DB.Enums
 @model  PagedList.StaticPagedList<GetPartnerSubscriptionListViewModel>
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var search = ViewBag.Search as PartnerSubscriptionFilterViewModel ?? new PartnerSubscriptionFilterViewModel();
 }
 
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
     <!--begin::Subheader-->
     <div class="subheader py-2 py-lg-6 subheader-transparent" id="kt_subheader">
         <div class="container">
+            @*@using (Html.BeginForm("GetPartnerSubscription", "Customer", FormMethod.Get, new { @class = "mb-15 my-8" }))
+            {
+                <div class="row mb-8">
+                    <div class="col-lg-4 mb-lg-0 mb-12">
+                        <label>@View.DateRange:</label>
+                        <div class="input-daterange input-group" id="kt_datepicker">
+                            @Html.TextBox("TaskListStartDate", search.CustomerMembershipStartDate, new { @placeholder = DateTime.Now.ToString("dd.MM.yyyy HH:mm"), @class = "form-control" })
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                    <i class="la la-ellipsis-h"></i>
+                                </span>
+                            </div>
+                            @Html.TextBox("TaskListEndDate", search.CustomerMembershipEndDate, new { @placeholder = DateTime.Now.ToString("dd.MM.yyyy HH:mm"), @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-lg-2 mb-lg-0 mb-6">
+                        @Html.LabelFor(m => search.SearchedName)
+                        @Html.TextBox("SearchedName", search.SearchedName, new { @placeholder = Html.DisplayNameFor(m => search.SearchedName), @class = "form-control datatable-input", @data_col_index = "1" })
+                    </div>
+                    <div class="col-lg-2 mb-lg-0 mb-6">
+                        @Html.LabelFor(m => search.SearchedSubsNo)
+                        @Html.Editor("SearchedTaskNo", new { htmlAttributes = new { @class = "form-control datatable-input", @data_col_index = "4", @type = "text" } })
+                    </div>
+                    <div class="col-lg-4 mb-lg-0 mb-8">
+                        <button type="submit" class="btn btn-primary btn-primary--icon" id="kt_search">
+                            <span>
+                                <i class="la la-search"></i>
+                                <span>@View.Filter</span>
+                            </span>
+                        </button>&nbsp;&nbsp;
+                        <a href="@Url.Action("GetPartnerSubscription","Customer")" class="btn btn-secondary btn-secondary--icon" id="kt_reset">
+                            <span>
+                                <i class="la la-close"></i>
+                                <span>@View.Reset</span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
 
+                <div class="row mt-8">
+                    <div class="col-lg-2 mb-lg-0 mb-6">
+                        @Html.ValidationMessageFor(m => search.CustomerMembershipStartDate)
+                    </div>
+                    <div class="col-lg-2 mb-lg-0 mb-6">
+                        @Html.ValidationMessageFor(m => search.CustomerMembershipEndDate)
+                    </div>
+                </div>
+                <div class="text-danger mb-4" align="center">
+                    <span style="font-size:1.5em">@Html.Raw(TempData["GetSelectedAttachmentErrorMessage"])</span>
+                </div>
+
+
+                <div class="row mt-8">
+
+                </div>
+            }*@
             @if (ViewBag.ErrorMessage == null)
             {
                 <div class="row">
                     @foreach (var item in Model)
                     {
-                        <div class="col-xl-4">
+                        <div class="col-xl-3">
                             <!--begin::Card-->
                             <div class="card card-custom gutter-b card-stretch">
                                 <div class=" ribbon ribbon-left">
-                                    <div class="ribbon-target bg-info" style="top: 10px; left: -2px;">@Html.DisplayFor(modelItem => item.StateName)</div>
+                                    @if (item.StateValue == (int)CustomerState.Active)
+                                    {
+                                        <div class="ribbon-target bg-success" style="top: 10px; left: -2px;">@Html.DisplayFor(modelItem => item.StateName)</div>
+                                    }
+                                    else if (item.StateValue == (int)CustomerState.Cancelled)
+                                    {
+                                        <div class="ribbon-target bg-danger" style="top: 10px; left: -2px;">@Html.DisplayFor(modelItem => item.StateName)</div>
+                                    }
+                                    else if (item.StateValue == (int)CustomerState.PreRegisterd)
+                                    {
+                                        <div class="ribbon-target bg-warning" style="top: 10px; left: -2px;">@Html.DisplayFor(modelItem => item.StateName)</div>
+                                    }
+                                    else
+                                    {
+                                        <div class="ribbon-target bg-info" style="top: 10px; left: -2px;">@Html.DisplayFor(modelItem => item.StateName)</div>
+                                    }
                                 </div>                                                    <!--begin::Body-->
                                 <div class="card-body pt-4 d-flex flex-column justify-content-between">
                                     <!--begin::Toolbar-->
@@ -44,7 +116,21 @@
                                                     <li class="navi-item">
                                                         <div class="navi-link">
                                                             <span class="navi-text" data-toggle="modal" data-target="#examplegetCustomerAttachment">
-                                                                <input class="btn-sm btn btn-block btn-outline-info customer-attachment-info-button" dataValue="@item.SubscriptionId" value="attachemnt" />
+                                                                <input class="btn-sm btn btn-block btn-outline-info customer-attachment-info-button" dataValue="@item.SubscriptionId" value="@View.CustomerDocuments" />
+                                                            </span>
+                                                        </div>
+                                                    </li>
+                                                    <li class="navi-item">
+                                                        <div class="navi-link">
+                                                            <span class="navi-text" data-toggle="modal" data-target="#examplegetCustomerAttachment">
+                                                                <input class="btn-sm btn btn-block btn-outline-info customer-forms-info-button" dataValue="@item.SubscriptionId" value="@View.CustomerForms" />
+                                                            </span>
+                                                        </div>
+                                                    </li>
+                                                    <li class="navi-item">
+                                                        <div class="navi-link">
+                                                            <span class="navi-text" data-toggle="modal" data-target="#examplegetCustomerAttachment">
+                                                                <input class="btn-sm btn btn-block btn-outline-info upload-document-customer" dataValue="@item.SubscriptionId" value="@View.UploadDocument" />
                                                             </span>
                                                         </div>
                                                     </li>
@@ -124,6 +210,95 @@
 
 @section Javascript{
     <script>
+        $("#GetCustomerAttachmentContainer").on('change', '#AttachmentType', function () {
+            $("#previews").show();
+            GetDropzone();
+        });
+          function GetDropzone() {
+
+        Dropzone.autoDiscover = false;
+        $('#myDropzone').dropzone({
+            //parameter name value
+            paramName: "files",
+            //clickable div id
+            clickable: '#previews',
+            //preview files container Id
+            previewsContainer: "#previews",
+            autoProcessQueue: false,
+            uploadMultiple: true,
+            parallelUploads: 100,
+            maxFiles: 100,
+            //  url:"/", // url here to save file
+            maxFilesize: 100,//max file size in MB,
+            addRemoveLinks: true,
+            dictResponseError: 'Server not Configured',
+            acceptedFiles: ".png,.jpg,.jpeg,.pdf",// use this to restrict file type
+            init: function () {
+                var self = this;
+                // config
+                self.options.addRemoveLinks = true;
+                self.options.dictRemoveFile = "@View.Delete";
+                //New file added
+                self.on("addedfile", function (file) {
+                    console.log('new file added ', file);
+                    $('.dz-success-mark').hide();
+                    $('.dz-error-mark').hide();
+                });
+                // Send file starts
+                self.on("sending", function (file) {
+                    console.log('upload started', file);
+                    $('.meter').show();
+                });
+
+                 //File upload Progress
+                self.on("totaluploadprogress", function (progress) {
+                    console.log("progress ", progress);
+                    $('.roller').width(progress + '%');
+                });
+
+                self.on("queuecomplete", function (progress) {
+                    $('.meter').delay(999).slideUp(999);
+                });
+
+                // On removing file
+                self.on("removedfile", function (file) {
+                    console.log(file);
+                });
+
+                $('#Submit').on("click", function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    // Validate form here if needed
+
+                    if (self.getQueuedFiles().length > 0) {
+                        self.processQueue();
+
+
+                    } else {
+                        self.uploadFiles([]);
+                        $('#myDropzone').submit();
+                    }
+
+                });
+
+
+
+                self.on("successmultiple", function (files, response) {
+                    if (response.status=="Success") {
+                         var message = response.message;
+                         var url='@Url.Action("Index", "Setup")';
+                         GetAlert(message, "true",url);
+                    }
+                    else {
+                        $(".error-codes-container").show();
+                        $(".error-codes").html(response.ErrorMessage);
+                    }
+
+                });
+            }
+        });
+        }
+
         $(".customer-attachment-info-button").click(function () {
             var dataValue = $(this).attr("dataValue");
                 $.ajax({
@@ -138,5 +313,56 @@
                     },
                 });
         });
+        $(".customer-forms-info-button").click(function () {
+            var dataValue = $(this).attr("dataValue");
+                $.ajax({
+                    url: '@Url.Action("GetPartnerClientForms", "Customer")',
+                    type: 'GET',
+                    data: {
+                        subscriptionId : dataValue
+                    },
+                    dataType: 'html',
+                    success: function (data) {
+                        $("#GetCustomerAttachmentContainer").html(data);
+                    },
+                });
+        });
+
+        $(".upload-document-customer").click(function () {
+            var dataValue = $(this).attr("dataValue");
+                $.ajax({
+                    url: '@Url.Action("UploadDocumentCustomer", "Customer")',
+                    type: 'GET',
+                    data: {
+                        subscriptionId : dataValue
+                    },
+                    dataType: 'html',
+                    success: function (data) {
+                        $("#GetCustomerAttachmentContainer").html(data);
+                    },
+                });
+        });
+        function UploadDocumentCustomerResult(data, status) {
+            if (status = "success") {
+                var responseStatus = data.responseJSON.status;
+                if (responseStatus == "Success") {
+                    var message = data.responseJSON.message;
+                    var url='@Url.Action("GetPartnerSubscription", "Customer")';
+                    GetAlert(message, "true",url);
+                }
+                else if (responseStatus =="FailedAndRedirect") {
+                    var redirectMessage = data.responseJSON.ErrorMessage;
+                    var urlHome='@Url.Action("Index", "Home")';
+                    GetAlert(redirectMessage, "false", urlHome);
+                }
+                else {
+                    $(".error-codes-container").show();
+                    $(".error-codes").html(data.responseJSON.ErrorMessage);
+                }
+            }
+            else {
+                console.log("Error");
+            }
+        }
     </script>
 }

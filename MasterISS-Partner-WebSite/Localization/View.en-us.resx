@@ -264,6 +264,12 @@
   <data name="CustomerDetail" xml:space="preserve">
     <value>Customer Details</value>
   </data>
+  <data name="CustomerDocuments" xml:space="preserve">
+    <value>Customer Documents</value>
+  </data>
+  <data name="CustomerForms" xml:space="preserve">
+    <value>Customer Forms</value>
+  </data>
   <data name="CustomerGeneralInfo" xml:space="preserve">
     <value>General Info</value>
   </data>

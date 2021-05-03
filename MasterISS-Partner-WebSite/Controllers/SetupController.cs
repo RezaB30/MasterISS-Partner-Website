@@ -635,7 +635,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                 if (files != null)
                 {
-                    var validFiles = ValidFiles(files, false);
+                    var validFiles = fileOperations.ValidFiles(files, false);
                     if (validFiles.Key)
                     {
                         foreach (var file in files)
@@ -703,43 +703,6 @@ namespace MasterISS_Partner_WebSite.Controllers
             return Json(new { status = "Failed", ErrorMessage = errorMessage }, JsonRequestBehavior.AllowGet);
         }
 
-        private KeyValuePair<bool, string> ValidFiles(IEnumerable<HttpPostedFileBase> files, bool couldBePdf)
-        {
-            if (files != null)
-            {
-                foreach (var file in files)
-                {
-                    var fileSize = Convert.ToDecimal(file.ContentLength) / 1024 / 1024;
-                    if (Properties.Settings.Default.FileSizeLimit > fileSize)
-                    {
-                        var extension = Path.GetExtension(file.FileName);
-                        var acceptedExtensionList = new List<string>();
-
-                        if (couldBePdf)
-                        {
-                            string[] acceptedExtensions = { ".jpg", ".pdf", ".png", ".jpeg" };
-
-                            acceptedExtensionList.AddRange(acceptedExtensions);
-                        }
-                        else
-                        {
-                            string[] acceptedExtensions = { ".jpg", ".png", ".jpeg" };
-
-                            acceptedExtensionList.AddRange(acceptedExtensions);
-                        }
-
-                        if (acceptedExtensionList.Contains(extension))
-                        {
-                            return new KeyValuePair<bool, string>(true, null);
-                        }
-
-                        return new KeyValuePair<bool, string>(false, Localization.View.FaultyFormat);
-                    }
-                    return new KeyValuePair<bool, string>(false, Localization.View.MaxFileSizeError);
-                }
-            }
-            return new KeyValuePair<bool, string>(false, Localization.View.SelectFile);
-        }
 
         public List<SetupTeamStaffsToMatchedTheTask> ShareSetupStaff(long taskNo)
         {
@@ -754,10 +717,24 @@ namespace MasterISS_Partner_WebSite.Controllers
                     LoggerError.Fatal($"An error occurred while ShareSetupStaff , Task not found, by: {wrapperByError.GetUserSubMail()}");
                 }
 
+                var list = new List<SetupTeamStaffsToMatchedTheTask>();
+
                 var wrapper = new WebServiceWrapper();
                 var serviceAvailability = wrapper.GetApartmentAddress(Convert.ToInt64(task.BBK));
 
                 var partnerSetupTeamId = db.User.Where(u => u.PartnerId == partnerId).Select(st => st.SetupTeam).Where(st => st.WorkingStatus == true).Select(st => st.UserId).ToList();
+
+
+                if (User.IsInRole("Admin") && partnerSetupTeamId.Count == 0)
+                {
+                    list.Add(new SetupTeamStaffsToMatchedTheTask
+                    {
+                        SetupTeamStaffId = claimInfo.UserId(),
+                        SetupTeamStaffName = claimInfo.GetPartnerName(),
+                        SetupTeamStaffWorkAreas = null
+                    });
+                    return list;
+                }
 
                 var setupTeamWorkAreas = db.WorkArea.Where(wa => partnerSetupTeamId.Contains(wa.UserId)).ToList();
 
@@ -796,7 +773,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                 }
 
-                var matchedWorkAreaTeam = db.User.Where(wa => matchedWorkAreaTeamUserId.Contains(wa.Id)).Select(user => new SetupTeamStaffsToMatchedTheTask
+                list = db.User.Where(wa => matchedWorkAreaTeamUserId.Contains(wa.Id)).Select(user => new SetupTeamStaffsToMatchedTheTask
                 {
                     SetupTeamStaffId = user.Id,
                     SetupTeamStaffName = user.NameSurname,
@@ -810,7 +787,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                     }).ToList(),
                 }).ToList();
 
-                return matchedWorkAreaTeam;
+
+                return list;
 
             }
         }
@@ -1131,18 +1109,16 @@ namespace MasterISS_Partner_WebSite.Controllers
             {
                 var isValidAttachmentType = Enum.IsDefined(typeof(AttachmentTypeEnum), uploadFileRequestViewModel.AttachmentTypesEnum);
 
-                var ass = Request.IsAjaxRequest();
                 if (isValidAttachmentType)
                 {
-                    var validFiles = ValidFiles(files, true);
+                    var fileOperations = new FileOperations();
+                    var validFiles = fileOperations.ValidFiles(files, true);
                     if (validFiles.Key)
                     {
                         using (var db = new PartnerWebSiteEntities())
                         {
                             foreach (var file in files)
                             {
-                                var fileOperations = new FileOperations();
-
                                 var saveForm = fileOperations.SaveCustomerForm(file.InputStream, (int)uploadFileRequestViewModel.AttachmentTypesEnum, file.FileName, uploadFileRequestViewModel.TaskNo);
                                 if (saveForm == true)
                                 {

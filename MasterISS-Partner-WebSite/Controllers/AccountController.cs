@@ -19,6 +19,7 @@ using System.Web.Mvc;
 using MasterISS_Partner_WebSite_Enums;
 using MasterISS_Partner_WebSite.ViewModels.Account;
 using MasterISS_Partner_WebSite_WebServices.PartnerServiceReference;
+using MasterISS_Partner_WebSite_Enums.Enums;
 
 namespace MasterISS_Partner_WebSite.Controllers
 {
@@ -141,15 +142,19 @@ namespace MasterISS_Partner_WebSite.Controllers
                                 db.SaveChanges();
                                 adminValid = db.User.Where(u => u.Password == adminPasswordHash && u.UserSubMail == adminSignInModel.Username && u.RoleId == null && u.PartnerId == null).FirstOrDefault();
                             }
-
                             var adminValidSetupTeamTable = db.SetupTeam.Find(adminValid.Id);
                             if (adminValidSetupTeamTable == null)
                             {
+                                var localizedListWorkDays = new LocalizedList<DayOfWeekEnum, Localization.DayList>().GenericList.Select(l => l.ID.ToString());
+                                var adminWorkDays = string.Join(",", localizedListWorkDays);
                                 SetupTeam setupTeam = new SetupTeam
                                 {
                                     IsAdmin = true,
                                     UserId = adminValid.Id,
-                                    WorkingStatus = true
+                                    WorkingStatus = true,
+                                    WorkDays = adminWorkDays,
+                                    WorkStartTime = DateTime.ParseExact("01:00", "HH:mm", null).TimeOfDay,
+                                    WorkEndTime = DateTime.ParseExact("23:59", "HH:mm", null).TimeOfDay,
                                 };
                                 db.SetupTeam.Add(setupTeam);
                                 db.SaveChanges();
@@ -167,6 +172,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                                 db.RendezvousTeam.Add(rendezvousTeam);
                                 db.SaveChanges();
                             }
+                            
 
                             var claims = new List<Claim>
                             {
@@ -178,7 +184,6 @@ namespace MasterISS_Partner_WebSite.Controllers
                                 new Claim(ClaimTypes.MobilePhone,adminValid.PhoneNumber),
                             };
 
-                            TempData["ass"] = adminValid.PhoneNumber;
                             ValidResponseHaveSetupPermissionAndAddClaims(authenticateResponse, claims);
 
                             var isSignIn = Authenticator.SignIn(Request.GetOwinContext(), claims);

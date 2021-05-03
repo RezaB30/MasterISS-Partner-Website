@@ -5193,12 +5193,124 @@ namespace MasterISS_Partner_WebSite_WebServices.PartnerServiceReference {
             [System.NonSerializedAttribute()]
             private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
             
+            [System.Runtime.Serialization.OptionalFieldAttribute()]
+            private System.Nullable<long> DistrictIDField;
+            
+            [System.Runtime.Serialization.OptionalFieldAttribute()]
+            private string DistrictNameField;
+            
+            [System.Runtime.Serialization.OptionalFieldAttribute()]
+            private System.Nullable<long> NeighbourhoodIDField;
+            
+            [System.Runtime.Serialization.OptionalFieldAttribute()]
+            private string NeighbourhoodNameField;
+            
+            [System.Runtime.Serialization.OptionalFieldAttribute()]
+            private long ProvinceIDField;
+            
+            [System.Runtime.Serialization.OptionalFieldAttribute()]
+            private string ProvinceNameField;
+            
+            [System.Runtime.Serialization.OptionalFieldAttribute()]
+            private System.Nullable<long> RuralCodeField;
+            
             public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
                 get {
                     return this.extensionDataField;
                 }
                 set {
                     this.extensionDataField = value;
+                }
+            }
+            
+            [System.Runtime.Serialization.DataMemberAttribute()]
+            public System.Nullable<long> DistrictID {
+                get {
+                    return this.DistrictIDField;
+                }
+                set {
+                    if ((this.DistrictIDField.Equals(value) != true)) {
+                        this.DistrictIDField = value;
+                        this.RaisePropertyChanged("DistrictID");
+                    }
+                }
+            }
+            
+            [System.Runtime.Serialization.DataMemberAttribute()]
+            public string DistrictName {
+                get {
+                    return this.DistrictNameField;
+                }
+                set {
+                    if ((object.ReferenceEquals(this.DistrictNameField, value) != true)) {
+                        this.DistrictNameField = value;
+                        this.RaisePropertyChanged("DistrictName");
+                    }
+                }
+            }
+            
+            [System.Runtime.Serialization.DataMemberAttribute()]
+            public System.Nullable<long> NeighbourhoodID {
+                get {
+                    return this.NeighbourhoodIDField;
+                }
+                set {
+                    if ((this.NeighbourhoodIDField.Equals(value) != true)) {
+                        this.NeighbourhoodIDField = value;
+                        this.RaisePropertyChanged("NeighbourhoodID");
+                    }
+                }
+            }
+            
+            [System.Runtime.Serialization.DataMemberAttribute()]
+            public string NeighbourhoodName {
+                get {
+                    return this.NeighbourhoodNameField;
+                }
+                set {
+                    if ((object.ReferenceEquals(this.NeighbourhoodNameField, value) != true)) {
+                        this.NeighbourhoodNameField = value;
+                        this.RaisePropertyChanged("NeighbourhoodName");
+                    }
+                }
+            }
+            
+            [System.Runtime.Serialization.DataMemberAttribute()]
+            public long ProvinceID {
+                get {
+                    return this.ProvinceIDField;
+                }
+                set {
+                    if ((this.ProvinceIDField.Equals(value) != true)) {
+                        this.ProvinceIDField = value;
+                        this.RaisePropertyChanged("ProvinceID");
+                    }
+                }
+            }
+            
+            [System.Runtime.Serialization.DataMemberAttribute()]
+            public string ProvinceName {
+                get {
+                    return this.ProvinceNameField;
+                }
+                set {
+                    if ((object.ReferenceEquals(this.ProvinceNameField, value) != true)) {
+                        this.ProvinceNameField = value;
+                        this.RaisePropertyChanged("ProvinceName");
+                    }
+                }
+            }
+            
+            [System.Runtime.Serialization.DataMemberAttribute()]
+            public System.Nullable<long> RuralCode {
+                get {
+                    return this.RuralCodeField;
+                }
+                set {
+                    if ((this.RuralCodeField.Equals(value) != true)) {
+                        this.RuralCodeField = value;
+                        this.RaisePropertyChanged("RuralCode");
+                    }
                 }
             }
             

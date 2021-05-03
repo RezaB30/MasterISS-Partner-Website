@@ -6,13 +6,14 @@ using System.Web;
 
 namespace MasterISS_Partner_WebSite.ViewModels
 {
-    public class GetPartnerClientFormsViewModel
+    public class SaveCustomerAttachmentViewModel
     {
+        [Display(ResourceType = typeof(Localization.Model), Name = "AttachmentType")]
         [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
-        public int FormTypeId { get; set; }
+        public int AttachmentType { get; set; }
+        public byte[] FileContect { get; set; }
+        public string FileExtention { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
         public long SubscriptionId { get; set; }
-        public List<KeyValuePair<int, string>> FormTypes { get; set; }
     }
 }

@@ -219,6 +219,12 @@
   <data name="CustomerCode" xml:space="preserve">
     <value>Müşteri Kodu</value>
   </data>
+  <data name="CustomerMembershipEndDate" xml:space="preserve">
+    <value>Bitiş Tarihi</value>
+  </data>
+  <data name="CustomerMembershipStartDate" xml:space="preserve">
+    <value>Başlangıç Tarihi</value>
+  </data>
   <data name="CustomerNo" xml:space="preserve">
     <value>Müşteri Numarası</value>
   </data>
@@ -512,6 +518,9 @@
   </data>
   <data name="SearchedName" xml:space="preserve">
     <value>Aranan Kişi</value>
+  </data>
+  <data name="SearchedSubsNo" xml:space="preserve">
+    <value>Abone Numarası</value>
   </data>
   <data name="SearchedTaskNo" xml:space="preserve">
     <value>Görev Numarası</value>

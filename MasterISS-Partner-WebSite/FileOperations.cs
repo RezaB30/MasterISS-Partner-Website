@@ -335,6 +335,43 @@ namespace MasterISS_Partner_WebSite
             }
         }
 
+        public KeyValuePair<bool, string> ValidFiles(IEnumerable<HttpPostedFileBase> files, bool couldBePdf)
+        {
+            if (files != null)
+            {
+                foreach (var file in files)
+                {
+                    var fileSize = Convert.ToDecimal(file.ContentLength) / 1024 / 1024;
+                    if (Properties.Settings.Default.FileSizeLimit > fileSize)
+                    {
+                        var extension = Path.GetExtension(file.FileName);
+                        var acceptedExtensionList = new List<string>();
+
+                        if (couldBePdf)
+                        {
+                            string[] acceptedExtensions = { ".jpg", ".pdf", ".png", ".jpeg" };
+
+                            acceptedExtensionList.AddRange(acceptedExtensions);
+                        }
+                        else
+                        {
+                            string[] acceptedExtensions = { ".jpg", ".png", ".jpeg" };
+
+                            acceptedExtensionList.AddRange(acceptedExtensions);
+                        }
+
+                        if (acceptedExtensionList.Contains(extension))
+                        {
+                            return new KeyValuePair<bool, string>(true, null);
+                        }
+
+                        return new KeyValuePair<bool, string>(false, Localization.View.FaultyFormat);
+                    }
+                    return new KeyValuePair<bool, string>(false, Localization.View.MaxFileSizeError);
+                }
+            }
+            return new KeyValuePair<bool, string>(false, Localization.View.SelectFile);
+        }
 
         private IFileManager GetLocalFileManager()
         {

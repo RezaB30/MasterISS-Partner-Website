@@ -264,6 +264,12 @@
   <data name="CustomerDetail" xml:space="preserve">
     <value>Müşteri Detayları</value>
   </data>
+  <data name="CustomerDocuments" xml:space="preserve">
+    <value>Müşteriye ait Belgeler</value>
+  </data>
+  <data name="CustomerForms" xml:space="preserve">
+    <value>Müşteriye ait Formlar</value>
+  </data>
   <data name="CustomerGeneralInfo" xml:space="preserve">
     <value>Genel Bilgiler</value>
   </data>

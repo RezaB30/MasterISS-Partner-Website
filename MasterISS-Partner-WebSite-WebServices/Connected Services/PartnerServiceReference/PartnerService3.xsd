@@ -55,7 +55,15 @@
   </xs:complexType>
   <xs:element name="ArrayOfAuthenticationResponse.WorkAreaResult" nillable="true" type="tns:ArrayOfAuthenticationResponse.WorkAreaResult" />
   <xs:complexType name="AuthenticationResponse.WorkAreaResult">
-    <xs:sequence />
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DistrictID" nillable="true" type="xs:long" />
+      <xs:element minOccurs="0" name="DistrictName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NeighbourhoodID" nillable="true" type="xs:long" />
+      <xs:element minOccurs="0" name="NeighbourhoodName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProvinceID" type="xs:long" />
+      <xs:element minOccurs="0" name="ProvinceName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RuralCode" nillable="true" type="xs:long" />
+    </xs:sequence>
   </xs:complexType>
   <xs:element name="AuthenticationResponse.WorkAreaResult" nillable="true" type="tns:AuthenticationResponse.WorkAreaResult" />
   <xs:complexType name="PartnerServiceAddSubUserResponse">

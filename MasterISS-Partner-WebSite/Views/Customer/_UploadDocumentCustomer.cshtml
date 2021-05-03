@@ -1,0 +1,48 @@
+﻿@using MasterISS_Partner_WebSite.Localization
+@model MasterISS_Partner_WebSite.ViewModels.SaveCustomerAttachmentViewModel
+
+<span class="text-danger">@ViewBag.UploadDocumentError</span>
+
+<div class="modal-header">
+    <div class="py-2">
+        <span class="text-dark-75 font-weight-bolder d-block font-size-h5">@View.Upload</span>
+    </div>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
+    </button>
+</div>
+
+@using (Ajax.BeginForm("UploadDocumentCustomer", "Customer", new AjaxOptions { HttpMethod = "POST", OnComplete = "UploadDocumentCustomerResult" }, new { @enctype = "multipart/form-data", @name = "myDropzone", @id = "myDropzone" }))
+{
+    @Html.AntiForgeryToken();
+
+    <div class="modal-body">
+        @Html.DropDownListFor(m => m.AttachmentType, (SelectList)ViewBag.AttachmentTypes, View.SelectAttachmentType, new { @class = "form-control" })
+        @Html.HiddenFor(m => m.SubscriptionId)
+
+        <div class="error-codes-container" style="display:none">
+            <div class="separator separator-dashed mt-2 my-4"></div>
+            <div class="text-danger error-codes" align="center"></div>
+            <div class="separator separator-dashed mt-2 my-4"></div>
+        </div>
+
+        <br />
+        <div id="previews" class="dz-default dz-message box__input dropzone dropzone-default dropzone-primary dz-clickable" style="display:none">
+            <div style="text-align:center">
+                <span class="dropzone-msg-desc">@View.Max10MB</span>
+                <br />
+                <h3 class="dropzone-msg-title">@View.FileDropOrClick</h3>
+            </div>
+        </div>
+        <div id="previewFiles"></div>
+        <br />
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">@View.Close</button>
+        <input type="submit" id="Submit" name="Submit" class="btn btn-success m-t-5" value="@View.Submit" />
+
+        @*<input type="submit" id="form-button" value="@View.Upload" class="btn btn-info font-weight-bold" />*@
+    </div>
+}
+

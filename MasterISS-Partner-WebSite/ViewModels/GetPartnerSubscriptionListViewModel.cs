@@ -18,5 +18,6 @@ namespace MasterISS_Partner_WebSite.ViewModels
         [Display(ResourceType = typeof(Localization.Model), Name = "SubscriberNo")]
         public string  SubscriberNo { get; set; }
         public string StateName { get; set; }
+        public int  StateValue { get; set; }
     }
 }

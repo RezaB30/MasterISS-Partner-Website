@@ -367,6 +367,24 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bitiş Tarihi.
+        /// </summary>
+        public static string CustomerMembershipEndDate {
+            get {
+                return ResourceManager.GetString("CustomerMembershipEndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Başlangıç Tarihi.
+        /// </summary>
+        public static string CustomerMembershipStartDate {
+            get {
+                return ResourceManager.GetString("CustomerMembershipStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Müşteri Numarası.
         /// </summary>
         public static string CustomerNo {
@@ -1245,6 +1263,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string SearchedName {
             get {
                 return ResourceManager.GetString("SearchedName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Abone Numarası.
+        /// </summary>
+        public static string SearchedSubsNo {
+            get {
+                return ResourceManager.GetString("SearchedSubsNo", resourceCulture);
             }
         }
         
