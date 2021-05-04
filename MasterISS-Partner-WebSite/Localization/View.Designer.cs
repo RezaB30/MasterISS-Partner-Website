@@ -691,6 +691,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Biten Kurulum.
+        /// </summary>
+        public static string FinishedSetup {
+            get {
+                return ResourceManager.GetString("FinishedSetup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to İlk Oturum Bilgileri.
         /// </summary>
         public static string FirstSessionInfo {
@@ -786,6 +795,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string InOrderToInquirePortAndSpeed {
             get {
                 return ResourceManager.GetString("InOrderToInquirePortAndSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bekleyen Kurulum.
+        /// </summary>
+        public static string InProgressSetup {
+            get {
+                return ResourceManager.GetString("InProgressSetup", resourceCulture);
             }
         }
         
@@ -979,6 +997,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Yeni Başvuru.
+        /// </summary>
+        public static string NewApplication {
+            get {
+                return ResourceManager.GetString("NewApplication", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to İşleminiz yapılırken bir hata oluştu.Tekrar deneyiniz..
         /// </summary>
         public static string NewCustomerError {
@@ -1069,6 +1096,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fatura Tahsilatı.
+        /// </summary>
+        public static string PaidBillsAmount {
+            get {
+                return ResourceManager.GetString("PaidBillsAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pasif.
         /// </summary>
         public static string Passive {
@@ -1083,6 +1119,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string PassiveError {
             get {
                 return ResourceManager.GetString("PassiveError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adet.
+        /// </summary>
+        public static string Piece {
+            get {
+                return ResourceManager.GetString("Piece", resourceCulture);
             }
         }
         

@@ -327,6 +327,9 @@
   <data name="Filter" xml:space="preserve">
     <value>Filtrele</value>
   </data>
+  <data name="FinishedSetup" xml:space="preserve">
+    <value>Biten Kurulum</value>
+  </data>
   <data name="FirstSessionInfo" xml:space="preserve">
     <value>İlk Oturum Bilgileri</value>
   </data>
@@ -359,6 +362,9 @@
   </data>
   <data name="InOrderToInquirePortAndSpeed" xml:space="preserve">
     <value>Altyapı port ve alabileceğiniz hız durumunu sorgulayabilmek için adres bilgilerinizi dikkatli bir şekilde seçerek</value>
+  </data>
+  <data name="InProgressSetup" xml:space="preserve">
+    <value>Bekleyen Kurulum</value>
   </data>
   <data name="InvalidCredentials" xml:space="preserve">
     <value>Geçersiz Kimlik Bilgileri</value>
@@ -423,6 +429,9 @@
   <data name="NetspeedPartnerSystem" xml:space="preserve">
     <value>Netspeed Bayi Sistemi</value>
   </data>
+  <data name="NewApplication" xml:space="preserve">
+    <value>Yeni Başvuru</value>
+  </data>
   <data name="NewCustomerError" xml:space="preserve">
     <value>İşleminiz yapılırken bir hata oluştu.Tekrar deneyiniz.</value>
   </data>
@@ -453,11 +462,17 @@
   <data name="Paid" xml:space="preserve">
     <value>Ödendi</value>
   </data>
+  <data name="PaidBillsAmount" xml:space="preserve">
+    <value>Fatura Tahsilatı</value>
+  </data>
   <data name="Passive" xml:space="preserve">
     <value>Pasif</value>
   </data>
   <data name="PassiveError" xml:space="preserve">
     <value>Kullanıcı pasif etme işleminde hata oluştu. Tekrar deneyiniz.</value>
+  </data>
+  <data name="Piece" xml:space="preserve">
+    <value>Adet</value>
   </data>
   <data name="QueryAgain" xml:space="preserve">
     <value>Yeniden Sorgula</value>

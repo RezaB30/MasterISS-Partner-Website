@@ -2054,7 +2054,6 @@
     <Content Include="Views\Account\SignIn.cshtml" />
     <Content Include="Views\UserOperations\_AddUser.cshtml" />
     <Content Include="Views\UserOperations\Index.cshtml" />
-    <Content Include="Views\UserOperations\Successful.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\DatetimeFormat.cshtml" />
     <Content Include="Views\UserOperations\_AddPermission.cshtml" />
     <Content Include="Views\Customer\NewCustomer.cshtml" />
@@ -2080,11 +2079,8 @@
     <Content Include="Views\Setup\_UploadDocument.cshtml" />
     <Content Include="Views\Revenues\Index.cshtml" />
     <Content Include="Views\UserOperations\_UpdateUserRole.cshtml" />
-    <Content Include="Views\UserOperations\SetupTeamList.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\WorkingTypeFormat.cshtml" />
     <Content Include="Views\UserOperations\_AddAndUpdateWorkAreaSetupTeamUser.cshtml" />
-    <Content Include="Views\UserOperations\ListWorkAreaSetupTeamUser.cshtml" />
-    <Content Include="Views\UserOperations\RendezvousTeamList.cshtml" />
     <Content Include="Views\Account\AdminSignIn.cshtml" />
     <Content Include="Views\Setup\_ListPartnerRendezvousTeam.cshtml" />
     <Content Include="Views\UserOperations\_SetupTeamWorkingDaysAndHours.cshtml" />
@@ -2235,7 +2231,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Localization\View.en-us.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>View.en-us.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Localization\View.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

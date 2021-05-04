@@ -32,8 +32,6 @@ namespace MasterISS_Partner_WebSite_Scheduler
                 {
                     var time = db.SchedulerSettings.Select(ss => ss.ServiceCheckTimer).First();
 
-                    LoggerError.Fatal($"Ass : { time}");
-
                     scheduler = new Scheduler(PrepareOperations(time), TimeSpan.FromSeconds(120), "MasterISSPartnerService");
                     if (!scheduler.IsRunning)
                     {

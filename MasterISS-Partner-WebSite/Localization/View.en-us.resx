@@ -327,6 +327,9 @@
   <data name="Filter" xml:space="preserve">
     <value>Filter</value>
   </data>
+  <data name="FinishedSetup" xml:space="preserve">
+    <value>Finished Setup</value>
+  </data>
   <data name="FirstSessionInfo" xml:space="preserve">
     <value>First Session Info</value>
   </data>
@@ -359,6 +362,9 @@
   </data>
   <data name="InOrderToInquirePortAndSpeed" xml:space="preserve">
     <value>In order to inquire about the infrastructure port and the speed you can get, carefully select your address information and click the</value>
+  </data>
+  <data name="InProgressSetup" xml:space="preserve">
+    <value>In Progress Setup</value>
   </data>
   <data name="InvalidCredentials" xml:space="preserve">
     <value>Invalid ID Information</value>
@@ -423,6 +429,9 @@
   <data name="NetspeedPartnerSystem" xml:space="preserve">
     <value>Netspeed Partner System</value>
   </data>
+  <data name="NewApplication" xml:space="preserve">
+    <value>New Application</value>
+  </data>
   <data name="NewCustomerError" xml:space="preserve">
     <value>An error occurred while processing your transaction. Try again.</value>
   </data>
@@ -453,11 +462,17 @@
   <data name="Paid" xml:space="preserve">
     <value>Paid</value>
   </data>
+  <data name="PaidBillsAmount" xml:space="preserve">
+    <value>Paid Bills Amount</value>
+  </data>
   <data name="Passive" xml:space="preserve">
     <value>Passive</value>
   </data>
   <data name="PassiveError" xml:space="preserve">
     <value>There was an error in the user inactivation process. Please try again.</value>
+  </data>
+  <data name="Piece" xml:space="preserve">
+    <value>Piece</value>
   </data>
   <data name="QueryAgain" xml:space="preserve">
     <value>Query Again</value>
