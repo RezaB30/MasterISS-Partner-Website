@@ -47,7 +47,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             if (ModelState.IsValid)
             {
                 var dateValid = new DatetimeParse();
-                if (dateValid.DateIsCorrrect(taskListRequestModel.TaskListEndDate, taskListRequestModel.TaskListStartDate))
+                if (dateValid.DateIsCorrrect(false,taskListRequestModel.TaskListEndDate, taskListRequestModel.TaskListStartDate))
                 {
                     var startDate = dateValid.ConvertDate(taskListRequestModel.TaskListStartDate);
                     var endDate = dateValid.ConvertDate(taskListRequestModel.TaskListEndDate);

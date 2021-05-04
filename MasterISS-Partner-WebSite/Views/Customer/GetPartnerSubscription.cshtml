@@ -14,30 +14,28 @@
     <!--begin::Subheader-->
     <div class="subheader py-2 py-lg-6 subheader-transparent" id="kt_subheader">
         <div class="container">
-            @*@using (Html.BeginForm("GetPartnerSubscription", "Customer", FormMethod.Get, new { @class = "mb-15 my-8" }))
+            @using (Html.BeginForm("GetPartnerSubscription", "Customer", FormMethod.Get, new { @class = "mb-15 my-8" }))
             {
                 <div class="row mb-8">
-                    <div class="col-lg-4 mb-lg-0 mb-12">
-                        <label>@View.DateRange:</label>
-                        <div class="input-daterange input-group" id="kt_datepicker">
-                            @Html.TextBox("TaskListStartDate", search.CustomerMembershipStartDate, new { @placeholder = DateTime.Now.ToString("dd.MM.yyyy HH:mm"), @class = "form-control" })
-                            <div class="input-group-append">
-                                <span class="input-group-text">
-                                    <i class="la la-ellipsis-h"></i>
-                                </span>
-                            </div>
-                            @Html.TextBox("TaskListEndDate", search.CustomerMembershipEndDate, new { @placeholder = DateTime.Now.ToString("dd.MM.yyyy HH:mm"), @class = "form-control" })
-                        </div>
-                    </div>
                     <div class="col-lg-2 mb-lg-0 mb-6">
                         @Html.LabelFor(m => search.SearchedName)
                         @Html.TextBox("SearchedName", search.SearchedName, new { @placeholder = Html.DisplayNameFor(m => search.SearchedName), @class = "form-control datatable-input", @data_col_index = "1" })
                     </div>
                     <div class="col-lg-2 mb-lg-0 mb-6">
                         @Html.LabelFor(m => search.SearchedSubsNo)
-                        @Html.Editor("SearchedTaskNo", new { htmlAttributes = new { @class = "form-control datatable-input", @data_col_index = "4", @type = "text" } })
+                        @Html.Editor("SearchedSubsNo", new { htmlAttributes = new { @class = "form-control datatable-input", @data_col_index = "4", @type = "text" } })
                     </div>
-                    <div class="col-lg-4 mb-lg-0 mb-8">
+                    <div class="col-lg-2 mb-lg-0 mb-6">
+                        @Html.LabelFor(m => search.SearchedCustomerStatus)
+                        @Html.DropDownList("SearchedCustomerStatus", (SelectList)ViewBag.CustomerState, View.Select, new { @class = "form-control datatable-input", @data_col_index = "2" })
+                    </div>
+
+                </div>
+                <div class="text-danger mb-4" align="center">
+                    <span style="font-size:1.5em">@Html.Raw(TempData["GetSelectedAttachmentErrorMessage"])</span>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
                         <button type="submit" class="btn btn-primary btn-primary--icon" id="kt_search">
                             <span>
                                 <i class="la la-search"></i>
@@ -52,30 +50,13 @@
                         </a>
                     </div>
                 </div>
-
-                <div class="row mt-8">
-                    <div class="col-lg-2 mb-lg-0 mb-6">
-                        @Html.ValidationMessageFor(m => search.CustomerMembershipStartDate)
-                    </div>
-                    <div class="col-lg-2 mb-lg-0 mb-6">
-                        @Html.ValidationMessageFor(m => search.CustomerMembershipEndDate)
-                    </div>
-                </div>
-                <div class="text-danger mb-4" align="center">
-                    <span style="font-size:1.5em">@Html.Raw(TempData["GetSelectedAttachmentErrorMessage"])</span>
-                </div>
-
-
-                <div class="row mt-8">
-
-                </div>
-            }*@
-            @if (ViewBag.ErrorMessage == null)
+            }
+            @if (ViewBag.ErrorMessage == null && ViewBag.Error == null)
             {
                 <div class="row">
                     @foreach (var item in Model)
                     {
-                        <div class="col-xl-3">
+                        <div class="col-xl-4">
                             <!--begin::Card-->
                             <div class="card card-custom gutter-b card-stretch">
                                 <div class=" ribbon ribbon-left">
@@ -98,45 +79,55 @@
                                 </div>                                                    <!--begin::Body-->
                                 <div class="card-body pt-4 d-flex flex-column justify-content-between">
                                     <!--begin::Toolbar-->
+
                                     <div class="d-flex justify-content-end">
+
                                         <div class="dropdown dropdown-inline" data-toggle="tooltip" title="" data-placement="left" data-original-title="Quick actions">
-                                            <a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="ki ki-bold-more-hor"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
-                                                <!--begin::Navigation-->
-                                                <ul class="navi navi-hover">
-                                                    <li class="navi-header font-weight-bold py-4">
-                                                        <span class="font-size-lg">@View.OperationMenu</span>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
-                                                        </button>
-                                                    </li>
-                                                    <li class="navi-separator mb-3 opacity-70"></li>
-                                                    <li class="navi-item">
-                                                        <div class="navi-link">
-                                                            <span class="navi-text" data-toggle="modal" data-target="#examplegetCustomerAttachment">
-                                                                <input class="btn-sm btn btn-block btn-outline-info customer-attachment-info-button" dataValue="@item.SubscriptionId" value="@View.CustomerDocuments" />
-                                                            </span>
-                                                        </div>
-                                                    </li>
-                                                    <li class="navi-item">
-                                                        <div class="navi-link">
-                                                            <span class="navi-text" data-toggle="modal" data-target="#examplegetCustomerAttachment">
-                                                                <input class="btn-sm btn btn-block btn-outline-info customer-forms-info-button" dataValue="@item.SubscriptionId" value="@View.CustomerForms" />
-                                                            </span>
-                                                        </div>
-                                                    </li>
-                                                    <li class="navi-item">
-                                                        <div class="navi-link">
-                                                            <span class="navi-text" data-toggle="modal" data-target="#examplegetCustomerAttachment">
-                                                                <input class="btn-sm btn btn-block btn-outline-info upload-document-customer" dataValue="@item.SubscriptionId" value="@View.UploadDocument" />
-                                                            </span>
-                                                        </div>
-                                                    </li>
-                                                </ul> <!--end::Navigation-->
-                                            </div>
+                                            @if (item.StateValue == (int)CustomerState.PreRegisterd)
+                                            {
+                                                <a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="ki ki-bold-more-hor"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
+                                                    <!--begin::Navigation-->
+                                                    <ul class="navi navi-hover">
+                                                        <li class="navi-header font-weight-bold py-4">
+                                                            <span class="font-size-lg">@View.OperationMenu</span>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
+                                                            </button>
+                                                        </li>
+                                                        <li class="navi-separator mb-3 opacity-70"></li>
+                                                        <li class="navi-item">
+                                                            <div class="navi-link">
+                                                                <span class="navi-text" data-toggle="modal" data-target="#examplegetCustomerAttachment">
+                                                                    <input class="btn-sm btn btn-block btn-outline-info customer-attachment-info-button" dataValue="@item.SubscriptionId" value="@View.CustomerDocuments" />
+                                                                </span>
+                                                            </div>
+                                                        </li>
+                                                        <li class="navi-item">
+                                                            <div class="navi-link">
+                                                                <span class="navi-text" data-toggle="modal" data-target="#examplegetCustomerAttachment">
+                                                                    <input class="btn-sm btn btn-block btn-outline-info customer-forms-info-button" dataValue="@item.SubscriptionId" value="@View.CustomerForms" />
+                                                                </span>
+                                                            </div>
+                                                        </li>
+                                                        <li class="navi-item">
+                                                            <div class="navi-link">
+                                                                <span class="navi-text" data-toggle="modal" data-target="#examplegetCustomerAttachment">
+                                                                    <input class="btn-sm btn btn-block btn-outline-info upload-document-customer" dataValue="@item.SubscriptionId" value="@View.UploadDocument" />
+                                                                </span>
+                                                            </div>
+                                                        </li>
+                                                    </ul> <!--end::Navigation-->
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <span class="btn btn-sm btn-icon" style="cursor:context-menu"></span>
+                                            }
                                         </div>
+
                                     </div> <!--end::Toolbar--> <!--begin::User-->
                                     <div class="d-flex align-items-center my-4 mb-2">
 
@@ -167,6 +158,8 @@
                 <div align="center">
                     <div class="text-danger">
                         <span>@ViewBag.ErrorMessage</span>
+                        <span>@ViewBag.DateFormatIsNotCorrect</span>
+                        <span>@ViewBag.StartTimeBiggerThanEndTime</span>
                     </div>
                 </div>
             }

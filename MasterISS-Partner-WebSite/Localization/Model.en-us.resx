@@ -516,6 +516,9 @@
   <data name="SameSetupAddress" xml:space="preserve">
     <value>Same as the Setup Address</value>
   </data>
+  <data name="SearchedCustomerState" xml:space="preserve">
+    <value>Customer State</value>
+  </data>
   <data name="SearchedName" xml:space="preserve">
     <value>Searched Person</value>
   </data>

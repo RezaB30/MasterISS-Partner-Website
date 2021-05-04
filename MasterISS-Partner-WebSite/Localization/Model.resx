@@ -516,6 +516,9 @@
   <data name="SameSetupAddress" xml:space="preserve">
     <value>Kurulum Adresi ile Aynı</value>
   </data>
+  <data name="SearchedCustomerState" xml:space="preserve">
+    <value>Müşteri Durumu</value>
+  </data>
   <data name="SearchedName" xml:space="preserve">
     <value>Aranan Kişi</value>
   </data>

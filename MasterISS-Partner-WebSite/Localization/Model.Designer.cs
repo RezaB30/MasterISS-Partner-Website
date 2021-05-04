@@ -1258,6 +1258,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Müşteri Durumu.
+        /// </summary>
+        public static string SearchedCustomerState {
+            get {
+                return ResourceManager.GetString("SearchedCustomerState", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aranan Kişi.
         /// </summary>
         public static string SearchedName {

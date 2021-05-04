@@ -436,7 +436,7 @@
     <value>Mevcut Değil</value>
   </data>
   <data name="NotFoundPhotoOfThisTask" xml:space="preserve">
-    <value>Bu göreve ait fotoğraf bulunamadı.</value>
+    <value>Bu göreve ait belge/fotoğraf bulunamadı.</value>
   </data>
   <data name="NotFoundSetupTeamForThisTask" xml:space="preserve">
     <value>Bu görev için uygun Kurulum Ekibi bulunamadı.</value>

@@ -28,10 +28,23 @@ namespace MasterISS_Partner_WebSite
             }
             return null;
         }
+
+        private string ConvertDateForFilter(string convertedDateTime)
+        {
+            DateTime date;
+            var convertedValue = DateTime.TryParseExact(convertedDateTime, "dd.MM.yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
+            if (convertedValue)
+            {
+                return date.ToString("yyyy-MM-dd");
+            }
+            return null;
+        }
+
+
         public DateTime? ConvertDate(string convertedDateTime)
         {
             DateTime convertedDate;
-            var validDate= DateTime.TryParseExact(convertedDateTime, "dd.MM.yyyy HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out convertedDate);
+            var validDate = DateTime.TryParseExact(convertedDateTime, "dd.MM.yyyy HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out convertedDate);
             if (validDate)
             {
                 return convertedDate;
@@ -39,20 +52,38 @@ namespace MasterISS_Partner_WebSite
             return null;
         }
 
-        public bool DateIsCorrrect(params string[] dateTimes)
+        public bool DateIsCorrrect(bool IsOnlyDate, params string[] dateTimes)
         {
             DateTime convertedDate;
-            foreach (var date in dateTimes)
+            if (IsOnlyDate==false)
             {
-                if (!string.IsNullOrEmpty(date))
+                foreach (var date in dateTimes)
                 {
-                    if (!DateTime.TryParseExact(ConvertDatetimeForFilter(date), "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out convertedDate))
+                    if (!string.IsNullOrEmpty(date))
                     {
-                        return false;
+                        if (!DateTime.TryParseExact(ConvertDatetimeForFilter(date), "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out convertedDate))
+                        {
+                            return false;
+                        }
                     }
                 }
+                return true;
             }
-            return true;
+            else
+            {
+                foreach (var date in dateTimes)
+                {
+                    if (!string.IsNullOrEmpty(date))
+                    {
+                        if (!DateTime.TryParseExact(ConvertDateForFilter(date), "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out convertedDate))
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
+
         }
     }
 }

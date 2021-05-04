@@ -1015,7 +1015,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bu göreve ait fotoğraf bulunamadı..
+        ///   Looks up a localized string similar to Bu göreve ait belge/fotoğraf bulunamadı..
         /// </summary>
         public static string NotFoundPhotoOfThisTask {
             get {

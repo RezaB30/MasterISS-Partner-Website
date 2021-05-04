@@ -595,7 +595,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                                 }
                                 var fileContect = memoryStream.ToArray();
                                 saveCustomerAttachmentViewModel.FileContect = fileContect;
-                                saveCustomerAttachmentViewModel.FileExtention = new FileInfo(item.FileName).Extension;
+                                saveCustomerAttachmentViewModel.FileExtention = new FileInfo(item.FileName).Extension.Replace(".", "");
                                 wrapper = new WebServiceWrapper();
                                 var response = wrapper.SaveCustomerAttachment(saveCustomerAttachmentViewModel);
                                 if (response.ResponseMessage.ErrorCode != 0)
@@ -619,13 +619,17 @@ namespace MasterISS_Partner_WebSite.Controllers
             return Json(new { status = "Failed", ErrorMessage = errorMessage }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetPartnerSubscription(int page = 1, int pageSize = 9)
+        public ActionResult GetPartnerSubscription(PartnerSubscriptionFilterViewModel partnerSubscriptionFilterViewModel, int page = 1, int pageSize = 9)
         {
+            ViewBag.CustomerState = CustomerStateList(partnerSubscriptionFilterViewModel.SearchedCustomerStatus ?? null);
+            ViewBag.Search = partnerSubscriptionFilterViewModel;
+
             var wrapper = new WebServiceWrapper();
             var partnerSubscriptionList = wrapper.GetPartnerSubscriptions();
-            if (partnerSubscriptionList.ResponseMessage.ErrorCode == 0)
+            var filteredList = PartnerSubcriptionFilteredList(partnerSubscriptionFilterViewModel);
+            if (string.IsNullOrEmpty(filteredList.ErrorMessage))
             {
-                var list = partnerSubscriptionList.PartnerSubscriptionList.Select(psl => new GetPartnerSubscriptionListViewModel
+                var list = filteredList.Data.Select(psl => new GetPartnerSubscriptionListViewModel
                 {
                     DisplayName = psl.DisplayName,
                     MembershipDate = Convert.ToDateTime(psl.MembershipDate),
@@ -640,11 +644,37 @@ namespace MasterISS_Partner_WebSite.Controllers
                 var pagedListByResponseList = new StaticPagedList<GetPartnerSubscriptionListViewModel>(list.Skip((page - 1) * pageSize).Take(pageSize), page, pageSize, totalCount);
 
                 return View(pagedListByResponseList);
-
             }
-
-            ViewBag.ErrorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(partnerSubscriptionList.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
+            ViewBag.ErrorMessage = filteredList.ErrorMessage;
             return View();
+
+        }
+        private ServiceResponse<List<PartnerSubscriptionsResponse>> PartnerSubcriptionFilteredList(PartnerSubscriptionFilterViewModel partnerSubscriptionFilterViewModel)
+        {
+            var wrapper = new WebServiceWrapper();
+            var partnerSubscriptionListResponse = wrapper.GetPartnerSubscriptions();
+            var filteredList = new List<PartnerSubscriptionsResponse>();
+            if (partnerSubscriptionListResponse.ResponseMessage.ErrorCode == 0)
+            {
+                filteredList = partnerSubscriptionListResponse.PartnerSubscriptionList.ToList();
+                if (!string.IsNullOrEmpty(partnerSubscriptionFilterViewModel.SearchedName))
+                {
+                    var list = filteredList.Where(fl => fl.DisplayName.Contains(partnerSubscriptionFilterViewModel.SearchedName)).ToList();
+                    filteredList = list;
+                }
+                if (!string.IsNullOrEmpty(partnerSubscriptionFilterViewModel.SearchedSubsNo))
+                {
+                    var list = filteredList.Where(fl => fl.SubscriberNo == partnerSubscriptionFilterViewModel.SearchedSubsNo).ToList();
+                    filteredList = list;
+                }
+                if (partnerSubscriptionFilterViewModel.SearchedCustomerStatus != null)
+                {
+                    var list = filteredList.Where(fl => fl.CustomerState.Value == partnerSubscriptionFilterViewModel.SearchedCustomerStatus.Value).ToList();
+                    filteredList = list;
+                }
+                return new ServiceResponse<List<PartnerSubscriptionsResponse>> { Data = filteredList };
+            }
+            return new ServiceResponse<List<PartnerSubscriptionsResponse>> { ErrorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(partnerSubscriptionListResponse.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture) };
         }
 
         public ActionResult GetPartnerClientAttachments(long subscriptionId)
@@ -936,6 +966,13 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             var list = new SelectList(monthList.Select(yl => new { Name = yl.ToString(), Value = yl }), "Value", "Name", selectedValue ?? null);
             return list;
+        }
+
+        private SelectList CustomerStateList(int? selectedValue)
+        {
+            var list = new LocalizedList<CustomerState, RadiusR.Localization.Lists.CustomerState>().GetList(CultureInfo.CurrentCulture);
+            var CustomerStateList = new SelectList(list.Select(m => new { Name = m.Value, Value = m.Key }).ToArray(), "Value", "Name", selectedValue);
+            return CustomerStateList;
         }
 
         private SelectList DayList(int? selectedValue)

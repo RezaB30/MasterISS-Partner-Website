@@ -436,7 +436,7 @@
     <value>Not Available</value>
   </data>
   <data name="NotFoundPhotoOfThisTask" xml:space="preserve">
-    <value>Not Found Photo Of This Task</value>
+    <value>Not Found Document/Photo Of This Task</value>
   </data>
   <data name="NotFoundSetupTeamForThisTask" xml:space="preserve">
     <value>Not found Setup Team for this task.</value>

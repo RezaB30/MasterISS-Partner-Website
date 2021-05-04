@@ -27,7 +27,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             if (ModelState.IsValid)
             {
                 var dateValid = new DatetimeParse();
-                if (dateValid.DateIsCorrrect(filterViewModel.StartDate, filterViewModel.EndDate))
+                if (dateValid.DateIsCorrrect(false,filterViewModel.StartDate, filterViewModel.EndDate))
                 {
                     var startDate = dateValid.ConvertDate(filterViewModel.StartDate);
                     var endDate = dateValid.ConvertDate(filterViewModel.EndDate);

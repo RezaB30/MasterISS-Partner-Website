@@ -100,6 +100,7 @@ namespace MasterISS_Partner_WebSite_Scheduler
                                     var task = db.TaskList.Find(removedTask);
                                     if (task.IsConfirmation == false)
                                     {
+                                        task.TaskStatus = (short)TaskStatusEnum.Halted;
                                         task.IsConfirmation = true;
                                     }
                                 }

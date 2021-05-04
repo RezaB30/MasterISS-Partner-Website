@@ -242,14 +242,22 @@ namespace MasterISS_Partner_WebSite.Controllers
 
         private string GetPartnerTotalNewSetupTask()
         {
-            if (User.IsInRole("Setup") && (User.IsInRole("Admin") || User.IsInRole("SetupManager") || User.IsInRole("RendezvousTeam")))
-            {
-                var claimInfo = new ClaimInfo();
-                var partnerId = claimInfo.PartnerId();
+            var claimInfo = new ClaimInfo();
+            var partnerId = claimInfo.PartnerId();
 
+            if (User.IsInRole("Setup") && User.IsInRole("Admin"))
+            {
                 using (var db = new PartnerWebSiteEntities())
                 {
                     var totalNewSetup = db.TaskList.Where(tl => tl.PartnerId == partnerId && tl.TaskStatus == (short)TaskStatusEnum.New).Count();
+                    return totalNewSetup.ToString();
+                }
+            }
+            else if (User.IsInRole("Setup") && User.IsInRole("RendezvousTeam"))
+            {
+                using (var db = new PartnerWebSiteEntities())
+                {
+                    var totalNewSetup = db.TaskList.Where(tl => tl.PartnerId == partnerId && tl.AssignToRendezvousStaff == claimInfo.UserId() && tl.TaskStatus == (short)TaskStatusEnum.New).Count();
                     return totalNewSetup.ToString();
                 }
             }
@@ -261,15 +269,31 @@ namespace MasterISS_Partner_WebSite.Controllers
 
         private string GetPartnerTotalCompletedSetupTask()
         {
-            if (User.IsInRole("Setup") && (User.IsInRole("Admin") || User.IsInRole("SetupManager") || User.IsInRole("RendezvousTeam")))
-            {
-                var claimInfo = new ClaimInfo();
-                var partnerId = claimInfo.PartnerId();
+            var claimInfo = new ClaimInfo();
+            var partnerId = claimInfo.PartnerId();
 
+            if (User.IsInRole("Setup") && User.IsInRole("Admin"))
+            {
                 using (var db = new PartnerWebSiteEntities())
                 {
                     var totalCompletedSetup = db.TaskList.Where(tl => tl.PartnerId == partnerId && tl.TaskStatus == (short)TaskStatusEnum.Completed).Count();
                     return totalCompletedSetup.ToString();
+                }
+            }
+            else if (User.IsInRole("Setup") && User.IsInRole("SetupManager") && !User.IsInRole("RendezvousTeam"))
+            {
+                using (var db = new PartnerWebSiteEntities())
+                {
+                    var totalCompletedSetupForSetupSetupTeamUser = db.TaskList.Where(tl => tl.PartnerId == partnerId && tl.AssignToSetupTeam == claimInfo.UserId() && tl.TaskStatus == (short)TaskStatusEnum.Completed).Count();
+                    return totalCompletedSetupForSetupSetupTeamUser.ToString();
+                }
+            }
+            else if (User.IsInRole("Setup") && User.IsInRole("RendezvousTeam"))
+            {
+                using (var db = new PartnerWebSiteEntities())
+                {
+                    var totalCompletedSetupForSetupSetupTeamUser = db.TaskList.Where(tl => tl.PartnerId == partnerId && tl.AssignToRendezvousStaff == claimInfo.UserId() && tl.TaskStatus == (short)TaskStatusEnum.Completed).Count();
+                    return totalCompletedSetupForSetupSetupTeamUser.ToString();
                 }
             }
             else
@@ -280,14 +304,30 @@ namespace MasterISS_Partner_WebSite.Controllers
 
         private string GetPartnerTotalInProgressSetupTask()
         {
-            if (User.IsInRole("Setup") && (User.IsInRole("Admin") || User.IsInRole("SetupManager") || User.IsInRole("RendezvousTeam")))
-            {
-                var claimInfo = new ClaimInfo();
-                var partnerId = claimInfo.PartnerId();
+            var claimInfo = new ClaimInfo();
+            var partnerId = claimInfo.PartnerId();
 
+            if (User.IsInRole("Setup") && User.IsInRole("Admin"))
+            {
                 using (var db = new PartnerWebSiteEntities())
                 {
                     var totalInProgressSetup = db.TaskList.Where(tl => tl.PartnerId == partnerId && tl.TaskStatus == (short)TaskStatusEnum.InProgress).Count();
+                    return totalInProgressSetup.ToString();
+                }
+            }
+            else if (User.IsInRole("Setup") && User.IsInRole("SetupManager") && !User.IsInRole("RendezvousTeam"))
+            {
+                using (var db = new PartnerWebSiteEntities())
+                {
+                    var totalInProgressSetup = db.TaskList.Where(tl => tl.PartnerId == partnerId && tl.AssignToSetupTeam == claimInfo.UserId() && tl.TaskStatus == (short)TaskStatusEnum.InProgress).Count();
+                    return totalInProgressSetup.ToString();
+                }
+            }
+            else if (User.IsInRole("Setup") && User.IsInRole("RendezvousTeam"))
+            {
+                using (var db = new PartnerWebSiteEntities())
+                {
+                    var totalInProgressSetup = db.TaskList.Where(tl => tl.PartnerId == partnerId && tl.AssignToRendezvousStaff == claimInfo.UserId() && tl.TaskStatus == (short)TaskStatusEnum.InProgress).Count();
                     return totalInProgressSetup.ToString();
                 }
             }
