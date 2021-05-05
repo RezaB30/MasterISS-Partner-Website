@@ -129,6 +129,9 @@
   <data name="AddCustomer" xml:space="preserve">
     <value>New Customer</value>
   </data>
+  <data name="AddNewArea" xml:space="preserve">
+    <value>Add New Area</value>
+  </data>
   <data name="AddressInformationAndApplicationTypeForNewCustomer" xml:space="preserve">
     <value>Address Information and Application Type from which you want to get service</value>
   </data>
@@ -186,6 +189,9 @@
   <data name="Back" xml:space="preserve">
     <value>Back</value>
   </data>
+  <data name="BillCheckAndPayment" xml:space="preserve">
+    <value>Bill Check &amp; Payment</value>
+  </data>
   <data name="BillingAddress" xml:space="preserve">
     <value>Billing Address</value>
   </data>
@@ -240,11 +246,14 @@
   <data name="Confirm" xml:space="preserve">
     <value>Confirm</value>
   </data>
+  <data name="ContactPhone" xml:space="preserve">
+    <value>Contact Phone</value>
+  </data>
   <data name="Create" xml:space="preserve">
     <value>Create</value>
   </data>
   <data name="CreateRole" xml:space="preserve">
-    <value>Creation Role</value>
+    <value>Create Role</value>
   </data>
   <data name="CreditReportDetail" xml:space="preserve">
     <value>Credit Report Detail</value>
@@ -280,7 +289,7 @@
     <value>Customer Line Details</value>
   </data>
   <data name="Customers" xml:space="preserve">
-    <value>Müşteriler</value>
+    <value>Customers</value>
   </data>
   <data name="CustomerSessionInfo" xml:space="preserve">
     <value>Customer Session Info</value>
@@ -302,6 +311,9 @@
   </data>
   <data name="DownloadTheContract" xml:space="preserve">
     <value>Download The Contract</value>
+  </data>
+  <data name="EnterStartAndEndWorkingHours" xml:space="preserve">
+    <value>Enter Start and End Working Hours</value>
   </data>
   <data name="EnterTheSMSPasswordSentToYourPhone" xml:space="preserve">
     <value>Enter the SMS password sent to your phone.</value>
@@ -471,6 +483,9 @@
   <data name="PassiveError" xml:space="preserve">
     <value>There was an error in the user inactivation process. Please try again.</value>
   </data>
+  <data name="Permissions" xml:space="preserve">
+    <value>Permissions</value>
+  </data>
   <data name="Piece" xml:space="preserve">
     <value>Piece</value>
   </data>
@@ -497,6 +512,9 @@
   </data>
   <data name="Reset" xml:space="preserve">
     <value>Reset</value>
+  </data>
+  <data name="ResponsibleArea" xml:space="preserve">
+    <value>Responsible Area:</value>
   </data>
   <data name="ReturnBill" xml:space="preserve">
     <value>Back</value>
@@ -536,6 +554,9 @@
   </data>
   <data name="SaveAndSendToPool" xml:space="preserve">
     <value>Save And Send To Pool</value>
+  </data>
+  <data name="SaveUser" xml:space="preserve">
+    <value>Save User</value>
   </data>
   <data name="SearchedPlace" xml:space="preserve">
     <value>Searched Place</value>
@@ -672,14 +693,26 @@
   <data name="UploadedPhotosOfTheTask" xml:space="preserve">
     <value>Uploaded photos of the Task</value>
   </data>
+  <data name="UserDisplayName" xml:space="preserve">
+    <value>User's Name</value>
+  </data>
+  <data name="UserEMail" xml:space="preserve">
+    <value>User E-Mail</value>
+  </data>
   <data name="UserInfo" xml:space="preserve">
     <value>User Information</value>
+  </data>
+  <data name="UserIsNotSetupManager" xml:space="preserve">
+    <value>This User is not Setup Manager</value>
   </data>
   <data name="UserOperations" xml:space="preserve">
     <value>User</value>
   </data>
   <data name="UserPanel" xml:space="preserve">
     <value>User Panel</value>
+  </data>
+  <data name="UserResponsibleAreaNotAdded" xml:space="preserve">
+    <value>This User Setup Manager but not added responsible area</value>
   </data>
   <data name="UserSettings" xml:space="preserve">
     <value>User Settings</value>
@@ -699,8 +732,14 @@
   <data name="WorkArea" xml:space="preserve">
     <value>Working Area</value>
   </data>
+  <data name="WorkAreas" xml:space="preserve">
+    <value>Work Areas</value>
+  </data>
   <data name="WorkHours" xml:space="preserve">
     <value>Working Hours</value>
+  </data>
+  <data name="WorkingDays" xml:space="preserve">
+    <value>Working Days</value>
   </data>
   <data name="WrongPassword" xml:space="preserve">
     <value>Wrong SMS Password</value>
@@ -710,6 +749,9 @@
   </data>
   <data name="YourAddressInformation" xml:space="preserve">
     <value>Your Address Information</value>
+  </data>
+  <data name="YourBalance" xml:space="preserve">
+    <value>Your Balance</value>
   </data>
   <data name="YourEmail" xml:space="preserve">
     <value>Your E-Mail</value>

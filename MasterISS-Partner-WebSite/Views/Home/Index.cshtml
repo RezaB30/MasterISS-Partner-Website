@@ -37,7 +37,7 @@
                                                 </div>
                                             </div>
                                             <div>
-                                                <div class="text-dark-75 font-weight-bold">Bakiyeniz</div>
+                                                <div class="text-dark-75 font-weight-bold">@View.YourBalance</div>
                                                 <div class="text-info font-weight-bolder font-size-h3">@ViewBag.TotalCredit TL</div>
                                             </div>
                                         </div>
@@ -184,7 +184,7 @@
             {
                 <div class="card flex-grow-1 card-spacer-x pt-6">
                     <div class="form-group">
-                        <h3 class="text-info font-size-h4">Fatura Sorgulama & Ödeme</h3>
+                        <h3 class="text-info font-size-h4">@View.BillCheckAndPayment</h3>
                         @using (Html.BeginForm("Index", "Home", FormMethod.Post))
                         {
                             <div class="input-group">

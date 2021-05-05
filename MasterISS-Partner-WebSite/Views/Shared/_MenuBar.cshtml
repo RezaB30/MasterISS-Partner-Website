@@ -314,8 +314,8 @@
                 <div class="topbar-item">
                     <div class="btn btn-icon w-auto d-flex align-items-center btn-lg px-2" id="kt_quick_user_toggle">
                         <div class="d-flex text-right pr-3">
-                            <span class="navi-text" data-toggle="modal" data-target="#exampleModalCenter5">
-                                <span class="btn-sm btn btn-block text-white btn-outline-info">@User.Identity.Name</span>
+                            <span class="navi-text" data-toggle="modal" data-target="#UserInfoModal">
+                                <span class="btn-sm btn btn-block text-white btn-outline-info user-identity-name">@User.Identity.Name</span>
                             </span>
                         </div>
                         <span class="symbol symbol-35">
@@ -355,7 +355,7 @@
 </div>
 
 
-<div class="modal fade" id="exampleModalCenter5" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+<div class="modal fade" id="UserInfoModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -378,7 +378,7 @@
                 {
                     @Html.AntiForgeryToken()
                     <div class="form-group my-4">
-                        <label class="text-info col-form-label">İletişim Telefonu</label>
+                        <label class="text-info col-form-label">@MasterISS_Partner_WebSite.Localization.View.ContactPhone</label>
                         <div class="input-group input-group-solid">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
@@ -394,7 +394,7 @@
                             <div class="separator separator-dashed mt-2 my-4"></div>
                         </div>
 
-                        <label class="text-info col-form-label">Kullanıcı E-Posta</label>
+                        <label class="text-info col-form-label">@MasterISS_Partner_WebSite.Localization.View.UserEMail</label>
                         <div class="input-group input-group-solid">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
@@ -404,8 +404,8 @@
                             <input type="text" class="form-control form-control-solid" placeholder="@identity.FindFirst(ClaimTypes.Email).Value" readonly="readonly">
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
-                            <button type="submit" class="btn btn-info font-weight-bold">Değiştir ve Kaydet</button>
+                            <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">@MasterISS_Partner_WebSite.Localization.View.Close</button>
+                            <button type="submit" class="btn btn-info font-weight-bold">@MasterISS_Partner_WebSite.Localization.View.ChangeAndSave</button>
                         </div>                                                     <!--end::Info-->
                     </div>
                 }

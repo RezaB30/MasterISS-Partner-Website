@@ -1,8 +1,9 @@
 ﻿@using MasterISS_Partner_WebSite.ViewModels
+@using MasterISS_Partner_WebSite.Localization
 @model SetupTeamWorkingDaysAndHoursViewModel
 <div class="modal-header">
     <div class="py-2">
-        <span class="text-dark-75 font-weight-bolder d-block font-size-h5">Çalışma Saatleri</span>
+        <span class="text-dark-75 font-weight-bolder d-block font-size-h5">@View.WorkHours</span>
         <span class="text-muted font-size-lg">@Html.DisplayFor(m => m.ContectName)</span>
     </div>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -28,7 +29,7 @@
                     </div>
                     @Html.EditorFor(m => m.WorkingEndTime, new { htmlAttributes = new { placeholder = DateTime.Now.ToString("HH:mm"), @class = "form-control", @autocomplete = "off" } })
                     @Html.ValidationMessageFor(m => m.WorkingEndTime)
-                </div><span class="form-text text-muted">Başlangıç ve Bitiş çalışma saatlerini giriniz</span>
+                </div><span class="form-text text-muted">@View.EnterStartAndEndWorkingHours</span>
             </div>
 
             <div class="error-codes-container" style="display:none">
@@ -39,7 +40,7 @@
 
             @Html.HiddenFor(m => m.UserId)
             <div class="separator separator-dashed mt-2 my-4"></div>
-            <label class="col-12 text-info col-form-label">Çalışma Günleri</label>
+            <label class="col-12 text-info col-form-label">@View.WorkingDays</label>
             <div class="col-9 col-form-label">
                 <div class="checkbox-list">
 
@@ -56,34 +57,7 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
-        <button type="submit" class="btn btn-info font-weight-bold">Değiştir ve Kaydet</button>
+        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">@View.Close</button>
+        <button type="submit" class="btn btn-info font-weight-bold">@View.ChangeAndSave</button>
     </div>
 }
-
-@*@using (Html.BeginForm("SetupTeamWorkingDaysAndHours", "UserOperations", FormMethod.Post))
-    {
-        <div class="form-group">
-            @Html.LabelFor(m => m.WorkingStartTime)
-            @Html.EditorFor(m => m.WorkingStartTime, new { htmlAttributes = new { placeholder = DateTime.Now.ToString("HH:mm") } })
-            @Html.ValidationMessageFor(m => m.WorkingStartTime)
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.WorkingEndTime)
-            @Html.EditorFor(m => m.WorkingEndTime, new { htmlAttributes = new { placeholder = DateTime.Now.ToString("HH:mm") } })
-            @Html.ValidationMessageFor(m => m.WorkingEndTime)
-        </div>
-
-        @Html.AntiForgeryToken()
-        foreach (var item in Model.AvailableWorkingDays)
-        {
-            <div>
-                <label>
-                    @Html.DisplayFor(m => item.DayName)
-                    <input class="checkbox" type="checkbox" value="@item.DayId" name="SelectedDays" checked="@item.IsSelected" />
-                </label>
-            </div>
-        }
-        @Html.HiddenFor(m => m.UserId)
-        <input value="aa" type="submit" />
-    }*@

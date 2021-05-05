@@ -432,13 +432,13 @@
 
             <div class="modal-body">
                 <div class="input-daterange input-group" id="kt_datepicker">
-                    @Html.TextBox("Latitude", null, new { @placeholder = Html.DisplayNameFor(m => map.Latitude), @class = "form-control datatable-input Latitude", @data_col_index = "5" })
+                    @Html.TextBox("LatitudeforShowing", null, new { @placeholder = Html.DisplayNameFor(m => map.Latitude), @class = "form-control datatable-input Latitude", @data_col_index = "5" })
                     <div class="input-group-append">
                         <span class="input-group-text">
                             <i class="la la-ellipsis-h"></i>
                         </span>
                     </div>
-                    @Html.TextBox("Longitude", null, new { @class = "form-control datatable-input Longitude", placeholder = Html.DisplayNameFor(m => map.Longitude), @data_col_index = "5" })
+                    @Html.TextBox("LongitudeforShowing", null, new { @class = "form-control datatable-input Longitude", placeholder = Html.DisplayNameFor(m => map.Longitude), @data_col_index = "5" })
 
                 </div>
                 <div class="form-group my-8 mb-1">
@@ -454,8 +454,8 @@
             @Html.Map("map-container", View.Map, View.SearchedPlace)
             @using (Ajax.BeginForm("UpdateClientLocation", "Setup", new AjaxOptions { HttpMethod = "POST", OnComplete = "GenericResult" }))
             {
-                @Html.Hidden("LatitudeHidden", null, new { @class = "Latitude" })
-                @Html.Hidden("LongitudeHidden", null, new { @class = "Longitude" })
+                @Html.Hidden("Latitude", null, new { @class = "Latitude" })
+                @Html.Hidden("Longitude", null, new { @class = "Longitude" })
                 @Html.Hidden("TaskNo", null, new { @class = "taskNoToUpdateClientLocation" })
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">@View.Close</button>

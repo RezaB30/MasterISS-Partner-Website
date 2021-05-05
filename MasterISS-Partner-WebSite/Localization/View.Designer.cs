@@ -97,6 +97,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Yeni Bölge ekle.
+        /// </summary>
+        public static string AddNewArea {
+            get {
+                return ResourceManager.GetString("AddNewArea", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hizmet almak istediğiniz adres bilgileri ve Başvuru türü.
         /// </summary>
         public static string AddressInformationAndApplicationTypeForNewCustomer {
@@ -268,6 +277,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fatura Sorgulama &amp; Ödeme.
+        /// </summary>
+        public static string BillCheckAndPayment {
+            get {
+                return ResourceManager.GetString("BillCheckAndPayment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fatura Adresi.
         /// </summary>
         public static string BillingAddress {
@@ -430,6 +448,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to İletişim Telefonu.
+        /// </summary>
+        public static string ContactPhone {
+            get {
+                return ResourceManager.GetString("ContactPhone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Oluştur.
         /// </summary>
         public static string Create {
@@ -439,7 +466,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rol Oluşturma.
+        ///   Looks up a localized string similar to Rol Oluştur.
         /// </summary>
         public static string CreateRole {
             get {
@@ -615,6 +642,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string DownloadTheContract {
             get {
                 return ResourceManager.GetString("DownloadTheContract", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Başlangıç ve Bitiş çalışma saatlerini giriniz.
+        /// </summary>
+        public static string EnterStartAndEndWorkingHours {
+            get {
+                return ResourceManager.GetString("EnterStartAndEndWorkingHours", resourceCulture);
             }
         }
         
@@ -1123,6 +1159,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Yetkiler.
+        /// </summary>
+        public static string Permissions {
+            get {
+                return ResourceManager.GetString("Permissions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Adet.
         /// </summary>
         public static string Piece {
@@ -1200,6 +1245,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string Reset {
             get {
                 return ResourceManager.GetString("Reset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yetki Bölgesi:.
+        /// </summary>
+        public static string ResponsibleArea {
+            get {
+                return ResourceManager.GetString("ResponsibleArea", resourceCulture);
             }
         }
         
@@ -1317,6 +1371,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string SaveAndSendToPool {
             get {
                 return ResourceManager.GetString("SaveAndSendToPool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kullanıcıyı Kaydet.
+        /// </summary>
+        public static string SaveUser {
+            get {
+                return ResourceManager.GetString("SaveUser", resourceCulture);
             }
         }
         
@@ -1727,11 +1790,38 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kullanıcının Adı.
+        /// </summary>
+        public static string UserDisplayName {
+            get {
+                return ResourceManager.GetString("UserDisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kullanıcı E-Posta.
+        /// </summary>
+        public static string UserEMail {
+            get {
+                return ResourceManager.GetString("UserEMail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kullanıcı Bilgileri.
         /// </summary>
         public static string UserInfo {
             get {
                 return ResourceManager.GetString("UserInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bu kullanıcı Kurulum yetkilisi Değil.
+        /// </summary>
+        public static string UserIsNotSetupManager {
+            get {
+                return ResourceManager.GetString("UserIsNotSetupManager", resourceCulture);
             }
         }
         
@@ -1750,6 +1840,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string UserPanel {
             get {
                 return ResourceManager.GetString("UserPanel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bu kullanıcı Kurulum yetkilisi ama yetki alanı eklenmemiş.
+        /// </summary>
+        public static string UserResponsibleAreaNotAdded {
+            get {
+                return ResourceManager.GetString("UserResponsibleAreaNotAdded", resourceCulture);
             }
         }
         
@@ -1808,11 +1907,29 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Çalışma Bölgeleri.
+        /// </summary>
+        public static string WorkAreas {
+            get {
+                return ResourceManager.GetString("WorkAreas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Çalışma Saatleri.
         /// </summary>
         public static string WorkHours {
             get {
                 return ResourceManager.GetString("WorkHours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Çalışma Günleri.
+        /// </summary>
+        public static string WorkingDays {
+            get {
+                return ResourceManager.GetString("WorkingDays", resourceCulture);
             }
         }
         
@@ -1840,6 +1957,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string YourAddressInformation {
             get {
                 return ResourceManager.GetString("YourAddressInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bakiyeniz.
+        /// </summary>
+        public static string YourBalance {
+            get {
+                return ResourceManager.GetString("YourBalance", resourceCulture);
             }
         }
         

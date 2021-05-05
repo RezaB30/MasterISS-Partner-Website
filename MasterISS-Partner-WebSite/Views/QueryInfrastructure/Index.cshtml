@@ -46,7 +46,6 @@
 
                         <div class="col-lg-12 col-md-12">
                             <div class="form-group">
-                                <label class="font-size-h6 font-weight-bolder m-2 text-dark">Semt</label>
                                 @Html.LabelFor(m => m.RuralRegionsId, new { @class = "font-size-h6 font-weight-bolder m-2 text-dark" })
                                 @Html.DropDownListFor(nvpl => nvpl.RuralRegionsId, new SelectList(""), HomeView.SelectRegions, new { @id = "ruralregions", @disabled = "disabled", @class = "form-control form-control-solid h-auto p-3 border-0 rounded-lg font-size-h6" })
                             </div>
@@ -93,7 +92,7 @@
                             @using (Html.BeginForm("ServiceAvailability", "QueryInfrastructure",FormMethod.Get))
                             {
                                 @Html.Hidden("bbk")
-                                <input type="submit" class="btn btn-block font-weight-bolder btn-danger btn-hover-warning mt-12" value="Altyapımı Sorgula"/>
+                                <input type="submit" class="btn btn-block font-weight-bolder btn-danger btn-hover-warning mt-12" value="@View.QueryInfrastructure"/>
                             }
                         </div>
                     </div>

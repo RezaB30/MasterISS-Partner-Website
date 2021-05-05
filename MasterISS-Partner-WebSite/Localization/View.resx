@@ -129,6 +129,9 @@
   <data name="AddCustomer" xml:space="preserve">
     <value>Yeni Müşteri</value>
   </data>
+  <data name="AddNewArea" xml:space="preserve">
+    <value>Yeni Bölge ekle</value>
+  </data>
   <data name="AddressInformationAndApplicationTypeForNewCustomer" xml:space="preserve">
     <value>Hizmet almak istediğiniz adres bilgileri ve Başvuru türü</value>
   </data>
@@ -186,6 +189,9 @@
   <data name="Back" xml:space="preserve">
     <value>Geri</value>
   </data>
+  <data name="BillCheckAndPayment" xml:space="preserve">
+    <value>Fatura Sorgulama &amp; Ödeme</value>
+  </data>
   <data name="BillingAddress" xml:space="preserve">
     <value>Fatura Adresi</value>
   </data>
@@ -240,11 +246,14 @@
   <data name="Confirm" xml:space="preserve">
     <value>Onayla</value>
   </data>
+  <data name="ContactPhone" xml:space="preserve">
+    <value>İletişim Telefonu</value>
+  </data>
   <data name="Create" xml:space="preserve">
     <value>Oluştur</value>
   </data>
   <data name="CreateRole" xml:space="preserve">
-    <value>Rol Oluşturma</value>
+    <value>Rol Oluştur</value>
   </data>
   <data name="CreditReportDetail" xml:space="preserve">
     <value>Kredi Rapor Detayları</value>
@@ -302,6 +311,9 @@
   </data>
   <data name="DownloadTheContract" xml:space="preserve">
     <value>Sözleşmeyi İndir</value>
+  </data>
+  <data name="EnterStartAndEndWorkingHours" xml:space="preserve">
+    <value>Başlangıç ve Bitiş çalışma saatlerini giriniz</value>
   </data>
   <data name="EnterTheSMSPasswordSentToYourPhone" xml:space="preserve">
     <value>Telefonunuza gelen SMS şifresini Giriniz.</value>
@@ -471,6 +483,9 @@
   <data name="PassiveError" xml:space="preserve">
     <value>Kullanıcı pasif etme işleminde hata oluştu. Tekrar deneyiniz.</value>
   </data>
+  <data name="Permissions" xml:space="preserve">
+    <value>Yetkiler</value>
+  </data>
   <data name="Piece" xml:space="preserve">
     <value>Adet</value>
   </data>
@@ -497,6 +512,9 @@
   </data>
   <data name="Reset" xml:space="preserve">
     <value>Sıfırla</value>
+  </data>
+  <data name="ResponsibleArea" xml:space="preserve">
+    <value>Yetki Bölgesi:</value>
   </data>
   <data name="ReturnBill" xml:space="preserve">
     <value>Geri</value>
@@ -536,6 +554,9 @@
   </data>
   <data name="SaveAndSendToPool" xml:space="preserve">
     <value>Kaydet Ve Havuza Gönder</value>
+  </data>
+  <data name="SaveUser" xml:space="preserve">
+    <value>Kullanıcıyı Kaydet</value>
   </data>
   <data name="SearchedPlace" xml:space="preserve">
     <value>Aranan Yer</value>
@@ -673,14 +694,26 @@
   <data name="UploadedPhotosOfTheTask" xml:space="preserve">
     <value>Göreve ait Yüklenen Fotoğraflar</value>
   </data>
+  <data name="UserDisplayName" xml:space="preserve">
+    <value>Kullanıcının Adı</value>
+  </data>
+  <data name="UserEMail" xml:space="preserve">
+    <value>Kullanıcı E-Posta</value>
+  </data>
   <data name="UserInfo" xml:space="preserve">
     <value>Kullanıcı Bilgileri</value>
+  </data>
+  <data name="UserIsNotSetupManager" xml:space="preserve">
+    <value>Bu kullanıcı Kurulum yetkilisi Değil</value>
   </data>
   <data name="UserOperations" xml:space="preserve">
     <value>Kullanıcılar</value>
   </data>
   <data name="UserPanel" xml:space="preserve">
     <value>Kullanıcı Paneli</value>
+  </data>
+  <data name="UserResponsibleAreaNotAdded" xml:space="preserve">
+    <value>Bu kullanıcı Kurulum yetkilisi ama yetki alanı eklenmemiş</value>
   </data>
   <data name="UserSettings" xml:space="preserve">
     <value>Kullanıcı Ayarları</value>
@@ -700,8 +733,14 @@
   <data name="WorkArea" xml:space="preserve">
     <value>Çalışma Bölgesi</value>
   </data>
+  <data name="WorkAreas" xml:space="preserve">
+    <value>Çalışma Bölgeleri</value>
+  </data>
   <data name="WorkHours" xml:space="preserve">
     <value>Çalışma Saatleri</value>
+  </data>
+  <data name="WorkingDays" xml:space="preserve">
+    <value>Çalışma Günleri</value>
   </data>
   <data name="WrongPassword" xml:space="preserve">
     <value>Yanlış SMS Şifresi</value>
@@ -711,6 +750,9 @@
   </data>
   <data name="YourAddressInformation" xml:space="preserve">
     <value>Adres Bilgileriniz</value>
+  </data>
+  <data name="YourBalance" xml:space="preserve">
+    <value>Bakiyeniz</value>
   </data>
   <data name="YourEmail" xml:space="preserve">
     <value>E-Posta Adresiniz</value>

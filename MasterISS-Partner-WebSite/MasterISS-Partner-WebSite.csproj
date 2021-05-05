@@ -301,6 +301,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TaskTypes.en-us.resx</DependentUpon>
     </Compile>
+    <Compile Include="Localization\View.en-us1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>View.en-us.resx</DependentUpon>
+    </Compile>
     <Compile Include="OtherPhoneNoValidation.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -2075,14 +2080,12 @@
     <Content Include="Views\Setup\_SessionInfo.cshtml" />
     <Content Include="Views\Setup\_LineInfo.cshtml" />
     <Content Include="Views\Setup\_UpdateTaskStatus.cshtml" />
-    <Content Include="Views\Setup\Successful.cshtml" />
     <Content Include="Views\Setup\_UploadDocument.cshtml" />
     <Content Include="Views\Revenues\Index.cshtml" />
     <Content Include="Views\UserOperations\_UpdateUserRole.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\WorkingTypeFormat.cshtml" />
     <Content Include="Views\UserOperations\_AddAndUpdateWorkAreaSetupTeamUser.cshtml" />
     <Content Include="Views\Account\AdminSignIn.cshtml" />
-    <Content Include="Views\Setup\_ListPartnerRendezvousTeam.cshtml" />
     <Content Include="Views\UserOperations\_SetupTeamWorkingDaysAndHours.cshtml" />
     <Content Include="Scripts\js2\12882-green-check.json" />
     <Content Include="Views\Shared\_MenuBar.cshtml" />
@@ -2232,6 +2235,7 @@
     <EmbeddedResource Include="Localization\View.en-us.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
+      <LastGenOutput>View.en-us1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Localization\View.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

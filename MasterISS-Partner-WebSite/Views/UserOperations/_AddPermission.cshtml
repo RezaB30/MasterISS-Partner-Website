@@ -5,7 +5,7 @@
 <div class="modal-content">
     <div class="modal-header">
         <div class="py-2">
-            <span class="text-dark-75 font-weight-bolder d-block font-size-h5">Rol Ekle</span>
+            <span class="text-dark-75 font-weight-bolder d-block font-size-h5">@View.AddRole</span>
         </div>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
@@ -32,7 +32,7 @@
                     <div class="separator separator-dashed mt-2 my-4"></div>
                 </div>
 
-                <label class="text-info col-12 col-form-label my-4">Yetkiler</label>
+                <label class="text-info col-12 col-form-label my-4">@View.Permissions</label>
                 <div class="checkbox-list">
                     @if (ViewBag.PermissionList != null)
                     {
@@ -49,36 +49,8 @@
         </div>
 
         <div class="modal-footer">
-            <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
-            <button type="submit" class="btn btn-info font-weight-bold">Rol Oluştur</button>
+            <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">@View.Close</button>
+            <button type="submit" class="btn btn-info font-weight-bold">@View.CreateRole</button>
         </div>
     }
 </div>
-<!--end::Info-->
-@*@using (Html.BeginForm("AddPermission", "UserOperations", FormMethod.Post))
-    {
-        @Html.AntiForgeryToken()
-
-        @Html.LabelFor(m => m.RoleName)
-        @Html.EditorFor(m => m.RoleName)
-        @Html.ValidationMessageFor(m => m.RoleName)
-
-        if (ViewBag.PermissionList != null)
-        {
-            foreach (var item in (SelectList)ViewBag.PermissionList)
-            {
-                <div>
-                    <label>
-                        @Html.DisplayFor(m => item.Text)
-                        <input class="checkbox" type="checkbox" value="@item.Value" name="AvailableRoles" />
-                    </label>
-                </div>
-            }
-            <input type="submit" value="@View.Create" />
-            @Html.ValidationMessageFor(m => m.AvailableRoles)
-        }
-        else
-        {
-            <span>@View.GeneralErrorDescription</span>
-        }
-    }*@

@@ -5,7 +5,7 @@
 <div class="modal-content">
     <div class="modal-header">
         <div class="py-2">
-            <span class="text-dark-75 font-weight-bolder d-block font-size-h5">Çalışma Bölgesi</span>
+            <span class="text-dark-75 font-weight-bolder d-block font-size-h5">@View.WorkArea</span>
             <span class="text-muted font-size-lg">@Html.DisplayFor(m => m.ContactName)</span>
         </div>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -18,7 +18,7 @@
             @Html.AntiForgeryToken()
             <div class="d-flex flex-column my-0">
                 <div class="d-flex mb-2">
-                    <span class="text-info font-size-lg flex-root font-weight-bold">Çalışma Bölgeleri</span>
+                    <span class="text-info font-size-lg flex-root font-weight-bold">@View.WorkAreas</span>
                 </div>
                 @foreach (var item in Model.SetupTeamUserAddressInfo)
                 {
@@ -39,7 +39,7 @@
                 </div>
 
                 <div class="d-flex mb-2">
-                    <span class="text-info font-size-lg flex-root font-weight-bold">Yeni Bölge Ekle</span>
+                    <span class="text-info font-size-lg flex-root font-weight-bold">@View.AddNewArea</span>
                 </div>
                 <div class="form-group">
                     <!--begin::Info-->
@@ -62,8 +62,8 @@
                 @Html.HiddenFor(m => m.UserId)
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Kapat</button>
-                <button type="submit" class="btn btn-info font-weight-bold">Ekle ve Kaydet</button>
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">@View.Close</button>
+                <button type="submit" class="btn btn-info font-weight-bold">@View.Submit</button>
             </div>
         }
     </div>
