@@ -6,283 +6,284 @@
     var search = ViewBag.Search as GetBillCollectionBySubscriberNoViewModel ?? new GetBillCollectionBySubscriberNoViewModel();
     var counter = 0;
 }
-<div class="d-flex flex-column-fluid">
-    <!--begin::Container-->
-    <div class="container">
-        @ViewBag.ResponseError
-        <div class="row">
-            <div class="col-xl-5">
-                <div class="row">
-                    <div class="col-xl-6">
-                        @if (User.IsInRole("Payment") && (User.IsInRole("Admin") || User.IsInRole("PaymentCreditReportNotDetail")))
-                        {
-                            <div class="card card-custom gutter-b" style="height: 100px">
-                                <div class="card-body d-flex flex-column p-0">
-                                    <div class="flex-grow-1 card-spacer-x pt-6">
-                                        <div class="d-flex align-items-center mr-2">
-                                            <div class="symbol symbol-45 symbol-light-info mr-4 flex-shrink-0">
-                                                <div class="symbol-label">
-                                                    <span class="svg-icon svg-icon-lg svg-icon-info">
-                                                        <span class="svg-icon svg-icon-primary svg-icon-2x">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                                    <rect x="0" y="0" width="24" height="24" />
-                                                                    <circle fill="#000000" opacity="0.3" cx="20.5" cy="12.5" r="1.5" />
-                                                                    <rect fill="#000000" opacity="0.3" transform="translate(12.000000, 6.500000) rotate(-15.000000) translate(-12.000000, -6.500000) " x="3" y="3" width="18" height="7" rx="1" />
-                                                                    <path d="M22,9.33681558 C21.5453723,9.12084552 21.0367986,9 20.5,9 C18.5670034,9 17,10.5670034 17,12.5 C17,14.4329966 18.5670034,16 20.5,16 C21.0367986,16 21.5453723,15.8791545 22,15.6631844 L22,18 C22,19.1045695 21.1045695,20 20,20 L4,20 C2.8954305,20 2,19.1045695 2,18 L2,6 C2,4.8954305 2.8954305,4 4,4 L20,4 C21.1045695,4 22,4.8954305 22,6 L22,9.33681558 Z" fill="#000000" />
-                                                                </g>
-                                                            </svg>
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <div class="d-flex flex-column-fluid">
+        <!--begin::Container-->
+        <div class="container">
+            @ViewBag.ResponseError
+            <div class="row">
+                <div class="col-xl-5">
+                    <div class="row">
+                        <div class="col-xl-6">
+                            @if (User.IsInRole("Payment") && (User.IsInRole("Admin") || User.IsInRole("PaymentCreditReportNotDetail")))
+                            {
+                                <div class="card card-custom gutter-b" style="height: 100px">
+                                    <div class="card-body d-flex flex-column p-0">
+                                        <div class="flex-grow-1 card-spacer-x pt-6">
+                                            <div class="d-flex align-items-center mr-2">
+                                                <div class="symbol symbol-45 symbol-light-info mr-4 flex-shrink-0">
+                                                    <div class="symbol-label">
+                                                        <span class="svg-icon svg-icon-lg svg-icon-info">
+                                                            <span class="svg-icon svg-icon-primary svg-icon-2x">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                        <rect x="0" y="0" width="24" height="24" />
+                                                                        <circle fill="#000000" opacity="0.3" cx="20.5" cy="12.5" r="1.5" />
+                                                                        <rect fill="#000000" opacity="0.3" transform="translate(12.000000, 6.500000) rotate(-15.000000) translate(-12.000000, -6.500000) " x="3" y="3" width="18" height="7" rx="1" />
+                                                                        <path d="M22,9.33681558 C21.5453723,9.12084552 21.0367986,9 20.5,9 C18.5670034,9 17,10.5670034 17,12.5 C17,14.4329966 18.5670034,16 20.5,16 C21.0367986,16 21.5453723,15.8791545 22,15.6631844 L22,18 C22,19.1045695 21.1045695,20 20,20 L4,20 C2.8954305,20 2,19.1045695 2,18 L2,6 C2,4.8954305 2.8954305,4 4,4 L20,4 C21.1045695,4 22,4.8954305 22,6 L22,9.33681558 Z" fill="#000000" />
+                                                                    </g>
+                                                                </svg>
+                                                            </span>
                                                         </span>
-                                                    </span>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div class="text-dark-75 font-weight-bold">@View.YourBalance</div>
+                                                    <div class="text-info font-weight-bolder font-size-h3">@ViewBag.TotalCredit TL</div>
                                                 </div>
                                             </div>
-                                            <div>
-                                                <div class="text-dark-75 font-weight-bold">@View.YourBalance</div>
-                                                <div class="text-info font-weight-bolder font-size-h3">@ViewBag.TotalCredit TL</div>
-                                            </div>
                                         </div>
+                                        <div id="kt_tiles_widget_2_chart" class="card-rounded-bottom" style="height: 50px"></div>
                                     </div>
-                                    <div id="kt_tiles_widget_2_chart" class="card-rounded-bottom" style="height: 50px"></div>
                                 </div>
-                            </div>
-                        }
-                        @if (User.IsInRole("Setup") && (User.IsInRole("Admin") || User.IsInRole("RendezvousTeam")))
-                        {
-                            <div class="card card-custom gutter-b" style="height: 100px">
-                                <div class="card-body d-flex flex-column p-0">
-                                    <div class="flex-grow-1 card-spacer-x pt-6">
-                                        <div class="d-flex align-items-center mr-2">
-                                            <div class="symbol symbol-45 symbol-light-info mr-4 flex-shrink-0">
-                                                <div class="symbol-label">
-                                                    <span class="svg-icon svg-icon-lg svg-icon-info">
-                                                        <span class="svg-icon svg-icon-primary svg-icon-2x">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                                    <rect x="0" y="0" width="24" height="24" />
-                                                                    <path d="M3.5,21 L20.5,21 C21.3284271,21 22,20.3284271 22,19.5 L22,8.5 C22,7.67157288 21.3284271,7 20.5,7 L10,7 L7.43933983,4.43933983 C7.15803526,4.15803526 6.77650439,4 6.37867966,4 L3.5,4 C2.67157288,4 2,4.67157288 2,5.5 L2,19.5 C2,20.3284271 2.67157288,21 3.5,21 Z" fill="#000000" opacity="0.3" />
-                                                                    <path d="M8.54301601,14.4923287 L10.6661,14.4923287 L10.6661,16.5 C10.6661,16.7761424 10.8899576,17 11.1661,17 L12.33392,17 C12.6100624,17 12.83392,16.7761424 12.83392,16.5 L12.83392,14.4923287 L14.9570039,14.4923287 C15.2331463,14.4923287 15.4570039,14.2684711 15.4570039,13.9923287 C15.4570039,13.8681299 15.41078,13.7483766 15.3273331,13.6563877 L12.1203391,10.1211145 C11.934804,9.91658739 11.6185961,9.90119131 11.414069,10.0867264 C11.4020553,10.0976245 11.390579,10.1091008 11.3796809,10.1211145 L8.1726869,13.6563877 C7.98715181,13.8609148 8.00254789,14.1771227 8.20707501,14.3626578 C8.29906387,14.4461047 8.41881721,14.4923287 8.54301601,14.4923287 Z" fill="#000000" />
-                                                                </g>
-                                                            </svg>
+                            }
+                            @if (User.IsInRole("Setup") && (User.IsInRole("Admin") || User.IsInRole("RendezvousTeam")))
+                            {
+                                <div class="card card-custom gutter-b" style="height: 100px">
+                                    <div class="card-body d-flex flex-column p-0">
+                                        <div class="flex-grow-1 card-spacer-x pt-6">
+                                            <div class="d-flex align-items-center mr-2">
+                                                <div class="symbol symbol-45 symbol-light-info mr-4 flex-shrink-0">
+                                                    <div class="symbol-label">
+                                                        <span class="svg-icon svg-icon-lg svg-icon-info">
+                                                            <span class="svg-icon svg-icon-primary svg-icon-2x">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                        <rect x="0" y="0" width="24" height="24" />
+                                                                        <path d="M3.5,21 L20.5,21 C21.3284271,21 22,20.3284271 22,19.5 L22,8.5 C22,7.67157288 21.3284271,7 20.5,7 L10,7 L7.43933983,4.43933983 C7.15803526,4.15803526 6.77650439,4 6.37867966,4 L3.5,4 C2.67157288,4 2,4.67157288 2,5.5 L2,19.5 C2,20.3284271 2.67157288,21 3.5,21 Z" fill="#000000" opacity="0.3" />
+                                                                        <path d="M8.54301601,14.4923287 L10.6661,14.4923287 L10.6661,16.5 C10.6661,16.7761424 10.8899576,17 11.1661,17 L12.33392,17 C12.6100624,17 12.83392,16.7761424 12.83392,16.5 L12.83392,14.4923287 L14.9570039,14.4923287 C15.2331463,14.4923287 15.4570039,14.2684711 15.4570039,13.9923287 C15.4570039,13.8681299 15.41078,13.7483766 15.3273331,13.6563877 L12.1203391,10.1211145 C11.934804,9.91658739 11.6185961,9.90119131 11.414069,10.0867264 C11.4020553,10.0976245 11.390579,10.1091008 11.3796809,10.1211145 L8.1726869,13.6563877 C7.98715181,13.8609148 8.00254789,14.1771227 8.20707501,14.3626578 C8.29906387,14.4461047 8.41881721,14.4923287 8.54301601,14.4923287 Z" fill="#000000" />
+                                                                    </g>
+                                                                </svg>
+                                                            </span>
                                                         </span>
-                                                    </span>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div class="text-dark-75 font-weight-bold">@View.NewApplication</div>
+                                                    <div class="text-primary font-weight-bolder font-size-h3">@ViewBag.TotalNewSetup @View.Piece</div>
                                                 </div>
                                             </div>
-                                            <div>
-                                                <div class="text-dark-75 font-weight-bold">@View.NewApplication</div>
-                                                <div class="text-primary font-weight-bolder font-size-h3">@ViewBag.TotalNewSetup @View.Piece</div>
-                                            </div>
                                         </div>
+                                        <div id="kt_tiles_widget_2_chart" class="card-rounded-bottom" style="height: 50px"></div>
                                     </div>
-                                    <div id="kt_tiles_widget_2_chart" class="card-rounded-bottom" style="height: 50px"></div>
                                 </div>
-                            </div>
-                        }
-                        @if (User.IsInRole("Setup") && (User.IsInRole("Admin") || User.IsInRole("SetupManager") || User.IsInRole("RendezvousTeam")))
-                        {
-                            <div class="card card-custom gutter-b" style="height: 100px">
-                                <div class="card-body d-flex flex-column p-0">
-                                    <div class="flex-grow-1 card-spacer-x pt-6">
-                                        <div class="d-flex align-items-center mr-2">
-                                            <div class="symbol symbol-45 symbol-light-info mr-4 flex-shrink-0">
-                                                <div class="symbol-label">
-                                                    <span class="svg-icon svg-icon-lg svg-icon-info">
-                                                        <span class="svg-icon svg-icon-primary svg-icon-2x">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                                    <rect x="0" y="0" width="24" height="24" />
-                                                                    <path d="M10.9630156,7.5 L11.0475062,7.5 C11.3043819,7.5 11.5194647,7.69464724 11.5450248,7.95024814 L12,12.5 L15.2480695,14.3560397 C15.403857,14.4450611 15.5,14.6107328 15.5,14.7901613 L15.5,15 C15.5,15.2109164 15.3290185,15.3818979 15.1181021,15.3818979 C15.0841582,15.3818979 15.0503659,15.3773725 15.0176181,15.3684413 L10.3986612,14.1087258 C10.1672824,14.0456225 10.0132986,13.8271186 10.0316926,13.5879956 L10.4644883,7.96165175 C10.4845267,7.70115317 10.7017474,7.5 10.9630156,7.5 Z" fill="#000000" />
-                                                                    <path d="M7.38979581,2.8349582 C8.65216735,2.29743306 10.0413491,2 11.5,2 C17.2989899,2 22,6.70101013 22,12.5 C22,18.2989899 17.2989899,23 11.5,23 C5.70101013,23 1,18.2989899 1,12.5 C1,11.5151324 1.13559454,10.5619345 1.38913364,9.65805651 L3.31481075,10.1982117 C3.10672013,10.940064 3,11.7119264 3,12.5 C3,17.1944204 6.80557963,21 11.5,21 C16.1944204,21 20,17.1944204 20,12.5 C20,7.80557963 16.1944204,4 11.5,4 C10.54876,4 9.62236069,4.15592757 8.74872191,4.45446326 L9.93948308,5.87355717 C10.0088058,5.95617272 10.0495583,6.05898805 10.05566,6.16666224 C10.0712834,6.4423623 9.86044965,6.67852665 9.5847496,6.69415008 L4.71777931,6.96995273 C4.66931162,6.97269931 4.62070229,6.96837279 4.57348157,6.95710938 C4.30487471,6.89303938 4.13906482,6.62335149 4.20313482,6.35474463 L5.33163823,1.62361064 C5.35654118,1.51920756 5.41437908,1.4255891 5.49660017,1.35659741 C5.7081375,1.17909652 6.0235153,1.2066885 6.2010162,1.41822583 L7.38979581,2.8349582 Z" fill="#000000" opacity="0.3" />
-                                                                </g>
-                                                            </svg>
+                            }
+                            @if (User.IsInRole("Setup") && (User.IsInRole("Admin") || User.IsInRole("SetupManager") || User.IsInRole("RendezvousTeam")))
+                            {
+                                <div class="card card-custom gutter-b" style="height: 100px">
+                                    <div class="card-body d-flex flex-column p-0">
+                                        <div class="flex-grow-1 card-spacer-x pt-6">
+                                            <div class="d-flex align-items-center mr-2">
+                                                <div class="symbol symbol-45 symbol-light-info mr-4 flex-shrink-0">
+                                                    <div class="symbol-label">
+                                                        <span class="svg-icon svg-icon-lg svg-icon-info">
+                                                            <span class="svg-icon svg-icon-primary svg-icon-2x">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                        <rect x="0" y="0" width="24" height="24" />
+                                                                        <path d="M10.9630156,7.5 L11.0475062,7.5 C11.3043819,7.5 11.5194647,7.69464724 11.5450248,7.95024814 L12,12.5 L15.2480695,14.3560397 C15.403857,14.4450611 15.5,14.6107328 15.5,14.7901613 L15.5,15 C15.5,15.2109164 15.3290185,15.3818979 15.1181021,15.3818979 C15.0841582,15.3818979 15.0503659,15.3773725 15.0176181,15.3684413 L10.3986612,14.1087258 C10.1672824,14.0456225 10.0132986,13.8271186 10.0316926,13.5879956 L10.4644883,7.96165175 C10.4845267,7.70115317 10.7017474,7.5 10.9630156,7.5 Z" fill="#000000" />
+                                                                        <path d="M7.38979581,2.8349582 C8.65216735,2.29743306 10.0413491,2 11.5,2 C17.2989899,2 22,6.70101013 22,12.5 C22,18.2989899 17.2989899,23 11.5,23 C5.70101013,23 1,18.2989899 1,12.5 C1,11.5151324 1.13559454,10.5619345 1.38913364,9.65805651 L3.31481075,10.1982117 C3.10672013,10.940064 3,11.7119264 3,12.5 C3,17.1944204 6.80557963,21 11.5,21 C16.1944204,21 20,17.1944204 20,12.5 C20,7.80557963 16.1944204,4 11.5,4 C10.54876,4 9.62236069,4.15592757 8.74872191,4.45446326 L9.93948308,5.87355717 C10.0088058,5.95617272 10.0495583,6.05898805 10.05566,6.16666224 C10.0712834,6.4423623 9.86044965,6.67852665 9.5847496,6.69415008 L4.71777931,6.96995273 C4.66931162,6.97269931 4.62070229,6.96837279 4.57348157,6.95710938 C4.30487471,6.89303938 4.13906482,6.62335149 4.20313482,6.35474463 L5.33163823,1.62361064 C5.35654118,1.51920756 5.41437908,1.4255891 5.49660017,1.35659741 C5.7081375,1.17909652 6.0235153,1.2066885 6.2010162,1.41822583 L7.38979581,2.8349582 Z" fill="#000000" opacity="0.3" />
+                                                                    </g>
+                                                                </svg>
+                                                            </span>
                                                         </span>
-                                                    </span>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div class="text-dark-75 font-weight-bold">@View.InProgressSetup</div>
+                                                    <a href="@Url.Action("Index", "Setup")">
+                                                        <div class="text-danger font-weight-bolder font-size-h3">@ViewBag.TotalInProgressSetup @View.Piece</div>
+                                                    </a>
                                                 </div>
                                             </div>
-                                            <div>
-                                                <div class="text-dark-75 font-weight-bold">@View.InProgressSetup</div>
-                                                <a href="@Url.Action("Index", "Setup")">
-                                                    <div class="text-danger font-weight-bolder font-size-h3">@ViewBag.TotalInProgressSetup @View.Piece</div>
-                                                </a>
-                                            </div>
                                         </div>
+                                        <div id="kt_tiles_widget_2_chart" class="card-rounded-bottom" style="height: 50px"></div>
                                     </div>
-                                    <div id="kt_tiles_widget_2_chart" class="card-rounded-bottom" style="height: 50px"></div>
                                 </div>
-                            </div>
-                        }
-                    </div>
+                            }
+                        </div>
 
-                    <div class="col-xl-6">
-                        @if (User.IsInRole("Payment") && (User.IsInRole("Admin") || User.IsInRole("PaymentManager")))
-                        {
-                            <div class="card card-custom gutter-b" style="height: 100px">
-                                <div class="card-body d-flex flex-column p-0">
-                                    <div class="flex-grow-1 card-spacer-x pt-6">
-                                        <div class="d-flex align-items-center mr-2">
-                                            <div class="symbol symbol-45 symbol-light-info mr-4 flex-shrink-0">
-                                                <div class="symbol-label">
-                                                    <span class="svg-icon svg-icon-lg svg-icon-info">
-                                                        <span class="svg-icon svg-icon-primary svg-icon-2x">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                                    <rect x="0" y="0" width="24" height="24" />
-                                                                    <rect fill="#000000" opacity="0.3" x="2" y="4" width="20" height="5" rx="1" />
-                                                                    <path d="M5,7 L8,7 L8,21 L7,21 C5.8954305,21 5,20.1045695 5,19 L5,7 Z M19,7 L19,19 C19,20.1045695 18.1045695,21 17,21 L11,21 L11,7 L19,7 Z" fill="#000000" />
-                                                                </g>
-                                                            </svg>
+                        <div class="col-xl-6">
+                            @if (User.IsInRole("Payment") && (User.IsInRole("Admin") || User.IsInRole("PaymentManager")))
+                            {
+                                <div class="card card-custom gutter-b" style="height: 100px">
+                                    <div class="card-body d-flex flex-column p-0">
+                                        <div class="flex-grow-1 card-spacer-x pt-6">
+                                            <div class="d-flex align-items-center mr-2">
+                                                <div class="symbol symbol-45 symbol-light-info mr-4 flex-shrink-0">
+                                                    <div class="symbol-label">
+                                                        <span class="svg-icon svg-icon-lg svg-icon-info">
+                                                            <span class="svg-icon svg-icon-primary svg-icon-2x">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                        <rect x="0" y="0" width="24" height="24" />
+                                                                        <rect fill="#000000" opacity="0.3" x="2" y="4" width="20" height="5" rx="1" />
+                                                                        <path d="M5,7 L8,7 L8,21 L7,21 C5.8954305,21 5,20.1045695 5,19 L5,7 Z M19,7 L19,19 C19,20.1045695 18.1045695,21 17,21 L11,21 L11,7 L19,7 Z" fill="#000000" />
+                                                                    </g>
+                                                                </svg>
+                                                            </span>
                                                         </span>
-                                                    </span>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div class="text-dark-75 font-weight-bold">@View.PaidBillsAmount</div>
+                                                    <div class="text-warning font-weight-bolder font-size-h3">@ViewBag.SumPaidBills TL</div>
                                                 </div>
                                             </div>
-                                            <div>
-                                                <div class="text-dark-75 font-weight-bold">@View.PaidBillsAmount</div>
-                                                <div class="text-warning font-weight-bolder font-size-h3">@ViewBag.SumPaidBills TL</div>
-                                            </div>
                                         </div>
+                                        <div id="kt_tiles_widget_2_chart" class="card-rounded-bottom" style="height: 50px"></div>
                                     </div>
-                                    <div id="kt_tiles_widget_2_chart" class="card-rounded-bottom" style="height: 50px"></div>
                                 </div>
-                            </div>
-                        }
-                        @if (User.IsInRole("Setup") && (User.IsInRole("Admin") || User.IsInRole("SetupManager") || User.IsInRole("RendezvousTeam")))
-                        {
-                            <div class="card card-custom gutter-b" style="height: 100px">
-                                <div class="card-body d-flex flex-column p-0">
-                                    <div class="flex-grow-1 card-spacer-x pt-6">
-                                        <div class="d-flex align-items-center mr-2">
-                                            <div class="symbol symbol-45 symbol-light-info mr-4 flex-shrink-0">
-                                                <div class="symbol-label">
-                                                    <span class="svg-icon svg-icon-lg svg-icon-info">
-                                                        <span class="svg-icon svg-icon-primary svg-icon-2x">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                                    <rect x="0" y="0" width="24" height="24" />
-                                                                    <circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10" />
-                                                                    <path d="M16.7689447,7.81768175 C17.1457787,7.41393107 17.7785676,7.39211077 18.1823183,7.76894473 C18.5860689,8.1457787 18.6078892,8.77856757 18.2310553,9.18231825 L11.2310553,16.6823183 C10.8654446,17.0740439 10.2560456,17.107974 9.84920863,16.7592566 L6.34920863,13.7592566 C5.92988278,13.3998345 5.88132125,12.7685345 6.2407434,12.3492086 C6.60016555,11.9298828 7.23146553,11.8813212 7.65079137,12.2407434 L10.4229928,14.616916 L16.7689447,7.81768175 Z" fill="#000000" fill-rule="nonzero" />
-                                                                </g>
-                                                            </svg>
+                            }
+                            @if (User.IsInRole("Setup") && (User.IsInRole("Admin") || User.IsInRole("SetupManager") || User.IsInRole("RendezvousTeam")))
+                            {
+                                <div class="card card-custom gutter-b" style="height: 100px">
+                                    <div class="card-body d-flex flex-column p-0">
+                                        <div class="flex-grow-1 card-spacer-x pt-6">
+                                            <div class="d-flex align-items-center mr-2">
+                                                <div class="symbol symbol-45 symbol-light-info mr-4 flex-shrink-0">
+                                                    <div class="symbol-label">
+                                                        <span class="svg-icon svg-icon-lg svg-icon-info">
+                                                            <span class="svg-icon svg-icon-primary svg-icon-2x">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                        <rect x="0" y="0" width="24" height="24" />
+                                                                        <circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10" />
+                                                                        <path d="M16.7689447,7.81768175 C17.1457787,7.41393107 17.7785676,7.39211077 18.1823183,7.76894473 C18.5860689,8.1457787 18.6078892,8.77856757 18.2310553,9.18231825 L11.2310553,16.6823183 C10.8654446,17.0740439 10.2560456,17.107974 9.84920863,16.7592566 L6.34920863,13.7592566 C5.92988278,13.3998345 5.88132125,12.7685345 6.2407434,12.3492086 C6.60016555,11.9298828 7.23146553,11.8813212 7.65079137,12.2407434 L10.4229928,14.616916 L16.7689447,7.81768175 Z" fill="#000000" fill-rule="nonzero" />
+                                                                    </g>
+                                                                </svg>
+                                                            </span>
                                                         </span>
-                                                    </span>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div class="text-dark-75 font-weight-bold">@View.FinishedSetup</div>
+                                                    <div class="text-success font-weight-bolder font-size-h3">@ViewBag.TotalCompletedSetup @View.Piece</div>
                                                 </div>
                                             </div>
-                                            <div>
-                                                <div class="text-dark-75 font-weight-bold">@View.FinishedSetup</div>
-                                                <div class="text-success font-weight-bolder font-size-h3">@ViewBag.TotalCompletedSetup @View.Piece</div>
-                                            </div>
                                         </div>
+                                        <div id="kt_tiles_widget_2_chart" class="card-rounded-bottom" style="height: 50px"></div>
                                     </div>
-                                    <div id="kt_tiles_widget_2_chart" class="card-rounded-bottom" style="height: 50px"></div>
                                 </div>
-                            </div>
-                        }
+                            }
+                        </div>
                     </div>
                 </div>
 
-            </div>
-
-            @if (User.IsInRole("Payment") && (User.IsInRole("PaymentManager") || User.IsInRole("Admin")))
-            {
-                <div class="card flex-grow-1 card-spacer-x pt-6">
-                    <div class="form-group">
-                        <h3 class="text-info font-size-h4">@View.BillCheckAndPayment</h3>
-                        @using (Html.BeginForm("Index", "Home", FormMethod.Post))
-                        {
-                            <div class="input-group">
-                                @Html.AntiForgeryToken()
-                                @Html.TextBoxFor(m => search.SubscriberNo, new { @id = "subsNo", @class = "form-control h-auto p-4 border-1 text-info font-size-h6", @placeholder = "Abone numarasını yazınız..." })
-                                <div class="input-group-append">
-                                    <button class="btn btn-info" type="submit">@View.ListBills</button>
+                @if (User.IsInRole("Payment") && (User.IsInRole("PaymentManager") || User.IsInRole("Admin")))
+                {
+                    <div class="card flex-grow-1 card-spacer-x pt-6">
+                        <div class="form-group">
+                            <h3 class="text-info font-size-h4">@View.BillCheckAndPayment</h3>
+                            @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+                            {
+                                <div class="input-group">
+                                    @Html.AntiForgeryToken()
+                                    @Html.TextBoxFor(m => search.SubscriberNo, new { @id = "subsNo", @class = "form-control h-auto p-4 border-1 text-info font-size-h6", @placeholder = "Abone numarasını yazınız..." })
+                                    <div class="input-group-append">
+                                        <button class="btn btn-info" type="submit">@View.ListBills</button>
+                                    </div>
                                 </div>
-                            </div>
-                        }
-                    </div>
+                            }
+                        </div>
 
-                    @if (ViewBag.Error == null)
-                    {
-                        <!--end::Header-->
-                        using (Html.BeginForm("BillOperations", "Home", FormMethod.Post, new { @class = "pb-5 w-100 w-md-550px w-lg-700px", @id = "kt_form2" }))
+                        @if (ViewBag.Error == null)
                         {
-                            <!--begin: Wizard Step 1-->
-                            <!--begin::Title-->
-                            <span class="pb-10 pb-lg-15"></span>
-
-                            <div class="alert alert-light text-dark-75 font-size-lg">
-                                <span class="text-info font-weight-bold">@Html.DisplayFor(m => m.SubscriberName)</span> <span>@View.ChooseSubscriberBillSelect</span>
-                            </div><hr class="my-8">
-                            <div class="login-form login-signin">
-                                <!--begin::Form-->
+                            <!--end::Header-->
+                            using (Html.BeginForm("BillOperations", "Home", FormMethod.Post, new { @class = "pb-5 w-100 w-md-550px w-lg-700px", @id = "kt_form2" }))
+                            {
+                                <!--begin: Wizard Step 1-->
                                 <!--begin::Title-->
+                                <span class="pb-10 pb-lg-15"></span>
 
-                                <span class="text-dark-50 font-weight font-size-h5 mt-5">
+                                <div class="alert alert-light text-dark-75 font-size-lg">
+                                    <span class="text-info font-weight-bold">@Html.DisplayFor(m => m.SubscriberName)</span> <span>@View.ChooseSubscriberBillSelect</span>
+                                </div><hr class="my-8">
+                                <div class="login-form login-signin">
+                                    <!--begin::Form-->
+                                    <!--begin::Title-->
 
-                                </span>
-                            </div>
+                                    <span class="text-dark-50 font-weight font-size-h5 mt-5">
 
-                            <!--begin::Title-->
-                            <!--begin::Table-->
-                            <div class="table-responsive">
-                                <table class="table table-head-custom table-vertical-center" id="kt_advance_table_widget_4">
-                                    <thead>
-                                        <tr class="text-left">
-                                            <th class="pl-0" style="width: 30px">
-                                                <label class="checkbox checkbox checkbox-inline mr-2">
-                                                    <input type="checkbox" id="container-check">
-                                                    <span></span>
-                                                </label>
-                                            </th>
-                                            <th class="pl-0" style="min-width: 130px"><span class="text-info">@Html.DisplayNameFor(m => m.Bills.FirstOrDefault().BillName)</span></th>
-                                            <th style="min-width: 120px"><span class="text-info">@Html.DisplayNameFor(m => m.Bills.FirstOrDefault().IssueDate)</span></th>
-                                            <th style="min-width: 120px">
-                                                <span class="text-info">@Html.DisplayNameFor(m => m.Bills.FirstOrDefault().DueDate)</span>
-                                            </th>
-                                            <th style="min-width: 120px"><span class="text-info">@Html.DisplayNameFor(m => m.Bills.FirstOrDefault().Cost)</span></th>
-                                        </tr>
-                                    </thead>
+                                    </span>
+                                </div>
 
-                                    <tbody>
-                                        @foreach (var itemBill in Model.Bills)
-                                        {
-                                            counter++;
-                                            <tr>
-                                                <td class="pl-0 py-6">
-                                                    <label class="checkbox checkbox checkbox-inline">
-                                                        <input type="checkbox" name="selectedBills" value="@itemBill.BillID" dataValue="@counter">
+                                <!--begin::Title-->
+                                <!--begin::Table-->
+                                <div class="table-responsive">
+                                    <table class="table table-head-custom table-vertical-center" id="kt_advance_table_widget_4">
+                                        <thead>
+                                            <tr class="text-left">
+                                                <th class="pl-0" style="width: 30px">
+                                                    <label class="checkbox checkbox checkbox-inline mr-2">
+                                                        <input type="checkbox" id="container-check">
                                                         <span></span>
                                                     </label>
-                                                </td>
-
-                                                <td class="pl-0">
-                                                    <span class="text-dark-75 font-size-lg font-weight d-block">@Html.DisplayFor(modelItem => itemBill.BillName)</span>
-                                                </td>
-
-                                                <td>
-                                                    <span class="text-dark-75 font-size-lg font-weight d-block ">@Html.DisplayFor(modelItem => itemBill.IssueDate)</span>
-                                                </td>
-                                                <td>
-                                                    <span class="text-dark font-size-lg font-weight-bold d-block ">@Html.DisplayFor(modelItem => itemBill.DueDate)</span>
-                                                </td>
-
-                                                <td>
-                                                    <span class="text-dark-75 font-size-lg font-weight d-block ">@Html.DisplayFor(modelItem => itemBill.Cost)</span>
-                                                </td>
+                                                </th>
+                                                <th class="pl-0" style="min-width: 130px"><span class="text-info">@Html.DisplayNameFor(m => m.Bills.FirstOrDefault().BillName)</span></th>
+                                                <th style="min-width: 120px"><span class="text-info">@Html.DisplayNameFor(m => m.Bills.FirstOrDefault().IssueDate)</span></th>
+                                                <th style="min-width: 120px">
+                                                    <span class="text-info">@Html.DisplayNameFor(m => m.Bills.FirstOrDefault().DueDate)</span>
+                                                </th>
+                                                <th style="min-width: 120px"><span class="text-info">@Html.DisplayNameFor(m => m.Bills.FirstOrDefault().Cost)</span></th>
                                             </tr>
-                                        }
-                                        @Html.Hidden("SubscriberNo", search.SubscriberNo)
-                                    </tbody>
-                                </table>
-                                <!--end::Table-->
-                            </div>
-                            <div class="pb-lg-0 pb-5">
-                                <button type="submit" class="btn btn-danger font-weight-bolder font-size-h8 px-8 py-3 my-3 mr-3" id="pay-button">@BillView.PayBill</button>
-                            </div>
+                                        </thead>
+
+                                        <tbody>
+                                            @foreach (var itemBill in Model.Bills)
+                                            {
+                                                counter++;
+                                                <tr>
+                                                    <td class="pl-0 py-6">
+                                                        <label class="checkbox checkbox checkbox-inline">
+                                                            <input type="checkbox" name="selectedBills" value="@itemBill.BillID" dataValue="@counter">
+                                                            <span></span>
+                                                        </label>
+                                                    </td>
+
+                                                    <td class="pl-0">
+                                                        <span class="text-dark-75 font-size-lg font-weight d-block">@Html.DisplayFor(modelItem => itemBill.BillName)</span>
+                                                    </td>
+
+                                                    <td>
+                                                        <span class="text-dark-75 font-size-lg font-weight d-block ">@Html.DisplayFor(modelItem => itemBill.IssueDate)</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="text-dark font-size-lg font-weight-bold d-block ">@Html.DisplayFor(modelItem => itemBill.DueDate)</span>
+                                                    </td>
+
+                                                    <td>
+                                                        <span class="text-dark-75 font-size-lg font-weight d-block ">@Html.DisplayFor(modelItem => itemBill.Cost)</span>
+                                                    </td>
+                                                </tr>
+                                            }
+                                            @Html.Hidden("SubscriberNo", search.SubscriberNo)
+                                        </tbody>
+                                    </table>
+                                    <!--end::Table-->
+                                </div>
+                                <div class="pb-lg-0 pb-5">
+                                    <button type="submit" class="btn btn-danger font-weight-bolder font-size-h8 px-8 py-3 my-3 mr-3" id="pay-button">@BillView.PayBill</button>
+                                </div>
+                            }
                         }
-                    }
-                    <div style="background-color:red">
-                        @ViewBag.PayOldBillError
-                        @ViewBag.PayBillError
+                        <div style="background-color:red">
+                            @ViewBag.PayOldBillError
+                            @ViewBag.PayBillError
+                        </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
         </div>
     </div>
 </div>

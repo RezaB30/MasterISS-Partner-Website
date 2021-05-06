@@ -5,29 +5,31 @@
 @model PagedList.StaticPagedList<AllowenceListViewModel>
 
 <h3 class="my-6 text-info font-size-h4">@MasterISS_Partner_WebSite.Localization.View.SaleAllowanceList</h3>
-<table class="table table-head-custom table-vertical-center table-hover mb-2">
-    <thead>
-        <tr class="bg-info text-left">
-            <th style="min-width: 130px">@Html.DisplayNameFor(m => m.FirstOrDefault(). Ispaid)</th>
-            <th style="min-width: 130px">@Html.DisplayNameFor(m => m.FirstOrDefault().IssueDate)</th>
-            <th style="min-width: 130px">@Html.DisplayNameFor(m => m.FirstOrDefault().PaymentDate)</th>
-            <th style="min-width: 130px">@Html.DisplayNameFor(m => m.FirstOrDefault().Total)</th>
-            <th style="min-width: 130px"></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@Html.DisplayFor(motelItem => item.Ispaid)</td>
-                <td><span class="text-dark-75  d-block font-size-lg">@Html.DisplayFor(motelItem => item.IssueDate)</span> </td>
-                <td><span class="text-dark-75  d-block font-size-lg">@Html.DisplayFor(motelItem => item.PaymentDate)</span> </td>
-                <td><span class="text-dark-75  d-block font-size-lg">@Html.DisplayFor(motelItem => item.Total)</span> </td>
-                <td><span class="text-dark-75  d-block font-size-lg"><input value="@View.Details" dataValue="@item.Id" class="btn btn-outline-primary saleAllowenceListByDetailsButton" /></span></td>
+<div class="table-responsive">
+    <table class="table table-head-custom table-vertical-center table-hover mb-2">
+        <thead>
+            <tr class="bg-info text-left">
+                <th style="min-width: 130px">@Html.DisplayNameFor(m => m.FirstOrDefault().Ispaid)</th>
+                <th style="min-width: 130px">@Html.DisplayNameFor(m => m.FirstOrDefault().IssueDate)</th>
+                <th style="min-width: 130px">@Html.DisplayNameFor(m => m.FirstOrDefault().PaymentDate)</th>
+                <th style="min-width: 130px">@Html.DisplayNameFor(m => m.FirstOrDefault().Total)</th>
+                <th style="min-width: 130px"></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(motelItem => item.Ispaid)</td>
+                    <td><span class="text-dark-75  d-block font-size-lg">@Html.DisplayFor(motelItem => item.IssueDate)</span> </td>
+                    <td><span class="text-dark-75  d-block font-size-lg">@Html.DisplayFor(motelItem => item.PaymentDate)</span> </td>
+                    <td><span class="text-dark-75  d-block font-size-lg">@Html.DisplayFor(motelItem => item.Total)</span> </td>
+                    <td><span class="text-dark-75  d-block font-size-lg"><input value="@View.Details" dataValue="@item.Id" class="btn btn-outline-primary saleAllowenceListByDetailsButton" /></span></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 @if (Model != null && Model.TotalItemCount > 0)
 {
     <div class="card card-custom">

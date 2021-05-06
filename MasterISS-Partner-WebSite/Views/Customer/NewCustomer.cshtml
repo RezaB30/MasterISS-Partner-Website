@@ -5,9 +5,6 @@
     ViewBag.Title = View.AddCustomer;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
-
 <div class="d-flex flex-column-fluid my-10">
     <div class="container">
         <div align="center" style="font-size:2em">
@@ -15,38 +12,21 @@
             <span class="text-danger">@Html.Raw(TempData["SMSConfirmationError"])</span>
             <span class="text-danger">@ViewBag.InvalidCredentials</span>
         </div>
-        <!--begin::Card-->
-        <!--begin::Card Body-->
-        <!--begin::Wizard 5-->
         <div class="wizard wizard-5 d-flex flex-column flex-lg-row flex-row-fluid" id="kt_wizard" data-wizard-state="first">
-            <!--begin::Aside-->
         </div>
-        <!--begin::Aside-->
-        <!--begin::Content-->
 
         <div class="bg-secondary wizard-content d-flex flex-column flex-row-fluid py-15 px-5 px-lg-10 ">
-            <!--begin::Title-->
             <div class="text-right mb-lg-4 mb-15 mr-xxl-10">
 
             </div>
-            <!--end::Title-->
-            <!--begin::Form-->
             <div class="d-flex justify-content-center flex-row-fluid ">
                 @using (Html.BeginForm("NewCustomer", "Customer", FormMethod.Post, new { @class = "pb-5 w-100 w-md-450px w-lg-500px fv-plugins-bootstrap fv-plugins-framework" }))
                 {
-
                     @Html.AntiForgeryToken()
-
-                    <!--begin: Wizard Step 1-->
                     <div class="pb-0" data-wizard-type="step-content" data-wizard-state="current">
-                        <!--begin::Title-->
                         <div class="pb-10 pb-lg-0">
-
                             <h3 class="font-weight-bolder text-info font-size-h4">@View.NewSubscriptionApplication</h3><hr class="my-4">
-
                         </div>
-                        <!--begin::Title-->
-                        <!--begin::Form Group-->
                         <div class="form-group fv-plugins-icon-container">
                             <label class="font-size-lg font-weight-bold m-2 text-dark">@Html.DisplayNameFor(m => m.GeneralInfo.ContactPhoneNo)</label>
                             @Html.EditorFor(m => m.GeneralInfo.ContactPhoneNo, new { htmlAttributes = new { @class = "form-control h-auto p-3 border-0 rounded-lg font-weight-bolder text-info font-size-lg", @placeholder = View.YourGsmNumber, @id = "kt_inputmask_3", @im_insert = "true", @autocomplete = "off" } })
@@ -70,18 +50,10 @@
                                 <div id="telephoneNumberInputContainer"></div>
                             </div>
                         </div>
-                        <!--end::Form Group-->
-                        <!--end: Wizard Step 1-->
                     </div>
-
-                    <!--begin::Form-->
-                    <!--begin: Wizard Step 3-->
                     <div class="pb-5" data-wizard-type="step-content">
-                        <!--begin::Title-->
                         <div class="pb-10 pb-lg-5">
                             <h3 class="font-weight-bolder text-dark-50 font-size-h3">@View.IDCardInfo</h3><hr class="my-4">
-                            <!--begin::Title-->
-                            <!--begin::Form Group-->
                             <div class="row">
                                 <div class="col-lg-6 col-md-6">
                                     <div class="form-group fv-plugins-icon-container">
@@ -92,8 +64,6 @@
                                         <div class="fv-plugins-message-container"></div>
                                     </div>
                                 </div>
-                                <!--end::Form Group-->
-                                <!--begin::Form Group-->
                                 <div class="col-lg-6 col-md-6">
                                     <div class="form-group fv-plugins-icon-container">
                                         <label class="font-size-lg font-weight-bold m-2 text-dark">@Html.DisplayNameFor(m => m.IDCard.LastName)</label>
@@ -103,8 +73,6 @@
                                         <div class="fv-plugins-message-container"></div>
                                     </div>
                                 </div>
-                                <!--end::Form Group-->
-                                <!--begin::Form Group-->
                                 <div class="col-lg-12 col-md-6">
                                     <div class="form-group fv-plugins-icon-container">
                                         <label class="font-size-lg font-weight-bold m-2 text-dark">@Html.DisplayNameFor(m => m.GeneralInfo.Email)</label>
@@ -113,25 +81,16 @@
                                         <div class="fv-plugins-message-container"></div>
                                         <div class="fv-plugins-message-container"></div>
                                     </div>
-                                    <!--end::Form Group-->
                                 </div>
-
                             </div>
-
-
                         </div>
-                        <!--end: Wizard Step 3-->
-                        <!--begin: Wizard Step 4-->
                         <div class="pb-5" data-wizard-type="step-content">
-                            <!--begin::Title-->
                             <div class="pb-10 pb-lg-5">
                                 <h3 class="font-weight-bolder text-dark-50 font-size-h3">@View.ApplicationInformation</h3><hr class="my-4">
                                 <div class="text-dark-50 font-weight font-size-h5 mt-5">
                                     @View.AddressInformationAndApplicationTypeForNewCustomer
                                 </div>
                             </div>
-                            <!--end::Title-->
-                            <!--begin::Form Group-->
 
                             <div class="form-group">
                                 <label class="font-size-lg font-weight-bolder m-2 text-dark">@Html.DisplayNameFor(m => m.ExtraInfo.SubscriptionRegistrationTypeId)</label>
@@ -205,8 +164,6 @@
                                                 <div class="fv-plugins-message-container"></div>
                                             </div>
                                         </div>
-                                        <!--end::Form Group-->
-                                        <!--begin::Form Group-->
                                         <div class="col-lg-6 col-md-6">
                                             <div class="form-group fv-plugins-icon-container">
                                                 @Html.LabelFor(m => m.Individual.FathersName, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
@@ -228,8 +185,6 @@
                                                 <div class="fv-plugins-message-container"></div>
                                             </div>
                                         </div>
-                                        <!--end::Form Group-->
-                                        <!--begin::Form Group-->
                                         <div class="col-lg-6 col-md-6">
                                             <div class="form-group fv-plugins-icon-container">
                                                 @Html.LabelFor(m => m.Individual.BirthPlace, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })
@@ -242,7 +197,6 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <!--end::Form Group-->
                                     <div class="col-lg-6 col-md-6">
                                         <div class="form-group fv-plugins-icon-container">
                                             @Html.LabelFor(ci => ci.Individual.MothersMaidenName, new { @class = "font-size-lg font-weight-bold m-2 text-dark" })

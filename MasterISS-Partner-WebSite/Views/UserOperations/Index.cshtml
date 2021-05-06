@@ -7,291 +7,295 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var search = ViewBag.Search as FilterUserViewModel ?? new FilterUserViewModel();
 }
-<div class="container my-8">
-    <div class="row">
-        <div class="col-lg-6 mb-lg-0 mb-6 ">
-            <div class="row mb-15 my-8 ">
-                <span class="navi-text add-user-button" data-toggle="modal" data-target="#exampleModalAddUser">
-                    <input class="btn btn-outline-info my-2 mr-4 " value="@View.AddUser" />
-                </span>
-                <span class="navi-text add-role-button" data-toggle="modal" data-target="#exampleModalAddRole">
-                    <input class="btn btn-outline-info my-2 mr-4 " value="@View.AddRole" />
-                </span>
-                <span class="navi-text update-rolePermission-button" data-toggle="modal" data-target="#exampleModalRolePermission">
-                    <input class="btn btn-outline-info my-2 mr-4 " value="@View.UpdateRolePermissions" />
-                </span>
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <div class="subheader py-2 py-lg-6 subheader-transparent" id="kt_subheader">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 mb-lg-0 mb-6 ">
+                    <div class="row mb-15 my-8 ">
+                        <span class="navi-text add-user-button" data-toggle="modal" data-target="#exampleModalAddUser">
+                            <input class="btn btn-outline-info my-2 mr-4 " value="@View.AddUser" />
+                        </span>
+                        <span class="navi-text add-role-button" data-toggle="modal" data-target="#exampleModalAddRole">
+                            <input class="btn btn-outline-info my-2 mr-4 " value="@View.AddRole" />
+                        </span>
+                        <span class="navi-text update-rolePermission-button" data-toggle="modal" data-target="#exampleModalRolePermission">
+                            <input class="btn btn-outline-info my-2 mr-4 " value="@View.UpdateRolePermissions" />
+                        </span>
 
-            </div>
-        </div>
-        <div class="col-lg-6 mb-lg-0 mb-6 ">
-            <div class="row mb-15 my-8 ">
-                @using (Html.BeginForm("Index", "UserOperations", FormMethod.Get))
-                {
-                    <div class="row ">
-                        <div class="col-lg-6 mb-lg-0 my-2">
-                            @Html.TextBox("SelectedUsername", search.SelectedUsername, new { @class = "form-control datatable-input", @autocomplete = "off", @data_col_index = "1", @placeholder = View.UserDisplayName})
-                        </div>
-                        <div class="col-lg-6 mb-lg-0 my-2 ">
-                            @Html.DropDownList("SelectedPermission", (SelectList)ViewBag.FilterList, View.Select, new { @class = "form-control datatable-input", @data_col_index = "2" })
-                        </div>
                     </div>
-                    <div class="row ">
-                        <div class="col-lg-12 my-2">
-                            <button type="submit" class="btn btn-primary btn-primary--icon" id="kt_search">
-                                <span>
-                                    <i class="la la-search"></i>
-                                    <span>@View.Filter</span>
-                                </span>
-                            </button>
+                </div>
+                <div class="col-lg-6 mb-lg-0 mb-6 ">
+                    <div class="row mb-15 my-8 ">
+                        @using (Html.BeginForm("Index", "UserOperations", FormMethod.Get))
+                        {
+                            <div class="row ">
+                                <div class="col-lg-6 mb-lg-0 my-2">
+                                    @Html.TextBox("SelectedUsername", search.SelectedUsername, new { @class = "form-control datatable-input", @autocomplete = "off", @data_col_index = "1", @placeholder = View.UserDisplayName })
+                                </div>
+                                <div class="col-lg-6 mb-lg-0 my-2 ">
+                                    @Html.DropDownList("SelectedPermission", (SelectList)ViewBag.FilterList, View.Select, new { @class = "form-control datatable-input", @data_col_index = "2" })
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-lg-12 my-2">
+                                    <button type="submit" class="btn btn-primary btn-primary--icon" id="kt_search">
+                                        <span>
+                                            <i class="la la-search"></i>
+                                            <span>@View.Filter</span>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6">
+                        <div class="card card-custom gutter-b card-stretch">
+                            <div class="card-body pt-4">
+                                <div class="mb-7">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="col-0">
+                                            <span class="switch switch-outline switch-icon switch-info">
+                                                <label>
+                                                    @Html.CheckBoxFor(modelItem => item.IsEnabled, new { @dataValue = item.UserId, @class = "user-status-check" })
+                                                    <span></span>
+                                                </label>
+                                            </span>
+                                        </div>
+                                        <div class="dropdown dropdown-inline" title="" data-placement="left">
+                                            <a href="javascript:void(0)" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="ki ki-bold-more-hor"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-md dropdown-menu-right" style="">
+                                                <ul class="navi navi-hover">
+                                                    <li class="navi-header font-weight-bold py-4">
+                                                        <span class="font-size-lg">@View.UserSettings:</span>
+                                                        <i class="flaticon2-settings icon-md text-muted"></i>
+                                                    </li>
+                                                    <li class="navi-separator mb-3 opacity-70"></li>
+                                                    <li class="navi-item">
+                                                        <div class="navi-link">
+                                                            <span class="navi-text" data-toggle="modal" data-target="#exampleModalUserInfo">
+                                                                <input class="btn-sm btn btn-block btn-outline-info user-Info-button " value="@View.UserInfo" dataValue="@item.UserId" />
+                                                            </span>
+
+                                                        </div>
+                                                    </li>
+                                                    @if (item.ısSetupTeam)
+                                                    {
+                                                        <li class="navi-item">
+                                                            <div class="navi-link">
+                                                                <span class="navi-text" data-toggle="modal" data-target="#exampleModalUserWorkHours">
+                                                                    <input class="btn-sm btn btn-block btn-outline-info user-workingHours-button" value="@View.WorkHours" dataValue="@item.UserId" />
+                                                                </span>
+
+                                                            </div>
+                                                        </li>
+                                                        <li class="navi-item">
+                                                            <div class="navi-link">
+                                                                <span class="navi-text" data-toggle="modal" data-target="#exampleModalUserWorkAreas">
+                                                                    <input class="btn-sm btn btn-block btn-outline-info user-workingAreas-button" value="@View.WorkArea" dataValue="@item.UserId" />
+                                                                </span>
+                                                            </div>
+                                                        </li>
+                                                    }
+                                                    <li class="navi-separator btn-info mt-10 opacity-100"></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr class="my-4 bg-secondary">
+                                    <!--end::Toolbar-->
+                                    <div class="mb-0">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="text-dark-50 font-weight-bold text-hover-primary font-size-h5 my-1 mb-0">@Html.DisplayFor(modelItem => item.NameSurname)</span>
+
+                                        </div>
+                                        <div class="mb-0">
+                                            <div class="d-flex justify-content-between align-items-center my-1">
+                                                <span class="text-dark-75 font-weight-bolder mr-2">@Html.DisplayNameFor(m => m.FirstOrDefault().RoleName)</span>
+                                                <a href="javascript:void(0)" class="text-muted text-hover-primary">@Html.DisplayFor(modelItem => item.RoleName)</a>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-center my-1">
+                                                <span class="text-dark-75 font-weight-bolder mr-2">@Html.DisplayNameFor(m => m.FirstOrDefault().NameSurname)</span>
+                                                <a href="javascript:void(0)" class="text-muted text-hover-primary">@Html.DisplayFor(modelItem => item.UserSubMail)</a>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-cente my-1">
+                                                <span class="text-dark-75 font-weight-bolder mr-2">@Html.DisplayNameFor(m => m.FirstOrDefault().PhoneNumber)</span>
+                                                <a href="javascript:void(0)" class="text-muted text-hover-primary">@Html.DisplayFor(modelItem => item.PhoneNumber)</a>
+                                            </div>
+                                            @if (User.IsInRole("Setup"))
+                                            {
+                                                <hr class="my-4 bg-secondary">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <span class="text-dark-75 font-weight-bolder my-2 mr-2">@View.ResponsibleArea</span>
+                                                </div>
+                                                if (item.ısSetupTeam && item.SetupTeamUserAddressInfo.Count() != 0)
+                                                {
+                                                    <div class="d-flex flex-column">
+                                                        @foreach (var workArea in item.SetupTeamUserAddressInfo)
+                                                        {
+                                                            <span class="btn btn-sm font-size-xs btn-outline-secondary my-1">@Html.DisplayFor(workAreaItem => workArea.ProvinceName) @Html.DisplayFor(workAreaItem => workArea.DistrictName) @Html.DisplayFor(workAreaItem => workArea.RuralName) @Html.DisplayFor(workAreaItem => workArea.NeigborhoodName)</span>
+                                                        }
+                                                    </div>
+                                                }
+                                                else if (item.ısSetupTeam && item.SetupTeamUserAddressInfo.Count() == 0)
+                                                {
+                                                    <div class="d-flex flex-column"><span class="btn btn-sm font-size-sm btn-outline-danger my-1">@View.UserResponsibleAreaNotAdded</span></div>
+
+                                                }
+                                                else
+                                                {
+                                                    <div class="d-flex flex-column"><span class="btn btn-sm font-size-sm btn-outline-warning my-1">@View.UserIsNotSetupManager</span></div>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 }
+
             </div>
-        </div>
-    </div>
-    <div class="row">
-        @foreach (var item in Model)
-        {
-            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6">
-                <div class="card card-custom gutter-b card-stretch">
-                    <div class="card-body pt-4">
-                        <div class="mb-7">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="col-0">
-                                    <span class="switch switch-outline switch-icon switch-info">
-                                        <label>
-                                            @Html.CheckBoxFor(modelItem => item.IsEnabled, new { @dataValue = item.UserId, @class = "user-status-check" })
-                                            <span></span>
-                                        </label>
-                                    </span>
-                                </div>
-                                <div class="dropdown dropdown-inline" title="" data-placement="left">
-                                    <a href="javascript:void(0)" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="ki ki-bold-more-hor"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-md dropdown-menu-right" style="">
-                                        <ul class="navi navi-hover">
-                                            <li class="navi-header font-weight-bold py-4">
-                                                <span class="font-size-lg">@View.UserSettings:</span>
-                                                <i class="flaticon2-settings icon-md text-muted"></i>
-                                            </li>
-                                            <li class="navi-separator mb-3 opacity-70"></li>
-                                            <li class="navi-item">
-                                                <div class="navi-link">
-                                                    <span class="navi-text" data-toggle="modal" data-target="#exampleModalUserInfo">
-                                                        <input class="btn-sm btn btn-block btn-outline-info user-Info-button " value="@View.UserInfo" dataValue="@item.UserId" />
-                                                    </span>
+            </div>
+            </div>
 
-                                                </div>
-                                            </li>
-                                            @if (item.ısSetupTeam)
-                                            {
-                                                <li class="navi-item">
-                                                    <div class="navi-link">
-                                                        <span class="navi-text" data-toggle="modal" data-target="#exampleModalUserWorkHours">
-                                                            <input class="btn-sm btn btn-block btn-outline-info user-workingHours-button" value="@View.WorkHours" dataValue="@item.UserId" />
-                                                        </span>
+            @if (Model != null && Model.TotalItemCount > 0)
+            {
+                <div class="card card-custom">
+                    <div class="card-body py-7">
+                        <!--begin::Pagination-->
+                        <div class="d-flex justify-content-between align-items-center flex-wrap">
+                            <div class="d-flex flex-wrap mr-3">
+                                @Html.PagedListPager(Model, page => Url.Action("Index", "UserOperations", new
+                           {
+                               page = page,
+                               search.SelectedUsername,
+                               search.SelectedPermission,
+                           }), new PagedListRenderOptions()
+                           {
 
-                                                    </div>
-                                                </li>
-                                                <li class="navi-item">
-                                                    <div class="navi-link">
-                                                        <span class="navi-text" data-toggle="modal" data-target="#exampleModalUserWorkAreas">
-                                                            <input class="btn-sm btn btn-block btn-outline-info user-workingAreas-button" value="@View.WorkArea" dataValue="@item.UserId" />
-                                                        </span>
-                                                    </div>
-                                                </li>
-                                            }
-                                            <li class="navi-separator btn-info mt-10 opacity-100"></li>
-                                        </ul>
-                                    </div>
-                                </div>
+                           })
                             </div>
-                            <hr class="my-4 bg-secondary">
-                            <!--end::Toolbar-->
-                            <div class="mb-0">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="text-dark-50 font-weight-bold text-hover-primary font-size-h5 my-1 mb-0">@Html.DisplayFor(modelItem => item.NameSurname)</span>
-
-                                </div>
-                                <div class="mb-0">
-                                    <div class="d-flex justify-content-between align-items-center my-1">
-                                        <span class="text-dark-75 font-weight-bolder mr-2">@Html.DisplayNameFor(m => m.FirstOrDefault().RoleName)</span>
-                                        <a href="javascript:void(0)" class="text-muted text-hover-primary">@Html.DisplayFor(modelItem => item.RoleName)</a>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-center my-1">
-                                        <span class="text-dark-75 font-weight-bolder mr-2">@Html.DisplayNameFor(m => m.FirstOrDefault().NameSurname)</span>
-                                        <a href="javascript:void(0)" class="text-muted text-hover-primary">@Html.DisplayFor(modelItem => item.UserSubMail)</a>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-cente my-1">
-                                        <span class="text-dark-75 font-weight-bolder mr-2">@Html.DisplayNameFor(m => m.FirstOrDefault().PhoneNumber)</span>
-                                        <a href="javascript:void(0)" class="text-muted text-hover-primary">@Html.DisplayFor(modelItem => item.PhoneNumber)</a>
-                                    </div>
-                                    @if (User.IsInRole("Setup"))
-                                    {
-                                        <hr class="my-4 bg-secondary">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <span class="text-dark-75 font-weight-bolder my-2 mr-2">@View.ResponsibleArea</span>
-                                        </div>
-                                        if (item.ısSetupTeam && item.SetupTeamUserAddressInfo.Count() != 0)
-                                        {
-                                            <div class="d-flex flex-column">
-                                                @foreach (var workArea in item.SetupTeamUserAddressInfo)
-                                                {
-                                                    <span class="btn btn-sm font-size-xs btn-outline-secondary my-1">@Html.DisplayFor(workAreaItem => workArea.ProvinceName) @Html.DisplayFor(workAreaItem => workArea.DistrictName) @Html.DisplayFor(workAreaItem => workArea.RuralName) @Html.DisplayFor(workAreaItem => workArea.NeigborhoodName)</span>
-                                                }
-                                            </div>
-                                        }
-                                        else if (item.ısSetupTeam && item.SetupTeamUserAddressInfo.Count() == 0)
-                                        {
-                                            <div class="d-flex flex-column"><span class="btn btn-sm font-size-sm btn-outline-danger my-1">@View.UserResponsibleAreaNotAdded</span></div>
-
-                                        }
-                                        else
-                                        {
-                                            <div class="d-flex flex-column"><span class="btn btn-sm font-size-sm btn-outline-warning my-1">@View.UserIsNotSetupManager</span></div>
-                                        }
-                                    }
-                                </div>
+                            <div class="d-flex align-items-center">
+                                <span class="text-muted"> @View.Total @Model.TotalItemCount @View.RecordFound @View.OnThisPage @Model.FirstItemOnPage @View.To @Model.LastItemOnPage @View.Showing</span>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        }
-
-    </div>
-
-    @if (Model != null && Model.TotalItemCount > 0)
-    {
-        <div class="card card-custom">
-            <div class="card-body py-7">
-                <!--begin::Pagination-->
-                <div class="d-flex justify-content-between align-items-center flex-wrap">
-                    <div class="d-flex flex-wrap mr-3">
-                        @Html.PagedListPager(Model, page => Url.Action("Index", "UserOperations", new
-                   {
-                       page = page,
-                       search.SelectedUsername,
-                       search.SelectedPermission,
-                   }), new PagedListRenderOptions()
-                   {
-
-                   })
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <span class="text-muted"> @View.Total @Model.TotalItemCount @View.RecordFound @View.OnThisPage @Model.FirstItemOnPage @View.To @Model.LastItemOnPage @View.Showing</span>
-                    </div>
-                </div>
-            </div>
+            }
         </div>
-    }
-</div>
-<div class="modal fade" id="exampleModalUserInfo" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div id="user-update-info-container">
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="exampleModalRolePermission" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div id="update-role-permission-container">
+        <div class="modal fade" id="exampleModalUserInfo" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <div class="py-2">
-                            <span class="text-dark-75 font-weight-bolder d-block font-size-h5">@View.UpdateRolePermissions</span>
-                        </div>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
-                        </button>
+                    <div id="user-update-info-container">
                     </div>
-                    @using (Ajax.BeginForm("UpdateRolePermission", "UserOperations", new AjaxOptions { HttpMethod = "POST", OnComplete = "GenericResultUserOperations" }))
-                    {
-                        <div class="modal-body">
-                            <div class="form-group my-0">
-                                <label class="text-info col-form-label">@View.SelectRole</label>
-
-                                @Html.DropDownList("RoleId", (SelectList)ViewBag.RoleList, MasterISS_Partner_WebSite.Localization.View.SelectRole, new { @class = "form-control" })
-
-                                <div class="error-codes-container" style="display:none">
-                                    <div class="separator separator-dashed mt-2 my-4"></div>
-                                    <div class="text-danger error-codes" align="center"></div>
-                                    <div class="separator separator-dashed mt-2 my-4"></div>
-                                </div>
-
-                                @Html.AntiForgeryToken()
-                                <label class="text-info col-12 col-form-label my-4">@View.Permissions</label>
-                                <div class="checkbox-list permissionCheckboxList">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">@View.Close</button>
-                            <button type="submit" class="btn btn-info font-weight-bold">@View.ChangeAndSave</button>
-                        </div> <!--end::Info-->
-                    }
                 </div>
             </div>
         </div>
-    </div>
-</div>
-@*Update Role Permission End *@
 
-@*Add Role Start *@
-<div class="modal fade" id="exampleModalAddRole" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div id="add-role-container">
-                @*user-Info-button*@
+        <div class="modal fade" id="exampleModalRolePermission" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div id="update-role-permission-container">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div class="py-2">
+                                    <span class="text-dark-75 font-weight-bolder d-block font-size-h5">@View.UpdateRolePermissions</span>
+                                </div>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
+                                </button>
+                            </div>
+                            @using (Ajax.BeginForm("UpdateRolePermission", "UserOperations", new AjaxOptions { HttpMethod = "POST", OnComplete = "GenericResultUserOperations" }))
+                            {
+                                <div class="modal-body">
+                                    <div class="form-group my-0">
+                                        <label class="text-info col-form-label">@View.SelectRole</label>
+
+                                        @Html.DropDownList("RoleId", (SelectList)ViewBag.RoleList, MasterISS_Partner_WebSite.Localization.View.SelectRole, new { @class = "form-control" })
+
+                                        <div class="error-codes-container" style="display:none">
+                                            <div class="separator separator-dashed mt-2 my-4"></div>
+                                            <div class="text-danger error-codes" align="center"></div>
+                                            <div class="separator separator-dashed mt-2 my-4"></div>
+                                        </div>
+
+                                        @Html.AntiForgeryToken()
+                                        <label class="text-info col-12 col-form-label my-4">@View.Permissions</label>
+                                        <div class="checkbox-list permissionCheckboxList">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">@View.Close</button>
+                                    <button type="submit" class="btn btn-info font-weight-bold">@View.ChangeAndSave</button>
+                                </div> <!--end::Info-->
+                            }
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-@*Add Role End *@
+        @*Update Role Permission End *@
 
-@*Add User Start *@
-<div class="modal fade" id="exampleModalAddUser" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div id="user-add-user-container">
-                @*user-Info-button*@
+        @*Add Role Start *@
+        <div class="modal fade" id="exampleModalAddRole" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div id="add-role-container">
+                        @*user-Info-button*@
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-@*Add User End *@
+        @*Add Role End *@
 
-@* Setup Team Work Hours Start*@
-<div class="modal fade" id="exampleModalUserWorkHours" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div id="user-work-hours-container">
-                @*user-Info-button*@
+        @*Add User Start *@
+        <div class="modal fade" id="exampleModalAddUser" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div id="user-add-user-container">
+                        @*user-Info-button*@
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-@* Setup Team Work Hours End*@
+        @*Add User End *@
 
-
-@* Setup Team Work Area Start*@
-<div class="modal fade" id="exampleModalUserWorkAreas" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div id="user-work-area-container">
+        @* Setup Team Work Hours Start*@
+        <div class="modal fade" id="exampleModalUserWorkHours" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div id="user-work-hours-container">
+                        @*user-Info-button*@
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-@* Setup Team Work Area End*@
+        @* Setup Team Work Hours End*@
 
 
-@section Javascript{
-    <script>
+        @* Setup Team Work Area Start*@
+        <div class="modal fade" id="exampleModalUserWorkAreas" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div id="user-work-area-container">
+                    </div>
+                </div>
+            </div>
+        </div>
+        @* Setup Team Work Area End*@
+
+
+        @section Javascript{
+            <script>
         function GetSelectTextandSetHiddenInput(triggerselectId, triggeredHiddenInputId) {
             var selectValue = $(triggerselectId).find(":selected").val();
                 if (selectValue != "") {
@@ -395,12 +399,12 @@
                         }
                     },
                 });
-            } 
+            }
         })
     });
-    </script>
+            </script>
 
-    <script>
+            <script>
         function UpdateUserRoleAndPhoneNumber(data, status) {
             if (status = "success") {
                 var responseStatus = data.responseJSON.status;
@@ -440,9 +444,9 @@
             }
         }
 
-    </script>
+            </script>
 
-    <script>
+            <script>
         $(".user-Info-button").click(function () {
             var dataValue = $(this).attr("dataValue");
                 $.ajax({
@@ -606,5 +610,5 @@
 
 
 
-    </script>
-}
+            </script>
+        }
