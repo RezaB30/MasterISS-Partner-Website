@@ -12,10 +12,10 @@
             <span class="text-danger">@Html.Raw(TempData["SMSConfirmationError"])</span>
             <span class="text-danger">@ViewBag.InvalidCredentials</span>
         </div>
-        <div class="wizard wizard-5 d-flex flex-column flex-lg-row flex-row-fluid" id="kt_wizard" data-wizard-state="first">
-        </div>
+        @*<div class="wizard wizard-5 d-flex flex-column flex-lg-row flex-row-fluid" id="kt_wizard" data-wizard-state="first">
+        </div>*@
 
-        <div class="bg-secondary wizard-content d-flex flex-column flex-row-fluid py-15 px-5 px-lg-10 ">
+        <div class="bg-secondary d-flex flex-column flex-row-fluid py-15 px-5 px-lg-10 ">
             <div class="text-right mb-lg-4 mb-15 mr-xxl-10">
 
             </div>
@@ -1241,7 +1241,6 @@
 @section Javascript{
     <script src="~/Scripts/js/custom-js/hide-show-fields-form.js"></script>
     <script src="~/Scripts/js/custom-js/input-mask.js"></script>
-    <script src="~/Scripts/js/custom-js/wizard5-basvur.js"></script>
     <script>
         $("#IDCard_SelectedBirthDay").change(function () {
             ValidDate("@MasterISS_Partner_WebSite_Enums.Enums.DateType.BirthDate.ToString()");
