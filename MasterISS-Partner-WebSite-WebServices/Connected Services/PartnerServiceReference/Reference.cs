@@ -2245,17 +2245,17 @@ namespace MasterISS_Partner_WebSite_WebServices.PartnerServiceReference {
     public partial class BillListRequest : MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.RequestBase {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string SubscriberNoField;
+        private string CustomerCodeField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SubscriberNo {
+        public string CustomerCode {
             get {
-                return this.SubscriberNoField;
+                return this.CustomerCodeField;
             }
             set {
-                if ((object.ReferenceEquals(this.SubscriberNoField, value) != true)) {
-                    this.SubscriberNoField = value;
-                    this.RaisePropertyChanged("SubscriberNo");
+                if ((object.ReferenceEquals(this.CustomerCodeField, value) != true)) {
+                    this.CustomerCodeField = value;
+                    this.RaisePropertyChanged("CustomerCode");
                 }
             }
         }
@@ -5214,6 +5214,9 @@ namespace MasterISS_Partner_WebSite_WebServices.PartnerServiceReference {
             [System.Runtime.Serialization.OptionalFieldAttribute()]
             private System.Nullable<long> RuralCodeField;
             
+            [System.Runtime.Serialization.OptionalFieldAttribute()]
+            private long WorkAreaIdField;
+            
             public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
                 get {
                     return this.extensionDataField;
@@ -5310,6 +5313,19 @@ namespace MasterISS_Partner_WebSite_WebServices.PartnerServiceReference {
                     if ((this.RuralCodeField.Equals(value) != true)) {
                         this.RuralCodeField = value;
                         this.RaisePropertyChanged("RuralCode");
+                    }
+                }
+            }
+            
+            [System.Runtime.Serialization.DataMemberAttribute()]
+            public long WorkAreaId {
+                get {
+                    return this.WorkAreaIdField;
+                }
+                set {
+                    if ((this.WorkAreaIdField.Equals(value) != true)) {
+                        this.WorkAreaIdField = value;
+                        this.RaisePropertyChanged("WorkAreaId");
                     }
                 }
             }
@@ -5604,6 +5620,9 @@ namespace MasterISS_Partner_WebSite_WebServices.PartnerServiceReference {
             private string ServiceNameField;
             
             [System.Runtime.Serialization.OptionalFieldAttribute()]
+            private string SubscriberNoField;
+            
+            [System.Runtime.Serialization.OptionalFieldAttribute()]
             private decimal TotalField;
             
             public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -5663,6 +5682,19 @@ namespace MasterISS_Partner_WebSite_WebServices.PartnerServiceReference {
                     if ((object.ReferenceEquals(this.ServiceNameField, value) != true)) {
                         this.ServiceNameField = value;
                         this.RaisePropertyChanged("ServiceName");
+                    }
+                }
+            }
+            
+            [System.Runtime.Serialization.DataMemberAttribute()]
+            public string SubscriberNo {
+                get {
+                    return this.SubscriberNoField;
+                }
+                set {
+                    if ((object.ReferenceEquals(this.SubscriberNoField, value) != true)) {
+                        this.SubscriberNoField = value;
+                        this.RaisePropertyChanged("SubscriberNo");
                     }
                 }
             }
@@ -7087,11 +7119,11 @@ namespace MasterISS_Partner_WebSite_WebServices.PartnerServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartnerService/EnableSubUser", ReplyAction="http://tempuri.org/IPartnerService/EnableSubUserResponse")]
         System.Threading.Tasks.Task<MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceSubUserResponse> EnableSubUserAsync(MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceSubUserRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartnerService/BillsBySubscriberNo", ReplyAction="http://tempuri.org/IPartnerService/BillsBySubscriberNoResponse")]
-        MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceBillListResponse BillsBySubscriberNo(MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceBillListRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartnerService/GetBills", ReplyAction="http://tempuri.org/IPartnerService/GetBillsResponse")]
+        MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceBillListResponse GetBills(MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceBillListRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartnerService/BillsBySubscriberNo", ReplyAction="http://tempuri.org/IPartnerService/BillsBySubscriberNoResponse")]
-        System.Threading.Tasks.Task<MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceBillListResponse> BillsBySubscriberNoAsync(MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceBillListRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartnerService/GetBills", ReplyAction="http://tempuri.org/IPartnerService/GetBillsResponse")]
+        System.Threading.Tasks.Task<MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceBillListResponse> GetBillsAsync(MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceBillListRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPartnerService/GetCultures", ReplyAction="http://tempuri.org/IPartnerService/GetCulturesResponse")]
         MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceKeyValueListResponse GetCultures(MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceParameterlessRequest request);
@@ -7379,12 +7411,12 @@ namespace MasterISS_Partner_WebSite_WebServices.PartnerServiceReference {
             return base.Channel.EnableSubUserAsync(request);
         }
         
-        public MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceBillListResponse BillsBySubscriberNo(MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceBillListRequest request) {
-            return base.Channel.BillsBySubscriberNo(request);
+        public MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceBillListResponse GetBills(MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceBillListRequest request) {
+            return base.Channel.GetBills(request);
         }
         
-        public System.Threading.Tasks.Task<MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceBillListResponse> BillsBySubscriberNoAsync(MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceBillListRequest request) {
-            return base.Channel.BillsBySubscriberNoAsync(request);
+        public System.Threading.Tasks.Task<MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceBillListResponse> GetBillsAsync(MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceBillListRequest request) {
+            return base.Channel.GetBillsAsync(request);
         }
         
         public MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceKeyValueListResponse GetCultures(MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceParameterlessRequest request) {

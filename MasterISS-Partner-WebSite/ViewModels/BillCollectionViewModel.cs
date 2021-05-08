@@ -31,5 +31,9 @@ namespace MasterISS_Partner_WebSite.ViewModels
 
         [Display(Name = "BillName", ResourceType = typeof(Localization.Model))]
         public string BillName { get; set; }
+
+        [Display(Name = "SubscriberNo", ResourceType = typeof(Localization.Model))]
+        public string SubscriptionNo { get; set; }
+
     }
 }

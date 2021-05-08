@@ -213,17 +213,17 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="BillsBySubscriberNo">
+  <xs:element name="GetBills">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/RadiusR.API.CustomerWebService.Requests.PartnerRequests" minOccurs="0" name="request" nillable="true" type="q29:PartnerServiceBillListRequest" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="BillsBySubscriberNoResponse">
+  <xs:element name="GetBillsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/RadiusR.API.CustomerWebService.Responses.PartnerResponses" minOccurs="0" name="BillsBySubscriberNoResult" nillable="true" type="q30:PartnerServiceBillListResponse" />
+        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/RadiusR.API.CustomerWebService.Responses.PartnerResponses" minOccurs="0" name="GetBillsResult" nillable="true" type="q30:PartnerServiceBillListResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

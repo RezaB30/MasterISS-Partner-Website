@@ -286,7 +286,7 @@
     <value>İndirme Hızı Kapasitesi</value>
   </data>
   <data name="DueDate" xml:space="preserve">
-    <value>Bitiş Tarihi</value>
+    <value>Son Ödeme Tarihi</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>E-Posta</value>

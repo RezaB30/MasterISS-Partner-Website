@@ -243,22 +243,22 @@ namespace MasterISS_Partner_WebSite
             return response;
         }
 
-        public PartnerServiceBillListResponse UserBillList(string subscriberNo)
+        public PartnerServiceBillListResponse UserBillList(string customerCode)
         {
-            var request = new PartnerServiceBillListRequest()
+            var request = new PartnerServiceBillListRequest
             {
-                Culture = Culture,
+                BillListRequest = new BillListRequest
+                {
+                    CustomerCode = customerCode,
+                    SubUserEmail = GetUserSubMail(),
+                    UserEmail = GetUserMail(),
+                },
                 Hash = Hash<SHA256>(),
                 Rand = Rand,
-                Username = Username,
-                BillListRequest = new BillListRequest()
-                {
-                    SubscriberNo = subscriberNo,
-                    SubUserEmail = GetUserSubMail(),
-                    UserEmail = GetUserMail()
-                }
+                Culture = Culture,
+                Username = Username
             };
-            var response = Client.BillsBySubscriberNo(request);
+            var response = Client.GetBills(request);
 
             return response;
         }

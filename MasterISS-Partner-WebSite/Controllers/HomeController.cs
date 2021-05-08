@@ -98,22 +98,20 @@ namespace MasterISS_Partner_WebSite.Controllers
         [HttpPost]
         [Authorize(Roles = "PaymentManager,Admin")]
         [Authorize(Roles = "Payment")]
-        public ActionResult BillOperations(long[] selectedBills, string SubscriberNo)
+        public ActionResult BillOperations(long[] selectedBills, string customerCode, string subscriberNo)
         {
             PartnerInfos();
 
             if (selectedBills != null)
             {
                 var wrapper = new WebServiceWrapper();
-                var response = wrapper.UserBillList(SubscriberNo);
+                var response = wrapper.UserBillList(customerCode);
 
                 if (response.ResponseMessage.ErrorCode == 0)
                 {
-                    var userBillList = response.BillListResponse.Bills.OrderBy(blr => blr.IssueDate).Take(selectedBills.Length).Select(blr => new { blr.ID, blr.Total });
+                    var userBillList = response.BillListResponse.Bills.Where(blr => blr.SubscriberNo == subscriberNo).OrderBy(blr => blr.IssueDate).Take(selectedBills.Length).Select(blr => new { blr.ID, blr.Total });
 
-                    var isMatchedBills = userBillList.Select(ubl => ubl.ID).SequenceEqual(selectedBills);
-
-                    if (isMatchedBills == false)
+                    if (ValidBills(selectedBills, customerCode, subscriberNo) == false)
                     {
                         ViewBag.PayOldBillError = Localization.BillView.PayOldBillError;
 
@@ -124,7 +122,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                     var billList = userBillList.Select(ubl => new UserBillIdAndCost { BillId = ubl.ID, Cost = ubl.Total }).ToArray();
                     Session["BillsSumCount"] = billTotalCount;
                     Session["BillList"] = billList;
-                    Session["SubsNo"] = SubscriberNo;
+                    Session["SubsNo"] = customerCode;
                     Session["SubsName"] = response.BillListResponse.SubscriberName;
 
                     ViewBag.SumCount = billTotalCount;
@@ -133,6 +131,29 @@ namespace MasterISS_Partner_WebSite.Controllers
                 return View("Index", BillList(response));
             }
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult ValidBillsBySubcriberNo(long[] selectedBills, string customerCode, string subscriberNo)
+        {
+            if (ValidBills(selectedBills, customerCode, subscriberNo))
+            {
+                return Json(new { status = "Success"}, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { status = "Failed" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        private bool ValidBills(long[] selectedBills, string customerCode, string subscriberNo)
+        {
+            var wrapper = new WebServiceWrapper();
+            var response = wrapper.UserBillList(customerCode);
+            var userBillList = response.BillListResponse.Bills.Where(blr => blr.SubscriberNo == subscriberNo).OrderBy(blr => blr.IssueDate).Take(selectedBills.Length).Select(blr => new { blr.ID, blr.Total });
+
+            var isMatchedBills = userBillList.Select(ubl => ubl.ID).SequenceEqual(selectedBills);
+            return isMatchedBills;
         }
 
         private void RemoveSessionsByBillOperations()
@@ -234,8 +255,9 @@ namespace MasterISS_Partner_WebSite.Controllers
                     BillID = b.ID,
                     DueDate = b.DueDate,
                     Cost = b.Total,
-                    BillName = b.ServiceName
-                })
+                    BillName = b.ServiceName,
+                    SubscriptionNo = b.SubscriberNo,
+                }).OrderBy(bl => bl.SubscriptionNo).ThenBy(bl => bl.IssueDate)
             };
             return billList;
         }

@@ -108,11 +108,11 @@
   <wsdl:message name="IPartnerService_EnableSubUser_OutputMessage">
     <wsdl:part name="parameters" element="tns:EnableSubUserResponse" />
   </wsdl:message>
-  <wsdl:message name="IPartnerService_BillsBySubscriberNo_InputMessage">
-    <wsdl:part name="parameters" element="tns:BillsBySubscriberNo" />
+  <wsdl:message name="IPartnerService_GetBills_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBills" />
   </wsdl:message>
-  <wsdl:message name="IPartnerService_BillsBySubscriberNo_OutputMessage">
-    <wsdl:part name="parameters" element="tns:BillsBySubscriberNoResponse" />
+  <wsdl:message name="IPartnerService_GetBills_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBillsResponse" />
   </wsdl:message>
   <wsdl:message name="IPartnerService_GetCultures_InputMessage">
     <wsdl:part name="parameters" element="tns:GetCultures" />
@@ -313,9 +313,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IPartnerService/EnableSubUser" message="tns:IPartnerService_EnableSubUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPartnerService/EnableSubUserResponse" message="tns:IPartnerService_EnableSubUser_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="BillsBySubscriberNo">
-      <wsdl:input wsaw:Action="http://tempuri.org/IPartnerService/BillsBySubscriberNo" message="tns:IPartnerService_BillsBySubscriberNo_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IPartnerService/BillsBySubscriberNoResponse" message="tns:IPartnerService_BillsBySubscriberNo_OutputMessage" />
+    <wsdl:operation name="GetBills">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPartnerService/GetBills" message="tns:IPartnerService_GetBills_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPartnerService/GetBillsResponse" message="tns:IPartnerService_GetBills_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetCultures">
       <wsdl:input wsaw:Action="http://tempuri.org/IPartnerService/GetCultures" message="tns:IPartnerService_GetCultures_InputMessage" />
@@ -548,8 +548,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="BillsBySubscriberNo">
-      <soap12:operation soapAction="http://tempuri.org/IPartnerService/BillsBySubscriberNo" style="document" />
+    <wsdl:operation name="GetBills">
+      <soap12:operation soapAction="http://tempuri.org/IPartnerService/GetBills" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

@@ -63,6 +63,7 @@
       <xs:element minOccurs="0" name="ProvinceID" type="xs:long" />
       <xs:element minOccurs="0" name="ProvinceName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="RuralCode" nillable="true" type="xs:long" />
+      <xs:element minOccurs="0" name="WorkAreaId" type="xs:long" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="AuthenticationResponse.WorkAreaResult" nillable="true" type="tns:AuthenticationResponse.WorkAreaResult" />
@@ -151,6 +152,7 @@
       <xs:element minOccurs="0" name="ID" type="xs:long" />
       <xs:element minOccurs="0" name="IssueDate" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ServiceName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SubscriberNo" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Total" type="xs:decimal" />
     </xs:sequence>
   </xs:complexType>

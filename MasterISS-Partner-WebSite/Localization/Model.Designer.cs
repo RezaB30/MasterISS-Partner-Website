@@ -565,7 +565,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bitiş Tarihi.
+        ///   Looks up a localized string similar to Son Ödeme Tarihi.
         /// </summary>
         public static string DueDate {
             get {

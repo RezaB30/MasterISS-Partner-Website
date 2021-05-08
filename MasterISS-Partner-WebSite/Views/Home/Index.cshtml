@@ -225,10 +225,6 @@
                                         <thead>
                                             <tr class="text-left">
                                                 <th class="pl-0" style="width: 30px">
-                                                    <label class="checkbox checkbox checkbox-inline mr-2">
-                                                        <input type="checkbox" id="container-check">
-                                                        <span></span>
-                                                    </label>
                                                 </th>
                                                 <th class="pl-0" style="min-width: 130px"><span class="text-info">@Html.DisplayNameFor(m => m.Bills.FirstOrDefault().BillName)</span></th>
                                                 <th style="min-width: 120px"><span class="text-info">@Html.DisplayNameFor(m => m.Bills.FirstOrDefault().IssueDate)</span></th>
@@ -236,6 +232,7 @@
                                                     <span class="text-info">@Html.DisplayNameFor(m => m.Bills.FirstOrDefault().DueDate)</span>
                                                 </th>
                                                 <th style="min-width: 120px"><span class="text-info">@Html.DisplayNameFor(m => m.Bills.FirstOrDefault().Cost)</span></th>
+                                                <th style="min-width: 120px"><span class="text-info">@Html.DisplayNameFor(m => m.Bills.FirstOrDefault().SubscriptionNo)</span></th>
                                             </tr>
                                         </thead>
 
@@ -246,28 +243,29 @@
                                                 <tr>
                                                     <td class="pl-0 py-6">
                                                         <label class="checkbox checkbox checkbox-inline">
-                                                            <input type="checkbox" name="selectedBills" value="@itemBill.BillID" dataValue="@counter">
+                                                            <input type="checkbox" name="selectedBills" value="@itemBill.BillID" dataValue="@counter" subsNo="@itemBill.SubscriptionNo">
                                                             <span></span>
                                                         </label>
                                                     </td>
-
                                                     <td class="pl-0">
                                                         <span class="text-dark-75 font-size-lg font-weight d-block">@Html.DisplayFor(modelItem => itemBill.BillName)</span>
                                                     </td>
-
                                                     <td>
                                                         <span class="text-dark-75 font-size-lg font-weight d-block ">@Html.DisplayFor(modelItem => itemBill.IssueDate)</span>
                                                     </td>
                                                     <td>
                                                         <span class="text-dark font-size-lg font-weight-bold d-block ">@Html.DisplayFor(modelItem => itemBill.DueDate)</span>
                                                     </td>
-
                                                     <td>
                                                         <span class="text-dark-75 font-size-lg font-weight d-block ">@Html.DisplayFor(modelItem => itemBill.Cost)</span>
                                                     </td>
+                                                    <td>
+                                                        <span class="text-dark-75 font-size-lg font-weight d-block ">@Html.DisplayFor(modelItem => itemBill.SubscriptionNo)</span>
+                                                    </td>
                                                 </tr>
                                             }
-                                            @Html.Hidden("SubscriberNo", search.SubscriberNo)
+                                            @Html.Hidden("customerCode", search.SubscriberNo)
+                                            @Html.Hidden("subscriberNo")
                                         </tbody>
                                     </table>
                                     <!--end::Table-->
@@ -290,51 +288,61 @@
 
 @section Javascript{
     <script>
-
         $("#subsNo").mask("9999999999");
-        $("#container-check").click(function () {
-            if (this.checked) {
-                $('input[type=checkbox]').each(function (index, element) {
-                    $(this).prop("checked", true);
-                });
-            }
-            else {
-                $('input[type=checkbox]').each(function (index, element) {
-                    $(this).prop("checked", false);
-                });
-            }
-        });
+        var lastChangedSubscriberNo = "";
+        var currentCheckedCheckboxDataValue = [];
 
         $('input[type=checkbox]').click(function () {
             if (this.checked) {
-                if ($(this).attr("dataValue") != 1) {
 
-                    var thisCheckbox = $(this);
-                    var currentCheckedCheckboxDataValue = [];
-                    var checkedCheckbox = $('input[type=checkbox]:checked');
+                var thisCheckbox = $(this);
 
+                var checkedCheckBoxSubscriptionNo = $(this).attr("subsNo");
+
+                if (lastChangedSubscriberNo == "") {
+                    lastChangedSubscriberNo = checkedCheckBoxSubscriptionNo;
+                }
+
+                if (checkedCheckBoxSubscriptionNo != lastChangedSubscriberNo) {
+                    thisCheckbox.prop("checked", false);
+                }
+                else {
+                    $("#subscriberNo").val(checkedCheckBoxSubscriptionNo);
+                    var subscriberNo = $("#subscriberNo").val();
+                    var customerCode = $("#customerCode").val();
+
+                    currentCheckedCheckboxDataValue = [];
                     $('input[type=checkbox]:checked').each(function (index, element) {
-
-                        var lastItem = (index == (checkedCheckbox.length - 1));
-                        currentCheckedCheckboxDataValue.push(lastItem);
+                        var checkedCheckboxBillId = parseFloat( $(this).val());
+                        currentCheckedCheckboxDataValue.push(checkedCheckboxBillId);
                     });
 
-                    var checkedCheckBoxDataValue = thisCheckbox.attr("dataValue");
-                    var arraylenght = parseInt(currentCheckedCheckboxDataValue.length);
-                    if (checkedCheckBoxDataValue > arraylenght) {
-                        thisCheckbox.prop("checked", false);
-                    }
+                    var postData = { selectedBills: currentCheckedCheckboxDataValue, subscriberNo: subscriberNo, customerCode: customerCode };
+
+                     $.ajax({
+                      url: '@Url.Action("ValidBillsBySubcriberNo", "Home")',
+                      type: "POST",
+                      dataType: "json",
+                      data: postData,
+                      complete: function (data, status) {
+                          if (status == "success") {
+                              var status = data.responseJSON.status;
+                              if (status =="Failed") {
+                                  thisCheckbox.prop("checked", false);
+                              }
+                          }
+                          else {
+                              console.log("Failed Get Staff Work Days");
+                          }
+                      }
+                  });
+
                 }
+
             }
             else {
-                var checkedCheckboxDataValue = parseInt($(this).attr("dataValue"));
-
-                $('input[type=checkbox]:checked').each(function (index, element) {
-                    var allCheckedCheckboxDataValue = parseInt($(this).attr("dataValue"))
-                    if (checkedCheckboxDataValue < allCheckedCheckboxDataValue) {
-                        $(this).prop("checked", false);
-                    }
-                });
+                lastChangedSubscriberNo = "";
+                $("#subscriberNo").val("");
             }
         });
     </script>

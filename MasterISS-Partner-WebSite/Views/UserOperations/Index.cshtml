@@ -163,8 +163,6 @@
                 }
 
             </div>
-            </div>
-            </div>
 
             @if (Model != null && Model.TotalItemCount > 0)
             {
@@ -191,111 +189,114 @@
                 </div>
             }
         </div>
-        <div class="modal fade" id="exampleModalUserInfo" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div id="user-update-info-container">
-                    </div>
-                </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModalUserInfo" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div id="user-update-info-container">
             </div>
         </div>
+    </div>
+</div>
 
-        <div class="modal fade" id="exampleModalRolePermission" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal fade" id="exampleModalRolePermission" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div id="update-role-permission-container">
                 <div class="modal-content">
-                    <div id="update-role-permission-container">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <div class="py-2">
-                                    <span class="text-dark-75 font-weight-bolder d-block font-size-h5">@View.UpdateRolePermissions</span>
-                                </div>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
-                                </button>
-                            </div>
-                            @using (Ajax.BeginForm("UpdateRolePermission", "UserOperations", new AjaxOptions { HttpMethod = "POST", OnComplete = "GenericResultUserOperations" }))
-                            {
-                                <div class="modal-body">
-                                    <div class="form-group my-0">
-                                        <label class="text-info col-form-label">@View.SelectRole</label>
-
-                                        @Html.DropDownList("RoleId", (SelectList)ViewBag.RoleList, MasterISS_Partner_WebSite.Localization.View.SelectRole, new { @class = "form-control" })
-
-                                        <div class="error-codes-container" style="display:none">
-                                            <div class="separator separator-dashed mt-2 my-4"></div>
-                                            <div class="text-danger error-codes" align="center"></div>
-                                            <div class="separator separator-dashed mt-2 my-4"></div>
-                                        </div>
-
-                                        @Html.AntiForgeryToken()
-                                        <label class="text-info col-12 col-form-label my-4">@View.Permissions</label>
-                                        <div class="checkbox-list permissionCheckboxList">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">@View.Close</button>
-                                    <button type="submit" class="btn btn-info font-weight-bold">@View.ChangeAndSave</button>
-                                </div> <!--end::Info-->
-                            }
+                    <div class="modal-header">
+                        <div class="py-2">
+                            <span class="text-dark-75 font-weight-bolder d-block font-size-h5">@View.UpdateRolePermissions</span>
                         </div>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
+                        </button>
                     </div>
+                    @using (Ajax.BeginForm("UpdateRolePermission", "UserOperations", new AjaxOptions { HttpMethod = "POST", OnComplete = "GenericResultUserOperations" }))
+                    {
+                        <div class="modal-body">
+                            <div class="form-group my-0">
+                                <label class="text-info col-form-label">@View.SelectRole</label>
+
+                                @Html.DropDownList("RoleId", (SelectList)ViewBag.RoleList, MasterISS_Partner_WebSite.Localization.View.SelectRole, new { @class = "form-control" })
+
+                                <div class="error-codes-container" style="display:none">
+                                    <div class="separator separator-dashed mt-2 my-4"></div>
+                                    <div class="text-danger error-codes" align="center"></div>
+                                    <div class="separator separator-dashed mt-2 my-4"></div>
+                                </div>
+
+                                @Html.AntiForgeryToken()
+                                <label class="text-info col-12 col-form-label my-4">@View.Permissions</label>
+                                <div class="checkbox-list permissionCheckboxList">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">@View.Close</button>
+                            <button type="submit" class="btn btn-info font-weight-bold">@View.ChangeAndSave</button>
+                        </div> <!--end::Info-->
+                    }
                 </div>
             </div>
         </div>
-        @*Update Role Permission End *@
+    </div>
+</div>
+@*Update Role Permission End *@
 
-        @*Add Role Start *@
-        <div class="modal fade" id="exampleModalAddRole" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div id="add-role-container">
-                        @*user-Info-button*@
-                    </div>
-                </div>
+@*Add Role Start *@
+<div class="modal fade" id="exampleModalAddRole" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div id="add-role-container">
+                @*user-Info-button*@
             </div>
         </div>
-        @*Add Role End *@
+    </div>
+</div>
+@*Add Role End *@
 
-        @*Add User Start *@
-        <div class="modal fade" id="exampleModalAddUser" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div id="user-add-user-container">
-                        @*user-Info-button*@
-                    </div>
-                </div>
+@*Add User Start *@
+<div class="modal fade" id="exampleModalAddUser" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div id="user-add-user-container">
+                @*user-Info-button*@
             </div>
         </div>
-        @*Add User End *@
+    </div>
+</div>
+@*Add User End *@
 
-        @* Setup Team Work Hours Start*@
-        <div class="modal fade" id="exampleModalUserWorkHours" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div id="user-work-hours-container">
-                        @*user-Info-button*@
-                    </div>
-                </div>
+@* Setup Team Work Hours Start*@
+<div class="modal fade" id="exampleModalUserWorkHours" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div id="user-work-hours-container">
+                @*user-Info-button*@
             </div>
         </div>
-        @* Setup Team Work Hours End*@
+    </div>
+</div>
+@* Setup Team Work Hours End*@
 
 
-        @* Setup Team Work Area Start*@
-        <div class="modal fade" id="exampleModalUserWorkAreas" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div id="user-work-area-container">
-                    </div>
-                </div>
+@* Setup Team Work Area Start*@
+<div class="modal fade" id="exampleModalUserWorkAreas" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div id="user-work-area-container">
             </div>
         </div>
-        @* Setup Team Work Area End*@
+    </div>
+</div>
+@* Setup Team Work Area End*@
 
 
-        @section Javascript{
-            <script>
+@section Javascript{
+    <script>
         function GetSelectTextandSetHiddenInput(triggerselectId, triggeredHiddenInputId) {
             var selectValue = $(triggerselectId).find(":selected").val();
                 if (selectValue != "") {
@@ -402,9 +403,9 @@
             }
         })
     });
-            </script>
+    </script>
 
-            <script>
+    <script>
         function UpdateUserRoleAndPhoneNumber(data, status) {
             if (status = "success") {
                 var responseStatus = data.responseJSON.status;
@@ -444,9 +445,9 @@
             }
         }
 
-            </script>
+    </script>
 
-            <script>
+    <script>
         $(".user-Info-button").click(function () {
             var dataValue = $(this).attr("dataValue");
                 $.ajax({
@@ -610,5 +611,5 @@
 
 
 
-            </script>
-        }
+    </script>
+}
