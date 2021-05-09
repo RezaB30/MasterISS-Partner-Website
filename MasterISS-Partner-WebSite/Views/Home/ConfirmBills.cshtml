@@ -36,26 +36,12 @@
                             <span class="font-size-sm text-dark-75">@View.AllTaxesIncluded</span>
                         </div>
                     </div>
-                </div>
-                <div class="pb-0 pt-lg-0 pt-0">
-                </div>
-                <div class="col-xl-12 col-xxl-7">
-                </div>
-                <div class="info-box my-8">Güvenliğiniz sebebi ile ödeme işleminiz <strong>3D secure</strong> ile gerçekleşecektir.</div>
-                <span>Gönder butonuna bastıktan sonra sistemimiz sizi 3D güvenli ödeme alanına yönlendirecektir. Telefonunuza gelecek olan SMS de yer alan güvenlik şifresini girerek faturanızın ödemesini yapabilirsiniz.</span>
-                <!--end: Wizard Step 3-->
-                <div class="row">
-                    <div class="col-xl-12">
-                        <div class="d-flex justify-content-between border-top mt-5 pt-3">
-                            <div class="mr-1"></div>
-                            <div>
-                                @Html.ActionLink(View.Cancel, "Index", "Home", null, new { @class = "btn btn-light-primary font-weight-bold" })
-                                @using (Ajax.BeginForm("ConfirmBills", "Home", new AjaxOptions { HttpMethod = "POST", OnComplete = "GenericResult" }))
-                                {
-                                    <button type="submit" class="btn btn-info font-weight-bolder font-size-h8 px-8 py-3 my-3 mr-3 pay-button">@View.Send</button>
-                                }
-                            </div>
-                        </div>
+                    <div class="btn-group float-right">
+                        @Html.ActionLink(View.Cancel, "Index", "Home", null, new { @class = "btn btn-light-primary font-weight-bolder font-size-h8 px-8 py-3 my-3 mr-3" })
+                        @using (Ajax.BeginForm("ConfirmBills", "Home", new AjaxOptions { HttpMethod = "POST", OnComplete = "GenericResult" }))
+                        {
+                            <button type="submit" class="btn btn-info font-weight-bolder font-size-h8 px-8 py-3 my-3 mr-3 pay-button">@View.Send</button>
+                        }
                     </div>
                 </div>
             </div>

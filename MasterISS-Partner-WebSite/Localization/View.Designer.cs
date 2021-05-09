@@ -1105,6 +1105,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Aynı anda sadece bir Abone Numarasına ait faturaları ödeyebilirsiniz..
+        /// </summary>
+        public static string OnlyOneSubscriberNoBills {
+            get {
+                return ResourceManager.GetString("OnlyOneSubscriberNoBills", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bu sayfada.
         /// </summary>
         public static string OnThisPage {
@@ -1669,6 +1678,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string SuccessfulPayment {
             get {
                 return ResourceManager.GetString("SuccessfulPayment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Abone Numarası, TC Kimlik Numarası ya da  Telefon Numarası giriniz.
+        /// </summary>
+        public static string TcSubscriptionNoOrNumberPhone {
+            get {
+                return ResourceManager.GetString("TcSubscriptionNoOrNumberPhone", resourceCulture);
             }
         }
         

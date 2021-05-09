@@ -465,6 +465,9 @@
   <data name="NotFoundTaskNo" xml:space="preserve">
     <value>Please Select.</value>
   </data>
+  <data name="OnlyOneSubscriberNoBills" xml:space="preserve">
+    <value>You can pay bills for only one Subscriber Number at the same time.</value>
+  </data>
   <data name="OnThisPage" xml:space="preserve">
     <value>On This Page</value>
   </data>
@@ -653,6 +656,9 @@
   </data>
   <data name="SuccessfulPayment" xml:space="preserve">
     <value>Payment Successful</value>
+  </data>
+  <data name="TcSubscriptionNoOrNumberPhone" xml:space="preserve">
+    <value>Enter your Subscriber Number, TR ID Number or Phone Number</value>
   </data>
   <data name="TheLast10RecordsAreListed" xml:space="preserve">
     <value>The last 10 records are listed.</value>

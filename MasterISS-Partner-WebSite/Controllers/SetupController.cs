@@ -47,7 +47,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             if (ModelState.IsValid)
             {
                 var dateValid = new DatetimeParse();
-                if (dateValid.DateIsCorrrect(false,taskListRequestModel.TaskListEndDate, taskListRequestModel.TaskListStartDate))
+                if (dateValid.DateIsCorrrect(false, taskListRequestModel.TaskListEndDate, taskListRequestModel.TaskListStartDate))
                 {
                     var startDate = dateValid.ConvertDate(taskListRequestModel.TaskListStartDate);
                     var endDate = dateValid.ConvertDate(taskListRequestModel.TaskListEndDate);
@@ -140,39 +140,45 @@ namespace MasterISS_Partner_WebSite.Controllers
 
         }
 
+        private string FormattedNumberPhone(string numberPhone)
+        {
+            var formattedNumberPhone = string.Format("90{0}", numberPhone);
+            return formattedNumberPhone;
+        }
+
         public ActionResult CallCustomer(long taskNo)
         {
-            //using (var db = new PartnerWebSiteEntities())
-            //{
-            //    var validTask = db.TaskList.Find(taskNo);
-            //    if (validTask != null)
-            //    {
-            //        var claimInfo = new ClaimInfo();
-            //        var sourceNumber = claimInfo.UserPhoneNumber();
-            //        var formattedSourceNumber = string.Format("90{0}", sourceNumber);
-            //        var customerPhoneNumber = "905387829318";
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var validTask = db.TaskList.Find(taskNo);
+                if (validTask != null)
+                {
+                    var claimInfo = new ClaimInfo();
+                    var sourceNumber = claimInfo.UserPhoneNumber();
 
-            //        var Url = string.Format("http://api.bulutsantralim.com/bridge?key=" + Properties.Settings.Default.VerimorKey + "&source={0}&destination={1}", formattedSourceNumber, customerPhoneNumber);
+                    var formattedSourceNumber = FormattedNumberPhone(sourceNumber);
+                    var customerPhoneNumber = FormattedNumberPhone(validTask.CustomerPhoneNo);
 
+                    var Url = string.Format("http://api.bulutsantralim.com/bridge?key=" + Properties.Settings.Default.VerimorKey + "&source={0}&destination={1}", formattedSourceNumber, customerPhoneNumber);
 
-            //        using (var httpClient = new HttpClient())
-            //        {
-            //            var response = httpClient.GetAsync(Url).Result;
-            //            if (response.StatusCode == HttpStatusCode.OK)
-            //            {
-            //                return RedirectToAction("Index", "Setup");
-            //            }
-            //            else
-            //            {
-            //                TempData["GeneralError"] = Localization.View.Generic200ErrorCodeMessage;
-            //                return RedirectToAction("Index", "Setup");
-            //            }
+                    using (var httpClient = new HttpClient())
+                    {
+                        var response = httpClient.GetAsync(Url).Result;
+                        if (response.StatusCode == HttpStatusCode.OK)
+                        {
+                            var message = Localization.View.Successful;
+                            return Json(new { status = "Success", message = message }, JsonRequestBehavior.AllowGet);
+                        }
+                        else
+                        {
+                            return Json(new { status = "Failed", ErrorMessage = Localization.View.Generic200ErrorCodeMessage }, JsonRequestBehavior.AllowGet);
+                        }
 
-            //        }
-            //    }
-            var message = Localization.View.Successful;
-            return Json(new { status = "Success", message = message }, JsonRequestBehavior.AllowGet);
-            //}
+                    }
+                }
+                return Json(new { status = "Failed", ErrorMessage = Localization.View.Generic200ErrorCodeMessage }, JsonRequestBehavior.AllowGet);
+
+            }
         }
 
         private DateTime ConvertDateTime(string date)

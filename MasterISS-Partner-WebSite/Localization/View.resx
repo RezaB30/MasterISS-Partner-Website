@@ -465,6 +465,9 @@
   <data name="NotFoundTaskNo" xml:space="preserve">
     <value>Lütfen Seçim Yapınız.</value>
   </data>
+  <data name="OnlyOneSubscriberNoBills" xml:space="preserve">
+    <value>Aynı anda sadece bir Abone Numarasına ait faturaları ödeyebilirsiniz.</value>
+  </data>
   <data name="OnThisPage" xml:space="preserve">
     <value>Bu sayfada</value>
   </data>
@@ -654,6 +657,9 @@
   </data>
   <data name="SuccessfulPayment" xml:space="preserve">
     <value>Ödeme Başarılı</value>
+  </data>
+  <data name="TcSubscriptionNoOrNumberPhone" xml:space="preserve">
+    <value>Abone Numarası, TC Kimlik Numarası ya da  Telefon Numarası giriniz</value>
   </data>
   <data name="TheLast10RecordsAreListed" xml:space="preserve">
     <value>Son 10 kayıt listelenmektedir.</value>

@@ -539,7 +539,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                     {
                         Session["Counter"] = Convert.ToInt32(Session["Counter"]) + 1;
 
-                        return Json(new { status = "Failed", ErrorMessage = serviceCode /*Localization.View.WrongPassword*/}, JsonRequestBehavior.AllowGet);
+                        return Json(new { status = "Failed", ErrorMessage = Localization.View.WrongPassword }, JsonRequestBehavior.AllowGet);
                     }
                 }
                 else
