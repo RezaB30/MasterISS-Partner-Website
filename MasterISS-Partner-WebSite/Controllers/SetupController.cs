@@ -1106,7 +1106,6 @@ namespace MasterISS_Partner_WebSite.Controllers
 
         }
 
-
         [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult UploadDocument(UploadFileRequestViewModel uploadFileRequestViewModel, IEnumerable<HttpPostedFileBase> files)
@@ -1282,7 +1281,6 @@ namespace MasterISS_Partner_WebSite.Controllers
             var attachmentTypesList = new SelectList(list.Select(m => new { Name = m.Value, Value = m.Key }).ToArray(), "Value", "Name", selectedValue);
             return attachmentTypesList;
         }
-
 
         private SelectList FaultTypeList(int? selectedValue, bool isRendezvous)
         {

@@ -78,7 +78,7 @@
             }
             <!--end::Item-->
             <!--begin::Item-->
-            @if (User.IsInRole("LastPayments") || User.IsInRole("Admin"))
+            @if (User.IsInRole("Payment") && (User.IsInRole("LastPayments") || User.IsInRole("Admin")))
             {
                 <div class="col-6">
                     <a href="@Url.Action("LastPayments","Home")" class="btn btn-block btn-hover-primary text-warning text-center py-5 px-5" style="background-color: #43257d">
@@ -240,7 +240,7 @@
                             }
 
 
-                            @if (User.IsInRole("LastPayments") || User.IsInRole("Admin"))
+                            @if (User.IsInRole("Payment") && (User.IsInRole("LastPayments") || User.IsInRole("Admin")))
                             {
                                 <li class="menu-item menu-item-submenu menu-item-rel" aria-haspopup="true">
                                     <a href="@Url.Action("LastPayments","Home")" class="menu-link">
@@ -352,64 +352,64 @@
         <!--end::Toolbar-->
     </div>
 </div>
-
-
-<div class="modal fade" id="UserInfoModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="py-2">
-                    <span class="text-dark-75 font-weight-bolder d-block font-size-h5">@User.Identity.Name</span>
-                    @Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.LogOut, "SignOut", "Account", null, new { @class = "btn btn-sm font-size-xs btn-outline-danger my-1" })
-                </div>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <label class="text-info col-form-label">@MasterISS_Partner_WebSite.Localization.View.SelectLanguage</label>                                 <!--begin::Info-->
-                <select class="form-control language-select" data-val="true" data-val-required="Eklenti Tipi alanı boş bırakılamaz." id="AttachmentTypesEnum" name="AttachmentTypesEnum">
-                    <option value="tr-tr">@MasterISS_Partner_WebSite.Localization.View.Select</option>
-                    <option value="tr-tr">Türkçe</option>
-                    <option value="en-us">English</option>
-                </select>
-                @using (Ajax.BeginForm("UserSettings", "Account", new AjaxOptions { HttpMethod = "POST", OnComplete = "GenericResultMenubar" }))
-                {
-                    @Html.AntiForgeryToken()
-                    <div class="form-group my-4">
-                        <label class="text-info col-form-label">@MasterISS_Partner_WebSite.Localization.View.ContactPhone</label>
-                        <div class="input-group input-group-solid">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="la la-phone"></i>
-                                </span>
-                            </div>
-                            @Html.TextBox("NumberPhone", "", new { @class = "form-control form-control-solid", @autocomplete = "off", @placeholder = @identity.FindFirst(ClaimTypes.MobilePhone).Value })
-                        </div>
-
-                        <div class="error-codes-container" style="display:none">
-                            <div class="separator separator-dashed mt-2 my-4"></div>
-                            <div class="text-danger error-codes" align="center"></div>
-                            <div class="separator separator-dashed mt-2 my-4"></div>
-                        </div>
-
-                        <label class="text-info col-form-label">@MasterISS_Partner_WebSite.Localization.View.UserEMail</label>
-                        <div class="input-group input-group-solid">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="la la-at"></i>
-                                </span>
-                            </div>
-                            <input type="text" class="form-control form-control-solid" placeholder="@identity.FindFirst(ClaimTypes.Email).Value" readonly="readonly">
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">@MasterISS_Partner_WebSite.Localization.View.Close</button>
-                            <button type="submit" class="btn btn-info font-weight-bold">@MasterISS_Partner_WebSite.Localization.View.ChangeAndSave</button>
-                        </div>                                                     <!--end::Info-->
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="modal fade" id="UserInfoModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="py-2">
+                        <span class="text-dark-75 font-weight-bolder d-block font-size-h5">@User.Identity.Name</span>
+                        @Html.ActionLink(MasterISS_Partner_WebSite.Localization.View.LogOut, "SignOut", "Account", null, new { @class = "btn btn-sm font-size-xs btn-outline-danger my-1" })
                     </div>
-                }
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <label class="text-info col-form-label">@MasterISS_Partner_WebSite.Localization.View.SelectLanguage</label>                                 <!--begin::Info-->
+                    <select class="form-control language-select" data-val="true" data-val-required="Eklenti Tipi alanı boş bırakılamaz." id="AttachmentTypesEnum" name="AttachmentTypesEnum">
+                        <option value="tr-tr">@MasterISS_Partner_WebSite.Localization.View.Select</option>
+                        <option value="tr-tr">Türkçe</option>
+                        <option value="en-us">English</option>
+                    </select>
+                    @using (Ajax.BeginForm("UserSettings", "Account", new AjaxOptions { HttpMethod = "POST", OnComplete = "GenericResultMenubar" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-group my-4">
+                            <label class="text-info col-form-label">@MasterISS_Partner_WebSite.Localization.View.ContactPhone</label>
+                            <div class="input-group input-group-solid">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="la la-phone"></i>
+                                    </span>
+                                </div>
+                                @Html.TextBox("NumberPhone", "", new { @class = "form-control form-control-solid", @autocomplete = "off", @placeholder = @identity.FindFirst(ClaimTypes.MobilePhone).Value })
+                            </div>
+
+                            <div class="error-codes-container" style="display:none">
+                                <div class="separator separator-dashed mt-2 my-4"></div>
+                                <div class="text-danger error-codes" align="center"></div>
+                                <div class="separator separator-dashed mt-2 my-4"></div>
+                            </div>
+
+                            <label class="text-info col-form-label">@MasterISS_Partner_WebSite.Localization.View.UserEMail</label>
+                            <div class="input-group input-group-solid">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="la la-at"></i>
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control form-control-solid" placeholder="@identity.FindFirst(ClaimTypes.Email).Value" readonly="readonly">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">@MasterISS_Partner_WebSite.Localization.View.Close</button>
+                                <button type="submit" class="btn btn-info font-weight-bold">@MasterISS_Partner_WebSite.Localization.View.ChangeAndSave</button>
+                            </div>                                                     <!--end::Info-->
+                        </div>
+                    }
+                </div>
             </div>
         </div>
     </div>
-</div>
-
+}

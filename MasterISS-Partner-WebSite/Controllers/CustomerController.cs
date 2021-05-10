@@ -13,6 +13,7 @@ using System.Web.Mvc;
 using MasterISS_Partner_WebSite_Enums;
 using PagedList;
 using System.IO;
+using MasterISS_Partner_WebSite_Enums.Enums;
 
 namespace MasterISS_Partner_WebSite.Controllers
 {
@@ -677,6 +678,16 @@ namespace MasterISS_Partner_WebSite.Controllers
             return new ServiceResponse<List<PartnerSubscriptionsResponse>> { ErrorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(partnerSubscriptionListResponse.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture) };
         }
 
+        //private string GetPartnerCustomerUploadedFilesCount(long subscriptionId)
+        //{
+        //    var wrapper = new WebServiceWrapper();
+        //    var partnerClientAttachments = wrapper.GetPartnerClientAttachments(subscriptionId);
+        //    if (partnerClientAttachments.ResponseMessage.ErrorCode == 0)
+        //    { 
+
+        //    }
+        //}
+
         public ActionResult GetPartnerClientAttachments(long subscriptionId)
         {
             var wrapper = new WebServiceWrapper();
@@ -710,7 +721,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             return Content(contect);
         }
 
-        public ActionResult GetPartnerClientSelectedAttachment(string fileName, int attachmentType, int subscriptionId)
+        public ActionResult GetPartnerClientSelectedAttachment(string fileName, int attachmentType, long subscriptionId)
         {
             var wrapper = new WebServiceWrapper();
             var partnerClientAttachments = wrapper.GetPartnerClientAttachments(subscriptionId);
@@ -903,9 +914,22 @@ namespace MasterISS_Partner_WebSite.Controllers
             return list;
         }
 
+        private string ConvertCultureDisplayName(string convertedCulture)
+        {
+            var localizedList = new LocalizedList<CultureList, Localization.CultureList>();
+            if (convertedCulture == "tr-tr")
+            {
+                return localizedList.GetDisplayText((int)MasterISS_Partner_WebSite_Enums.Enums.CultureList.Turkish, CultureInfo.CurrentCulture);
+            }
+            else
+            {
+                return localizedList.GetDisplayText((int)MasterISS_Partner_WebSite_Enums.Enums.CultureList.English, CultureInfo.CurrentCulture);
+            }
+        }
+
         private SelectList CultureList(PartnerServiceKeyValueListResponse cultureType, string selectedValue)
         {
-            var list = new SelectList(cultureType.KeyValueItemResponse.Select(tck => new { Name = tck.Value, Value = tck.Value }), "Value", "Name", selectedValue);
+            var list = new SelectList(cultureType.KeyValueItemResponse.Select(tck => new { Name = ConvertCultureDisplayName(tck.Value), Value = tck.Value }), "Value", "Name", selectedValue);
             return list;
         }
 

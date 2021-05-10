@@ -1186,6 +1186,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ürün ve Hizmetler.
+        /// </summary>
+        public static string ProductsAndServices {
+            get {
+                return ResourceManager.GetString("ProductsAndServices", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Yeniden Sorgula.
         /// </summary>
         public static string QueryAgain {

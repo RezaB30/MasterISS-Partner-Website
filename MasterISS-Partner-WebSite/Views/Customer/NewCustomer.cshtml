@@ -12,9 +12,6 @@
             <span class="text-danger">@Html.Raw(TempData["SMSConfirmationError"])</span>
             <span class="text-danger">@ViewBag.InvalidCredentials</span>
         </div>
-        @*<div class="wizard wizard-5 d-flex flex-column flex-lg-row flex-row-fluid" id="kt_wizard" data-wizard-state="first">
-        </div>*@
-
         <div class="bg-secondary d-flex flex-column flex-row-fluid py-15 px-5 px-lg-10 ">
             <div class="text-right mb-lg-4 mb-15 mr-xxl-10">
 
@@ -830,7 +827,7 @@
                             <!--end::Radio list-->
 
                             <div class="pb-10 pb-lg-8">
-                                <h3 class="font-weight-bolder text-dark-50 font-size-h3">Ürün ve Hizmetler</h3><hr class="my-4">
+                                <h3 class="font-weight-bolder text-dark-50 font-size-h3">@View.ProductsAndServices</h3><hr class="my-4">
                                 <!--begin::Form Group-->
 
                                 <div class="form-group">
@@ -844,7 +841,7 @@
                                     @Html.DropDownListFor(m => m.SubscriptionInfo.BillingPeriodId, (SelectList)ViewBag.BillingPeriod, BillView.Select, new { @disabled = "disabled", @id = "billingPeriodId", @class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" })
                                     @Html.ValidationMessageFor(m => m.SubscriptionInfo.BillingPeriodId)
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" style="display:none">
                                     <label class="font-size-lg font-weight-bold m-2 text-dark">Modem İsteniyor mu?</label>
                                     <select name="modem" class="form-control h-auto p-3 border-0 rounded-lg font-size-lg">
                                         <option value="" selected="selected">Hayır</option>
@@ -853,7 +850,7 @@
                                     </select>
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group" style="display:none">
                                     <label class="font-size-lg font-weight-bold m-2 text-dark">Statik IP</label>
                                     <select name="statikip" class="form-control h-auto p-3 border-0 rounded-lg font-size-lg">
                                         <option value="" selected="selected">Hayır</option>
@@ -997,7 +994,6 @@
                                                     <div class="fv-plugins-message-container"></div>
                                                 </div>
                                             </div>
-
                                         </div>
                                         <div class="row">
                                             <!--end::Form Group-->

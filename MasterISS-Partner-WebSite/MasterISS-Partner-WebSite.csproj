@@ -221,6 +221,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AttachmentTypes.en-us.resx</DependentUpon>
     </Compile>
+    <Compile Include="Localization\CultureList.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CultureList.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Localization\CultureList.en-us.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CultureList.en-us.resx</DependentUpon>
+    </Compile>
     <Compile Include="Localization\CustomerTypes.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -2134,6 +2144,14 @@
     <EmbeddedResource Include="Localization\BillView.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>BillView.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\CultureList.en-us.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CultureList.en-us.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\CultureList.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CultureList.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Localization\CustomerTypes.en-us.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

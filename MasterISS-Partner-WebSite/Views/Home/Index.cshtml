@@ -70,7 +70,9 @@
                                                 </div>
                                                 <div>
                                                     <div class="text-dark-75 font-weight-bold">@View.NewApplication</div>
-                                                    <div class="text-primary font-weight-bolder font-size-h3">@ViewBag.TotalNewSetup @View.Piece</div>
+                                                    <a href="@Url.Action("Index", "Setup")">
+                                                        <div class="text-primary font-weight-bolder font-size-h3">@ViewBag.TotalNewSetup @View.Piece</div>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
