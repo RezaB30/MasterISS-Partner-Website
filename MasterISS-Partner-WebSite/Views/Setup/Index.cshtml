@@ -274,22 +274,25 @@
                                                     </span>
                                                 </div>
                                             }
-                                            if (string.IsNullOrEmpty(item.SetupTeamStaffName))
+                                            if (item.TaskStatusByControl != (int)MasterISS_Partner_WebSite_Enums.TaskStatusEnum.Completed)
                                             {
-                                                <span class="navi-text" data-toggle="modal" data-target="#exampleModalUpdateTask">
-                                                    <input type="button" class="btn-sm my-2 btn btn-outline-primary task-update-button" dataValue="@item.TaskNo" value="@View.AssignToSetupTeam" />
-                                                    &nbsp &nbsp &nbsp
-                                                </span>
-                                            }
-                                            else
-                                            {
-                                                <span class="navi-text" data-toggle="modal" data-target="#exampleModalUpdateTask">
-                                                    <input type="button" class="btn-sm my-2 btn btn-outline-primary task-update-button" dataValue="@item.TaskNo" value="@View.ChangeSetupTeam" />
-                                                    &nbsp &nbsp &nbsp
-                                                </span>
+                                                if (string.IsNullOrEmpty(item.SetupTeamStaffName))
+                                                {
+                                                    <span class="navi-text" data-toggle="modal" data-target="#exampleModalUpdateTask">
+                                                        <input type="button" class="btn-sm my-2 btn btn-outline-primary task-update-button" dataValue="@item.TaskNo" value="@View.AssignToSetupTeam" />
+                                                        &nbsp &nbsp &nbsp
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="navi-text" data-toggle="modal" data-target="#exampleModalUpdateTask">
+                                                        <input type="button" class="btn-sm my-2 btn btn-outline-primary task-update-button" dataValue="@item.TaskNo" value="@View.ChangeSetupTeam" />
+                                                        &nbsp &nbsp &nbsp
+                                                    </span>
+                                                }
                                             }
                                         }
-                                        @if (User.IsInRole("Admin"))
+                                        @if (User.IsInRole("Admin") && item.TaskStatusByControl != (int)MasterISS_Partner_WebSite_Enums.TaskStatusEnum.Completed)
                                         {
                                             if (!string.IsNullOrEmpty(item.RendezvousTeamStaffName) && !string.IsNullOrEmpty(item.SetupTeamStaffName))
                                             {
@@ -306,12 +309,12 @@
                                                 </span>
                                             }
                                         }
-                                    </div> <!--end::Info--> <!--end::Card Body-->
+                                    </div> 
                                 </div>
                             </div>
                         </div>
                     }
-                </div> <!--end::Info--> <!--end::Card Body-->
+                </div>
             }
             else
             {
@@ -661,12 +664,25 @@
         $("#TaskUpdateContainer").on('change', '.FaultCodesDrowndownByUpdateTaskStatus', function () {
             var value = $(this).val();
             if (value == '9') {//Rendezvous Made
-                $('.setupTeamWorkAreasContainer').show(100);
-                $('.assignTaskButton').hide()
+                $('.selectedSetupTeamContainer').show(100);
             } else {
-                $('.setupTeamWorkAreasContainer').hide(100);
-                $('.assignTaskButton').show()
+                $('.selectedSetupTeamContainer').hide(100);
             }
+        });
+
+        $("#TaskUpdateContainer").on('change', '#SelectedSetupTeam', function () {
+            var value = $(this).val();
+             $.ajax({
+                    url: '@Url.Action("GetSelectedSetupTeamUserInfo", "Setup")',
+                    type: 'POST',
+                    data: {
+                        staffId : value
+                    },
+                    dataType: 'html',
+                    success: function (data) {
+                        $("#selectedSetupTeamUserInfo").html(data);
+                    },
+                });
         });
 
         $("#TaskUpdateContainer").on('change', '.setupTeamWorkDays', function () {

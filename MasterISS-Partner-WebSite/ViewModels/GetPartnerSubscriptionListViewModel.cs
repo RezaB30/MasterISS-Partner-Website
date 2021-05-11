@@ -19,5 +19,8 @@ namespace MasterISS_Partner_WebSite.ViewModels
         public string  SubscriberNo { get; set; }
         public string StateName { get; set; }
         public int  StateValue { get; set; }
+
+        [Display(ResourceType = typeof(Localization.Model), Name = "TotalUploadedDocument")]
+        public string TotalUploadedDocument { get; set; }
     }
 }

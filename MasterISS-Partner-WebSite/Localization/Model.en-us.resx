@@ -537,6 +537,9 @@
   <data name="SelectedBirthYear" xml:space="preserve">
     <value>Birth Year</value>
   </data>
+  <data name="SelectedSetupTeam" xml:space="preserve">
+    <value>Select Setup Team</value>
+  </data>
   <data name="SerialNo" xml:space="preserve">
     <value>Serial No</value>
   </data>
@@ -629,6 +632,9 @@
   </data>
   <data name="TotalCredit" xml:space="preserve">
     <value>Total Credit</value>
+  </data>
+  <data name="TotalUploadedDocument" xml:space="preserve">
+    <value>Total Uploaded Documents</value>
   </data>
   <data name="TradeRegistrationNo" xml:space="preserve">
     <value>Trade Registration Number</value>

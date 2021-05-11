@@ -119,6 +119,7 @@
                                                                 </span>
                                                             </div>
                                                         </li>
+
                                                     </ul> <!--end::Navigation-->
                                                 </div>
                                             }
@@ -147,12 +148,14 @@
                                         <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.FirstOrDefault().MembershipDate)</span>
                                         <span class="text-dark flex-root font-weight-bold">@Html.DisplayFor(modelItem => item.MembershipDate)</span>
                                     </div>
-                                    <div class="separator separator-dashed mt-1 my-2"></div>
-                                    <div class="d-flex mb-2">
-                                        <span class="text-info flex-root font-weight-bold">Yüklenen Belge Sayısı</span>
-                                        <span class="text-info flex-root font-weight-bold">1</span>
-                                    </div>
-
+                                    @if (item.StateValue == (int)CustomerState.PreRegisterd)
+                                    {
+                                        <div class="separator separator-dashed mt-1 my-2"></div>
+                                        <div class="d-flex mb-2">
+                                            <span class="text-info flex-root font-weight-bold">@Html.DisplayNameFor(model => model.FirstOrDefault().TotalUploadedDocument)</span>
+                                            <span class="text-info flex-root font-weight-bold">@Html.DisplayFor(modelItem => item.TotalUploadedDocument)</span>
+                                        </div>
+                                    }
                                 </div>
                             </div>
                         </div>

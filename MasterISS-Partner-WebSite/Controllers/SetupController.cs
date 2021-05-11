@@ -378,13 +378,15 @@ namespace MasterISS_Partner_WebSite.Controllers
                             UserId = claimInfo.UserId()
                         };
                         db.OperationHistory.Add(operationHistory);
-                        db.SaveChanges();
 
                         //Log
                         Logger.Info($"SendSchedulerTask TaskNo: {sendTaskToSchedulerViewModel.TaskNo}, by : {claimInfo.UserId()}");
                         //Log
 
+                        var removedUpdatedTask = db.UpdatedSetupStatus.Where(uss => uss.TaskNo == sendTaskToSchedulerViewModel.TaskNo).ToList();
+                        db.UpdatedSetupStatus.RemoveRange(removedUpdatedTask);
                         db.SaveChanges();
+
                         var message = Localization.View.Successful;
                         return Json(new { status = "Success", message = message }, JsonRequestBehavior.AllowGet);
                     }
@@ -710,7 +712,7 @@ namespace MasterISS_Partner_WebSite.Controllers
         }
 
 
-        public List<SetupTeamStaffsToMatchedTheTask> ShareSetupStaff(long taskNo)
+        public IEnumerable<KeyValuePair<long, string>> ShareSetupStaff(long taskNo)
         {
             var claimInfo = new ClaimInfo();
             var partnerId = claimInfo.PartnerId();
@@ -723,8 +725,6 @@ namespace MasterISS_Partner_WebSite.Controllers
                     LoggerError.Fatal($"An error occurred while ShareSetupStaff , Task not found, by: {wrapperByError.GetUserSubMail()}");
                 }
 
-                var list = new List<SetupTeamStaffsToMatchedTheTask>();
-
                 var wrapper = new WebServiceWrapper();
                 var serviceAvailability = wrapper.GetApartmentAddress(Convert.ToInt64(task.BBK));
 
@@ -733,12 +733,12 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                 if (User.IsInRole("Admin") && partnerSetupTeamId.Count == 0)
                 {
-                    list.Add(new SetupTeamStaffsToMatchedTheTask
-                    {
-                        SetupTeamStaffId = claimInfo.UserId(),
-                        SetupTeamStaffName = claimInfo.GetPartnerName(),
-                        SetupTeamStaffWorkAreas = null
-                    });
+                    var list = new List<KeyValuePair<long, string>>();
+
+                    var adminId = claimInfo.UserId();
+                    var adminName = claimInfo.GetPartnerName();
+                    var adminIDAndName = new KeyValuePair<long, string>(adminId, adminName);
+                    list.Add(adminIDAndName);
                     return list;
                 }
 
@@ -779,23 +779,8 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                 }
 
-                list = db.User.Where(wa => matchedWorkAreaTeamUserId.Contains(wa.Id)).Select(user => new SetupTeamStaffsToMatchedTheTask
-                {
-                    SetupTeamStaffId = user.Id,
-                    SetupTeamStaffName = user.NameSurname,
-                    SetupTeamStaffWorkAreas = user.WorkArea.Where(matchedWorkArea => matchedWorkArea.UserId == user.Id).Select(wa => new
-                    SetupTeamUserAddressInfo()
-                    {
-                        DistrictName = wa.Districtname,
-                        NeigborhoodName = wa.NeighbourhoodName,
-                        ProvinceName = wa.ProvinceName,
-                        RuralName = wa.RuralName,
-                    }).ToList(),
-                }).ToList();
-
-
-                return list;
-
+                var suitableSetupTeamList = db.User.Where(wa => matchedWorkAreaTeamUserId.Contains(wa.Id)).ToList().Select(user => new KeyValuePair<long, string>(user.Id, user.NameSurname)).ToList();
+                return suitableSetupTeamList;
             }
         }
 
@@ -830,6 +815,35 @@ namespace MasterISS_Partner_WebSite.Controllers
             }
         }
 
+        public ActionResult GetSelectedSetupTeamUserInfo(long staffId)
+        {
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var user = db.User.Find(staffId);
+                if (user != null)
+                {
+
+                    var list = db.User.Where(u => u.Id == staffId).Select(selectedUser => new SetupTeamStaffsToMatchedTheTask
+                    {
+                        SetupTeamStaffId = selectedUser.Id,
+                        SetupTeamStaffName = selectedUser.NameSurname,
+                        SetupTeamStaffWorkAreas = selectedUser.WorkArea.Where(matchedWorkArea => matchedWorkArea.UserId == user.Id).Select(wa => new
+                        SetupTeamUserAddressInfo()
+                        {
+                            DistrictName = wa.Districtname,
+                            NeigborhoodName = wa.NeighbourhoodName,
+                            ProvinceName = wa.ProvinceName,
+                            RuralName = wa.RuralName,
+                        }).ToList(),
+                    }).ToList();
+
+
+                }
+                var responseMessage = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false','{1}');</script>", new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture), Url.Action("Index", "Setup"));
+                return Content(responseMessage);
+            }
+        }
+
         [HttpGet]
         public ActionResult UpdateTaskStatus(long taskNo)
         {
@@ -842,12 +856,12 @@ namespace MasterISS_Partner_WebSite.Controllers
                     var request = new AddTaskStatusUpdateViewModel
                     {
                         TaskNo = taskNo,
-                        SetupTeamStaffsToMatchedTheTask = ShareSetupStaff(taskNo),
                         ContactName = task.ContactName
                     };
 
                     var faultTypeList = FaultTypeList(null, true);
 
+                    ViewBag.SuitableSetupTeam = SuitableSetupTeamList(taskNo);
                     ViewBag.FaultTypes = faultTypeList;
 
                     return PartialView("_UpdateTaskStatus", request);
@@ -1295,6 +1309,13 @@ namespace MasterISS_Partner_WebSite.Controllers
             var faultCodesList = new SelectList(list.Select(m => new { Name = m.Value, Value = m.Key }).ToArray(), "Value", "Name", selectedValue);
 
             return faultCodesList;
+        }
+
+        private SelectList SuitableSetupTeamList(long taskNo)
+        {
+            var list = ShareSetupStaff(taskNo);
+            var setupTeamList = new SelectList(list.Select(stl => new { Name = stl.Value, Value = stl.Key }).ToArray(), "Value", "name");
+            return setupTeamList;
         }
 
         private SelectList TaskTypeList(int? selectedValue)

@@ -48,7 +48,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                         RuralName = wa.RuralName,
                         NeigborhoodName = wa.NeighbourhoodName,
                     }).ToList()
-                }).OrderBy(u => u.IsEnabled == true).ThenBy(u=>u.UserId).Reverse().ToList();
+                }).OrderBy(u => u.IsEnabled == true).ThenBy(u => u.UserId).Reverse().ToList();
 
                 ViewBag.RoleList = new SelectList(db.Role.Where(r => r.PartnerId == partnerId && r.IsEnabled).Select(r => new { Value = r.Id, Name = r.RoleName }).ToArray(), "Value", "Name");
                 ViewBag.FilterList = PermissionListByFilter(filterUserViewModel.SelectedPermission ?? null);
@@ -363,8 +363,14 @@ namespace MasterISS_Partner_WebSite.Controllers
                         var user = db.User.Find(updateUserRoleViewModel.UserId);
                         if (user != null)
                         {
+                            var wrapper = new WebServiceWrapper();
+
                             user.RoleId = updateUserRoleViewModel.RoleId;
                             user.PhoneNumber = updateUserRoleViewModel.PhoneNumber;
+                            if (!string.IsNullOrEmpty(updateUserRoleViewModel.Password))
+                            {
+                                user.Password = wrapper.CalculateHash<SHA256>(updateUserRoleViewModel.Password);
+                            }
                             db.SaveChanges();
 
                             if (!ValidRoleHaveSetupManagerPermission(updateUserRoleViewModel.RoleId))
@@ -438,7 +444,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                             }
 
                             //LOG
-                            var wrapper = new WebServiceWrapper();
+                             wrapper = new WebServiceWrapper();
                             Logger.Info("Updated User Role: " + user.UserSubMail + ", by: " + wrapper.GetUserSubMail());
                             //LOG
 

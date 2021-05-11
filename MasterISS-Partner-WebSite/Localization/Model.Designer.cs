@@ -1321,6 +1321,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kurulum Ekibi Seçiniz.
+        /// </summary>
+        public static string SelectedSetupTeam {
+            get {
+                return ResourceManager.GetString("SelectedSetupTeam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Seri No.
         /// </summary>
         public static string SerialNo {
@@ -1596,6 +1605,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string TotalCredit {
             get {
                 return ResourceManager.GetString("TotalCredit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toplam Yüklenen Belge.
+        /// </summary>
+        public static string TotalUploadedDocument {
+            get {
+                return ResourceManager.GetString("TotalUploadedDocument", resourceCulture);
             }
         }
         

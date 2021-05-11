@@ -26,5 +26,8 @@ namespace MasterISS_Partner_WebSite.ViewModels
         [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
         public string PhoneNumber { get; set; }
 
+        [MinLength(6, ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "PasswordMinLenght")]
+        [Display(ResourceType = typeof(Localization.Model), Name = "Password")]
+        public string Password { get; set; }
     }
 }

@@ -17,6 +17,10 @@ namespace MasterISS_Partner_WebSite.ViewModels.Setup
 
         public List<SetupTeamStaffsToMatchedTheTask> SetupTeamStaffsToMatchedTheTask { get; set; }
 
+        [Required(ErrorMessageResourceType = typeof(Localization.Validation), ErrorMessageResourceName = "Required")]
+        [Display(ResourceType = typeof(Localization.Model), Name = "SelectedSetupTeam")]
+        public long SelectedSetupTeam { get; set; }
+        
         public string ContactName { get; set; }
 
         [Display(ResourceType = typeof(Localization.Model), Name = "Description")]

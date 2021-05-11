@@ -56,6 +56,18 @@
                 @Html.EditorFor(m => m.UserEmail, new { htmlAttributes = new { @class = "form-control form-control-solid", @readonly = "readonly", @placeholder = Html.DisplayNameFor(m => m.UserEmail) } })
             </div>
 
+            @Html.LabelFor(m => m.Password, new { @class = "text-info col-form-label" })
+            <div class="input-group input-group-solid">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <i class="la la-lock"></i>
+                    </span>
+                </div>
+                @Html.EditorFor(m => m.Password, new { htmlAttributes = new { @class = "form-control form-control-solid", @placeholder = Html.DisplayNameFor(m => m.Password) } })
+            </div>
+
+
+
             <div class="modal-footer">
                 <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">@View.Close</button>
                 <button type="submit" class="btn btn-info font-weight-bold">@View.ChangeAndSave</button>

@@ -637,7 +637,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                     SubscriberNo = psl.SubscriberNo,
                     SubscriptionId = psl.ID,
                     StateName = psl.CustomerState.Name,
-                    StateValue = psl.CustomerState.Value
+                    StateValue = psl.CustomerState.Value,
+                    TotalUploadedDocument = GetPartnerCustomerUploadedFilesCount(psl.ID)
                 }).OrderByDescending(psl => psl.MembershipDate);
 
                 var totalCount = list.Count();
@@ -678,15 +679,26 @@ namespace MasterISS_Partner_WebSite.Controllers
             return new ServiceResponse<List<PartnerSubscriptionsResponse>> { ErrorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(partnerSubscriptionListResponse.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture) };
         }
 
-        //private string GetPartnerCustomerUploadedFilesCount(long subscriptionId)
-        //{
-        //    var wrapper = new WebServiceWrapper();
-        //    var partnerClientAttachments = wrapper.GetPartnerClientAttachments(subscriptionId);
-        //    if (partnerClientAttachments.ResponseMessage.ErrorCode == 0)
-        //    { 
+        private string GetPartnerCustomerUploadedFilesCount(long subscriptionId)
+        {
+            var wrapper = new WebServiceWrapper();
+            var partnerClientAttachmentsResponse = wrapper.GetPartnerClientAttachments(subscriptionId);
+            if (partnerClientAttachmentsResponse.ResponseMessage.ErrorCode == 0)
+            {
+                var totalUploadedDocument = partnerClientAttachmentsResponse.ClientAttachmentList.Count();
+                if (totalUploadedDocument == 0)
+                {
+                    return Localization.View.NotAvailable;
+                }
+                else
+                {
+                    return totalUploadedDocument.ToString();
+                }
 
-        //    }
-        //}
+            }
+            var errorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(partnerClientAttachmentsResponse.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
+            return errorMessage;
+        }
 
         public ActionResult GetPartnerClientAttachments(long subscriptionId)
         {

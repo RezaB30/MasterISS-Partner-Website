@@ -537,6 +537,9 @@
   <data name="SelectedBirthYear" xml:space="preserve">
     <value>Doğum Yılı</value>
   </data>
+  <data name="SelectedSetupTeam" xml:space="preserve">
+    <value>Kurulum Ekibi Seçiniz</value>
+  </data>
   <data name="SerialNo" xml:space="preserve">
     <value>Seri No</value>
   </data>
@@ -629,6 +632,9 @@
   </data>
   <data name="TotalCredit" xml:space="preserve">
     <value>Toplam Kredi</value>
+  </data>
+  <data name="TotalUploadedDocument" xml:space="preserve">
+    <value>Toplam Yüklenen Belge</value>
   </data>
   <data name="TradeRegistrationNo" xml:space="preserve">
     <value>Ticaret Sicil Numarası</value>
