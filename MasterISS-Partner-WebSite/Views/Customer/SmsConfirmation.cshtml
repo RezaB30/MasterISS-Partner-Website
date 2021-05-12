@@ -63,7 +63,7 @@
                 var responseStatus = data.responseJSON.status;
                 if (responseStatus == "Success") {
                     var message = data.responseJSON.message;
-                    var url='@Url.Action("NewCustomer", "Customer")';
+                    var url='@Url.Action("GetPartnerSubscription", "Customer")';
                     GetAlert(message, "true",url);
                 }
                 else if (responseStatus =="FailedAndRedirect") {

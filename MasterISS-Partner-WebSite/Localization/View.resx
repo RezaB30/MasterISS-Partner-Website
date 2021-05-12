@@ -679,6 +679,9 @@
   <data name="Update" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="UpdateAppointment" xml:space="preserve">
+    <value>Randevuyu Güncelle</value>
+  </data>
   <data name="UpdateClientLocation" xml:space="preserve">
     <value>Konum Güncelle</value>
   </data>

@@ -79,7 +79,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Transfer.
+        ///   Looks up a localized string similar to Nakil.
         /// </summary>
         public static string Transfer {
             get {

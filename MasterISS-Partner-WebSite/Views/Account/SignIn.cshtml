@@ -49,15 +49,15 @@
                         {
                             @Html.AntiForgeryToken()
                             <div class="form-group">
-                                @Html.EditorFor(m => m.Username, new { htmlAttributes = new { @class = "form-control form-control-solid h-auto py-5 px-6", @placeholder = Html.DisplayNameFor(m => m.Username), @autocomplete = "off" } })
+                                @Html.EditorFor(m => m.Username, new { htmlAttributes = new { @class = "form-control form-control-solid h-auto py-5 px-6", @placeholder = Html.DisplayNameFor(m => m.Username), @autocomplete = "on" } })
                                 <span class="text-danger">@Html.ValidationMessageFor(m => m.Username)</span>
                             </div>
                             <div class="form-group">
-                                @Html.EditorFor(m => m.PartnerCode, new { htmlAttributes = new { @class = "form-control form-control-solid h-auto py-5 px-6", @placeholder = Html.DisplayNameFor(m => m.PartnerCode), @autocomplete = "off" } })
+                                @Html.EditorFor(m => m.PartnerCode, new { htmlAttributes = new { @class = "form-control form-control-solid h-auto py-5 px-6", @placeholder = Html.DisplayNameFor(m => m.PartnerCode), @autocomplete = "on" } })
                                 <span class="text-danger">@Html.ValidationMessageFor(m => m.PartnerCode)</span>
                             </div>
                             <div class="form-group">
-                                @Html.EditorFor(m => m.Password, new { htmlAttributes = new { @class = "form-control form-control-solid h-auto py-5 px-6", @placeholder = Html.DisplayNameFor(m => m.Password), @autocomplete = "off" } })
+                                @Html.EditorFor(m => m.Password, new { htmlAttributes = new { @class = "form-control form-control-solid h-auto py-5 px-6", @placeholder = Html.DisplayNameFor(m => m.Password), @autocomplete = "on" } })
                                 <span class="text-danger">@Html.ValidationMessageFor(m => m.Password)</span>
                             </div>
                             <div class="form-group d-flex flex-wrap justify-content-between align-items-center">

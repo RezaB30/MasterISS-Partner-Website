@@ -823,7 +823,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                 if (user != null)
                 {
 
-                    var list = db.User.Where(u => u.Id == staffId).Select(selectedUser => new SetupTeamStaffsToMatchedTheTask
+                    var setupTeamInfo = db.User.Where(u => u.Id == staffId).Select(selectedUser => new SetupTeamStaffsToMatchedTheTask
                     {
                         SetupTeamStaffId = selectedUser.Id,
                         SetupTeamStaffName = selectedUser.NameSurname,
@@ -837,7 +837,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                         }).ToList(),
                     }).ToList();
 
-
+                    return PartialView("_SelectedSetupTeamInfo", setupTeamInfo);
                 }
                 var responseMessage = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false','{1}');</script>", new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText((int)ErrorCodesEnum.Failed, CultureInfo.CurrentCulture), Url.Action("Index", "Setup"));
                 return Content(responseMessage);
@@ -938,6 +938,12 @@ namespace MasterISS_Partner_WebSite.Controllers
                                     description = string.Format($"{assignTaskDescription}, {Localization.View.By}: {wrapper.GetUserSubMail()}");
                                 }
 
+                                var removedUpdatedTask = db.UpdatedSetupStatus.Where(uss => uss.TaskNo == updateTaskStatusViewModel.TaskNo && uss.FaultCodes == (int)FaultCodeEnum.RendezvousMade).ToList();
+                                if (removedUpdatedTask != null)
+                                {
+                                    db.UpdatedSetupStatus.RemoveRange(removedUpdatedTask);
+                                }
+
                                 OperationHistory operationHistory = new OperationHistory
                                 {
                                     ChangeTime = DateTime.Now,
@@ -947,6 +953,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                                     TaskNo = updateTaskStatusViewModel.TaskNo.Value,
                                 };
                                 db.OperationHistory.Add(operationHistory);
+
                                 db.SaveChanges();
                             }
                             else

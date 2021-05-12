@@ -138,7 +138,7 @@ namespace MasterISS_Partner_WebSite.Controllers
         {
             if (ValidBills(selectedBills, customerCode, subscriberNo))
             {
-                return Json(new { status = "Success"}, JsonRequestBehavior.AllowGet);
+                return Json(new { status = "Success" }, JsonRequestBehavior.AllowGet);
             }
             else
             {
@@ -361,7 +361,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
         private string CreditReportNotDetail()
         {
-            if (User.IsInRole("Admin") || User.IsInRole("PaymentCreditReportNotDetail"))
+            if (User.IsInRole("Payment") && (User.IsInRole("Admin") || User.IsInRole("PaymentCreditReportNotDetail")))
             {
                 var wrapper = new WebServiceWrapper();
                 var response = wrapper.GetCreditReportNotDetail();

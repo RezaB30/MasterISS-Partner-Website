@@ -868,7 +868,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
         private SelectList CustomerTypeList(PartnerServiceKeyValueListResponse customerType, int? selectedValue)
         {
-            var list = new SelectList(customerType.KeyValueItemResponse.Select(tck => new { Name = tck.Value, Value = tck.Key }), "Value", "Name", selectedValue);
+            var list = new SelectList(customerType.KeyValueItemResponse.Where(ctl => ctl.Key != (long)CustomerTypeEnum.PrivateCompany).Select(tck => new { Name = tck.Value, Value = tck.Key }), "Value", "Name", selectedValue);
             return list;
         }
 

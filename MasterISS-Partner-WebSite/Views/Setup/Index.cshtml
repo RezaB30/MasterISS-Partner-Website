@@ -102,91 +102,102 @@
                                         <div class="ribbon-target bg-danger" style="top: 10px; left: -2px;">@Html.DisplayFor(modelItem => item.TaskStatus)</div>
                                     }
                                 </div>                                                    <!--begin::Body-->
+
                                 <div class="card-body pt-4 d-flex flex-column justify-content-between">
                                     <!--begin::Toolbar-->
+
                                     <div class="d-flex justify-content-end">
-                                        <div class="dropdown dropdown-inline" data-toggle="tooltip" title="" data-placement="left" data-original-title="Quick actions">
-                                            <a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="ki ki-bold-more-hor"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
-                                                <!--begin::Navigation-->
-                                                <ul class="navi navi-hover">
-                                                    <li class="navi-header font-weight-bold py-4">
-                                                        <span class="font-size-lg">@View.OperationMenu</span>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
-                                                        </button>
-                                                    </li>
-                                                    <li class="navi-separator mb-3 opacity-70"></li>
-                                                    <li class="navi-item">
-                                                        <div class="navi-link">
-                                                            <span class="navi-text" data-toggle="modal" data-target="#exampleModalCenterSession">
-                                                                <input class="btn-sm btn btn-block btn-outline-info customer-session-info-button" value="@View.CustomerSessionInfo" dataValue="@item.TaskNo" />
-                                                            </span>
-                                                        </div>
-                                                    </li>
+                                        @if (item.TaskStatusByControl != (int)MasterISS_Partner_WebSite_Enums.TaskStatusEnum.Completed)
+                                        {
+                                            <div class="dropdown dropdown-inline" data-toggle="tooltip" title="" data-placement="left" data-original-title="Quick actions">
+                                                <a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="ki ki-bold-more-hor"></i>
+                                                </a>
 
-
-                                                    <li class="navi-item">
-                                                        <div class="navi-link">
-                                                            <span class="navi-text" data-toggle="modal" data-target="#exampleModalCenterGeneralInfo">
-                                                                <input class="btn-sm btn btn-block btn-outline-info customer-info-button" value="@View.CustomerInfo" dataValue="@item.TaskNo" />
-                                                            </span>
-                                                        </div>
-                                                    </li>
-
-                                                    <li class="navi-item">
-                                                        <div class="navi-link">
-                                                            <span class="navi-text" data-toggle="modal" data-target="#exampleModalCenterLine">
-                                                                <input class="btn-sm btn btn-block btn-outline-info customer-line-info-button" value="@View.CustomerLineDetails" dataValue="@item.TaskNo" />
-                                                            </span>
-                                                        </div>
-                                                    </li>
-
-                                                    <li class="navi-item">
-                                                        @using (Html.BeginForm("CustomerContractInfo", "Setup", new { taskNo = item.TaskNo }, FormMethod.Post))
-                                                        {
+                                                <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
+                                                    <!--begin::Navigation-->
+                                                    <ul class="navi navi-hover">
+                                                        <li class="navi-header font-weight-bold py-4">
+                                                            <span class="font-size-lg">@View.OperationMenu</span>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
+                                                            </button>
+                                                        </li>
+                                                        <li class="navi-separator mb-3 opacity-70"></li>
+                                                        <li class="navi-item">
                                                             <div class="navi-link">
-                                                                <span class="navi-text">
-                                                                    <input type="submit" class="btn-sm btn btn-block btn-outline-info" id="GetCustomerDetail" value="@View.DownloadTheContract" />
+                                                                <span class="navi-text" data-toggle="modal" data-target="#exampleModalCenterSession">
+                                                                    <input class="btn-sm btn btn-block btn-outline-info customer-session-info-button" value="@View.CustomerSessionInfo" dataValue="@item.TaskNo" />
                                                                 </span>
                                                             </div>
-                                                        }
-                                                    </li>
+                                                        </li>
 
-                                                    <li class="navi-item">
-                                                        <div class="navi-link">
-                                                            <span class="navi-text" data-toggle="modal" data-target="#exampleModalUploadDocumentCenter">
-                                                                <input class="btn-sm btn btn-block btn-outline-info customer-upload-document" value="@View.UploadDocument" dataValue="@item.TaskNo" />
-                                                            </span>
-                                                        </div>
 
-                                                    </li>
-                                                    <li class="navi-item">
-                                                        <div class="navi-link">
-                                                            <span class="navi-text" data-toggle="modal" data-target="#exampleModalUpdateLocation">
-                                                                <input class="btn-sm btn btn-block btn-outline-info customer-localition-info-button" value="@View.UpdateClientLocation" dataValue="@item.TaskNo" />
-                                                            </span>
-                                                        </div>
+                                                        <li class="navi-item">
+                                                            <div class="navi-link">
+                                                                <span class="navi-text" data-toggle="modal" data-target="#exampleModalCenterGeneralInfo">
+                                                                    <input class="btn-sm btn btn-block btn-outline-info customer-info-button" value="@View.CustomerInfo" dataValue="@item.TaskNo" />
+                                                                </span>
+                                                            </div>
+                                                        </li>
 
-                                                    </li>
-                                                    <li class="navi-item">
-                                                        <div class="navi-link">
-                                                            <span class="navi-text" data-toggle="modal" data-target="#examplegetTaskFile">
-                                                                <input class="btn-sm btn btn-block btn-outline-info get-task-file-button" value="@View.ViewUploadedPhotos" dataValue="@item.TaskNo" />
-                                                            </span>
-                                                        </div>
-                                                    </li>
-                                                    <li class="navi-separator mt-3 opacity-70"></li>
-                                                    <li class="navi-footer py-4">
-                                                        <a class="btn btn-light-warning btn-block text-info text-hover-white info font-weight-bold btn-sm task-update-notRendezvous-button" dataValue="@item.TaskNo" data-toggle="modal" data-target="#exampleModalUpdateTaskNotRendezvous">
-                                                            <i class="ki ki-plus text-info icon-sm"></i> @View.ChangeTaskAddNote
-                                                        </a>
-                                                    </li>
-                                                </ul> <!--end::Navigation-->
+                                                        <li class="navi-item">
+                                                            <div class="navi-link">
+                                                                <span class="navi-text" data-toggle="modal" data-target="#exampleModalCenterLine">
+                                                                    <input class="btn-sm btn btn-block btn-outline-info customer-line-info-button" value="@View.CustomerLineDetails" dataValue="@item.TaskNo" />
+                                                                </span>
+                                                            </div>
+                                                        </li>
+
+                                                        <li class="navi-item">
+                                                            @using (Html.BeginForm("CustomerContractInfo", "Setup", new { taskNo = item.TaskNo }, FormMethod.Post))
+                                                            {
+                                                                <div class="navi-link">
+                                                                    <span class="navi-text">
+                                                                        <input type="submit" class="btn-sm btn btn-block btn-outline-info" id="GetCustomerDetail" value="@View.DownloadTheContract" />
+                                                                    </span>
+                                                                </div>
+                                                            }
+                                                        </li>
+
+                                                        <li class="navi-item">
+                                                            <div class="navi-link">
+                                                                <span class="navi-text" data-toggle="modal" data-target="#exampleModalUploadDocumentCenter">
+                                                                    <input class="btn-sm btn btn-block btn-outline-info customer-upload-document" value="@View.UploadDocument" dataValue="@item.TaskNo" />
+                                                                </span>
+                                                            </div>
+
+                                                        </li>
+                                                        <li class="navi-item">
+                                                            <div class="navi-link">
+                                                                <span class="navi-text" data-toggle="modal" data-target="#exampleModalUpdateLocation">
+                                                                    <input class="btn-sm btn btn-block btn-outline-info customer-localition-info-button" value="@View.UpdateClientLocation" dataValue="@item.TaskNo" />
+                                                                </span>
+                                                            </div>
+
+                                                        </li>
+                                                        <li class="navi-item">
+                                                            <div class="navi-link">
+                                                                <span class="navi-text" data-toggle="modal" data-target="#examplegetTaskFile">
+                                                                    <input class="btn-sm btn btn-block btn-outline-info get-task-file-button" value="@View.ViewUploadedPhotos" dataValue="@item.TaskNo" />
+                                                                </span>
+                                                            </div>
+                                                        </li>
+                                                        <li class="navi-separator mt-3 opacity-70"></li>
+                                                        <li class="navi-footer py-4">
+                                                            <a class="btn btn-light-warning btn-block text-info text-hover-white info font-weight-bold btn-sm task-update-notRendezvous-button" dataValue="@item.TaskNo" data-toggle="modal" data-target="#exampleModalUpdateTaskNotRendezvous">
+                                                                <i class="ki ki-plus text-info icon-sm"></i> @View.ChangeTaskAddNote
+                                                            </a>
+                                                        </li>
+                                                    </ul> <!--end::Navigation-->
+                                                </div>
+
                                             </div>
-                                        </div>
+                                        }
+                                        else
+                                        {
+                                            <span class="btn btn-sm btn-icon" style="cursor:context-menu"></span>
+                                        }
                                     </div> <!--end::Toolbar--> <!--begin::User-->
                                     <div class="d-flex align-items-center my-4 mb-2">
 
@@ -304,12 +315,12 @@
                                             if (!string.IsNullOrEmpty(item.RendezvousTeamStaffName) && string.IsNullOrEmpty(item.SetupTeamStaffName))
                                             {
                                                 <span class="navi-text" data-toggle="modal" data-target="#exampleModalOtherRendezvousTeam">
-                                                    <input type="button" class="btn-sm my-2 btn btn-outline-danger assign-rendezvous-team-button" dataValue="@item.TaskNo" value="@View.ChangeRendezvousTeam" />
+                                                    <input type="button" class="btn-sm my-2 btn btn-outline-danger assign-rendezvous-team-button" dataValue="@item.TaskNo" value="@View.UpdateAppointment" />
                                                     &nbsp &nbsp &nbsp
                                                 </span>
                                             }
                                         }
-                                    </div> 
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -665,24 +676,35 @@
             var value = $(this).val();
             if (value == '9') {//Rendezvous Made
                 $('.selectedSetupTeamContainer').show(100);
+                $('#selectedSetupTeamUserInfo').show(100);
+                $('.assignTaskButton').hide(100);
             } else {
                 $('.selectedSetupTeamContainer').hide(100);
+                $('#selectedSetupTeamUserInfo').hide(100);
+                $('.assignTaskButton').show(100);
             }
         });
 
         $("#TaskUpdateContainer").on('change', '#SelectedSetupTeam', function () {
             var value = $(this).val();
+            var area = $("#selectedSetupTeamUserInfo");
+
+            if (value!="") {
              $.ajax({
                     url: '@Url.Action("GetSelectedSetupTeamUserInfo", "Setup")',
-                    type: 'POST',
+                    type: 'GET',
                     data: {
                         staffId : value
                     },
                     dataType: 'html',
                     success: function (data) {
-                        $("#selectedSetupTeamUserInfo").html(data);
+                        area.html(data);
                     },
-                });
+             });
+            }
+            else {
+                area.empty();
+            }
         });
 
         $("#TaskUpdateContainer").on('change', '.setupTeamWorkDays', function () {

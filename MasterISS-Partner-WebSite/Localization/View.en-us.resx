@@ -678,6 +678,9 @@
   <data name="Update" xml:space="preserve">
     <value>Update</value>
   </data>
+  <data name="UpdateAppointment" xml:space="preserve">
+    <value>Update Appointment</value>
+  </data>
   <data name="UpdateClientLocation" xml:space="preserve">
     <value>Update Location</value>
   </data>

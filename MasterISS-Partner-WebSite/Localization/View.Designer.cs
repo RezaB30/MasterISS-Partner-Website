@@ -1745,6 +1745,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Randevuyu Güncelle.
+        /// </summary>
+        public static string UpdateAppointment {
+            get {
+                return ResourceManager.GetString("UpdateAppointment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Konum Güncelle.
         /// </summary>
         public static string UpdateClientLocation {
