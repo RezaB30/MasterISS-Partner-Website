@@ -513,475 +513,161 @@
 
 
 @section Javascript{
+    @Scripts.Render("~/Scripts/setup-index-page-js")
 
     <script>
-        function GetDropzone() {
-
-        Dropzone.autoDiscover = false;
-        $('#myDropzone').dropzone({
-            //parameter name value
-            paramName: "files",
-            //clickable div id
-            clickable: '#previews',
-            //preview files container Id
-            previewsContainer: "#previews",
-            autoProcessQueue: false,
-            uploadMultiple: true,
-            parallelUploads: 100,
-            maxFiles: 100,
-            //  url:"/", // url here to save file
-            maxFilesize: 100,//max file size in MB,
-            addRemoveLinks: true,
-            dictResponseError: 'Server not Configured',
-            acceptedFiles: ".png,.jpg,.jpeg,.pdf",// use this to restrict file type
-            init: function () {
-                var self = this;
-                // config
-                self.options.addRemoveLinks = true;
-                self.options.dictRemoveFile = "@View.Delete";
-                //New file added
-                self.on("addedfile", function (file) {
-                    console.log('new file added ', file);
-                    $('.dz-success-mark').hide();
-                    $('.dz-error-mark').hide();
-                });
-                // Send file starts
-                self.on("sending", function (file) {
-                    console.log('upload started', file);
-                    $('.meter').show();
-                });
-
-                 //File upload Progress
-                self.on("totaluploadprogress", function (progress) {
-                    console.log("progress ", progress);
-                    $('.roller').width(progress + '%');
-                });
-
-                self.on("queuecomplete", function (progress) {
-                    $('.meter').delay(999).slideUp(999);
-                });
-
-                // On removing file
-                self.on("removedfile", function (file) {
-                    console.log(file);
-                });
-
-                $('#Submit').on("click", function (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    // Validate form here if needed
-
-                    if (self.getQueuedFiles().length > 0) {
-                        self.processQueue();
-
-
-                    } else {
-                        self.uploadFiles([]);
-                        $('#myDropzone').submit();
-                    }
-
-                });
-
-
-
-                self.on("successmultiple", function (files, response) {
-                    if (response.status=="Success") {
-                         var message = response.message;
-                         var url='@Url.Action("Index", "Setup")';
-                         GetAlert(message, "true",url);
-                    }
-                    else {
-                        $(".error-codes-container").show();
-                        $(".error-codes").html(response.ErrorMessage);
-                    }
-
-                });
-            }
-        });
-        }
+    var deleteButtonName="@View.Delete";
+    var url = '@Url.Action("Index", "Setup")';
 
     $("#CustomerUploaodDocumentContainer").on('change', '#AttachmentTypesEnum', function () {
         $("#previews").show();
-        GetDropzone();
-
+        GetDropzoneSetup(deleteButtonName,url);
     });
 
     $("#TaskUpdateNotRendezvousContainer").on('change', '#FaultCodesDrowndown', function () {
         $("#previews").show()
-        GetDropzone();
+        GetDropzoneSetup(deleteButtonName, url);
     });
+    function GenericResult(data, status) {
+          if (status = "success") {
+              var responseStatus = data.responseJSON.status;
+              if (responseStatus == "Success") {
+                  var message = data.responseJSON.message;
+                  var url='@Url.Action("Index", "Setup")';
+                  GetAlert(message, "true",url);
+              }
+              else if (responseStatus =="FailedAndRedirect") {
+                  var redirectMessage = data.responseJSON.ErrorMessage;
+                  var urlHome='@Url.Action("Index", "Home")';
+                  GetAlert(redirectMessage, "false", urlHome);
+              }
+              else {
+                  $(".error-codes-container").show();
+                  $(".error-codes").html(data.responseJSON.ErrorMessage);
+              }
+          }
+          else {
+              console.log("Error");
+          }
+      }
     </script>
-
-
-    <script>
-          function GenericResult(data, status) {
-            if (status = "success") {
-                var responseStatus = data.responseJSON.status;
-                if (responseStatus == "Success") {
-                    var message = data.responseJSON.message;
-                    var url='@Url.Action("Index", "Setup")';
-                    GetAlert(message, "true",url);
-                }
-                else if (responseStatus =="FailedAndRedirect") {
-                    var redirectMessage = data.responseJSON.ErrorMessage;
-                    var urlHome='@Url.Action("Index", "Home")';
-                    GetAlert(redirectMessage, "false", urlHome);
-                }
-                else {
-                    $(".error-codes-container").show();
-                    $(".error-codes").html(data.responseJSON.ErrorMessage);
-                }
-            }
-            else {
-                console.log("Error");
-            }
-        }
-    </script>
-
 
     <script>
         MapJS('.map-container', '.Latitude', '.Longitude');
 
         $(".assign-rendezvous-team-button").click(function () {
             var dataValue = $(this).attr("dataValue");
-                $.ajax({
-                    url: '@Url.Action("ListPartnerRendezvousTeam", "Setup")',
-                    type: 'GET',
-                    data: {
-                        taskNo : dataValue
-                    },
-                    dataType: 'html',
-                    success: function (data) {
-                        $("#RendezvousTeamContainer").html(data);
-                    },
-                });
+            var postdata = { taskNo: dataValue };
+            var url = '@Url.Action("ListPartnerRendezvousTeam", "Setup")';
+            var container = $("#RendezvousTeamContainer");
+            AjaxRequestTypeGetAndReturnHTML(postdata,url,container);
         });
 
          $(".get-task-file-button").click(function () {
-            var dataValue = $(this).attr("dataValue");
-                $.ajax({
-                    url: '@Url.Action("GetTasksFileBase64", "Setup")',
-                    type: 'POST',
-                    data: {
-                        taskNo : dataValue
-                    },
-                    dataType: 'html',
-                    success: function (data) {
-                        $("#GetFileContainer").html(data);
-                    },
-                });
+             var dataValue = $(this).attr("dataValue");
+             var postdata = { taskNo: dataValue };
+             var url = '@Url.Action("GetTasksFileBase64", "Setup")';
+             var container = $("#GetFileContainer");
+             AjaxRequestTypePostAndReturnHTML(postdata, url, container);
           });
 
-        $("#TaskUpdateContainer").on('change', '.FaultCodesDrowndownByUpdateTaskStatus', function () {
-            var value = $(this).val();
-            if (value == '9') {//Rendezvous Made
-                $('.selectedSetupTeamContainer').show(100);
-                $('#selectedSetupTeamUserInfo').show(100);
-                $('.assignTaskButton').hide(100);
-            } else {
-                $('.selectedSetupTeamContainer').hide(100);
-                $('#selectedSetupTeamUserInfo').hide(100);
-                $('.assignTaskButton').show(100);
-            }
-        });
 
         $("#TaskUpdateContainer").on('change', '#SelectedSetupTeam', function () {
             var value = $(this).val();
             var area = $("#selectedSetupTeamUserInfo");
-
+            var postdata = { staffId: value};
+            var url= '@Url.Action("GetSelectedSetupTeamUserInfo", "Setup")';
             if (value!="") {
-             $.ajax({
-                    url: '@Url.Action("GetSelectedSetupTeamUserInfo", "Setup")',
-                    type: 'GET',
-                    data: {
-                        staffId : value
-                    },
-                    dataType: 'html',
-                    success: function (data) {
-                        area.html(data);
-                    },
-             });
+                AjaxRequestTypeGetAndReturnHTML(postdata, url, area);
             }
             else {
                 area.empty();
             }
         });
 
-        $("#TaskUpdateContainer").on('change', '.setupTeamWorkDays', function () {
-            var hoursSelect = $(this).parent().children('.setupTeamWorkHours');
+        GetStaffAvailableHours('@Url.Action("GetStaffAvailableHours", "Setup")');
 
-            var selectedSelectDateValue = $(this).find(":selected").val();
-            var selectDataValue = $(this).attr("dataValue");
-            var postData = { staffId: selectDataValue, date:selectedSelectDateValue };
+        GetStaffAvailableDays('@Url.Action("StaffWorkDays", "Setup")');
 
-               $.ajax({
-                      url: '@Url.Action("GetStaffAvailableHours", "Setup")',
-                      type: "POST",
-                      dataType: "json",
-                      data: postData,
-                      complete: function (data, status) {
-                          if (status == "success") {
-                              var result = data.responseJSON.list;
-                              $(hoursSelect).find("option").not(":first").remove();
-                              for (var i = 0; i < result.length; i++) {
-                                  hoursSelect.append($('<option>', {
-                                      value: result[i].Value,
-                                      text: result[i].Name,
-                                  }));
-                              }
-                          }
-                          else {
-                              console.log("Failed Get Staff Work Days");
-                          }
-                      }
-                  });
-        });
+        TaskUpdateWithRendezvousPost('@Url.Action("UpdateTaskStatus", "Setup")','@Url.Action("Index", "Setup")','@Url.Action("Index", "Home")')
 
-        $("#TaskUpdateContainer").on('click', '.assignTaskSetupTeamButton', function () {
-            var dataValue = $(this).attr("dataValue");
-            var selectedDate = null;
-            var selectedTime = null;
-
-            var taskNo = $(".genericContainer").children().children().children("#TaskNo").val();
-            var description = $('.genericContainer').children().children().children().children('textarea#description').val();
-            var faultCode = $(".genericContainer").children().children().children("#FaultCodes").find(":selected").val();
-            $(".assignTaskButtonContainer").each(function () {
-                var date = $(this).find("#item_SelectedDate");
-                var time = $(this).find("#item_SelectedTime");
-                if (date.attr("dataValue")==dataValue.toString()) {
-                    selectedDate = date.find(":selected").val()
-                    selectedTime= time.find(":selected").val()
-                };
-            });
-
-            var postData = { PostTimeValue: selectedTime, PostDateValue: selectedDate, TaskNo: taskNo, Description: description, staffId: dataValue, FaultCodes: faultCode, };
-             $.ajax({
-                            url: '@Url.Action("UpdateTaskStatus", "Setup")',
-                            type: "POST",
-                            dataType: "json",
-                            data: postData,
-                            complete: function (data, status) {
-                                        if (status = "success") {
-                                var responseStatus = data.responseJSON.status;
-                                if (responseStatus == "Success") {
-                                    var message = data.responseJSON.message;
-                                    var url='@Url.Action("Index", "Setup")';
-                                    GetAlert(message, "true",url);
-                                }
-                                else if (responseStatus =="FailedAndRedirect") {
-                                    var redirectMessage = data.responseJSON.ErrorMessage;
-                                    var urlHome='@Url.Action("Index", "Home")';
-                                    GetAlert(redirectMessage, "false", urlHome);
-                                }
-                                else {
-                                    $(".error-codes-container").show();
-                                    $(".error-codes").html(data.responseJSON.ErrorMessage);
-                                }
-                            }
-                            else {
-                                console.log("Error");
-                            }
-                            }
-                        });
-
-        });
-
-        $("#TaskUpdateContainer").on('click', '.setupTeamWorkDays', function () {
-            var selectedSelect = $(this);
-
-            if ($(this).children().length<=1) {
-                var dataValue = selectedSelect.attr("dataValue");
-                var postData = { staffId: dataValue};
-                $.ajax({
-                            url: '@Url.Action("StaffWorkDays", "Setup")',
-                            type: "POST",
-                            dataType: "json",
-                            data: postData,
-                            complete: function (data, status) {
-                                if (status == "success") {
-                                    var result = data.responseJSON.list;
-                                    for (var i = 0; i < result.length; i++) {
-                                        selectedSelect.append($('<option>', {
-                                            value: result[i].Value,
-                                            text: result[i].Name,
-                                        }));
-                                    }
-                                }
-                                else {
-                                    console.log("Failed Get Staff Work Days");
-                                }
-                            }
-                        });
-            }
-        });
 
         $(".task-update-notRendezvous-button").click(function () {
             var dataValue = $(this).attr("dataValue");
-                $.ajax({
-                    url: '@Url.Action("UpdateTaskStatusNotRendezvous", "Setup")',
-                    type: 'GET',
-                    data: {
-                        taskNo : dataValue
-                    },
-                    dataType: 'html',
-                    success: function (data) {
-                        $("#TaskUpdateNotRendezvousContainer").html(data);
-                    },
-                });
+            var postData = { taskNo: dataValue };
+            var url = '@Url.Action("UpdateTaskStatusNotRendezvous", "Setup")';
+            var container = $("#TaskUpdateNotRendezvousContainer");
+            AjaxRequestTypeGetAndReturnHTML(postData,url,container)
         });
 
         $(".send-pool-button").click(function () {
             var dataValue = $(this).attr("dataValue");
-                $.ajax({
-                    url: '@Url.Action("SendTaskToScheduler", "Setup")',
-                    type: 'GET',
-                    data: {
-                        taskNo : dataValue
-                    },
-                    dataType: 'html',
-                    success: function (data) {
-                        $("#SendPoolContainer").html(data);
-                    },
-                });
+            var postData = { taskNo: dataValue };
+            var url = '@Url.Action("SendTaskToScheduler", "Setup")';
+            var container = $("#SendPoolContainer");
+            AjaxRequestTypeGetAndReturnHTML(postData, url, container)
          });
 
         $(".task-update-button").click(function () {
             var dataValue = $(this).attr("dataValue");
-                $.ajax({
-                    url: '@Url.Action("UpdateTaskStatus", "Setup")',
-                    type: 'GET',
-                    data: {
-                        taskNo : dataValue
-                    },
-                    dataType: 'html',
-                    success: function (data) {
-                        $("#TaskUpdateContainer").html(data);
-                    },
-                });
+            var postData = { taskNo: dataValue };
+            var container = $("#TaskUpdateContainer");
+            var url = '@Url.Action("UpdateTaskStatus", "Setup")';
+            AjaxRequestTypeGetAndReturnHTML(postData, url, container)
          });
 
         $(".customer-line-info-button").click(function () {
             var dataValue = $(this).attr("dataValue");
-                $.ajax({
-                    url: '@Url.Action("CustomerLineInfo", "Setup")',
-                    type: 'POST',
-                    data: {
-                        taskNo : dataValue
-                    },
-                    dataType: 'html',
-                    success: function (data) {
-                        $("#CustomerLineInfoContainer").html(data);
-                    },
-                });
+            var postData = { taskNo: dataValue };
+            var container = $("#CustomerLineInfoContainer");
+            var url = '@Url.Action("CustomerLineInfo", "Setup")';
+            AjaxRequestTypePostAndReturnHTML(postData, url, container);
          });
 
-        $(".customer-localition-info-button").click(function () {
-            var dataValue = $(this).attr("dataValue");
-            $(".taskNoToUpdateClientLocation").val(dataValue);
-         });
 
         $(".customer-upload-document").click(function () {
             var dataValue = $(this).attr("dataValue");
-                $.ajax({
-                    url: '@Url.Action("UploadDocument", "Setup")',
-                    type: 'GET',
-                    data: {
-                        taskNo : dataValue
-                    },
-                    dataType: 'html',
-                    success: function (data) {
-                        $("#CustomerUploaodDocumentContainer").html(data);
-                    },
-                });
+            var postData = { taskNo: dataValue };
+            var container = $("#CustomerUploaodDocumentContainer");
+            var url = '@Url.Action("UploadDocument", "Setup")';
+            AjaxRequestTypeGetAndReturnHTML(postData, url, container)
         });
 
 
         $(".customer-info-button").click(function () {
             var dataValue = $(this).attr("dataValue");
-                $.ajax({
-                    url: '@Url.Action("CustomerDetail", "Setup")',
-                    type: 'POST',
-                    data: {
-                        taskNo : dataValue
-                    },
-                    dataType: 'html',
-                    success: function (data) {
-                        $("#CustomerInfoContainer").html(data);
-                    },
-                });
+            var postData = { taskNo: dataValue };
+            var container = $("#CustomerInfoContainer");
+            var url = '@Url.Action("CustomerDetail", "Setup")';
+            AjaxRequestTypePostAndReturnHTML(postData, url, container);
         });
 
 
         $(".customer-session-info-button").click(function () {
             var dataValue = $(this).attr("dataValue");
-                $.ajax({
-                    url: '@Url.Action("CustomerSessionInfo", "Setup")',
-                    type: 'POST',
-                    data: {
-                        taskNo : dataValue
-                    },
-                    dataType: 'html',
-                    success: function (data) {
-                        $("#CustomerSessionInfoContainer").html(data);
-                    },
-                });
+            var postData = { taskNo: dataValue };
+            var container = $("#CustomerSessionInfoContainer");
+            var url = '@Url.Action("CustomerSessionInfo", "Setup")';
+            AjaxRequestTypePostAndReturnHTML(postData, url, container);
         });
 
+        var titleYes = `@View.Yes`;
+        var titleCancel = `@View.Cancel`;
 
         $(".call-customer-button").click(function () {
          var dataValue = $(this).attr("dataValue");
-         var url = '@Url.Action("CallCustomer", "Setup")';
+            var url = '@Url.Action("CallCustomer", "Setup")';
+            var returnUrl = '@Url.Action("Index", "Setup")';
             var title = '@View.AreYouSureYouWantToCallTheCustomer';
-         GetSwalFireForConfirmation(dataValue,url,title);
+         GetSwalFireForConfirmation(dataValue,url,title,titleYes,titleCancel,returnUrl);
         });
-
-        function GetSwalFireForConfirmation(dataValue,ajaxUrl,title) {
-             Swal.fire({
-                title: title,
-                showDenyButton: true,
-                showCancelButton: true,
-                confirmButtonText: `@View.Yes`,
-                cancelButtonText: `@View.Cancel`,
-                }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: ajaxUrl,
-                        type: 'GET',
-                        data: {
-                            taskNo: dataValue,
-                        },
-                        dataType: 'JSON',
-                        success: function (data) {
-                            var result = data.status;
-                            if (result =="Success") {
-                                var message = data.message;
-                                var url = '@Url.Action("Index", "Setup")';
-                                GetAlert(message, "true", url);
-                            }
-                            else {
-                                var errorMessage = data.ErrorMessage;
-                                var url = '@Url.Action("Index", "Home")';
-                                GetAlert(errorMessage, "false", url);
-                            }
-                        },
-                    });
-                }
-            })
-        }
-
 
         $(".give-confirmation-button").click(function () {
             var dataValue = $(this).attr("dataValue");
             var url = '@Url.Action("GiveConfirmation","Setup")';
-            var title= '@View.AreYouSureYouWantToConfirm';
-            GetSwalFireForConfirmation(dataValue,url,title);
-        });
-
-        $(function () {
-
-            $("#search_TaskListStartDate").mask("99.99.9999 99:99");
-            $("#search_TaskListEndDate").mask("99.99.9999 99:99");
-            $("#search_SearchedTaskNo").mask("99999");
+            var title = '@View.AreYouSureYouWantToConfirm';
+            var returnUrl = '@Url.Action("Index", "Setup")';
+            GetSwalFireForConfirmation(dataValue,url,title,titleYes,titleCancel,returnUrl);
         });
 
     </script>

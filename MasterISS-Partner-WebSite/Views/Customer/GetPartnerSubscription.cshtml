@@ -152,7 +152,7 @@
                                     {
                                         <div class="separator separator-dashed mt-1 my-2"></div>
                                         <div class="d-flex mb-2">
-                                            <span class="text-info flex-root font-weight-bold">@Html.DisplayNameFor(model => model.FirstOrDefault().TotalUploadedDocument)</span>
+                                            <span class="text-dark-50 flex-root font-weight-bold">@Html.DisplayNameFor(model => model.FirstOrDefault().TotalUploadedDocument)</span>
                                             <span class="text-danger flex-root font-weight-bold">@Html.DisplayFor(modelItem => item.TotalUploadedDocument)</span>
                                         </div>
                                     }
@@ -211,139 +211,42 @@
 </div>
 
 @section Javascript{
-    <script>
+    @Scripts.Render("~/Scripts/get-partner-subscription-page-js")
+<script>
         $("#GetCustomerAttachmentContainer").on('change', '#AttachmentType', function () {
             $("#previews").show();
-            GetDropzone();
+            var deleteButtonName = "@View.Delete";
+            var successResponseUrl = '@Url.Action("GetPartnerSubscription", "Customer")';
+            GetDropzone(deleteButtonName, successResponseUrl);
         });
-          function GetDropzone() {
-
-        Dropzone.autoDiscover = false;
-        $('#myDropzone').dropzone({
-            //parameter name value
-            paramName: "files",
-            //clickable div id
-            clickable: '#previews',
-            //preview files container Id
-            previewsContainer: "#previews",
-            autoProcessQueue: false,
-            uploadMultiple: true,
-            parallelUploads: 100,
-            maxFiles: 100,
-            //  url:"/", // url here to save file
-            maxFilesize: 100,//max file size in MB,
-            addRemoveLinks: true,
-            dictResponseError: 'Server not Configured',
-            acceptedFiles: ".png,.jpg,.jpeg,.pdf",// use this to restrict file type
-            init: function () {
-                var self = this;
-                // config
-                self.options.addRemoveLinks = true;
-                self.options.dictRemoveFile = "@View.Delete";
-                //New file added
-                self.on("addedfile", function (file) {
-                    console.log('new file added ', file);
-                    $('.dz-success-mark').hide();
-                    $('.dz-error-mark').hide();
-                });
-                // Send file starts
-                self.on("sending", function (file) {
-                    console.log('upload started', file);
-                    $('.meter').show();
-                });
-
-                 //File upload Progress
-                self.on("totaluploadprogress", function (progress) {
-                    console.log("progress ", progress);
-                    $('.roller').width(progress + '%');
-                });
-
-                self.on("queuecomplete", function (progress) {
-                    $('.meter').delay(999).slideUp(999);
-                });
-
-                // On removing file
-                self.on("removedfile", function (file) {
-                    console.log(file);
-                });
-
-                $('#Submit').on("click", function (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    // Validate form here if needed
-
-                    if (self.getQueuedFiles().length > 0) {
-                        self.processQueue();
-
-
-                    } else {
-                        self.uploadFiles([]);
-                        $('#myDropzone').submit();
-                    }
-
-                });
-
-
-
-                self.on("successmultiple", function (files, response) {
-                    if (response.status=="Success") {
-                         var message = response.message;
-                         var url='@Url.Action("Index", "Setup")';
-                         GetAlert(message, "true",url);
-                    }
-                    else {
-                        $(".error-codes-container").show();
-                        $(".error-codes").html(response.ErrorMessage);
-                    }
-
-                });
-            }
-        });
-        }
 
         $(".customer-attachment-info-button").click(function () {
             var dataValue = $(this).attr("dataValue");
-                $.ajax({
-                    url: '@Url.Action("GetPartnerClientAttachments", "Customer")',
-                    type: 'GET',
-                    data: {
-                        subscriptionId : dataValue
-                    },
-                    dataType: 'html',
-                    success: function (data) {
-                        $("#GetCustomerAttachmentContainer").html(data);
-                    },
-                });
+            var ajaxDataValue = { subscriptionId: dataValue };
+            var url = '@Url.Action("GetPartnerClientAttachments", "Customer")';
+            var container = $("#GetCustomerAttachmentContainer");
+
+            AjaxRequestTypeGetAndReturnHTML(ajaxDataValue, url, container);
         });
+
         $(".customer-forms-info-button").click(function () {
             var dataValue = $(this).attr("dataValue");
-                $.ajax({
-                    url: '@Url.Action("GetPartnerClientForms", "Customer")',
-                    type: 'GET',
-                    data: {
-                        subscriptionId : dataValue
-                    },
-                    dataType: 'html',
-                    success: function (data) {
-                        $("#GetCustomerAttachmentContainer").html(data);
-                    },
-                });
+            var ajaxDataValue = { subscriptionId: dataValue };
+            var url = '@Url.Action("GetPartnerClientForms", "Customer")';
+            var container = $("#GetCustomerAttachmentContainer");
+
+            AjaxRequestTypeGetAndReturnHTML(ajaxDataValue, url, container);
         });
 
         $(".upload-document-customer").click(function () {
             var dataValue = $(this).attr("dataValue");
-                $.ajax({
-                    url: '@Url.Action("UploadDocumentCustomer", "Customer")',
-                    type: 'GET',
-                    data: {
-                        subscriptionId : dataValue
-                    },
-                    dataType: 'html',
-                    success: function (data) {
-                        $("#GetCustomerAttachmentContainer").html(data);
-                    },
-                });
+            var ajaxDataValue = { subscriptionId: dataValue };
+            var url = '@Url.Action("UploadDocumentCustomer", "Customer")';
+            var container = $("#GetCustomerAttachmentContainer");
+
+            AjaxRequestTypeGetAndReturnHTML(ajaxDataValue, url, container);
         });
+
         function UploadDocumentCustomerResult(data, status) {
             if (status = "success") {
                 var responseStatus = data.responseJSON.status;
@@ -366,5 +269,5 @@
                 console.log("Error");
             }
         }
-    </script>
+</script>
 }

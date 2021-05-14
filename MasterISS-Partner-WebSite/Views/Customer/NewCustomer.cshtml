@@ -1235,9 +1235,9 @@
 
 
 @section Javascript{
-    <script src="~/Scripts/js/custom-js/hide-show-fields-form.js"></script>
-    <script src="~/Scripts/js/custom-js/input-mask.js"></script>
-    <script>
+    @Scripts.Render("~/Scripts/new-customer-page-js")
+
+<script>
         $("#IDCard_SelectedBirthDay").change(function () {
             ValidDate("@MasterISS_Partner_WebSite_Enums.Enums.DateType.BirthDate.ToString()");
         });
@@ -1266,13 +1266,15 @@
             ValidDate("@MasterISS_Partner_WebSite_Enums.Enums.DateType.DateOfIssue.ToString()");
         });
 
+        var sendRequestValidDateURL='@Url.Action("DateValidation", "Customer")';
+
         function ValidDate(type) {
             if (type="@MasterISS_Partner_WebSite_Enums.Enums.DateType.BirthDate.ToString()") {
                 var birthDay = $("#IDCard_SelectedBirthDay").find(":selected").val();
                 var birthMonth = $("#IDCard_SelectedBirthMonth").find(":selected").val();
                 var birthYear = $("#IDCard_SelectedBirthYear").find(":selected").val();
                 if (birthDay != "" && birthMonth != "" && birthYear !="") {
-                    SendRequestValidDate(birthYear, birthMonth, birthDay,type);
+                    SendRequestValidDate(birthYear, birthMonth, birthDay, type, sendRequestValidDateURL);
                 }
             }
 
@@ -1281,7 +1283,7 @@
                 var expiryMonth = $("#IDCard_TCIDCardWithChip_ExpiryMonth").find(":selected").val();
                 var expiryYear = $("#IDCard_TCIDCardWithChip_ExpiryYear").find(":selected").val();
                 if (expiryDay != "" && expiryMonth != "" && expiryYear != "") {
-                    SendRequestValidDate(expiryYear, expiryMonth, expiryDay,type);
+                    SendRequestValidDate(expiryYear, expiryMonth, expiryDay, type, sendRequestValidDateURL);
                 }
             }
 
@@ -1290,7 +1292,7 @@
                 var issueMonth = $("#IDCard_TCBirthCertificate_DateOfIssueMonth").find(":selected").val();
                 var issueYear = $("#IDCard_TCBirthCertificate_DateOfIssueYear").find(":selected").val();
                 if (issueDay != "" && issueMonth != "" && issueYear != "") {
-                    SendRequestValidDate(issueYear, issueMonth, issueDay,type);
+                    SendRequestValidDate(issueYear, issueMonth, issueDay, type, sendRequestValidDateURL);
                 }
             }
 
@@ -1314,147 +1316,7 @@
             }
         }
 
-        function SendRequestValidDate(year,month,day,type) {
-
-             $.ajax({
-                            url: '@Url.Action("DateValidation", "Customer")',
-                            type: 'GET',
-                            dataType: 'JSON',
-                            contentType: 'application/json; charset=utf-8',
-                             data: {
-                                 year: year,
-                                 month: month,
-                                 day,day
-                             },
-                            complete: function (data, status) {
-                                if (status == "success") {
-                                    var statusData = data.responseJSON.status;
-                                    if (statusData == "Failed") {
-                                        var errorMessage = data.responseJSON.ErrorMessage;
-                                        ChangeSelectSelectedValue(type);
-                                        GetAlert(errorMessage,"false",null)
-                                    }
-                                }
-                                else {
-                                    console.log("An error occurred");
-                                }
-                            }
-                        });
-        }
-
-
-        function CheckValidAndHideContainer(checkId,containerId) {
-            if ($(checkId).is(':checked')) {
-                $(containerId).hide();
-            }
-            else {
-                $(containerId).show();
-            }
-        }
-
         $(document).ready(function () {
-
-            $(function () {
-                $("#ExtraInfo_XDSLNo").mask("9999999999");
-                $("#ExtraInfo_PSTN").mask("9999999999");
-                $("#IDCard_TCKNo").mask("99999999999");
-                $("#CorporateInfo_CentralSystemNo").mask("9999999999999999");
-                $("#CorporateInfo_TaxNo").mask("9999999999");
-                $("#CorporateInfo_TradeRegistrationNo").mask("999999");
-                $("#GeneralInfo_ContactPhoneNo").mask("9999999999");
-                $("#IDCard_BirthDate").mask("99.99.9999");
-                $("#IDCard_TCIDCardWithChip_ExpiryDate").mask("99.99.9999");
-                $("#IDCard_TCBirthCertificate_DateOfIssue").mask("99.99.9999");
-            });
-
-            $("#IDCard_CardTypeId").change(function () {
-                var tckType = $(this).find(":selected").val();
-                if (tckType == "1") {//This Is TCIDCardWithChip
-                    $("#TCBirthCertificateContainer").hide();
-                    $("#TCIDCardWithChipContainer").show();
-                }
-                else {
-                    $("#TCBirthCertificateContainer").show();
-                    $("#TCIDCardWithChipContainer").hide();
-                }
-
-                if ($("#ExtraInfo_SubscriptionRegistrationTypeId").find(":selected").val()==2) {
-                    $("#xdslNoContainer").show();
-                }
-                else {
-                    $("#xdslNoContainer").hide();
-                }
-
-            });
-
-            $("#ExtraInfo_SubscriptionRegistrationTypeId").change(function () {
-                var registrationType = $(this).find(":selected").val();
-                if (registrationType == "2") {//This Is Transiction
-                    $("#xdslNoContainer").show();
-                }
-                else {
-                    $("#xdslNoContainer").hide();
-                }
-            });
-
-            $("#pstnSelect").change(function () {
-                var value = $("#pstnSelect option:selected").val();
-                if (value == "0") {
-                    $("#pstnContainer").hide();
-                }
-
-                else {
-                    $("#pstnContainer").show();
-                }
-            });
-
-
-            CheckValidAndHideContainer("#GeneralInfo_SameSetupAddressByBilling", "#BillingAddressContainer")
-            $("#GeneralInfo_SameSetupAddressByBilling").change(function () {
-                CheckValidAndHideContainer(this, "#BillingAddressContainer")
-            });
-
-            CheckValidAndHideContainer("#Individual_SameSetupAddressByIndividual", "#IndividualResidencyContainer")
-            $("#Individual_SameSetupAddressByIndividual").change(function () {
-                CheckValidAndHideContainer(this, "#IndividualResidencyContainer")
-            });
-
-            CheckValidAndHideContainer("#CorporateInfo_SameSetupAddressByCorporativeResidencyAddress", "#ExecutiveResidencyContainer")
-            $("#CorporateInfo_SameSetupAddressByCorporativeResidencyAddress").change(function () {
-                CheckValidAndHideContainer(this, "#ExecutiveResidencyContainer")
-            });
-
-            CheckValidAndHideContainer("#CorporateInfo_SameSetupAddressByCorporativeCompanyAddress", "#CompanyContainer")
-            $("#CorporateInfo_SameSetupAddressByCorporativeCompanyAddress").change(function () {
-                CheckValidAndHideContainer(this, "#CompanyContainer")
-            });
-
-
-            $("#GeneralInfo_CustomerTypeId").change(function () {
-                var value = $("#GeneralInfo_CustomerTypeId option:selected").val();
-                if (value=="1") {
-                    $("#corporateCustomerInfoContainer").hide();
-                    $("#individualCustomerInfoContainer").show();
-                }
-                else if (value == "") {
-                    $("#corporateCustomerInfoContainer").hide();
-                    $("#individualCustomerInfoContainer").hide();
-                }
-                else {
-                    $("#corporateCustomerInfoContainer").show();
-                    $("#individualCustomerInfoContainer").hide();
-                }
-            });
-
-            $('#createNumberInput').click(function () {
-                $('#telephoneNumberInputContainer').append('<div class="input-container"><input type="button" class="remove-button btn btn-block font-weight-bolder btn-danger btn-hover-warning mt-12" value="@MasterISS_Partner_WebSite.Localization.View.Remove"><input type="text" class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" name="GeneralInfo.OtherPhoneNos" id="GeneralInfo_OtherPhoneNos"><br/></div>')
-                $("#GeneralInfo_OtherPhoneNos").mask("9999999999");
-            });
-
-            $("#telephoneNumberInputContainer").on('click', '.remove-button', function () {
-                $(this).parent().remove();
-            });
-
 
             QueryAddress("#province-company","#district-company",'@Url.Action("DistrictList", "QueryInfrastructure")')
 
@@ -1526,62 +1388,15 @@
 
             ///////////////////////////////////////////////////////////////////////////////////////////////
 
-            $("#partnerTariffId").change(function () {
-
-                $("#billingPeriodId").find("option").not(":first").remove();
-
-                $("#billingPeriodId").attr("disabled", "disabled")
+            var paymentDayUrl = '@Url.Action("PaymentDayList", "Customer")';
+            GetTariffPaymentDayList(paymentDayUrl);
 
 
-                var id = $("#partnerTariffId").find(":selected").val();
-
-                    if (id != "") {
-                        var selectId = { "id": id }
-                        $.ajax({
-                            url: '@Url.Action("PaymentDayList", "Customer")',
-                            type: 'POST',
-                            dataType: 'JSON',
-                            contentType: 'application/json; charset=utf-8',
-                            data: JSON.stringify(selectId),
-                            complete: function (data, status) {
-                                if (status == "success") {
-                                    var result = data.responseJSON.list;
-                                    for (var i = 0; i < result.length; i++) {
-                                        $("#billingPeriodId").append($('<option>', {
-                                            value: result[i].Value,
-                                            text: result[i].Name,
-                                        }));
-                                    }
-                                    $("#billingPeriodId").attr("disabled", false)
-                                }
-                                else {
-                                    console.log(data.responseJSON.errorMessage);
-                                }
-                            }
-                        });
-                    }
+            $('#createNumberInput').click(function () {
+                $('#telephoneNumberInputContainer').append('<div class="input-container"><input type="button" class="remove-button btn btn-block font-weight-bolder btn-danger btn-hover-warning mt-12" value="@MasterISS_Partner_WebSite.Localization.View.Remove"><input type="text" class = "form-control h-auto p-3 border-0 rounded-lg font-size-lg" name="GeneralInfo.OtherPhoneNos" id="GeneralInfo_OtherPhoneNos"><br/></div>')
+                $("#GeneralInfo_OtherPhoneNos").mask("9999999999");
             });
 
-            var billingPeriodSelect = $("#billingPeriodId").find(":selected").val();
-            if (billingPeriodSelect  != "") {
-                $("#billingPeriodId").attr("disabled", false);
-            }
-
-            var cardTypeSelect = $("#IDCard_CardTypeId").find(":selected").val();
-            if (cardTypeSelect != "") {
-                $("#IDCard_CardTypeId").trigger('change');
-            }
-
-            var customerTypeSelect = $("#GeneralInfo_CustomerTypeId").find(":selected").val();
-            if (customerTypeSelect != "") {
-                $("#GeneralInfo_CustomerTypeId").trigger('change');
-            }
-
-            var pstnSelectvalue = $("#pstnSelect").find(":selected").val()
-            if (pstnSelectvalue != "") {
-                $("#pstnSelect").trigger('change');
-            }
-
         });
-    </script>
+</script>
 }

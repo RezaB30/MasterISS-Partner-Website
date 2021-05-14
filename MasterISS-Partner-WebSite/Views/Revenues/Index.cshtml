@@ -3,6 +3,8 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    @Styles.Render("~/PagedList")
 }
 <div class="container my-8">
     <div class="col-lg-12 mb-lg-0 mb-6 ">
@@ -44,98 +46,30 @@
 </div>
 
 @section Javascript{
-    <link href="~/Content/PagedList.css" rel="stylesheet" />
-    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    @Scripts.Render("~/Scripts/revenues-index-page-js")
 
     <script>
         $("#generic-Container").on('click', '.setupAllowenceListByDetailsButton', function () {
             var dataValue = $(this).attr("dataValue");
             var postData = { Id: dataValue};
-            $.ajax({
-                    url: '@Url.Action("SetupAllowenceDetails", "Revenues")',
-                    type: 'GET',
-                    dataType: 'html',
-                    data: postData,
-                    success: function (data) {
-                        $("#generic-Container").html(data);
-                    },
-                });
+            var url = '@Url.Action("SetupAllowenceDetails", "Revenues")';
+            var container = $("#generic-Container");
+            AjaxRequestTypeGetAndReturnHTML(postData, url, container);
         });
 
         $("#generic-Container").on('click', '.saleAllowenceListByDetailsButton', function () {
             var dataValue = $(this).attr("dataValue");
-            var postData = { Id: dataValue};
-            $.ajax({
-                    url: '@Url.Action("SaleAllowenceDetails", "Revenues")',
-                    type: 'GET',
-                    dataType: 'html',
-                    data: postData,
-                    success: function (data) {
-                        $("#generic-Container").html(data);
-                    },
-                });
+            var postData = { Id: dataValue };
+            var url = '@Url.Action("SaleAllowenceDetails", "Revenues")';
+            var container = $("#generic-Container");
+            AjaxRequestTypeGetAndReturnHTML(postData, url, container);
         });
 
-
-        $("#SetupAllowedDetails").click(function () {
-                $.ajax({
-                    url: '@Url.Action("SetupAllowedDetails", "Revenues")',
-                    type: 'GET',
-                    dataType: 'html',
-                    success: function (data) {
-                        $("#generic-Container").html(data);
-                    },
-                });
-        });
-        $("#SetupAllowanceList").click(function () {
-                $.ajax({
-                    url: '@Url.Action("SetupAllowanceList", "Revenues")',
-                    type: 'GET',
-                    dataType: 'html',
-                    success: function (data) {
-                        $("#generic-Container").html(data);
-                    },
-                });
-        });
-        $("#SetupGenericAllowanceList").click(function () {
-                $.ajax({
-                    url: '@Url.Action("SetupGenericAllowanceList", "Revenues")',
-                    type: 'GET',
-                    dataType: 'html',
-                    success: function (data) {
-                        $("#generic-Container").html(data);
-                    },
-                });
-        });
-        $("#SaleGenericAllowanceList").click(function () {
-                $.ajax({
-                    url: '@Url.Action("SaleGenericAllowanceList", "Revenues")',
-                    type: 'GET',
-                    dataType: 'html',
-                    success: function (data) {
-                        $("#generic-Container").html(data);
-                    },
-                });
-        });
-        $("#SaleAllowanceList").click(function () {
-                $.ajax({
-                    url: '@Url.Action("SaleAllowanceList", "Revenues")',
-                    type: 'GET',
-                    dataType: 'html',
-                    success: function (data) {
-                        $("#generic-Container").html(data);
-                    },
-                });
-         });
-        $("#SaleAllowedDetails").click(function () {
-                $.ajax({
-                    url: '@Url.Action("SaleAllowedDetails", "Revenues")',
-                    type: 'GET',
-                    dataType: 'html',
-                    success: function (data) {
-                        $("#generic-Container").html(data);
-                    },
-                });
-        });
+        AjaxGetRequestForRevenues("#SetupAllowedDetails",'@Url.Action("SetupAllowedDetails", "Revenues")')
+        AjaxGetRequestForRevenues("#SetupAllowanceList",'@Url.Action("SetupAllowanceList", "Revenues")')
+        AjaxGetRequestForRevenues("#SetupGenericAllowanceList",'@Url.Action("SetupGenericAllowanceList", "Revenues")')
+        AjaxGetRequestForRevenues("#SaleGenericAllowanceList",'@Url.Action("SaleGenericAllowanceList", "Revenues")')
+        AjaxGetRequestForRevenues("#SaleAllowanceList",'@Url.Action("SaleAllowanceList", "Revenues")')
+        AjaxGetRequestForRevenues("#SaleAllowedDetails",'@Url.Action("SaleAllowedDetails", "Revenues")')
     </script>
 }

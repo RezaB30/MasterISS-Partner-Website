@@ -102,9 +102,11 @@
     </div>
 </div>
 @Html.Raw(TempData["Error"])
-@section Javascript{
-    <script>
 
+@section Javascript{
+    @Scripts.Render("~/Scripts/query-infrastructure-page-js")
+
+    <script>
         QueryAddress("#province","#district",'@Url.Action("DistrictList", "QueryInfrastructure")')
 
         QueryAddress("#district", "#ruralregions", '@Url.Action("RuralRegionsList", "QueryInfrastructure")')
@@ -116,19 +118,5 @@
         QueryAddress("#street","#building",'@Url.Action("BuildingList", "QueryInfrastructure")')
 
         QueryAddress("#building","#apartment",'@Url.Action("ApartmentList", "QueryInfrastructure")')
-
-        $("#apartment").change(function () {
-            var bbk = $("#apartment").find(":selected").val();
-            if (bbk=="") {
-                $("#bbk").val("");
-                $(".query-infrastructure-button").attr("disabled", true);
-            }
-            else {
-                $("#bbk").val(bbk);
-                $(".query-infrastructure-button").attr("disabled", false);
-            }
-
-        });
-
     </script>
 }

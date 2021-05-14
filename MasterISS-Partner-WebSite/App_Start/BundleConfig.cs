@@ -16,6 +16,8 @@ namespace MasterISS_Partner_WebSite
 
             bundles.Add(new StyleBundle("~/Content/all-page-css").IncludeDirectory("~/Content/css/", "*.css"));
 
+            bundles.Add(new StyleBundle("~/PagedList").Include("~/Content/PagedList.css"));
+
             bundles.Add(new ScriptBundle("~/QueryAdress").Include(
                 "~/Scripts/QueryAddress/address-query.js"));
 
@@ -29,6 +31,18 @@ namespace MasterISS_Partner_WebSite
                "~/Scripts/jquery.unobtrusive-ajax.js"));
 
             bundles.Add(new ScriptBundle("~/Scripts/all-page-js").IncludeDirectory("~/Scripts/js/", "*.js"));
+
+            bundles.Add(new ScriptBundle("~/Scripts/new-customer-page-js").IncludeDirectory("~/Scripts/NewCustomer/", "*.js"));
+
+            bundles.Add(new ScriptBundle("~/Scripts/get-partner-subscription-page-js").IncludeDirectory("~/Scripts/GetPartnerSubscription/", "*.js"));
+
+            bundles.Add(new ScriptBundle("~/Scripts/home-index-page-js").IncludeDirectory("~/Scripts/HomeIndex/", "*.js"));
+
+            bundles.Add(new ScriptBundle("~/Scripts/query-infrastructure-page-js").IncludeDirectory("~/Scripts/QueryInfrastructure/", "*.js"));
+
+            bundles.Add(new ScriptBundle("~/Scripts/revenues-index-page-js").IncludeDirectory("~/Scripts/Revenues/", "*.js"));
+
+            bundles.Add(new ScriptBundle("~/Scripts/setup-index-page-js").IncludeDirectory("~/Scripts/Setup/", "*.js"));
 
             bundles.Add(new ScriptBundle("~/bundleMask/jquery").Include("~/Scripts/jquery.mask.js", "~/Scripts/input-upparcase.js"));
 
