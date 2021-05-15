@@ -142,7 +142,7 @@
     <value>{0} must be numerical value</value>
   </data>
   <data name="PasswordMinLenght" xml:space="preserve">
-    <value>Please enter a minimum of 6 characters.</value>
+    <value>Password must be a minimum of 6 characters.</value>
   </data>
   <data name="Required" xml:space="preserve">
     <value>{0} field cannot be left blank.</value>

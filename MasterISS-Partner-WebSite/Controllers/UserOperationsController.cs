@@ -444,7 +444,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                             }
 
                             //LOG
-                             wrapper = new WebServiceWrapper();
+                            wrapper = new WebServiceWrapper();
                             Logger.Info("Updated User Role: " + user.UserSubMail + ", by: " + wrapper.GetUserSubMail());
                             //LOG
 
@@ -613,118 +613,123 @@ namespace MasterISS_Partner_WebSite.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult UpdateRolePermission(AvailablePermissionList availablePermissionList, int roleId)
+        public ActionResult UpdateRolePermission(AvailablePermissionList availablePermissionList, int? roleId)
         {
-            if (ModelState.IsValid)
+            if (roleId != null)
             {
-                var claimList = new ClaimInfo();
-                var partnerId = claimList.PartnerId();
-                using (var db = new PartnerWebSiteEntities())
+                if (ModelState.IsValid)
                 {
-                    var validRolename = db.Role.Where(r => r.Id == roleId && r.PartnerId == partnerId && r.IsEnabled).FirstOrDefault();
-                    if (validRolename != null)
+                    var claimList = new ClaimInfo();
+                    var partnerId = claimList.PartnerId();
+                    using (var db = new PartnerWebSiteEntities())
                     {
-                        var partnerAvaibleRoles = claimList.PartnerRoleId();
-
-                        var availablePartnerPermission = db.Permission.SelectMany(permission => partnerAvaibleRoles.Where(r => r == permission.RoleTypeId), (permission, response) => new { permission.Id }).Select(p => p.Id);
-
-                        var userMatchedPermissionCount = availablePermissionList.SelectedPermissions.Where(viewmodel => availablePartnerPermission.Contains(viewmodel) == true).Count();
-
-                        if (userMatchedPermissionCount == availablePermissionList.SelectedPermissions.Length)
+                        var validRolename = db.Role.Where(r => r.Id == roleId && r.PartnerId == partnerId && r.IsEnabled).FirstOrDefault();
+                        if (validRolename != null)
                         {
-                            var removedRolePermission = db.RolePermission.Where(rp => rp.RoleId == roleId).ToArray();
-                            db.RolePermission.RemoveRange(removedRolePermission);
-                            db.SaveChanges();
+                            var partnerAvaibleRoles = claimList.PartnerRoleId();
 
-                            var addedRolePermission = availablePermissionList.SelectedPermissions.Select(selectedP => new RolePermission
+                            var availablePartnerPermission = db.Permission.SelectMany(permission => partnerAvaibleRoles.Where(r => r == permission.RoleTypeId), (permission, response) => new { permission.Id }).Select(p => p.Id);
+
+                            var userMatchedPermissionCount = availablePermissionList.SelectedPermissions.Where(viewmodel => availablePartnerPermission.Contains(viewmodel) == true).Count();
+
+                            if (userMatchedPermissionCount == availablePermissionList.SelectedPermissions.Length)
                             {
-                                PermissionId = selectedP,
-                                RoleId = roleId
-                            });
-                            db.RolePermission.AddRange(addedRolePermission);
-                            db.SaveChanges();
-
-
-                            var currentUser = db.User.Where(u => u.RoleId == roleId && u.PartnerId == partnerId && u.IsEnabled).Select(u => u.Id).ToList();
-
-                            if (currentUser.Count > 0)
-                            {
-                                if (!ValidRoleHaveSetupManagerPermission(roleId))
-                                {
-                                    var matchedSetupTeams = db.SetupTeam.Where(st => currentUser.Contains(st.UserId));
-
-                                    if (matchedSetupTeams.Count() > 0)
-                                    {
-                                        foreach (var item in matchedSetupTeams)
-                                        {
-                                            item.WorkingStatus = false;
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    var currentSetupTeam = db.SetupTeam.Select(st => st.UserId);
-                                    var newSetupTeam = currentUser.Where(u => currentSetupTeam.Contains(u) == false).Select(st => new SetupTeam
-                                    {
-                                        UserId = st,
-                                        WorkingStatus = true
-                                    });
-                                    db.SetupTeam.AddRange(newSetupTeam);
-
-                                    var matchedSetupTeams = db.SetupTeam.Where(st => currentUser.Contains(st.UserId));
-                                    if (matchedSetupTeams.Count() > 0)
-                                    {
-                                        foreach (var item in matchedSetupTeams)
-                                        {
-                                            item.WorkingStatus = true;
-                                        }
-                                    }
-                                }
-
-                                if (!ValidRoleHaveRendezvousTeamPermission(roleId))
-                                {
-                                    var matchedRendezvousTeams = db.RendezvousTeam.Where(rt => currentUser.Contains(rt.UserId));
-                                    if (matchedRendezvousTeams.Count() > 0)
-                                    {
-                                        foreach (var item in matchedRendezvousTeams)
-                                        {
-                                            item.WorkingStatus = false;
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    var currentRendezvousTeam = db.RendezvousTeam.Select(rt => rt.UserId);
-                                    var newRendezvousTeam = currentUser.Where(u => currentRendezvousTeam.Contains(u) == false).Select(rt => new RendezvousTeam
-                                    {
-                                        UserId = rt,
-                                        WorkingStatus = true
-                                    });
-
-                                    db.RendezvousTeam.AddRange(newRendezvousTeam);
-
-                                    var matchedRendezvousTeam = db.RendezvousTeam.Where(rt => currentUser.Contains(rt.UserId));
-                                    if (matchedRendezvousTeam.Count() > 0)
-                                    {
-                                        foreach (var item in matchedRendezvousTeam)
-                                        {
-                                            item.WorkingStatus = true;
-                                        }
-                                    }
-
-                                }
+                                var removedRolePermission = db.RolePermission.Where(rp => rp.RoleId == roleId).ToArray();
+                                db.RolePermission.RemoveRange(removedRolePermission);
                                 db.SaveChanges();
-                            }
-                            return Json(new { status = "Success", message = Localization.View.Successful }, JsonRequestBehavior.AllowGet);
-                        }
 
+                                var addedRolePermission = availablePermissionList.SelectedPermissions.Select(selectedP => new RolePermission
+                                {
+                                    PermissionId = selectedP,
+                                    RoleId = roleId.Value
+                                });
+                                db.RolePermission.AddRange(addedRolePermission);
+                                db.SaveChanges();
+
+
+                                var currentUser = db.User.Where(u => u.RoleId == roleId && u.PartnerId == partnerId && u.IsEnabled).Select(u => u.Id).ToList();
+
+                                if (currentUser.Count > 0)
+                                {
+                                    if (!ValidRoleHaveSetupManagerPermission(roleId.Value))
+                                    {
+                                        var matchedSetupTeams = db.SetupTeam.Where(st => currentUser.Contains(st.UserId));
+
+                                        if (matchedSetupTeams.Count() > 0)
+                                        {
+                                            foreach (var item in matchedSetupTeams)
+                                            {
+                                                item.WorkingStatus = false;
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        var currentSetupTeam = db.SetupTeam.Select(st => st.UserId);
+                                        var newSetupTeam = currentUser.Where(u => currentSetupTeam.Contains(u) == false).Select(st => new SetupTeam
+                                        {
+                                            UserId = st,
+                                            WorkingStatus = true
+                                        });
+                                        db.SetupTeam.AddRange(newSetupTeam);
+
+                                        var matchedSetupTeams = db.SetupTeam.Where(st => currentUser.Contains(st.UserId));
+                                        if (matchedSetupTeams.Count() > 0)
+                                        {
+                                            foreach (var item in matchedSetupTeams)
+                                            {
+                                                item.WorkingStatus = true;
+                                            }
+                                        }
+                                    }
+
+                                    if (!ValidRoleHaveRendezvousTeamPermission(roleId.Value))
+                                    {
+                                        var matchedRendezvousTeams = db.RendezvousTeam.Where(rt => currentUser.Contains(rt.UserId));
+                                        if (matchedRendezvousTeams.Count() > 0)
+                                        {
+                                            foreach (var item in matchedRendezvousTeams)
+                                            {
+                                                item.WorkingStatus = false;
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        var currentRendezvousTeam = db.RendezvousTeam.Select(rt => rt.UserId);
+                                        var newRendezvousTeam = currentUser.Where(u => currentRendezvousTeam.Contains(u) == false).Select(rt => new RendezvousTeam
+                                        {
+                                            UserId = rt,
+                                            WorkingStatus = true
+                                        });
+
+                                        db.RendezvousTeam.AddRange(newRendezvousTeam);
+
+                                        var matchedRendezvousTeam = db.RendezvousTeam.Where(rt => currentUser.Contains(rt.UserId));
+                                        if (matchedRendezvousTeam.Count() > 0)
+                                        {
+                                            foreach (var item in matchedRendezvousTeam)
+                                            {
+                                                item.WorkingStatus = true;
+                                            }
+                                        }
+
+                                    }
+                                    db.SaveChanges();
+                                }
+                                return Json(new { status = "Success", message = Localization.View.Successful }, JsonRequestBehavior.AllowGet);
+                            }
+
+                        }
+                        var notDefined = Localization.View.Generic200ErrorCodeMessage;
+                        return Json(new { status = "FailedAndRedirect", ErrorMessage = notDefined }, JsonRequestBehavior.AllowGet);
                     }
-                    var notDefined = Localization.View.Generic200ErrorCodeMessage;
-                    return Json(new { status = "FailedAndRedirect", ErrorMessage = notDefined }, JsonRequestBehavior.AllowGet);
                 }
+                var errorMessage = string.Join("<br/>", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
+                return Json(new { status = "Failed", ErrorMessage = errorMessage }, JsonRequestBehavior.AllowGet);
             }
-            var errorMessage = string.Join("<br/>", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
-            return Json(new { status = "Failed", ErrorMessage = errorMessage }, JsonRequestBehavior.AllowGet);
+            var notfoundRoleId = Localization.View.RequiredRoleId;
+            return Json(new { status = "Failed", ErrorMessage = notfoundRoleId }, JsonRequestBehavior.AllowGet);
         }
 
         [Authorize(Roles = "Setup")]
@@ -1034,7 +1039,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             foreach (var item in permissionList)
             {
-                item.PermissionName = localizedList.GetDisplayText(item.PermissionId, null);
+                item.PermissionName = localizedList.GetDisplayText(item.PermissionId, CultureInfo.CurrentCulture);
             }
             return permissionList;
         }

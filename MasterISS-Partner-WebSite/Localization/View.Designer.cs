@@ -1258,6 +1258,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rol alanı boş bırakılamaz..
+        /// </summary>
+        public static string RequiredRoleId {
+            get {
+                return ResourceManager.GetString("RequiredRoleId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sıfırla.
         /// </summary>
         public static string Reset {

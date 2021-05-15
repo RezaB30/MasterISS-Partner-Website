@@ -415,6 +415,7 @@
                     GetAlert(message, "true",url);
                 }
                 else {
+                    $(".error-codes-container").show();
                     $(".error-codes").html(data.responseJSON.ErrorMessage);
                 }
             }
@@ -476,6 +477,9 @@
                         $("#user-work-hours-container").html(data);
                     },
                 });
+        });
+        $(".update-rolePermission-button").click(function () {
+             $("#update-role-permission-container").find(".error-codes").empty();
         });
 
         $(".user-workingAreas-button").click(function () {

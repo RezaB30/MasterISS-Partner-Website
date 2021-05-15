@@ -355,10 +355,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PermissionList.resx</DependentUpon>
     </Compile>
-    <Compile Include="Localization\PermissionList.en.us.Designer.cs">
+    <Compile Include="Localization\PermissionList.en-us.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>PermissionList.en.us.resx</DependentUpon>
+      <DependentUpon>PermissionList.en-us.resx</DependentUpon>
     </Compile>
     <Compile Include="Localization\Validation.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -2009,9 +2009,9 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>OperationHistoryType.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Localization\PermissionList.en.us.resx">
+    <EmbeddedResource Include="Localization\PermissionList.en-us.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>PermissionList.en.us.Designer.cs</LastGenOutput>
+      <LastGenOutput>PermissionList.en-us.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Localization\PermissionList.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

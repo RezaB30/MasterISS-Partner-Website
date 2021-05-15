@@ -133,7 +133,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Minimum 6 karakter giriniz..
+        ///   Looks up a localized string similar to Şifre minimum 6 karakter olmalıdır..
         /// </summary>
         public static string PasswordMinLenght {
             get {

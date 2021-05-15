@@ -516,6 +516,9 @@
   <data name="RequiredPermission" xml:space="preserve">
     <value>Lütfen en az 1 Yetki seçiniz.</value>
   </data>
+  <data name="RequiredRoleId" xml:space="preserve">
+    <value>Rol alanı boş bırakılamaz.</value>
+  </data>
   <data name="Reset" xml:space="preserve">
     <value>Sıfırla</value>
   </data>

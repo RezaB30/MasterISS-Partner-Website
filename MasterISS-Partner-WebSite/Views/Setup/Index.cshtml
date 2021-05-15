@@ -76,10 +76,10 @@
                     </div>
                 </div>
             }
-
-            <span style="color:red">@Html.Raw(TempData["GetTaskDetailError"])</span>
-            <span style="color:red">@Html.Raw(TempData["CustomerContractResponse"])</span>
-
+            <div align="center">
+                <span style="color:red">@Html.Raw(TempData["GetTaskDetailError"])</span>
+                <span style="color:red">@Html.Raw(TempData["CustomerContractResponse"])</span>
+            </div>
             @if (ViewBag.ValidationError == null && ViewBag.Max30Days == null && ViewBag.StartTimeBiggerThanEndTime == null && ViewBag.ErrorMessage == null && ViewBag.DateFormatIsNotCorrect == null)
             {
                 <div class="row">

@@ -142,7 +142,7 @@
     <value>{0} sayısal değer olmalıdır</value>
   </data>
   <data name="PasswordMinLenght" xml:space="preserve">
-    <value>Minimum 6 karakter giriniz.</value>
+    <value>Şifre minimum 6 karakter olmalıdır.</value>
   </data>
   <data name="Required" xml:space="preserve">
     <value>{0} alanı boş bırakılamaz.</value>

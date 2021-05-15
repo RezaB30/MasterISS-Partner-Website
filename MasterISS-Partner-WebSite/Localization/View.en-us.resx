@@ -516,6 +516,9 @@
   <data name="RequiredPermission" xml:space="preserve">
     <value>Please select at least 1 Permission.</value>
   </data>
+  <data name="RequiredRoleId" xml:space="preserve">
+    <value>Role field cannot be left blank.</value>
+  </data>
   <data name="Reset" xml:space="preserve">
     <value>Reset</value>
   </data>
