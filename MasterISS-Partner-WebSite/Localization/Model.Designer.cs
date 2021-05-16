@@ -1609,7 +1609,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Toplam Yüklenen Belge.
+        ///   Looks up a localized string similar to Yüklenen Belgeler.
         /// </summary>
         public static string TotalUploadedDocument {
             get {

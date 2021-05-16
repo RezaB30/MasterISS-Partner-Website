@@ -13,6 +13,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MasterISS-Partner-WebSite-S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MasterISS-Partner-WebSite-Enums", "MasterISS-Partner-WebSite_Enums\MasterISS-Partner-WebSite-Enums.csproj", "{7E11B348-49AE-4D79-86DA-C931ACE56D65}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MasterISS-Partner-WebSite-DataAccess", "MasterISS-Partner-WebSite-DataAccess\MasterISS-Partner-WebSite-DataAccess.csproj", "{3FA6EA97-4FE5-4A6B-AF68-B2B45DB1BEDA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MasterISS-Partner-WebSite-Business", "MasterISS-Partner-WebSite-Business\MasterISS-Partner-WebSite-Business.csproj", "{A7DD15F5-7FC4-4DDA-B0D1-30EA8F1ADDA7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MasterISS-Partner-WebSite-Core", "MasterISS-Partner-WebSite-Core\MasterISS-Partner-WebSite-Core.csproj", "{EB068594-0109-4AFB-B12E-036B7A9F549D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +45,18 @@ Global
 		{7E11B348-49AE-4D79-86DA-C931ACE56D65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E11B348-49AE-4D79-86DA-C931ACE56D65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E11B348-49AE-4D79-86DA-C931ACE56D65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FA6EA97-4FE5-4A6B-AF68-B2B45DB1BEDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FA6EA97-4FE5-4A6B-AF68-B2B45DB1BEDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FA6EA97-4FE5-4A6B-AF68-B2B45DB1BEDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FA6EA97-4FE5-4A6B-AF68-B2B45DB1BEDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7DD15F5-7FC4-4DDA-B0D1-30EA8F1ADDA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7DD15F5-7FC4-4DDA-B0D1-30EA8F1ADDA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7DD15F5-7FC4-4DDA-B0D1-30EA8F1ADDA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7DD15F5-7FC4-4DDA-B0D1-30EA8F1ADDA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB068594-0109-4AFB-B12E-036B7A9F549D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB068594-0109-4AFB-B12E-036B7A9F549D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB068594-0109-4AFB-B12E-036B7A9F549D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB068594-0109-4AFB-B12E-036B7A9F549D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

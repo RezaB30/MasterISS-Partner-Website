@@ -2058,6 +2058,14 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MasterISS-Partner-WebSite-Business\MasterISS-Partner-WebSite-Business.csproj">
+      <Project>{a7dd15f5-7fc4-4dda-b0d1-30ea8f1adda7}</Project>
+      <Name>MasterISS-Partner-WebSite-Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MasterISS-Partner-WebSite-DataAccess\MasterISS-Partner-WebSite-DataAccess.csproj">
+      <Project>{3FA6EA97-4FE5-4A6B-AF68-B2B45DB1BEDA}</Project>
+      <Name>MasterISS-Partner-WebSite-DataAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MasterISS-Partner-WebSite-Database\MasterISS-Partner-WebSite-Database.csproj">
       <Project>{a8c5677c-00de-4d7f-957a-58b308e2784d}</Project>
       <Name>MasterISS-Partner-WebSite-Database</Name>

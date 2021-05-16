@@ -634,7 +634,7 @@
     <value>Toplam Kredi</value>
   </data>
   <data name="TotalUploadedDocument" xml:space="preserve">
-    <value>Toplam Yüklenen Belge</value>
+    <value>Yüklenen Belgeler</value>
   </data>
   <data name="TradeRegistrationNo" xml:space="preserve">
     <value>Ticaret Sicil Numarası</value>

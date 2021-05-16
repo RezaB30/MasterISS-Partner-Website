@@ -634,7 +634,7 @@
     <value>Total Credit</value>
   </data>
   <data name="TotalUploadedDocument" xml:space="preserve">
-    <value>Total Uploaded Documents</value>
+    <value>Uploaded Documents</value>
   </data>
   <data name="TradeRegistrationNo" xml:space="preserve">
     <value>Trade Registration Number</value>

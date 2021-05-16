@@ -1,4 +1,6 @@
 ﻿using MasterISS_Partner_WebSite.ViewModels;
+using MasterISS_Partner_WebSite_Business.Concrete;
+using MasterISS_Partner_WebSite_DataAccess.Concrete.EntityFramework;
 using MasterISS_Partner_WebSite_Database.Models;
 using MasterISS_Partner_WebSite_Enums;
 using NLog;
@@ -28,6 +30,9 @@ namespace MasterISS_Partner_WebSite.Controllers
             var adminId = claimInfo.UserId();
             filterUserViewModel = filterUserViewModel ?? new FilterUserViewModel();
             ViewBag.Search = filterUserViewModel;
+
+            //UserManager userManager = new UserManager(new EfUserDal());
+
             using (var db = new PartnerWebSiteEntities())
             {
                 var userList = FilteredUserList(filterUserViewModel);
