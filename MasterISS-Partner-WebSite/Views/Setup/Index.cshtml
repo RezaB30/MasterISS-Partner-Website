@@ -79,6 +79,7 @@
             <div align="center">
                 <span style="color:red">@Html.Raw(TempData["GetTaskDetailError"])</span>
                 <span style="color:red">@Html.Raw(TempData["CustomerContractResponse"])</span>
+                <span style="color:red">@Html.Raw(TempData["GetSelectedAttachmentErrorMessage"])</span>
             </div>
             @if (ViewBag.ValidationError == null && ViewBag.Max30Days == null && ViewBag.StartTimeBiggerThanEndTime == null && ViewBag.ErrorMessage == null && ViewBag.DateFormatIsNotCorrect == null)
             {
@@ -180,6 +181,13 @@
                                                             <div class="navi-link">
                                                                 <span class="navi-text" data-toggle="modal" data-target="#examplegetTaskFile">
                                                                     <input class="btn-sm btn btn-block btn-outline-info get-task-file-button" value="@View.ViewUploadedPhotos" dataValue="@item.TaskNo" />
+                                                                </span>
+                                                            </div>
+                                                        </li>
+                                                        <li class="navi-item">
+                                                            <div class="navi-link">
+                                                                <span class="navi-text" data-toggle="modal" data-target="#examplegetTaskFile">
+                                                                    <input class="btn-sm btn btn-block btn-outline-info get-uploaded-document" value="@View.ViewUploadedDocuments" dataValue="@item.SubscriberNo" />
                                                                 </span>
                                                             </div>
                                                         </li>
@@ -569,7 +577,15 @@
              var url = '@Url.Action("GetTasksFileBase64", "Setup")';
              var container = $("#GetFileContainer");
              AjaxRequestTypePostAndReturnHTML(postdata, url, container);
-          });
+         });
+
+        $(".get-uploaded-document").click(function () {
+             var dataValue = $(this).attr("dataValue");
+             var postdata = { subscriberNo: dataValue };
+             var url = '@Url.Action("GetUploadedFormsbySubscriberNo", "Setup")';
+             var container = $("#GetFileContainer");
+             AjaxRequestTypePostAndReturnHTML(postdata, url, container);
+         });
 
 
         $("#TaskUpdateContainer").on('change', '#SelectedSetupTeam', function () {

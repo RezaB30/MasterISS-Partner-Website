@@ -441,6 +441,7 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:RequestBase">
         <xs:sequence>
+          <xs:element minOccurs="0" name="SubscriberNo" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="SubscriptionId" nillable="true" type="xs:long" />
         </xs:sequence>
       </xs:extension>

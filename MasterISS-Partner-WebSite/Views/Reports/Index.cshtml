@@ -14,7 +14,11 @@
         <div class="container my-8">
             <span class="navi-text">
                 @Html.ActionLink(View.ViewingLoadedBalances, "CreditReportDetail", "Home", null, new { @class = "btn btn-outline-danger my-2 mr-4" })
+            </span> 
+            <span class="navi-text">
+                @Html.ActionLink("exel rapor al", "ExportExcelReportForSetup", "Reports", null, new { @class = "btn btn-outline-info my-2 mr-4" })
             </span>
+
             @if (User.IsInRole("Admin"))
             {
                 <div class="row">

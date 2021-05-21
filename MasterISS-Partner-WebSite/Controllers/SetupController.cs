@@ -92,7 +92,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                                         IsCorfirmation = tl.IsConfirmation,
                                         FaultCodesDisplayText = tl.TaskStatus == (int)TaskStatusEnum.New ? null : GetFaultCodesOrDescription(tl.TaskNo, false),
                                         SetupStaffEnteredMessage = tl.TaskStatus == (int)TaskStatusEnum.New ? null : GetFaultCodesOrDescription(tl.TaskNo, true),
-                                        TaskStatusByControl = tl.TaskStatus
+                                        TaskStatusByControl = tl.TaskStatus,
+                                        SubscriberNo = tl.SubscriberNo
                                     });
 
                                 var totalCount = list.Count();
@@ -332,6 +333,54 @@ namespace MasterISS_Partner_WebSite.Controllers
                     return RedirectToAction("Index", "Setup");
                 }
             }
+        }
+
+        public ActionResult GetUploadedFormsbySubscriberNo(string subscriberNo)
+        {
+            var wrapper = new WebServiceWrapper();
+            var response = wrapper.GetPartnerClientAttachmentsBySubcriberNo(subscriberNo);
+            if (response.ResponseMessage.ErrorCode == 0)
+            {
+                var fileListViewModel = new GetTasksFileViewModel();
+
+                fileListViewModel.GenericFileList = new List<GenericFileList>();
+
+                foreach (var fileName in response.ClientAttachmentList)
+                {
+                    var base64 = Convert.ToBase64String(fileName.FileContent);
+                    var src = string.Format("data:{0};base64,{1}", fileName.MIMEType, base64);
+                    var link = Url.Action("GetSelectedAttachmentbySubscriberNo", "Setup", new { fileName = fileName.FileName, attachmentType = fileName.AttachmentType, subscriberNo = subscriberNo});
+                    var genericItem = new GenericFileList
+                    {
+                        ImgLink = link,
+                        ImgSrc = src,
+                        AttachmentType = new LocalizedList<AttachmentTypeEnum, Localization.AttachmentTypes>().GetDisplayText(fileName.AttachmentType, CultureInfo.CurrentCulture)
+                    };
+                    fileListViewModel.GenericFileList.Add(genericItem);
+                }
+
+                return PartialView("_GetPartnerClientAttachments", fileListViewModel);
+            }
+
+            var errorMessage = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
+            var contect = string.Format("<script language='javascript' type='text/javascript'>GetAlert('{0}','false','{1}');</script>", errorMessage, Url.Action("GetPartnerSubscription", "Customer"));
+            return Content(contect);
+        }
+
+        public ActionResult GetSelectedAttachmentbySubscriberNo(string fileName, int attachmentType, string subscriberNo)
+        {
+            var wrapper = new WebServiceWrapper();
+            var partnerClientAttachments = wrapper.GetPartnerClientAttachmentsBySubcriberNo(subscriberNo);
+            if (partnerClientAttachments.ResponseMessage.ErrorCode == 0)
+            {
+                var file = partnerClientAttachments.ClientAttachmentList.Where(cal => cal.AttachmentType == attachmentType && cal.FileName == fileName).FirstOrDefault();
+                if (file != null)
+                {
+                    return File(file.FileContent, file.FileName);
+                }
+            }
+            TempData["GetSelectedAttachmentErrorMessage"] = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(partnerClientAttachments.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
+            return RedirectToAction("Index", "Setup");
         }
 
         [HttpGet]
@@ -599,7 +648,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             LoggerError.Fatal($"An error occurred while GetCustomerContract , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: {wrapperByGetuserSubmail.GetUserSubMail()}");
             //LOG
 
-            TempData["CustomerContractResponse"] = new LocalizedList<ErrorCodesEnum, Localization.ErrorCodesList>().GetDisplayText(response.ResponseMessage.ErrorCode, CultureInfo.CurrentCulture);
+            TempData["CustomerContractResponse"] = response.ResponseMessage.ErrorMessage;
             return RedirectToAction("Index", "Setup", new { taskNo = taskNo });
         }
 

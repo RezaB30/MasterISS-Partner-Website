@@ -7,6 +7,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Web;
 using System.IO;
+using MasterISS_Partner_WebSite_WebServices.PartnerServiceReference;
 
 namespace MasterISS_Partner_WebSite
 {
@@ -62,7 +63,6 @@ namespace MasterISS_Partner_WebSite
 
             return response;
         }
-
         //public ParameterlessResponse AddTaskStatusUpdate(AddTaskStatusUpdateViewModel taskStatusUpdateViewModel)
         //{
         //    var request = new AddTaskStatusUpdateRequest
@@ -144,7 +144,7 @@ namespace MasterISS_Partner_WebSite
         //    //var response = Client.GetTaskList(request).SetupTasks.First().;
 
         //    //return response;
-            
+
 
 
         //}

@@ -647,12 +647,34 @@ namespace MasterISS_Partner_WebSite
                     SubUserEmail = GetUserSubMail(),
                     UserEmail = GetUserMail(),
                     SubscriptionId = subscriptionId,
+                    SubscriberNo = null
                 }
             };
 
             var response = Client.GetPartnerClientAttachments(request);
             return response;
         }
+        public PartnerServiceClientAttachmentsResponse GetPartnerClientAttachmentsBySubcriberNo(string subscriberNo)
+        {
+            var request = new PartnerServiceClientAttachmentsRequest
+            {
+                Culture = Culture,
+                Hash = Hash<SHA256>(),
+                Rand = Rand,
+                Username = Username,
+                ClientAttachmentsParameters = new PartnerClientAttachmentsRequest
+                {
+                    SubUserEmail = GetUserSubMail(),
+                    UserEmail = GetUserMail(),
+                    SubscriptionId = null,
+                    SubscriberNo = subscriberNo
+                }
+            };
+
+            var response = Client.GetPartnerClientAttachments(request);
+            return response;
+        }
+
 
         public PartnerServiceClientFormsResponse GetPartnerClientForms(GetPartnerClientFormsViewModel getPartnerClientFormsViewModel)
         {
@@ -667,7 +689,7 @@ namespace MasterISS_Partner_WebSite
                     SubUserEmail = GetUserSubMail(),
                     UserEmail = GetUserMail(),
                     FormType = getPartnerClientFormsViewModel.FormTypeId,
-                    SubscriptionId = getPartnerClientFormsViewModel.SubscriptionId
+                    SubscriptionId = getPartnerClientFormsViewModel.SubscriptionId,
                 }
             };
             var response = Client.GetPartnerClientForms(request);

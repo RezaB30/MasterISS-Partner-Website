@@ -1925,6 +1925,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Yüklenen Belgeleri Görüntüle.
+        /// </summary>
+        public static string ViewUploadedDocuments {
+            get {
+                return ResourceManager.GetString("ViewUploadedDocuments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Yüklenen Fotoğrafları Görüntüle.
         /// </summary>
         public static string ViewUploadedPhotos {

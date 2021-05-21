@@ -30,6 +30,7 @@ namespace MasterISS_Partner_WebSite.ViewModels.Setup.Response
         public string TaskStatus { get; set; }
 
         public short? TaskStatusByControl { get; set; }
+        public string SubscriberNo { get; set; }
 
         [UIHint("DateTimeConverted")]
         [Display(ResourceType = typeof(Localization.Model), Name = "ReservationDate")]

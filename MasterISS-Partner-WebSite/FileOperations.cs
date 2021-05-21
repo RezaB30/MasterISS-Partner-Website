@@ -1,10 +1,12 @@
 ﻿using NLog;
 using RezaB.Files;
+using RezaB.Data.Files;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
+using MasterISS_Partner_WebSite.ViewModels;
 
 namespace MasterISS_Partner_WebSite
 {

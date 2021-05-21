@@ -738,6 +738,9 @@
   <data name="ViewingLoadedBalances" xml:space="preserve">
     <value>Viewing Loaded Balances</value>
   </data>
+  <data name="ViewUploadedDocuments" xml:space="preserve">
+    <value>View Uploaded Documents</value>
+  </data>
   <data name="ViewUploadedPhotos" xml:space="preserve">
     <value>View Uploaded Photos</value>
   </data>

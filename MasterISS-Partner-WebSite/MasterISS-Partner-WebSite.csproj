@@ -403,6 +403,7 @@
     <Compile Include="ViewModels\PartnerSubscriptionFilterViewModel.cs" />
     <Compile Include="ViewModels\SaveCustomerAttachmentViewModel.cs" />
     <Compile Include="ViewModels\SendTaskToSchedulerViewModel.cs" />
+    <Compile Include="ViewModels\CSVModel\SetupOperationsGenericReportCSVModel.cs" />
     <Compile Include="ViewModels\SetupTeamStaffsToMatchedTheTask.cs" />
     <Compile Include="ViewModels\SetupTeamWorkingDaysAndHoursViewModel.cs" />
     <Compile Include="ViewModels\UserBillIdAndCost.cs" />
@@ -1906,6 +1907,7 @@
     <Content Include="Views\Customer\_GetPartnerClientForms.cshtml" />
     <Content Include="Views\Customer\_UploadDocumentCustomer.cshtml" />
     <Content Include="Views\Setup\_SelectedSetupTeamInfo.cshtml" />
+    <Content Include="Views\Setup\_GetPartnerClientAttachments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

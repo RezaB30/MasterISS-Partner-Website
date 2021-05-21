@@ -739,6 +739,9 @@
   <data name="ViewingLoadedBalances" xml:space="preserve">
     <value>Yüklenen Bakiyeleri Görüntüle</value>
   </data>
+  <data name="ViewUploadedDocuments" xml:space="preserve">
+    <value>Yüklenen Belgeleri Görüntüle</value>
+  </data>
   <data name="ViewUploadedPhotos" xml:space="preserve">
     <value>Yüklenen Fotoğrafları Görüntüle</value>
   </data>

@@ -10,6 +10,8 @@ using NLog;
 using RezaB.Data.Localization;
 using MasterISS_Partner_WebSite_Enums.Enums;
 using System.Globalization;
+using RezaB.Data.Files;
+using MasterISS_Partner_WebSite_Enums;
 
 namespace MasterISS_Partner_WebSite.Controllers
 {
@@ -27,7 +29,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             if (ModelState.IsValid)
             {
                 var dateValid = new DatetimeParse();
-                if (dateValid.DateIsCorrrect(false,filterViewModel.StartDate, filterViewModel.EndDate))
+                if (dateValid.DateIsCorrrect(false, filterViewModel.StartDate, filterViewModel.EndDate))
                 {
                     var startDate = dateValid.ConvertDate(filterViewModel.StartDate);
                     var endDate = dateValid.ConvertDate(filterViewModel.EndDate);
@@ -79,7 +81,70 @@ namespace MasterISS_Partner_WebSite.Controllers
             return View();
         }
 
+        public ActionResult ExportExcelReportForSetup()
+        {
+            var claimInfo = new ClaimInfo();
+            var partnerId = claimInfo.PartnerId();
 
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var results = db.TaskList.Where(tl => tl.PartnerId == partnerId).AsEnumerable().Select(tl => new SetupOperationsGenericReportCSVModel
+                {
+                    Area = string.Format("{0} > {1}", tl.Province, tl.City),
+                    CompletionDate = GetTaskComplationDate(tl.TaskNo),
+                    Description = GetTaskLastDescription(tl.TaskNo),
+                    NameSurname = tl.ContactName,
+                    SubscriberNo = tl.SubscriberNo,
+                });
+
+                return File(CSVGenerator.GetStream(results, "\t"), @"text/csv", "a" + ".csv");
+            }
+        }
+
+        private string GetTaskLastDescription(long taskNo)
+        {
+            var lastUpdatedDescription = LastUpdatedSetupStatusbyTaskNo(taskNo);
+            if (lastUpdatedDescription != null)
+            {
+                return lastUpdatedDescription.Description;
+            }
+            return string.Empty;
+        }
+        private UpdatedSetupStatus LastUpdatedSetupStatusbyTaskNo(long taskNo)
+        {
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var validTask = db.UpdatedSetupStatus.Where(uss => uss.TaskNo == taskNo);
+                if (validTask != null)
+                {
+                    var lastUpdatedForTask = validTask.OrderByDescending(t => t.ChangeTime).FirstOrDefault();
+                    if (lastUpdatedForTask != null)
+                    {
+                        return lastUpdatedForTask;
+                    }
+                    return null;
+                }
+                return null;
+            }
+        }
+        private string GetTaskComplationDate(long taskNo)
+        {
+            using (var db = new PartnerWebSiteEntities())
+            {
+                var updatedSetupStatusesbyTaskNo = db.UpdatedSetupStatus.Where(uss => uss.TaskNo == taskNo);
+                if (updatedSetupStatusesbyTaskNo.Any())
+                {
+                    var completedTaskValidation = updatedSetupStatusesbyTaskNo.OrderByDescending(uss => uss.ChangeTime).Where(uss => uss.FaultCodes == (short)FaultCodeEnum.SetupComplete).FirstOrDefault();
+                    if (completedTaskValidation != null)
+                    {
+                        return completedTaskValidation.ChangeTime.ToString("dd.MM.yyyy HH:mm");
+                    }
+                    return string.Empty;
+                }
+                return string.Empty;
+
+            }
+        }
 
         private SelectList OperationTypeList(int? selectedValue)
         {
