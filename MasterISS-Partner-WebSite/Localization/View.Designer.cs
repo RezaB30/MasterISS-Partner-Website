@@ -493,6 +493,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to GüncelGörevlerRaporu.
+        /// </summary>
+        public static string CurrentTasksReport {
+            get {
+                return ResourceManager.GetString("CurrentTasksReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mevcut Kullanıcılar.
         /// </summary>
         public static string CurrentUsers {
@@ -768,6 +777,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string GenericReport {
             get {
                 return ResourceManager.GetString("GenericReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rapor Al.
+        /// </summary>
+        public static string GetReport {
+            get {
+                return ResourceManager.GetString("GetReport", resourceCulture);
             }
         }
         

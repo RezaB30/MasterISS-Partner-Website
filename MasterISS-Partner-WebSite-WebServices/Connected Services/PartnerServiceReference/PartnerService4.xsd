@@ -549,4 +549,18 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetSubscriptionState">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q77="http://schemas.datacontract.org/2004/07/RadiusR.API.CustomerWebService.Requests.PartnerRequests" minOccurs="0" name="request" nillable="true" type="q77:PartnerServiceSubscriptionStateRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSubscriptionStateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q78="http://schemas.datacontract.org/2004/07/RadiusR.API.CustomerWebService.Responses.PartnerResponses" minOccurs="0" name="GetSubscriptionStateResult" nillable="true" type="q78:PartnerServiceSubscriptionStateResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

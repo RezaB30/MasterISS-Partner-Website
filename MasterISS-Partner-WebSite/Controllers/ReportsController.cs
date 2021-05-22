@@ -20,7 +20,7 @@ namespace MasterISS_Partner_WebSite.Controllers
         private static Logger LoggerError = LogManager.GetLogger("AppLoggerError");
 
         // GET: Reports
-        public ActionResult Index(OperationTypeHistoryFilterViewModel filterViewModel, int page = 1, int pageSize = 10)
+        public ActionResult Index(OperationTypeHistoryFilterViewModel filterViewModel, string isReport, int page = 1, int pageSize = 10)
         {
             filterViewModel = filterViewModel ?? new OperationTypeHistoryFilterViewModel();
             ViewBag.OperationType = OperationTypeList(filterViewModel.OperationType ?? null);
@@ -45,6 +45,10 @@ namespace MasterISS_Partner_WebSite.Controllers
                     }
                     if (startDate <= endDate)
                     {
+                        if (isReport == Localization.View.GetReport)//GetReport Button
+                        {
+                            return RedirectToAction("ExportExcelReportForSetup", new { startDate = startDate.GetValueOrDefault().ToString(), endDate = endDate.Value.ToString() });
+                        }
                         if (startDate.Value.AddDays(Properties.Settings.Default.SearchLimit) >= endDate)
                         {
                             using (var db = new PartnerWebSiteEntities())
@@ -81,27 +85,102 @@ namespace MasterISS_Partner_WebSite.Controllers
             return View();
         }
 
-        public ActionResult ExportExcelReportForSetup()
+        public ActionResult ExportExcelReportForSetup(DateTime startDate, DateTime endDate)
         {
             var claimInfo = new ClaimInfo();
             var partnerId = claimInfo.PartnerId();
 
             using (var db = new PartnerWebSiteEntities())
             {
-                var results = db.TaskList.Where(tl => tl.PartnerId == partnerId).AsEnumerable().Select(tl => new SetupOperationsGenericReportCSVModel
+                var results = db.TaskList.Where(tl => tl.PartnerId == partnerId).Where(tl => tl.TaskIssueDate > startDate && tl.TaskIssueDate < endDate).AsEnumerable().Select(tl => new SetupOperationsGenericReportCSVModel
                 {
                     Area = string.Format("{0} > {1}", tl.Province, tl.City),
                     CompletionDate = GetTaskComplationDate(tl.TaskNo),
-                    Description = GetTaskLastDescription(tl.TaskNo),
+                    Description = GetTaskLastDescriptionByTaskNo(tl.TaskNo),
                     NameSurname = tl.ContactName,
                     SubscriberNo = tl.SubscriberNo,
+                    LastRendezvousDate = GetLastReservationDateByTaskNo(tl.TaskNo),
+                    SetupTeamStaff = GetSetupStaffNameByUserId(tl.AssignToSetupTeam),
+                    TaskIssueDate = tl.TaskIssueDate?.ToString("dd.MM.yyyy HH:mm"),
+                    TaskType = GetTaskTypeDisplayText(tl.TaskType),
+                    TaskStatus = GetLastTaskStatus(tl.TaskNo),
+                    Stage = new LocalizedList<TaskStatusEnum, Localization.TaskStatus>().GetDisplayText(tl.TaskStatus, CultureInfo.CurrentCulture),
+                    CustomerStatus = GetCustomerState(tl.SubscriberNo),
                 });
 
-                return File(CSVGenerator.GetStream(results, "\t"), @"text/csv", "a" + ".csv");
+                return File(CSVGenerator.GetStream(results, "\t"), @"text/csv",string.Format($"{Localization.View.CurrentTasksReport}_{startDate.ToString("dd.MM.yyyy")}_{endDate.ToString("dd.MM.yyyy")}_.csv"));
             }
         }
 
-        private string GetTaskLastDescription(long taskNo)
+        private string GetTaskTypeDisplayText(short? taskTypeId)
+        {
+            if (taskTypeId != null)
+            {
+                var taskDisplayText = new LocalizedList<TaskTypesEnum, Localization.TaskTypes>().GetDisplayText(taskTypeId.Value, CultureInfo.CurrentCulture);
+                return taskDisplayText;
+            }
+            return string.Empty;
+        }
+
+        private string GetCustomerState(string subscriberNo)
+        {
+            var wrapper = new WebServiceWrapper();
+            var response = wrapper.GetSubscriptionState(subscriberNo);
+            if (response.ResponseMessage.ErrorCode == 0)
+            {
+                return response.PartnerSubscriptionState.CustomerState.Name;
+            }
+            LoggerError.Fatal($"An error occurred while Report=> GetCustomerState , ErrorCode: {response.ResponseMessage.ErrorCode}, ErrorMessage : {response.ResponseMessage.ErrorMessage} by: { wrapper.GetUserSubMail()}");
+
+            return string.Empty;
+        }
+
+        private string GetLastTaskStatus(long taskNo)
+        {
+            var lastTask = LastUpdatedSetupStatusbyTaskNo(taskNo);
+            if (lastTask != null)
+            {
+                var lastTaskStatus = lastTask.FaultCodes;
+                if (lastTaskStatus != null)
+                {
+                    var lastTaskStatusDisplayText = new LocalizedList<FaultCodeEnum, Localization.FaultCodes>().GetDisplayText(lastTaskStatus, CultureInfo.CurrentCulture);
+                    return lastTaskStatusDisplayText;
+                }
+                return string.Empty;
+            }
+            return string.Empty;
+        }
+
+        private string GetSetupStaffNameByUserId(long? userId)
+        {
+            if (userId != null)
+            {
+                using (var db = new PartnerWebSiteEntities())
+                {
+                    var user = db.User.Find(userId);
+                    if (user != null)
+                    {
+                        return user.NameSurname;
+                    }
+                    return string.Empty;
+                }
+            }
+            return string.Empty;
+        }
+        private string GetLastReservationDateByTaskNo(long taskNo)
+        {
+            var lastRandezvousDate = LastUpdatedSetupStatusbyTaskNo(taskNo);
+            if (lastRandezvousDate != null)
+            {
+                if (lastRandezvousDate.ReservationDate.HasValue)
+                {
+                    return lastRandezvousDate.ReservationDate.GetValueOrDefault().ToString("dd.MM.yyyy HH:mm");
+                }
+                return string.Empty;
+            }
+            return string.Empty;
+        }
+        private string GetTaskLastDescriptionByTaskNo(long taskNo)
         {
             var lastUpdatedDescription = LastUpdatedSetupStatusbyTaskNo(taskNo);
             if (lastUpdatedDescription != null)

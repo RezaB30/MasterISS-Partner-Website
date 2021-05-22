@@ -14,12 +14,8 @@
         <div class="container my-8">
             <span class="navi-text">
                 @Html.ActionLink(View.ViewingLoadedBalances, "CreditReportDetail", "Home", null, new { @class = "btn btn-outline-danger my-2 mr-4" })
-            </span> 
-            <span class="navi-text">
-                @Html.ActionLink("exel rapor al", "ExportExcelReportForSetup", "Reports", null, new { @class = "btn btn-outline-info my-2 mr-4" })
             </span>
-
-            @if (User.IsInRole("Admin"))
+            @if (User.IsInRole("Admin") || User.IsInRole("RendezvousTeam"))
             {
                 <div class="row">
                     <div class="col-lg-12 mb-lg-0 mb-6 ">
@@ -51,12 +47,18 @@
                                             <span>@View.Filter</span>
                                         </span>
                                     </button>&nbsp;&nbsp;
-                                    <a href="@Url.Action("Index","Reports")" class="btn btn-secondary btn-secondary--icon" id="kt_reset">
+                                    <a href="@Url.Action("Index", "Reports")" class="btn btn-secondary btn-secondary--icon" id="kt_reset">
                                         <span>
                                             <i class="la la-close"></i>
                                             <span>@View.Reset</span>
                                         </span>
-                                    </a>
+                                    </a>&nbsp;&nbsp;
+                                    <button type="submit" name="isReport" class="btn btn-danger btn-danger" value="@View.GetReport">
+                                        <span>
+                                            <i class="la la-file"></i>
+                                            <span>@View.GetReport</span>
+                                        </span>
+                                    </button>
                                 </div>
                             </div>
                         }
@@ -130,3 +132,5 @@
         </div>
     </div>
 </div>
+@section Javascript{
+}

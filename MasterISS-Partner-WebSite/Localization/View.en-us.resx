@@ -261,6 +261,9 @@
   <data name="CurrentOperatorName" xml:space="preserve">
     <value>Current Operator Name</value>
   </data>
+  <data name="CurrentTasksReport" xml:space="preserve">
+    <value>CurrentTasksReport</value>
+  </data>
   <data name="CurrentUsers" xml:space="preserve">
     <value>Current Users</value>
   </data>
@@ -353,6 +356,9 @@
   </data>
   <data name="GenericReport" xml:space="preserve">
     <value>Generic Report</value>
+  </data>
+  <data name="GetReport" xml:space="preserve">
+    <value>Get Report</value>
   </data>
   <data name="GiveConfirmation" xml:space="preserve">
     <value>Give Confirmation</value>

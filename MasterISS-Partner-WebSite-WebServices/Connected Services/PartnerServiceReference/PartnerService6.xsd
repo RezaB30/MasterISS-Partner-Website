@@ -752,4 +752,36 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="BaseResponseOfNullableOfbooleanSHA256qBRhzOKh" nillable="true" type="tns:BaseResponseOfNullableOfbooleanSHA256qBRhzOKh" />
+  <xs:complexType name="BaseRequestOfPartnerSubscriptionStateRequestSHA256XdPrP3EA">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="BaseRequestOf{0}{1}{#}" Namespace="http://schemas.datacontract.org/2004/07/RezaB.API.WebService" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="PartnerSubscriptionStateRequest" Namespace="http://schemas.datacontract.org/2004/07/RadiusR.API.CustomerWebService.Requests.PartnerRequests" />
+          <GenericParameter Name="SHA256" Namespace="http://schemas.datacontract.org/2004/07/System.Security.Cryptography" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BaseRequestOfSHA256o_Pr6u_PMh">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="BaseRequestOfPartnerSubscriptionStateRequestSHA256XdPrP3EA" nillable="true" type="tns:BaseRequestOfPartnerSubscriptionStateRequestSHA256XdPrP3EA" />
+  <xs:complexType name="BaseResponseOfPartnerSubscriptionsResponseSHA256_SnLIBD70">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="BaseResponseOf{0}{1}{#}" Namespace="http://schemas.datacontract.org/2004/07/RezaB.API.WebService" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="PartnerSubscriptionsResponse" Namespace="http://schemas.datacontract.org/2004/07/RadiusR.API.CustomerWebService.Responses.PartnerResponses" />
+          <GenericParameter Name="SHA256" Namespace="http://schemas.datacontract.org/2004/07/System.Security.Cryptography" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BaseResponseOfSHA256o_Pr6u_PMh">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="BaseResponseOfPartnerSubscriptionsResponseSHA256_SnLIBD70" nillable="true" type="tns:BaseResponseOfPartnerSubscriptionsResponseSHA256_SnLIBD70" />
 </xs:schema>

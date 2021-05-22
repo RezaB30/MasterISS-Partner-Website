@@ -134,7 +134,7 @@
             <!--end::Item-->
         </div>
         <div class="row gutter-b">
-            @if (User.IsInRole("Setup") && (User.IsInRole("Admin") || User.IsInRole("PaymentCreditReportDetail")))
+            @if (User.IsInRole("Setup") && (User.IsInRole("Admin") || User.IsInRole("RendezvousTeam") || User.IsInRole("PaymentCreditReportDetail")))
             {
                 <div class="col-6">
                     <a href="@Url.Action("Index","Reports")" class="btn btn-block btn-hover-primary text-warning text-center py-5 px-5" style="background-color: #43257d">
@@ -294,7 +294,7 @@
                                 </li>
                             }
 
-                            @if (User.IsInRole("Setup") && (User.IsInRole("Admin") || User.IsInRole("PaymentCreditReportDetail")))
+                            @if (User.IsInRole("Setup") && (User.IsInRole("Admin") || User.IsInRole("RendezvousTeam") || User.IsInRole("PaymentCreditReportDetail")))
                             {
                                 <li class="menu-item menu-item-submenu menu-item-rel" aria-haspopup="true">
                                     <a href="@Url.Action("Index","Reports")" class="menu-link">

@@ -488,4 +488,24 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="SavePartnerClientAttachmentRequest" nillable="true" type="tns:SavePartnerClientAttachmentRequest" />
+  <xs:complexType name="PartnerServiceSubscriptionStateRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q20="http://schemas.datacontract.org/2004/07/RezaB.API.WebService" base="q20:BaseRequestOfPartnerSubscriptionStateRequestSHA256XdPrP3EA">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="SubscriptionStateParameters" nillable="true" type="tns:PartnerSubscriptionStateRequest" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="PartnerServiceSubscriptionStateRequest" nillable="true" type="tns:PartnerServiceSubscriptionStateRequest" />
+  <xs:complexType name="PartnerSubscriptionStateRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:RequestBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="SubscriberNo" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="PartnerSubscriptionStateRequest" nillable="true" type="tns:PartnerSubscriptionStateRequest" />
 </xs:schema>

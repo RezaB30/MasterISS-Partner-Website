@@ -634,6 +634,25 @@ namespace MasterISS_Partner_WebSite
             return response;
         }
 
+        public PartnerServiceSubscriptionStateResponse GetSubscriptionState(string subscriberNo)
+        {
+            var request = new PartnerServiceSubscriptionStateRequest
+            {
+                Culture = Culture,
+                Hash = Hash<SHA256>(),
+                Rand = Rand,
+                Username = Username,
+                SubscriptionStateParameters = new PartnerSubscriptionStateRequest
+                {
+                    SubUserEmail = GetUserSubMail(),
+                    UserEmail = GetUserMail(),
+                    SubscriberNo = subscriberNo,
+                }
+            };
+            var response = Client.GetSubscriptionState(request);
+
+            return response;
+        }
         public PartnerServiceClientAttachmentsResponse GetPartnerClientAttachments(long subscriptionId)
         {
             var request = new PartnerServiceClientAttachmentsRequest

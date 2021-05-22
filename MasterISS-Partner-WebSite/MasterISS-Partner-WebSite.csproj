@@ -291,6 +291,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>OperationHistoryType.en-us.resx</DependentUpon>
     </Compile>
+    <Compile Include="Localization\TaskCSVReport.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TaskCSVReport.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Localization\TaskCSVReport.en-us.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TaskCSVReport.en-us.resx</DependentUpon>
+    </Compile>
     <Compile Include="Localization\TaskStatus.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -2018,6 +2028,14 @@
     <EmbeddedResource Include="Localization\PermissionList.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PermissionList.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\TaskCSVReport.en-us.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TaskCSVReport.en-us.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\TaskCSVReport.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TaskCSVReport.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Localization\TaskStatus.en-us.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

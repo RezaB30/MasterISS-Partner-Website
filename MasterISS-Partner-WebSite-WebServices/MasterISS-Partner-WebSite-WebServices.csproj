@@ -172,6 +172,9 @@
     <None Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceSubscriptionsResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceSubscriptionStateResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\PartnerServiceReference\MasterISS_Partner_WebSite_WebServices.PartnerServiceReference.PartnerServiceSubUserResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

@@ -261,6 +261,9 @@
   <data name="CurrentOperatorName" xml:space="preserve">
     <value>Mevcut Operatör Adı</value>
   </data>
+  <data name="CurrentTasksReport" xml:space="preserve">
+    <value>GüncelGörevlerRaporu</value>
+  </data>
   <data name="CurrentUsers" xml:space="preserve">
     <value>Mevcut Kullanıcılar</value>
   </data>
@@ -353,6 +356,9 @@
   </data>
   <data name="GenericReport" xml:space="preserve">
     <value>Genel Rapor</value>
+  </data>
+  <data name="GetReport" xml:space="preserve">
+    <value>Rapor Al</value>
   </data>
   <data name="GiveConfirmation" xml:space="preserve">
     <value>Teyit Ver</value>
