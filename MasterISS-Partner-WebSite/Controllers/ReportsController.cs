@@ -20,6 +20,9 @@ namespace MasterISS_Partner_WebSite.Controllers
         private static Logger LoggerError = LogManager.GetLogger("AppLoggerError");
 
         // GET: Reports
+
+        [Authorize(Roles = "Setup")]
+        [Authorize(Roles = "Admin,RendezvousTeam")]
         public ActionResult Index(OperationTypeHistoryFilterViewModel filterViewModel, string isReport, int page = 1, int pageSize = 10)
         {
             filterViewModel = filterViewModel ?? new OperationTypeHistoryFilterViewModel();
@@ -45,6 +48,9 @@ namespace MasterISS_Partner_WebSite.Controllers
                     }
                     if (startDate <= endDate)
                     {
+                        filterViewModel.StartDate = startDate.Value.ToString("dd.MM.yyyy HH:mm");
+                        filterViewModel.EndDate = endDate.Value.ToString("dd.MM.yyyy HH:mm");
+
                         if (isReport == Localization.View.GetReport)//GetReport Button
                         {
                             return RedirectToAction("ExportExcelReportForSetup", new { startDate = startDate.GetValueOrDefault().ToString(), endDate = endDate.Value.ToString() });
@@ -53,8 +59,6 @@ namespace MasterISS_Partner_WebSite.Controllers
                         {
                             using (var db = new PartnerWebSiteEntities())
                             {
-                                filterViewModel.StartDate = startDate.ToString();
-                                filterViewModel.EndDate = endDate.ToString();
                                 var operationHistoriesList = OperationHistories(filterViewModel);
                                 var list = operationHistoriesList.OrderByDescending(oh => oh.ChangeTime).Select(oh => new OperationHistoryListViewModel
                                 {
@@ -108,7 +112,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                     CustomerStatus = GetCustomerState(tl.SubscriberNo),
                 });
 
-                return File(CSVGenerator.GetStream(results, "\t"), @"text/csv",string.Format($"{Localization.View.CurrentTasksReport}_{startDate.ToString("dd.MM.yyyy")}_{endDate.ToString("dd.MM.yyyy")}_.csv"));
+                return File(CSVGenerator.GetStream(results, "\t"), @"text/csv", string.Format($"{Localization.View.CurrentTasksReport}_{startDate.ToString("dd.MM.yyyy")}_{endDate.ToString("dd.MM.yyyy")}_.csv"));
             }
         }
 
@@ -121,7 +125,6 @@ namespace MasterISS_Partner_WebSite.Controllers
             }
             return string.Empty;
         }
-
         private string GetCustomerState(string subscriberNo)
         {
             var wrapper = new WebServiceWrapper();
@@ -134,7 +137,6 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             return string.Empty;
         }
-
         private string GetLastTaskStatus(long taskNo)
         {
             var lastTask = LastUpdatedSetupStatusbyTaskNo(taskNo);
@@ -150,7 +152,6 @@ namespace MasterISS_Partner_WebSite.Controllers
             }
             return string.Empty;
         }
-
         private string GetSetupStaffNameByUserId(long? userId)
         {
             if (userId != null)
@@ -169,16 +170,23 @@ namespace MasterISS_Partner_WebSite.Controllers
         }
         private string GetLastReservationDateByTaskNo(long taskNo)
         {
-            var lastRandezvousDate = LastUpdatedSetupStatusbyTaskNo(taskNo);
-            if (lastRandezvousDate != null)
+            using (var db = new PartnerWebSiteEntities())
             {
-                if (lastRandezvousDate.ReservationDate.HasValue)
+                var validTask = db.UpdatedSetupStatus.Where(uss => uss.TaskNo == taskNo);
+                if (validTask != null)
                 {
-                    return lastRandezvousDate.ReservationDate.GetValueOrDefault().ToString("dd.MM.yyyy HH:mm");
+                    var lastUpdatedForTask = validTask.OrderByDescending(t => t.ChangeTime).Where(uss => uss.FaultCodes == (short)FaultCodeEnum.RendezvousMade).FirstOrDefault();
+                    if (lastUpdatedForTask != null)
+                    {
+                        if (lastUpdatedForTask.ReservationDate.HasValue)
+                        {
+                            return lastUpdatedForTask.ReservationDate.GetValueOrDefault().ToString("dd.MM.yyyy HH:mm");
+                        }
+                    }
+                    return null;
                 }
-                return string.Empty;
+                return null;
             }
-            return string.Empty;
         }
         private string GetTaskLastDescriptionByTaskNo(long taskNo)
         {
@@ -224,7 +232,6 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             }
         }
-
         private SelectList OperationTypeList(int? selectedValue)
         {
             var list = new LocalizedList<OperationTypeEnum, Localization.OperationHistoryType>().GetList(CultureInfo.CurrentCulture);
@@ -254,8 +261,6 @@ namespace MasterISS_Partner_WebSite.Controllers
                 return operationHistories.ToList();
             }
         }
-
-
         private string GetOperationTypeDisplayText(short operationType)
         {
             var localizedList = new LocalizedList<OperationTypeEnum, Localization.OperationHistoryType>();

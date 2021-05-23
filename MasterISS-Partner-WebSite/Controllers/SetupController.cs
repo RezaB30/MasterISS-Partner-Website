@@ -27,7 +27,7 @@ using Newtonsoft.Json;
 namespace MasterISS_Partner_WebSite.Controllers
 {
     [Authorize(Roles = "Setup")]
-    [Authorize(Roles = "Admin,SetupManager")]
+    [Authorize(Roles = "Admin,SetupManager,RendezvousTeam")]
     public class SetupController : BaseController
     {
         private static Logger LoggerError = LogManager.GetLogger("AppLoggerError");
@@ -349,7 +349,7 @@ namespace MasterISS_Partner_WebSite.Controllers
                 {
                     var base64 = Convert.ToBase64String(fileName.FileContent);
                     var src = string.Format("data:{0};base64,{1}", fileName.MIMEType, base64);
-                    var link = Url.Action("GetSelectedAttachmentbySubscriberNo", "Setup", new { fileName = fileName.FileName, attachmentType = fileName.AttachmentType, subscriberNo = subscriberNo});
+                    var link = Url.Action("GetSelectedAttachmentbySubscriberNo", "Setup", new { fileName = fileName.FileName, attachmentType = fileName.AttachmentType, subscriberNo = subscriberNo });
                     var genericItem = new GenericFileList
                     {
                         ImgLink = link,
@@ -800,32 +800,35 @@ namespace MasterISS_Partner_WebSite.Controllers
                     if (serviceAvailability.AddressDetailsResponse.ProvinceID == setupTeamWorkArea.ProvinceId)
                     {
                         matchedWorkAreaTeamUserId.Add(setupTeamWorkArea.UserId);
-                    }
 
-                    if (setupTeamWorkArea.DistrictId.HasValue)
-                    {
-                        if (serviceAvailability.AddressDetailsResponse.DistrictID != setupTeamWorkArea.DistrictId)
+                        if (setupTeamWorkArea.DistrictId.HasValue)
                         {
-                            matchedWorkAreaTeamUserId.Remove(setupTeamWorkArea.UserId);
+                            if (serviceAvailability.AddressDetailsResponse.DistrictID != setupTeamWorkArea.DistrictId)
+                            {
+                                matchedWorkAreaTeamUserId.Remove(setupTeamWorkArea.UserId);
+                            }
+                            else
+                            {
+                                if (setupTeamWorkArea.RuralId.HasValue)
+                                {
+                                    if (serviceAvailability.AddressDetailsResponse.RuralCode != setupTeamWorkArea.RuralId)
+                                    {
+                                        matchedWorkAreaTeamUserId.Remove(setupTeamWorkArea.UserId);
+                                    }
+                                    else
+                                    {
+                                        if (setupTeamWorkArea.NeighbourhoodId.HasValue)
+                                        {
+                                            if (serviceAvailability.AddressDetailsResponse.NeighbourhoodID != setupTeamWorkArea.NeighbourhoodId)
+                                            {
+                                                matchedWorkAreaTeamUserId.Remove(setupTeamWorkArea.UserId);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
-
-                    if (setupTeamWorkArea.RuralId.HasValue)
-                    {
-                        if (serviceAvailability.AddressDetailsResponse.RuralCode != setupTeamWorkArea.RuralId)
-                        {
-                            matchedWorkAreaTeamUserId.Remove(setupTeamWorkArea.UserId);
-                        }
-                    }
-
-                    if (setupTeamWorkArea.NeighbourhoodId.HasValue)
-                    {
-                        if (serviceAvailability.AddressDetailsResponse.NeighbourhoodID != setupTeamWorkArea.NeighbourhoodId)
-                        {
-                            matchedWorkAreaTeamUserId.Remove(setupTeamWorkArea.UserId);
-                        }
-                    }
-
                 }
 
                 var suitableSetupTeamList = db.User.Where(wa => matchedWorkAreaTeamUserId.Contains(wa.Id)).ToList().Select(user => new KeyValuePair<long, string>(user.Id, user.NameSurname)).ToList();
@@ -1370,6 +1373,10 @@ namespace MasterISS_Partner_WebSite.Controllers
         private SelectList SuitableSetupTeamList(long taskNo)
         {
             var list = ShareSetupStaff(taskNo);
+            if (list.Count() == 0)
+            {
+                return null;
+            }
             var setupTeamList = new SelectList(list.Select(stl => new { Name = stl.Value, Value = stl.Key }).ToArray(), "Value", "name");
             return setupTeamList;
         }
