@@ -40,8 +40,18 @@ namespace MasterISS_Partner_WebSite
             return null;
         }
 
-
         public DateTime? ConvertDate(string convertedDateTime)
+        {
+            DateTime convertedDate;
+            var validDate = DateTime.TryParseExact(convertedDateTime, "dd.MM.yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out convertedDate);
+            if (validDate)
+            {
+                return convertedDate;
+            }
+            return null;
+        }
+
+        public DateTime? ConvertDateTime(string convertedDateTime)
         {
             DateTime convertedDate;
             var validDate = DateTime.TryParseExact(convertedDateTime, "dd.MM.yyyy HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out convertedDate);
@@ -55,7 +65,7 @@ namespace MasterISS_Partner_WebSite
         public bool DateIsCorrrect(bool IsOnlyDate, params string[] dateTimes)
         {
             DateTime convertedDate;
-            if (IsOnlyDate==false)
+            if (IsOnlyDate == false)
             {
                 foreach (var date in dateTimes)
                 {

@@ -32,7 +32,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             if (ModelState.IsValid)
             {
                 var dateValid = new DatetimeParse();
-                if (dateValid.DateIsCorrrect(false, filterViewModel.StartDate, filterViewModel.EndDate))
+                if (dateValid.DateIsCorrrect(true, filterViewModel.StartDate, filterViewModel.EndDate))
                 {
                     var startDate = dateValid.ConvertDate(filterViewModel.StartDate);
                     var endDate = dateValid.ConvertDate(filterViewModel.EndDate);
@@ -48,8 +48,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                     }
                     if (startDate <= endDate)
                     {
-                        filterViewModel.StartDate = startDate.Value.ToString("dd.MM.yyyy HH:mm");
-                        filterViewModel.EndDate = endDate.Value.ToString("dd.MM.yyyy HH:mm");
+                        filterViewModel.StartDate = startDate.Value.ToString("dd.MM.yyyy");
+                        filterViewModel.EndDate = endDate.Value.ToString("dd.MM.yyyy");
 
                         if (isReport == Localization.View.GetReport)//GetReport Button
                         {
@@ -94,9 +94,12 @@ namespace MasterISS_Partner_WebSite.Controllers
             var claimInfo = new ClaimInfo();
             var partnerId = claimInfo.PartnerId();
 
+            var startDateForFilter = startDate.AddHours(0).AddMinutes(0).AddSeconds(0);
+            var endDateForFilter = endDate.AddHours(59).AddMinutes(59).AddSeconds(59);
+
             using (var db = new PartnerWebSiteEntities())
             {
-                var results = db.TaskList.Where(tl => tl.PartnerId == partnerId).Where(tl => tl.TaskIssueDate > startDate && tl.TaskIssueDate < endDate).AsEnumerable().Select(tl => new SetupOperationsGenericReportCSVModel
+                var results = db.TaskList.Where(tl => tl.PartnerId == partnerId).Where(tl => tl.TaskIssueDate > startDateForFilter && tl.TaskIssueDate < endDateForFilter).AsEnumerable().Select(tl => new SetupOperationsGenericReportCSVModel
                 {
                     Area = string.Format("{0} > {1}", tl.Province, tl.City),
                     CompletionDate = GetTaskComplationDate(tl.TaskNo),
@@ -247,8 +250,8 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                 var operationHistories = Enumerable.Empty<OperationHistory>().AsQueryable();
 
-                var startDate = Convert.ToDateTime(operationTypeHistoryFilterViewModel.StartDate);
-                var endDate = Convert.ToDateTime(operationTypeHistoryFilterViewModel.EndDate);
+                var startDate = Convert.ToDateTime(operationTypeHistoryFilterViewModel.StartDate).AddHours(0).AddMinutes(0).AddSeconds(0);
+                var endDate = Convert.ToDateTime(operationTypeHistoryFilterViewModel.EndDate).AddHours(23).AddMinutes(59).AddSeconds(59);
 
                 operationHistories = db.OperationHistory.Where(oh => oh.TaskList.PartnerId == partnerId).Where(oh => oh.ChangeTime >= startDate && oh.ChangeTime <= endDate);
 
