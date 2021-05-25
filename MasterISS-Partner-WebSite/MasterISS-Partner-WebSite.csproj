@@ -2082,6 +2082,10 @@
       <Project>{a7dd15f5-7fc4-4dda-b0d1-30ea8f1adda7}</Project>
       <Name>MasterISS-Partner-WebSite-Business</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MasterISS-Partner-WebSite-Core\MasterISS-Partner-WebSite-Core.csproj">
+      <Project>{EB068594-0109-4AFB-B12E-036B7A9F549D}</Project>
+      <Name>MasterISS-Partner-WebSite-Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MasterISS-Partner-WebSite-DataAccess\MasterISS-Partner-WebSite-DataAccess.csproj">
       <Project>{3FA6EA97-4FE5-4A6B-AF68-B2B45DB1BEDA}</Project>
       <Name>MasterISS-Partner-WebSite-DataAccess</Name>

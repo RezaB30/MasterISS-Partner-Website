@@ -46,6 +46,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MasterISS-Partner-WebSite-Core\MasterISS-Partner-WebSite-Core.csproj">
+      <Project>{EB068594-0109-4AFB-B12E-036B7A9F549D}</Project>
+      <Name>MasterISS-Partner-WebSite-Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MasterISS-Partner-WebSite-DataAccess\MasterISS-Partner-WebSite-DataAccess.csproj">
       <Project>{3fa6ea97-4fe5-4a6b-af68-b2b45db1beda}</Project>
       <Name>MasterISS-Partner-WebSite-DataAccess</Name>

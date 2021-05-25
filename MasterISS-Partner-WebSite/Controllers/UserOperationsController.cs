@@ -1,4 +1,5 @@
 ﻿using MasterISS_Partner_WebSite.ViewModels;
+using MasterISS_Partner_WebSite_Business.Abstract;
 using MasterISS_Partner_WebSite_Business.Concrete;
 using MasterISS_Partner_WebSite_DataAccess.Concrete.EntityFramework;
 using MasterISS_Partner_WebSite_Database.Models;
@@ -32,6 +33,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             ViewBag.Search = filterUserViewModel;
 
             //UserManager userManager = new UserManager(new EfUserDal());
+            //var result = userManager.GetById(14);
 
             using (var db = new PartnerWebSiteEntities())
             {

@@ -108,22 +108,23 @@
                                     <!--begin::Toolbar-->
 
                                     <div class="d-flex justify-content-end">
-                                        @if (item.TaskStatusByControl != (int)MasterISS_Partner_WebSite_Enums.TaskStatusEnum.Completed)
-                                        {
-                                            <div class="dropdown dropdown-inline" data-toggle="tooltip" title="" data-placement="left" data-original-title="Quick actions">
-                                                <a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <i class="ki ki-bold-more-hor"></i>
-                                                </a>
 
-                                                <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
-                                                    <!--begin::Navigation-->
-                                                    <ul class="navi navi-hover">
-                                                        <li class="navi-header font-weight-bold py-4">
-                                                            <span class="font-size-lg">@View.OperationMenu</span>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
-                                                            </button>
-                                                        </li>
+                                        <div class="dropdown dropdown-inline" data-toggle="tooltip" title="" data-placement="left" data-original-title="Quick actions">
+                                            <a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="ki ki-bold-more-hor"></i>
+                                            </a>
+
+                                            <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
+                                                <!--begin::Navigation-->
+                                                <ul class="navi navi-hover">
+                                                    <li class="navi-header font-weight-bold py-4">
+                                                        <span class="font-size-lg">@View.OperationMenu</span>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
+                                                        </button>
+                                                    </li>
+                                                    @if (item.TaskStatusByControl != (int)MasterISS_Partner_WebSite_Enums.TaskStatusEnum.Completed)
+                                                    {
                                                         <li class="navi-separator mb-3 opacity-70"></li>
                                                         <li class="navi-item">
                                                             <div class="navi-link">
@@ -177,35 +178,33 @@
                                                             </div>
 
                                                         </li>
-                                                        <li class="navi-item">
-                                                            <div class="navi-link">
-                                                                <span class="navi-text" data-toggle="modal" data-target="#examplegetTaskFile">
-                                                                    <input class="btn-sm btn btn-block btn-outline-info get-task-file-button" value="@View.ViewUploadedPhotos" dataValue="@item.TaskNo" />
-                                                                </span>
-                                                            </div>
-                                                        </li>
-                                                        <li class="navi-item">
-                                                            <div class="navi-link">
-                                                                <span class="navi-text" data-toggle="modal" data-target="#examplegetTaskFile">
-                                                                    <input class="btn-sm btn btn-block btn-outline-info get-uploaded-document" value="@View.ViewUploadedDocuments" dataValue="@item.SubscriberNo" />
-                                                                </span>
-                                                            </div>
-                                                        </li>
+                                                    }
+                                                    <li class="navi-item">
+                                                        <div class="navi-link">
+                                                            <span class="navi-text" data-toggle="modal" data-target="#examplegetTaskFile">
+                                                                <input class="btn-sm btn btn-block btn-outline-info get-task-file-button" value="@View.ViewUploadedPhotos" dataValue="@item.TaskNo" />
+                                                            </span>
+                                                        </div>
+                                                    </li>
+                                                    <li class="navi-item">
+                                                        <div class="navi-link">
+                                                            <span class="navi-text" data-toggle="modal" data-target="#examplegetTaskFile">
+                                                                <input class="btn-sm btn btn-block btn-outline-info get-uploaded-document" value="@View.ViewUploadedDocuments" dataValue="@item.SubscriberNo" />
+                                                            </span>
+                                                        </div>
+                                                    </li>
+                                                    @if (item.TaskStatusByControl != (int)MasterISS_Partner_WebSite_Enums.TaskStatusEnum.Completed)
+                                                    {
                                                         <li class="navi-separator mt-3 opacity-70"></li>
                                                         <li class="navi-footer py-4">
                                                             <a class="btn btn-light-warning btn-block text-info text-hover-white info font-weight-bold btn-sm task-update-notRendezvous-button" dataValue="@item.TaskNo" data-toggle="modal" data-target="#exampleModalUpdateTaskNotRendezvous">
                                                                 <i class="ki ki-plus text-info icon-sm"></i> @View.ChangeTaskAddNote
                                                             </a>
                                                         </li>
-                                                    </ul> <!--end::Navigation-->
-                                                </div>
-
+                                                    }
+                                                </ul> <!--end::Navigation-->
                                             </div>
-                                        }
-                                        else
-                                        {
-                                            <span class="btn btn-sm btn-icon" style="cursor:context-menu"></span>
-                                        }
+                                        </div>
                                     </div> <!--end::Toolbar--> <!--begin::User-->
                                     <div class="d-flex align-items-center my-4 mb-2">
 

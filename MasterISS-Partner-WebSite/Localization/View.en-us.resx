@@ -477,6 +477,9 @@
   <data name="OnThisPage" xml:space="preserve">
     <value>On This Page</value>
   </data>
+  <data name="OperationHistory" xml:space="preserve">
+    <value>Operation History</value>
+  </data>
   <data name="OperationMenu" xml:space="preserve">
     <value>Operation Menu</value>
   </data>

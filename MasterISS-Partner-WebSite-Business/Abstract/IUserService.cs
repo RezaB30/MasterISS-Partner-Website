@@ -1,4 +1,5 @@
-﻿using MasterISS_Partner_WebSite_Database.Models;
+﻿using MasterISS_Partner_WebSite_Core.Utilities.Results;
+using MasterISS_Partner_WebSite_Database.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,10 @@ namespace MasterISS_Partner_WebSite_Business.Abstract
 {
     public interface IUserService
     {
-        List<User> GetAll();
+        IDataResult<List<User>> GetAll();
 
-        User GetById(long userId);
+        IResult Add(User user);
+
+        IDataResult<User> GetById(long userId);
     }
 }

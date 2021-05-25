@@ -232,7 +232,7 @@ namespace MasterISS_Partner_WebSite.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kurulum Ekine Ata.
+        ///   Looks up a localized string similar to Kurulum Ekibine Ata.
         /// </summary>
         public static string AssignToSetupTeam {
             get {
@@ -1137,6 +1137,15 @@ namespace MasterISS_Partner_WebSite.Localization {
         public static string OnThisPage {
             get {
                 return ResourceManager.GetString("OnThisPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İşlem Geçmişi.
+        /// </summary>
+        public static string OperationHistory {
+            get {
+                return ResourceManager.GetString("OperationHistory", resourceCulture);
             }
         }
         

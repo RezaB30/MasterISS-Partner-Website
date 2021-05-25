@@ -1,4 +1,5 @@
 ﻿using MasterISS_Partner_WebSite_Business.Abstract;
+using MasterISS_Partner_WebSite_Core.Utilities.Results;
 using MasterISS_Partner_WebSite_DataAccess.Abstract;
 using MasterISS_Partner_WebSite_Database.Models;
 using System;
@@ -18,14 +19,32 @@ namespace MasterISS_Partner_WebSite_Business.Concrete
             _userdal = userdal;
         }
 
-        public List<User> GetAll()
+        public IResult Add(User user)
         {
-            throw new NotImplementedException();
+            if (user.NameSurname.Length < 2)
+            {
+                return new ErrorResult("En az 2 karakter Yap");
+            }
+            _userdal.Add(user);
+            return new SuccessResult();
         }
 
-        public User GetById(long userId)
+        public IDataResult<List<User>> GetAll()
         {
-            throw new NotImplementedException();
+            if (DateTime.Now.Hour == 14)
+            {
+                return new ErrorDataResult<List<User>>("hata var");
+            }
+            return new SuccessDataResult<List<User>>(_userdal.GetAll(), "Başarılı");
+        }
+
+        public IDataResult<User> GetById(long userId)
+        {
+            if (DateTime.Now.Hour == 1)
+            {
+                return new ErrorDataResult<User>("hata var");
+            }
+            return new SuccessDataResult<User>(_userdal.Get(u => u.Id == userId), "Başarılı");
         }
     }
 }

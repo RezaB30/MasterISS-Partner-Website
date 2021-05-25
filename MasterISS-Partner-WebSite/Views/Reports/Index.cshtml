@@ -25,13 +25,13 @@
                                 <div class="col-lg-6 mb-lg-0 mb-12">
                                     <label>@View.DateRange:</label>
                                     <div class="input-daterange input-group" id="kt_datepicker">
-                                        @Html.TextBox("StartDate", search.StartDate, new { @placeholder = DateTime.Now.ToString("dd.MM.yyyy HH:mm"), @class = "form-control" })
+                                        @Html.TextBox("StartDate", search.StartDate, new { @placeholder = DateTime.Now.ToString("dd.MM.yyyy"), @class = "form-control" })
                                         <div class="input-group-append">
                                             <span class="input-group-text">
                                                 <i class="la la-ellipsis-h"></i>
                                             </span>
                                         </div>
-                                        @Html.TextBox("EndDate", search.EndDate, new { @placeholder = DateTime.Now.ToString("dd.MM.yyyy HH:mm"), @class = "form-control" })
+                                        @Html.TextBox("EndDate", search.EndDate, new { @placeholder = DateTime.Now.ToString("dd.MM.yyyy"), @class = "form-control" })
                                     </div>
                                 </div>
                                 <div class="col-lg-6 mb-lg-0 mb-6">
@@ -68,7 +68,7 @@
                 if (ViewBag.ValidationError == null && ViewBag.Max30Days == null && ViewBag.StartTimeBiggerThanEndTime == null && ViewBag.ErrorMessage == null && ViewBag.DateFormatIsNotCorrect == null)
                 {
                     <div class="table-responsive">
-                        <h3 class="my-6 text-info font-size-h4">@View.GenericReport</h3>
+                        <h3 class="my-6 text-info font-size-h4">@View.OperationHistory</h3>
                         <table class="table table-head-custom table-vertical-center table-hover mb-2">
                             <thead>
                                 <tr class="bg-info text-left">

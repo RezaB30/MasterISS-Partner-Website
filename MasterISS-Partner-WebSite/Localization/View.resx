@@ -175,7 +175,7 @@
     <value>Görevi Ata</value>
   </data>
   <data name="AssignToSetupTeam" xml:space="preserve">
-    <value>Kurulum Ekine Ata</value>
+    <value>Kurulum Ekibine Ata</value>
   </data>
   <data name="AuthenticateError" xml:space="preserve">
     <value>Giriş İşlemi Başarısız.</value>
@@ -476,6 +476,9 @@
   </data>
   <data name="OnThisPage" xml:space="preserve">
     <value>Bu sayfada</value>
+  </data>
+  <data name="OperationHistory" xml:space="preserve">
+    <value>İşlem Geçmişi</value>
   </data>
   <data name="OperationMenu" xml:space="preserve">
     <value>İşlem Menüsü</value>
