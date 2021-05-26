@@ -1115,11 +1115,23 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                 var removedDate = new List<DateTime>();
 
+                //for (int i = 0; i < currentDateList.Count - 1; i++)
+                //{
+                //    var validStaffReservation = staffReservationDateList.Any(sel => currentDateList.ToArray()[i] <= sel.Value && currentDateList.ToArray()[i + 1] > sel.Value);
 
+                //    if (validStaffReservation)
+                //    {
+                //        removedDate.Add(currentDateList.ToArray()[i]);
+                //    }
+                //}
                 for (int i = 0; i < currentDateList.Count - 1; i++)
                 {
-                    var validStaffReservation = staffReservationDateList.Any(sel => currentDateList.ToArray()[i] <= sel.Value && currentDateList.ToArray()[i + 1] > sel.Value);
+                    var validStaffReservation = staffReservationDateList.Any(sel => (currentDateList.ToArray()[i] <= sel.Value && currentDateList.ToArray()[i + 1] > sel.Value) || sel.Value == currentDateList.ToArray()[i]);
 
+                    if (staffReservationDateList.Any(sel => sel.Value == currentDateList.ToArray()[i + 1]))
+                    {
+                        removedDate.Add(currentDateList.ToArray()[i+1]);
+                    }
                     if (validStaffReservation)
                     {
                         removedDate.Add(currentDateList.ToArray()[i]);
