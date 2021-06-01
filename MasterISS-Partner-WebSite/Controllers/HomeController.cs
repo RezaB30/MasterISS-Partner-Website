@@ -339,9 +339,12 @@ namespace MasterISS_Partner_WebSite.Controllers
             }
             else if (User.IsInRole("Setup") && User.IsInRole("SetupManager") && !User.IsInRole("RendezvousTeam"))
             {
+                var todayStartDate = DateTime.Today;
+                var todayEndDate = DateTime.Today.AddHours(23).AddMinutes(59).AddSeconds(59);
                 using (var db = new PartnerWebSiteEntities())
                 {
-                    var totalInProgressSetup = db.TaskList.Where(tl => tl.PartnerId == partnerId && tl.AssignToSetupTeam == userId && tl.TaskStatus == (short)TaskStatusEnum.InProgress).Count();
+                    var totalInProgressSetup = db.TaskList.Where(tl => tl.PartnerId == partnerId && tl.AssignToSetupTeam == userId && tl.TaskStatus == (short)TaskStatusEnum.InProgress).
+                        Where(tl => tl.ReservationDate >= todayStartDate && tl.ReservationDate <= todayEndDate).Count();
                     return totalInProgressSetup.ToString();
                 }
             }

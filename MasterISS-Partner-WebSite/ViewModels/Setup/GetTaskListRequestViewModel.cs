@@ -26,6 +26,9 @@ namespace MasterISS_Partner_WebSite.ViewModels.Setup
         public int? TaskType { get; set; }
 
         [Display(ResourceType = typeof(Localization.Model), Name = "FaultCode")]
+        public int? TaskStatus { get; set; }
+
+        [Display(ResourceType = typeof(Localization.Model), Name = "FaultCode")]
         public int? FaultCode { get; set; }
 
     }

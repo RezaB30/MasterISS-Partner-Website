@@ -42,6 +42,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
             ViewBag.TaskType = TaskTypeList(taskListRequestModel.TaskType ?? null);
             ViewBag.FaultCodes = FaultTypeList(taskListRequestModel.FaultCode ?? null, true);
+            //ViewBag.TaskStatus = TaskStatusList(taskListRequestModel.TaskStatus ?? null);
             ViewBag.Search = taskListRequestModel;
 
             if (ModelState.IsValid)
@@ -73,28 +74,27 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                                 var taskList = TaskList(User.IsInRole("Admin"), taskListRequestModel);
 
-                                var list = taskList.OrderByDescending(tl => tl.TaskStatus == (int)TaskStatusEnum.New).ThenBy(tl => tl.TaskStatus == (int)TaskStatusEnum.Completed).ThenBy(tl => tl.TaskStatus == (int)TaskStatusEnum.InProgress)
-                                    .Select(tl => new GetTaskListResponseViewModel
-                                    {
-                                        AddressLatitudeandLongitude = GetAddressLatituteandLongitude(tl.Address),
-                                        ContactName = tl.ContactName,
-                                        TaskIssueDate = Convert.ToDateTime(tl.TaskIssueDate),
-                                        TaskNo = tl.TaskNo,
-                                        XDSLNo = tl.XDSLNo,
-                                        TaskStatus = TaskStatusDescription((short)tl.TaskStatus),
-                                        TaskType = TaskTypeDescription((short)tl.TaskType),
-                                        ReservationDate = Convert.ToDateTime(tl.ReservationDate),
-                                        Address = tl.Address,
-                                        PartnerId = tl.PartnerId,
-                                        RendezvousTeamStaffName = tl.AssignToRendezvousStaff == null ? null : db.RendezvousTeam.Find(tl.AssignToRendezvousStaff).User.NameSurname,
-                                        SetupTeamStaffName = tl.AssignToSetupTeam == null ? null : db.SetupTeam.Find(tl.AssignToSetupTeam).User.NameSurname,
-                                        BBK = tl.BBK,
-                                        IsCorfirmation = tl.IsConfirmation,
-                                        FaultCodesDisplayText = tl.TaskStatus == (int)TaskStatusEnum.New ? null : GetFaultCodesOrDescription(tl.TaskNo, false),
-                                        SetupStaffEnteredMessage = tl.TaskStatus == (int)TaskStatusEnum.New ? null : GetFaultCodesOrDescription(tl.TaskNo, true),
-                                        TaskStatusByControl = tl.TaskStatus,
-                                        SubscriberNo = tl.SubscriberNo
-                                    });
+                                var list = taskList.Select(tl => new GetTaskListResponseViewModel
+                                {
+                                    AddressLatitudeandLongitude = GetAddressLatituteandLongitude(tl.Address),
+                                    ContactName = tl.ContactName,
+                                    TaskIssueDate = Convert.ToDateTime(tl.TaskIssueDate),
+                                    TaskNo = tl.TaskNo,
+                                    XDSLNo = tl.XDSLNo,
+                                    TaskStatus = TaskStatusDescription((short)tl.TaskStatus),
+                                    TaskType = TaskTypeDescription((short)tl.TaskType),
+                                    ReservationDate = Convert.ToDateTime(tl.ReservationDate),
+                                    Address = tl.Address,
+                                    PartnerId = tl.PartnerId,
+                                    RendezvousTeamStaffName = tl.AssignToRendezvousStaff == null ? null : db.RendezvousTeam.Find(tl.AssignToRendezvousStaff).User.NameSurname,
+                                    SetupTeamStaffName = tl.AssignToSetupTeam == null ? null : db.SetupTeam.Find(tl.AssignToSetupTeam).User.NameSurname,
+                                    BBK = tl.BBK,
+                                    IsCorfirmation = tl.IsConfirmation,
+                                    FaultCodesDisplayText = tl.TaskStatus == (int)TaskStatusEnum.New ? null : GetFaultCodesOrDescription(tl.TaskNo, false),
+                                    SetupStaffEnteredMessage = tl.TaskStatus == (int)TaskStatusEnum.New ? null : GetFaultCodesOrDescription(tl.TaskNo, true),
+                                    TaskStatusByControl = tl.TaskStatus,
+                                    SubscriberNo = tl.SubscriberNo
+                                });
 
                                 var totalCount = list.Count();
 
@@ -197,7 +197,6 @@ namespace MasterISS_Partner_WebSite.Controllers
                 var taskList = Enumerable.Empty<TaskList>().AsQueryable();
                 var startDate = ConvertDateTime(taskListRequestModel.TaskListStartDate);
                 var endDate = ConvertDateTime(taskListRequestModel.TaskListEndDate);
-
                 if (isAdmin)
                 {
                     var adminId = claimInfo.UserId();
@@ -207,22 +206,26 @@ namespace MasterISS_Partner_WebSite.Controllers
                         LoggerError.Fatal("An error occurred while SetupController=>TaskList: Admin not found in User Table");
                     }
                     var searchedValueByContactName = taskListRequestModel.SearchedName ?? "";
-                    var list = db.TaskList.Where(tl => tl.PartnerId == partnerId && tl.IsConfirmation == false && tl.ContactName.Contains(searchedValueByContactName));
+                    var list = db.TaskList.Where(tl => tl.PartnerId == partnerId && tl.IsConfirmation == false && tl.ContactName.Contains(searchedValueByContactName)).OrderByDescending(tl => tl.TaskStatus == (int)TaskStatusEnum.New).ThenBy(tl => tl.TaskStatus == (int)TaskStatusEnum.Completed).ThenBy(tl => tl.TaskStatus == (int)TaskStatusEnum.InProgress);
                     taskList = list;
                 }
                 else if (User.IsInRole("SetupManager") && !User.IsInRole("RendezvousTeam"))
                 {
+                    var dateTodayStart = DateTime.Today;
+                    var dateTodayEnd = DateTime.Today.AddHours(23).AddMinutes(59).AddSeconds(59);
                     var userId = claimInfo.UserId();
                     var searchedValueByContactName = taskListRequestModel.SearchedName ?? "";
-                    var list = db.TaskList.Where(tl => tl.AssignToSetupTeam == userId && tl.PartnerId == partnerId && tl.TaskStatus == (int)TaskStatusEnum.InProgress && tl.IsConfirmation == false && tl.ContactName.Contains(searchedValueByContactName));
-                    taskList = list;
+                    var list = db.TaskList.Where(tl => tl.AssignToSetupTeam == userId && tl.PartnerId == partnerId && tl.TaskStatus == (int)TaskStatusEnum.InProgress && tl.IsConfirmation == false && tl.ContactName.Contains(searchedValueByContactName)).
+                        Where(tl => tl.ReservationDate >= dateTodayStart && tl.ReservationDate <= dateTodayEnd).Where(tl => tl.UpdatedSetupStatus.OrderByDescending(uss => uss.ChangeTime).FirstOrDefault().FaultCodes !=(int) FaultCodeEnum.WaitingForNewRendezvous).OrderBy(tl => tl.ReservationDate);
+
+                    taskList =  list;
                 }
                 else
                 {
                     var userId = claimInfo.UserId();
                     var searchedValueByContactName = taskListRequestModel.SearchedName ?? "";
 
-                    var list = db.TaskList.Where(tl => (tl.AssignToRendezvousStaff == userId || tl.AssignToSetupTeam == userId) && tl.PartnerId == partnerId && tl.IsConfirmation == false && tl.ContactName.Contains(searchedValueByContactName));
+                    var list = db.TaskList.Where(tl => (tl.AssignToRendezvousStaff == userId || tl.AssignToSetupTeam == userId) && tl.PartnerId == partnerId && tl.IsConfirmation == false && tl.ContactName.Contains(searchedValueByContactName)).OrderByDescending(tl => tl.TaskStatus == (int)TaskStatusEnum.New).ThenBy(tl => tl.TaskStatus == (int)TaskStatusEnum.Completed).ThenBy(tl => tl.TaskStatus == (int)TaskStatusEnum.InProgress);
                     taskList = list;
                 }
 
@@ -241,7 +244,8 @@ namespace MasterISS_Partner_WebSite.Controllers
                 }
                 if (taskListRequestModel.FaultCode != null)
                 {
-                    var list = taskList.SelectMany(tl => tl.UpdatedSetupStatus.Where(uss => uss.FaultCodes == taskListRequestModel.FaultCode), (tl, uss) => new { taskList = tl }).Select(selectedList => selectedList.taskList);
+                    //var list = taskList.SelectMany(tl => tl.UpdatedSetupStatus.Where(uss => uss.FaultCodes == taskListRequestModel.FaultCode), (tl, uss) => new { taskList = tl }).Select(selectedList => selectedList.taskList);
+                    var list = taskList.Where(tl => tl.UpdatedSetupStatus.OrderByDescending(uss => uss.ChangeTime).FirstOrDefault().FaultCodes == taskListRequestModel.FaultCode);
                     taskList = list;
                 }
 
@@ -1130,7 +1134,7 @@ namespace MasterISS_Partner_WebSite.Controllers
 
                     if (staffReservationDateList.Any(sel => sel.Value == currentDateList.ToArray()[i + 1]))
                     {
-                        removedDate.Add(currentDateList.ToArray()[i+1]);
+                        removedDate.Add(currentDateList.ToArray()[i + 1]);
                     }
                     if (validStaffReservation)
                     {
@@ -1398,6 +1402,13 @@ namespace MasterISS_Partner_WebSite.Controllers
             var list = new LocalizedList<TaskTypesEnum, Localization.TaskTypes>().GetList(CultureInfo.CurrentCulture);
             var faultCodesList = new SelectList(list.Select(m => new { Name = m.Value, Value = m.Key }).ToArray(), "Value", "Name", selectedValue);
             return faultCodesList;
+        }
+
+        private SelectList TaskStatusList(int? selectedValue)
+        {
+            var list = new LocalizedList<TaskStatusEnum, Localization.TaskStatus>().GetList(CultureInfo.CurrentCulture);
+            var taskStatusList = new SelectList(list.Select(m => new { Name = m.Value, Value = m.Key }).ToArray(), "Value", "Name", selectedValue);
+            return taskStatusList;
         }
 
         private DateTime ResponseParseDatetime(string date)

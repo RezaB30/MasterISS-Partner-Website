@@ -20,18 +20,27 @@
             @using (Html.BeginForm("Index", "Setup", FormMethod.Get, new { @class = "mb-15 my-8" }))
             {
                 <div class="row mb-8">
-                    <div class="col-lg-4 mb-lg-0 mb-12">
-                        <label>@View.DateRange:</label>
-                        <div class="input-daterange input-group" id="kt_datepicker">
-                            @Html.TextBox("TaskListStartDate", search.TaskListStartDate, new { @placeholder = DateTime.Now.ToString("dd.MM.yyyy HH:mm"), @class = "form-control" })
-                            <div class="input-group-append">
-                                <span class="input-group-text">
-                                    <i class="la la-ellipsis-h"></i>
-                                </span>
+                    @if (User.IsInRole("Admin") || User.IsInRole("RendezvousTeam"))
+                    {
+                        <div class="col-lg-4 mb-lg-0 mb-12">
+                            <label>@View.DateRange:</label>
+                            <div class="input-daterange input-group" id="kt_datepicker">
+                                @Html.TextBox("TaskListStartDate", search.TaskListStartDate, new { @placeholder = DateTime.Now.ToString("dd.MM.yyyy HH:mm"), @class = "form-control" })
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i class="la la-ellipsis-h"></i>
+                                    </span>
+                                </div>
+                                @Html.TextBox("TaskListEndDate", search.TaskListEndDate, new { @placeholder = DateTime.Now.ToString("dd.MM.yyyy HH:mm"), @class = "form-control" })
                             </div>
-                            @Html.TextBox("TaskListEndDate", search.TaskListEndDate, new { @placeholder = DateTime.Now.ToString("dd.MM.yyyy HH:mm"), @class = "form-control" })
                         </div>
-                    </div>
+
+                        <div class="col-lg-2 mb-lg-0 mb-6">
+                            @Html.LabelFor(m => search.FaultCode)
+                            @Html.DropDownList("FaultCode", (SelectList)ViewBag.FaultCodes, View.Select, new { @class = "form-control datatable-input", @data_col_index = "2" })
+                        </div>
+                    }
+
                     <div class="col-lg-2 mb-lg-0 mb-6">
                         @Html.LabelFor(m => search.SearchedName)
                         @Html.TextBox("SearchedName", search.SearchedName, new { @placeholder = Html.DisplayNameFor(m => search.SearchedName), @class = "form-control datatable-input", @data_col_index = "1" })
@@ -40,10 +49,11 @@
                         @Html.LabelFor(m => search.TaskType)
                         @Html.DropDownList("TaskType", (SelectList)ViewBag.TaskType, View.Select, new { @class = "form-control datatable-input", @data_col_index = "2" })
                     </div>
-                    <div class="col-lg-2 mb-lg-0 mb-6">
-                        @Html.LabelFor(m => search.FaultCode)
-                        @Html.DropDownList("FaultCode", (SelectList)ViewBag.FaultCodes, View.Select, new { @class = "form-control datatable-input", @data_col_index = "2" })
-                    </div>
+
+                    @*<div class="col-lg-2 mb-lg-0 mb-6">
+                            @Html.LabelFor(m => search.TaskStatus)
+                            @Html.DropDownList("TaskStatus", (SelectList)ViewBag.TaskStatus, View.Select, new { @class = "form-control datatable-input", @data_col_index = "2" })
+                        </div>*@
                     <div class="col-lg-2 mb-lg-0 mb-6">
                         @Html.LabelFor(m => search.SearchedTaskNo)
                         @Html.Editor("SearchedTaskNo", new { htmlAttributes = new { @class = "form-control datatable-input", @data_col_index = "4", @type = "text" } })
@@ -123,7 +133,7 @@
                                                             <i aria-hidden="true" class="ki font-size-h5 ki-close"></i>
                                                         </button>
                                                     </li>
-                                                    @if (item.TaskStatusByControl != (int)MasterISS_Partner_WebSite_Enums.TaskStatusEnum.Completed)
+                                                    @if (item.TaskStatusByControl == (int)MasterISS_Partner_WebSite_Enums.TaskStatusEnum.New || item.TaskStatusByControl == (int)MasterISS_Partner_WebSite_Enums.TaskStatusEnum.InProgress)
                                                     {
                                                         <li class="navi-separator mb-3 opacity-70"></li>
                                                         <li class="navi-item">
@@ -193,7 +203,7 @@
                                                             </span>
                                                         </div>
                                                     </li>
-                                                    @if (item.TaskStatusByControl != (int)MasterISS_Partner_WebSite_Enums.TaskStatusEnum.Completed)
+                                                    @if (item.TaskStatusByControl == (int)MasterISS_Partner_WebSite_Enums.TaskStatusEnum.New || item.TaskStatusByControl == (int)MasterISS_Partner_WebSite_Enums.TaskStatusEnum.InProgress)
                                                     {
                                                         <li class="navi-separator mt-3 opacity-70"></li>
                                                         <li class="navi-footer py-4">
@@ -282,7 +292,7 @@
 
                                         @if (User.IsInRole("Admin") || User.IsInRole("RendezvousTeam"))
                                         {
-                                            if (item.IsCorfirmation == false && (item.TaskStatusByControl == (int)MasterISS_Partner_WebSite_Enums.TaskStatusEnum.Completed || item.TaskStatusByControl == (int)MasterISS_Partner_WebSite_Enums.TaskStatusEnum.Cancelled))
+                                            if (item.IsCorfirmation == false && (item.TaskStatusByControl == (int)MasterISS_Partner_WebSite_Enums.TaskStatusEnum.Completed || item.TaskStatusByControl == (int)MasterISS_Partner_WebSite_Enums.TaskStatusEnum.Cancelled || item.TaskStatusByControl == (int)MasterISS_Partner_WebSite_Enums.TaskStatusEnum.Halted))
                                             {
                                                 <div class="separator separator-dashed mt-1 my-1"></div>
                                                 <div class="d-flex mb-2">
@@ -292,7 +302,7 @@
                                                     </span>
                                                 </div>
                                             }
-                                            if (item.TaskStatusByControl != (int)MasterISS_Partner_WebSite_Enums.TaskStatusEnum.Completed)
+                                            if (item.TaskStatusByControl == (int)MasterISS_Partner_WebSite_Enums.TaskStatusEnum.New || item.TaskStatusByControl == (int)MasterISS_Partner_WebSite_Enums.TaskStatusEnum.InProgress)
                                             {
                                                 if (string.IsNullOrEmpty(item.SetupTeamStaffName))
                                                 {
@@ -310,7 +320,7 @@
                                                 }
                                             }
                                         }
-                                        @if (User.IsInRole("Admin") && item.TaskStatusByControl != (int)MasterISS_Partner_WebSite_Enums.TaskStatusEnum.Completed)
+                                        @if (User.IsInRole("Admin") && item.TaskStatusByControl == (int)MasterISS_Partner_WebSite_Enums.TaskStatusEnum.New)
                                         {
                                             if (!string.IsNullOrEmpty(item.RendezvousTeamStaffName) && !string.IsNullOrEmpty(item.SetupTeamStaffName))
                                             {
@@ -318,9 +328,7 @@
                                                     <input type="button" class="btn-sm my-2 btn btn-outline-danger send-pool-button" dataValue="@item.TaskNo" value="@View.SendBackToThePool" />
                                                     &nbsp &nbsp &nbsp
                                                 </span>
-                                            }
-                                            if (!string.IsNullOrEmpty(item.RendezvousTeamStaffName) && string.IsNullOrEmpty(item.SetupTeamStaffName))
-                                            {
+
                                                 <span class="navi-text" data-toggle="modal" data-target="#exampleModalOtherRendezvousTeam">
                                                     <input type="button" class="btn-sm my-2 btn btn-outline-danger assign-rendezvous-team-button" dataValue="@item.TaskNo" value="@View.UpdateAppointment" />
                                                     &nbsp &nbsp &nbsp
@@ -357,7 +365,7 @@
                                page = page,
                                search.TaskListStartDate,
                                search.TaskListEndDate,
-                               search.FaultCode,
+                               search.TaskStatus,
                                search.SearchedName,
                                search.TaskType,
                            }),
