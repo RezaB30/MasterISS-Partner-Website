@@ -216,9 +216,9 @@ namespace MasterISS_Partner_WebSite.Controllers
                     var userId = claimInfo.UserId();
                     var searchedValueByContactName = taskListRequestModel.SearchedName ?? "";
                     var list = db.TaskList.Where(tl => tl.AssignToSetupTeam == userId && tl.PartnerId == partnerId && tl.TaskStatus == (int)TaskStatusEnum.InProgress && tl.IsConfirmation == false && tl.ContactName.Contains(searchedValueByContactName)).
-                        Where(tl => tl.ReservationDate >= dateTodayStart && tl.ReservationDate <= dateTodayEnd).Where(tl => tl.UpdatedSetupStatus.OrderByDescending(uss => uss.ChangeTime).FirstOrDefault().FaultCodes !=(int) FaultCodeEnum.WaitingForNewRendezvous).OrderBy(tl => tl.ReservationDate);
+                        Where(tl => tl.ReservationDate >= dateTodayStart && tl.ReservationDate <= dateTodayEnd).Where(tl => tl.UpdatedSetupStatus.OrderByDescending(uss => uss.ChangeTime).FirstOrDefault().FaultCodes != (int)FaultCodeEnum.WaitingForNewRendezvous).OrderBy(tl => tl.ReservationDate);
 
-                    taskList =  list;
+                    taskList = list;
                 }
                 else
                 {
@@ -456,7 +456,9 @@ namespace MasterISS_Partner_WebSite.Controllers
 
         private string FixedAddress(string address)
         {
-            var fixedAddress = address.Replace("..", ".");
+            var fixedAddress = "";
+            fixedAddress = address.Replace("..", ".");
+            fixedAddress = fixedAddress.Replace("P.K.: ", "");
 
             return fixedAddress;
         }
