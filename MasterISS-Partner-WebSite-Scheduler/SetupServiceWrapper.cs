@@ -151,6 +151,10 @@ namespace MasterISS_Partner_WebSite_Scheduler
                 }
                 SetupServiceWrapper.LoggerError.Fatal($"An error occurred while ValidTaskStatus GetTaskList, ErrorMessage3:  {outputLines}");
             }
+            catch (Exception ex)
+            {
+                SetupServiceWrapper.LoggerError.Fatal(ex, $"An error occurred while ValidTaskStatus GetTaskList");
+            }
         }
 
         public override bool Run()
@@ -167,7 +171,7 @@ namespace MasterISS_Partner_WebSite_Scheduler
             }
             catch (Exception ex)
             {
-                SetupServiceWrapper.LoggerError.Fatal($"An error occurred while ValidTaskStatus GetTaskList ValidTaskStatus : {ex.Message}");
+                SetupServiceWrapper.LoggerError.Fatal(ex, $"An error occurred while ValidTaskStatus GetTaskList ValidTaskStatus");
                 return false;
             }
         }
@@ -277,6 +281,10 @@ namespace MasterISS_Partner_WebSite_Scheduler
                 }
                 SetupServiceWrapper.LoggerError.Fatal($"An error occurred while GetTaskListWebServiceToDatabase GetTaskList, ErrorMessage3:  {outputLines}");
             }
+            catch (Exception ex)
+            {
+                SetupServiceWrapper.LoggerError.Fatal(ex,$"An error occurred while GetTaskListWebServiceToDatabase GetTaskList, ErrorMessage3");
+            }
 
         }
         private DateTime? ParseDatetime(string date)
@@ -375,7 +383,7 @@ namespace MasterISS_Partner_WebSite_Scheduler
             }
             catch (Exception ex)
             {
-                SetupServiceWrapper.LoggerError.Fatal($"An error occurred while AddTaskStatusUpdate, ErrorMessage:  {ex.Message}");
+                SetupServiceWrapper.LoggerError.Fatal(ex,$"An error occurred while AddTaskStatusUpdate, ErrorMessage");
             }
         }
 
@@ -391,9 +399,9 @@ namespace MasterISS_Partner_WebSite_Scheduler
                 Set();
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                SetupServiceWrapper.LoggerError.Fatal($"An error occurred while AddTaskStatusUpdate");
+                SetupServiceWrapper.LoggerError.Fatal(ex, $"An error occurred while AddTaskStatusUpdate");
                 return false;
             }
         }
@@ -437,8 +445,7 @@ namespace MasterISS_Partner_WebSite_Scheduler
             }
             catch (Exception ex)
             {
-                SetupServiceWrapper.LoggerError.Fatal($"An error occurred while ShareUnAssignedTaskToActiveRendezvousTeam, ErrorMessage:  {ex.Message}");
-
+                SetupServiceWrapper.LoggerError.Fatal(ex, $"An error occurred while ShareUnAssignedTaskToActiveRendezvousTeam");
             }
         }
 
@@ -454,9 +461,9 @@ namespace MasterISS_Partner_WebSite_Scheduler
                 Share();
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                SetupServiceWrapper.LoggerError.Fatal($"An error occurred while ShareUnAssignedTaskToActiveRendezvousTeam");
+                SetupServiceWrapper.LoggerError.Fatal(ex, $"An error occurred while ShareUnAssignedTaskToActiveRendezvousTeam");
                 return false;
             }
         }
@@ -515,7 +522,7 @@ namespace MasterISS_Partner_WebSite_Scheduler
             }
             catch (Exception ex)
             {
-                SetupServiceWrapper.LoggerError.Fatal($"An error occurred while TaskUploadedDocumentSendWebService, ErrorMessage:  {ex.Message}");
+                SetupServiceWrapper.LoggerError.Fatal(ex,$"An error occurred while TaskUploadedDocumentSendWebService");
             }
 
         }
@@ -532,11 +539,7 @@ namespace MasterISS_Partner_WebSite_Scheduler
                 Send();
                 return true;
             }
-            catch (Exception)
-            {
-                SetupServiceWrapper.LoggerError.Fatal($"An error occurred while TaskUploadedDocumentSendWebService");
-                return false;
-            }
+            catch (Exception ex) { SetupServiceWrapper.LoggerError.Fatal(ex, $"An error occurred while TaskUploadedDocumentSendWebService"); return false; }
         }
     }
 
