@@ -651,6 +651,7 @@ namespace MasterISS_Partner_WebSite.Controllers
             return View();
 
         }
+
         private ServiceResponse<List<PartnerSubscriptionsResponse>> PartnerSubcriptionFilteredList(PartnerSubscriptionFilterViewModel partnerSubscriptionFilterViewModel)
         {
             var wrapper = new WebServiceWrapper();

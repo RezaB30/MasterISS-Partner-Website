@@ -46,7 +46,7 @@
 
                             <div class="form-group">
                                 @Html.TextBox("inputCode", null, new { @class = "form-control h-auto p-3  rounded-lg font-weight-bolder text-info font-size-lg", @placeholder = "SMS Şİfresi", @autocomplete = "off" })
-                                <input type="submit" class="btn btn-block font-weight-bolder btn-danger btn-hover-warning mt-12" value="@MasterISS_Partner_WebSite.Localization.View.Confirm" />
+                                <input type="submit" class="btn btn-block font-weight-bolder btn-danger btn-hover-warning mt-12" id="confirm-button" value="@MasterISS_Partner_WebSite.Localization.View.Confirm" />
                             </div>
                         }
                     </div>
@@ -58,6 +58,7 @@
 
 @section Javascript{
     <script>
+
         function SMSConfirmationResult(data, status) {
             if (status = "success") {
                 var responseStatus = data.responseJSON.status;
@@ -80,5 +81,16 @@
                 console.log("Error");
             }
         }
+
+        $(document).ajaxStart(function () {
+            $("#confirm-button").prop("disabled", true);
+        });
+
+        $(document).ajaxStop(function () {
+            $("#confirm-button").prop("disabled", false);
+        });
+
+
+
     </script>
 }
